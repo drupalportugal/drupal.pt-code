@@ -1,0 +1,51 @@
+<?php
+// $Id: ajax_test.module,v 1.4 2010/10/04 17:46:01 dries Exp $
+
+/**
+ * @file
+ * Helper module for AJAX framework tests.
+ */
+
+/**
+ * Implements hook_menu().
+ */
+function ajax_test_menu() {
+  $items['ajax-test/render'] = array(
+    'title' => 'ajax_render',
+    'page callback' => 'ajax_test_render',
+    'delivery callback' => 'ajax_deliver',
+    'access callback' => TRUE,
+    'type' => MENU_CALLBACK,
+  );
+  $items['ajax-test/render-error'] = array(
+    'title' => 'ajax_render_error',
+    'page callback' => 'ajax_test_error',
+    'delivery callback' => 'ajax_deliver',
+    'access callback' => TRUE,
+    'type' => MENU_CALLBACK,
+  );
+  return $items;
+}
+
+/**
+ * Menu callback; Return an element suitable for use by ajax_deliver().
+ *
+ * Additionally ensures that ajax_render() incorporates JavaScript settings
+ * generated during the page request by invoking drupal_add_js() with a dummy
+ * setting.
+ */
+function ajax_test_render() {
+  drupal_add_js(array('ajax' => 'test'), 'setting');
+  return array('#type' => 'ajax', '#commands' => array());
+}
+
+/**
+ * Menu callback; Returns AJAX element with #error property set.
+ */
+function ajax_test_error() {
+  $message = '';
+  if (!empty($_GET['message'])) {
+    $message = $_GET['message'];
+  }
+  return array('#type' => 'ajax', '#error' => $message);
+}

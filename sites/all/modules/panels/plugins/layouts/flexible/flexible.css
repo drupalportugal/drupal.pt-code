@@ -1,0 +1,5 @@
+/* $Id: flexible.css,v 1.3 2010/09/07 09:42:12 sdboyer Exp $ */
+
+.panel-flexible .panel-separator {
+  margin: 0 0 1em 0;
+}

@@ -1,0 +1,24 @@
+<?php
+// $Id: default.inc,v 1.3 2010/10/11 22:56:01 sdboyer Exp $
+
+/**
+ * @file
+ * Definition of the 'default' panel style.
+ */
+
+// Plugin definition
+$plugin = array(
+  'title' => t('No style'),
+  'description' => t('The default panel rendering style; displays each pane with a separator.'),
+  'render region' => 'panels_default_style_render_region',
+);
+
+/**
+ * Render callback.
+ *
+ * @ingroup themeable
+ */
+function theme_panels_default_style_render_region($vars) {
+  return implode('<div class="panel-separator"></div>', $vars['panes']);
+}
+

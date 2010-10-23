@@ -1,0 +1,15 @@
+; $Id: panels_node.info,v 1.4 2010/10/11 22:56:02 sdboyer Exp $
+name = Panel nodes
+description = Create nodes that are divided into areas with selectable content.
+package = "Panels"
+dependencies[] = panels
+configure = admin/structure/panels
+core = 7.x
+files[] = panels_node.module
+
+; Information added by drupal.org packaging script on 2010-10-11
+version = "7.x-3.0-alpha1"
+core = "7.x"
+project = "panels"
+datestamp = "1286839262"
+
