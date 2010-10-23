@@ -1,0 +1,21 @@
+; $Id: forum.info,v 1.14 2010/09/05 02:21:38 dries Exp $
+name = Forum
+description = Provides discussion forums.
+dependencies[] = taxonomy
+dependencies[] = comment
+package = Core
+version = VERSION
+core = 7.x
+files[] = forum.module
+files[] = forum.admin.inc
+files[] = forum.pages.inc
+files[] = forum.install
+files[] = forum.test
+configure = admin/structure/forum
+stylesheets[all][] = forum.css
+
+; Information added by drupal.org packaging script on 2010-10-23
+version = "7.0-beta2"
+project = "drupal"
+datestamp = "1287812130"
+
