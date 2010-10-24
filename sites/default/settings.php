@@ -184,9 +184,9 @@ $databases = array (
     'default' => 
     array (
       'driver' => 'mysql',
-      'database' => 'd7',
-      'username' => 'drupal_user',
-      'password' => 'mrothko67!',
+      'database' => 'drupalptDB',
+      'username' => 'drupalPTluser',
+      'password' => 'NtC?49!',
       'host' => 'localhost',
       'port' => '',
       'prefix' => '',
