@@ -1,0 +1,604 @@
+# Portuguese, Portugal translation of Drupal core (7.0-beta2)
+# Copyright (c) 2010 by the Portuguese, Portugal translation team
+# Generated from files:
+#  filter.module,v 1.355 2010/10/22 16:36:14 webchick
+#  filter.admin.inc,v 1.69 2010/10/22 16:36:14 webchick
+#  filter.pages.inc,v 1.11 2010/09/16 18:00:43 dries
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Drupal core (7.0-beta2)\n"
+"POT-Creation-Date: 2010-10-25 05:28+0000\n"
+"PO-Revision-Date: 2010-06-14 18:41+0000\n"
+"Language-Team: Portuguese, Portugal\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n!=1);\n"
+
+#: modules/filter/filter.module:1294,1295,1296,1297,1298,1299
+msgid "Heading"
+msgstr "Cabeçalho"
+
+#: modules/filter/filter.module:1283
+msgid "Table"
+msgstr "Tabela"
+
+#: modules/filter/filter.module:1277
+msgid "Preformatted"
+msgstr "Pré-formatado"
+
+#: modules/filter/filter.module:1285
+msgid "Deleted"
+msgstr "Eliminado"
+
+#: modules/filter/filter.module:1326
+msgid "Greater than"
+msgstr "Maior que"
+
+#: modules/filter/filter.module:1327
+msgid "Less than"
+msgstr "Menor que"
+
+#: modules/filter/filter.module:1353
+msgid "characters"
+msgstr "caracteres"
+
+#: modules/filter/filter.admin.inc:185
+msgid "Enabled filters"
+msgstr "Filtros activos"
+
+#: modules/filter/filter.admin.inc:36
+msgid "disable"
+msgstr "desactivar"
+
+#: modules/filter/filter.module:1273
+msgid "Underlined"
+msgstr "Sublinhado"
+
+#: modules/filter/filter.module:1295
+msgid "Subtitle"
+msgstr "Subtítulo"
+
+#: modules/filter/filter.module:1349
+msgid "Maximum link text length"
+msgstr "Tamanho máximo do texto de uma ligação"
+
+#: modules/filter/filter.module:1354
+msgid ""
+"URLs longer than this number of characters will be truncated to "
+"prevent long strings that break formatting. The link itself will be "
+"retained; just the text portion of the link will be truncated."
+msgstr ""
+"URL mais longos que este número de caracteres serão truncados para "
+"evitar linhas longas que quebram a formatação. A ligação em si "
+"será mantida; apenas a parte textual do link será truncada."
+
+#: modules/filter/filter.module:1279
+msgid "Acronym"
+msgstr "Acrónimo"
+
+#: modules/filter/filter.admin.inc:224
+msgid "Filter settings"
+msgstr "Definições dos filtros"
+
+#: modules/filter/filter.module:1278
+msgid "Abbreviation"
+msgstr "Abreviação"
+
+#: modules/filter/filter.module:1286
+msgid "Inserted"
+msgstr "Inserido"
+
+#: modules/filter/filter.module:732
+msgid "filter"
+msgstr "filtro"
+
+#: modules/filter/filter.admin.inc:32
+msgid "No roles may use this format"
+msgstr "Nenhum grupo de utilizadores pode utilizar este formato"
+
+#: modules/filter/filter.module:1252
+msgid "Allowed HTML tags: @tags"
+msgstr "Tags HTML permitidas: @tags"
+
+#: modules/filter/filter.module:1265
+msgid "Anchors are used to make links to other pages."
+msgstr "Âncoras são usadas para criar ligações para outras páginas."
+
+#: modules/filter/filter.module:1266
+msgid ""
+"By default line break tags are automatically added, so use this tag to "
+"add additional ones. Use of this tag is different because it is not "
+"used with an open/close pair like all the others. Use the extra \" /\" "
+"inside the tag to maintain XHTML 1.0 compatibility"
+msgstr ""
+"Por omissão, as tags de mudança de linha são adicionadas "
+"automaticamente, portanto utilize esta tag para adicionar linhas "
+"extra. O uso desta tag é diferente porque não é usada com um par "
+"abrir/fechar como as outras. Use uma \" /\" extra dentro da tag para "
+"manter a compatibilidade XHTML 1.0."
+
+#: modules/filter/filter.module:1266
+msgid "Text with <br />line break"
+msgstr "Texto com <br />mudança de linha"
+
+#: modules/filter/filter.module:1267
+msgid ""
+"By default paragraph tags are automatically added, so use this tag to "
+"add additional ones."
+msgstr ""
+"Por omissão, as tags de parágrafo são automaticamente inseridas, "
+"portanto utilize esta tag para adicionar parágrafos adicionais."
+
+#: modules/filter/filter.module:1267
+msgid "Paragraph one."
+msgstr "Primeiro parágrafo."
+
+#: modules/filter/filter.module:1267
+msgid "Paragraph two."
+msgstr "Segundo parágrafo."
+
+#: modules/filter/filter.module:1269
+msgid "Emphasized"
+msgstr "Enfatizado"
+
+#: modules/filter/filter.module:1270
+msgid "Cited"
+msgstr "Citado"
+
+#: modules/filter/filter.module:1271
+msgid "Coded text used to show programming source code"
+msgstr "Texto usado para exibir código de programação"
+
+#: modules/filter/filter.module:1271
+msgid "Coded"
+msgstr "Codificado"
+
+#: modules/filter/filter.module:1272
+msgid "Bolded"
+msgstr "Colocado em Negrito"
+
+#: modules/filter/filter.module:1274
+msgid "Italicized"
+msgstr "Colocado em Itálico"
+
+#: modules/filter/filter.module:1275
+msgid "Superscripted"
+msgstr "Super-escrito"
+
+#: modules/filter/filter.module:1275
+msgid "<sup>Super</sup>scripted"
+msgstr "<sup>Super</sup>escrito"
+
+#: modules/filter/filter.module:1276
+msgid "Subscripted"
+msgstr "Sub-escrito"
+
+#: modules/filter/filter.module:1276
+msgid "<sub>Sub</sub>scripted"
+msgstr "<sub>Sub</sub>escrito"
+
+#: modules/filter/filter.module:1278
+msgid "<abbr title=\"Abbreviation\">Abbrev.</abbr>"
+msgstr "<abbr title=\"Abreviação\">Abrev.</abbr>"
+
+#: modules/filter/filter.module:1279
+msgid "<acronym title=\"Three-Letter Acronym\">TLA</acronym>"
+msgstr "<acronym title=\"Acrónimo de Três Letras\">ATL</acronym>"
+
+#: modules/filter/filter.module:1280
+msgid "Block quoted"
+msgstr "Citado em bloco"
+
+#: modules/filter/filter.module:1281
+msgid "Quoted inline"
+msgstr "Citado na mesma linha"
+
+#: modules/filter/filter.module:1283
+msgid "Table header"
+msgstr "Cabeçalho de tabela"
+
+#: modules/filter/filter.module:1283
+msgid "Table cell"
+msgstr "Célula de tabela"
+
+#: modules/filter/filter.module:1288
+msgid "Ordered list - use the &lt;li&gt; to begin each list item"
+msgstr "Lista ordenada - use o &lt;li&gt; para iniciar cada item da lista"
+
+#: modules/filter/filter.module:1288,1289
+msgid "First item"
+msgstr "Primeiro item"
+
+#: modules/filter/filter.module:1288,1289
+msgid "Second item"
+msgstr "Segundo item"
+
+#: modules/filter/filter.module:1289
+msgid "Unordered list - use the &lt;li&gt; to begin each list item"
+msgstr "Lista não ordenada - use o &lt;li&gt; para iniciar cada item da lista"
+
+#: modules/filter/filter.module:1292
+msgid ""
+"Definition lists are similar to other HTML lists. &lt;dl&gt; begins "
+"the definition list, &lt;dt&gt; begins the definition term and "
+"&lt;dd&gt; begins the definition description."
+msgstr ""
+"Listas de definição são semelhantes a outras listas de HTML. "
+"&lt;dl&gt; inicia a lista de definição, &lt;dt&gt; inicia a "
+"definição do termo e &lt;dd&gt; inicia a definição da descrição."
+
+#: modules/filter/filter.module:1292
+msgid "First term"
+msgstr "Primeiro termo"
+
+#: modules/filter/filter.module:1292
+msgid "First definition"
+msgstr "Primeira definição"
+
+#: modules/filter/filter.module:1292
+msgid "Second term"
+msgstr "Segundo termo"
+
+#: modules/filter/filter.module:1292
+msgid "Second definition"
+msgstr "Segunda definição"
+
+#: modules/filter/filter.module:1296
+msgid "Subtitle three"
+msgstr "Terceiro subtítulo"
+
+#: modules/filter/filter.module:1297
+msgid "Subtitle four"
+msgstr "Quarto subtítulo"
+
+#: modules/filter/filter.module:1298
+msgid "Subtitle five"
+msgstr "Quinto subtítulo"
+
+#: modules/filter/filter.module:1299
+msgid "Subtitle six"
+msgstr "Sexto subtítulo"
+
+#: modules/filter/filter.module:1301
+msgid "Tag Description"
+msgstr "Descrição da tag"
+
+#: modules/filter/filter.module:1301,1330
+msgid "You Type"
+msgstr "Você Introduz"
+
+#: modules/filter/filter.module:1301,1330
+msgid "You Get"
+msgstr "Você Obtém"
+
+#: modules/filter/filter.module:1315
+msgid "No help provided for tag %tag."
+msgstr "Não existe ajuda para a tag %tag."
+
+#: modules/filter/filter.module:1325
+msgid "Ampersand"
+msgstr "\"e\" comercial"
+
+#: modules/filter/filter.module:1328
+msgid "Quotation mark"
+msgstr "Aspas"
+
+#: modules/filter/filter.module:1330
+msgid "Character Description"
+msgstr "Descrição do Caracter"
+
+#: modules/filter/filter.module:1657
+msgid "Lines and paragraphs break automatically."
+msgstr "As linhas e os parágrafos quebram automaticamente."
+
+#: modules/filter/filter.module:1654
+msgid ""
+"Lines and paragraphs are automatically recognized. The &lt;br /&gt; "
+"line break, &lt;p&gt; paragraph and &lt;/p&gt; close paragraph tags "
+"are inserted automatically. If paragraphs are not recognized simply "
+"add a couple blank lines."
+msgstr ""
+"Linhas e parágrafos são reconhecidos automaticamente. As tags de "
+"quebra de linha &lt;br /&gt;, &lt;p&gt; parágrafo e &lt;/p&gt; fechar "
+"parágrafo são inseridas automaticamente. Se os parágrafos não "
+"forem reconhecidos, adicione duas linhas em branco."
+
+#: modules/filter/filter.module:1579
+msgid "Web page addresses and e-mail addresses turn into links automatically."
+msgstr ""
+"Endereços de páginas web e endereços de email são transformados "
+"automaticamente em ligações."
+
+#: modules/filter/filter.module:98
+msgid ""
+"Configure how content input by users is filtered, including allowed "
+"HTML tags. Also allows enabling of module-provided filters."
+msgstr ""
+"Configurar como o conteúdo introduzido pelos utilizadores é "
+"filtrado, incluindo as tags de HTML. Também permite a activação de "
+"filtros fornecidos por módulos."
+
+#: modules/filter/filter.module:90
+msgid "Compose tips"
+msgstr "Sugestões para composição"
+
+#: modules/filter/filter.module:875
+msgid "Text format"
+msgstr ""
+
+#: modules/filter/filter.admin.inc:27
+msgid "All roles may use this format"
+msgstr "Todos os grupos de utilizador podem usar este formato"
+
+#: modules/filter/filter.admin.inc:60
+msgid "The text format ordering has been saved."
+msgstr "A ordenção de formatos de texto foi gravada."
+
+#: modules/filter/filter.admin.inc:152
+msgid "All roles for this text format must be enabled and cannot be changed."
+msgstr ""
+"Todos os grupos de utilizador precisam de estar activos para este "
+"formate e tal não pode ser alterado."
+
+#: modules/filter/filter.admin.inc:203
+msgid "Filter processing order"
+msgstr "Ordem de processamento dos filtros"
+
+#: modules/filter/filter.admin.inc:300
+msgid "Text format names must be unique. A format named %name already exists."
+msgstr ""
+"Os nomes dos formatos de texto devem ser únicos. Um formato com o "
+"nome de %name já existe."
+
+#: modules/filter/filter.admin.inc:324
+msgid "Added text format %format."
+msgstr "Adicionar formato de texto %format."
+
+#: modules/filter/filter.admin.inc:328
+msgid "The text format %format has been updated."
+msgstr "O formato de texto %format foi actualizado."
+
+#: modules/filter/filter.module:97
+msgid "Text formats"
+msgstr "Formatos de texto"
+
+#: modules/filter/filter.module:17
+msgid ""
+"The Filter module allows administrators to configure text formats. A "
+"text format defines the HTML tags, codes, and other input allowed in "
+"content and comments, and is a key feature in guarding against "
+"potentially damaging input from malicious users. For more information, "
+"see the online handbook entry for <a href=\"@filter\">Filter "
+"module</a>."
+msgstr ""
+"O módulo Filter permite que os administradores configurem os formatos "
+"de texto. Um formato de texto define as tags HTML, códigos e outras "
+"expressões permitidas em conteúdos e comentários e é uma "
+"funcionalidade chave para se proteger de conteúdos perigosos de "
+"utilizadores maliciosos. Para informações adicionais consulte a "
+"entrada <a href=\"@filter\">módulo Filtro</a> no manual."
+
+#: modules/filter/filter.module:22
+msgid "Applying filters to text"
+msgstr "Aplicando filtros a texto"
+
+#: modules/filter/filter.module:23
+msgid ""
+"Each text format uses filters to manipulate text, and most formats "
+"apply several different filters to text in a specific order. Each "
+"filter is designed for a specific purpose, and generally either adds, "
+"removes, or transforms elements within user-entered text before it is "
+"displayed. A filter does not change the actual content, but instead, "
+"modifies it temporarily before it is displayed. One filter may remove "
+"unapproved HTML tags, while another automatically adds HTML to make "
+"URLs display as clickable links."
+msgstr ""
+
+#: modules/filter/filter.module:24
+msgid "Defining text formats"
+msgstr ""
+
+#: modules/filter/filter.module:25
+msgid ""
+"One format is included by default: <em>Plain text</em> (which removes "
+"all HTML tags). Additional formats may be created by your installation "
+"profile when you install Drupal, and more can be created by an "
+"administrator on the <a href=\"@text-formats\">Text formats page</a>."
+msgstr ""
+
+#: modules/filter/filter.module:26
+msgid "Choosing a text format"
+msgstr ""
+
+#: modules/filter/filter.module:37
+msgid ""
+"A text format contains filters that change the user input, for example "
+"stripping out malicious HTML or making URLs clickable. Filters are "
+"executed from top to bottom and the order is important, since one "
+"filter may prevent another filter from doing its job. For example, "
+"when URLs are converted into links before disallowed HTML tags are "
+"removed, all links may be removed. When this happens, the order of "
+"filters may need to be re-arranged."
+msgstr ""
+
+#: modules/filter/filter.module:338
+msgid ""
+"Warning: This permission may have security implications depending on "
+"how the text format is configured."
+msgstr ""
+
+#: modules/filter/filter.module:337
+msgid "Use the !text_format text format"
+msgstr ""
+
+#: modules/filter/filter.module:1127
+msgid "More information about text formats"
+msgstr ""
+
+#: modules/filter/filter.module:1161
+msgid "Limit allowed HTML tags"
+msgstr ""
+
+#: modules/filter/filter.module:1173
+msgid ""
+"Convert line breaks into HTML (i.e. <code>&lt;br&gt;</code> and "
+"<code>&lt;p&gt;</code>)"
+msgstr ""
+
+#: modules/filter/filter.module:1178
+msgid "Convert URLs into links"
+msgstr "Converter URLs em links"
+
+#: modules/filter/filter.module:1187
+msgid "Correct faulty and chopped off HTML"
+msgstr ""
+
+#: modules/filter/filter.module:1192
+msgid "Display any HTML as plain text"
+msgstr ""
+
+#: modules/filter/filter.module:1209
+msgid ""
+"A list of HTML tags that can be used. JavaScript event attributes, "
+"JavaScript URLs, and CSS are always stripped."
+msgstr ""
+"Uma listagem de tags HTML que podem ser usadas. Os atributos de evento "
+"JavaScript, URL JavaScript e CSS são sempre limpos."
+
+#: modules/filter/filter.module:1213
+msgid "Display basic HTML help in long filter tips"
+msgstr "Mostrar a ajuda básica HTML em sugestões de filtro longas"
+
+#: modules/filter/filter.module:1218
+msgid "Add rel=\"nofollow\" to all links"
+msgstr "Adicionar rel=\"nofollow\" a todas as ligações"
+
+#: modules/filter/filter.module:1262
+msgid ""
+"This site allows HTML content. While learning all of HTML may feel "
+"intimidating, learning how to use a very small number of the most "
+"basic HTML \"tags\" is very easy. This table provides examples for "
+"each tag that is enabled on this site."
+msgstr ""
+"Este site permite conteúdos HTML. Se é verdade que aprender todo o "
+"HTML pode ser difícil, aprender a usar um pequeno número de tags "
+"HTML básicas é muito fácil. Esta tabela dá exemplos de cada tag "
+"que está activa no site."
+
+#: modules/filter/filter.module:1263
+msgid ""
+"For more information see W3C's <a href=\"@html-specifications\">HTML "
+"Specifications</a> or use your favorite search engine to find other "
+"sites that explain HTML."
+msgstr ""
+"Para informações adicionais consulte as <a "
+"href=\"@html-specifications\">especificações HTML</a> do W3C ou use "
+"o seu motor de pesquisa preferido para encontrar outros sites que "
+"expliquem a linguagem HTML."
+
+#: modules/filter/filter.module:1321
+msgid "Most unusual characters can be directly entered without any problems."
+msgstr ""
+"A maior parte dos caracteres pouco usuais podem ser introduzidos "
+"directamente sem quaisquer problemas."
+
+#: modules/filter/filter.module:1322
+msgid ""
+"If you do encounter problems, try using HTML character entities. A "
+"common example looks like &amp;amp; for an ampersand &amp; character. "
+"For a full list of entities see HTML's <a "
+"href=\"@html-entities\">entities</a> page. Some of the available "
+"characters include:"
+msgstr ""
+"Se encontrar dificuldades, tente usar entidades de caracter HTML. Um "
+"exemplo habitual é o &amp;amp; para o caracter \"E\" comercial. Para "
+"uma lista de todas as entidades consulte a página de <a "
+"href=\"@html-entities\">entidades HTML</a>. Alguns dos caracteres "
+"disponíveis incluem:"
+
+#: modules/filter/filter.module:1672
+msgid "No HTML tags allowed."
+msgstr "Não são permitidas tags HTML."
+
+#: modules/filter/filter.module:20
+msgid "Configuring text formats"
+msgstr "Configurando o formato de texto"
+
+#: modules/filter/filter.module:21
+msgid ""
+"Configure text formats on the <a href=\"@formats\">Text formats "
+"page</a>. <strong>Improper text format configuration is a security "
+"risk</strong>. To ensure security, untrusted users should only have "
+"access to text formats that restrict them to either plain text or a "
+"safe set of HTML tags, since certain HTML tags can allow embedding "
+"malicious links or scripts in text. More trusted registered users may "
+"be granted permission to use less restrictive text formats in order to "
+"create rich content."
+msgstr ""
+
+#: modules/filter/filter.module:27
+msgid ""
+"Users with access to more than one text format can use the <em>Text "
+"format</em> fieldset to choose between available text formats when "
+"creating or editing multi-line content. Administrators can define the "
+"text formats available to each user role, and control the order of "
+"formats listed in the <em>Text format</em> fieldset on the <a "
+"href=\"@text-formats\">Text formats page</a>."
+msgstr ""
+
+#: modules/filter/filter.module:32
+msgid ""
+"Text formats define the HTML tags, code, and other formatting that can "
+"be used when entering text. <strong>Improper text format configuration "
+"is a security risk</strong>. Learn more on the <a "
+"href=\"@filterhelp\">Filter module help page</a>."
+msgstr ""
+
+#: modules/filter/filter.module:324
+msgid "Administer text formats and filters"
+msgstr ""
+
+#: modules/filter/filter.module:949
+msgid ""
+"This field has been disabled because you do not have sufficient "
+"permissions to edit it."
+msgstr ""
+"Este campo foi desactivado porque não possui permissões suficientes "
+"para o editar."
+
+#: modules/filter/filter.module:33
+msgid ""
+"Text formats are presented on content editing pages in the order "
+"defined on this page. The first format available to a user will be "
+"selected by default."
+msgstr ""
+
+#: modules/filter/filter.module:732
+msgid "Missing text format: %format."
+msgstr ""
+
+#: modules/filter/filter.admin.inc:343
+msgid "Are you sure you want to disable the text format %format?"
+msgstr ""
+
+#: modules/filter/filter.admin.inc:345
+msgid ""
+"Disabled text formats are completely removed from the administrative "
+"interface, and any content stored with that format will not be "
+"displayed. This action cannot be undone."
+msgstr ""
+
+#: modules/filter/filter.admin.inc:356
+msgid "Disabled text format %format."
+msgstr ""
+
+#: modules/filter/filter.pages.inc:58
+msgid "Text Formats"
+msgstr ""
+
+#: modules/filter/filter.module:125
+msgid "Disable text format"
+msgstr ""
+

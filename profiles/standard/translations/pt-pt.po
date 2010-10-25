@@ -1,0 +1,2264 @@
+# Portuguese, Portugal translation of Drupal core (7.0-beta2)
+# Copyright (c) 2010 by the Portuguese, Portugal translation team
+# Generated from files:
+#  install.core.inc,v 1.40 2010/10/15 03:31:28 webchick
+#  node.module,v 1.1309 2010/10/20 08:15:33 webchick
+#  simpletest.pages.inc,v 1.33 2010/10/20 01:31:07 dries
+#  system.module,v 1.983 2010/10/21 12:09:41 dries
+#  user.admin.inc,v 1.120 2010/10/20 01:31:07 dries
+#  user.module,v 1.1212 2010/10/23 03:20:40 webchick
+#  standard.install,v 1.28 2010/10/21 04:22:34 webchick
+#  block.admin.inc,v 1.90 2010/10/10 20:11:21 dries
+#  comment.module,v 1.906 2010/10/20 01:31:06 dries
+#  filter.admin.js,v 1.4 2010/04/16 13:55:06 dries
+#  locale.module,v 1.303 2010/10/09 17:38:41 webchick
+#  content_types.inc,v 1.119 2010/10/13 13:43:21 dries
+#  shortcut.admin.inc,v 1.16 2010/10/20 01:31:07 dries
+#  simpletest.install,v 1.39 2010/10/15 23:40:21 webchick
+#  statistics.module,v 1.339 2010/09/24 00:37:44 dries
+#  system.install,v 1.520 2010/10/20 00:47:44 dries
+#  translation.module,v 1.88 2010/10/09 17:38:41 webchick
+#  update.manager.inc,v 1.24 2010/07/29 02:27:43 dries
+#  locale.admin.inc,v 1.20 2010/10/20 01:31:07 dries
+#  menu.admin.inc,v 1.90 2010/10/20 07:40:59 webchick
+#  system.admin.inc,v 1.323 2010/10/20 16:19:24 webchick
+#  form.inc,v 1.506 2010/10/21 20:46:58 webchick
+#  language.inc,v 1.30 2010/05/12 08:26:14 dries
+#  list.module,v 1.35 2010/10/11 19:57:00 dries
+#  number.module,v 1.44 2010/10/22 00:42:42 dries
+#  text.module,v 1.66 2010/10/22 00:42:42 dries
+#  field_ui.module,v 1.33 2010/09/24 00:37:42 dries
+#  image.admin.inc,v 1.27 2010/10/21 20:50:43 webchick
+#  shortcut.install,v 1.6 2010/08/22 13:55:53 dries
+#  batch.inc,v 1.53 2010/10/04 07:34:26 webchick
+#  errors.inc,v 1.9 2010/10/16 00:00:16 webchick
+#  unicode.inc,v 1.47 2010/08/11 10:58:22 dries
+#  update.report.inc,v 1.33 2010/10/03 22:43:16 dries
+#  update.install,v 1.20 2010/10/03 22:44:48 dries
+#  iso.inc,v 1.12 2010/10/09 18:20:43 webchick
+#  system.tokens.inc,v 1.12 2010/08/17 21:31:13 dries
+#  options.module,v 1.27 2010/08/17 21:48:39 dries
+#  file.module,v 1.45 2010/10/20 15:22:53 dries
+#  node.admin.inc,v 1.101 2010/10/20 01:31:07 dries
+#  locale.inc,v 1.260 2010/10/06 13:38:39 dries
+#  file.install,v 1.4 2010/09/29 01:37:03 dries
+#  install.inc,v 1.10 2010/08/16 21:01:23 dries
+#  install.inc,v 1.142 2010/08/22 15:31:18 dries
+#  menu.install,v 1.26 2010/08/23 23:38:06 webchick
+#  field.install,v 1.23 2010/10/20 01:15:58 dries
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Drupal core (7.0-beta2)\n"
+"POT-Creation-Date: 2010-10-25 05:28+0000\n"
+"PO-Revision-Date: 2010-10-09 20:37+0000\n"
+"Language-Team: Portuguese, Portugal\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n!=1);\n"
+
+#: includes/install.core.inc:1736; modules/node/node.module:3653,3662; modules/simpletest/simpletest.pages.inc:485; modules/system/system.module:1808; modules/user/user.admin.inc:152; modules/user/user.module:971,1241,1988
+msgid "Username"
+msgstr "Utilizador"
+
+#: profiles/standard/standard.install:212
+msgid "Article"
+msgstr "Artigo"
+
+#: modules/block/block.admin.inc:645; modules/comment/comment.module:1145; modules/filter/filter.admin.js:0; modules/locale/locale.module:331; modules/node/content_types.inc:150; modules/node/node.module:3749; modules/shortcut/shortcut.admin.inc:289,339; modules/simpletest/simpletest.install:76; modules/statistics/statistics.module:320; modules/system/system.install:106,142,183; modules/translation/translation.module:132; modules/update/update.manager.inc:224
+msgid "Disabled"
+msgstr "Inactivo(s)"
+
+#: modules/filter/filter.admin.js:0; modules/locale/locale.admin.inc:95,631; modules/locale/locale.module:331; modules/menu/menu.admin.inc:210,318; modules/shortcut/shortcut.admin.inc:289,339; modules/simpletest/simpletest.install:47,55,64,76; modules/system/system.admin.inc:881; modules/system/system.install:147,188,461; modules/translation/translation.module:132; modules/update/update.manager.inc:214
+msgid "Enabled"
+msgstr "Activo"
+
+#: includes/install.core.inc:897
+msgid "Advanced options"
+msgstr "Definições avançadas"
+
+#: includes/form.inc:2852; modules/comment/comment.module:1147; modules/node/content_types.inc:152
+msgid "Required"
+msgstr "Obrigatório"
+
+#: includes/language.inc:242; modules/field/modules/list/list.module:317; modules/field/modules/number/number.module:186,196; modules/field/modules/text/text.module:185; modules/field_ui/field_ui.module:171; modules/image/image.admin.inc:671; modules/locale/locale.admin.inc:95; modules/shortcut/shortcut.install:16
+msgid "Default"
+msgstr "Predefinido"
+
+#: modules/shortcut/shortcut.install:25
+msgid "Find content"
+msgstr "Encontrar conteúdo"
+
+#: includes/install.core.inc:858
+msgid "Database type"
+msgstr "Tipo de base de dados"
+
+#: includes/batch.inc:158; includes/errors.inc:251; includes/unicode.inc:138; modules/system/system.admin.inc:2490
+msgid "Error"
+msgstr "Erro"
+
+#: modules/node/node.module:1901; modules/shortcut/shortcut.install:20
+msgid "Add content"
+msgstr "Adicionar conteúdo"
+
+#: includes/install.core.inc:1716; modules/system/system.admin.inc:400,1456
+msgid "Site name"
+msgstr "Nome do site"
+
+#: modules/system/system.install:26
+msgid "Drupal"
+msgstr "Drupal"
+
+#: modules/simpletest/simpletest.install:47,55,64
+msgid "Not found"
+msgstr "Não encontrado"
+
+#: modules/system/system.module:1041; modules/system/system.install:61,67
+msgid "PHP"
+msgstr "PHP"
+
+#: modules/system/system.install:363; modules/update/update.report.inc:277; modules/update/update.install:153
+msgid "Up to date"
+msgstr "Actualizado"
+
+#: modules/system/system.install:373; modules/update/update.install:143
+msgid "Out of date"
+msgstr "Desactualizado"
+
+#: includes/install.core.inc:1745; modules/system/system.admin.inc:1468; modules/user/user.module:983
+msgid "E-mail address"
+msgstr "Endereço de email"
+
+#: includes/form.inc:3726
+msgid "This field is required."
+msgstr "Este campo é obrigatório."
+
+#: includes/iso.inc:90
+msgid "Egypt"
+msgstr "Egipto"
+
+#: includes/iso.inc:185
+msgid "Namibia"
+msgstr "Namíbia"
+
+#: includes/iso.inc:128
+msgid "Israel"
+msgstr "Israel"
+
+#: includes/iso.inc:133
+msgid "Iran"
+msgstr "Irão"
+
+#: includes/iso.inc:196
+msgid "New Zealand"
+msgstr "Nova Zelândia"
+
+#: includes/iso.inc:247,458
+msgid "Tonga"
+msgstr "Tonga"
+
+#: includes/iso.inc:77
+msgid "Cuba"
+msgstr "Cuba"
+
+#: includes/iso.inc:57
+msgid "Brazil"
+msgstr "Brasil"
+
+#: includes/iso.inc:72
+msgid "Chile"
+msgstr "Chile"
+
+#: includes/iso.inc:211
+msgid "Paraguay"
+msgstr "Paraguai"
+
+#: includes/iso.inc:137
+msgid "Jamaica"
+msgstr "Jamaica"
+
+#: includes/iso.inc:139
+msgid "Japan"
+msgstr "Japão"
+
+#: includes/iso.inc:161
+msgid "Libya"
+msgstr "Líbia"
+
+#: includes/iso.inc:204
+msgid "Poland"
+msgstr "Polónia"
+
+#: includes/iso.inc:209
+msgid "Portugal"
+msgstr "Portugal"
+
+#: includes/iso.inc:223
+msgid "Singapore"
+msgstr "Singapura"
+
+#: includes/iso.inc:248
+msgid "Turkey"
+msgstr "Turquia"
+
+#: includes/install.core.inc:1759
+msgid "Server settings"
+msgstr "Definições de servidor"
+
+#: includes/iso.inc:82
+msgid "Germany"
+msgstr "Alemanha"
+
+#: includes/iso.inc:29
+msgid "Afghanistan"
+msgstr "Afeganistão"
+
+#: includes/iso.inc:32
+msgid "Albania"
+msgstr "Albânia"
+
+#: includes/iso.inc:87
+msgid "Algeria"
+msgstr "Argélia"
+
+#: includes/iso.inc:38
+msgid "American Samoa"
+msgstr "Samoa Americana"
+
+#: includes/iso.inc:27
+msgid "Andorra"
+msgstr "Andorra"
+
+#: includes/iso.inc:35
+msgid "Angola"
+msgstr "Angola"
+
+#: includes/iso.inc:31
+msgid "Anguilla"
+msgstr "Anguila"
+
+#: includes/iso.inc:36
+msgid "Antarctica"
+msgstr "Antárctida"
+
+#: includes/iso.inc:30
+msgid "Antigua and Barbuda"
+msgstr "Antígua e Barbuda"
+
+#: includes/iso.inc:37
+msgid "Argentina"
+msgstr "Argentina"
+
+#: includes/iso.inc:33
+msgid "Armenia"
+msgstr "Arménia"
+
+#: includes/iso.inc:41
+msgid "Aruba"
+msgstr "Aruba"
+
+#: includes/iso.inc:40
+msgid "Australia"
+msgstr "Austrália"
+
+#: includes/iso.inc:39
+msgid "Austria"
+msgstr "Áustria"
+
+#: includes/iso.inc:43
+msgid "Azerbaijan"
+msgstr "Azerbeijão"
+
+#: includes/iso.inc:58
+msgid "Bahamas"
+msgstr "Baamas"
+
+#: includes/iso.inc:50
+msgid "Bahrain"
+msgstr "Barém"
+
+#: includes/iso.inc:46
+msgid "Bangladesh"
+msgstr "Bangladesh"
+
+#: includes/iso.inc:45
+msgid "Barbados"
+msgstr "Barbados"
+
+#: includes/iso.inc:62
+msgid "Belarus"
+msgstr "Bielorrússia"
+
+#: includes/iso.inc:47
+msgid "Belgium"
+msgstr "Bélgica"
+
+#: includes/iso.inc:63
+msgid "Belize"
+msgstr "Belize"
+
+#: includes/iso.inc:52
+msgid "Benin"
+msgstr "Benim"
+
+#: includes/iso.inc:54
+msgid "Bermuda"
+msgstr "Bermudas"
+
+#: includes/iso.inc:59
+msgid "Bhutan"
+msgstr "Baamas"
+
+#: includes/iso.inc:56
+msgid "Bolivia"
+msgstr "Bolívia"
+
+#: includes/iso.inc:44
+msgid "Bosnia and Herzegovina"
+msgstr "Bósnia e Herzegovina"
+
+#: includes/iso.inc:61
+msgid "Botswana"
+msgstr "Botsuana"
+
+#: includes/iso.inc:60
+msgid "Bouvet Island"
+msgstr "ilha Bouvet"
+
+#: includes/iso.inc:55
+msgid "Brunei"
+msgstr "Brunei"
+
+#: includes/iso.inc:49
+msgid "Bulgaria"
+msgstr "Bulgária"
+
+#: includes/iso.inc:48
+msgid "Burkina Faso"
+msgstr "Burquina Faso"
+
+#: includes/iso.inc:51
+msgid "Burundi"
+msgstr "Burundi"
+
+#: includes/iso.inc:142
+msgid "Cambodia"
+msgstr "Camboja"
+
+#: includes/iso.inc:73
+msgid "Cameroon"
+msgstr "Camarões"
+
+#: includes/iso.inc:64
+msgid "Canada"
+msgstr "Canadá"
+
+#: includes/iso.inc:78
+msgid "Cape Verde"
+msgstr "Cabo Verde"
+
+#: includes/iso.inc:149
+msgid "Cayman Islands"
+msgstr "Ilhas Caimão"
+
+#: includes/iso.inc:67
+msgid "Central African Republic"
+msgstr "República Centro-Africana"
+
+#: includes/iso.inc:238
+msgid "Chad"
+msgstr "Chade"
+
+#: includes/iso.inc:74
+msgid "China"
+msgstr "China"
+
+#: includes/iso.inc:79
+msgid "Christmas Island"
+msgstr "Ilha Christmas"
+
+#: includes/iso.inc:65
+msgid "Cocos (Keeling) Islands"
+msgstr "Ilhas Cocos"
+
+#: includes/iso.inc:75
+msgid "Colombia"
+msgstr "Colômbia"
+
+#: includes/iso.inc:144
+msgid "Comoros"
+msgstr "Comores"
+
+#: includes/iso.inc:71
+msgid "Cook Islands"
+msgstr "Ilhas Cook"
+
+#: includes/iso.inc:76
+msgid "Costa Rica"
+msgstr "Costa Rica"
+
+#: includes/iso.inc:80
+msgid "Cyprus"
+msgstr "Chipre"
+
+#: includes/iso.inc:81
+msgid "Czech Republic"
+msgstr "República Checa"
+
+#: includes/iso.inc:84
+msgid "Denmark"
+msgstr "Dinamarca"
+
+#: includes/iso.inc:83
+msgid "Djibouti"
+msgstr "jibuti"
+
+#: includes/iso.inc:85
+msgid "Dominica"
+msgstr "Domínica"
+
+#: includes/iso.inc:86
+msgid "Dominican Republic"
+msgstr "República Dominicana"
+
+#: includes/iso.inc:244
+msgid "East Timor"
+msgstr "Timor-Leste"
+
+#: includes/iso.inc:88
+msgid "Ecuador"
+msgstr "Equador"
+
+#: includes/iso.inc:234
+msgid "El Salvador"
+msgstr "El Salvador"
+
+#: includes/iso.inc:113
+msgid "Equatorial Guinea"
+msgstr "Guiné Equatorial"
+
+#: includes/iso.inc:92
+msgid "Eritrea"
+msgstr "Eritreia"
+
+#: includes/iso.inc:89
+msgid "Estonia"
+msgstr "Estónia"
+
+#: includes/iso.inc:94
+msgid "Ethiopia"
+msgstr "Etiópia"
+
+#: includes/iso.inc:99
+msgid "Faroe Islands"
+msgstr "Ilhas Feroe"
+
+#: includes/iso.inc:95
+msgid "Finland"
+msgstr "Finlândia"
+
+#: includes/iso.inc:100
+msgid "France"
+msgstr "França"
+
+#: includes/iso.inc:105
+msgid "French Guiana"
+msgstr "Guiana Francesa"
+
+#: includes/iso.inc:200
+msgid "French Polynesia"
+msgstr "Polinésia Francesa"
+
+#: includes/iso.inc:101
+msgid "Gabon"
+msgstr "Gabão"
+
+#: includes/iso.inc:110
+msgid "Gambia"
+msgstr "Gâmbia"
+
+#: includes/iso.inc:104
+msgid "Georgia"
+msgstr "Georgia"
+
+#: includes/iso.inc:107
+msgid "Ghana"
+msgstr "Gana"
+
+#: includes/iso.inc:108
+msgid "Gibraltar"
+msgstr "Gibraltar"
+
+#: includes/iso.inc:114
+msgid "Greece"
+msgstr "Grécia"
+
+#: includes/iso.inc:109
+msgid "Greenland"
+msgstr "Gronelândia"
+
+#: includes/iso.inc:103
+msgid "Grenada"
+msgstr "Granada"
+
+#: includes/iso.inc:112
+msgid "Guadeloupe"
+msgstr "Guadalupe"
+
+#: includes/iso.inc:117
+msgid "Guam"
+msgstr "Guame"
+
+#: includes/iso.inc:116
+msgid "Guatemala"
+msgstr "Guatemala"
+
+#: includes/iso.inc:111
+msgid "Guinea"
+msgstr "Guiné"
+
+#: includes/iso.inc:118
+msgid "Guinea-Bissau"
+msgstr "Guiné-Bissau"
+
+#: includes/iso.inc:119
+msgid "Guyana"
+msgstr "Guiana"
+
+#: includes/iso.inc:124
+msgid "Haiti"
+msgstr "Haiti"
+
+#: includes/iso.inc:121
+msgid "Heard Island and McDonald Islands"
+msgstr "Ilha Heard e as Ilhas McDonald"
+
+#: includes/iso.inc:122
+msgid "Honduras"
+msgstr "Honduras"
+
+#: includes/iso.inc:125
+msgid "Hungary"
+msgstr "Hungria"
+
+#: includes/iso.inc:134
+msgid "Iceland"
+msgstr "Islândia"
+
+#: includes/iso.inc:130
+msgid "India"
+msgstr "Índia"
+
+#: includes/iso.inc:126
+msgid "Indonesia"
+msgstr "Indonésia"
+
+#: includes/iso.inc:132
+msgid "Iraq"
+msgstr "Iraque"
+
+#: includes/iso.inc:127
+msgid "Ireland"
+msgstr "Irlanda"
+
+#: includes/iso.inc:135
+msgid "Italy"
+msgstr "Itália"
+
+#: includes/iso.inc:138
+msgid "Jordan"
+msgstr "Jordânia"
+
+#: includes/iso.inc:150
+msgid "Kazakhstan"
+msgstr "Cazaquistão"
+
+#: includes/iso.inc:140
+msgid "Kenya"
+msgstr "Quénia"
+
+#: includes/iso.inc:143
+msgid "Kiribati"
+msgstr "Quiribati"
+
+#: includes/iso.inc:148
+msgid "Kuwait"
+msgstr "Koweit"
+
+#: includes/iso.inc:141
+msgid "Kyrgyzstan"
+msgstr "Quirguizistão"
+
+#: includes/iso.inc:151
+msgid "Laos"
+msgstr "Laos"
+
+#: includes/iso.inc:160
+msgid "Latvia"
+msgstr "Letónia"
+
+#: includes/iso.inc:152
+msgid "Lebanon"
+msgstr "Listenstaine"
+
+#: includes/iso.inc:157
+msgid "Lesotho"
+msgstr "Lesoto"
+
+#: includes/iso.inc:156
+msgid "Liberia"
+msgstr "Libéria"
+
+#: includes/iso.inc:154
+msgid "Liechtenstein"
+msgstr "Listenstaine"
+
+#: includes/iso.inc:158
+msgid "Lithuania"
+msgstr "Lituânia"
+
+#: includes/iso.inc:159
+msgid "Luxembourg"
+msgstr "Luxemburgo"
+
+#: includes/iso.inc:167
+msgid "Madagascar"
+msgstr "Madagáscar"
+
+#: includes/iso.inc:181
+msgid "Malawi"
+msgstr "Malávi"
+
+#: includes/iso.inc:183
+msgid "Malaysia"
+msgstr "Malásia"
+
+#: includes/iso.inc:180
+msgid "Maldives"
+msgstr "Maldivas"
+
+#: includes/iso.inc:170
+msgid "Mali"
+msgstr "Mali"
+
+#: includes/iso.inc:178
+msgid "Malta"
+msgstr "Malta"
+
+#: includes/iso.inc:168
+msgid "Marshall Islands"
+msgstr "Ilhas Marshall"
+
+#: includes/iso.inc:175
+msgid "Martinique"
+msgstr "Martinica"
+
+#: includes/iso.inc:176
+msgid "Mauritania"
+msgstr "Mauritânia"
+
+#: includes/iso.inc:179
+msgid "Mauritius"
+msgstr "Maurícia"
+
+#: includes/iso.inc:269
+msgid "Mayotte"
+msgstr "Maiote"
+
+#: includes/iso.inc:182
+msgid "Mexico"
+msgstr "México"
+
+#: includes/iso.inc:98
+msgid "Micronesia"
+msgstr "Micronésia"
+
+#: includes/iso.inc:164
+msgid "Moldova"
+msgstr "Moldávia"
+
+#: includes/iso.inc:163
+msgid "Monaco"
+msgstr "Mónaco"
+
+#: includes/iso.inc:172
+msgid "Mongolia"
+msgstr "Mongólia"
+
+#: includes/iso.inc:177
+msgid "Montserrat"
+msgstr "Monserrate"
+
+#: includes/iso.inc:162
+msgid "Morocco"
+msgstr "Marrocos"
+
+#: includes/iso.inc:184
+msgid "Mozambique"
+msgstr "Moçambique"
+
+#: includes/iso.inc:171
+msgid "Myanmar"
+msgstr "Birmânia"
+
+#: includes/iso.inc:194,403
+msgid "Nauru"
+msgstr "Nauru"
+
+#: includes/iso.inc:193
+msgid "Nepal"
+msgstr "Nepal"
+
+#: includes/iso.inc:191
+msgid "Netherlands"
+msgstr "Holanda"
+
+#: includes/iso.inc:34
+msgid "Netherlands Antilles"
+msgstr "Antilhas Neerlandesas"
+
+#: includes/iso.inc:186
+msgid "New Caledonia"
+msgstr "Nova Caledónia"
+
+#: includes/iso.inc:190
+msgid "Nicaragua"
+msgstr "Nicarágua"
+
+#: includes/iso.inc:187
+msgid "Niger"
+msgstr "Níger"
+
+#: includes/iso.inc:189
+msgid "Nigeria"
+msgstr "Nigéria"
+
+#: includes/iso.inc:195
+msgid "Niue"
+msgstr "Niue"
+
+#: includes/iso.inc:188
+msgid "Norfolk Island"
+msgstr "Ilha de Norfolque"
+
+#: includes/iso.inc:146
+msgid "North Korea"
+msgstr "Coreia do Norte"
+
+#: includes/iso.inc:174
+msgid "Northern Mariana Islands"
+msgstr "Marianas Setentrionais"
+
+#: includes/iso.inc:192
+msgid "Norway"
+msgstr "Noruega"
+
+#: includes/iso.inc:197
+msgid "Oman"
+msgstr "Omã"
+
+#: includes/iso.inc:203
+msgid "Pakistan"
+msgstr "Paquistão"
+
+#: includes/iso.inc:210
+msgid "Palau"
+msgstr "Palau"
+
+#: includes/iso.inc:198
+msgid "Panama"
+msgstr "Panamá"
+
+#: includes/iso.inc:201
+msgid "Papua New Guinea"
+msgstr "Papua Nova Guiné"
+
+#: includes/iso.inc:199
+msgid "Peru"
+msgstr "Peru"
+
+#: includes/iso.inc:202
+msgid "Philippines"
+msgstr "Filipinas"
+
+#: includes/iso.inc:207
+msgid "Puerto Rico"
+msgstr "Porto Rico"
+
+#: includes/iso.inc:212
+msgid "Qatar"
+msgstr "Qatar"
+
+#: includes/iso.inc:213
+msgid "Reunion"
+msgstr "Reunião"
+
+#: includes/iso.inc:214
+msgid "Romania"
+msgstr "Roménia"
+
+#: includes/iso.inc:216
+msgid "Russia"
+msgstr "Rússia"
+
+#: includes/iso.inc:217
+msgid "Rwanda"
+msgstr "Ruanda"
+
+#: includes/iso.inc:267
+msgid "Samoa"
+msgstr "Samoa"
+
+#: includes/iso.inc:229
+msgid "San Marino"
+msgstr "São Marino"
+
+#: includes/iso.inc:218
+msgid "Saudi Arabia"
+msgstr "Arábia Saudita"
+
+#: includes/iso.inc:230
+msgid "Senegal"
+msgstr "Senegal"
+
+#: includes/iso.inc:220
+msgid "Seychelles"
+msgstr "Seicheles"
+
+#: includes/iso.inc:228
+msgid "Sierra Leone"
+msgstr "Serra Leoa"
+
+#: includes/iso.inc:227
+msgid "Slovakia"
+msgstr "Eslováquia"
+
+#: includes/iso.inc:225
+msgid "Slovenia"
+msgstr "Eslovénia"
+
+#: includes/iso.inc:219
+msgid "Solomon Islands"
+msgstr "Ilhas Salomão"
+
+#: includes/iso.inc:231
+msgid "Somalia"
+msgstr "Somália"
+
+#: includes/iso.inc:270
+msgid "South Africa"
+msgstr "África do Sul"
+
+#: includes/iso.inc:115
+msgid "South Georgia and the South Sandwich Islands"
+msgstr "Ilhas Geórgia do Sul e Sandwich do Sul"
+
+#: includes/iso.inc:93
+msgid "Spain"
+msgstr "Espanha"
+
+#: includes/iso.inc:155
+msgid "Sri Lanka"
+msgstr "Sri Lanka"
+
+#: includes/iso.inc:221
+msgid "Sudan"
+msgstr "Sudão"
+
+#: includes/iso.inc:232
+msgid "Suriname"
+msgstr "Suriname"
+
+#: includes/iso.inc:226
+msgid "Svalbard and Jan Mayen"
+msgstr "Svalbard e Jan Mayen"
+
+#: includes/iso.inc:236
+msgid "Swaziland"
+msgstr "Suazilândia"
+
+#: includes/iso.inc:222
+msgid "Sweden"
+msgstr "Suíça"
+
+#: includes/iso.inc:69
+msgid "Switzerland"
+msgstr "Suiça"
+
+#: includes/iso.inc:235
+msgid "Syria"
+msgstr "Síria"
+
+#: includes/iso.inc:251
+msgid "Taiwan"
+msgstr "Formosa"
+
+#: includes/iso.inc:242
+msgid "Tajikistan"
+msgstr "Tajiquistão"
+
+#: includes/iso.inc:252
+msgid "Tanzania"
+msgstr "Tanzânia"
+
+#: includes/iso.inc:241
+msgid "Thailand"
+msgstr "Tailândia"
+
+#: includes/iso.inc:240
+msgid "Togo"
+msgstr "Togo"
+
+#: includes/iso.inc:243
+msgid "Tokelau"
+msgstr "Toquelau"
+
+#: includes/iso.inc:249
+msgid "Trinidad and Tobago"
+msgstr "Trindade e Tobago"
+
+#: includes/iso.inc:246
+msgid "Tunisia"
+msgstr "Tunísia"
+
+#: includes/iso.inc:245
+msgid "Turkmenistan"
+msgstr "Turquemenistão"
+
+#: includes/iso.inc:237
+msgid "Turks and Caicos Islands"
+msgstr "Turks e Caicos"
+
+#: includes/iso.inc:250
+msgid "Tuvalu"
+msgstr "Tuvalu"
+
+#: includes/iso.inc:254
+msgid "Uganda"
+msgstr "Uganda"
+
+#: includes/iso.inc:253
+msgid "Ukraine"
+msgstr "Ucrânia"
+
+#: includes/iso.inc:28
+msgid "United Arab Emirates"
+msgstr "Emirados Árabes Unidos"
+
+#: includes/iso.inc:102
+msgid "United Kingdom"
+msgstr "Reino Unido"
+
+#: includes/iso.inc:256
+msgid "United States"
+msgstr "Estados Unidos"
+
+#: includes/iso.inc:255
+msgid "United States Minor Outlying Islands"
+msgstr "Ilhas Menores Distantes dos Estados Unidos"
+
+#: includes/iso.inc:257
+msgid "Uruguay"
+msgstr "Uruguai"
+
+#: includes/iso.inc:258
+msgid "Uzbekistan"
+msgstr "Usbequistão"
+
+#: includes/iso.inc:265
+msgid "Vanuatu"
+msgstr "Vanuatu"
+
+#: includes/iso.inc:261
+msgid "Venezuela"
+msgstr "Venezuela"
+
+#: includes/iso.inc:266
+msgid "Wallis and Futuna"
+msgstr "Wallis e Futuna"
+
+#: includes/iso.inc:268
+msgid "Yemen"
+msgstr "Iémen"
+
+#: includes/iso.inc:271
+msgid "Zambia"
+msgstr "Zâmbia"
+
+#: includes/iso.inc:272
+msgid "Zimbabwe"
+msgstr "Zimbábue"
+
+#: includes/install.core.inc:930
+msgid "Table prefix"
+msgstr "Prefixo das tabelas"
+
+#: includes/install.core.inc:882
+msgid "Database username"
+msgstr "Nome de utilizador da base de dados"
+
+#: includes/install.core.inc:890
+msgid "Database password"
+msgstr "Senha da base de dados"
+
+#: includes/install.core.inc:872
+msgid "Database name"
+msgstr "Nome da base de dados"
+
+#: modules/system/system.install:274
+msgid "Last run !time ago"
+msgstr "Executado pela última vez há !time"
+
+#: includes/install.core.inc:1711; modules/system/system.tokens.inc:17; modules/system/system.module:969
+msgid "Site information"
+msgstr "Informação do site"
+
+#: includes/iso.inc:42
+msgid "Aland Islands"
+msgstr "Alanda"
+
+#: includes/iso.inc:96,340
+msgid "Fiji"
+msgstr "Fiji"
+
+#: includes/iso.inc:97
+msgid "Falkland Islands"
+msgstr "Ilhas Malvinas"
+
+#: includes/iso.inc:145
+msgid "Saint Kitts and Nevis"
+msgstr "São Cristóvão e Nevis"
+
+#: includes/iso.inc:147
+msgid "South Korea"
+msgstr "Coreia do Sul"
+
+#: includes/iso.inc:153
+msgid "Saint Lucia"
+msgstr "Santa Lúcia"
+
+#: includes/iso.inc:224
+msgid "Saint Helena"
+msgstr "Santa Helena"
+
+#: includes/iso.inc:233
+msgid "Sao Tome and Principe"
+msgstr "São Tome e Príncipe"
+
+#: includes/iso.inc:239
+msgid "French Southern Territories"
+msgstr "Terras Austrais e Antárcticas Francesas"
+
+#: includes/iso.inc:260
+msgid "Saint Vincent and the Grenadines"
+msgstr "São Vicente e Granadinas"
+
+#: includes/iso.inc:262
+msgid "British Virgin Islands"
+msgstr "Ilhas Virgens Britânicas"
+
+#: includes/iso.inc:263
+msgid "U.S. Virgin Islands"
+msgstr "Ilhas Virgens Americanas"
+
+#: includes/iso.inc:264
+msgid "Vietnam"
+msgstr "Vietname"
+
+#: includes/iso.inc:106
+msgid "Guernsey"
+msgstr "Guernesei"
+
+#: includes/iso.inc:136
+msgid "Jersey"
+msgstr "Jersey"
+
+#: includes/form.inc:1236; modules/field/modules/options/options.module:142; modules/file/file.module:548
+msgid "!name field is required."
+msgstr "O campo !name é obrigatório."
+
+#: modules/system/system.install:243,392
+msgid "Protected"
+msgstr "Protegido"
+
+#: includes/form.inc:3990; modules/node/node.admin.inc:267
+msgid "Processing"
+msgstr "A processar"
+
+#: includes/install.core.inc:593
+msgid "Finished"
+msgstr "Concluído"
+
+#: includes/iso.inc:131
+msgid "British Indian Ocean Territory"
+msgstr "Território Britânico do Oceano Índico"
+
+#: includes/iso.inc:123
+msgid "Croatia"
+msgstr "Croácia"
+
+#: includes/iso.inc:169
+msgid "Macedonia"
+msgstr "Macedónia"
+
+#: includes/iso.inc:206
+msgid "Pitcairn"
+msgstr "Pitcairn"
+
+#: includes/iso.inc:91
+msgid "Western Sahara"
+msgstr "Sara Ocidental"
+
+#: includes/install.core.inc:1776; modules/system/system.admin.inc:1902
+msgid "Default time zone"
+msgstr "Fuso horário predefinido"
+
+#: includes/form.inc:3783
+msgid "!title !required"
+msgstr "!required !title"
+
+#: modules/system/system.install:328
+msgid "The directory %directory does not exist."
+msgstr "O directório %directory não existe."
+
+#: includes/iso.inc:208
+msgid "Palestinian Territory"
+msgstr "Palestina"
+
+#: includes/iso.inc:259
+msgid "Vatican"
+msgstr "Vaticano"
+
+#: includes/install.core.inc:906
+msgid "Database host"
+msgstr "Servidor da base de dados"
+
+#: modules/system/system.install:246
+msgid "Configuration file"
+msgstr "Ficheiro de configuração"
+
+#: includes/install.core.inc:558; modules/system/system.install:38
+msgid "Install profile"
+msgstr "Perfil de instalação"
+
+#: modules/system/system.install:53
+msgid "Web server"
+msgstr "Servidor web"
+
+#: includes/locale.inc:511
+msgid ""
+"The translation import failed, because the file %filename could not be "
+"read."
+msgstr ""
+"Erro ao importar a tradução: não foi possível ler o ficheiro "
+"%filename."
+
+#: includes/locale.inc:540
+msgid ""
+"The translation file %filename contains an error: \"msgstr\" was "
+"expected but not found on line %line."
+msgstr ""
+"Erro no ficheiro de tradução %filename: \"msgstr\" era esperado mas "
+"não foi encontrado na linha %line."
+
+#: includes/locale.inc:546
+msgid ""
+"The translation file %filename contains an error: \"msgid_plural\" was "
+"expected but not found on line %line."
+msgstr ""
+"Erro no ficheiro de tradução %filename: \"msgid_plural\" era "
+"esperado mas não foi encontrado na linha %line."
+
+#: includes/locale.inc:552,570,588,600,608,622,631
+msgid "The translation file %filename contains a syntax error on line %line."
+msgstr ""
+"Erro no ficheiro de tradução %filename: erro de sintaxe na linha "
+"%line."
+
+#: includes/locale.inc:564
+msgid ""
+"The translation file %filename contains an error: \"msgid\" is "
+"unexpected on line %line."
+msgstr ""
+"Erro no ficheiro de tradução %filename: \"msgid\" não é esperado "
+"na linha %line."
+
+#: includes/locale.inc:596
+msgid ""
+"The translation file %filename contains an error: \"msgstr[]\" is "
+"unexpected on line %line."
+msgstr ""
+"Erro no ficheiro de tradução %filename: \"msgstr[]\" não é "
+"esperado na linha %line."
+
+#: includes/locale.inc:616
+msgid ""
+"The translation file %filename contains an error: \"msgstr\" is "
+"unexpected on line %line."
+msgstr ""
+"Erro no ficheiro de tradução %filename: \"msgstr\" não é esperada "
+"na linha %line."
+
+#: includes/locale.inc:647
+msgid ""
+"The translation file %filename contains an error: there is an "
+"unexpected string on line %line."
+msgstr ""
+"Erro no ficheiro de tradução %filename: expressão inesperada na "
+"linha %line."
+
+#: includes/locale.inc:658
+msgid "The translation file %filename ended unexpectedly at line %line."
+msgstr ""
+"Erro no ficheiro de tradução %filename: fim inesperado na linha "
+"%line."
+
+#: modules/file/file.install:62,67,72,77; modules/system/system.install:454
+msgid "Not enabled"
+msgstr "Não activo"
+
+#: includes/iso.inc:66
+msgid "Congo (Kinshasa)"
+msgstr "Congo-Kinshasa"
+
+#: includes/iso.inc:68
+msgid "Congo (Brazzaville)"
+msgstr "Congo-Brazzaville"
+
+#: includes/iso.inc:70
+msgid "Ivory Coast"
+msgstr "Costa do Marfim"
+
+#: includes/iso.inc:120
+msgid "Hong Kong S.A.R., China"
+msgstr "Hong Kong"
+
+#: includes/iso.inc:129
+msgid "Isle of Man"
+msgstr "Ilha de Man"
+
+#: includes/iso.inc:165
+msgid "Montenegro"
+msgstr "Montenegro"
+
+#: includes/iso.inc:173
+msgid "Macao S.A.R., China"
+msgstr "Macau"
+
+#: includes/iso.inc:205
+msgid "Saint Pierre and Miquelon"
+msgstr "São Pedro e Miquelon"
+
+#: includes/iso.inc:215
+msgid "Serbia"
+msgstr "Sérvia"
+
+#: includes/install.core.inc:918
+msgid "Database port"
+msgstr "Porta da base de dados"
+
+#: modules/simpletest/simpletest.install:46
+msgid "cURL"
+msgstr ""
+
+#: includes/install.core.inc:939,1162,1311,1809
+msgid "Save and continue"
+msgstr "Guardar e continuar"
+
+#: includes/install.core.inc:900
+msgid ""
+"These options are only necessary for some sites. If you're not sure "
+"what you should enter here, leave the default settings or check with "
+"your hosting provider."
+msgstr ""
+"Estas opções são apenas necessárias para alguns sites. Se não tem "
+"a certeza do que deverá introduzir aqui, mantenha as definições "
+"predefinidas ou confirme com o seu provedor de alojamento."
+
+#: includes/install.core.inc:912
+msgid "If your database is located on a different server, change this."
+msgstr "Se a sua base de dados está noutro servidor, altere esta opção."
+
+#: includes/install.core.inc:923
+msgid ""
+"If your database server is listening to a non-standard port, enter its "
+"number."
+msgstr ""
+"Se o seu servidor de base de dados está configurado numa porta "
+"não-padrão, introduza o seu número."
+
+#: includes/install.core.inc:976
+msgid "Database port must be a number."
+msgstr "A porta da base de dados deve ser um número."
+
+#: includes/install.core.inc:1738
+msgid ""
+"Spaces are allowed; punctuation is not allowed except for periods, "
+"hyphens, and underscores."
+msgstr ""
+"Espaços são permitidos; pontuação não é permitida excepto para "
+"pontos, hífenes e traços inferiores."
+
+#: includes/form.inc:1162,1181
+msgid ""
+"An illegal choice has been detected. Please contact the site "
+"administrator."
+msgstr ""
+"Uma escolha ilegal foi detectada. Por favor contacte o administrador "
+"do site."
+
+#: modules/system/system.install:326
+msgid "Not writable"
+msgstr "Sem permissão para escrita"
+
+#: modules/system/system.module:718; modules/system/system.install:310
+msgid "File system"
+msgstr "Sistema de ficheiros"
+
+#: modules/system/system.install:111
+msgid "PHP extensions"
+msgstr "Extensões PHP"
+
+#: modules/system/system.install:235
+msgid ""
+"The directory %file is not protected from modifications and poses a "
+"security risk. You must change the directory's permissions to be "
+"non-writable. "
+msgstr ""
+"O directório %file não está protegido contra modificações e "
+"apresenta um risco de segurança. Deve alterar as permissões do "
+"directório para que não seja possível modificá-lo. "
+
+#: modules/simpletest/simpletest.install:63
+msgid "PHP DOMDocument class"
+msgstr ""
+
+#: includes/form.inc:3991
+msgid "Initializing."
+msgstr "Inicializando."
+
+#: includes/form.inc:3993
+msgid "An error has occurred."
+msgstr "Ocorreu um erro."
+
+#: includes/form.inc:4084
+msgid "Please continue to <a href=\"@error_url\">the error page</a>"
+msgstr "Por favor, continue para <a href=\"@error_url\">a página do erro</a>"
+
+#: includes/install.core.inc:1293
+msgid "(@language)"
+msgstr "(@language)"
+
+#: modules/system/system.install:469
+msgid "HTTP request status"
+msgstr "Estado de pedido HTTP"
+
+#: modules/system/system.install:470
+msgid "Fails"
+msgstr "Falha"
+
+#: includes/install.core.inc:730
+msgid "Requirements problem"
+msgstr "Problema a nível dos requisitos"
+
+#: includes/install.core.inc:851
+msgid "Database configuration"
+msgstr "Configuração da base de dados"
+
+#: includes/install.core.inc:862
+msgid "The type of database your @drupal data will be stored in."
+msgstr ""
+"O tipo de base de dados onde os seus dados do @drupal serão "
+"guardados."
+
+#: includes/install.core.inc:876
+msgid ""
+"The name of the database your @drupal data will be stored in. It must "
+"exist on your server before @drupal can be installed."
+msgstr ""
+"O nome da base de dados em que os seus dados do @drupal serão "
+"armazenados. Deve existir no servidor para que o @drupal possa ser "
+"instalado."
+
+#: includes/install.core.inc:933
+msgid ""
+"If more than one application will be sharing this database, enter a "
+"table prefix such as %prefix for your @drupal site here."
+msgstr ""
+"Se mais do que uma aplicação vai partilhar esta base de dados, "
+"introduza aqui um prefixo de tabela como %prefix para o seu site "
+"@drupal."
+
+#: includes/install.core.inc:1064
+msgid "Select an installation profile"
+msgstr "Seleccione um perfil de instalação"
+
+#: includes/install.core.inc:538,1212,1271
+msgid "Choose language"
+msgstr "Escolha o idioma"
+
+#: includes/install.core.inc:1305
+msgid "Learn how to install Drupal in other languages"
+msgstr "Aprenda como instalar o Drupal em outros idiomas"
+
+#: includes/install.core.inc:1299
+msgid "(built-in)"
+msgstr "(de raíz)"
+
+#: includes/install.core.inc:1320
+msgid "No profiles available"
+msgstr "Não estão disponíveis quaisquer perfis"
+
+#: includes/install.core.inc:1330
+msgid "Drupal already installed"
+msgstr "O Drupal já está instalado"
+
+#: includes/install.core.inc:1331
+msgid ""
+"<ul><li>To start over, you must empty your existing "
+"database.</li><li>To install to a different database, edit the "
+"appropriate <em>settings.php</em> file in the <em>sites</em> "
+"folder.</li><li>To upgrade an existing installation, proceed to the <a "
+"href=\"@base-url/update.php\">update script</a>.</li><li>View your <a "
+"href=\"@base-url\">existing site</a>.</li></ul>"
+msgstr ""
+"<ul><li>Para recomeçar deverá limpar a sua base de dados já "
+"existente.</li><li>Para instalar numa base de dados diferente, edite o "
+"ficheiro <em>settings.php</em> apropriado no directório "
+"<em>sites</em>.</li><li>Para actualizar uma instalação já "
+"existente, proceda para o <a href=\"@base-url/update.php\">script de "
+"actualização</a>.</li><li>Veja o seu <a href=\"@base-url\">actual "
+"site</a>.</li></ul>"
+
+#: includes/install.core.inc:1409
+msgid "Installing @drupal"
+msgstr "Instalando @drupal"
+
+#: includes/install.core.inc:1410
+msgid "The installation has encountered an error."
+msgstr "A instalação encontrou um erro."
+
+#: includes/install.core.inc:568,1458
+msgid "Configure site"
+msgstr "Configurar o site"
+
+#: includes/install.core.inc:1467
+msgid ""
+"All necessary changes to %dir and %file have been made. They have been "
+"set to read-only for security."
+msgstr ""
+"Foram efectuadas todas as alterações necessárias a %dir e %file. "
+"Ambos foram marcados como <em>só para leitura</em> por razões de "
+"segurança."
+
+#: includes/install.core.inc:1526
+msgid "@drupal installation complete"
+msgstr "A instalação do @drupal está terminada"
+
+#: includes/install.core.inc:1567
+msgid "Installed %module module."
+msgstr "Módulo %module instalado."
+
+#: includes/install.core.inc:533
+msgid "Choose profile"
+msgstr "Escolha o perfil"
+
+#: includes/install.core.inc:545
+msgid "Verify requirements"
+msgstr "Verificar requisitos"
+
+#: includes/install.core.inc:548
+msgid "Set up database"
+msgstr "Configurar base de dados"
+
+#: includes/install.core.inc:562
+msgid "Set up translations"
+msgstr "Configurar traduções"
+
+#: includes/install.core.inc:558
+msgid "Install site"
+msgstr "Instalar site"
+
+#: includes/install.core.inc:587
+msgid "Finish translations"
+msgstr "Concluir traduções"
+
+#: includes/install.core.inc:1722
+msgid "Site e-mail address"
+msgstr "Endereço de email do site"
+
+#: includes/install.core.inc:1779
+msgid ""
+"By default, dates in this site will be displayed in the chosen time "
+"zone."
+msgstr ""
+"Por predefinição as datas neste site irão ser exibidas no fuso "
+"horário escolhido."
+
+#: includes/install.core.inc:1792; modules/system/system.install:464
+msgid "Update notifications"
+msgstr "Actualizar notificações"
+
+#: includes/install.core.inc:1798
+msgid "Check for updates automatically"
+msgstr "Procurar por actualizações automáticamente"
+
+#: includes/form.inc:1148
+msgid ""
+"!name cannot be longer than %max characters but is currently %length "
+"characters long."
+msgstr ""
+"!name não pode ser maior que %max caracteres mas tem actualmente "
+"%length caracteres de comprimento."
+
+#: includes/locale.inc:1959
+msgid "Importing interface translations"
+msgstr "A importar traduções da interface"
+
+#: includes/locale.inc:1960
+msgid "Starting import"
+msgstr "Iniciando a importação"
+
+#: includes/locale.inc:1961
+msgid "Error importing interface translations"
+msgstr "Erro na importação das traduções da interface"
+
+#: includes/unicode.inc:105
+msgid ""
+"Operations on Unicode strings are emulated on a best-effort basis. "
+"Install the <a href=\"@url\">PHP mbstring extension</a> for improved "
+"Unicode support."
+msgstr ""
+"As operações em cadeias Unicode são emuladas da melhor forma "
+"possível. Instale<a href=\"@url\">a extensão <em>mbstring</em> do "
+"PHP</a> para melhorar o suporte Unicode."
+
+#: includes/unicode.inc:110
+msgid ""
+"Multibyte string function overloading in PHP is active and must be "
+"disabled. Check the php.ini <em>mbstring.func_overload</em> setting. "
+"Please refer to the <a href=\"@url\">PHP mbstring documentation</a> "
+"for more information."
+msgstr ""
+"No PHP a função de sobrecarga para a cadeia Multibyte está activa e "
+"deve ser desactivada. Verifique no ficheiro php.ini o parâmetro "
+"<em>mbstring.func_overload</em>. Por favor consulte a <a "
+"href=\"@url\">documentação PHP do<em>mbstring</em></a> para "
+"informações adicionais."
+
+#: includes/unicode.inc:113
+msgid ""
+"Multibyte string input conversion in PHP is active and must be "
+"disabled. Check the php.ini <em>mbstring.encoding_translation</em> "
+"setting. Please refer to the <a href=\"@url\">PHP mbstring "
+"documentation</a> for more information."
+msgstr ""
+"No PHP a conversão de entrada para a cadeia Multibyte está activa e "
+"deve ser desactivada. Verifique no ficheiro php.ini o parâmetro "
+"<em>mbstring.encoding_translation</em>. Por favor consulte <a "
+"href=\"@url\">Documentação acerca das <em>mbstring</em> do PHP</a> "
+"para informações adicionais."
+
+#: includes/unicode.inc:116
+msgid ""
+"Multibyte string input conversion in PHP is active and must be "
+"disabled. Check the php.ini <em>mbstring.http_input</em> setting. "
+"Please refer to the <a href=\"@url\">PHP mbstring documentation</a> "
+"for more information."
+msgstr ""
+"No PHP a conversão de entrada para a cadeia Multibyte está activa e "
+"deve ser desactivada. Verifique no ficheiro php.ini o parâmetro "
+"<em>mbstring.http_input</em>. Por favor consulte <a "
+"href=\"@url\">Documentação acerca das <em>mbstring</em> do PHP</a> "
+"para informações adicionais."
+
+#: includes/unicode.inc:119
+msgid ""
+"Multibyte string output conversion in PHP is active and must be "
+"disabled. Check the php.ini <em>mbstring.http_output</em> setting. "
+"Please refer to the <a href=\"@url\">PHP mbstring documentation</a> "
+"for more information."
+msgstr ""
+"No PHP a conversão de saida para a cadeia Multibyte está activa e "
+"deve ser desactivada. Verifique no ficheiro php.ini o parâmetro "
+"<em>mbstring.http_output</em>. Por favor consulte <a "
+"href=\"@url\">Documentação acerca das <em>mbstring</em> do PHP</a> "
+"para informações adicionais."
+
+#: includes/unicode.inc:136
+msgid "Standard PHP"
+msgstr "PHP Standard"
+
+#: includes/unicode.inc:137
+msgid "PHP Mbstring Extension"
+msgstr "Extensão PHP Mbstring"
+
+#: includes/unicode.inc:148
+msgid "Unicode library"
+msgstr "Bibioteca Unicode"
+
+#: modules/system/system.install:75
+msgid ""
+"Your PHP installation is too old. Drupal requires at least PHP "
+"%version."
+msgstr ""
+"A seu PHP é demasiado antigo. O Drupal requer pelo menos o PHP "
+"%version."
+
+#: modules/system/system.install:92
+msgid "PHP register globals"
+msgstr "Variáveis globais de registo do PHP (register globals)"
+
+#: modules/system/system.install:101
+msgid ""
+"<em>register_globals</em> is enabled. Drupal requires this "
+"configuration directive to be disabled. Your site may not be secure "
+"when <em>register_globals</em> is enabled. The PHP manual has "
+"instructions for <a href=\"http://php.net/configuration.changes\">how "
+"to change configuration settings</a>."
+msgstr ""
+"O parâmetro <em>register_globals</em> está activo. O Drupal requer "
+"que esta parametrização esteja inactiva. O seu site poderá não "
+"estar seguro quando o parâmetro <em>register_globals</em> estiver "
+"activo. O manual do PHP contém instruções em <a "
+"href=\"http://php.net/configuration.changes\">como alterar as "
+"parametrização de configuração</a>."
+
+#: modules/system/system.install:103
+msgid "Enabled ('@value')"
+msgstr "Activo ('@value')"
+
+#: modules/system/system.install:195
+msgid "PHP memory limit"
+msgstr "Limite de memória do PHP"
+
+#: modules/system/system.install:202
+msgid ""
+"Consider increasing your PHP memory limit to %memory_minimum_limit to "
+"help prevent errors in the installation process."
+msgstr ""
+"Pondere aumentar o seu limite de memória PHP para "
+"%memory_minimum_limit, por forma a prevenir erros no processo de "
+"instalação."
+
+#: modules/system/system.install:205
+msgid ""
+"Consider increasing your PHP memory limit to %memory_minimum_limit to "
+"help prevent errors in the update process."
+msgstr ""
+"Pondere aumentar o seu limite de memória PHP para "
+"%memory_minimum_limit, por forma a prevenir erros no processo de "
+"actualização."
+
+#: modules/system/system.install:208
+msgid ""
+"Depending on your configuration, Drupal can run with a %memory_limit "
+"PHP memory limit. However, a %memory_minimum_limit PHP memory limit or "
+"above is recommended, especially if your site uses additional custom "
+"or contributed modules."
+msgstr ""
+"Dependendo da sua configuração, o Drupal poderá correr com um "
+"limite de memória PHP de %memory_limit. Contudo, um limite de "
+"memória PHP de %memory_minimum_limit ou superior é recomendado, "
+"especialmente se o seu site usar módulos adicionais ou "
+"personalizados."
+
+#: modules/system/system.install:213
+msgid ""
+"Increase the memory limit by editing the memory_limit parameter in the "
+"file %configuration-file and then restart your web server (or contact "
+"your system administrator or hosting provider for assistance)."
+msgstr ""
+"Aumente o limite de memória editando o parâmetro memory_limit no "
+"ficheiro %configuration-file e posteriormente reinicie o seu servidor "
+"(ou contacte o seu administrador de sistemas ou fornecedor de "
+"alojamento para o ajudar)."
+
+#: modules/system/system.install:216
+msgid ""
+"Contact your system administrator or hosting provider for assistance "
+"with increasing your PHP memory limit."
+msgstr ""
+"Contacte o seu administrador de sistemas ou fornecedor de alojamento "
+"para assistência no aumento do seu limite de memória PHP."
+
+#: modules/system/system.install:219
+msgid "See the <a href=\"@url\">Drupal requirements</a> for more information."
+msgstr ""
+"Consulte <a href=\"@url\">requisitos do Drupal</a> para informações "
+"adicionais."
+
+#: modules/system/system.install:230,385
+msgid "Not protected"
+msgstr "Não protegido"
+
+#: modules/system/system.install:238
+msgid ""
+"The file %file is not protected from modifications and poses a "
+"security risk. You must change the file's permissions to be "
+"non-writable."
+msgstr ""
+"O ficheiro %file não está protegido contra modificações e "
+"apresenta um risco de segurança. Deve alterar as permissões do "
+"ficheiro para que não seja possível modificá-lo."
+
+#: modules/system/system.install:256
+msgid ""
+"For more information, see the online handbook entry for <a "
+"href=\"@cron-handbook\">configuring cron jobs</a>."
+msgstr ""
+"Para informações adicionais consulte a entrada <a "
+"href=\"@cron-handbook\">configuração de tarefas cron</a> no manual."
+
+#: modules/system/system.install:277
+msgid "Cron has not run recently."
+msgstr "O cron não correu recentemente."
+
+#: modules/system/system.install:284
+msgid "Cron maintenance tasks"
+msgstr "Tarefas de manutenção do cron"
+
+#: modules/system/system.install:280
+msgid "You can <a href=\"@cron\">run cron manually</a>."
+msgstr "Poderá <a href=\"@cron\">executar o cron manualmente</a>."
+
+#: modules/system/system.install:331
+msgid "The directory %directory is not writable."
+msgstr "Não é possível escrever no directório %directory."
+
+#: modules/system/system.install:335
+msgid ""
+"You may need to set the correct directory at the <a "
+"href=\"@admin-file-system\">file system settings page</a> or change "
+"the current directory's permissions so that it is writable."
+msgstr ""
+"Pode ter de introduzir o directório correcto na <a "
+"href=\"@admin-file-system\">página de configuração do sistema de "
+"ficheiros</a> ou alterar as permissões do directório actual para que "
+"possa ser escrito."
+
+#: modules/system/system.install:350
+msgid "Writable (<em>public</em> download method)"
+msgstr "Possível escrever (método de descarga <em>público</em>)"
+
+#: modules/system/system.install:353
+msgid "Writable (<em>private</em> download method)"
+msgstr "Possível escrever (método de descarga <em>privado</em>)"
+
+#: modules/system/system.install:361
+msgid "Database updates"
+msgstr "Actualizações à base de dados"
+
+#: modules/system/system.install:374
+msgid ""
+"Some modules have database schema updates to install. You should run "
+"the <a href=\"@update\">database update script</a> immediately."
+msgstr ""
+"Alguns módulos têm actualizações do esquema da base de dados para "
+"serem efectuadas. Deve executar o <a href=\"@update\">script de "
+"actualização da base de dados</a> imediatamente."
+
+#: modules/system/system.install:387
+msgid ""
+"The update.php script is accessible to everyone without authentication "
+"check, which is a security risk. You must change the "
+"$update_free_access value in your settings.php back to FALSE."
+msgstr ""
+"O script update.php está neste momento acessível a qualquer pessoa, "
+"sem verificação de autenticação, o que é um risco de segurança. "
+"Você deve alterar o valor da opção  $update_free_access no seu "
+"settings.php de volta para FALSE."
+
+#: modules/system/system.install:395
+msgid "Access to update.php"
+msgstr "Aceder ao update.php"
+
+#: includes/locale.inc:582
+msgid ""
+"The translation file %filename contains an error: \"msgctxt\" is "
+"unexpected on line %line."
+msgstr ""
+"O ficheiro de tradução %filename contém um erro: \"msgctxt\" é "
+"inesperada na linha %line."
+
+#: includes/database/pgsql/install.inc:40
+msgid "Database is encoded in UTF-8"
+msgstr "A base de dados está codificada em UTF-8"
+
+#: includes/database/pgsql/install.inc:53
+msgid ""
+"Drupal could not determine the encoding of the database was set to "
+"UTF-8"
+msgstr ""
+"Drupal não conseguiu determinar se a codificação da base de dados "
+"está configurada para UTF-8"
+
+#: includes/database/pgsql/install.inc:128
+msgid "PostgreSQL has initialized itself."
+msgstr "O PostgreSQL inicializou-se a si próprio."
+
+#: modules/simpletest/simpletest.install:54
+msgid "hash"
+msgstr ""
+
+#: includes/install.core.inc:732
+msgid ""
+"Check the error messages and <a href=\"!url\">proceed with the "
+"installation</a>."
+msgstr ""
+"Verifique as mensagens de erro e <a href=\"!url\">prossiga com a "
+"instalação</a>."
+
+#: includes/install.core.inc:983
+msgid ""
+"In your %settings_file file you have configured @drupal to use a "
+"%driver server, however your PHP installation currently does not "
+"support this database type."
+msgstr ""
+"No seu ficheiro %settings_file configurou @drupal para usar um "
+"servidor %driver, contudo a sua instalação PHP actualmente não "
+"suporta este tipo de base-de-dados."
+
+#: includes/install.core.inc:1277
+msgid "Sorry, you must select a language to continue the installation."
+msgstr "Por favor escolha um idioma para continuar a instalação."
+
+#: includes/install.core.inc:1321
+msgid ""
+"We were unable to find any installation profiles. Installation "
+"profiles tell us what modules to enable and what schema to install in "
+"the database. A profile is necessary to continue with the installation "
+"process."
+msgstr ""
+"Não fomos capazes de encontrar quaisquer perfis de instalação. Os "
+"perfis de instalação indicam-nos que módulos activar e que "
+"estrutura instalar na base de dados. Um perfil é necessário para "
+"continuar com o processo de instalação."
+
+#: includes/install.core.inc:1349
+msgid "Sorry, the profile you have chosen cannot be loaded."
+msgstr "Infelizmente o perfil que escolheu não pôde ser carregado."
+
+#: includes/install.core.inc:1464
+msgid ""
+"All necessary changes to %dir and %file have been made, so you should "
+"remove write permissions to them now in order to avoid security risks. "
+"If you are unsure how to do so, consult the <a "
+"href=\"@handbook_url\">online handbook</a>."
+msgstr ""
+"Realizaram-se todas as modificações necessárias a %dir e %file, "
+"pelo que deve-lhes retirar as permissões de escrita para evitar "
+"riscos de segurança. Se não está seguro de como o fazer, consulte o "
+"<a href=\"@handbook_url\">manual</a>."
+
+#: includes/install.core.inc:1528
+msgid "Congratulations, you installed @drupal!"
+msgstr "Parabéns, instalou o @drupal!"
+
+#: includes/install.core.inc:1529
+msgid ""
+"Review the messages above before visiting <a href=\"@url\">your new "
+"site</a>."
+msgstr ""
+"Reveja as mensagens acima antes de visitar <a href=\"@url\">o seu novo "
+"site</a>."
+
+#: includes/install.core.inc:1529
+msgid "<a href=\"@url\">Visit your new site</a>."
+msgstr "<a href=\"@url\">Visite o seu novo site</a>."
+
+#: includes/install.core.inc:1664,1672,1678,1686,1692
+msgid "Settings file"
+msgstr "Ficheiro de definições"
+
+#: includes/install.core.inc:1665
+msgid "The settings file does not exist."
+msgstr "O ficheiro de definições não existe."
+
+#: includes/install.core.inc:1667
+msgid ""
+"The @drupal installer requires that you create a settings file as part "
+"of the installation process. Copy the %default_file file to %file. "
+"More details about installing Drupal are available in <a "
+"href=\"@install_txt\">INSTALL.txt</a>."
+msgstr ""
+"A Instalação do @Drupal requere a criação de um ficheiro de "
+"configuração. Para isso, copie o ficheiro %default_file para "
+"%file.\r\n"
+"Poderá encontrar mais detalhes sobre a instalação do Drupal em <a "
+"href=\"@install_txt\">INSTALL.txt</a>."
+
+#: includes/install.core.inc:1673
+msgid "The %file file exists."
+msgstr "O ficheiro %file existe."
+
+#: includes/install.core.inc:1679
+msgid "The settings file is not writable."
+msgstr "O ficheiro de definições não permite a escrita."
+
+#: includes/install.core.inc:1681
+msgid ""
+"The @drupal installer requires write permissions to %file during the "
+"installation process. If you are unsure how to grant file permissions, "
+"consult the <a href=\"@handbook_url\">online handbook</a>."
+msgstr ""
+"O instalador @drupal requer permissões de escrita para %file durante "
+"o processo de instalação. Se não está certo de como alterar "
+"permissões de acesso a ficheiros, consulte o <a "
+"href=\"@handbook_url\">manual em linha</a>."
+
+#: includes/install.core.inc:1724
+msgid ""
+"Automated e-mails, such as registration information, will be sent from "
+"this address. Use an address ending in your site's domain to help "
+"prevent these e-mails from being flagged as spam."
+msgstr ""
+"Mensagens automáticas via email, tal como informações de registo, "
+"serão enviadas deste endereço. Utilize um endereço que termine com "
+"o domínio do seu site por forma a evitar que estas mensagens sejam "
+"consideradas como spam."
+
+#: includes/install.core.inc:1730
+msgid "Site maintenance account"
+msgstr "Conta de manutenção do site"
+
+#: includes/install.core.inc:1770
+msgid "Select the default country for the site."
+msgstr "Seleccione o país predefinido para o site."
+
+#: includes/install.core.inc:1799
+msgid "Receive e-mail notifications"
+msgstr "Receber notificações de email"
+
+#: includes/install.core.inc:1802
+msgid ""
+"The system will notify you when updates and important security "
+"releases are available for installed components. Anonymous information "
+"about your site is sent to <a href=\"@drupal\">Drupal.org</a>."
+msgstr ""
+"O sistema irá notificá-lo quando actualizações genéricas e de "
+"segurança se encontrarem disponíveis para os componentes instalados. "
+"Informação anónima sobre o seu site é enviada para <a "
+"href=\"@drupal\">Drupal.org</a>."
+
+#: includes/form.inc:3992
+msgid "Completed @current of @total."
+msgstr "Completado @current de @total."
+
+#: includes/install.inc:370
+msgid ""
+"Failed to run all tasks against the database server. The task %task "
+"wasn't found."
+msgstr ""
+"Falha ao executar as tarefas na base de dados do servidor. A tarefa "
+"%task não foi encontrada."
+
+#: includes/install.inc:495
+msgid "Failed to modify %settings. Verify the file permissions."
+msgstr "Erro ao modificar %settings. Verifique as permissões do ficheiro."
+
+#: includes/install.inc:499
+msgid "Failed to open %settings. Verify the file permissions."
+msgstr "Erro ao abrir %settings. Verifique as permissões do ficheiro."
+
+#: includes/install.inc:546
+msgid "Required modules"
+msgstr "Módulos requeridos"
+
+#: includes/install.inc:547
+msgid "Required modules not found."
+msgstr "Módulo requerido não foi encontrado."
+
+#: includes/install.inc:549
+msgid ""
+"The following modules are required but were not found. Move them into "
+"the appropriate modules subdirectory, such as "
+"<em>sites/all/modules</em>. Missing modules: !modules"
+msgstr ""
+"Os módulos seguintes são necessários, mas não foram encontrados. "
+"Coloque-os na pasta módulos adequada, tal como "
+"<em>sites/all/modules</em>. Módulos não encontrados: !modules"
+
+#: includes/iso.inc:53
+msgid "Saint Barthélemy"
+msgstr "São Bartolomeu"
+
+#: includes/iso.inc:166
+msgid "Saint Martin (French part)"
+msgstr "São Martinho"
+
+#: includes/database/pgsql/install.inc:131
+msgid ""
+"Drupal could not be correctly setup with the existing database. Revise "
+"any errors."
+msgstr ""
+"O Drupal não pôde ser instalado correctamente na base de dados "
+"existente. Reveja os erros."
+
+#: modules/menu/menu.install:51
+msgid ""
+"The <em>Navigation</em> menu contains links intended for site "
+"visitors. Links are added to the <em>Navigation</em> menu "
+"automatically by some modules."
+msgstr ""
+
+#: modules/menu/menu.install:52
+msgid ""
+"The <em>User</em> menu contains links related to the user's account, "
+"as well as the 'Log out' link."
+msgstr ""
+
+#: modules/menu/menu.install:53
+msgid "The <em>Management</em> menu contains links for administrative tasks."
+msgstr ""
+
+#: modules/menu/menu.install:54
+msgid ""
+"The <em>Main</em> menu is used on many sites to show the major "
+"sections of the site, often in a top navigation bar."
+msgstr ""
+
+#: modules/node/node.module:3751
+msgid ""
+"If the site is experiencing problems with permissions to content, you "
+"may have to rebuild the permissions cache. Rebuilding will remove all "
+"privileges to content and replace them with permissions based on the "
+"current modules and settings. Rebuilding may take some time if there "
+"is a lot of content or complex permission settings. After rebuilding "
+"has completed, content will automatically use the new permissions."
+msgstr ""
+
+#: modules/node/node.module:3754
+msgid "Node Access Permissions"
+msgstr ""
+
+#: modules/simpletest/simpletest.install:51
+msgid ""
+"The testing framework could not be installed because the PHP <a "
+"href=\"@curl_url\">cURL</a> library is not available."
+msgstr ""
+
+#: modules/simpletest/simpletest.install:59
+msgid ""
+"The testing framework could not be installed because the PHP <a "
+"href=\"@hash_url\">hash</a> extension is disabled."
+msgstr ""
+
+#: modules/simpletest/simpletest.install:75
+msgid "PHP open_basedir restriction"
+msgstr ""
+
+#: modules/system/system.install:39
+msgid "%profile_name (%profile-%version)"
+msgstr "%profile_name (%profile-%version)"
+
+#: modules/system/system.install:62
+msgid "more information"
+msgstr "mais informação"
+
+#: modules/system/system.install:69
+msgid ""
+"The phpinfo() function has been disabled for security reasons. To see "
+"your server's phpinfo() information, change your PHP settings or "
+"contact your server administrator. For more information, <a "
+"href=\"@phpinfo\">Enabling and disabling phpinfo()</a> handbook page."
+msgstr ""
+
+#: modules/system/system.install:281
+msgid "To run cron from outside the site, go to <a href=\"!cron\">!cron</a>"
+msgstr ""
+
+#: modules/system/system.install:340
+msgid ""
+"An automated attempt to create this directory failed, possibly due to "
+"a permissions problem. To proceed with the installation, either create "
+"the directory and modify its permissions manually or ensure that the "
+"installer has the permissions to create it automatically. For more "
+"information, see INSTALL.txt or the <a href=\"@handbook_url\">online "
+"handbook</a>."
+msgstr ""
+
+#: modules/system/system.install:456
+msgid ""
+"Update notifications are not enabled. It is <strong>highly "
+"recommended</strong> that you enable the update status module from the "
+"<a href=\"@module\">module administration page</a> in order to stay "
+"up-to-date on new releases. For more information, <a "
+"href=\"@update\">Update status handbook page</a>."
+msgstr ""
+
+#: profiles/standard/standard.install:203
+msgid "Basic page"
+msgstr "Página básica"
+
+#: profiles/standard/standard.install:205
+msgid ""
+"Use <em>basic pages</em> for your static content, such as an 'About "
+"us' page."
+msgstr ""
+"Use as <em>Páginas básicas</em> para conteúdo estático, como por "
+"exemplo a página 'Acerca'."
+
+#: profiles/standard/standard.install:273
+msgid "Use tags to group articles on similar topics into categories."
+msgstr ""
+"Use etiquetas para agrupar artigos, sobre tópicos similares, em "
+"categorias."
+
+#: profiles/standard/standard.install:274
+msgid "Enter a comma-separated list of words to describe your content."
+msgstr ""
+"Insira uma lista de palavras, separadas por vírgulas, para descrever "
+"o seu contéudo."
+
+#: modules/system/system.install:136
+msgid ""
+"Drupal requires you to enable the PHP extensions in the following list "
+"(see the <a href=\"@system_requirements\">system requirements page</a> "
+"for more information):"
+msgstr ""
+
+#: modules/system/system.install:153
+msgid "Database support"
+msgstr "Suporte à base de dados"
+
+#: modules/system/system.install:168
+msgid ""
+"Your web server does not appear to support any common PDO database "
+"extensions. Check with your hosting provider to see if they support "
+"PDO (PHP Data Objects) and offer any databases that <a "
+"href=\"@drupal-databases\">Drupal supports</a>."
+msgstr ""
+
+#: modules/system/system.install:472
+msgid ""
+"Your system or network configuration does not allow Drupal to access "
+"web pages, resulting in reduced functionality. This could be due to "
+"your webserver configuration or PHP settings, and should be resolved "
+"in order to download information about available updates, fetch "
+"aggregator feeds, sign in via OpenID, or use other network-dependent "
+"services. If you are certain that Drupal can access web pages but you "
+"are still seeing this message, you may add "
+"<code>$conf['drupal_http_request_fails'] = FALSE;</code> to the bottom "
+"of your settings.php file."
+msgstr ""
+
+#: profiles/standard/standard.install:214
+msgid ""
+"Use <em>articles</em> for time-sensitive content like news, press "
+"releases or blog posts."
+msgstr ""
+
+#: modules/system/system.install:411
+msgid "@name requires at least PHP @version."
+msgstr "@name requer pelo menos a versão @version do PHP"
+
+#: modules/system/system.install:420,435
+msgid "Unresolved dependency"
+msgstr "Dependência não resolvida"
+
+#: modules/system/system.install:421
+msgid "@name requires this module."
+msgstr "@name requer este módulo."
+
+#: modules/system/system.install:436
+msgid ""
+"@name requires this module and version. Currently using @required_name "
+"version @version"
+msgstr ""
+"@name requer este módulo e versão. Neste momento tem @required_name "
+"e versão @version."
+
+#: includes/install.core.inc:972
+msgid ""
+"The database table prefix you have entered, %prefix, is invalid. The "
+"table prefix can only contain alphanumeric characters, periods, or "
+"underscores."
+msgstr ""
+
+#: includes/install.core.inc:1611
+msgid "Default settings file"
+msgstr "Ficheiro de configuração por omissão"
+
+#: includes/install.core.inc:1612
+msgid "The default settings file does not exist."
+msgstr ""
+
+#: includes/install.core.inc:1614
+msgid ""
+"The @drupal installer requires that the %default-file file not be "
+"modified in any way from the original download."
+msgstr ""
+
+#: includes/install.core.inc:866
+msgid ""
+"Your PHP configuration only supports a single database type, so it has "
+"been automatically selected."
+msgstr ""
+
+#: includes/install.inc:399
+msgid ""
+"Failed to connect to your database server. The server reports the "
+"following message: %error.<ul><li>Is the database server "
+"running?</li><li>Does the database exist, and have you entered the "
+"correct database name?</li><li>Have you entered the correct username "
+"and password?</li><li>Have you entered the correct database "
+"hostname?</li></ul>"
+msgstr ""
+
+#: includes/database/pgsql/install.inc:70
+msgid ""
+"The version of PHP you are using has known issues with PostgreSQL. You "
+"need to upgrade PHP to 5.2.11, 5.3.1 or greater."
+msgstr ""
+
+#: profiles/standard/standard.install:354
+msgid "Upload an image to go with this article."
+msgstr "Carregue uma imagem para ficar com este artigo."
+
+#: includes/install.core.inc:1687
+msgid "The settings file is writable."
+msgstr ""
+
+#: includes/install.core.inc:1693
+msgid "The settings file is owned by the web server."
+msgstr ""
+
+#: includes/install.core.inc:1695
+msgid ""
+"The @drupal installer failed to create a settings file with proper "
+"file ownership. Log on to your web server, remove the existing %file "
+"file, and create a new one by copying the %default_file file to %file. "
+"More details about installing Drupal are available in <a "
+"href=\"@install_txt\">INSTALL.txt</a>. If you have problems with the "
+"file permissions on your server, consult the <a "
+"href=\"@handbook_url\">online handbook</a>."
+msgstr ""
+
+#: modules/field/field.install:263
+msgid "This function can only be used to delete fields without data"
+msgstr ""
+
+#: modules/system/system.install:84
+msgid ""
+"Your PHP installation is too old. Drupal requires at least PHP 5.2.5, "
+"or PHP @version with the htmlspecialchars security patch backported."
+msgstr ""
+
+#: modules/system/system.install:159
+msgid ""
+"Your web server does not appear to support PDO (PHP Data Objects). Ask "
+"your hosting provider if they support the native PDO extension. See "
+"the <a href=\"@link\">system requirements</a> page for more "
+"information."
+msgstr ""
+
+#: modules/system/system.install:176
+msgid ""
+"Your web server seems to have the wrong version of PDO installed. "
+"Drupal 7 requires the PDO extension from PHP core. This system has the "
+"older PECL version. See the <a href=\"@link\">system requirements</a> "
+"page for more information."
+msgstr ""
+

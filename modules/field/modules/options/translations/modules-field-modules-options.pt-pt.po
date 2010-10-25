@@ -1,0 +1,42 @@
+# Portuguese, Portugal translation of Drupal core (7.0-beta2)
+# Copyright (c) 2010 by the Portuguese, Portugal translation team
+# Generated from file: options.module,v 1.27 2010/08/17 21:48:39 dries
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Drupal core (7.0-beta2)\n"
+"POT-Creation-Date: 2010-10-25 05:28+0000\n"
+"PO-Revision-Date: 2010-10-09 20:37+0000\n"
+"Language-Team: Portuguese, Portugal\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n!=1);\n"
+
+#: modules/field/modules/options/options.module:409
+msgid "N/A"
+msgstr "N/D"
+
+#: modules/field/modules/options/options.module:45
+msgid "Select list"
+msgstr "Seleccione a lista"
+
+#: modules/field/modules/options/options.module:52
+msgid "Check boxes/radio buttons"
+msgstr "Caixas de selecção/botões de opção"
+
+#: modules/field/modules/options/options.module:59
+msgid "Single on/off checkbox"
+msgstr ""
+
+#: modules/field/modules/options/options.module:17
+msgid ""
+"The Options module defines checkbox, selection, and other input "
+"widgets for the Field module. See the <a href=\"@field-help\">Field "
+"module help page</a> for more information about fields."
+msgstr ""
+
+#: modules/field/modules/options/options.module:413
+msgid "- Select a value -"
+msgstr "- Seleccione um valor -"
+

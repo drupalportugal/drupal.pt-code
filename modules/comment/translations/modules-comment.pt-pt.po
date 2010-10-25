@@ -1,0 +1,560 @@
+# Portuguese, Portugal translation of Drupal core (7.0-beta2)
+# Copyright (c) 2010 by the Portuguese, Portugal translation team
+# Generated from files:
+#  comment.module,v 1.906 2010/10/20 01:31:06 dries
+#  comment.tokens.inc,v 1.13 2010/07/07 17:00:42 webchick
+#  comment.admin.inc,v 1.51 2010/10/20 01:31:06 dries
+#  comment.pages.inc,v 1.40 2010/09/09 23:01:48 dries
+#  comment.tpl.php,v 1.18 2010/01/07 05:23:51 webchick
+#  comment-node-form.js,v 1.5 2010/04/16 13:55:06 dries
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Drupal core (7.0-beta2)\n"
+"POT-Creation-Date: 2010-10-25 05:28+0000\n"
+"PO-Revision-Date: 2010-06-14 18:42+0000\n"
+"Language-Team: Portuguese, Portugal\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n!=1);\n"
+
+#: modules/comment/comment.module:1021
+msgid "approve"
+msgstr "aprovar"
+
+#: modules/comment/comment.module:262
+msgid "Approve"
+msgstr "Aprovar"
+
+#: modules/comment/comment.tokens.inc:43
+msgid "Email address"
+msgstr "Endereço de email"
+
+#: modules/comment/comment.module:1926
+msgid "Homepage"
+msgstr "Página Pessoal"
+
+#: modules/comment/comment.tokens.inc:47
+msgid "Home page"
+msgstr "A página inicial"
+
+#: modules/comment/comment.module:1102,1179,1185
+msgid "Open"
+msgstr "Abrir"
+
+#: modules/comment/comment.module:1142,2014
+msgid "Preview comment"
+msgstr "Pré-visualizar o comentário"
+
+#: modules/comment/comment.tokens.inc:31
+msgid "Comment ID"
+msgstr "ID do comentário"
+
+#: modules/comment/comment.module:617
+msgid "Jump to the first comment of this posting."
+msgstr "Ir para o primeiro comentário deste texto"
+
+#: modules/comment/comment.module:628
+msgid "Jump to the first new comment of this posting."
+msgstr "Ir para o primeiro comentário novo deste texto."
+
+#: modules/comment/comment.module:640
+msgid "Add a new comment to this page."
+msgstr "Adicionar um novo comentário à página."
+
+#: modules/comment/comment.module:661
+msgid "Share your thoughts and opinions related to this posting."
+msgstr "Partilhe as suas ideias e opinião no que toca a este texto."
+
+#: modules/comment/comment.module:404,437
+msgid "Recent comments"
+msgstr "Comentários recentes"
+
+#: modules/comment/comment.tokens.inc:35
+msgid "IP Address"
+msgstr "Endereço de IP"
+
+#: modules/comment/comment.admin.inc:277
+msgid "The comment and all its replies have been deleted."
+msgstr "O comentário e todas as suas respostas foram apagadas."
+
+#: modules/comment/comment.module:1015,1037
+msgid "reply"
+msgstr "responder"
+
+#: modules/comment/comment.admin.inc:222
+msgid "Delete comments"
+msgstr "Eliminar comentários"
+
+#: modules/comment/comment.module:228
+msgid "Published comments"
+msgstr "Comentários publicados"
+
+#: modules/comment/comment.module:1090,1161
+msgid "Comment settings"
+msgstr "Definições dos comentários"
+
+#: modules/comment/comment.module:2229
+msgid "Permalink"
+msgstr ""
+
+#: modules/comment/comment.module:1118
+msgid "Anonymous commenting"
+msgstr "Comentários anónimos"
+
+#: modules/comment/comment.module:1121
+msgid "Anonymous posters may not enter their contact information"
+msgstr ""
+"Os utilizadores anónimos não podem introduzir a sua informação de "
+"contacto"
+
+#: modules/comment/comment.module:1122
+msgid "Anonymous posters may leave their contact information"
+msgstr ""
+"Os utilizadores anónimos podem introduzir a sua informação de "
+"contacto"
+
+#: modules/comment/comment.module:1123
+msgid "Anonymous posters must leave their contact information"
+msgstr ""
+"Os utilizadores anónimos têm que deixar a sua informação de "
+"contacto"
+
+#: modules/comment/comment.module:625
+msgid "1 new comment"
+msgid_plural "@count new comments"
+msgstr[0] "1 novo comentário"
+msgstr[1] "@count novos comentários"
+
+#: modules/comment/comment.module:2586
+msgid "Number of comments"
+msgstr "Número de comentários"
+
+#: modules/comment/comment.module:2441
+msgid "Unpublish comment"
+msgstr "Despublicar comentário"
+
+#: modules/comment/comment.module:2448
+msgid "Unpublish comment containing keyword(s)"
+msgstr "Despublicar comentários que contenham a(s) palavras-chave(s)"
+
+#: modules/comment/comment.module:2514,2536
+msgid "Unpublished comment %subject."
+msgstr "Comentário não publicado (%subject)."
+
+#: modules/comment/comment.module:246
+msgid "View comment"
+msgstr "Ver comentário"
+
+#: modules/comment/comment.pages.inc:43,89
+msgid "You are not authorized to post comments."
+msgstr "Não está autorizado a colocar comentários."
+
+#: modules/comment/comment.pages.inc:60,70
+msgid "The comment you are replying to does not exist."
+msgstr "O comentário a que está a responder não existe."
+
+#: modules/comment/comment.pages.inc:81
+msgid "This discussion is closed: you can't post new comments."
+msgstr ""
+"Esta discussão encontra-se fechada: não pode colocar novos "
+"comentários."
+
+#: modules/comment/comment.pages.inc:95
+msgid "You are not authorized to view comments."
+msgstr "Não está autorizado a visualizar comentários."
+
+#: modules/comment/comment.admin.inc:262
+msgid "Are you sure you want to delete the comment %title?"
+msgstr "Tem a certeza que pretende eliminar o comentário %title?"
+
+#: modules/comment/comment.admin.inc:264
+msgid ""
+"Any replies to this comment will be lost. This action cannot be "
+"undone."
+msgstr ""
+"Qualquer respostas a este comentário serão perdidas. Esta acção "
+"não pode ser revertida."
+
+#: modules/comment/comment.admin.inc:44
+msgid "Publish the selected comments"
+msgstr "Publicar os comentários seleccionados"
+
+#: modules/comment/comment.admin.inc:47
+msgid "Unpublish the selected comments"
+msgstr "Não publicar os comentários seleccionados"
+
+#: modules/comment/comment.admin.inc:220
+msgid "Are you sure you want to delete these comments and all their children?"
+msgstr ""
+"Tem a certeza que pretende eliminar estes comentários e todos os seus "
+"filhos?"
+
+#: modules/comment/comment.module:2075
+msgid "You have to specify a valid author."
+msgstr "Tem que indicar um autor válido."
+
+#: modules/comment/comment.module:2092
+msgid "The name you used belongs to a registered user."
+msgstr "O nome que utilizou pertence a um utilizador registado."
+
+#: modules/comment/comment.module:2097
+msgid "The e-mail address you specified is not valid."
+msgstr "O endereço de email que indicou não é válido."
+
+#: modules/comment/comment.module:2100
+msgid ""
+"The URL of your homepage is not valid. Remember that it must be fully "
+"qualified, i.e. of the form <code>http://example.com/directory</code>."
+msgstr ""
+"O URL do seu site não é válido. Lembre-se que o mesmo deve ser "
+"completo (ex: <code>http://exemplo.com/directório</code>)."
+
+#: modules/comment/comment.module:2135
+msgid "(No subject)"
+msgstr "(Sem assunto)"
+
+#: modules/comment/comment.admin.inc:68
+msgid "Posted in"
+msgstr "Colocado em"
+
+#: modules/comment/comment.module:2197,2196
+msgid ""
+"Comment: unauthorized comment submitted or comment submitted to a "
+"closed post %subject."
+msgstr ""
+"Comentário: foi enviado um comentário não autorizado ou o "
+"comentário foi enviado para um nó que está encerrado (%subject)."
+
+#: modules/comment/comment.module:1112
+msgid "Comments per page"
+msgstr "Comentários por página"
+
+#: modules/comment/comment.module:2434
+msgid "Publish comment"
+msgstr "Publicar comentário"
+
+#: modules/comment/comment.module:386
+msgid "View comments"
+msgstr "Ver comentários"
+
+#: modules/comment/comment.tokens.inc:52
+msgid "The title of the comment."
+msgstr "O título do comentário."
+
+#: modules/comment/comment.tokens.inc:21
+msgid "Comment count"
+msgstr "Número de comentários"
+
+#: modules/comment/comment.admin.inc:49
+msgid "Delete the selected comments"
+msgstr "Eliminar os comentários seleccionados"
+
+#: modules/comment/comment.module:240
+msgid "Comment permalink"
+msgstr "Ligação permanente do comentário"
+
+#: modules/comment/comment.tpl.php:73
+msgid "Submitted by !username on !datetime."
+msgstr "Submetido por !username em !datetime."
+
+#: modules/comment/comment-node-form.js:0
+msgid "@number comments per page"
+msgstr "@number comentários por página"
+
+#: modules/comment/comment.tokens.inc:32
+msgid "The unique ID of the comment."
+msgstr "ID único do comentário."
+
+#: modules/comment/comment.tokens.inc:36
+msgid "The IP address of the computer the comment was posted from."
+msgstr "O endereço de IP do computador de onde foi colocado o comentário."
+
+#: modules/comment/comment.tokens.inc:40
+msgid "The name left by the comment author."
+msgstr "O nome indicado pelo autor do comentário."
+
+#: modules/comment/comment.tokens.inc:44
+msgid "The email address left by the comment author."
+msgstr "O endereço de email indicado pelo autor do comentário."
+
+#: modules/comment/comment.tokens.inc:48
+msgid "The home page URL left by the comment author."
+msgstr "O URL da página indicada pelo autor do comentário."
+
+#: modules/comment/comment.tokens.inc:56
+msgid "The formatted content of the comment itself."
+msgstr "O conteúdo formatado do próprio comentário."
+
+#: modules/comment/comment.tokens.inc:60
+msgid "The URL of the comment."
+msgstr "O URL do comentário."
+
+#: modules/comment/comment.tokens.inc:64
+msgid "The URL of the comment's edit page."
+msgstr "O URL da página de edição do comentário."
+
+#: modules/comment/comment.tokens.inc:70
+msgid "The date the comment was posted."
+msgstr "A data em que o comentário foi colocado."
+
+#: modules/comment/comment.tokens.inc:80
+msgid "The comment's parent, if comment threading is active."
+msgstr ""
+"O pai do comentário, se a lista hierárquica de comentários estiver "
+"activa."
+
+#: modules/comment/comment.tokens.inc:85
+msgid "The node the comment was posted to."
+msgstr "O nó em que o comentário foi colocado."
+
+#: modules/comment/comment.tokens.inc:90
+msgid "The author of the comment, if they were logged in."
+msgstr "O autor do comentário, se tinha a sessão iniciada."
+
+#: modules/comment/comment.tokens.inc:22
+msgid "The number of comments posted on a node."
+msgstr "O número de comentários colocados num nó."
+
+#: modules/comment/comment.tokens.inc:25
+msgid "New comment count"
+msgstr "Número de novos comentários"
+
+#: modules/comment/comment.tokens.inc:26
+msgid ""
+"The number of comments posted on a node since the reader last viewed "
+"it."
+msgstr ""
+"O número de comentários colocados num nó desde a última vez que o "
+"leitor o visitou."
+
+#: modules/comment/comment.admin.inc:149
+msgid "Select one or more comments to perform the update on."
+msgstr "Seleccione um ou mais comentários a actualizar."
+
+#: modules/comment/comment.admin.inc:215
+msgid ""
+"There do not appear to be any comments to delete, or your selected "
+"comment was deleted by another administrator."
+msgstr ""
+"Parece não existirem quaisquer comentários para eliminar ou "
+"seleccionou um comentários eliminado por outro administrador."
+
+#: modules/comment/comment.admin.inc:235,234
+msgid "Deleted @count comments."
+msgstr "Eliminados @count comentários."
+
+#: modules/comment/comment.admin.inc:278
+msgid "Deleted comment @cid and its replies."
+msgstr "Eliminar o comentário @cid e respectivas respostas."
+
+#: modules/comment/comment.pages.inc:116
+msgid "Comment approved."
+msgstr "Comentário aprovado."
+
+#: modules/comment/comment.tokens.inc:15
+msgid "Tokens for comments posted on the site."
+msgstr "Token para comentários colocados no site."
+
+#: modules/comment/comment.module:80
+msgid ""
+"The Comment module allows users to comment on site content, set "
+"commenting defaults and permissions, and moderate comments. For more "
+"information, see the online handbook entry for <a "
+"href=\"@comment\">Comment module</a>."
+msgstr ""
+"O módulo Comment permite aos utilizadores comentar os conteúdos do "
+"site, definir pre-definições de comentários e permissões, e "
+"moderar os comentários. Para informações adicionais consulte a "
+"entrada <a href=\"@php\">módulo Comment</a> no manual."
+
+#: modules/comment/comment.module:83
+msgid "Default and custom settings"
+msgstr ""
+
+#: modules/comment/comment.module:84
+msgid ""
+"Each <a href='@content-type'>content type</a> can have its own default "
+"comment settings configured as: <em>Open</em> to allow new comments, "
+"<em>Hidden</em> to hide existing comments and prevent new comments, or "
+"<em>Closed</em> to view existing comments, but prevent new comments. "
+"These defaults will apply to all new content created (changes to the "
+"settings on existing content must be done manually). Other comment "
+"settings can also be customized per content type, and can be "
+"overridden for any given item of content. When a comment has no "
+"replies, it remains editable by its author, as long as the author has "
+"a user account and is logged in."
+msgstr ""
+
+#: modules/comment/comment.module:111
+msgid "Full comment"
+msgstr "Comentário completo"
+
+#: modules/comment/comment.module:312
+msgid "Unapproved comments (@count)"
+msgstr "Comentários por aprovar (@count)"
+
+#: modules/comment/comment.module:383
+msgid "Administer comments and comment settings"
+msgstr "Administrar comentários e definições de comentários"
+
+#: modules/comment/comment.module:395
+msgid "Edit own comments"
+msgstr "Editar os próprios comentários"
+
+#: modules/comment/comment.module:415
+msgid "Number of recent comments"
+msgstr "Número de comentários recentes"
+
+#: modules/comment/comment.module:1106
+msgid "Threading"
+msgstr "Listagem hierárquica"
+
+#: modules/comment/comment.module:1108
+msgid "Show comment replies in a threaded list."
+msgstr "Apresentar respostas aos comentários numa lista hierárquica."
+
+#: modules/comment/comment.module:1100
+msgid "Default comment setting for new content"
+msgstr "Definiçõeas pré-definidas de comentários para novos conteúdos"
+
+#: modules/comment/comment.module:1132
+msgid "Allow comment title"
+msgstr "Permitir título de comentário"
+
+#: modules/comment/comment.module:1137
+msgid "Show reply form on the same page as comments"
+msgstr "Mostrar formulário de resposta na mesma página dos comentários"
+
+#: modules/comment/comment.module:1186
+msgid "Users with the \"Post comments\" permission can post comments."
+msgstr ""
+"Utilizadores com permissões de \"publicação de comentários\" podem "
+"publicar comentários."
+
+#: modules/comment/comment.module:1195
+msgid "Users cannot post comments, but existing comments will be displayed."
+msgstr ""
+"Os utilizadores não podem publicar comentários, mas os comentários "
+"existentes serão mostrados."
+
+#: modules/comment/comment.module:1204
+msgid "Comments are hidden from view."
+msgstr "Os comentários estão ocultados."
+
+#: modules/comment/comment.module:1216
+msgid "Users cannot post comments."
+msgstr "Os utilizadores não podem publicar comentários."
+
+#: modules/comment/comment.module:2180
+msgid ""
+"Your comment has been queued for review by site administrators and "
+"will be published after approval."
+msgstr ""
+"O eu comentário foi colocado em fila de espera para revisão por um "
+"dos administradores do site e será publicado após aprovação."
+
+#: modules/comment/comment.module:2184
+msgid "Your comment has been posted."
+msgstr "O seu comentário foi publicado."
+
+#: modules/comment/comment.module:2303
+msgid ""
+"<a href=\"@login\">Log in</a> or <a href=\"@register\">register</a> to "
+"post comments"
+msgstr ""
+"<a href=\"@login\">Inicie sessão</a> ou <a "
+"href=\"@register\">registe-se</a> para publicar comentários"
+
+#: modules/comment/comment.module:2307
+msgid "<a href=\"@login\">Log in</a> to post comments"
+msgstr "<a href=\"@login\">Inicie sessão</a> para publicar comentários"
+
+#: modules/comment/comment.module:2333
+msgid "Flat list"
+msgstr "lista não hierárquica"
+
+#: modules/comment/comment.module:2334
+msgid "Threaded list"
+msgstr "lista hierárquica"
+
+#: modules/comment/comment.module:2455
+msgid "Save comment"
+msgstr "Guardar comentário"
+
+#: modules/comment/comment.module:2553
+msgid ""
+"The comment will be unpublished if it contains any of the phrases "
+"above. Use a case-sensitive, comma-separated list of phrases. Example: "
+"funny, bungee jumping, \"Company, Inc.\""
+msgstr ""
+"O comentário será despublicado se contiver qualquer uma das frases "
+"acima. Utilize uma listagem de frases separada por vírgulas, "
+"sensível a maiúsculas e minúsculas. Por exemplo: engraçado, "
+"saltar, \"Companhia, Lda\"."
+
+#: modules/comment/comment.module:2487
+msgid "Published comment %subject."
+msgstr "Publicado comentário %subject."
+
+#: modules/comment/comment.module:2577
+msgid "Saved comment %title"
+msgstr "Guardado comentário %title"
+
+#: modules/comment/comment.module:220
+msgid "List and edit site comments and the comment approval queue."
+msgstr ""
+"Listar e editar comentários do site e a lista de aprovação de "
+"comentários."
+
+#: modules/comment/comment.module:233
+msgid "Unapproved comments"
+msgstr "Comentários não aprovados"
+
+#: modules/comment/comment.module:173
+msgid "Author textfield"
+msgstr ""
+
+#: modules/comment/comment.module:178
+msgid "Subject textfield"
+msgstr ""
+
+#: modules/comment/comment.module:121
+msgid "@node_type comment"
+msgstr ""
+
+#: modules/comment/comment.module:1764
+msgid "Edit comment %comment"
+msgstr "Edite o comentário %comment"
+
+#: modules/comment/comment.tokens.inc:75
+msgid "The date the comment was most recently updated."
+msgstr "A data em que o comentário foi recentemente actualizado."
+
+#: modules/comment/comment.module:2175
+msgid "Comment posted: %subject."
+msgstr ""
+
+#: modules/comment/comment.module:85
+msgid "Comment approval"
+msgstr ""
+
+#: modules/comment/comment.module:86
+msgid ""
+"Comments from users who have the <em>Skip comment approval</em> "
+"permission are published immediately. All other comments are placed in "
+"the <a href='@comment-approval'>Unapproved comments</a> queue, until a "
+"user who has permission to <em>Administer comments</em> publishes or "
+"deletes them. Published comments can be bulk managed on the <a "
+"href='@admin-comment'>Published comments</a> administration page."
+msgstr ""
+
+#: modules/comment/comment.module:389
+msgid "Post comments"
+msgstr ""
+
+#: modules/comment/comment.module:392
+msgid "Skip comment approval"
+msgstr ""
+

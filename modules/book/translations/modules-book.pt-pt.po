@@ -1,0 +1,429 @@
+# Portuguese, Portugal translation of Drupal core (7.0-beta2)
+# Copyright (c) 2010 by the Portuguese, Portugal translation team
+# Generated from files:
+#  book.module,v 1.554 2010/10/18 05:53:34 webchick
+#  book-navigation.tpl.php,v 1.3 2009/02/18 14:28:21 webchick
+#  book.admin.inc,v 1.38 2010/10/20 01:31:06 dries
+#  book.pages.inc,v 1.27 2010/07/07 01:07:33 dries
+#  book.js,v 1.7 2010/04/16 13:55:06 dries
+#  book.install,v 1.36 2010/06/23 19:05:15 dries
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Drupal core (7.0-beta2)\n"
+"POT-Creation-Date: 2010-10-25 05:28+0000\n"
+"PO-Revision-Date: 2010-03-19 07:56+0000\n"
+"Language-Team: Portuguese, Portugal\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n!=1);\n"
+
+#: modules/book/book.module:512
+msgid "Pages at a given level are ordered first by weight and then by title."
+msgstr ""
+"Páginas do mesmo nível são ordenadas primeiro por peso e depois por "
+"título."
+
+#: modules/book/book-navigation.tpl.php:40
+msgid "‹ "
+msgstr "‹ "
+
+#: modules/book/book-navigation.tpl.php:43
+msgid "up"
+msgstr "subir"
+
+#: modules/book/book-navigation.tpl.php:43
+msgid "Go to parent page"
+msgstr "Ir para página pai"
+
+#: modules/book/book-navigation.tpl.php:46
+msgid " ›"
+msgstr " ›"
+
+#: modules/book/book.module:168
+msgid "Outline"
+msgstr "Estrutura"
+
+#: modules/book/book.module:106
+msgid "Printer-friendly version"
+msgstr "Versão de impressão"
+
+#: modules/book/book.admin.inc:44
+msgid "Content type for child pages"
+msgstr "Tipos de conteúdo para páginas filhas"
+
+#: modules/book/book.module:179
+msgid "Remove from outline"
+msgstr "Remover da estrutura"
+
+#: modules/book/book.pages.inc:51
+msgid "Unknown export format."
+msgstr "Formato de exportação desconhecido."
+
+#: modules/book/book.module:124,154
+msgid "Books"
+msgstr "Livros"
+
+#: modules/book/book.module:21,234,254
+msgid "Book navigation"
+msgstr "Navegação do livro"
+
+#: modules/book/book.module:223
+msgid "Print"
+msgstr "Imprimir"
+
+#: modules/book/book.module:404
+msgid "Change book (update list of parents)"
+msgstr "Alterar o livro (actualização da lista dos pais)"
+
+#: modules/book/book.module:529
+msgid "create a new book"
+msgstr "criar um novo livro"
+
+#: modules/book/book.admin.inc:19
+msgid "edit order and titles"
+msgstr "edite a ordem e os títulos"
+
+#: modules/book/book.module:125
+msgid "Manage your site's book outlines."
+msgstr "Gerir as estruturas de livros do seu site."
+
+#: modules/book/book.module:308
+msgid "Book navigation block display"
+msgstr "Bloco da navegação do livro"
+
+#: modules/book/book.pages.inc:126
+msgid "Add to book outline"
+msgstr "Adicionar à estrutura do livro"
+
+#: modules/book/book.module:486
+msgid "Book outline"
+msgstr "Estrutura do livro"
+
+#: modules/book/book.module:452
+msgid "This will be the top-level page in this book."
+msgstr "Esta será a página pai neste livro."
+
+#: modules/book/book.module:23
+msgid "Collaboration"
+msgstr "Colaboração"
+
+#: modules/book/book.js:0
+msgid "Not in book"
+msgstr "Inexistente em livro"
+
+#: modules/book/book.js:0
+msgid "New book"
+msgstr "Novo livro"
+
+#: modules/book/book.module:543
+msgid "Your page will be a part of the selected book."
+msgstr "A sua página fará parte do livro seleccionado."
+
+#: modules/book/book.admin.inc:63
+msgid ""
+"The content type for the %add-child link must be one of those selected "
+"as an allowed book outline type."
+msgstr ""
+"O tipo de conteúdo para a ligação %add-child tem que ser um dos "
+"seleccionados como um tipo permitido na estrutura do livro."
+
+#: modules/book/book.admin.inc:80
+msgid "Save book pages"
+msgstr "Guardar páginas do livro."
+
+#: modules/book/book.admin.inc:93
+msgid ""
+"This book has been modified by another user, the changes could not be "
+"saved."
+msgstr ""
+"Este livro foi modificado entretanto por outro utilizador e as suas "
+"alterações não puderam ser guardadas."
+
+#: modules/book/book.admin.inc:131
+msgid "Title changed from %original to %current."
+msgstr "O título foi alterado de %original para %current."
+
+#: modules/book/book.admin.inc:139
+msgid "Updated book %title."
+msgstr "O livro %title foi actualizado."
+
+#: modules/book/book.admin.inc:134
+msgid "book: updated %title."
+msgstr "livro: %title actualizado."
+
+#: modules/book/book.pages.inc:126
+msgid "Update book outline"
+msgstr "Actualizar estrutura do livro"
+
+#: modules/book/book.pages.inc:132
+msgid "Remove from book outline"
+msgstr "Remover da estrutura do livro"
+
+#: modules/book/book.pages.inc:160
+msgid "No changes were made"
+msgstr "Não foi feita nenhuma alteração"
+
+#: modules/book/book.pages.inc:170
+msgid ""
+"The post has been added to the selected book. You may now position it "
+"relative to other pages."
+msgstr ""
+"A entrada foi adicionada ao livro seleccionado. Pode agora "
+"posicioná-la relativamente às outras páginas."
+
+#: modules/book/book.pages.inc:174
+msgid "The book outline has been updated."
+msgstr "A estrutura do livro foi actualizada."
+
+#: modules/book/book.pages.inc:178
+msgid "There was an error adding the post to the book."
+msgstr "Ocorreu um erro ao adicionar a entrada ao livro."
+
+#: modules/book/book.pages.inc:194
+msgid ""
+"%title has associated child pages, which will be relocated "
+"automatically to maintain their connection to the book. To recreate "
+"the hierarchy (as it was before removing this page), %title may be "
+"added again using the Outline tab, and each of its former child pages "
+"will need to be relocated manually."
+msgstr ""
+"%title tem páginas filhas associadas, que serão recolocadas "
+"automaticamente para manter a sua ligação ao livro. Para recriar a "
+"hierarquia (tal como estava antes de remover esta página), %title "
+"pode ser adicionado novamente utilizando o separador Estrutura, e cada "
+"uma das suas páginas filhas terá que ser recolocada manualmente."
+
+#: modules/book/book.pages.inc:197
+msgid "%title may be added to hierarchy again using the Outline tab."
+msgstr ""
+"%title pode ser adicionado novamente à hierarquia utilizando o "
+"separador Estrutura."
+
+#: modules/book/book.pages.inc:200
+msgid "Are you sure you want to remove %title from the book hierarchy?"
+msgstr "Tem a certeza de que pretende remover %title da hierarquia do livro?"
+
+#: modules/book/book.pages.inc:216
+msgid "The post has been removed from the book."
+msgstr "A entrada foi eliminada do livro."
+
+#: modules/book/book.module:108
+msgid "Show a printer-friendly version of this book page and its sub-pages."
+msgstr "Mostrar uma versão de impressão desta página e suas sub-páginas."
+
+#: modules/book/book.module:303
+msgid "Show block on all pages"
+msgstr "Mostrar o bloco em todas as páginas"
+
+#: modules/book/book.module:304
+msgid "Show block only on book pages"
+msgstr "Mostrar o bloco apenas nas páginas do livro."
+
+#: modules/book/book.module:311
+msgid ""
+"If <em>Show block on all pages</em> is selected, the block will "
+"contain the automatically generated menus for all of the site's books. "
+"If <em>Show block only on book pages</em> is selected, the block will "
+"contain only the one menu corresponding to the current page's book. In "
+"this case, if the current page is not in a book, no block will be "
+"displayed. The <em>Page specific visibility settings</em> or other "
+"visibility settings can be used in addition to selectively display "
+"this block."
+msgstr ""
+"Se <em>Mostrar o bloco em todas as páginas</em> estiver seleccionada, "
+"o bloco irá conter menus gerados automaticamente para todos os livros "
+"do site. Se <em>Mostrar o bloco apenas nas páginas do livro</em> "
+"estiver seleccionada, o bloco irá conter apenas o menu correspondente "
+"ao livro da página actual. Neste caso, se a página actual não "
+"pertencer a um livro, nenhum bloco será mostrado. As "
+"<em>Configurações de visibilidade específicas de páginas</em> ou "
+"outras configurações de visibilidade podem ser utilizadas para além "
+"de escolher se este bloco é mostrado."
+
+#: modules/book/book.module:449
+msgid "This is the top-level page in this book."
+msgstr "Esta é a página pai neste livro."
+
+#: modules/book/book.module:456
+msgid "No book selected."
+msgstr "Nenhum livro seleccionado."
+
+#: modules/book/book.module:463
+msgid ""
+"The parent page in the book. The maximum depth for a book and all "
+"child pages is !maxdepth. Some pages in the selected book may not be "
+"available as parents if selecting them would exceed this limit."
+msgstr ""
+"A página pai no livro. A profundidade máxima para um livro e todas "
+"as páginas filhas é !maxdepth. Algumas páginas no livro "
+"seleccionado podem não estar disponíveis como pais, se ao "
+"seleccioná-las, excede este limite."
+
+#: modules/book/book.module:941
+msgid ""
+"%title is part of a book outline, and has associated child pages. If "
+"you proceed with deletion, the child pages will be relocated "
+"automatically."
+msgstr ""
+"%title pertence à estrutura de um livro, e tem páginas filhas "
+"associadas. Se for eliminada, as páginas filhas serão recolocadas "
+"automaticamente."
+
+#: modules/book/book.module:145
+msgid "Re-order book pages and change titles"
+msgstr "Reordenar as páginas dos livros e modificar os títulos"
+
+#: modules/book/book.install:32
+msgid "Book page"
+msgstr "Página do livro"
+
+#: modules/book/book.admin.inc:22
+msgid "No books available."
+msgstr "Não existem livros disponíveis"
+
+#: modules/book/book.admin.inc:36
+msgid "Content types allowed in book outlines"
+msgstr "Tipos de conteúdo permitidos nas estruturas de livros"
+
+#: modules/book/book.admin.inc:39
+msgid "Users with the %outline-perm permission can add all content types."
+msgstr ""
+"Os utilizadores com a permissão %outline-perm podem adicionar todos "
+"os tipos de conteúdos."
+
+#: modules/book/book.module:16
+msgid ""
+"The Book module is used for creating structured, multi-page content, "
+"such as site resource guides, manuals, and wikis. It allows you to "
+"create content that has chapters, sections, subsections, or any "
+"similarly-tiered structure. For more information, see the online "
+"handbook entry for <a href=\"@book\">Book module</a>."
+msgstr ""
+"O módulo Book é utilizador para criar páginas de conteúdo "
+"estruturadas, como guias de recursos do site, manuais e wikis. Permite "
+"criar conteúdos como capítulos, secções, sub-secções e uma "
+"estrutura organizada de uma forma semelhante. Para informações "
+"adicionais consulte a entrada <a href=\"@blog\">módulo Blog</a> no "
+"manual."
+
+#: modules/book/book.module:19
+msgid "Adding and managing book content"
+msgstr "Adicionando e gerindo conteúdos de livros"
+
+#: modules/book/book.module:20
+msgid ""
+"You can assign separate permissions for <em>creating</em>, "
+"<em>editing</em>, and <em>deleting</em> book content, as well as "
+"<em>adding content to books</em>, and <em>creating new books</em>. "
+"Users with the <em>Administer book outlines</em> permission can add "
+"<em>any</em> type of content to a book by selecting the appropriate "
+"book outline while editing the content. They can also view a list of "
+"all books, and edit and rearrange section titles on the <a "
+"href=\"@admin-book\">Book administration page</a>."
+msgstr ""
+"Pode atribuir permissões diferentes para <em>criar</em>, "
+"<em>editar</em> e <em>apagar</em> conteúdo de livros, bem como para "
+"<em>adicionar conteúdos a livros</em> e <em>criar novos livros</em>. "
+"Os utilizadores com permissão de <em>Administrar estruturas de "
+"livro</em> podem adicionar <em>qualquer</em> tipo de conteúdo a um "
+"livro seleccionando a estrutura de livro apropriado enquanto estiverem "
+"a editar o conteúdo. Podem também ver uma lista de todos os livros e "
+"editar e rearranjar título de secção na <a "
+"href=\"@admin-book\">página de administração do módulo Book</a>."
+
+#: modules/book/book.module:22
+msgid ""
+"Book pages have a default book-specific navigation block. This "
+"navigation block contains links that lead to the previous and next "
+"pages in the book, and to the level above the current page in the "
+"book's structure. This block can be enabled on the <a "
+"href='@admin-block'>Blocks administration page</a>. For book pages to "
+"show up in the book navigation, they must be added to a book outline."
+msgstr ""
+"Páginas de livro têm um bloco de navegação específico para "
+"livros. Este bloco de navegação contém ligações que levam às "
+"paginas de livro anteriores e seguintes e ao nível acima da página "
+"actual na estrutura do livro. Este bloco pode ser activado na  <a "
+"href='@admin-block'>página de administração do módulo Book</a>. "
+"Para que as páginas do livro sejam mostradas na navegação do livro "
+"devem ser adicionadas a uma estrutura de livro."
+
+#: modules/book/book.module:24
+msgid ""
+"Books can be created collaboratively, as they allow users with "
+"appropriate permissions to add pages into existing books, and add "
+"those pages to a custom table of contents menu."
+msgstr ""
+"Os livros podem ser criados de uma forma colaborativa, pois permitem "
+"que os utilizadores com as permissões adequadas possam adicionar "
+"páginas aos livros já existentes e adicionar essas páginas a uma "
+"tabela personalizada do menu de conteúdos."
+
+#: modules/book/book.module:25
+msgid "Printing books"
+msgstr "Imprimindo livros"
+
+#: modules/book/book.module:26
+msgid ""
+"Users with the <em>View printer-friendly books</em> permission can "
+"select the <em>printer-friendly version</em> link visible at the "
+"bottom of a book page's content to generate a printer-friendly display "
+"of the page and all of its subsections."
+msgstr ""
+"Utilizadores com a permissão <em>Visualizar livros de impressão "
+"amigável</em> podem seleccionar a ligação <em>versão de impressão "
+"amigável</em> disponível no rodapé da página do livro para gerar "
+"uma página de impressão amigável com todas as suas sub-secções."
+
+#: modules/book/book.module:30
+msgid ""
+"The book module offers a means to organize a collection of related "
+"content pages, collectively known as a book. When viewed, this content "
+"automatically displays links to adjacent book pages, providing a "
+"simple navigation system for creating and reviewing structured "
+"content."
+msgstr ""
+"O módulo Book oferece uma forma de organizar uma colecção de "
+"páginas de conteúdo relacionadas, colectivamente conhecidas como um "
+"livro. Quando visualizado, este conteúdo pode automaticamente mostrar "
+"ligações para as páginas de livro adjacentes, oferecendo um sistema "
+"de navegação simples para criar e rever conteúdos estruturados."
+
+#: modules/book/book.module:32
+msgid ""
+"The outline feature allows you to include pages in the <a "
+"href=\"@book\">Book hierarchy</a>, as well as move them within the "
+"hierarchy or to <a href=\"@book-admin\">reorder an entire book</a>."
+msgstr ""
+
+#: modules/book/book.module:75
+msgid "Create new books"
+msgstr "Criar novos livros"
+
+#: modules/book/book.module:78
+msgid "Add content and child pages to books"
+msgstr ""
+
+#: modules/book/book.module:81
+msgid "View printer-friendly books"
+msgstr "Exibe livros amigáveis para impressão"
+
+#: modules/book/book.module:82
+msgid ""
+"View a book page and all of its sub-pages as a single document for "
+"ease of printing. Can be performance heavy."
+msgstr ""
+"Visualiza uma página do livro e todas as suas sub-páginas como um "
+"documento único para facilitar a impressão. Pode ter um impacto "
+"forte na performance do site."
+
+#: modules/book/book.install:34
+msgid ""
+"<em>Books</em> have a built-in hierarchical navigation. Use for "
+"handbooks or tutorials."
+msgstr ""
+"<em>Livros</em> têm uma navegação hierárquica incorporada. Útil "
+"para manuais."
+

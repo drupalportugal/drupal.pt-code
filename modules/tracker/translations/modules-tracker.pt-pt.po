@@ -1,0 +1,81 @@
+# Portuguese, Portugal translation of Drupal core (7.0-beta2)
+# Copyright (c) 2010 by the Portuguese, Portugal translation team
+# Generated from files:
+#  tracker.pages.inc,v 1.32 2010/07/30 02:47:28 dries
+#  tracker.module,v 1.171 2009/12/04 16:49:47 dries
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Drupal core (7.0-beta2)\n"
+"POT-Creation-Date: 2010-10-25 05:28+0000\n"
+"PO-Revision-Date: 2010-01-27 21:10+0000\n"
+"Language-Team: Portuguese, Portugal\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n!=1);\n"
+
+#: modules/tracker/tracker.pages.inc:112
+msgid "Last updated"
+msgstr "Última actualização"
+
+#: modules/tracker/tracker.pages.inc:67
+msgid "!time ago"
+msgstr "!time atrás"
+
+#: modules/tracker/tracker.module:142
+msgid "Indexed %count nodes for tracking."
+msgstr ""
+
+#: modules/tracker/tracker.module:16
+msgid ""
+"The Tracker module displays the most recently added and updated "
+"content on your site, and allows you to follow new content created by "
+"each user. This module has no configuration options. For more "
+"information, see the online handbook entry for <a "
+"href=\"@tracker\">Tracker module</a>."
+msgstr ""
+
+#: modules/tracker/tracker.module:20
+msgid ""
+"The Tracker module adds a new menu item to the Navigation menu, called "
+"<em>Recent content</em>. You can configure menu items via the <a "
+"href=\"@menus\">Menus administration page</a>."
+msgstr ""
+
+#: modules/tracker/tracker.module:21
+msgid "Tracking new and updated site content"
+msgstr ""
+
+#: modules/tracker/tracker.module:22
+msgid ""
+"The <a href='@recent'>Recent content</a> page shows new and updated "
+"content in reverse chronological order, listing the content type, "
+"title, author's name, number of comments, and time of last update. "
+"Content is considered updated when changes occur in the text, or when "
+"new comments are added. The <em>My recent content</em> tab limits the "
+"list to the currently logged-in user."
+msgstr ""
+
+#: modules/tracker/tracker.module:23
+msgid "Tracking user-specific content"
+msgstr ""
+
+#: modules/tracker/tracker.module:24
+msgid ""
+"To follow a specific user's new and updated content, select the "
+"<em>Track</em> tab from the user's profile page."
+msgstr ""
+
+#: modules/tracker/tracker.module:42
+msgid "All recent content"
+msgstr "Todo o conteúdo recente"
+
+#: modules/tracker/tracker.module:46
+msgid "My recent content"
+msgstr "O meu conteúdo recente"
+
+#: modules/tracker/tracker.module:65
+msgid "Track content"
+msgstr ""
+

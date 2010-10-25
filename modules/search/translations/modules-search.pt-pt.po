@@ -1,0 +1,387 @@
+# Portuguese, Portugal translation of Drupal core (7.0-beta2)
+# Copyright (c) 2010 by the Portuguese, Portugal translation team
+# Generated from files:
+#  search.admin.inc,v 1.19 2010/10/20 01:31:07 dries
+#  search.module,v 1.365 2010/10/20 01:31:07 dries
+#  search.pages.inc,v 1.23 2010/08/18 18:40:50 dries
+#  search-results.tpl.php,v 1.7 2010/08/18 18:40:50 dries
+#  search.extender.inc,v 1.8 2010/09/24 21:24:14 webchick
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Drupal core (7.0-beta2)\n"
+"POT-Creation-Date: 2010-10-25 05:28+0000\n"
+"PO-Revision-Date: 2010-10-09 20:37+0000\n"
+"Language-Team: Portuguese, Portugal\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n!=1);\n"
+
+#: modules/search/search.admin.inc:152,173
+msgid "Reset to defaults"
+msgstr "Restaurar os valores predefinidos"
+
+#: modules/search/search.module:180
+msgid "Clear index"
+msgstr "Limpar índice"
+
+#: modules/search/search.pages.inc:63
+msgid "results"
+msgstr "resultados"
+
+#: modules/search/search.pages.inc:63
+msgid "search"
+msgstr "procurar"
+
+#: modules/search/search.module:171
+msgid "Search settings"
+msgstr "Definições de procura"
+
+#: modules/search/search-results.tpl.php:26
+msgid "Search results"
+msgstr "Resultados da procura"
+
+#: modules/search/search-results.tpl.php:32
+msgid "Your search yielded no results"
+msgstr "A procura não gerou resultados"
+
+#: modules/search/search.pages.inc:148
+msgid "Please enter some keywords."
+msgstr "Por favor introduza algumas palavras chave."
+
+#: modules/search/search.module:1002
+msgid "Enter the terms you wish to search for."
+msgstr "Introduza os termos pelos quais pretende pesquisar."
+
+#: modules/search/search.module:963
+msgid "Enter your keywords"
+msgstr "Introduza as suas palavras chave"
+
+#: modules/search/search.admin.inc:72
+msgid "%percentage of the site has been indexed."
+msgstr "%percentage do site que foi indexado."
+
+#: modules/search/search.admin.inc:70
+msgid "There is 1 item left to index."
+msgid_plural "There are @count items left to index."
+msgstr[0] "Existe 1 item por indexar."
+msgstr[1] "Existem @count itens por indexar."
+
+#: modules/search/search.admin.inc:14,75
+msgid "Re-index site"
+msgstr "Re-indexar o site"
+
+#: modules/search/search.admin.inc:13
+msgid "Are you sure you want to re-index the site?"
+msgstr "Tem a certeza de que pretende re-indexar o site?"
+
+#: modules/search/search.extender.inc:278
+msgid ""
+"Search for either of the two terms with uppercase <strong>OR</strong>. "
+"For example, <strong>cats OR dogs</strong>."
+msgstr ""
+"Procure qualquer uma das duas condições com maiúscula <strong>OU "
+"</strong>. Por exemplo, <strong>gatos OU cachorros</strong>."
+
+#: modules/search/search.admin.inc:14
+msgid ""
+" The search index is not cleared but systematically updated to reflect "
+"the new settings. Searching will continue to work but new content "
+"won't be indexed until all existing content has been re-indexed. This "
+"action cannot be undone."
+msgstr ""
+" Alterar as opções abaixo irá fazer com que o índice do seu site "
+"seja refeito. O índice de pesquisa não é esvaziado mas "
+"sistematicamente actualizado para reflectir os novos parâmetros. A "
+"pesquisa continuará funcionando mas novos conteúdos não serão "
+"indexados até que o conteúdo existente seja re-indexado. As opções "
+"predefinidas são apropriadas para a maioria dos sites. Esta acção "
+"não podem ser desfeita."
+
+#: modules/search/search.admin.inc:23,168
+msgid "The index will be rebuilt."
+msgstr "O índice será reconstruído."
+
+#: modules/search/search.admin.inc:73
+msgid "Indexing status"
+msgstr "Estado da indexação"
+
+#: modules/search/search.admin.inc:82
+msgid "Indexing throttle"
+msgstr "Acelerador de indexação"
+
+#: modules/search/search.admin.inc:86
+msgid "Number of items to index per cron run"
+msgstr "Número de itens a indexar por cada execução do cron"
+
+#: modules/search/search.admin.inc:89
+msgid ""
+"The maximum number of items indexed in each pass of a <a "
+"href=\"@cron\">cron maintenance task</a>. If necessary, reduce the "
+"number of items to prevent timeouts and memory errors while indexing."
+msgstr ""
+"O número de máximo de artigos indexados em cada passagem numa <a "
+"href=\"@cron\">tarefa de manutenção de cron</a>. Se necessário, "
+"reduza o número de artigos para prevenir intervalos e erros de "
+"memória enquanto indexando."
+
+#: modules/search/search.admin.inc:94
+msgid "Indexing settings"
+msgstr "Opções de indexação"
+
+#: modules/search/search.admin.inc:97
+msgid ""
+"<p><em>Changing the settings below will cause the site index to be "
+"rebuilt. The search index is not cleared but systematically updated to "
+"reflect the new settings. Searching will continue to work but new "
+"content won't be indexed until all existing content has been "
+"re-indexed.</em></p><p><em>The default settings should be appropriate "
+"for the majority of sites.</em></p>"
+msgstr ""
+"<p><em>A alteração das definições abaixo provocará a "
+"reconstrução do índice do site. O índice de pesquisa não será "
+"limpo mas actualizado sistematicamente de forma a reflectir as novas "
+"definições. As pesquisas continuarão a funcionar mas os novos "
+"conteúdos não serão indexados até que o conteúdo pré-existente "
+"tenha sido re-indexado.</em></p><p><em>As definições predefinidas "
+"deverão ser adequadas para a maioria dos sites.</em></p>"
+
+#: modules/search/search.admin.inc:101
+msgid "Minimum word length to index"
+msgstr "Tamanho mínimo das palavras que serão indexadas"
+
+#: modules/search/search.admin.inc:105
+msgid ""
+"The number of characters a word has to be to be indexed. A lower "
+"setting means better search result ranking, but also a larger "
+"database. Each search query must contain at least one keyword that is "
+"this size (or longer)."
+msgstr ""
+"O número de caracteres que uma palavra tem de ter para ser indexada. "
+"Um número menor significa um posicionamento melhor do resultado da "
+"pesquisa, mas também uma base de dados maior. Cada pesquisa deve "
+"conter pelo menos uma palavra com este número de caracteres (ou "
+"mais)."
+
+#: modules/search/search.admin.inc:109
+msgid "Simple CJK handling"
+msgstr "Manuseamento simples de CJK"
+
+#: modules/search/search.admin.inc:111
+msgid ""
+"Whether to apply a simple Chinese/Japanese/Korean tokenizer based on "
+"overlapping sequences. Turn this off if you want to use an external "
+"preprocessor for this instead. Does not affect other languages."
+msgstr ""
+"Se deseja aplicar um <em>tokenizer</em> Chinês/Japonês/Koreano "
+"simples baseado na sobreposição de sequências. Desligue esta "
+"opção se desejar utilizar um pré-processador externo. Não afecta "
+"outras línguas."
+
+#: modules/search/search.module:90
+msgid ""
+"The search engine maintains an index of words found in your site's "
+"content. To build and maintain this index, a correctly configured <a "
+"href=\"@cron\">cron maintenance task</a> is required. Indexing "
+"behavior can be adjusted using the settings below."
+msgstr ""
+"O motor de procura mantém um índice de palavras do conteúdo do seu "
+"site. Construir e manter este índice, requer uma corretamente "
+"configuração de uma<a href=\"@cron\"> tarefa de manutenção de cron "
+"</a>. O índex pode ser ajustado na opção abaixo."
+
+#: modules/search/search.module:83
+msgid "Search block"
+msgstr ""
+
+#: modules/search/search.admin.inc:116
+msgid "Active search modules "
+msgstr ""
+
+#: modules/search/search.admin.inc:180
+msgid "The active search modules have been changed."
+msgstr ""
+
+#: modules/search/search.extender.inc:319
+msgid ""
+"You must include at least one positive keyword with 1 character or "
+"more."
+msgid_plural ""
+"You must include at least one positive keyword with @count characters "
+"or more."
+msgstr[0] ""
+msgstr[1] ""
+
+#: modules/search/search.pages.inc:63
+msgid "Searched %type for %keys."
+msgstr ""
+
+#: modules/search/search.module:72
+msgid ""
+"The Search module provides the ability to index and search for content "
+"by exact keywords, and for users by username or e-mail. For more "
+"information, see the online handbook entry for <a "
+"href=\"@search-module\">Search module</a>."
+msgstr ""
+
+#: modules/search/search.module:75
+msgid "Searching content and users"
+msgstr ""
+
+#: modules/search/search.module:76
+msgid ""
+"Users with <em>Use search</em> permission can use the search block and "
+"<a href=\"@search\">Search page</a>. Users with the <em>View published "
+"content</em> permission can search for content containing exact "
+"keywords. Users with the <em>View user profiles</em> permission can "
+"search for users containing the keyword anywhere in the user name, and "
+"users with the <em>Administer users</em> permission can search for "
+"users by email address. Additionally, users with <em>Use advanced "
+"search</em> permission can find content using more complex search "
+"methods and filtering by choosing the <em>Advanced search</em> option "
+"on the <a href=\"@search\">Search page</a>."
+msgstr ""
+
+#: modules/search/search.module:77
+msgid "Indexing content with cron"
+msgstr ""
+
+#: modules/search/search.module:81
+msgid "Configuring search settings"
+msgstr ""
+
+#: modules/search/search.module:82
+msgid ""
+"Indexing behavior can be adjusted using the <a "
+"href=\"@searchsettings\">Search settings page</a>. Users with "
+"<em>Administer search</em> permission can control settings such as the "
+"<em>Number of items to index per cron run</em>, <em>Indexing "
+"settings</em> (word length), <em>Active search modules</em>, and "
+"<em>Content ranking</em>, which lets you adjust the priority in which "
+"indexed content is returned in results."
+msgstr ""
+
+#: modules/search/search.module:84
+msgid ""
+"The Search module includes a default <em>Search form</em> block, which "
+"can be enabled and configured on the <a href=\"@blocks\">Blocks "
+"administration page</a>. The block is available to users with the "
+"<em>Search content</em> permission."
+msgstr ""
+
+#: modules/search/search.module:85
+msgid "Extending Search module"
+msgstr ""
+
+#: modules/search/search.module:86
+msgid ""
+"By default, the Search module only supports exact keyword matching in "
+"content searches. You can modify this behavior by installing a "
+"language-specific stemming module for your language (such as <a "
+"href=\"http://drupal.org/project/porterstemmer\">Porter Stemmer</a> "
+"for American English), which allows words such as walk, walking, and "
+"walked to be matched in the Search module. Another approach is to use "
+"a third-party search technology with stemming or partial word matching "
+"features built in, such as <a "
+"href=\"http://drupal.org/project/apachesolr\">Apache Solr</a> or <a "
+"href=\"http://drupal.org/project/sphinx\">Sphinx</a>. These and other "
+"<a href=\"@contrib-search\">search-related contributed modules</a> can "
+"be downloaded by visiting Drupal.org."
+msgstr ""
+
+#: modules/search/search.module:92
+msgid ""
+"<ul>\n"
+"<li>Check if your spelling is correct.</li>\n"
+"<li>Remove quotes around phrases to search for each word individually. "
+"<em>bike shed</em> will often show more results than <em>&quot;bike "
+"shed&quot;</em>.</li>\n"
+"<li>Consider loosening your query with <em>OR</em>. <em>bike OR "
+"shed</em> will often show more results than <em>bike shed</em>.</li>\n"
+"</ul>"
+msgstr ""
+
+#: modules/search/search.module:128
+msgid "Administer search"
+msgstr "Administrar pesquisa"
+
+#: modules/search/search.module:131
+msgid "Use search"
+msgstr "Usar pesquisa"
+
+#: modules/search/search.module:134
+msgid "Use advanced search"
+msgstr "Usar pesquisa avançada"
+
+#: modules/search/search.module:172
+msgid "Configure relevance settings for search and other indexing options."
+msgstr ""
+
+#: modules/search/search.module:78
+msgid ""
+"To provide keyword searching, the search engine maintains an index of "
+"words found in the content and its fields, along with text added to "
+"your content by other modules (such as comments from the core Comment "
+"module, and taxonomy terms from the core Taxonomy module). To build "
+"and maintain this index, a correctly configured <a href=\"@cron\">cron "
+"maintenance task</a> is required. Users with <em>Administer "
+"search</em> permission can further configure the cron settings on the "
+"<a href=\"@searchsettings\">Search settings page</a>."
+msgstr ""
+
+#: modules/search/search.module:79
+msgid "Content reindexing"
+msgstr ""
+
+#: modules/search/search.module:80
+msgid ""
+"Content-related actions on your site (creating, editing, or deleting "
+"content and comments) automatically cause affected content items to be "
+"marked for indexing or reindexing at the next cron run. When content "
+"is marked for reindexing, the previous content remains in the index "
+"until cron runs, at which time it is replaced by the new content. "
+"Unlike content-related actions, actions related to the structure of "
+"your site do not cause affected content to be marked for reindexing. "
+"Examples of structure-related actions that affect content include "
+"deleting or editing taxonomy terms, enabling or disabling modules that "
+"add text to content (such as Taxonomy, Comment, and field-providing "
+"modules), and modifying the fields or display parameters of your "
+"content types. If you take one of these actions and you want to ensure "
+"that the search index is updated to reflect your changed site "
+"structure, you can mark all content for reindexing by clicking the "
+"\"Re-index site\" button on the <a href=\"@searchsettings\">Search "
+"settings page</a>. If you have a lot of content on your site, it may "
+"take several cron runs for the content to be reindexed."
+msgstr ""
+
+#: modules/search/search.admin.inc:124
+msgid "Choose which search modules are active from the available modules."
+msgstr ""
+
+#: modules/search/search.admin.inc:127
+msgid "Default search module"
+msgstr "Módulo de procura por defeito"
+
+#: modules/search/search.admin.inc:131
+msgid "Choose which search module is the default."
+msgstr "Escolha qual o módulo de procura por defeito."
+
+#: modules/search/search.admin.inc:156
+msgid "Your default search module is not selected as an active module."
+msgstr ""
+"O seu módulo de procura definido não está seleccionado como módulo "
+"activo."
+
+#: modules/search/search.module:955,1029
+msgid "Search is currently disabled."
+msgstr "Procura está presentemente desactivada."
+
+#: modules/search/search.module:1205
+msgid "... !excerpt ... !excerpt ..."
+msgstr ""
+
+#: modules/search/search.admin.inc:120
+msgid "Active modules"
+msgstr ""
+

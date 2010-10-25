@@ -1,0 +1,63 @@
+# Portuguese, Portugal translation of Drupal core (7.0-beta2)
+# Copyright (c) 2010 by the Portuguese, Portugal translation team
+# Generated from file: contextual.module,v 1.8 2010/09/11 14:35:13 dries
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Drupal core (7.0-beta2)\n"
+"POT-Creation-Date: 2010-10-25 05:28+0000\n"
+"PO-Revision-Date: 2010-02-01 08:44+0000\n"
+"Language-Team: Portuguese, Portugal\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n!=1);\n"
+
+#: modules/contextual/contextual.module:17
+msgid ""
+"The Contextual links module displays links related to regions of pages "
+"on your site to users with <em>access contextual links</em> "
+"permission. For more information, see the online handbook entry for <a "
+"href=\"@contextual\">Contextual links module</a>."
+msgstr ""
+"O módulo Contextual Links mostra ligações relacionadas com regiões "
+"de páginas do seu site aos utilizadores com a permissão para "
+"<em>aceder a ligações contextuais</em>. Para informações "
+"adicionais consulte a entrada <a href=\"@contextual\">módulo "
+"Contextual Links</a> no manual."
+
+#: modules/contextual/contextual.module:20
+msgid "Displaying contextual links"
+msgstr "Mostrar ligações contextuais"
+
+#: modules/contextual/contextual.module:21
+msgid ""
+"Contextual links are supplied by modules, to give you quick access to "
+"tasks associated with regions of pages on your site. For instance, if "
+"you have a custom menu block displayed in a sidebar of your site, the "
+"Blocks and Menus modules will supply links to configure the block and "
+"edit the menu. The Contextual links module collects these links into a "
+"list for display by your theme, and also adds JavaScript code to the "
+"page to hide the links initially, and display them when your mouse "
+"hovers over the block."
+msgstr ""
+"As ligações contextuais são fornecidas por módulos, para lhe dar "
+"acesso rápido a tarefas associadas com regiões das páginas do seu "
+"site. Por exemplo, se tiver um bloco de menu personalizado na barra "
+"lateral do seu site, os módulos Blocks e Menus irão fornecer-lhe "
+"ligações para configurar o bloco e editar o menu. O módulo "
+"Contextual Links recolhe estas ligações numa lista para "
+"apresentação pelo seu tema, adiciona código JavaScript à página "
+"para esconder as ligações inicialmente e mostra-as quando o seu rato "
+"passa por cima do bloco."
+
+#: modules/contextual/contextual.module:33
+msgid "Use contextual links"
+msgstr "Usar ligações contextuais"
+
+#: modules/contextual/contextual.module:34
+msgid "Use contextual links to perform actions related to elements on a page."
+msgstr ""
+"Usar ligações contextuais para executar acções relacionadas com os "
+"elementos numa página."
+

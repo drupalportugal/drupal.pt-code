@@ -1,0 +1,2936 @@
+# Portuguese, Portugal translation of Drupal core (7.0-beta2)
+# Copyright (c) 2010 by the Portuguese, Portugal translation team
+# Generated from files:
+#  theme.inc,v 1.620 2010/10/21 19:31:39 dries
+#  common.inc,v 1.1244 2010/10/21 19:31:39 dries
+#  form.inc,v 1.506 2010/10/21 20:46:58 webchick
+#  iso.inc,v 1.12 2010/10/09 18:20:43 webchick
+#  locale.inc,v 1.260 2010/10/06 13:38:39 dries
+#  pager.inc,v 1.85 2010/10/08 05:07:53 webchick
+#  theme.maintenance.inc,v 1.67 2010/09/19 18:10:41 dries
+#  actions.inc,v 1.39 2010/08/22 11:04:09 dries
+#  file.inc,v 1.239 2010/10/21 12:09:41 dries
+#  unicode.inc,v 1.47 2010/08/11 10:58:22 dries
+#  ajax.inc,v 1.37 2010/10/21 19:31:39 dries
+#  tablesort.inc,v 1.59 2010/10/15 04:34:15 webchick
+#  image.inc,v 1.40 2010/07/16 02:39:38 dries
+#  install.inc,v 1.142 2010/08/22 15:31:18 dries
+#  errors.inc,v 1.9 2010/10/16 00:00:16 webchick
+#  batch.inc,v 1.53 2010/10/04 07:34:26 webchick
+#  mail.inc,v 1.34 2010/07/28 02:19:56 dries
+#  xmlrpc.inc,v 1.69 2010/08/14 03:15:01 dries
+#  xmlrpcs.inc,v 1.42 2010/10/02 01:22:41 dries
+#  authorize.inc,v 1.11 2010/05/14 04:50:18 webchick
+#  language.inc,v 1.30 2010/05/12 08:26:14 dries
+#  menu.inc,v 1.416 2010/10/21 11:56:17 dries
+#  module.inc,v 1.202 2010/10/03 02:04:55 dries
+#  updater.inc,v 1.7 2010/09/01 20:08:17 dries
+#  entity.inc,v 1.16 2010/10/09 02:36:46 webchick
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Drupal core (7.0-beta2)\n"
+"POT-Creation-Date: 2010-10-25 05:28+0000\n"
+"PO-Revision-Date: 2010-10-23 10:21+0000\n"
+"Language-Team: Portuguese, Portugal\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n!=1);\n"
+
+#: includes/theme.inc:2520
+msgid "not verified"
+msgstr "não verificado"
+
+#: includes/theme.inc:1780
+msgid "updated"
+msgstr "actualizado"
+
+#: includes/theme.inc:779
+msgid "theme"
+msgstr "tema"
+
+#: includes/common.inc:2480
+msgid "Access denied"
+msgstr "Acesso negado"
+
+#: includes/form.inc:2706
+msgid "Year"
+msgstr "Ano"
+
+#: includes/common.inc:0
+msgid "1 hour"
+msgid_plural "@count hours"
+msgstr[0] "1 hora"
+msgstr[1] "@count horas"
+
+#: includes/common.inc:0
+msgid "1 day"
+msgid_plural "@count days"
+msgstr[0] "1 dia"
+msgstr[1] "@count dias"
+
+#: includes/form.inc:3726
+msgid "This field is required."
+msgstr "Este campo é obrigatório."
+
+#: includes/form.inc:2701
+msgid "Month"
+msgstr "Mês"
+
+#: includes/iso.inc:90
+msgid "Egypt"
+msgstr "Egipto"
+
+#: includes/iso.inc:185
+msgid "Namibia"
+msgstr "Namíbia"
+
+#: includes/iso.inc:128
+msgid "Israel"
+msgstr "Israel"
+
+#: includes/iso.inc:133
+msgid "Iran"
+msgstr "Irão"
+
+#: includes/iso.inc:196
+msgid "New Zealand"
+msgstr "Nova Zelândia"
+
+#: includes/iso.inc:247,458
+msgid "Tonga"
+msgstr "Tonga"
+
+#: includes/iso.inc:77
+msgid "Cuba"
+msgstr "Cuba"
+
+#: includes/iso.inc:57
+msgid "Brazil"
+msgstr "Brasil"
+
+#: includes/iso.inc:72
+msgid "Chile"
+msgstr "Chile"
+
+#: includes/iso.inc:211
+msgid "Paraguay"
+msgstr "Paraguai"
+
+#: includes/iso.inc:137
+msgid "Jamaica"
+msgstr "Jamaica"
+
+#: includes/iso.inc:139
+msgid "Japan"
+msgstr "Japão"
+
+#: includes/iso.inc:161
+msgid "Libya"
+msgstr "Líbia"
+
+#: includes/iso.inc:411
+msgid "Navajo"
+msgstr "Navajo"
+
+#: includes/iso.inc:204
+msgid "Poland"
+msgstr "Polónia"
+
+#: includes/iso.inc:209
+msgid "Portugal"
+msgstr "Portugal"
+
+#: includes/iso.inc:223
+msgid "Singapore"
+msgstr "Singapura"
+
+#: includes/iso.inc:248
+msgid "Turkey"
+msgstr "Turquia"
+
+#: includes/form.inc:2696
+msgid "Day"
+msgstr "Dia"
+
+#: includes/locale.inc:1587
+msgid "String"
+msgstr "Expressão"
+
+#: includes/iso.inc:82
+msgid "Germany"
+msgstr "Alemanha"
+
+#: includes/iso.inc:29
+msgid "Afghanistan"
+msgstr "Afeganistão"
+
+#: includes/iso.inc:32
+msgid "Albania"
+msgstr "Albânia"
+
+#: includes/iso.inc:87
+msgid "Algeria"
+msgstr "Argélia"
+
+#: includes/iso.inc:38
+msgid "American Samoa"
+msgstr "Samoa Americana"
+
+#: includes/iso.inc:27
+msgid "Andorra"
+msgstr "Andorra"
+
+#: includes/iso.inc:35
+msgid "Angola"
+msgstr "Angola"
+
+#: includes/iso.inc:31
+msgid "Anguilla"
+msgstr "Anguila"
+
+#: includes/iso.inc:36
+msgid "Antarctica"
+msgstr "Antárctida"
+
+#: includes/iso.inc:30
+msgid "Antigua and Barbuda"
+msgstr "Antígua e Barbuda"
+
+#: includes/iso.inc:37
+msgid "Argentina"
+msgstr "Argentina"
+
+#: includes/iso.inc:33
+msgid "Armenia"
+msgstr "Arménia"
+
+#: includes/iso.inc:41
+msgid "Aruba"
+msgstr "Aruba"
+
+#: includes/iso.inc:40
+msgid "Australia"
+msgstr "Austrália"
+
+#: includes/iso.inc:39
+msgid "Austria"
+msgstr "Áustria"
+
+#: includes/iso.inc:43
+msgid "Azerbaijan"
+msgstr "Azerbeijão"
+
+#: includes/iso.inc:58
+msgid "Bahamas"
+msgstr "Baamas"
+
+#: includes/iso.inc:50
+msgid "Bahrain"
+msgstr "Barém"
+
+#: includes/iso.inc:46
+msgid "Bangladesh"
+msgstr "Bangladesh"
+
+#: includes/iso.inc:45
+msgid "Barbados"
+msgstr "Barbados"
+
+#: includes/iso.inc:62
+msgid "Belarus"
+msgstr "Bielorrússia"
+
+#: includes/iso.inc:47
+msgid "Belgium"
+msgstr "Bélgica"
+
+#: includes/iso.inc:63
+msgid "Belize"
+msgstr "Belize"
+
+#: includes/iso.inc:52
+msgid "Benin"
+msgstr "Benim"
+
+#: includes/iso.inc:54
+msgid "Bermuda"
+msgstr "Bermudas"
+
+#: includes/iso.inc:59
+msgid "Bhutan"
+msgstr "Baamas"
+
+#: includes/iso.inc:56
+msgid "Bolivia"
+msgstr "Bolívia"
+
+#: includes/iso.inc:44
+msgid "Bosnia and Herzegovina"
+msgstr "Bósnia e Herzegovina"
+
+#: includes/iso.inc:61
+msgid "Botswana"
+msgstr "Botsuana"
+
+#: includes/iso.inc:60
+msgid "Bouvet Island"
+msgstr "ilha Bouvet"
+
+#: includes/iso.inc:55
+msgid "Brunei"
+msgstr "Brunei"
+
+#: includes/iso.inc:49
+msgid "Bulgaria"
+msgstr "Bulgária"
+
+#: includes/iso.inc:48
+msgid "Burkina Faso"
+msgstr "Burquina Faso"
+
+#: includes/iso.inc:51
+msgid "Burundi"
+msgstr "Burundi"
+
+#: includes/iso.inc:142
+msgid "Cambodia"
+msgstr "Camboja"
+
+#: includes/iso.inc:73
+msgid "Cameroon"
+msgstr "Camarões"
+
+#: includes/iso.inc:64
+msgid "Canada"
+msgstr "Canadá"
+
+#: includes/iso.inc:78
+msgid "Cape Verde"
+msgstr "Cabo Verde"
+
+#: includes/iso.inc:149
+msgid "Cayman Islands"
+msgstr "Ilhas Caimão"
+
+#: includes/iso.inc:67
+msgid "Central African Republic"
+msgstr "República Centro-Africana"
+
+#: includes/iso.inc:238
+msgid "Chad"
+msgstr "Chade"
+
+#: includes/iso.inc:74
+msgid "China"
+msgstr "China"
+
+#: includes/iso.inc:79
+msgid "Christmas Island"
+msgstr "Ilha Christmas"
+
+#: includes/iso.inc:65
+msgid "Cocos (Keeling) Islands"
+msgstr "Ilhas Cocos"
+
+#: includes/iso.inc:75
+msgid "Colombia"
+msgstr "Colômbia"
+
+#: includes/iso.inc:144
+msgid "Comoros"
+msgstr "Comores"
+
+#: includes/iso.inc:71
+msgid "Cook Islands"
+msgstr "Ilhas Cook"
+
+#: includes/iso.inc:76
+msgid "Costa Rica"
+msgstr "Costa Rica"
+
+#: includes/iso.inc:80
+msgid "Cyprus"
+msgstr "Chipre"
+
+#: includes/iso.inc:81
+msgid "Czech Republic"
+msgstr "República Checa"
+
+#: includes/iso.inc:84
+msgid "Denmark"
+msgstr "Dinamarca"
+
+#: includes/iso.inc:83
+msgid "Djibouti"
+msgstr "jibuti"
+
+#: includes/iso.inc:85
+msgid "Dominica"
+msgstr "Domínica"
+
+#: includes/iso.inc:86
+msgid "Dominican Republic"
+msgstr "República Dominicana"
+
+#: includes/iso.inc:244
+msgid "East Timor"
+msgstr "Timor-Leste"
+
+#: includes/iso.inc:88
+msgid "Ecuador"
+msgstr "Equador"
+
+#: includes/iso.inc:234
+msgid "El Salvador"
+msgstr "El Salvador"
+
+#: includes/iso.inc:113
+msgid "Equatorial Guinea"
+msgstr "Guiné Equatorial"
+
+#: includes/iso.inc:92
+msgid "Eritrea"
+msgstr "Eritreia"
+
+#: includes/iso.inc:89
+msgid "Estonia"
+msgstr "Estónia"
+
+#: includes/iso.inc:94
+msgid "Ethiopia"
+msgstr "Etiópia"
+
+#: includes/iso.inc:99
+msgid "Faroe Islands"
+msgstr "Ilhas Feroe"
+
+#: includes/iso.inc:95
+msgid "Finland"
+msgstr "Finlândia"
+
+#: includes/iso.inc:100
+msgid "France"
+msgstr "França"
+
+#: includes/iso.inc:105
+msgid "French Guiana"
+msgstr "Guiana Francesa"
+
+#: includes/iso.inc:200
+msgid "French Polynesia"
+msgstr "Polinésia Francesa"
+
+#: includes/iso.inc:101
+msgid "Gabon"
+msgstr "Gabão"
+
+#: includes/iso.inc:110
+msgid "Gambia"
+msgstr "Gâmbia"
+
+#: includes/iso.inc:104
+msgid "Georgia"
+msgstr "Georgia"
+
+#: includes/iso.inc:107
+msgid "Ghana"
+msgstr "Gana"
+
+#: includes/iso.inc:108
+msgid "Gibraltar"
+msgstr "Gibraltar"
+
+#: includes/iso.inc:114
+msgid "Greece"
+msgstr "Grécia"
+
+#: includes/iso.inc:109
+msgid "Greenland"
+msgstr "Gronelândia"
+
+#: includes/iso.inc:103
+msgid "Grenada"
+msgstr "Granada"
+
+#: includes/iso.inc:112
+msgid "Guadeloupe"
+msgstr "Guadalupe"
+
+#: includes/iso.inc:117
+msgid "Guam"
+msgstr "Guame"
+
+#: includes/iso.inc:116
+msgid "Guatemala"
+msgstr "Guatemala"
+
+#: includes/iso.inc:111
+msgid "Guinea"
+msgstr "Guiné"
+
+#: includes/iso.inc:118
+msgid "Guinea-Bissau"
+msgstr "Guiné-Bissau"
+
+#: includes/iso.inc:119
+msgid "Guyana"
+msgstr "Guiana"
+
+#: includes/iso.inc:124
+msgid "Haiti"
+msgstr "Haiti"
+
+#: includes/iso.inc:121
+msgid "Heard Island and McDonald Islands"
+msgstr "Ilha Heard e as Ilhas McDonald"
+
+#: includes/iso.inc:122
+msgid "Honduras"
+msgstr "Honduras"
+
+#: includes/iso.inc:125
+msgid "Hungary"
+msgstr "Hungria"
+
+#: includes/iso.inc:134
+msgid "Iceland"
+msgstr "Islândia"
+
+#: includes/iso.inc:130
+msgid "India"
+msgstr "Índia"
+
+#: includes/iso.inc:126
+msgid "Indonesia"
+msgstr "Indonésia"
+
+#: includes/iso.inc:132
+msgid "Iraq"
+msgstr "Iraque"
+
+#: includes/iso.inc:127
+msgid "Ireland"
+msgstr "Irlanda"
+
+#: includes/iso.inc:135
+msgid "Italy"
+msgstr "Itália"
+
+#: includes/iso.inc:138
+msgid "Jordan"
+msgstr "Jordânia"
+
+#: includes/iso.inc:150
+msgid "Kazakhstan"
+msgstr "Cazaquistão"
+
+#: includes/iso.inc:140
+msgid "Kenya"
+msgstr "Quénia"
+
+#: includes/iso.inc:143
+msgid "Kiribati"
+msgstr "Quiribati"
+
+#: includes/iso.inc:148
+msgid "Kuwait"
+msgstr "Koweit"
+
+#: includes/iso.inc:141
+msgid "Kyrgyzstan"
+msgstr "Quirguizistão"
+
+#: includes/iso.inc:151
+msgid "Laos"
+msgstr "Laos"
+
+#: includes/iso.inc:160
+msgid "Latvia"
+msgstr "Letónia"
+
+#: includes/iso.inc:152
+msgid "Lebanon"
+msgstr "Listenstaine"
+
+#: includes/iso.inc:157
+msgid "Lesotho"
+msgstr "Lesoto"
+
+#: includes/iso.inc:156
+msgid "Liberia"
+msgstr "Libéria"
+
+#: includes/iso.inc:154
+msgid "Liechtenstein"
+msgstr "Listenstaine"
+
+#: includes/iso.inc:158
+msgid "Lithuania"
+msgstr "Lituânia"
+
+#: includes/iso.inc:159
+msgid "Luxembourg"
+msgstr "Luxemburgo"
+
+#: includes/iso.inc:167
+msgid "Madagascar"
+msgstr "Madagáscar"
+
+#: includes/iso.inc:181
+msgid "Malawi"
+msgstr "Malávi"
+
+#: includes/iso.inc:183
+msgid "Malaysia"
+msgstr "Malásia"
+
+#: includes/iso.inc:180
+msgid "Maldives"
+msgstr "Maldivas"
+
+#: includes/iso.inc:170
+msgid "Mali"
+msgstr "Mali"
+
+#: includes/iso.inc:178
+msgid "Malta"
+msgstr "Malta"
+
+#: includes/iso.inc:168
+msgid "Marshall Islands"
+msgstr "Ilhas Marshall"
+
+#: includes/iso.inc:175
+msgid "Martinique"
+msgstr "Martinica"
+
+#: includes/iso.inc:176
+msgid "Mauritania"
+msgstr "Mauritânia"
+
+#: includes/iso.inc:179
+msgid "Mauritius"
+msgstr "Maurícia"
+
+#: includes/iso.inc:269
+msgid "Mayotte"
+msgstr "Maiote"
+
+#: includes/iso.inc:182
+msgid "Mexico"
+msgstr "México"
+
+#: includes/iso.inc:98
+msgid "Micronesia"
+msgstr "Micronésia"
+
+#: includes/iso.inc:164
+msgid "Moldova"
+msgstr "Moldávia"
+
+#: includes/iso.inc:163
+msgid "Monaco"
+msgstr "Mónaco"
+
+#: includes/iso.inc:172
+msgid "Mongolia"
+msgstr "Mongólia"
+
+#: includes/iso.inc:177
+msgid "Montserrat"
+msgstr "Monserrate"
+
+#: includes/iso.inc:162
+msgid "Morocco"
+msgstr "Marrocos"
+
+#: includes/iso.inc:184
+msgid "Mozambique"
+msgstr "Moçambique"
+
+#: includes/iso.inc:171
+msgid "Myanmar"
+msgstr "Birmânia"
+
+#: includes/iso.inc:194,403
+msgid "Nauru"
+msgstr "Nauru"
+
+#: includes/iso.inc:193
+msgid "Nepal"
+msgstr "Nepal"
+
+#: includes/iso.inc:191
+msgid "Netherlands"
+msgstr "Holanda"
+
+#: includes/iso.inc:34
+msgid "Netherlands Antilles"
+msgstr "Antilhas Neerlandesas"
+
+#: includes/iso.inc:186
+msgid "New Caledonia"
+msgstr "Nova Caledónia"
+
+#: includes/iso.inc:190
+msgid "Nicaragua"
+msgstr "Nicarágua"
+
+#: includes/iso.inc:187
+msgid "Niger"
+msgstr "Níger"
+
+#: includes/iso.inc:189
+msgid "Nigeria"
+msgstr "Nigéria"
+
+#: includes/iso.inc:195
+msgid "Niue"
+msgstr "Niue"
+
+#: includes/iso.inc:188
+msgid "Norfolk Island"
+msgstr "Ilha de Norfolque"
+
+#: includes/iso.inc:146
+msgid "North Korea"
+msgstr "Coreia do Norte"
+
+#: includes/iso.inc:174
+msgid "Northern Mariana Islands"
+msgstr "Marianas Setentrionais"
+
+#: includes/iso.inc:192
+msgid "Norway"
+msgstr "Noruega"
+
+#: includes/iso.inc:197
+msgid "Oman"
+msgstr "Omã"
+
+#: includes/iso.inc:203
+msgid "Pakistan"
+msgstr "Paquistão"
+
+#: includes/iso.inc:210
+msgid "Palau"
+msgstr "Palau"
+
+#: includes/iso.inc:198
+msgid "Panama"
+msgstr "Panamá"
+
+#: includes/iso.inc:201
+msgid "Papua New Guinea"
+msgstr "Papua Nova Guiné"
+
+#: includes/iso.inc:199
+msgid "Peru"
+msgstr "Peru"
+
+#: includes/iso.inc:202
+msgid "Philippines"
+msgstr "Filipinas"
+
+#: includes/iso.inc:207
+msgid "Puerto Rico"
+msgstr "Porto Rico"
+
+#: includes/iso.inc:212
+msgid "Qatar"
+msgstr "Qatar"
+
+#: includes/iso.inc:213
+msgid "Reunion"
+msgstr "Reunião"
+
+#: includes/iso.inc:214
+msgid "Romania"
+msgstr "Roménia"
+
+#: includes/iso.inc:216
+msgid "Russia"
+msgstr "Rússia"
+
+#: includes/iso.inc:217
+msgid "Rwanda"
+msgstr "Ruanda"
+
+#: includes/iso.inc:267
+msgid "Samoa"
+msgstr "Samoa"
+
+#: includes/iso.inc:229
+msgid "San Marino"
+msgstr "São Marino"
+
+#: includes/iso.inc:218
+msgid "Saudi Arabia"
+msgstr "Arábia Saudita"
+
+#: includes/iso.inc:230
+msgid "Senegal"
+msgstr "Senegal"
+
+#: includes/iso.inc:220
+msgid "Seychelles"
+msgstr "Seicheles"
+
+#: includes/iso.inc:228
+msgid "Sierra Leone"
+msgstr "Serra Leoa"
+
+#: includes/iso.inc:227
+msgid "Slovakia"
+msgstr "Eslováquia"
+
+#: includes/iso.inc:225
+msgid "Slovenia"
+msgstr "Eslovénia"
+
+#: includes/iso.inc:219
+msgid "Solomon Islands"
+msgstr "Ilhas Salomão"
+
+#: includes/iso.inc:231
+msgid "Somalia"
+msgstr "Somália"
+
+#: includes/iso.inc:270
+msgid "South Africa"
+msgstr "África do Sul"
+
+#: includes/iso.inc:115
+msgid "South Georgia and the South Sandwich Islands"
+msgstr "Ilhas Geórgia do Sul e Sandwich do Sul"
+
+#: includes/iso.inc:93
+msgid "Spain"
+msgstr "Espanha"
+
+#: includes/iso.inc:155
+msgid "Sri Lanka"
+msgstr "Sri Lanka"
+
+#: includes/iso.inc:221
+msgid "Sudan"
+msgstr "Sudão"
+
+#: includes/iso.inc:232
+msgid "Suriname"
+msgstr "Suriname"
+
+#: includes/iso.inc:226
+msgid "Svalbard and Jan Mayen"
+msgstr "Svalbard e Jan Mayen"
+
+#: includes/iso.inc:236
+msgid "Swaziland"
+msgstr "Suazilândia"
+
+#: includes/iso.inc:222
+msgid "Sweden"
+msgstr "Suíça"
+
+#: includes/iso.inc:69
+msgid "Switzerland"
+msgstr "Suiça"
+
+#: includes/iso.inc:235
+msgid "Syria"
+msgstr "Síria"
+
+#: includes/iso.inc:251
+msgid "Taiwan"
+msgstr "Formosa"
+
+#: includes/iso.inc:242
+msgid "Tajikistan"
+msgstr "Tajiquistão"
+
+#: includes/iso.inc:252
+msgid "Tanzania"
+msgstr "Tanzânia"
+
+#: includes/iso.inc:241
+msgid "Thailand"
+msgstr "Tailândia"
+
+#: includes/iso.inc:240
+msgid "Togo"
+msgstr "Togo"
+
+#: includes/iso.inc:243
+msgid "Tokelau"
+msgstr "Toquelau"
+
+#: includes/iso.inc:249
+msgid "Trinidad and Tobago"
+msgstr "Trindade e Tobago"
+
+#: includes/iso.inc:246
+msgid "Tunisia"
+msgstr "Tunísia"
+
+#: includes/iso.inc:245
+msgid "Turkmenistan"
+msgstr "Turquemenistão"
+
+#: includes/iso.inc:237
+msgid "Turks and Caicos Islands"
+msgstr "Turks e Caicos"
+
+#: includes/iso.inc:250
+msgid "Tuvalu"
+msgstr "Tuvalu"
+
+#: includes/iso.inc:254
+msgid "Uganda"
+msgstr "Uganda"
+
+#: includes/iso.inc:253
+msgid "Ukraine"
+msgstr "Ucrânia"
+
+#: includes/iso.inc:28
+msgid "United Arab Emirates"
+msgstr "Emirados Árabes Unidos"
+
+#: includes/iso.inc:102
+msgid "United Kingdom"
+msgstr "Reino Unido"
+
+#: includes/iso.inc:256
+msgid "United States"
+msgstr "Estados Unidos"
+
+#: includes/iso.inc:255
+msgid "United States Minor Outlying Islands"
+msgstr "Ilhas Menores Distantes dos Estados Unidos"
+
+#: includes/iso.inc:257
+msgid "Uruguay"
+msgstr "Uruguai"
+
+#: includes/iso.inc:258
+msgid "Uzbekistan"
+msgstr "Usbequistão"
+
+#: includes/iso.inc:265
+msgid "Vanuatu"
+msgstr "Vanuatu"
+
+#: includes/iso.inc:261
+msgid "Venezuela"
+msgstr "Venezuela"
+
+#: includes/iso.inc:266
+msgid "Wallis and Futuna"
+msgstr "Wallis e Futuna"
+
+#: includes/iso.inc:268
+msgid "Yemen"
+msgstr "Iémen"
+
+#: includes/iso.inc:271
+msgid "Zambia"
+msgstr "Zâmbia"
+
+#: includes/iso.inc:272
+msgid "Zimbabwe"
+msgstr "Zimbábue"
+
+#: includes/iso.inc:299
+msgid "Arabic"
+msgstr "Árabe"
+
+#: includes/iso.inc:330
+msgid "English"
+msgstr "Inglês"
+
+#: includes/iso.inc:342
+msgid "French"
+msgstr "Francês"
+
+#: includes/iso.inc:366
+msgid "Italian"
+msgstr "Italiano"
+
+#: includes/iso.inc:333
+msgid "Spanish"
+msgstr "Castelhano"
+
+#: includes/iso.inc:368
+msgid "Japanese"
+msgstr "Japonês"
+
+#: includes/iso.inc:378
+msgid "Korean"
+msgstr "Coreano"
+
+#: includes/pager.inc:356,613
+msgid "‹ previous"
+msgstr "‹ anterior"
+
+#: includes/pager.inc:357,614
+msgid "next ›"
+msgstr "seguinte ›"
+
+#: includes/common.inc:6755
+msgid "critical"
+msgstr "crítico"
+
+#: includes/form.inc:2634
+msgid "The specified passwords do not match."
+msgstr "As senhas indicadas não coincidem."
+
+#: includes/theme.maintenance.inc:210
+msgid "Failed"
+msgstr "Falhou"
+
+#: includes/iso.inc:42
+msgid "Aland Islands"
+msgstr "Alanda"
+
+#: includes/iso.inc:96,340
+msgid "Fiji"
+msgstr "Fiji"
+
+#: includes/iso.inc:97
+msgid "Falkland Islands"
+msgstr "Ilhas Malvinas"
+
+#: includes/iso.inc:145
+msgid "Saint Kitts and Nevis"
+msgstr "São Cristóvão e Nevis"
+
+#: includes/iso.inc:147
+msgid "South Korea"
+msgstr "Coreia do Sul"
+
+#: includes/iso.inc:153
+msgid "Saint Lucia"
+msgstr "Santa Lúcia"
+
+#: includes/iso.inc:224
+msgid "Saint Helena"
+msgstr "Santa Helena"
+
+#: includes/iso.inc:233
+msgid "Sao Tome and Principe"
+msgstr "São Tome e Príncipe"
+
+#: includes/iso.inc:239
+msgid "French Southern Territories"
+msgstr "Terras Austrais e Antárcticas Francesas"
+
+#: includes/iso.inc:260
+msgid "Saint Vincent and the Grenadines"
+msgstr "São Vicente e Granadinas"
+
+#: includes/iso.inc:262
+msgid "British Virgin Islands"
+msgstr "Ilhas Virgens Britânicas"
+
+#: includes/iso.inc:263
+msgid "U.S. Virgin Islands"
+msgstr "Ilhas Virgens Americanas"
+
+#: includes/iso.inc:264
+msgid "Vietnam"
+msgstr "Vietname"
+
+#: includes/iso.inc:106
+msgid "Guernsey"
+msgstr "Guernesei"
+
+#: includes/iso.inc:136
+msgid "Jersey"
+msgstr "Jersey"
+
+#: includes/actions.inc:295
+msgid "Action '%action' added."
+msgstr "Acção '%action' adicionada."
+
+#: includes/file.inc:1514
+msgid "File upload error. Could not move uploaded file."
+msgstr "Erro no carregamento do ficheiro. Não foi possível mover o ficheiro."
+
+#: includes/form.inc:2728
+msgid "The specified date is invalid."
+msgstr "A data indicada é inválida."
+
+#: includes/pager.inc:612
+msgid "Go to first page"
+msgstr "Ir para a primeira página"
+
+#: includes/pager.inc:615
+msgid "Go to last page"
+msgstr "Ir para a última página"
+
+#: includes/pager.inc:622
+msgid "Go to page @number"
+msgstr "Ir para a página @number"
+
+#: includes/iso.inc:131
+msgid "British Indian Ocean Territory"
+msgstr "Território Britânico do Oceano Índico"
+
+#: includes/iso.inc:123
+msgid "Croatia"
+msgstr "Croácia"
+
+#: includes/iso.inc:169
+msgid "Macedonia"
+msgstr "Macedónia"
+
+#: includes/iso.inc:206
+msgid "Pitcairn"
+msgstr "Pitcairn"
+
+#: includes/iso.inc:91
+msgid "Western Sahara"
+msgstr "Sara Ocidental"
+
+#: includes/form.inc:3783
+msgid "!title !required"
+msgstr "!required !title"
+
+#: includes/common.inc:6760
+msgid "debug"
+msgstr "debug"
+
+#: includes/unicode.inc:325
+msgid "..."
+msgstr "..."
+
+#: includes/common.inc:2451
+msgid "Page not found"
+msgstr "Página não encontrada"
+
+#: includes/theme.inc:1859
+msgid "More help"
+msgstr "Mais ajuda"
+
+#: includes/common.inc:6759
+msgid "info"
+msgstr "informação"
+
+#: includes/pager.inc:355,612
+msgid "« first"
+msgstr "« primeira"
+
+#: includes/pager.inc:358,615
+msgid "last »"
+msgstr "última »"
+
+#: includes/ajax.inc:320
+msgid "ajax"
+msgstr "ajax"
+
+#: includes/common.inc:0
+msgid "1 year"
+msgid_plural "@count years"
+msgstr[0] "1 ano"
+msgstr[1] "@count anos"
+
+#: includes/common.inc:0
+msgid "1 week"
+msgid_plural "@count weeks"
+msgstr[0] "1 semana"
+msgstr[1] "@count semanas"
+
+#: includes/common.inc:0
+msgid "1 min"
+msgid_plural "@count min"
+msgstr[0] "1 minuto"
+msgstr[1] "@count minutos"
+
+#: includes/common.inc:0
+msgid "1 sec"
+msgid_plural "@count sec"
+msgstr[0] "1 segundo"
+msgstr[1] "@count segundos"
+
+#: includes/iso.inc:208
+msgid "Palestinian Territory"
+msgstr "Palestina"
+
+#: includes/iso.inc:259
+msgid "Vatican"
+msgstr "Vaticano"
+
+#: includes/iso.inc:307
+msgid "Bulgarian"
+msgstr "Búlgaro"
+
+#: includes/iso.inc:355
+msgid "Croatian"
+msgstr "Croata"
+
+#: includes/iso.inc:320
+msgid "Czech"
+msgstr "Checo"
+
+#: includes/iso.inc:324
+msgid "Danish"
+msgstr "Dinamarquês"
+
+#: includes/iso.inc:407
+msgid "Dutch"
+msgstr "Holandês"
+
+#: includes/iso.inc:338
+msgid "Finnish"
+msgstr "Finlandês"
+
+#: includes/iso.inc:325
+msgid "German"
+msgstr "Alemão"
+
+#: includes/iso.inc:329
+msgid "Greek"
+msgstr "Grego"
+
+#: includes/iso.inc:352
+msgid "Hebrew"
+msgstr "Hebreu"
+
+#: includes/iso.inc:357
+msgid "Hungarian"
+msgstr "Húngaro"
+
+#: includes/iso.inc:361
+msgid "Indonesian"
+msgstr "Indonésio"
+
+#: includes/iso.inc:419
+msgid "Polish"
+msgstr "Polaco"
+
+#: includes/iso.inc:427
+msgid "Romanian"
+msgstr "Romeno"
+
+#: includes/iso.inc:428
+msgid "Russian"
+msgstr "Russo"
+
+#: includes/iso.inc:438
+msgid "Slovak"
+msgstr "Eslovaco"
+
+#: includes/iso.inc:448
+msgid "Swedish"
+msgstr "Sueco"
+
+#: includes/iso.inc:459
+msgid "Turkish"
+msgstr "Turco"
+
+#: includes/form.inc:3127
+msgid "Machine name"
+msgstr "Nome da máquina"
+
+#: includes/file.inc:1833
+msgid "The file could not be created."
+msgstr "Não foi possível criar o ficheiro."
+
+#: includes/tablesort.inc:172
+msgid "sort by @s"
+msgstr "ordenar por @s"
+
+#: includes/actions.inc:63
+msgid ""
+"Stack overflow: too many calls to actions_do(). Aborting to prevent "
+"infinite recursion."
+msgstr ""
+"<em>Stack overflow</em>: muitas chamadas para actions_do(). Cancelando "
+"para evitar recursão infinita."
+
+#: includes/actions.inc:356
+msgid "Action %action saved."
+msgstr "Acção %action guardada."
+
+#: includes/iso.inc:390
+msgid "Lithuanian"
+msgstr "Lituano"
+
+#: includes/locale.inc:511
+msgid ""
+"The translation import failed, because the file %filename could not be "
+"read."
+msgstr ""
+"Erro ao importar a tradução: não foi possível ler o ficheiro "
+"%filename."
+
+#: includes/locale.inc:540
+msgid ""
+"The translation file %filename contains an error: \"msgstr\" was "
+"expected but not found on line %line."
+msgstr ""
+"Erro no ficheiro de tradução %filename: \"msgstr\" era esperado mas "
+"não foi encontrado na linha %line."
+
+#: includes/locale.inc:546
+msgid ""
+"The translation file %filename contains an error: \"msgid_plural\" was "
+"expected but not found on line %line."
+msgstr ""
+"Erro no ficheiro de tradução %filename: \"msgid_plural\" era "
+"esperado mas não foi encontrado na linha %line."
+
+#: includes/locale.inc:552,570,588,600,608,622,631
+msgid "The translation file %filename contains a syntax error on line %line."
+msgstr ""
+"Erro no ficheiro de tradução %filename: erro de sintaxe na linha "
+"%line."
+
+#: includes/locale.inc:564
+msgid ""
+"The translation file %filename contains an error: \"msgid\" is "
+"unexpected on line %line."
+msgstr ""
+"Erro no ficheiro de tradução %filename: \"msgid\" não é esperado "
+"na linha %line."
+
+#: includes/locale.inc:596
+msgid ""
+"The translation file %filename contains an error: \"msgstr[]\" is "
+"unexpected on line %line."
+msgstr ""
+"Erro no ficheiro de tradução %filename: \"msgstr[]\" não é "
+"esperado na linha %line."
+
+#: includes/locale.inc:616
+msgid ""
+"The translation file %filename contains an error: \"msgstr\" is "
+"unexpected on line %line."
+msgstr ""
+"Erro no ficheiro de tradução %filename: \"msgstr\" não é esperada "
+"na linha %line."
+
+#: includes/locale.inc:647
+msgid ""
+"The translation file %filename contains an error: there is an "
+"unexpected string on line %line."
+msgstr ""
+"Erro no ficheiro de tradução %filename: expressão inesperada na "
+"linha %line."
+
+#: includes/locale.inc:658
+msgid "The translation file %filename ended unexpectedly at line %line."
+msgstr ""
+"Erro no ficheiro de tradução %filename: fim inesperado na linha "
+"%line."
+
+#: includes/theme.inc:1328
+msgid "Error message"
+msgstr "Mensagem de erro"
+
+#: includes/file.inc:1105,1461
+msgid "For security reasons, your upload has been renamed to %filename."
+msgstr ""
+"Por motivos de segurança, o ficheiro que carregou foi renomeado para "
+"%filename."
+
+#: includes/common.inc:6758
+msgid "notice"
+msgstr "observação"
+
+#: includes/common.inc:0
+msgid "1 month"
+msgid_plural "@count months"
+msgstr[0] "1 mês"
+msgstr[1] "@count meses"
+
+#: includes/theme.maintenance.inc:122
+msgid "done"
+msgstr "operação concluída"
+
+#: includes/form.inc:2638
+msgid "Password field is required."
+msgstr "O campo da senha é obrigatório."
+
+#: includes/form.inc:2611
+msgid "Confirm password"
+msgstr "Confirmar senha"
+
+#: includes/iso.inc:66
+msgid "Congo (Kinshasa)"
+msgstr "Congo-Kinshasa"
+
+#: includes/iso.inc:68
+msgid "Congo (Brazzaville)"
+msgstr "Congo-Brazzaville"
+
+#: includes/iso.inc:70
+msgid "Ivory Coast"
+msgstr "Costa do Marfim"
+
+#: includes/iso.inc:120
+msgid "Hong Kong S.A.R., China"
+msgstr "Hong Kong"
+
+#: includes/iso.inc:129
+msgid "Isle of Man"
+msgstr "Ilha de Man"
+
+#: includes/iso.inc:165
+msgid "Montenegro"
+msgstr "Montenegro"
+
+#: includes/iso.inc:173
+msgid "Macao S.A.R., China"
+msgstr "Macau"
+
+#: includes/iso.inc:205
+msgid "Saint Pierre and Miquelon"
+msgstr "São Pedro e Miquelon"
+
+#: includes/iso.inc:215
+msgid "Serbia"
+msgstr "Sérvia"
+
+#: includes/iso.inc:293
+msgid "Afar"
+msgstr "Afar"
+
+#: includes/iso.inc:442
+msgid "Somali"
+msgstr "Somali"
+
+#: includes/iso.inc:382
+msgid "Komi"
+msgstr "Komi"
+
+#: includes/theme.inc:1329
+msgid "Warning message"
+msgstr "Mensagem de aviso"
+
+#: includes/file.inc:512
+msgid ""
+"Security warning: Couldn't write .htaccess file. Please create a "
+".htaccess file in your %directory directory which contains the "
+"following lines: <code>!htaccess</code>"
+msgstr ""
+"Aviso de segurança: Não é possível escrever no ficheiro "
+"<em>.htaccess</em>. Por favor crie um ficheiro <em>.htaccess</em> no "
+"seu directório %directory que contenha as seguintes linhas: "
+"<code>!htaccess</code>"
+
+#: includes/file.inc:841
+msgid ""
+"The specified file %file could not be copied, because no file by that "
+"name exists. Please check that you supplied the correct filename."
+msgstr ""
+"O ficheiro indicado %file não pôde ser copiado porque não existe "
+"nenhum ficheiro com esse nome. Por favor verifique que indicou o nome "
+"de ficheiro correcto."
+
+#: includes/file.inc:878
+msgid ""
+"The specified file %file was not copied because it would overwrite "
+"itself."
+msgstr ""
+"O ficheiro indicado %file não pôde ser copiado porque iria "
+"substituir-se a si próprio."
+
+#: includes/file.inc:1392
+msgid ""
+"The file %file could not be saved, because it exceeds %maxsize, the "
+"maximum allowed size for uploads."
+msgstr ""
+"Não foi possível guardar o ficheiro %file, porque o mesmo excede o "
+"tamanho máximo para carregamento de ficheiros."
+
+#: includes/file.inc:1397
+msgid ""
+"The file %file could not be saved, because the upload did not "
+"complete."
+msgstr ""
+"Não foi possível guardar o ficheiro %file, porque o carregamento "
+"não foi concluído."
+
+#: includes/file.inc:1409
+msgid "The file %file could not be saved. An unknown error has occurred."
+msgstr ""
+"Não foi possível guardar o ficheiro %file. Ocorreu um erro "
+"desconhecido."
+
+#: includes/file.inc:1498
+msgid "The specified file %name could not be uploaded."
+msgstr "O ficheiro especificado %name não pôde ser carregado."
+
+#: includes/file.inc:1588
+msgid "The file's name is empty. Please give a name to the file."
+msgstr ""
+"O campo de nome do ficheiro está vazio. Por favor dê um nome ao "
+"ficheiro."
+
+#: includes/file.inc:1615
+msgid "Only files with the following extensions are allowed: %files-allowed."
+msgstr ""
+"Apenas ficheiros com as seguintes extensões são permitidos: "
+"%files-allowed."
+
+#: includes/file.inc:1648
+msgid "The file is %filesize exceeding the maximum file size of %maxsize."
+msgstr ""
+"O ficheiro tem %filesize, excedendo o tamanho máximo de um ficheiro "
+"(%maxsize)."
+
+#: includes/file.inc:1653
+msgid "The file is %filesize which would exceed your disk quota of %quota."
+msgstr ""
+"O ficheiro tem %filesize, o que irá exceder a sua quota de disco "
+"(%quota)."
+
+#: includes/file.inc:1675
+msgid "Only JPEG, PNG and GIF images are allowed."
+msgstr "Apenas são permitidas imagens JPEG, PNG e GIF."
+
+#: includes/file.inc:1719
+msgid ""
+"The image was resized to fit within the maximum allowed dimensions of "
+"%dimensions pixels."
+msgstr ""
+"A sua imagem foi redimensionada para respeitar a resolução máxima "
+"permitida de %resolution píxeis"
+
+#: includes/file.inc:1722
+msgid "The image is too large; the maximum dimensions are %dimensions pixels."
+msgstr ""
+"A imagem é demasiado grande; as dimensões máximas são %dimensions "
+"píxeis."
+
+#: includes/file.inc:1731
+msgid "The image is too small; the minimum dimensions are %dimensions pixels."
+msgstr ""
+"A imagem é demasiado pequena; as dimensões mínimas são %dimensions "
+"píxeis."
+
+#: includes/file.inc:1260
+msgid "The file %path was not deleted, because it does not exist."
+msgstr "O ficheiro %path não foi apagado, porque não existe."
+
+#: includes/file.inc:1515
+msgid ""
+"Upload error. Could not move uploaded file %file to destination "
+"%destination."
+msgstr ""
+"Erro de carregamento. Não foi possível mover o ficheiro enviado "
+"(%file) para o destino (%destination)."
+
+#: includes/form.inc:1162,1181
+msgid ""
+"An illegal choice has been detected. Please contact the site "
+"administrator."
+msgstr ""
+"Uma escolha ilegal foi detectada. Por favor contacte o administrador "
+"do site."
+
+#: includes/form.inc:1163
+msgid "Illegal choice %choice in !name element."
+msgstr "Escolha %choice é inválida no elemento !name."
+
+#: includes/image.inc:98
+msgid ""
+"The selected image handling toolkit %toolkit can not correctly process "
+"%function."
+msgstr ""
+"A ferramenta para tratamento de imagem seleccionada %toolkit não "
+"consegue processar %function"
+
+#: includes/install.inc:974
+msgid "Currently using !item !version"
+msgstr "Actualmente a usar !item !version"
+
+#: includes/errors.inc:254
+msgid "The website encountered an unexpected error. Please try again later."
+msgstr "O site encontrou um erro inesperado. Por favor tente mais tarde."
+
+#: includes/iso.inc:353
+msgid "Hindi"
+msgstr "Hindi"
+
+#: includes/form.inc:3366
+msgid "Vertical Tabs"
+msgstr "Separadores Verticais"
+
+#: includes/form.inc:3991
+msgid "Initializing."
+msgstr "Inicializando."
+
+#: includes/form.inc:3993
+msgid "An error has occurred."
+msgstr "Ocorreu um erro."
+
+#: includes/form.inc:4084
+msgid "Please continue to <a href=\"@error_url\">the error page</a>"
+msgstr "Por favor, continue para <a href=\"@error_url\">a página do erro</a>"
+
+#: includes/batch.inc:157
+msgid "HTTP POST is required."
+msgstr "É necessário o método HTTP POST."
+
+#: includes/common.inc:1825
+msgid "0 sec"
+msgstr "0 segundos"
+
+#: includes/form.inc:1163,1182
+msgid "form"
+msgstr "formulário"
+
+#: includes/common.inc:6754
+msgid "alert"
+msgstr "alerta"
+
+#: includes/common.inc:6753
+msgid "emergency"
+msgstr "emergência"
+
+#: includes/common.inc:4929
+msgid "Attempting to re-run cron while it is already running."
+msgstr ""
+"Tentativa de executar o <em>cron</em> quando este já se encontra em "
+"execução."
+
+#: includes/common.inc:4945
+msgid "Cron run completed."
+msgstr "Execução finalizada do <em>cron</em>."
+
+#: includes/form.inc:3117
+msgid "Machine-readable name"
+msgstr ""
+
+#: includes/iso.inc:315
+msgid "Catalan"
+msgstr "Catalão"
+
+#: includes/actions.inc:308
+msgid "Removed orphaned action '%action' from database."
+msgstr "Acção orfã '% acção' removida da base de dados."
+
+#: includes/actions.inc:315
+msgid "One orphaned action (%orphans) exists in the actions table. !link"
+msgid_plural "@count orphaned actions (%orphans) exist in the actions table. !link"
+msgstr[0] "Existe uma acção orfã (%orphans) na tabela de acções. !link"
+msgstr[1] "Existem @count acções orfãs (%orphans) na tabela de acções. !link"
+
+#: includes/common.inc:4976
+msgid "Cron run exceeded the time limit and was aborted."
+msgstr "O <em>cron</em> excedeu o tempo limite de execução e foi abortado."
+
+#: includes/common.inc:1763
+msgid "1 byte"
+msgid_plural "@count bytes"
+msgstr[0] "1 byte"
+msgstr[1] "@count bytes"
+
+#: includes/form.inc:1148
+msgid ""
+"!name cannot be longer than %max characters but is currently %length "
+"characters long."
+msgstr ""
+"!name não pode ser maior que %max caracteres mas tem actualmente "
+"%length caracteres de comprimento."
+
+#: includes/form.inc:1182
+msgid "Illegal choice %choice in %name element."
+msgstr "Escolha ilegal no elemento %name."
+
+#: includes/locale.inc:456
+msgid "The language selected for import is not supported."
+msgstr "O idioma seleccionado para importar não é suportado."
+
+#: includes/locale.inc:471
+msgid ""
+"The translation file %filename appears to have a missing or malformed "
+"header."
+msgstr ""
+"O ficheiro de tradução %filename não tem cabeçalho ou tem um erro "
+"no mesmo."
+
+#: includes/locale.inc:481
+msgid ""
+"The translation was successfully imported. There are %number newly "
+"created translated strings, %update strings were updated and %delete "
+"strings were removed."
+msgstr ""
+"A tradução foi importada com sucesso: Existem %number novas "
+"expressões e %update expressões foram actualizadas."
+
+#: includes/locale.inc:1959
+msgid "Importing interface translations"
+msgstr "A importar traduções da interface"
+
+#: includes/locale.inc:1960
+msgid "Starting import"
+msgstr "Iniciando a importação"
+
+#: includes/locale.inc:1961
+msgid "Error importing interface translations"
+msgstr "Erro na importação das traduções da interface"
+
+#: includes/locale.inc:423
+msgid "The %language language (%code) has been created."
+msgstr "O idioma %language (%code) foi criado."
+
+#: includes/locale.inc:482
+msgid ""
+"Imported %file into %locale: %number new strings added, %update "
+"updated and %delete removed."
+msgstr ""
+"Tradução %file importada para %locale: %number expressões "
+"adicionadas, %update expressões actualizadas e %delete removidas."
+
+#: includes/locale.inc:1434
+msgid "Exported %locale translation file: %filename."
+msgstr "Arquivo %filename do idioma %locale exportado."
+
+#: includes/locale.inc:1438
+msgid "Exported translation file: %filename."
+msgstr "Arquivo de tradução %filename exportado."
+
+#: includes/locale.inc:1782
+msgid "Updated JavaScript translation file for the language %language."
+msgstr ""
+"Actualizado o ficheiro de tradução JavaScript para o idioma "
+"%language."
+
+#: includes/locale.inc:1789
+msgid "Created JavaScript translation file for the language %language."
+msgstr "Criado ficheiro de tradução JavaScript para o idioma %language."
+
+#: includes/locale.inc:1792
+msgid ""
+"Removed JavaScript translation file for the language %language, "
+"because no translations currently exist for that language."
+msgstr ""
+"Removido o ficheiro de tradução JavaScript para o idioma %language, "
+"porque não existem actualmente traduções para esse idioma."
+
+#: includes/locale.inc:1795
+msgid ""
+"An error occurred during creation of the JavaScript translation file "
+"for the language %language."
+msgstr ""
+"Ocorreu um erro durante a criação do ficheiro de tradução "
+"JavaScript para o idioma %language."
+
+#: includes/locale.inc:484
+msgid ""
+"One translation string was skipped because it contains disallowed "
+"HTML."
+msgid_plural ""
+"@count translation strings were skipped because they contain "
+"disallowed HTML."
+msgstr[0] ""
+"Uma expressão traduzida foi ignorada por conter HTML não autorizado. "
+""
+msgstr[1] ""
+"@count expressões traduzidas foram ignoradas por conterem HTML não "
+"autorizado"
+
+#: includes/locale.inc:1999
+msgid "One translation file imported for the newly installed modules."
+msgid_plural "@count translation files imported for the newly installed modules."
+msgstr[0] ""
+"Um ficheiro de tradução importado para os módulos recém "
+"instalados."
+msgstr[1] ""
+"@count ficheiros de tradução importados para os módulos recém "
+"instalados."
+
+#: includes/locale.inc:2009
+msgid "One translation file imported for the enabled modules."
+msgid_plural "@count translation files imported for the enabled modules."
+msgstr[0] "Um ficheiro de tradução importado para os módulos activos."
+msgstr[1] "@count ficheiros de tradução importados para os módulos activos."
+
+#: includes/iso.inc:294
+msgid "Abkhazian"
+msgstr "Abcázio"
+
+#: includes/iso.inc:295
+msgid "Avestan"
+msgstr "Avéstico"
+
+#: includes/iso.inc:296
+msgid "Afrikaans"
+msgstr "Africander"
+
+#: includes/iso.inc:297
+msgid "Akan"
+msgstr "Akan"
+
+#: includes/iso.inc:298
+msgid "Amharic"
+msgstr "Amárico"
+
+#: includes/iso.inc:300
+msgid "Assamese"
+msgstr "Assamês"
+
+#: includes/iso.inc:302
+msgid "Avar"
+msgstr "Avárico"
+
+#: includes/iso.inc:303
+msgid "Aymara"
+msgstr "Aimará"
+
+#: includes/iso.inc:304
+msgid "Azerbaijani"
+msgstr "Azerbaijanês"
+
+#: includes/iso.inc:305
+msgid "Bashkir"
+msgstr "Bashquir"
+
+#: includes/iso.inc:306
+msgid "Belarusian"
+msgstr "Bielorusso"
+
+#: includes/iso.inc:308
+msgid "Bihari"
+msgstr "Biari"
+
+#: includes/iso.inc:309
+msgid "Bislama"
+msgstr "Bislama"
+
+#: includes/iso.inc:310
+msgid "Bambara"
+msgstr "Bambara"
+
+#: includes/iso.inc:311
+msgid "Bengali"
+msgstr "Bengali"
+
+#: includes/iso.inc:312
+msgid "Tibetan"
+msgstr "Tibetano"
+
+#: includes/iso.inc:313
+msgid "Breton"
+msgstr "Bretão"
+
+#: includes/iso.inc:314
+msgid "Bosnian"
+msgstr "Bósnio"
+
+#: includes/iso.inc:316
+msgid "Chechen"
+msgstr "Checheno"
+
+#: includes/iso.inc:317
+msgid "Chamorro"
+msgstr "Chamorro"
+
+#: includes/iso.inc:318
+msgid "Corsican"
+msgstr "Córsego"
+
+#: includes/iso.inc:319
+msgid "Cree"
+msgstr "Cree"
+
+#: includes/iso.inc:321
+msgid "Old Slavonic"
+msgstr "Eslavónico Antigo"
+
+#: includes/iso.inc:322
+msgid "Chuvash"
+msgstr "Chuvasho"
+
+#: includes/iso.inc:323
+msgid "Welsh"
+msgstr "Galês"
+
+#: includes/iso.inc:326
+msgid "Maldivian"
+msgstr "Maldivo"
+
+#: includes/iso.inc:327
+msgid "Bhutani"
+msgstr "Butanês"
+
+#: includes/iso.inc:328
+msgid "Ewe"
+msgstr "Jeje"
+
+#: includes/iso.inc:332
+msgid "Esperanto"
+msgstr "Esperanto"
+
+#: includes/iso.inc:334
+msgid "Estonian"
+msgstr "Estónio"
+
+#: includes/iso.inc:335
+msgid "Basque"
+msgstr "Basco"
+
+#: includes/iso.inc:336
+msgid "Persian"
+msgstr "Persa"
+
+#: includes/iso.inc:337
+msgid "Fulah"
+msgstr "Fulah"
+
+#: includes/iso.inc:341
+msgid "Faeroese"
+msgstr "Faroense"
+
+#: includes/iso.inc:343
+msgid "Frisian"
+msgstr "Frísio"
+
+#: includes/iso.inc:344
+msgid "Irish"
+msgstr "Irlandês"
+
+#: includes/iso.inc:345
+msgid "Scots Gaelic"
+msgstr "Gaélico Escocês"
+
+#: includes/iso.inc:346
+msgid "Galician"
+msgstr "Galego"
+
+#: includes/iso.inc:347
+msgid "Guarani"
+msgstr "Guarani"
+
+#: includes/iso.inc:349
+msgid "Gujarati"
+msgstr "Guarani"
+
+#: includes/iso.inc:350
+msgid "Manx"
+msgstr "Manês"
+
+#: includes/iso.inc:351
+msgid "Hausa"
+msgstr "Haúça"
+
+#: includes/iso.inc:354
+msgid "Hiri Motu"
+msgstr "Hiri Motu"
+
+#: includes/iso.inc:358
+msgid "Armenian"
+msgstr "Arménio"
+
+#: includes/iso.inc:359
+msgid "Herero"
+msgstr "Herero"
+
+#: includes/iso.inc:360
+msgid "Interlingua"
+msgstr "Interlíngua"
+
+#: includes/iso.inc:362
+msgid "Interlingue"
+msgstr "Interlingue"
+
+#: includes/iso.inc:363
+msgid "Igbo"
+msgstr "Igbo"
+
+#: includes/iso.inc:364
+msgid "Inupiak"
+msgstr "Inupiaque"
+
+#: includes/iso.inc:365
+msgid "Icelandic"
+msgstr "Islandês"
+
+#: includes/iso.inc:367
+msgid "Inuktitut"
+msgstr "Inuktitut"
+
+#: includes/iso.inc:369
+msgid "Javanese"
+msgstr "Javanês"
+
+#: includes/iso.inc:370
+msgid "Georgian"
+msgstr "Georgiano"
+
+#: includes/iso.inc:371
+msgid "Kongo"
+msgstr "Congolense"
+
+#: includes/iso.inc:372
+msgid "Kikuyu"
+msgstr "Quicuiu"
+
+#: includes/iso.inc:373
+msgid "Kwanyama"
+msgstr "Cuanhama"
+
+#: includes/iso.inc:374
+msgid "Kazakh"
+msgstr "Cazaque"
+
+#: includes/iso.inc:375
+msgid "Greenlandic"
+msgstr "Gronelandês"
+
+#: includes/iso.inc:376
+msgid "Cambodian"
+msgstr "Cambodjano"
+
+#: includes/iso.inc:377
+msgid "Kannada"
+msgstr "Canarês"
+
+#: includes/iso.inc:379
+msgid "Kanuri"
+msgstr "Canúri"
+
+#: includes/iso.inc:380
+msgid "Kashmiri"
+msgstr "Cashmir"
+
+#: includes/iso.inc:381
+msgid "Kurdish"
+msgstr "Curdo"
+
+#: includes/iso.inc:383
+msgid "Cornish"
+msgstr "Córnico"
+
+#: includes/iso.inc:385
+msgid "Latin"
+msgstr "Latim"
+
+#: includes/iso.inc:386
+msgid "Luxembourgish"
+msgstr "Lituano"
+
+#: includes/iso.inc:387
+msgid "Luganda"
+msgstr "Ganda"
+
+#: includes/iso.inc:388
+msgid "Lingala"
+msgstr "Lingala"
+
+#: includes/iso.inc:389
+msgid "Laothian"
+msgstr "Lao"
+
+#: includes/iso.inc:391
+msgid "Latvian"
+msgstr "Letão"
+
+#: includes/iso.inc:392
+msgid "Malagasy"
+msgstr "Malagasi"
+
+#: includes/iso.inc:393
+msgid "Marshallese"
+msgstr "Marshalês"
+
+#: includes/iso.inc:395
+msgid "Macedonian"
+msgstr "Macedónio"
+
+#: includes/iso.inc:396
+msgid "Malayalam"
+msgstr "Malaiala"
+
+#: includes/iso.inc:397
+msgid "Mongolian"
+msgstr "Mongol"
+
+#: includes/iso.inc:398
+msgid "Moldavian"
+msgstr "Moldavo"
+
+#: includes/iso.inc:399
+msgid "Marathi"
+msgstr "Marati"
+
+#: includes/iso.inc:400
+msgid "Malay"
+msgstr "Malaio"
+
+#: includes/iso.inc:401
+msgid "Maltese"
+msgstr "Maltês"
+
+#: includes/iso.inc:402
+msgid "Burmese"
+msgstr "Birmanês"
+
+#: includes/iso.inc:404
+msgid "North Ndebele"
+msgstr "Ndebele do Norte"
+
+#: includes/iso.inc:405
+msgid "Nepali"
+msgstr "Nepalês"
+
+#: includes/iso.inc:406
+msgid "Ndonga"
+msgstr "Ndonga"
+
+#: includes/iso.inc:408
+msgid "Norwegian Bokmål"
+msgstr "Norueguês (dano-norueguês)"
+
+#: includes/iso.inc:409
+msgid "Norwegian Nynorsk"
+msgstr "Norueguês (novo norueguês)"
+
+#: includes/iso.inc:410
+msgid "South Ndebele"
+msgstr "Ndebele do Sul"
+
+#: includes/iso.inc:412
+msgid "Chichewa"
+msgstr "Chicheua"
+
+#: includes/iso.inc:413
+msgid "Occitan"
+msgstr "Occitano"
+
+#: includes/iso.inc:414
+msgid "Oromo"
+msgstr "Oromo"
+
+#: includes/iso.inc:415
+msgid "Oriya"
+msgstr "Oriya"
+
+#: includes/iso.inc:416
+msgid "Ossetian"
+msgstr "Ossetiano"
+
+#: includes/iso.inc:417
+msgid "Punjabi"
+msgstr "Punjabi"
+
+#: includes/iso.inc:418
+msgid "Pali"
+msgstr "Pali"
+
+#: includes/iso.inc:420
+msgid "Pashto"
+msgstr "Pashto"
+
+#: includes/iso.inc:422
+msgid "Portuguese, Portugal"
+msgstr "Português, Portugal"
+
+#: includes/iso.inc:423
+msgid "Portuguese, Brazil"
+msgstr "Português, Brasil"
+
+#: includes/iso.inc:424
+msgid "Quechua"
+msgstr "Quechua"
+
+#: includes/iso.inc:425
+msgid "Rhaeto-Romance"
+msgstr "Reto-Românico"
+
+#: includes/iso.inc:426
+msgid "Kirundi"
+msgstr "Rundi"
+
+#: includes/iso.inc:429
+msgid "Kinyarwanda"
+msgstr "Ruandês"
+
+#: includes/iso.inc:430
+msgid "Sanskrit"
+msgstr "Sânscrito"
+
+#: includes/iso.inc:431
+msgid "Sardinian"
+msgstr "Sardo"
+
+#: includes/iso.inc:433
+msgid "Sindhi"
+msgstr "Sindi"
+
+#: includes/iso.inc:434
+msgid "Northern Sami"
+msgstr "Sami Setentrional"
+
+#: includes/iso.inc:435
+msgid "Sango"
+msgstr "Sango"
+
+#: includes/iso.inc:436
+msgid "Serbo-Croatian"
+msgstr "Sérvio-Croata"
+
+#: includes/iso.inc:437
+msgid "Sinhala"
+msgstr "Cingalês"
+
+#: includes/iso.inc:439
+msgid "Slovenian"
+msgstr "Esloveno"
+
+#: includes/iso.inc:440
+msgid "Samoan"
+msgstr "Samoano"
+
+#: includes/iso.inc:441
+msgid "Shona"
+msgstr "Shona"
+
+#: includes/iso.inc:443
+msgid "Albanian"
+msgstr "Albaniano"
+
+#: includes/iso.inc:444
+msgid "Serbian"
+msgstr "Sérvio"
+
+#: includes/iso.inc:445
+msgid "Siswati"
+msgstr "Sisuati"
+
+#: includes/iso.inc:446
+msgid "Sesotho"
+msgstr "Sesotho"
+
+#: includes/iso.inc:447
+msgid "Sudanese"
+msgstr "Sudanês"
+
+#: includes/iso.inc:449
+msgid "Swahili"
+msgstr "Suaíli"
+
+#: includes/iso.inc:450
+msgid "Tamil"
+msgstr "Tamil"
+
+#: includes/iso.inc:451
+msgid "Telugu"
+msgstr "Telugu"
+
+#: includes/iso.inc:452
+msgid "Tajik"
+msgstr "Tajique"
+
+#: includes/iso.inc:453
+msgid "Thai"
+msgstr "Tailandês"
+
+#: includes/iso.inc:454
+msgid "Tigrinya"
+msgstr "Tigrínia"
+
+#: includes/iso.inc:455
+msgid "Turkmen"
+msgstr "Turcumano"
+
+#: includes/iso.inc:456
+msgid "Tagalog"
+msgstr "Tagalogue"
+
+#: includes/iso.inc:457
+msgid "Setswana"
+msgstr "Setsuana"
+
+#: includes/iso.inc:460
+msgid "Tsonga"
+msgstr "ChiTsonga"
+
+#: includes/iso.inc:461
+msgid "Tatar"
+msgstr "Tatar"
+
+#: includes/iso.inc:462
+msgid "Twi"
+msgstr "Ashanti"
+
+#: includes/iso.inc:463
+msgid "Tahitian"
+msgstr "Tahitiano"
+
+#: includes/iso.inc:464
+msgid "Uighur"
+msgstr "Uighur"
+
+#: includes/iso.inc:465
+msgid "Ukrainian"
+msgstr "Ucraniano"
+
+#: includes/iso.inc:466
+msgid "Urdu"
+msgstr "Urdu"
+
+#: includes/iso.inc:467
+msgid "Uzbek"
+msgstr "Uzbeque"
+
+#: includes/iso.inc:468
+msgid "Venda"
+msgstr "XiVenda"
+
+#: includes/iso.inc:469
+msgid "Vietnamese"
+msgstr "Vietnamita"
+
+#: includes/iso.inc:470
+msgid "Wolof"
+msgstr "Wolof"
+
+#: includes/iso.inc:471
+msgid "Xhosa"
+msgstr "Xhosa"
+
+#: includes/iso.inc:473
+msgid "Yiddish"
+msgstr "Ídiche"
+
+#: includes/iso.inc:474
+msgid "Yoruba"
+msgstr "Ioruba"
+
+#: includes/iso.inc:475
+msgid "Zhuang"
+msgstr "Zhuang"
+
+#: includes/iso.inc:476
+msgid "Chinese, Simplified"
+msgstr "Chinês, Simplificado"
+
+#: includes/iso.inc:477
+msgid "Chinese, Traditional"
+msgstr "Chinês, Tradicional"
+
+#: includes/iso.inc:478
+msgid "Zulu"
+msgstr "Zulu"
+
+#: includes/mail.inc:156
+msgid "Error sending e-mail (from %from to %to)."
+msgstr "Erro ao enviar e-mail (de %from para %to)."
+
+#: includes/unicode.inc:105
+msgid ""
+"Operations on Unicode strings are emulated on a best-effort basis. "
+"Install the <a href=\"@url\">PHP mbstring extension</a> for improved "
+"Unicode support."
+msgstr ""
+"As operações em cadeias Unicode são emuladas da melhor forma "
+"possível. Instale<a href=\"@url\">a extensão <em>mbstring</em> do "
+"PHP</a> para melhorar o suporte Unicode."
+
+#: includes/unicode.inc:110
+msgid ""
+"Multibyte string function overloading in PHP is active and must be "
+"disabled. Check the php.ini <em>mbstring.func_overload</em> setting. "
+"Please refer to the <a href=\"@url\">PHP mbstring documentation</a> "
+"for more information."
+msgstr ""
+"No PHP a função de sobrecarga para a cadeia Multibyte está activa e "
+"deve ser desactivada. Verifique no ficheiro php.ini o parâmetro "
+"<em>mbstring.func_overload</em>. Por favor consulte a <a "
+"href=\"@url\">documentação PHP do<em>mbstring</em></a> para "
+"informações adicionais."
+
+#: includes/unicode.inc:113
+msgid ""
+"Multibyte string input conversion in PHP is active and must be "
+"disabled. Check the php.ini <em>mbstring.encoding_translation</em> "
+"setting. Please refer to the <a href=\"@url\">PHP mbstring "
+"documentation</a> for more information."
+msgstr ""
+"No PHP a conversão de entrada para a cadeia Multibyte está activa e "
+"deve ser desactivada. Verifique no ficheiro php.ini o parâmetro "
+"<em>mbstring.encoding_translation</em>. Por favor consulte <a "
+"href=\"@url\">Documentação acerca das <em>mbstring</em> do PHP</a> "
+"para informações adicionais."
+
+#: includes/unicode.inc:116
+msgid ""
+"Multibyte string input conversion in PHP is active and must be "
+"disabled. Check the php.ini <em>mbstring.http_input</em> setting. "
+"Please refer to the <a href=\"@url\">PHP mbstring documentation</a> "
+"for more information."
+msgstr ""
+"No PHP a conversão de entrada para a cadeia Multibyte está activa e "
+"deve ser desactivada. Verifique no ficheiro php.ini o parâmetro "
+"<em>mbstring.http_input</em>. Por favor consulte <a "
+"href=\"@url\">Documentação acerca das <em>mbstring</em> do PHP</a> "
+"para informações adicionais."
+
+#: includes/unicode.inc:119
+msgid ""
+"Multibyte string output conversion in PHP is active and must be "
+"disabled. Check the php.ini <em>mbstring.http_output</em> setting. "
+"Please refer to the <a href=\"@url\">PHP mbstring documentation</a> "
+"for more information."
+msgstr ""
+"No PHP a conversão de saida para a cadeia Multibyte está activa e "
+"deve ser desactivada. Verifique no ficheiro php.ini o parâmetro "
+"<em>mbstring.http_output</em>. Por favor consulte <a "
+"href=\"@url\">Documentação acerca das <em>mbstring</em> do PHP</a> "
+"para informações adicionais."
+
+#: includes/unicode.inc:136
+msgid "Standard PHP"
+msgstr "PHP Standard"
+
+#: includes/unicode.inc:137
+msgid "PHP Mbstring Extension"
+msgstr "Extensão PHP Mbstring"
+
+#: includes/unicode.inc:148
+msgid "Unicode library"
+msgstr "Bibioteca Unicode"
+
+#: includes/unicode.inc:206
+msgid "Could not convert XML encoding %s to UTF-8."
+msgstr "Não foi possível converter a codificação XML %s para UTF-8."
+
+#: includes/unicode.inc:240
+msgid ""
+"Unsupported encoding %s. Please install iconv, GNU recode or mbstring "
+"for PHP."
+msgstr ""
+"Codificação %s não suportada. Por favor instale o <em>iconv</em>, "
+"<em>GNU recode</em> ou <em>mbstring</em> para PHP."
+
+#: includes/xmlrpc.inc:575
+msgid "Parse error. Not well formed"
+msgstr "Erro de processamento. Estrutura incorrecta."
+
+#: includes/xmlrpcs.inc:72
+msgid "Parse error. Request not well formed."
+msgstr "Erro de processamento. O pedido não foi estruturado correctamente."
+
+#: includes/xmlrpcs.inc:75
+msgid "Server error. Invalid XML-RPC. Request must be a methodCall."
+msgstr ""
+"Erro de servidor. XML-RPC inválido. O pedido tem que usar um "
+"methodCall."
+
+#: includes/xmlrpcs.inc:186,358
+msgid "Server error. Requested method @methodname not specified."
+msgstr ""
+"Erro no servidor. O método requerido - @methodname - não se encontra "
+"especificado."
+
+#: includes/xmlrpcs.inc:197
+msgid "Server error. Wrong number of method parameters."
+msgstr "Erro no servidor. Número errado de parâmetros para o método."
+
+#: includes/xmlrpcs.inc:238
+msgid "Server error. Invalid method parameters."
+msgstr "Erro no servidor. Parâmetros inválidos para o método."
+
+#: includes/xmlrpcs.inc:244
+msgid "Server error. Requested function @method does not exist."
+msgstr "Erro no servidor. A função requerida - @method - não existe."
+
+#: includes/xmlrpcs.inc:271
+msgid "Invalid syntax for system.multicall."
+msgstr "Sintaxe inválida para system.multicall."
+
+#: includes/xmlrpcs.inc:277
+msgid "Recursive calls to system.multicall are forbidden."
+msgstr "Chamadas recursivas a system.multicall são proibidas."
+
+#: includes/xmlrpcs.inc:361
+msgid "Server error. Requested method @methodname signature not specified."
+msgstr ""
+"Erro no servidor. A assinatura do método @methodname não se encontra "
+"especificada."
+
+#: includes/form.inc:3192
+msgid ""
+"The machine-readable name must contain only lowercase letters, "
+"numbers, and underscores."
+msgstr ""
+"O nome de sistema pode conter apenas letras minúsculas, números e "
+"traços inferiores."
+
+#: includes/common.inc:1768
+msgid "@size KB"
+msgstr "@size KB"
+
+#: includes/common.inc:1769
+msgid "@size MB"
+msgstr "@size MB"
+
+#: includes/common.inc:1770
+msgid "@size GB"
+msgstr "@size GB"
+
+#: includes/common.inc:1771
+msgid "@size TB"
+msgstr "@size TB"
+
+#: includes/common.inc:1772
+msgid "@size PB"
+msgstr "@size PB"
+
+#: includes/common.inc:1773
+msgid "@size EB"
+msgstr "@size EB"
+
+#: includes/common.inc:1774
+msgid "@size ZB"
+msgstr "@size ZB"
+
+#: includes/common.inc:1775
+msgid "@size YB"
+msgstr "@size YB"
+
+#: includes/locale.inc:582
+msgid ""
+"The translation file %filename contains an error: \"msgctxt\" is "
+"unexpected on line %line."
+msgstr ""
+"O ficheiro de tradução %filename contém um erro: \"msgctxt\" é "
+"inesperada na linha %line."
+
+#: includes/ajax.inc:451
+msgid ""
+"An error occurred while handling the request: The server received "
+"invalid input."
+msgstr ""
+"Um errou ocorreu a processar o pedido: O servidor recebeu uma entrada "
+"inválida."
+
+#: includes/ajax.inc:320
+msgid "Invalid form POST data."
+msgstr "Dados de formulário POST inválidos."
+
+#: includes/authorize.inc:25
+msgid "Unable to continue, no available methods of file transfer"
+msgstr ""
+"Incapaz de continuar, indisponibilidade de métodos de transferência "
+"de ficheiros"
+
+#: includes/authorize.inc:32
+msgid ""
+"WARNING: You are not using an encrypted connection, so your password "
+"will be sent in plain text. <a href=\"@https-link\">Learn more</a>."
+msgstr ""
+"AVISO: Não está a utilizar uma ligação encriptada, pelo que a sua "
+"senha será enviada em texto simples. <a href=\"@https-link\">Saiba "
+"mais</a>."
+
+#: includes/authorize.inc:46
+msgid "To continue, provide your server connection details"
+msgstr "Para continuar introduza a informação de ligação do seu servidor"
+
+#: includes/authorize.inc:53
+msgid "Connection method"
+msgstr "Método de ligação"
+
+#: includes/authorize.inc:69
+msgid "Enter connection settings"
+msgstr "Introduza as definições de ligação"
+
+#: includes/authorize.inc:87
+msgid "@backend connection settings"
+msgstr "@backend definições de ligação"
+
+#: includes/authorize.inc:114
+msgid "Change connection type"
+msgstr "Alterar tipo de ligação"
+
+#: includes/authorize.inc:135
+msgid "Error, this type of connection protocol (%backend) does not exist."
+msgstr "Erro, este tipo de protocolo de ligação (%backend) não existe."
+
+#: includes/batch.inc:55
+msgid "No active batch."
+msgstr "Não existe um lote activo"
+
+#: includes/common.inc:2491
+msgid "Site under maintenance"
+msgstr "Site em manutenção"
+
+#: includes/common.inc:7421
+msgid "Archivers can only operate on local files: %file not supported"
+msgstr ""
+"Os arquivadores só podem operar em ficheiros locais: %file não "
+"suportado"
+
+#: includes/file.inc:1473
+msgid ""
+"The file could not be uploaded, because the destination %destination "
+"is invalid."
+msgstr ""
+"O ficheiro não pôde ser carregado, porque o destino %destination é "
+"inválido."
+
+#: includes/file.inc:1486
+msgid ""
+"The file %source could not be uploaded because a file by that name "
+"already exists in the destination %directory."
+msgstr ""
+"O ficheiro %source não pode ser carregado porque já existe um outro "
+"ficheiro com o mesmo nome na pasta de destino %directory."
+
+#: includes/file.inc:1591
+msgid ""
+"The file's name exceeds the 240 characters limit. Please rename the "
+"file and try again."
+msgstr ""
+"O nome do ficheiro excede o limite de 240 caracteres. Por favor "
+"dê-lhe um novo nome e tente de novo."
+
+#: includes/file.inc:1251
+msgid ""
+"%path is a directory and cannot be removed using "
+"file_unmanaged_delete()."
+msgstr ""
+"%path é um directório e não pode ser removido usando "
+"file_unmanaged_delete()"
+
+#: includes/file.inc:1265
+msgid "The file %path is not of a recognized type so it was not deleted."
+msgstr ""
+"O ficheiro %path não está num formato reconhecido, por isso não foi "
+"eliminado."
+
+#: includes/file.inc:2094
+msgid "The file permissions could not be set on %uri."
+msgstr "As permissões do ficheiro não podem ser definidas no %uri"
+
+#: includes/form.inc:3992
+msgid "Completed @current of @total."
+msgstr "Completado @current de @total."
+
+#: includes/install.inc:600
+msgid "%module module uninstalled."
+msgstr "Módulo %module desinstalado."
+
+#: includes/iso.inc:53
+msgid "Saint Barthélemy"
+msgstr "São Bartolomeu"
+
+#: includes/iso.inc:166
+msgid "Saint Martin (French part)"
+msgstr "São Martinho"
+
+#: includes/language.inc:243
+msgid "Use the default site language (@language_name)."
+msgstr "Use a linguagem por defeito ( @language_name)"
+
+#: includes/locale.inc:965
+msgid ""
+"The translation file %filepath contains an error: the plural formula "
+"could not be parsed."
+msgstr ""
+"O ficheiro %filepath de tradução contêm um erro: a fórmula plural "
+"não pode ser passada."
+
+#: includes/locale.inc:1617
+msgid "No strings available."
+msgstr "Não existem expressões disponíveis."
+
+#: includes/locale.inc:486
+msgid "@count disallowed HTML string(s) in %file"
+msgstr "@count expressões HTML não permitidas em %file"
+
+#: includes/locale.inc:1785
+msgid "JavaScript translation file %file.js was lost."
+msgstr "O ficheiro JavaScript de tradução %file foi perdido."
+
+#: includes/mail.inc:157
+msgid ""
+"Unable to send e-mail. Contact the site administrator if the problem "
+"persists."
+msgstr ""
+"Não é possível enviar o email. Contacte o administrador do site se "
+"o problema persistir."
+
+#: includes/mail.inc:252
+msgid "Class %class does not implement interface %interface"
+msgstr "A classe %class não instala o interface %interface"
+
+#: includes/menu.inc:3602
+msgid "Operating in maintenance mode. <a href=\"@url\">Go online.</a>"
+msgstr ""
+"A operar em modo de manutenção. <a href=\"@url\">Entrar em "
+"produção.</a>"
+
+#: includes/menu.inc:3605
+msgid "Operating in maintenance mode."
+msgstr "Operação em modo de manutenção."
+
+#: includes/module.inc:435
+msgid "%module module enabled."
+msgstr "Módulo %module activado."
+
+#: includes/module.inc:508
+msgid "%module module disabled."
+msgstr "Módulo %module desactivado."
+
+#: includes/theme.inc:1327
+msgid "Status message"
+msgstr "Mensagem de estado"
+
+#: includes/theme.inc:1871
+msgid "Subscribe to @feed-title"
+msgstr "Subscrever @feed-title"
+
+#: includes/theme.inc:779
+msgid "Theme key \"@key\" not found."
+msgstr "Chave do tema \"@key\" não encontrada."
+
+#: includes/updater.inc:100
+msgid "Unable to determine the type of the source directory."
+msgstr "Não é possíivel determinar o tipo da pasta de origem."
+
+#: includes/updater.inc:123
+msgid "Cannot determine the type of project."
+msgstr "Não é possível determinar o tipo do projecto."
+
+#: includes/updater.inc:183
+msgid "Unable to parse info file."
+msgstr "Impossível analisar o arquivo de informações."
+
+#: includes/updater.inc:230
+msgid ""
+"Fatal error in update, cowardly refusing to wipe out the install "
+"directory."
+msgstr ""
+"Erro fatal na actualização, sistema cobardemente a recusar-se a "
+"apagar a pasta de instalação."
+
+#: includes/updater.inc:258,294
+msgid "File Transfer failed, reason: !reason"
+msgstr "Transferência do Ficheiro falhou, motivo: !reason"
+
+#: includes/updater.inc:331
+msgid "Unable to create %directory due to the following: %reason"
+msgstr "Não foi possível criar %directory devido ao seguinte: %reason"
+
+#: includes/module.inc:427
+msgid "%module module installed."
+msgstr "Módulo %module instalado."
+
+#: includes/iso.inc:384
+msgid "Kyrgyz"
+msgstr "Kyrgyz"
+
+#: includes/theme.inc:745
+msgid "theme() may not be called until all modules are loaded."
+msgstr ""
+"theme() não pode ser chamado até todos os módulos estarem "
+"carregados."
+
+#: includes/iso.inc:339
+msgid "Filipino"
+msgstr ""
+
+#: includes/iso.inc:348
+msgid "Swiss German"
+msgstr ""
+
+#: includes/iso.inc:432
+msgid "Scots"
+msgstr ""
+
+#: includes/menu.inc:1540
+msgid "!local-task-title!active"
+msgstr "!local-task-title!active"
+
+#: includes/entity.inc:937
+msgid "Can't handle more than one field storage engine"
+msgstr ""
+
+#: includes/entity.inc:945
+msgid "Field storage engine not found."
+msgstr ""
+
+#: includes/entity.inc:959
+msgid "For this query an entity type must be specified."
+msgstr ""
+
+#: includes/entity.inc:965
+msgid "Entity %entity has no base table."
+msgstr "A entidade %entity não tem nenhuma tabela base."
+
+#: includes/entity.inc:1018
+msgid "Do not know how to order on @key for @entity_type"
+msgstr ""
+
+#: includes/iso.inc:394
+msgid "Māori"
+msgstr ""
+
+#: includes/common.inc:837
+msgid "Error opening socket @socket"
+msgstr ""
+
+#: includes/common.inc:2401
+msgid "delivery callback not found"
+msgstr ""
+
+#: includes/common.inc:2401
+msgid "callback %callback not found: %q."
+msgstr ""
+
+#: includes/file.inc:747
+msgid ""
+"The specified file %file could not be copied, because the destination "
+"is invalid. More information is available in the system log."
+msgstr ""
+
+#: includes/file.inc:863
+msgid ""
+"The specified file %file could not be copied, because the destination "
+"directory is not properly configured. This may be caused by a problem "
+"with file or directory permissions. More information is available in "
+"the system log."
+msgstr ""
+
+#: includes/file.inc:871
+msgid ""
+"The file %file could not be copied because a file by that name already "
+"exists in the destination directory."
+msgstr ""
+
+#: includes/file.inc:979
+msgid ""
+"The specified file %file could not be moved, because the destination "
+"is invalid. More information is available in the system log."
+msgstr ""
+
+#: includes/file.inc:1205
+msgid ""
+"The specified file %file could not be deleted, because it is not a "
+"valid URI. More information is available in the system log."
+msgstr ""
+
+#: includes/file.inc:1770
+msgid ""
+"The data could not be saved, because the destination is invalid. More "
+"information is available in the system log."
+msgstr ""
+
+#: includes/file.inc:746
+msgid ""
+"File %file (%realpath) could not be copied, because the destination "
+"%destination is invalid. This is often caused by improper use of "
+"file_copy() or a missing stream wrapper."
+msgstr ""
+
+#: includes/file.inc:842
+msgid "File %file (%realpath) could not be copied because it does not exist."
+msgstr ""
+
+#: includes/file.inc:862
+msgid ""
+"File %file could not be copied, because the destination directory "
+"%directory is not configured correctly."
+msgstr ""
+
+#: includes/file.inc:872
+msgid ""
+"File %file could not be copied because a file by that name already "
+"exists in the destination directory (%directory)"
+msgstr ""
+
+#: includes/file.inc:879
+msgid "File %file could not be copied because it would overwrite itself."
+msgstr ""
+
+#: includes/file.inc:886
+msgid "The specified file %file could not be copied to %destination."
+msgstr ""
+
+#: includes/file.inc:978
+msgid ""
+"File %file (%realpath) could not be moved, because the destination "
+"%destination is invalid. This may be caused by improper use of "
+"file_move() or a missing stream wrapper."
+msgstr ""
+
+#: includes/file.inc:1204
+msgid ""
+"File %file (%realpath) could not be deleted because it is not a valid "
+"URI. This may be caused by improper use of file_delete() or a missing "
+"stream wrapper."
+msgstr ""
+
+#: includes/file.inc:1769
+msgid ""
+"The data could not be saved because the destination %destination is "
+"invalid. This may be caused by improper use of file_save_data() or a "
+"missing stream wrapper."
+msgstr ""
+
+#: includes/form.inc:1014
+msgid ""
+"This form is outdated. Reload the page and try again. Contact the site "
+"administrator if the problem persists."
+msgstr ""
+
+#: includes/form.inc:2387
+msgid "- Select - "
+msgstr "- Seleccione - "
+
+#: includes/iso.inc:472
+msgid "Lolspeak"
+msgstr ""
+
+#: includes/errors.inc:222,230,247,213
+msgid "%type: !message in %function (line %line of %file)."
+msgstr ""
+
+#: includes/form.inc:3045
+msgid "Update @title"
+msgstr ""
+
+#: includes/form.inc:3118
+msgid ""
+"A unique machine-readable name. Can only contain lowercase letters, "
+"numbers, and underscores."
+msgstr ""
+
+#: includes/form.inc:3179
+msgid "The machine-readable name must contain unique characters."
+msgstr ""
+
+#: includes/form.inc:3188
+msgid ""
+"The machine-readable name must contain only lowercase letters, "
+"numbers, and hyphens."
+msgstr ""
+
+#: includes/form.inc:3204
+msgid "The machine-readable name is already in use. It must be unique."
+msgstr ""
+
+#: includes/iso.inc:301
+msgid "Asturian"
+msgstr ""
+
+#: includes/iso.inc:331
+msgid "English, British"
+msgstr ""
+
+#: includes/iso.inc:356
+msgid "Haitian Creole"
+msgstr ""
+
+#: includes/iso.inc:421
+msgid "Portuguese, International"
+msgstr ""
+
