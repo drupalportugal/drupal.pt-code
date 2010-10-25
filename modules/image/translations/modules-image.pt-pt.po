@@ -1,0 +1,812 @@
+# Portuguese, Portugal translation of Drupal core (7.0-beta2)
+# Copyright (c) 2010 by the Portuguese, Portugal translation team
+# Generated from files:
+#  image.admin.inc,v 1.27 2010/10/21 20:50:43 webchick
+#  image.field.inc,v 1.33 2010/10/22 00:42:42 dries
+#  image.effects.inc,v 1.5 2010/05/06 05:59:31 webchick
+#  image.module,v 1.53 2010/10/03 05:14:58 webchick
+#  image.install,v 1.13 2010/09/04 15:40:51 dries
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Drupal core (7.0-beta2)\n"
+"POT-Creation-Date: 2010-10-25 05:28+0000\n"
+"PO-Revision-Date: 2010-10-09 20:37+0000\n"
+"Language-Team: Portuguese, Portugal\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n!=1);\n"
+
+#: modules/image/image.admin.inc:579,581,582,583,585
+msgid "Center"
+msgstr "Centrar"
+
+#: modules/image/image.admin.inc:578,579,580
+msgid "Top"
+msgstr "Topo"
+
+#: modules/image/image.admin.inc:576
+msgid "Anchor"
+msgstr "Âncora"
+
+#: modules/image/image.admin.inc:584,585,586
+msgid "Bottom"
+msgstr "Baixo"
+
+#: modules/image/image.admin.inc:666
+msgid "Overridden"
+msgstr "Substituído"
+
+#: modules/image/image.field.inc:472
+msgid "Original image"
+msgstr "Imagem original"
+
+#: modules/image/image.admin.inc:511
+msgid "Width"
+msgstr "Largura"
+
+#: modules/image/image.admin.inc:521
+msgid "Height"
+msgstr "Altura"
+
+#: modules/image/image.admin.inc:622
+msgid "Background color"
+msgstr "Cor de fundo"
+
+#: modules/image/image.field.inc:127
+msgid "Minimum height"
+msgstr ""
+
+#: modules/image/image.field.inc:118
+msgid "Minimum width"
+msgstr ""
+
+#: modules/image/image.admin.inc:631
+msgid "Randomize"
+msgstr "Baralhar"
+
+#: modules/image/image.admin.inc:578,581,584
+msgid "Left"
+msgstr "Esquerda"
+
+#: modules/image/image.admin.inc:580,583,586
+msgid "Right"
+msgstr "Direita"
+
+#: modules/image/image.field.inc:356
+msgid "Alternate text"
+msgstr "Texto alternativo"
+
+#: modules/image/image.effects.inc:15
+msgid "Resize"
+msgstr "Redimensionar"
+
+#: modules/image/image.admin.inc:550
+msgid "Allow Upscaling"
+msgstr "Permitir aumento de resolução"
+
+#: modules/image/image.admin.inc:551
+msgid "Let scale make images larger than their original size"
+msgstr "Permitir que as imagens fiquem maiores que o seu tamanho original"
+
+#: modules/image/image.admin.inc:610
+msgid "Rotation angle"
+msgstr "Ângulo de rotação"
+
+#: modules/image/image.admin.inc:611
+msgid ""
+"The number of degrees the image should be rotated. Positive numbers "
+"are clockwise, negative are counter-clockwise."
+msgstr ""
+"O número de graus que a imagem deve ser rodada. Números positivos "
+"são no sentido do ponteiro do relógio, negativos são opostos ao "
+"ponteiro do relógio."
+
+#: modules/image/image.admin.inc:632
+msgid ""
+"Randomize the rotation angle for each image. The angle specified above "
+"is used as a maximum."
+msgstr ""
+"Baralhar o ângulo de rotação para cada imagem. O ângulo indicado "
+"acima é usado como um máximo."
+
+#: modules/image/image.effects.inc:36
+msgid "Crop"
+msgstr "Recortar"
+
+#: modules/image/image.admin.inc:132,730
+msgid "Effect"
+msgstr "Efeito"
+
+#: modules/image/image.admin.inc:800
+msgid "original"
+msgstr "original"
+
+#: modules/image/image.field.inc:98
+msgid "Maximum height"
+msgstr ""
+
+#: modules/image/image.field.inc:89
+msgid "Maximum width"
+msgstr ""
+
+#: modules/image/image.field.inc:80
+msgid "Maximum image resolution"
+msgstr "Resolução máxima da imagem"
+
+#: modules/image/image.field.inc:56
+msgid "Default image"
+msgstr "Imagem predefinida"
+
+#: modules/image/image.field.inc:359
+msgid ""
+"This text will be used by screen readers, search engines, or when the "
+"image cannot be loaded."
+msgstr ""
+"Este texto irá ser usado por leitores de ecrã, motores de pesquisa "
+"ou quando a imagem não poder ser carregada."
+
+#: modules/image/image.field.inc:368
+msgid ""
+"The title is used as a tool tip when the user hovers the mouse over "
+"the image."
+msgstr ""
+"O título é usado como uma mensagem quando o utilizador passa com o "
+"rato sobre a imagem."
+
+#: modules/image/image.effects.inc:48
+msgid "Rotate"
+msgstr "Rodar"
+
+#: modules/image/image.admin.inc:867
+msgid "width @width"
+msgstr "largura @width"
+
+#: modules/image/image.admin.inc:867
+msgid "height @height"
+msgstr "altura @height"
+
+#: modules/image/image.admin.inc:882
+msgid "upscaling allowed"
+msgstr "aumento de resolução permitido"
+
+#: modules/image/image.admin.inc:909
+msgid "random between -@degrees&deg and @degrees&deg"
+msgstr "aleatório entre -@degrees&deg e @degrees&deg"
+
+#: modules/image/image.admin.inc:909
+msgid "@degrees&deg"
+msgstr "@degrees&deg"
+
+#: modules/image/image.module:123
+msgid "Edit style"
+msgstr "Editar estilo"
+
+#: modules/image/image.module:131
+msgid "Delete style"
+msgstr "Eliminar estilo"
+
+#: modules/image/image.admin.inc:39
+msgid "Edit %name style"
+msgstr "Editar estilo %name"
+
+#: modules/image/image.admin.inc:46
+msgid ""
+"This image style is currently being provided by a module. Click the "
+"\"Override defaults\" button to change its settings."
+msgstr ""
+"O estilo de imagem está a ser fornecido por um módulo. Cliquem no "
+"botão \"contornar prédefinições\" para alterar as definições."
+
+#: modules/image/image.admin.inc:65,74
+msgid "Image style name"
+msgstr "Nome do estilo de imagem"
+
+#: modules/image/image.admin.inc:67
+msgid ""
+"This image style is being provided by %module module and may not be "
+"renamed."
+msgstr ""
+"O estilo de imagem está a ser fornecido pelo módulo %module e não "
+"pode ser renomeado."
+
+#: modules/image/image.admin.inc:76,248
+msgid ""
+"The name is used in URLs for generated images. Use only lowercase "
+"alphanumeric characters, underscores (_), and hyphens (-)."
+msgstr ""
+"O nome é usado nos URL para gerar imagens. Use apenas minúsculas de "
+"caracteres alfanuméricos, traços inferiores e hífens."
+
+#: modules/image/image.admin.inc:135
+msgid "Select a new effect"
+msgstr "Seleccione um novo efeito"
+
+#: modules/image/image.admin.inc:154
+msgid "Override defaults"
+msgstr "Contornar prédefinições"
+
+#: modules/image/image.admin.inc:161,229
+msgid "Update style"
+msgstr "Actualizar estilo"
+
+#: modules/image/image.admin.inc:173
+msgid "Select an effect to add."
+msgstr "Seleccione um efeito a adicionar."
+
+#: modules/image/image.admin.inc:195,425
+msgid "The image effect was successfully applied."
+msgstr "O efeito de imagem foi aplicado com sucesso."
+
+#: modules/image/image.admin.inc:203
+msgid ""
+"The %style style has been overridden, allowing you to change its "
+"settings."
+msgstr ""
+"O estilo %style foi contornado com sucesso, permitindo-lhe alterar as "
+"suas definições."
+
+#: modules/image/image.admin.inc:246,650
+msgid "Style name"
+msgstr "Nome do estilo"
+
+#: modules/image/image.admin.inc:255
+msgid "Create new style"
+msgstr "Criar novo estilo"
+
+#: modules/image/image.admin.inc:267
+msgid "Style %name was created."
+msgstr "Estilo %name foi criado"
+
+#: modules/image/image.admin.inc:278
+msgid "The image style name %name is already in use."
+msgstr "O estilo de imagem %name já está em uso."
+
+#: modules/image/image.admin.inc:283
+msgid ""
+"Please only use lowercase alphanumeric characters, underscores (_), "
+"and hyphens (-) for style names."
+msgstr ""
+"Por favor use apenas minúsculas de caracteres alfanuméricos, traços "
+"inferiores e hífens para nomes de estilos."
+
+#: modules/image/image.admin.inc:304
+msgid "No replacement, just delete"
+msgstr "Não é possível substituição, apenas eliminação"
+
+#: modules/image/image.admin.inc:301
+msgid "Replacement style"
+msgstr "Estilo de substituição"
+
+#: modules/image/image.admin.inc:309
+msgid "Optionally select a style before deleting %style"
+msgstr "Opcionalmente seleccione um estilo antes de eliminar o estilo %style"
+
+#: modules/image/image.admin.inc:311
+msgid ""
+"If this style is in use on the site, you may select another style to "
+"replace it. All images that have been generated for this style will be "
+"permanently deleted."
+msgstr ""
+"Se este estilo estiver em utilização no site, pode seleccionar outro "
+"estilo para o substituir. Todas as imagens que tiverem sido geradas "
+"pelo estilo serão eliminadas definitivamente."
+
+#: modules/image/image.admin.inc:323
+msgid "Style %name was deleted."
+msgstr "O estilo %name foi eliminado."
+
+#: modules/image/image.admin.inc:335
+msgid "Revert the %style style?"
+msgstr "Reverter o estilo %style?"
+
+#: modules/image/image.admin.inc:337
+msgid ""
+"Reverting this style will delete the customized settings and restore "
+"the defaults provided by the @module module."
+msgstr ""
+"Ao reverter este estilo irá eliminar as definições personalizadas e "
+"recuperar as predefinições fornecidas pelo módulo @module."
+
+#: modules/image/image.admin.inc:346
+msgid "The %style style has been revert to its defaults."
+msgstr "O estilo %style for revertido para o predefinido."
+
+#: modules/image/image.admin.inc:376
+msgid "Edit %label effect"
+msgstr "Editar efeito %label"
+
+#: modules/image/image.admin.inc:379
+msgid "Add %label effect"
+msgstr "Adicionar efeito %label"
+
+#: modules/image/image.admin.inc:406
+msgid "Update effect"
+msgstr "Actualizar efeito"
+
+#: modules/image/image.admin.inc:406
+msgid "Add effect"
+msgstr "adicionar efeito"
+
+#: modules/image/image.admin.inc:443
+msgid ""
+"Are you sure you want to delete the @effect effect from the %style "
+"style?"
+msgstr "Tem a certeza que pretende eliminar o efeito @effect do estilo %style?"
+
+#: modules/image/image.admin.inc:455
+msgid "The image effect %name has been deleted."
+msgstr "O efeito de imagem %name foi eliminado."
+
+#: modules/image/image.admin.inc:468
+msgid "!name must be an integer."
+msgstr "!name deve ser um número inteiro."
+
+#: modules/image/image.admin.inc:471
+msgid "!name must be a positive integer."
+msgstr "!name deve ser um número inteiro positivo."
+
+#: modules/image/image.admin.inc:483
+msgid "!name must be a hexadecimal color value."
+msgstr "!name deve ser um valor de cor hexadecimal."
+
+#: modules/image/image.admin.inc:494
+msgid "Width and height can not both be blank."
+msgstr "A largura e altura não podem ficar em branco em simultâneo."
+
+#: modules/image/image.admin.inc:590
+msgid "The part of the image that will be retained during the crop."
+msgstr "A secção da imagem que irá permanecer após o corte"
+
+#: modules/image/image.admin.inc:623
+msgid ""
+"The background color to use for exposed areas of the image. Use "
+"web-style hex colors (#FFFFFF for white, #000000 for black). Leave "
+"blank for transparency on image types that support it."
+msgstr ""
+"A cor de fundo para usar nas áreas expostas da imagem. Utilize cores "
+"hexadecimais em formato Internet (#FFFFFF para branco, #000000 para "
+"preto). Deixe em branco para transparência em imagens que suportem "
+"esta opção."
+
+#: modules/image/image.admin.inc:681
+msgid "There are currently no styles. <a href=\"!url\">Add a new one</a>."
+msgstr ""
+"Actualmente não existem estilo. <a href=\"!url\">Adicionar um "
+"novo</a>."
+
+#: modules/image/image.admin.inc:737
+msgid ""
+"There are currently no effects in this style. Add one by selecting an "
+"option below."
+msgstr ""
+"Não existem actualmente efeitos para este estilo. Adicione um "
+"seleccionando uma opção abaixo."
+
+#: modules/image/image.admin.inc:800,811
+msgid "view actual size"
+msgstr "ver o tamanho actual"
+
+#: modules/image/image.admin.inc:802
+msgid "Sample original image"
+msgstr "Exemplo da imagem original"
+
+#: modules/image/image.admin.inc:813
+msgid "Sample modified image"
+msgstr "Exemplo da imagem modificada"
+
+#: modules/image/image.effects.inc:16
+msgid ""
+"Resizing will make images an exact set of dimensions. This may cause "
+"images to be stretched or shrunk disproportionately."
+msgstr ""
+"Alterar a dimensão irá alterar as dimensões da imagem para uma "
+"dimensão específica. Esta acção poderá distorcer a proporção "
+"das imagens de uma forma significativa."
+
+#: modules/image/image.effects.inc:23
+msgid ""
+"Scaling will maintain the aspect-ratio of the original image. If only "
+"a single dimension is specified, the other dimension will be "
+"calculated."
+msgstr ""
+"O dimensionamento mantém a proporção da imagem original. Se apenas "
+"uma dimensão for indicada, a outra dimensão será calculada."
+
+#: modules/image/image.effects.inc:29
+msgid "Scale and crop"
+msgstr "Dimensionar e recortar"
+
+#: modules/image/image.effects.inc:30
+msgid ""
+"Scale and crop will maintain the aspect-ratio of the original image, "
+"then crop the larger dimension. This is most useful for creating "
+"perfectly square thumbnails without stretching the image."
+msgstr ""
+"Dimensionar e recortar ira manter as proporções da imagem original e "
+"posteriormente recortar a dimensão mais larga. Esta função é mais "
+"útil para criar miniaturas perfeitamente quadradas sem distorcer a "
+"imagem."
+
+#: modules/image/image.effects.inc:37
+msgid ""
+"Cropping will remove portions of an image to make it the specified "
+"dimensions."
+msgstr ""
+"O recorte de uma imagem irá remover pedaços da imagem por forma a "
+"fazê-la ter as dimensões indicadas."
+
+#: modules/image/image.effects.inc:43
+msgid "Desaturate"
+msgstr "Reduzir saturação"
+
+#: modules/image/image.effects.inc:44
+msgid "Desaturate converts an image to grayscale."
+msgstr "A redução de saturação converte a imagem para tons de cinzento."
+
+#: modules/image/image.effects.inc:49
+msgid ""
+"Rotating an image may cause the dimensions of an image to increase to "
+"fit the diagonal."
+msgstr ""
+"Rodar uma imagem pode aumentar as dimensões de uma imagem por forma a "
+"que esta mantenha a mesma dimensão diagonal."
+
+#: modules/image/image.effects.inc:77
+msgid ""
+"Image resize failed using the %toolkit toolkit on %path (%mimetype, "
+"%dimensions)"
+msgstr ""
+"Falha no redimensionamento da imagem, usando o %toolkit toolkit em "
+"%path (%mimetype, %dimensions)"
+
+#: modules/image/image.effects.inc:112
+msgid ""
+"Image scale failed using the %toolkit toolkit on %path (%mimetype, "
+"%dimensions)"
+msgstr ""
+"Falha na alteração da escala da imagem, usando o %toolkit toolkit em "
+"%path (%mimetype, %dimensions)"
+
+#: modules/image/image.effects.inc:146
+msgid ""
+"Image crop failed using the %toolkit toolkit on %path (%mimetype, "
+"%dimensions)"
+msgstr ""
+"Falha no recorte de imagem, usando o %toolkit toolkit em %path "
+"(%mimetype, %dimensions)"
+
+#: modules/image/image.effects.inc:168
+msgid ""
+"Image scale and crop failed using the %toolkit toolkit on %path "
+"(%mimetype, %dimensions)"
+msgstr ""
+"Falha na alteração da escala e recorte da imagem, usando o %toolkit "
+"toolkit em %path (%mimetype, %dimensions)"
+
+#: modules/image/image.effects.inc:187
+msgid ""
+"Image desaturate failed using the %toolkit toolkit on %path "
+"(%mimetype, %dimensions)"
+msgstr ""
+"Falha na redução da saturação da imagem, usando o %toolkit toolkit "
+"em %path (%mimetype, %dimensions)"
+
+#: modules/image/image.effects.inc:240
+msgid ""
+"Image rotate failed using the %toolkit toolkit on %path (%mimetype, "
+"%dimensions)"
+msgstr ""
+"Falha na rotação da imagem, usando o %toolkit toolkit em %path "
+"(%mimetype, %dimensions)"
+
+#: modules/image/image.field.inc:16
+msgid "This field stores the ID of an image file as an integer value."
+msgstr ""
+"Este campo guarda o ID de um ficheiro de imagem com um número "
+"inteiro."
+
+#: modules/image/image.field.inc:58
+msgid "If no image is uploaded, this image will be shown on display."
+msgstr "Se nenhuma imagem for carregada esta imagem irá ser exibida."
+
+#: modules/image/image.field.inc:85
+msgid ""
+"The maximum allowed image size expressed as WIDTHxHEIGHT (e.g. "
+"640x480). Leave blank for no restriction. If a larger image is "
+"uploaded, it will be resized to reflect the given width and height. "
+"Resizing images on upload will cause the loss of <a "
+"href=\"http://en.wikipedia.org/wiki/Exchangeable_image_file_format\">EXIF "
+"data</a> in the image."
+msgstr ""
+"O tamanho máximo permitido para a imagem, expresso como "
+"LARGURAxALTURA (ex.: 640x480). Defina como 0 para que não exista "
+"qualquer restrição. Se for enviada uma imagem maior esta será "
+"redimensionada para reflectir a largura e altura indicadas, "
+"Redimensionar as imagens no momento do carregamento pode causar a "
+"perda de <a href=\"http://pt.wikipedia.org/wiki/Exif\">dados EXIF</a> "
+"da imagem."
+
+#: modules/image/image.field.inc:109
+msgid "Minimum image resolution"
+msgstr "Resolução mínima da imagem"
+
+#: modules/image/image.field.inc:114
+msgid ""
+"The minimum allowed image size expressed as WIDTHxHEIGHT (e.g. "
+"640x480). Leave blank for no restriction. If a smaller image is "
+"uploaded, it will be rejected."
+msgstr ""
+"O tamanho mínimo permitido para a imagem, expresso como "
+"LARGURAxALTURA (ex.: 640x480). Defina como 0 para que não exista "
+"qualquer restrição. Se uma imagem inferior for enviada o sistema "
+"irá rejeitá-la."
+
+#: modules/image/image.field.inc:141
+msgid "Enable <em>Alt</em> field"
+msgstr "Activar campo <em>Alt</em>"
+
+#: modules/image/image.field.inc:143
+msgid ""
+"The alt attribute may be used by search engines, screen readers, and "
+"when the image cannot be loaded."
+msgstr ""
+"O atributo <em>alt</em> pode ser utilizado por motores de pesquisa, "
+"leitores de ecrã ou quando uma imagem não possa ser carregada."
+
+#: modules/image/image.field.inc:148
+msgid "Enable <em>Title</em> field"
+msgstr "Activar campo <em>Title</em>"
+
+#: modules/image/image.field.inc:150
+msgid ""
+"The title attribute is used as a tooltip when the mouse hovers over "
+"the image."
+msgstr ""
+"O atributo <em>title</em> é utilizado como uma mensagem quando o rato "
+"passa sobre a imagem."
+
+#: modules/image/image.field.inc:165
+msgid "Height and width values must be numeric."
+msgstr "Os valores da altura e da largura deve ambos ser númericos."
+
+#: modules/image/image.field.inc:169
+msgid "Both a height and width value must be specified in the !name field."
+msgstr "A altura e a largura devem ser indicado no campo !name."
+
+#: modules/image/image.field.inc:278
+msgid "Preview image style"
+msgstr "Pré-visualizar o estilo de imagem"
+
+#: modules/image/image.field.inc:281
+msgid "no preview"
+msgstr "não existe pré-visualização"
+
+#: modules/image/image.field.inc:283
+msgid "The preview image will be shown while editing the content."
+msgstr ""
+"A pré-visualização ira ser mostrada quando estiver a editar "
+"conteúdos."
+
+#: modules/image/image.module:45
+msgid ""
+"The Image module allows you to manipulate images on your website. It "
+"exposes a setting for using the <em>Image toolkit</em>, allows you to "
+"configure <em>Image styles</em> that can be used for resizing or "
+"adjusting images on display, and provides an <em>Image</em> field for "
+"attaching images to content. For more information, see the online "
+"handbook entry for <a href=\"@image\">Image module</a>."
+msgstr ""
+"O módulo Image permite manipular imagens no seu site. Ao activá-lo "
+"este dá-lhe uma opção para usar as <em>ferramentas de imagem</em>, "
+"permite-lhe configura <em>estilo de imagem</em> que podem ser usados "
+"para redimensionar ou ajustar imagens e fornece um campo "
+"<em>Imagem</em> para anexar imagens aos conteúdos. Para informações "
+"adicionais consulte a entrada <a href=\"\"@image\">módulo Imagem</a> "
+"no manual."
+
+#: modules/image/image.module:48
+msgid "Manipulating images"
+msgstr "Manipulando imagens"
+
+#: modules/image/image.module:49
+msgid ""
+"With the Image module you can scale, crop, resize, rotate and "
+"desaturate images without affecting the original image using <a "
+"href=\"@image\">image styles</a>. When you change an image style, the "
+"module automatically refreshes all created images. Every image style "
+"must have a name, which will be used in the URL of the generated "
+"images. There are two common approaches to naming image styles (which "
+"you use will depend on how the image style is being applied):"
+msgstr ""
+
+#: modules/image/image.module:50
+msgid "Based on where it will be used: eg. <em>profile-picture</em>"
+msgstr ""
+
+#: modules/image/image.module:51
+msgid "Describing its appearance: eg. <em>square-85x85</em>"
+msgstr ""
+
+#: modules/image/image.module:52
+msgid ""
+"After you create an image style, you can add effects: crop, scale, "
+"resize, rotate, desaturate, and rotate (other contributed modules "
+"provide additional effects). For example, by combining effects as "
+"crop, scale, and desaturate, you can create square, grayscale "
+"thumbnails."
+msgstr ""
+
+#: modules/image/image.module:53
+msgid "Attaching images to content as fields"
+msgstr ""
+
+#: modules/image/image.module:54
+msgid ""
+"Image module also allows you to attach images to content as fields. To "
+"add an image field to a <a href='@content-type'>content type</a>, go "
+"to the content type's <em>manage fields</em> page, and add a new field "
+"of type <em>Image</em>. Attaching images to content this way allows "
+"image styles to be applied and maintained, and also allows you more "
+"flexibility when theming."
+msgstr ""
+
+#: modules/image/image.module:58
+msgid ""
+"Image styles commonly provide thumbnail sizes by scaling and cropping "
+"images, but can also add various effects before an image is displayed. "
+"When an image is displayed with a style, a new file is created and the "
+"original image is left unchanged."
+msgstr ""
+
+#: modules/image/image.module:238
+msgid "Administer image styles"
+msgstr "Administrar estilos de imagens"
+
+#: modules/image/image.module:239
+msgid ""
+"Create and modify styles for generating image modifications such as "
+"thumbnails."
+msgstr ""
+
+#: modules/image/image.module:635
+msgid "No defined styles"
+msgstr ""
+
+#: modules/image/image.module:691
+msgid "Image generation in progress. Try again shortly."
+msgstr ""
+
+#: modules/image/image.module:711
+msgid "Error generating image."
+msgstr ""
+
+#: modules/image/image.module:709
+msgid "Unable to generate the derived image located at %path."
+msgstr ""
+
+#: modules/image/image.module:735
+msgid "Failed to create style directory: %directory"
+msgstr ""
+
+#: modules/image/image.module:749
+msgid ""
+"Cached image file %destination already exists. There may be an issue "
+"with your rewrite configuration."
+msgstr ""
+
+#: modules/image/image.module:81,90
+msgid "Generate image style"
+msgstr "Gerar estilo de imagem"
+
+#: modules/image/image.module:97
+msgid "Image styles"
+msgstr "Estilos de Imagens"
+
+#: modules/image/image.module:98
+msgid ""
+"Configure styles that can be used for resizing or adjusting images on "
+"display."
+msgstr ""
+"Configura estilos que podem ser usados para redimensionar ou ajudar "
+"imagens que estejam a ser exibidas."
+
+#: modules/image/image.module:105
+msgid "List the current image styles on the site."
+msgstr "Listar os estilos de imagens actualmente no site."
+
+#: modules/image/image.module:113
+msgid "Add style"
+msgstr "Adicionar estilo"
+
+#: modules/image/image.module:114
+msgid "Add a new image style."
+msgstr "Adicionar um novo estilo de imagem."
+
+#: modules/image/image.module:124
+msgid "Configure an image style."
+msgstr "Configurar um estilo de imagem."
+
+#: modules/image/image.module:132
+msgid "Delete an image style."
+msgstr "Eliminar um estilo de imagem."
+
+#: modules/image/image.module:140
+msgid "Revert style"
+msgstr "Reverter estilo"
+
+#: modules/image/image.module:141
+msgid "Revert an image style."
+msgstr "Reverter um estilo de imagem."
+
+#: modules/image/image.module:149
+msgid "Edit image effect"
+msgstr "Editar efeito de imagem"
+
+#: modules/image/image.module:158
+msgid "Delete image effect"
+msgstr "Eliminar um efeito de imagem"
+
+#: modules/image/image.module:167
+msgid "Add image effect"
+msgstr "Adicionar um efeito de imagem."
+
+#: modules/image/image.module:168
+msgid "Add a new effect to a style."
+msgstr "Adicionar um novo efeito a um estilo."
+
+#: modules/image/image.field.inc:432
+msgid "Image style"
+msgstr "Estilo da imagem"
+
+#: modules/image/image.install:251
+msgid ""
+"The GD Library for PHP is enabled, but was compiled without support "
+"for functions used by the rotate and desaturate effects. It was "
+"probably compiled using the official GD libraries from "
+"http://www.libgd.org instead of the GD library bundled with PHP. You "
+"should recompile PHP --with-gd using the bundled GD library. See <a "
+"href=\"http://www.php.net/manual/book.image.php\">the PHP manual</a>."
+msgstr ""
+
+#: modules/image/image.install:261
+msgid "GD library rotate and desaturate effects"
+msgstr ""
+
+#: modules/image/image.module:150
+msgid "Edit an existing effect within a style."
+msgstr "Editar um efeito existente dentro de um estilo."
+
+#: modules/image/image.module:159
+msgid "Delete an existing effect from a style."
+msgstr "Excluir um efeito de um estilo existente."
+
+#: modules/image/image.field.inc:435
+msgid "None (original image)"
+msgstr "Nenhuma (imagem original)"
+
+#: modules/image/image.field.inc:444
+msgid "Link image to"
+msgstr "Ligar imagem a"
+
+#: modules/image/image.field.inc:469
+msgid "Image style: @style"
+msgstr "Estilo da imagem: @style"
+
+#: modules/image/image.field.inc:476
+msgid "Linked to content"
+msgstr "Ligado ao contéudo"
+
+#: modules/image/image.field.inc:477
+msgid "Linked to file"
+msgstr ""
+
+#: modules/image/image.field.inc:447
+msgid "Nothing"
+msgstr ""
+
+#: modules/image/image.admin.inc:139
+msgid "Weight for new effect"
+msgstr ""
+

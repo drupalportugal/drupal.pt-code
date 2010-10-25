@@ -1,0 +1,336 @@
+# Portuguese, Portugal translation of Drupal core (7.0-beta2)
+# Copyright (c) 2010 by the Portuguese, Portugal translation team
+# Generated from files:
+#  shortcut.install,v 1.6 2010/08/22 13:55:53 dries
+#  shortcut.admin.inc,v 1.16 2010/10/20 01:31:07 dries
+#  shortcut.module,v 1.27 2010/09/24 00:37:44 dries
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Drupal core (7.0-beta2)\n"
+"POT-Creation-Date: 2010-10-25 05:28+0000\n"
+"PO-Revision-Date: 2010-08-22 12:31+0000\n"
+"Language-Team: Portuguese, Portugal\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n!=1);\n"
+
+#: modules/shortcut/shortcut.install:25
+msgid "Find content"
+msgstr "Encontrar conteúdo"
+
+#: modules/shortcut/shortcut.admin.inc:212,601
+msgid "Set name"
+msgstr "Nome do conjunto"
+
+#: modules/shortcut/shortcut.admin.inc:372
+msgid "Empty"
+msgstr "Vazio"
+
+#: modules/shortcut/shortcut.module:191,72,153
+msgid "Shortcuts"
+msgstr "Atalhos"
+
+#: modules/shortcut/shortcut.admin.inc:57
+msgid "New set"
+msgstr ""
+
+#: modules/shortcut/shortcut.admin.inc:68
+msgid "Choose a set of shortcuts to use"
+msgstr ""
+
+#: modules/shortcut/shortcut.admin.inc:68
+msgid "Choose a set of shortcuts for this user"
+msgstr ""
+
+#: modules/shortcut/shortcut.admin.inc:146
+msgid ""
+"You are now using the new %set_name shortcut set. You can edit it from "
+"this page or <a href=\"@switch-url\">switch back to a different "
+"one.</a>"
+msgstr ""
+
+#: modules/shortcut/shortcut.admin.inc:149
+msgid ""
+"%user is now using a new shortcut set called %set_name. You can edit "
+"it from this page."
+msgstr ""
+
+#: modules/shortcut/shortcut.admin.inc:160
+msgid "You are now using the %set_name shortcut set."
+msgstr ""
+
+#: modules/shortcut/shortcut.admin.inc:160
+msgid "%user is now using the %set_name shortcut set."
+msgstr ""
+
+#: modules/shortcut/shortcut.admin.inc:94
+msgid "Change set"
+msgstr ""
+
+#: modules/shortcut/shortcut.admin.inc:324
+msgid "The shortcut set has been updated."
+msgstr ""
+
+#: modules/shortcut/shortcut.admin.inc:411
+msgid "Add new shortcut"
+msgstr "Adicionar novo atalho"
+
+#: modules/shortcut/shortcut.admin.inc:438
+msgid "Editing @shortcut"
+msgstr "Editando @shortcut"
+
+#: modules/shortcut/shortcut.admin.inc:472
+msgid "The name of the shortcut."
+msgstr ""
+
+#: modules/shortcut/shortcut.admin.inc:481
+msgid "The path to the shortcut."
+msgstr ""
+
+#: modules/shortcut/shortcut.admin.inc:504
+msgid "The link must correspond to a valid path on the site."
+msgstr ""
+
+#: modules/shortcut/shortcut.admin.inc:519
+msgid "The shortcut %link has been updated."
+msgstr ""
+
+#: modules/shortcut/shortcut.admin.inc:533,762
+msgid "Added a shortcut for %title."
+msgstr ""
+
+#: modules/shortcut/shortcut.admin.inc:726
+msgid "Are you sure you want to delete the shortcut %title?"
+msgstr ""
+
+#: modules/shortcut/shortcut.admin.inc:741
+msgid "The shortcut %title has been deleted."
+msgstr ""
+
+#: modules/shortcut/shortcut.admin.inc:765
+msgid "Unable to add a shortcut for %title."
+msgstr ""
+
+#: modules/shortcut/shortcut.module:32
+msgid "Adding and removing shortcuts"
+msgstr ""
+
+#: modules/shortcut/shortcut.module:34
+msgid "Displaying shortcuts"
+msgstr ""
+
+#: modules/shortcut/shortcut.module:35
+msgid ""
+"You can display your shortcuts by enabling the Shortcuts block on the "
+"<a href=\"@blocks\">Blocks administration page</a>. Certain "
+"administrative modules also display your shortcuts; for example, the "
+"core <a href=\"@toolbar-help\">Toolbar module</a> displays them near "
+"the top of the page, along with an <em>Edit shortcuts</em> link."
+msgstr ""
+
+#: modules/shortcut/shortcut.module:54
+msgid "Administer shortcuts"
+msgstr "Adminstrar atalhos"
+
+#: modules/shortcut/shortcut.module:204
+msgid "@shortcut_set shortcuts"
+msgstr ""
+
+#: modules/shortcut/shortcut.module:672
+msgid "Add to %shortcut_set shortcuts"
+msgstr ""
+
+#: modules/shortcut/shortcut.module:672
+msgid "Add to shortcuts"
+msgstr "Adicionar aos atalhos"
+
+#: modules/shortcut/shortcut.module:677
+msgid "Remove from %shortcut_set shortcuts"
+msgstr ""
+
+#: modules/shortcut/shortcut.module:677
+msgid "Remove from shortcuts"
+msgstr "Eliminar dos atalhos"
+
+#: modules/shortcut/shortcut.module:719,87
+msgid "Edit shortcuts"
+msgstr "Editar atalhos"
+
+#: modules/shortcut/shortcut.module:119,128
+msgid "Add shortcut"
+msgstr "Adicionar atalho"
+
+#: modules/shortcut/shortcut.module:137
+msgid "Edit shortcut"
+msgstr "Editar atalho"
+
+#: modules/shortcut/shortcut.module:145
+msgid "Delete shortcut"
+msgstr "Eliminar atalho"
+
+#: modules/shortcut/shortcut.admin.inc:77,213
+msgid ""
+"The new set is created by copying items from your default shortcut "
+"set."
+msgstr ""
+"O novo conjunto é criado copiando itens do seu conjunto de atalhos "
+"pré definido."
+
+#: modules/shortcut/shortcut.admin.inc:83
+msgid "The new set is created by copying items from the %default set."
+msgstr "O novo conjunto foi criado copiando os items do conjunto %default."
+
+#: modules/shortcut/shortcut.admin.inc:100
+msgid "You are currently using the %set-name shortcut set."
+msgstr "Está presentemente a utilizar o conjunto de atalho %set-name."
+
+#: modules/shortcut/shortcut.admin.inc:179
+msgid "edit set name"
+msgstr "edite o nome do conjunto"
+
+#: modules/shortcut/shortcut.admin.inc:182
+msgid "delete set"
+msgstr "apagar o conjunto"
+
+#: modules/shortcut/shortcut.admin.inc:220
+msgid "Create new set"
+msgstr "Criar novo conjunto"
+
+#: modules/shortcut/shortcut.admin.inc:247
+msgid ""
+"The %set_name shortcut set has been created. You can edit it from this "
+"page."
+msgstr ""
+"O conjunto de atalhos %set-name foi criado. Pode editá-lo a partir "
+"desta página."
+
+#: modules/shortcut/shortcut.admin.inc:635
+msgid "Updated set name to %set-name."
+msgstr "Actualizado o nome do conjunto para %set-name."
+
+#: modules/shortcut/shortcut.admin.inc:675
+msgid ""
+"If you have chosen this shortcut set as the default for some or all "
+"users, they may also be affected by deleting it."
+msgstr ""
+"Se escolheu este conjunto de atalhos para ser o pré definido para "
+"alguns ou todos os utilizadores, se o apagar vai afectá-los também"
+
+#: modules/shortcut/shortcut.admin.inc:684
+msgid "Are you sure you want to delete the shortcut set %title?"
+msgstr "Tem a certeza de que quer apagar o conjunto de atalhos %title?"
+
+#: modules/shortcut/shortcut.admin.inc:699
+msgid "The shortcut set %title has been deleted."
+msgstr "O conjunto de atalhos %title foi apagado."
+
+#: modules/shortcut/shortcut.admin.inc:667
+msgid "1 user has chosen or been assigned to this shortcut set."
+msgid_plural "@count users have chosen or been assigned to this shortcut set."
+msgstr[0] ""
+msgstr[1] ""
+
+#: modules/shortcut/shortcut.module:26
+msgid ""
+"The Shortcut module allows users to create sets of <em>shortcut</em> "
+"links to commonly-visited pages of the site. Shortcuts are contained "
+"within <em>sets</em>. Each user with <em>Select any shortcut set</em> "
+"permission can select a shortcut set created by anyone at the site. "
+"For more information, see the online handbook entry for <a "
+"href=\"@shortcut\">Shortcut module</a>."
+msgstr ""
+
+#: modules/shortcut/shortcut.module:28
+msgid "Administering shortcuts"
+msgstr "Administrando atalhos"
+
+#: modules/shortcut/shortcut.module:29
+msgid ""
+"Users with the <em>Administer shortcuts</em> permission can manage "
+"shortcut sets and edit the shortcuts within sets from the <a "
+"href=\"@shortcuts\">Shortcuts administration page</a>."
+msgstr ""
+
+#: modules/shortcut/shortcut.module:30
+msgid "Choosing shortcut sets"
+msgstr "Escolhendo um conjunto de atalhos"
+
+#: modules/shortcut/shortcut.module:31
+msgid ""
+"Users with permission to switch shortcut sets can choose a shortcut "
+"set to use from the Shortcuts tab of their user account page."
+msgstr ""
+"Utilizadores com permissão para trocar os conjuntos de atalho podem "
+"escolher um conjunto de atalho para usar na guia Atalhos na página da "
+"sua conta de utilizador."
+
+#: modules/shortcut/shortcut.module:33
+msgid ""
+"The Shortcut module creates an add/remove link for each page on your "
+"site; the link lets you add or remove the current page from the "
+"currently-enabled set of shortcuts (if your theme displays it and you "
+"have permission to edit your shortcut set). The core Seven "
+"administration theme displays this link next to the page title, as a "
+"small + or - sign. If you click on the + sign, you will add that page "
+"to your preferred set of shortcuts. If the page is already part of "
+"your shortcut set, the link will be a - sign, and will allow you to "
+"remove the current page from your shortcut set."
+msgstr ""
+
+#: modules/shortcut/shortcut.module:42
+msgid ""
+"Define which shortcut set you are using on the <a "
+"href=\"@shortcut-link\">Shortcuts tab</a> of your account page."
+msgstr ""
+
+#: modules/shortcut/shortcut.module:57
+msgid "Edit current shortcut set"
+msgstr "Edite o presente conjunto de atalhos"
+
+#: modules/shortcut/shortcut.module:58
+msgid ""
+"Editing the current shortcut set will affect other users if that set "
+"has been assigned to or selected by other users. Granting \"Select any "
+"shortcut set\" permission along with this permission will grant "
+"permission to edit any shortcut set."
+msgstr ""
+
+#: modules/shortcut/shortcut.module:61
+msgid "Select any shortcut set"
+msgstr "Seleccione qualquer conjunto de atalhos"
+
+#: modules/shortcut/shortcut.module:62
+msgid ""
+"From all shortcut sets, select one to be own active set. Without this "
+"permission, an administrator selects shortcut sets for users."
+msgstr ""
+"De todos os conjuntos de atalhos, seleccione um para ser o conjunto "
+"activo. Sem esta permissão, um administrador selecciona um conjunto "
+"de atalhos para os utilizadores."
+
+#: modules/shortcut/shortcut.module:73
+msgid "Add and modify shortcut sets."
+msgstr "Adicione e modifique um conjunto de atalhos"
+
+#: modules/shortcut/shortcut.module:79
+msgid "Add shortcut set"
+msgstr "Adicione um conjunto de atalhos"
+
+#: modules/shortcut/shortcut.module:101
+msgid "Edit set name"
+msgstr "Edite o nome do conjunto"
+
+#: modules/shortcut/shortcut.module:111
+msgid "Delete shortcut set"
+msgstr "Apague o conjunto de atalhos"
+
+#: modules/shortcut/shortcut.admin.inc:114
+msgid "The new set name is required."
+msgstr "O novo nome do conjunto é necessário"
+
+#: modules/shortcut/shortcut.admin.inc:118,232,624
+msgid "The shortcut set %name already exists. Choose another name."
+msgstr ""
+

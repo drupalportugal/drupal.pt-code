@@ -1,0 +1,603 @@
+# Portuguese, Portugal translation of Drupal core (7.0-beta2)
+# Copyright (c) 2010 by the Portuguese, Portugal translation team
+# Generated from files:
+#  simpletest.pages.inc,v 1.33 2010/10/20 01:31:07 dries
+#  simpletest.install,v 1.39 2010/10/15 23:40:21 webchick
+#  drupal_web_test_case.php,v 1.243 2010/10/23 02:26:11 webchick
+#  simpletest.module,v 1.95 2010/10/10 11:34:22 dries
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Drupal core (7.0-beta2)\n"
+"POT-Creation-Date: 2010-10-25 05:28+0000\n"
+"PO-Revision-Date: 2010-10-23 10:21+0000\n"
+"Language-Team: Portuguese, Portugal\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n!=1);\n"
+
+#: modules/simpletest/simpletest.pages.inc:250
+msgid "Group"
+msgstr "Grupo"
+
+#: modules/simpletest/simpletest.pages.inc:79
+msgid "Test"
+msgstr "Testar"
+
+#: modules/simpletest/simpletest.pages.inc:250
+msgid "Filename"
+msgstr ""
+
+#: modules/simpletest/simpletest.install:47,55,64
+msgid "Not found"
+msgstr "Não encontrado"
+
+#: modules/simpletest/simpletest.pages.inc:250
+msgid "Line"
+msgstr ""
+
+#: modules/simpletest/simpletest.pages.inc:448
+msgid "General"
+msgstr "Geral"
+
+#: modules/simpletest/simpletest.pages.inc:472
+msgid "Method"
+msgstr "Método"
+
+#: modules/simpletest/simpletest.pages.inc:474
+msgid "Basic"
+msgstr "Básico"
+
+#: modules/simpletest/drupal_web_test_case.php:1047,1050,1078
+msgid "Role"
+msgstr "Grupo"
+
+#: modules/simpletest/simpletest.pages.inc:250
+msgid "Function"
+msgstr "Função"
+
+#: modules/simpletest/drupal_web_test_case.php:1149,1150
+msgid "Logout"
+msgstr "Encerrar sessão"
+
+#: modules/simpletest/simpletest.pages.inc:433
+msgid "Debug"
+msgstr "Depuração"
+
+#: modules/simpletest/simpletest.pages.inc:432
+msgid "Exception"
+msgstr "Excepção"
+
+#: modules/simpletest/simpletest.pages.inc:86
+msgid "Expand"
+msgstr "Expandir"
+
+#: modules/simpletest/simpletest.pages.inc:465
+msgid "HTTP authentication"
+msgstr ""
+
+#: modules/simpletest/drupal_web_test_case.php:1047
+msgid "-n/a-"
+msgstr "-n/a-"
+
+#: modules/simpletest/drupal_web_test_case.php:1789
+msgid "Found the @submit button"
+msgstr "Encontrado o botão de @submit."
+
+#: modules/simpletest/drupal_web_test_case.php:1786
+msgid "Failed to set field @name to @value"
+msgstr ""
+
+#: modules/simpletest/simpletest.module:472
+msgid "No temporary directories to remove."
+msgstr ""
+
+#: modules/simpletest/simpletest.module:36
+msgid ""
+"Run tests against Drupal core and your active modules. These tests "
+"help assure that your site code is working as designed."
+msgstr ""
+
+#: modules/simpletest/simpletest.pages.inc:478
+msgid "Any"
+msgstr "Qualquer"
+
+#: modules/simpletest/simpletest.install:46
+msgid "cURL"
+msgstr ""
+
+#: modules/simpletest/simpletest.pages.inc:430
+msgid "Pass"
+msgstr "Passagem"
+
+#: modules/simpletest/simpletest.pages.inc:431
+msgid "Fail"
+msgstr "Falha"
+
+#: modules/simpletest/simpletest.pages.inc:222
+msgid "No test results to display."
+msgstr ""
+
+#: modules/simpletest/simpletest.pages.inc:475
+msgid "Digest"
+msgstr "Compilar"
+
+#: modules/simpletest/drupal_web_test_case.php:3239
+msgid "Email:"
+msgstr "Email:"
+
+#: modules/simpletest/drupal_web_test_case.php:906
+msgid "Created content type %type."
+msgstr ""
+
+#: modules/simpletest/drupal_web_test_case.php:1010
+msgid "User created with name %name and pass %pass"
+msgstr ""
+
+#: modules/simpletest/drupal_web_test_case.php:1050
+msgid "Created permissions: @perms"
+msgstr ""
+
+#: modules/simpletest/drupal_web_test_case.php:1078
+msgid "Invalid permission %permission."
+msgstr ""
+
+#: modules/simpletest/drupal_web_test_case.php:1149
+msgid "Username field found."
+msgstr ""
+
+#: modules/simpletest/drupal_web_test_case.php:1150
+msgid "Password field found."
+msgstr "Campo senha encontrado."
+
+#: modules/simpletest/drupal_web_test_case.php:1521
+msgid "!method @url returned @status (!length)."
+msgstr ""
+
+#: modules/simpletest/drupal_web_test_case.php:1589
+msgid "Valid HTML found on \"@path\""
+msgstr ""
+
+#: modules/simpletest/drupal_web_test_case.php:1596
+msgid "Parsed page successfully."
+msgstr ""
+
+#: modules/simpletest/drupal_web_test_case.php:1791
+msgid "Found the requested form fields at @path"
+msgstr ""
+
+#: modules/simpletest/drupal_web_test_case.php:2925
+msgid "Found field by name @name"
+msgstr ""
+
+#: modules/simpletest/drupal_web_test_case.php:2943
+msgid "Did not find field by name @name"
+msgstr ""
+
+#: modules/simpletest/drupal_web_test_case.php:2961
+msgid "Found field by id @id"
+msgstr ""
+
+#: modules/simpletest/drupal_web_test_case.php:2979
+msgid "Did not find field by id @id"
+msgstr ""
+
+#: modules/simpletest/drupal_web_test_case.php:3139
+msgid "HTTP response expected !code, actual !curl_code"
+msgstr ""
+
+#: modules/simpletest/simpletest.pages.inc:15
+msgid "Tests"
+msgstr "Testes"
+
+#: modules/simpletest/simpletest.pages.inc:42,333
+msgid "Run tests"
+msgstr "Correr os testes"
+
+#: modules/simpletest/simpletest.pages.inc:48
+msgid "Clean test environment"
+msgstr ""
+
+#: modules/simpletest/simpletest.pages.inc:49
+msgid ""
+"Remove tables with the prefix \"simpletest\" and temporary directories "
+"that are left over from tests that crashed. This is intended for "
+"developers when creating tests."
+msgstr ""
+
+#: modules/simpletest/simpletest.pages.inc:53
+msgid "Clean environment"
+msgstr ""
+
+#: modules/simpletest/simpletest.pages.inc:174
+msgid "No tests to display."
+msgstr ""
+
+#: modules/simpletest/simpletest.module:111
+msgid "@pass, @fail, and @exception"
+msgstr "@pass, @fail e @exception"
+
+#: modules/simpletest/simpletest.pages.inc:211
+msgid "No test(s) selected."
+msgstr ""
+
+#: modules/simpletest/simpletest.module:148
+msgid "Processing test @num of @max - %test."
+msgstr ""
+
+#: modules/simpletest/simpletest.module:192
+msgid "@name: @summary"
+msgstr "@name: @summary"
+
+#: modules/simpletest/simpletest.module:194
+msgid "Processed test @num of @max - %test."
+msgstr ""
+
+#: modules/simpletest/simpletest.module:106
+msgid "1 pass"
+msgid_plural "@count passes"
+msgstr[0] "1 passagem"
+msgstr[1] "@count passagens"
+
+#: modules/simpletest/simpletest.module:107
+msgid "1 fail"
+msgid_plural "@count fails"
+msgstr[0] "1 falha"
+msgstr[1] "@count falhas"
+
+#: modules/simpletest/simpletest.module:108
+msgid "1 exception"
+msgid_plural "@count exceptions"
+msgstr[0] "1 excepção"
+msgstr[1] "@count excepções"
+
+#: modules/simpletest/simpletest.install:63
+msgid "PHP DOMDocument class"
+msgstr ""
+
+#: modules/simpletest/drupal_web_test_case.php:1047
+msgid "Created role of name: @name, id: @rid"
+msgstr ""
+
+#: modules/simpletest/drupal_web_test_case.php:1125
+msgid "User %name successfully logged in."
+msgstr ""
+
+#: modules/simpletest/drupal_web_test_case.php:2563
+msgid "Raw \"@raw\" found"
+msgstr ""
+
+#: modules/simpletest/drupal_web_test_case.php:2583
+msgid "Raw \"@raw\" not found"
+msgstr ""
+
+#: modules/simpletest/drupal_web_test_case.php:2645
+msgid "\"@text\" found"
+msgstr ""
+
+#: modules/simpletest/drupal_web_test_case.php:2645
+msgid "\"@text\" not found"
+msgstr ""
+
+#: modules/simpletest/drupal_web_test_case.php:2736
+msgid "Pattern \"@pattern\" found"
+msgstr ""
+
+#: modules/simpletest/drupal_web_test_case.php:2755
+msgid "Pattern \"@pattern\" not found"
+msgstr ""
+
+#: modules/simpletest/drupal_web_test_case.php:2994
+msgid "Checkbox field @id is checked."
+msgstr ""
+
+#: modules/simpletest/drupal_web_test_case.php:3009
+msgid "Checkbox field @id is not checked."
+msgstr ""
+
+#: modules/simpletest/drupal_web_test_case.php:428
+msgid "Verbose message"
+msgstr ""
+
+#: modules/simpletest/simpletest.pages.inc:16
+msgid ""
+"Select the test(s) or test group(s) you would like to run, and click "
+"<em>Run tests</em>."
+msgstr ""
+
+#: modules/simpletest/simpletest.pages.inc:314
+msgid "All (@count)"
+msgstr "Todos (@count)"
+
+#: modules/simpletest/simpletest.pages.inc:315
+msgid "Pass (@count)"
+msgstr "Passagens (@count)"
+
+#: modules/simpletest/simpletest.pages.inc:316
+msgid "Fail (@count)"
+msgstr "Falhas (@count)"
+
+#: modules/simpletest/simpletest.pages.inc:338
+msgid "Return to list"
+msgstr "Regressar à lista"
+
+#: modules/simpletest/simpletest.pages.inc:452
+msgid "Clear results after each complete test suite run"
+msgstr ""
+
+#: modules/simpletest/simpletest.pages.inc:458
+msgid "Provide verbose information when running tests"
+msgstr ""
+
+#: modules/simpletest/simpletest.pages.inc:459
+msgid ""
+"The verbose data will be printed along with the standard assertions "
+"and is useful for debugging. The verbose data will be erased between "
+"each test suite run. The verbose data output is very detailed and "
+"should only be used when debugging."
+msgstr ""
+
+#: modules/simpletest/simpletest.pages.inc:466
+msgid ""
+"HTTP auth settings to be used by the SimpleTest browser during "
+"testing. Useful when the site requires basic HTTP authentication."
+msgstr ""
+
+#: modules/simpletest/simpletest.module:114
+msgid "@pass, @fail, @exception, and @debug"
+msgstr "@pass, @fail, @exception e @debug"
+
+#: modules/simpletest/simpletest.module:223
+msgid "The test run did not successfully finish."
+msgstr ""
+
+#: modules/simpletest/simpletest.module:422
+msgid ""
+"Clear results is disabled and the test results table will not be "
+"cleared."
+msgstr ""
+
+#: modules/simpletest/simpletest.module:450
+msgid "No leftover tables to remove."
+msgstr ""
+
+#: modules/simpletest/simpletest.module:113
+msgid "1 debug message"
+msgid_plural "@count debug messages"
+msgstr[0] ""
+msgstr[1] ""
+
+#: modules/simpletest/simpletest.module:419
+msgid "Removed 1 test result."
+msgid_plural "Removed @count test results."
+msgstr[0] ""
+msgstr[1] ""
+
+#: modules/simpletest/simpletest.module:447
+msgid "Removed 1 leftover table."
+msgid_plural "Removed @count leftover tables."
+msgstr[0] ""
+msgstr[1] ""
+
+#: modules/simpletest/simpletest.module:469
+msgid "Removed 1 temporary directory."
+msgid_plural "Removed @count temporary directories."
+msgstr[0] ""
+msgstr[1] ""
+
+#: modules/simpletest/simpletest.module:54
+msgid "Test result"
+msgstr "Resultado do teste"
+
+#: modules/simpletest/simpletest.module:57
+msgid "View result of tests."
+msgstr ""
+
+#: modules/simpletest/simpletest.install:54
+msgid "hash"
+msgstr ""
+
+#: modules/simpletest/drupal_web_test_case.php:241
+msgid "Value @value is TRUE."
+msgstr "Valor @value é VERDADEIRO."
+
+#: modules/simpletest/drupal_web_test_case.php:257
+msgid "Value @value is FALSE."
+msgstr "Valor @value é FALSO."
+
+#: modules/simpletest/drupal_web_test_case.php:273
+msgid "Value @value is NULL."
+msgstr "Valor @value é NULO."
+
+#: modules/simpletest/drupal_web_test_case.php:289
+msgid "Value @value is not NULL."
+msgstr "Valor @value é não NULO."
+
+#: modules/simpletest/drupal_web_test_case.php:307
+msgid "Value @first is equal to value @second."
+msgstr ""
+
+#: modules/simpletest/drupal_web_test_case.php:325
+msgid "Value @first is not equal to value @second."
+msgstr ""
+
+#: modules/simpletest/drupal_web_test_case.php:343
+msgid "Value @first is identical to value @second."
+msgstr ""
+
+#: modules/simpletest/drupal_web_test_case.php:361
+msgid "Value @first is not identical to value @second."
+msgstr ""
+
+#: modules/simpletest/drupal_web_test_case.php:462
+msgid "The test did not complete due to a fatal error."
+msgstr ""
+
+#: modules/simpletest/drupal_web_test_case.php:2237
+msgid "Link with label %label found."
+msgstr ""
+
+#: modules/simpletest/drupal_web_test_case.php:2257
+msgid "Link with label %label not found."
+msgstr ""
+
+#: modules/simpletest/drupal_web_test_case.php:2278
+msgid "Link containing href %href found."
+msgstr ""
+
+#: modules/simpletest/drupal_web_test_case.php:2297
+msgid "No link containing href %href found."
+msgstr ""
+
+#: modules/simpletest/drupal_web_test_case.php:2324
+msgid "Clicked link %label (@url_target) from @url_before"
+msgstr ""
+
+#: modules/simpletest/drupal_web_test_case.php:3028
+msgid "Option @option for field @id is selected."
+msgstr ""
+
+#: modules/simpletest/drupal_web_test_case.php:3045
+msgid "Option @option for field @id is not selected."
+msgstr ""
+
+#: modules/simpletest/simpletest.pages.inc:453
+msgid ""
+"By default SimpleTest will clear the results after they have been "
+"viewed on the results page, but in some cases it may be useful to "
+"leave the results in the database. The results can then be viewed at "
+"<em>admin/config/development/testing/[test_id]</em>. The test ID can "
+"be found in the database, simpletest table, or kept track of when "
+"viewing the results the first time. Additionally, some modules may "
+"provide more analysis or features that require this setting to be "
+"disabled."
+msgstr ""
+
+#: modules/simpletest/simpletest.pages.inc:476
+msgid "GSS negotiate"
+msgstr ""
+
+#: modules/simpletest/simpletest.pages.inc:477
+msgid "NTLM"
+msgstr "NTLM"
+
+#: modules/simpletest/simpletest.pages.inc:479
+msgid "Any safe"
+msgstr ""
+
+#: modules/simpletest/simpletest.module:17
+msgid ""
+"The Testing module provides a framework for running automated unit "
+"tests. It can be used to verify a working state of Drupal before and "
+"after any code changes, or as a means for developers to write and "
+"execute tests for their modules. For more information, see the online "
+"handbook entry for <a href=\"@simpletest\">Testing module</a>."
+msgstr ""
+
+#: modules/simpletest/simpletest.module:20,141
+msgid "Running tests"
+msgstr "Executando testes"
+
+#: modules/simpletest/simpletest.module:21
+msgid ""
+"Visit the <a href=\"@admin-simpletest\">Testing page</a> to display a "
+"list of available tests. For comprehensive testing, select "
+"<em>all</em> tests, or individually select tests for more targeted "
+"testing. Note that it might take several minutes for all tests to "
+"complete. For more information on creating and modifying your own "
+"tests, see the <a href=\"@simpletest-api\">Testing API "
+"Documentation</a> in the Drupal handbook."
+msgstr ""
+
+#: modules/simpletest/simpletest.module:22
+msgid ""
+"After the tests run, a message will be displayed next to each test "
+"group indicating whether tests within it passed, failed, or had "
+"exceptions. A pass means that the test returned the expected results, "
+"while fail means that it did not. An exception normally indicates an "
+"error outside of the test, such as a PHP warning or notice. If there "
+"were failures or exceptions, the results will be expanded to show "
+"details, and the tests that had failures or exceptions will be "
+"indicated in red or pink rows. You can then use these results to "
+"refine your code and tests, until all tests pass."
+msgstr ""
+
+#: modules/simpletest/simpletest.module:70
+msgid "Administer tests"
+msgstr ""
+
+#: modules/simpletest/simpletest.module:210
+msgid "The test run finished in @elapsed."
+msgstr ""
+
+#: modules/simpletest/simpletest.module:224
+msgid ""
+"Use the <em>Clean environment</em> button to clean-up temporary files "
+"and tables."
+msgstr ""
+
+#: modules/simpletest/simpletest.install:80
+msgid ""
+"The testing framework requires the PHP <a "
+"href=\"@open_basedir-url\">open_basedir</a> restriction to be "
+"disabled. Check your webserver configuration or contact your web host."
+msgstr ""
+
+#: modules/simpletest/simpletest.install:51
+msgid ""
+"The testing framework could not be installed because the PHP <a "
+"href=\"@curl_url\">cURL</a> library is not available."
+msgstr ""
+
+#: modules/simpletest/simpletest.install:59
+msgid ""
+"The testing framework could not be installed because the PHP <a "
+"href=\"@hash_url\">hash</a> extension is disabled."
+msgstr ""
+
+#: modules/simpletest/simpletest.install:75
+msgid "PHP open_basedir restriction"
+msgstr ""
+
+#: modules/simpletest/simpletest.pages.inc:87
+msgid "Collapse"
+msgstr ""
+
+#: modules/simpletest/simpletest.install:68
+msgid ""
+"The testing framework requires the DOMDocument class to be available. "
+"Check the configure command at the <a href=\"@link-phpinfo\">PHP info "
+"page</a>."
+msgstr ""
+
+#: modules/simpletest/drupal_web_test_case.php:3102
+msgid "The HTML ID %id is unique."
+msgstr ""
+
+#: modules/simpletest/drupal_web_test_case.php:3208,3226
+msgid "Expected text found in @field of email message: \"@expected\"."
+msgstr ""
+
+#: modules/simpletest/drupal_web_test_case.php:1357
+msgid "1 e-mail was sent during this test."
+msgid_plural "@count e-mails were sent during this test."
+msgstr[0] ""
+msgstr[1] ""
+
+#: modules/simpletest/drupal_web_test_case.php:2540
+msgid "Current URL is @url."
+msgstr "URL actual é @url"
+
+#: modules/simpletest/drupal_web_test_case.php:2775
+msgid "Page title @actual is equal to @expected."
+msgstr "Título da página @actual é igual a @expected."
+
+#: modules/simpletest/drupal_web_test_case.php:2798
+msgid "Page title @actual is not equal to @unexpected."
+msgstr "Título da página é diferente de @unexpected"
+
+#: modules/simpletest/drupal_web_test_case.php:3157
+msgid "HTTP response not expected !code, actual !curl_code"
+msgstr ""
+

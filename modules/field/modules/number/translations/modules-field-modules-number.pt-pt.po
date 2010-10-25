@@ -1,0 +1,165 @@
+# Portuguese, Portugal translation of Drupal core (7.0-beta2)
+# Copyright (c) 2010 by the Portuguese, Portugal translation team
+# Generated from file: number.module,v 1.44 2010/10/22 00:42:42 dries
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Drupal core (7.0-beta2)\n"
+"POT-Creation-Date: 2010-10-25 05:28+0000\n"
+"PO-Revision-Date: 2010-10-09 20:37+0000\n"
+"Language-Team: Portuguese, Portugal\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n!=1);\n"
+
+#: modules/field/modules/number/number.module:113
+msgid "Prefix"
+msgstr "Prefixo"
+
+#: modules/field/modules/number/number.module:120
+msgid "Suffix"
+msgstr "Sufixo"
+
+#: modules/field/modules/number/number.module:106
+msgid "Maximum"
+msgstr "Máximo"
+
+#: modules/field/modules/number/number.module:28
+msgid "Integer"
+msgstr "Inteiro"
+
+#: modules/field/modules/number/number.module:206
+msgid "Unformatted"
+msgstr "Sem formato"
+
+#: modules/field/modules/number/number.module:35
+msgid "Decimal"
+msgstr "Decimal"
+
+#: modules/field/modules/number/number.module:43
+msgid "Float"
+msgstr "Vírgula flutuante"
+
+#: modules/field/modules/number/number.module:99
+msgid "Minimum"
+msgstr "Mínimo"
+
+#: modules/field/modules/number/number.module:63
+msgid "Precision"
+msgstr "Precisão"
+
+#: modules/field/modules/number/number.module:66
+msgid ""
+"The total number of digits to store in the database, including those "
+"to the right of the decimal."
+msgstr ""
+"O número total de dígitos a arquivar na base de dados, incluindo os "
+"à direita do separador decimal."
+
+#: modules/field/modules/number/number.module:74,244
+msgid "The number of digits to the right of the decimal."
+msgstr "O número de dígitos para a direita do separador decimal."
+
+#: modules/field/modules/number/number.module:81,235
+msgid "Decimal marker"
+msgstr "Separador decimal"
+
+#: modules/field/modules/number/number.module:84
+msgid "The character users will input to mark the decimal point in forms."
+msgstr ""
+"O caracter que os utilizadores inserirão para definir o separador "
+"decimal nos formulários."
+
+#: modules/field/modules/number/number.module:223
+msgid "Space"
+msgstr "Espaço"
+
+#: modules/field/modules/number/number.module:82,221,236
+msgid "Decimal point"
+msgstr "Ponto decimal"
+
+#: modules/field/modules/number/number.module:82,222,236
+msgid "Comma"
+msgstr ""
+
+#: modules/field/modules/number/number.module:375
+msgid "Only numbers are allowed in %field."
+msgstr "Apenas números são permitidos em %field"
+
+#: modules/field/modules/number/number.module:17
+msgid ""
+"The Number module defines various numeric field types for the Field "
+"module. Numbers can be in integer, decimal, or floating-point form, "
+"and they can be formatted when displayed. Number fields can be limited "
+"to a specific set of input values or to a range of values. See the <a "
+"href=\"@field-help\">Field module help page</a> for more information "
+"about fields."
+msgstr ""
+
+#: modules/field/modules/number/number.module:29
+msgid "This field stores a number in the database as an integer."
+msgstr ""
+
+#: modules/field/modules/number/number.module:36
+msgid "This field stores a number in the database in a fixed decimal format."
+msgstr ""
+
+#: modules/field/modules/number/number.module:44
+msgid "This field stores a number in the database in a floating point format."
+msgstr ""
+
+#: modules/field/modules/number/number.module:101
+msgid ""
+"The minimum value that should be allowed in this field. Leave blank "
+"for no minimum."
+msgstr ""
+
+#: modules/field/modules/number/number.module:108
+msgid ""
+"The maximum value that should be allowed in this field. Leave blank "
+"for no maximum."
+msgstr ""
+"O limite máximo permitido para este campo.\r\n"
+"Deixe em branco para sem limite."
+
+#: modules/field/modules/number/number.module:116
+msgid ""
+"Define a string that should be prefixed to the value, like '$ ' or "
+"'&euro; '. Leave blank for none. Separate singular and plural values "
+"with a pipe ('pound|pounds')."
+msgstr ""
+
+#: modules/field/modules/number/number.module:370
+msgid "Only numbers and the decimal separator (@separator) allowed in %field."
+msgstr ""
+"Apenas números e separador decimal (@separator) são permitidos em "
+"%field."
+
+#: modules/field/modules/number/number.module:142
+msgid "%name: the value may be no less than %min."
+msgstr ""
+
+#: modules/field/modules/number/number.module:148
+msgid "%name: the value may be no greater than %max."
+msgstr ""
+
+#: modules/field/modules/number/number.module:123
+msgid ""
+"Define a string that should be suffixed to the value, like ' m', ' "
+"kb/s'. Leave blank for none. Separate singular and plural values with "
+"a pipe ('pound|pounds')."
+msgstr ""
+
+#: modules/field/modules/number/number.module:227
+msgid "Thousand marker"
+msgstr "Marcador mil"
+
+#: modules/field/modules/number/number.module:250
+msgid "Display prefix and suffix."
+msgstr ""
+
+#: modules/field/modules/number/number.module:267
+msgid "Display with prefix and suffix."
+msgstr ""
+

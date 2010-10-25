@@ -1,5 +1,5 @@
 <?php
-// $Id: system.views.inc,v 1.7.6.5 2010/10/06 16:17:38 dereine Exp $
+// $Id: system.views.inc,v 1.7.6.7 2010/10/16 09:06:51 dereine Exp $
 /**
  * @file
  *
@@ -119,6 +119,17 @@ function system_views_data() {
     'argument' => array(
       'handler' => 'views_handler_argument_string',
     ),
+  );
+
+  // extension
+  $data['files']['extension'] = array(
+    'title' => t('Extension'),
+    'help' => t('The extension of the file.'),
+    'real field' => 'filename',
+    'field' => array(
+      'handler' => 'views_handler_field_file_extension',
+      'click sortable' => FALSE,
+     ),
   );
 
   // filesize
@@ -441,6 +452,18 @@ function _views_file_status($choice = NULL) {
 
   return $status;
 }
+
+  // uid field
+  $data['files']['uid'] = array(
+    'title' => t('User'),
+    'help' => t('The user, who uploaded the file.'),
+    'relationship' => array(
+      'base' => 'users',
+      'base field' => 'uid',
+      'handler' => 'views_handler_relationship',
+      'label' => t('User'),
+    ),
+  );
 
 
 /**

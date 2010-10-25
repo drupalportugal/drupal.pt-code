@@ -1,0 +1,2109 @@
+# Portuguese, Portugal translation of Drupal core (7.0-beta2)
+# Copyright (c) 2010 by the Portuguese, Portugal translation team
+# Generated from files:
+#  menu.inc,v 1.416 2010/10/21 11:56:17 dries
+#  blog.module,v 1.360 2010/08/30 05:58:46 webchick
+#  comment.pages.inc,v 1.40 2010/09/09 23:01:48 dries
+#  forum.module,v 1.579 2010/10/06 13:38:40 dries
+#  maintenance-page.tpl.php,v 1.9 2010/02/23 05:02:02 webchick
+#  page.tpl.php,v 1.46 2010/08/23 23:38:06 webchick
+#  taxonomy.pages.inc,v 1.56 2010/10/13 01:25:11 webchick
+#  toolbar.module,v 1.46 2010/10/05 19:59:10 dries
+#  maintenance-page.tpl.php,v 1.2 2010/07/28 01:40:39 dries
+#  page.tpl.php,v 1.7 2010/10/05 01:48:11 dries
+#  aggregator.admin.inc,v 1.54 2010/06/26 19:55:47 dries
+#  book.admin.inc,v 1.38 2010/10/20 01:31:06 dries
+#  comment.tokens.inc,v 1.13 2010/07/07 17:00:42 webchick
+#  filter.module,v 1.355 2010/10/22 16:36:14 webchick
+#  image.field.inc,v 1.33 2010/10/22 00:42:42 dries
+#  menu.admin.inc,v 1.90 2010/10/20 07:40:59 webchick
+#  node.admin.inc,v 1.101 2010/10/20 01:31:07 dries
+#  node.tokens.inc,v 1.15 2010/06/29 00:57:19 dries
+#  profile.admin.inc,v 1.43 2010/10/20 01:31:07 dries
+#  statistics.admin.inc,v 1.40 2010/06/26 21:32:20 dries
+#  tracker.pages.inc,v 1.32 2010/07/30 02:47:28 dries
+#  translation.pages.inc,v 1.16 2010/07/17 11:31:36 dries
+#  user.admin.inc,v 1.120 2010/10/20 01:31:07 dries
+#  system.admin.inc,v 1.323 2010/10/20 16:19:24 webchick
+#  user.pages.inc,v 1.75 2010/08/27 11:28:45 webchick
+#  user.module,v 1.1212 2010/10/23 03:20:40 webchick
+#  pager.inc,v 1.85 2010/10/08 05:07:53 webchick
+#  block.admin.inc,v 1.90 2010/10/10 20:11:21 dries
+#  filter.admin.inc,v 1.69 2010/10/22 16:36:14 webchick
+#  locale.admin.inc,v 1.20 2010/10/20 01:31:07 dries
+#  system.module,v 1.983 2010/10/21 12:09:41 dries
+#  locale.inc,v 1.260 2010/10/06 13:38:39 dries
+#  comment.module,v 1.906 2010/10/20 01:31:06 dries
+#  field_ui.admin.inc,v 1.79 2010/10/23 01:34:02 webchick
+#  image.admin.inc,v 1.27 2010/10/21 20:50:43 webchick
+#  content_types.inc,v 1.119 2010/10/13 13:43:21 dries
+#  node.pages.inc,v 1.132 2010/09/09 23:01:48 dries
+#  node.module,v 1.1309 2010/10/20 08:15:33 webchick
+#  path.admin.inc,v 1.45 2010/09/11 03:04:43 dries
+#  shortcut.admin.inc,v 1.16 2010/10/20 01:31:07 dries
+#  simpletest.pages.inc,v 1.33 2010/10/20 01:31:07 dries
+#  drupal_web_test_case.php,v 1.243 2010/10/23 02:26:11 webchick
+#  comment.admin.inc,v 1.51 2010/10/20 01:31:06 dries
+#  contact.admin.inc,v 1.24 2010/04/24 14:49:13 dries
+#  field_ui.module,v 1.33 2010/09/24 00:37:42 dries
+#  forum.admin.inc,v 1.36 2010/08/08 19:21:25 dries
+#  openid.pages.inc,v 1.28 2010/04/24 14:49:14 dries
+#  taxonomy.admin.inc,v 1.114 2010/10/20 01:31:07 dries
+#  block-admin-display-form.tpl.php,v 1.7 2009/10/05 02:43:01 webchick
+#  dblog.admin.inc,v 1.40 2010/09/09 15:47:03 webchick
+#  file.field.inc,v 1.37 2010/10/20 15:22:53 dries
+#  statistics.pages.inc,v 1.23 2010/01/09 21:54:01 webchick
+#  bartik.info,v 1.4 2010/09/05 02:21:38 dries
+#  seven.info,v 1.5 2010/01/14 06:47:54 webchick
+#  install.core.inc,v 1.40 2010/10/15 03:31:28 webchick
+#  poll.module,v 1.358 2010/10/20 01:31:07 dries
+#  aggregator.module,v 1.444 2010/09/24 00:37:41 dries
+#  book.module,v 1.554 2010/10/18 05:53:34 webchick
+#  list.module,v 1.35 2010/10/11 19:57:00 dries
+#  list.info,v 1.8 2010/08/16 20:57:22 dries
+#  image.module,v 1.53 2010/10/03 05:14:58 webchick
+#  locale.module,v 1.303 2010/10/09 17:38:41 webchick
+#  path.module,v 1.185 2010/09/24 00:37:44 dries
+#  simpletest.module,v 1.95 2010/10/10 11:34:22 dries
+#  taxonomy.module,v 1.613 2010/10/15 05:25:32 webchick
+#  update.module,v 1.70 2010/10/06 13:36:30 dries
+#  contact.pages.inc,v 1.44 2010/10/08 03:36:03 webchick
+#  menu.module,v 1.233 2010/09/24 00:37:43 dries
+#  search.admin.inc,v 1.19 2010/10/20 01:31:07 dries
+#  trigger.admin.inc,v 1.30 2010/10/20 16:19:24 webchick
+#  book.pages.inc,v 1.27 2010/07/07 01:07:33 dries
+#  file.module,v 1.45 2010/10/20 15:22:53 dries
+#  system.tokens.inc,v 1.12 2010/08/17 21:31:13 dries
+#  taxonomy.tokens.inc,v 1.9 2010/08/08 02:06:56 dries
+#  filter.admin.js,v 1.4 2010/04/16 13:55:06 dries
+#  simpletest.install,v 1.39 2010/10/15 23:40:21 webchick
+#  statistics.module,v 1.339 2010/09/24 00:37:44 dries
+#  system.install,v 1.520 2010/10/20 00:47:44 dries
+#  translation.module,v 1.88 2010/10/09 17:38:41 webchick
+#  update.manager.inc,v 1.24 2010/07/29 02:27:43 dries
+#  comment-wrapper.tpl.php,v 1.10 2010/05/05 06:41:22 webchick
+#  comment-wrapper.tpl.php,v 1.2 2010/09/25 02:05:51 dries
+#  theme.inc,v 1.620 2010/10/21 19:31:39 dries
+#  aggregator-summary-items.tpl.php,v 1.4 2010/10/15 23:37:55 webchick
+#  common.inc,v 1.1244 2010/10/21 19:31:39 dries
+#  update.report.inc,v 1.33 2010/10/03 22:43:16 dries
+#  taxonomy.info,v 1.11 2009/11/17 21:24:18 dries
+#  cron.php,v 1.43 2009/11/02 03:30:49 webchick
+#  aggregator-item.tpl.php,v 1.2 2008/05/15 21:27:32 dries
+#  file.info,v 1.2 2010/08/16 20:57:23 dries
+#  machine-name.js,v 1.1 2010/10/13 17:09:00 webchick
+#  search.module,v 1.365 2010/10/20 01:31:07 dries
+#  search.info,v 1.12 2010/09/05 02:21:38 dries
+#  number.info,v 1.6 2010/08/16 20:57:22 dries
+#  form.inc,v 1.506 2010/10/21 20:46:58 webchick
+#  options.module,v 1.27 2010/08/17 21:48:39 dries
+#  dashboard.module,v 1.40 2010/10/21 11:55:08 dries
+#  image.info,v 1.5 2009/11/17 21:24:18 dries
+#  contact.module,v 1.148 2010/09/24 00:37:42 dries
+#  user.tokens.inc,v 1.8 2010/10/16 20:09:17 webchick
+#  book-navigation.tpl.php,v 1.3 2009/02/18 14:28:21 webchick
+#  book.info,v 1.14 2010/09/05 02:21:38 dries
+#  field.info,v 1.9 2010/09/05 02:21:38 dries
+#  color.module,v 1.92 2010/10/05 19:59:10 dries
+#  help.module,v 1.99 2010/10/04 14:54:10 webchick
+#  help.info,v 1.8 2009/06/08 09:23:52 dries
+#  language.inc,v 1.30 2010/05/12 08:26:14 dries
+#  number.module,v 1.44 2010/10/22 00:42:42 dries
+#  text.module,v 1.66 2010/10/22 00:42:42 dries
+#  shortcut.install,v 1.6 2010/08/22 13:55:53 dries
+#  locale.datepicker.js,v 1.1 2010/04/29 05:15:43 webchick
+#  aggregator.info,v 1.14 2010/09/05 02:21:37 dries
+#  block.info,v 1.15 2009/11/17 21:24:18 dries
+#  blog.info,v 1.11 2009/06/08 09:23:51 dries
+#  color.info,v 1.10 2009/09/01 20:39:55 webchick
+#  comment.info,v 1.14 2010/09/05 02:21:38 dries
+#  contact.info,v 1.10 2009/11/17 21:24:18 dries
+#  contextual.info,v 1.1 2009/12/06 01:00:27 dries
+#  dashboard.info,v 1.4 2010/06/04 23:04:32 webchick
+#  dblog.info,v 1.7 2009/06/08 09:23:51 dries
+#  field_sql_storage.info,v 1.5 2010/08/16 20:57:22 dries
+#  options.info,v 1.6 2010/08/16 20:57:22 dries
+#  text.info,v 1.8 2010/08/16 20:57:22 dries
+#  field_ui.info,v 1.4 2010/08/16 20:57:23 dries
+#  filter.info,v 1.13 2009/11/17 21:24:18 dries
+#  forum.info,v 1.14 2010/09/05 02:21:38 dries
+#  locale.info,v 1.15 2010/03/25 11:46:21 dries
+#  menu.info,v 1.10 2009/11/17 21:24:18 dries
+#  node.info,v 1.14 2010/09/05 02:21:38 dries
+#  openid.info,v 1.8 2010/05/26 08:39:54 dries
+#  overlay.info,v 1.2 2009/12/02 07:28:22 webchick
+#  path.info,v 1.9 2009/11/17 21:24:18 dries
+#  php.info,v 1.7 2009/06/08 09:23:53 dries
+#  poll.info,v 1.11 2010/09/05 02:21:38 dries
+#  profile.info,v 1.10 2009/11/17 21:24:18 dries
+#  rdf.info,v 1.3 2009/11/18 04:44:19 webchick
+#  shortcut.info,v 1.4 2010/03/06 06:33:14 dries
+#  simpletest.info,v 1.26 2010/10/22 16:36:14 webchick
+#  statistics.info,v 1.11 2009/11/17 21:24:18 dries
+#  syslog.info,v 1.6 2009/06/08 09:23:54 dries
+#  system.info,v 1.20 2009/12/15 08:37:18 dries
+#  toolbar.info,v 1.4 2009/12/04 16:02:42 dries
+#  tracker.info,v 1.10 2009/11/23 02:45:42 webchick
+#  translation.info,v 1.5 2009/06/08 09:23:54 dries
+#  trigger.info,v 1.7 2009/11/17 21:24:18 dries
+#  update.info,v 1.9 2009/11/17 21:24:18 dries
+#  user.info,v 1.14 2010/09/05 02:21:38 dries
+#  garland.info,v 1.9 2009/12/01 15:57:40 webchick
+#  stark.info,v 1.3 2009/12/20 19:43:10 dries
+#  profile.module,v 1.294 2010/10/01 15:24:18 webchick
+#  aggregator.pages.inc,v 1.45 2010/10/15 23:37:55 webchick
+#  mail.inc,v 1.34 2010/07/28 02:19:56 dries
+#  actions.inc,v 1.39 2010/08/22 11:04:09 dries
+#  aggregator.fetcher.inc,v 1.12 2010/01/08 11:03:54 dries
+#  aggregator.parser.inc,v 1.10 2010/07/24 17:42:22 dries
+#  poll.pages.inc,v 1.28 2010/10/06 13:38:40 dries
+#  trigger.module,v 1.65 2010/09/24 00:37:44 dries
+#  ajax.inc,v 1.37 2010/10/21 19:31:39 dries
+#  update.compare.inc,v 1.41 2010/10/04 07:26:25 webchick
+#  forum-submitted.tpl.php,v 1.5 2009/07/28 10:41:20 dries
+#  authorize.inc,v 1.11 2010/05/14 04:50:18 webchick
+#  contextual.js,v 1.5 2010/03/26 18:59:54 dries
+#  file.inc,v 1.239 2010/10/21 12:09:41 dries
+#  batch.inc,v 1.53 2010/10/04 07:34:26 webchick
+#  errors.inc,v 1.9 2010/10/16 00:00:16 webchick
+#  unicode.inc,v 1.47 2010/08/11 10:58:22 dries
+#  dblog.module,v 1.57 2010/10/03 02:14:23 dries
+#  dashboard.js,v 1.13 2010/06/08 05:16:29 webchick
+#  aggregator.processor.inc,v 1.14 2010/10/04 18:00:45 dries
+#  update.install,v 1.20 2010/10/03 22:44:48 dries
+#  comment.install,v 1.73 2010/09/28 03:30:37 webchick
+#  poll.tokens.inc,v 1.5 2010/04/20 09:48:06 webchick
+#  theme.maintenance.inc,v 1.67 2010/09/19 18:10:41 dries
+#  image.effects.inc,v 1.5 2010/05/06 05:59:31 webchick
+#  forum-list.tpl.php,v 1.5 2008/10/13 12:31:42 dries
+#  color.inc,v 1.6 2010/09/28 02:29:27 dries
+#  color.inc,v 1.5 2010/04/03 08:05:08 webchick
+#  tracker.module,v 1.171 2009/12/04 16:49:47 dries
+#  color.install,v 1.8 2010/10/15 23:41:53 webchick
+#  image.install,v 1.13 2010/09/04 15:40:51 dries
+#  openid.install,v 1.12 2010/08/22 22:00:16 dries
+#  poll-bar.tpl.php,v 1.3 2008/10/13 12:31:42 dries
+#  authorize.php,v 1.8 2010/04/22 10:16:24 webchick
+#  update.php,v 1.325 2010/10/03 23:33:15 webchick
+#  openid.module,v 1.96 2010/09/24 00:37:43 dries
+#  forum.install,v 1.52 2010/10/07 00:28:19 webchick
+#  testing.info,v 1.2 2010/08/27 12:36:53 webchick
+#  standard.info,v 1.1 2010/01/04 23:08:34 webchick
+#  content_types.js,v 1.10 2010/05/05 06:55:25 webchick
+#  node.js,v 1.6 2010/05/04 16:03:34 dries
+#  image.inc,v 1.40 2010/07/16 02:39:38 dries
+#  image.gd.inc,v 1.17 2010/09/21 15:28:11 dries
+#  template.php,v 1.42 2010/10/05 19:59:10 dries
+#  block.module,v 1.431 2010/09/28 03:30:37 webchick
+#  html.tpl.php,v 1.4 2010/05/26 10:47:20 dries
+#  statistics.tokens.inc,v 1.4 2010/04/20 09:48:06 webchick
+#  contextual.module,v 1.8 2010/09/11 14:35:13 dries
+#  field.module,v 1.88 2010/10/23 01:34:02 webchick
+#  field_sql_storage.module,v 1.56 2010/10/06 13:57:47 dries
+#  overlay.module,v 1.31 2010/08/31 15:04:09 webchick
+#  php.module,v 1.28 2010/03/21 21:20:43 dries
+#  rdf.module,v 1.46 2010/10/01 01:44:39 webchick
+#  shortcut.module,v 1.27 2010/09/24 00:37:44 dries
+#  syslog.module,v 1.38 2010/09/26 23:31:36 dries
+#  file.install,v 1.4 2010/09/29 01:37:03 dries
+#  overlay.tpl.php,v 1.4 2010/09/16 19:47:45 dries
+#  page.tpl.php,v 1.47 2010/09/16 19:47:45 dries
+#  page.tpl.php,v 1.14 2010/10/05 00:29:14 dries
+#  blog.pages.inc,v 1.28 2010/08/03 02:02:02 dries
+#  update.inc,v 1.78 2010/10/22 15:41:45 webchick
+#  template.php,v 1.24 2010/10/05 19:59:10 dries
+#  poll-results--block.tpl.php,v 1.1 2010/01/13 06:07:27 webchick
+#  poll-results.tpl.php,v 1.3 2008/10/13 12:31:42 dries
+#  profile.pages.inc,v 1.27 2010/10/06 13:38:40 dries
+#  search-block-form.tpl.php,v 1.4 2010/06/03 13:18:48 dries
+#  install.inc,v 1.142 2010/08/22 15:31:18 dries
+#  module.inc,v 1.202 2010/10/03 02:04:55 dries
+#  vertical-tabs.js,v 1.14 2010/07/24 16:56:31 dries
+#  overlay-child.js,v 1.10 2010/07/08 12:20:23 dries
+#  block.js,v 1.16 2010/05/09 13:57:59 dries
+#  toolbar.js,v 1.19 2010/06/08 05:16:29 webchick
+#  minimal.info,v 1.1 2010/01/04 23:08:34 webchick
+#  schema.inc,v 1.43 2010/10/22 15:18:56 webchick
+#  schema.inc,v 1.39 2010/10/22 15:18:56 webchick
+#  schema.inc,v 1.20 2010/10/22 15:18:56 webchick
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Drupal core (7.0-beta2)\n"
+"POT-Creation-Date: 2010-10-25 05:28+0000\n"
+"PO-Revision-Date: 2010-10-23 10:21+0000\n"
+"Language-Team: Portuguese, Portugal\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n!=1);\n"
+
+#: includes/menu.inc:2219; modules/blog/blog.module:72; modules/comment/comment.pages.inc:32; modules/forum/forum.module:273,955; modules/system/maintenance-page.tpl.php:31,32,39; modules/system/page.tpl.php:76,77,86,90; modules/taxonomy/taxonomy.pages.inc:29; modules/toolbar/toolbar.module:247; themes/bartik/templates/maintenance-page.tpl.php:43,48; themes/bartik/templates/page.tpl.php:93,94,105,110
+msgid "Home"
+msgstr "Início"
+
+#: modules/aggregator/aggregator.admin.inc:27,46,68,519; modules/book/book.admin.inc:230; modules/comment/comment.tokens.inc:51; modules/filter/filter.module:1294; modules/image/image.field.inc:366; modules/menu/menu.admin.inc:14,440; modules/node/node.admin.inc:395; modules/node/node.tokens.inc:43; modules/profile/profile.admin.inc:168,239; modules/statistics/statistics.admin.inc:205; modules/tracker/tracker.pages.inc:112; modules/translation/translation.pages.inc:27
+msgid "Title"
+msgstr "Título"
+
+#: modules/node/node.tokens.inc:47; modules/user/user.admin.inc:452,473,494,516,551,586,607,642
+msgid "Body"
+msgstr "Corpo"
+
+#: modules/system/system.admin.inc:1438,3100; modules/user/user.pages.inc:81,129,169,448; modules/user/user.module:2111,2166,2279,2330,2341,3590
+msgid "user"
+msgstr "utilizador"
+
+#: includes/pager.inc:423; modules/block/block.admin.inc:329,360
+msgid "Pages"
+msgstr "Páginas"
+
+#: modules/aggregator/aggregator.admin.inc:497; modules/filter/filter.admin.inc:251; modules/locale/locale.admin.inc:55,1416; modules/menu/menu.admin.inc:78; modules/profile/profile.admin.inc:55; modules/system/system.admin.inc:272,898; modules/system/system.module:2677
+msgid "Save configuration"
+msgstr "Guardar configuração"
+
+#: includes/locale.inc:1613; modules/block/block.admin.inc:146; modules/book/book.admin.inc:250; modules/comment/comment.module:1005; modules/field_ui/field_ui.admin.inc:374; modules/image/image.admin.inc:113,663; modules/locale/locale.admin.inc:89; modules/menu/menu.admin.inc:130; modules/node/content_types.inc:37; modules/node/node.admin.inc:472; modules/node/node.pages.inc:531; modules/node/node.module:2202; modules/path/path.admin.inc:58; modules/profile/profile.admin.inc:41; modules/shortcut/shortcut.admin.inc:295; modules/system/system.admin.inc:1353,2008,2754,2890
+msgid "delete"
+msgstr "eliminar"
+
+#: modules/comment/comment.module:1944; modules/node/node.admin.inc:398; modules/shortcut/shortcut.admin.inc:288,386; modules/simpletest/simpletest.pages.inc:250; modules/translation/translation.pages.inc:27; modules/user/user.admin.inc:153; modules/user/user.module:1045
+msgid "Status"
+msgstr "Estado"
+
+#: modules/comment/comment.module:1916; modules/simpletest/drupal_web_test_case.php:1358,3178
+msgid "E-mail"
+msgstr "Email"
+
+#: modules/aggregator/aggregator.admin.inc:121,165,531,562; modules/block/block.admin.inc:607; modules/comment/comment.admin.inc:265; modules/comment/comment.module:270; modules/contact/contact.admin.inc:37,186; modules/field_ui/field_ui.admin.inc:1618; modules/field_ui/field_ui.module:145; modules/forum/forum.admin.inc:10,61,170,190; modules/image/image.admin.inc:312,444; modules/locale/locale.admin.inc:440,1283; modules/menu/menu.admin.inc:296,477,516; modules/node/content_types.inc:417; modules/node/node.admin.inc:588; modules/node/node.pages.inc:281,476,568; modules/node/node.module:1887,1959; modules/openid/openid.pages.inc:53; modules/path/path.admin.inc:152; modules/profile/profile.admin.inc:409; modules/shortcut/shortcut.admin.inc:687,729; modules/system/system.admin.inc:1427,3086; modules/taxonomy/taxonomy.admin.inc:174,185,746,778,890,930; modules/user/user.admin.inc:1021
+msgid "Delete"
+msgstr "Eliminar"
+
+#: includes/locale.inc:1587; modules/aggregator/aggregator.admin.inc:27,46; modules/block/block-admin-display-form.tpl.php:42; modules/book/book.admin.inc:15,230; modules/comment/comment.admin.inc:70; modules/contact/contact.admin.inc:17; modules/dblog/dblog.admin.inc:38,169; modules/field_ui/field_ui.admin.inc:303; modules/file/file.field.inc:812; modules/filter/filter.admin.inc:89; modules/image/image.admin.inc:650,732; modules/locale/locale.admin.inc:95,637,1343; modules/menu/menu.admin.inc:14,212; modules/node/content_types.inc:16; modules/node/node.admin.inc:404; modules/node/node.pages.inc:501; modules/openid/openid.pages.inc:48; modules/path/path.admin.inc:28; modules/profile/profile.admin.inc:173; modules/shortcut/shortcut.admin.inc:172,386; modules/statistics/statistics.admin.inc:17,102; modules/statistics/statistics.pages.inc:16,62; modules/system/system.admin.inc:885,1348,2035,2744,2876; modules/taxonomy/taxonomy.admin.inc:98,596; modules/translation/translation.pages.inc:27; modules/user/user.admin.inc:157,895
+msgid "Operations"
+msgstr "Operações"
+
+#: modules/comment/comment.tokens.inc:55; modules/image/image.field.inc:440; modules/node/node.module:1827,1836; modules/system/system.module:0; themes/bartik/bartik.info:0; themes/seven/seven.info:0
+msgid "Content"
+msgstr "Conteúdos"
+
+#: includes/install.core.inc:1736; modules/node/node.module:3653,3662; modules/simpletest/simpletest.pages.inc:485; modules/system/system.module:1808; modules/user/user.admin.inc:152; modules/user/user.module:971,1241,1988
+msgid "Username"
+msgstr "Utilizador"
+
+#: modules/book/book.admin.inc:134; modules/comment/comment.admin.inc:234,278; modules/comment/comment.module:2175,2196; modules/forum/forum.admin.inc:199; modules/node/node.admin.inc:595; modules/node/node.pages.inc:410,414,488,561,575
+msgid "content"
+msgstr "conteúdos"
+
+#: modules/dblog/dblog.admin.inc:34,137,228; modules/node/node.admin.inc:396; modules/profile/profile.admin.inc:168; modules/tracker/tracker.pages.inc:112
+msgid "Type"
+msgstr "Tipo"
+
+#: modules/comment/comment.admin.inc:67; modules/comment/comment.tokens.inc:89; modules/comment/comment.module:172; modules/node/node.admin.inc:397; modules/node/node.tokens.inc:79; modules/tracker/tracker.pages.inc:112
+msgid "Author"
+msgstr "Autor"
+
+#: modules/forum/forum.module:863; modules/tracker/tracker.pages.inc:112
+msgid "Replies"
+msgstr "Respostas"
+
+#: modules/comment/comment.module:1102,1180,1194; modules/poll/poll.module:325
+msgid "Closed"
+msgstr "Encerrada"
+
+#: modules/aggregator/aggregator.module:147; modules/book/book.module:132; modules/field/modules/list/list.module:28; modules/field/modules/list/list.info:0; modules/filter/filter.module:105; modules/forum/forum.module:113; modules/image/image.module:104; modules/locale/locale.module:86; modules/node/node.module:1861; modules/path/path.module:79; modules/simpletest/simpletest.module:42; modules/system/system.module:592,658,662; modules/taxonomy/taxonomy.module:270,333; modules/update/update.module:175; modules/user/user.module:1585
+msgid "List"
+msgstr "Listar"
+
+#: modules/comment/comment.admin.inc:66; modules/comment/comment.module:177,1955; modules/contact/contact.pages.inc:81,220; modules/forum/forum.module:455; modules/system/system.module:3046; modules/user/user.admin.inc:446,467,488,510,545,580,601,636
+msgid "Subject"
+msgstr "Assunto"
+
+#: modules/simpletest/simpletest.pages.inc:305; modules/system/system.module:931
+msgid "Actions"
+msgstr "Acções"
+
+#: modules/menu/menu.admin.inc:103; modules/menu/menu.module:404; modules/user/user.admin.inc:291
+msgid "disabled"
+msgstr "inactivo"
+
+#: modules/locale/locale.module:131; modules/system/system.module:2790
+msgid "Confirm"
+msgstr "Confirmar"
+
+#: modules/aggregator/aggregator.admin.inc:214; modules/block/block.admin.inc:607; modules/comment/comment.admin.inc:222,266; modules/contact/contact.admin.inc:187; modules/field_ui/field_ui.admin.inc:1023,1618; modules/forum/forum.admin.inc:190; modules/image/image.admin.inc:312,338,410; modules/locale/locale.admin.inc:440,1283,1455; modules/node/node.admin.inc:14,588; modules/node/node.pages.inc:477,551,568; modules/profile/profile.admin.inc:409; modules/search/search.admin.inc:14; modules/shortcut/shortcut.admin.inc:688,730; modules/system/system.admin.inc:1059,1302,1427,2687,2720,3087; modules/system/system.module:2794; modules/taxonomy/taxonomy.admin.inc:891,931,967; modules/trigger/trigger.admin.inc:78; modules/user/user.pages.inc:417; modules/user/user.module:3143
+msgid "Cancel"
+msgstr "Cancelar"
+
+#: modules/book/book.pages.inc:200; modules/file/file.module:390; modules/system/system.admin.inc:2687,2720
+msgid "Remove"
+msgstr "Remover"
+
+#: modules/aggregator/aggregator.admin.inc:525; modules/file/file.field.inc:640; modules/forum/forum.admin.inc:45,147; modules/locale/locale.admin.inc:630; modules/menu/menu.admin.inc:311,466; modules/menu/menu.module:644; modules/node/content_types.inc:113; modules/simpletest/simpletest.pages.inc:80; modules/system/system.admin.inc:884,2596; modules/system/system.tokens.inc:93; modules/taxonomy/taxonomy.admin.inc:161,665; modules/taxonomy/taxonomy.tokens.inc:34,56; modules/taxonomy/taxonomy.module:167,174
+msgid "Description"
+msgstr "Descrição"
+
+#: includes/locale.inc:1587; modules/locale/locale.admin.inc:761,827,1342,1370; modules/locale/locale.module:301,314,370; modules/node/node.admin.inc:402; modules/node/node.tokens.inc:55; modules/path/path.admin.inc:26; modules/translation/translation.pages.inc:27
+msgid "Language"
+msgstr "Idioma"
+
+#: modules/aggregator/aggregator.module:180; modules/node/node.module:1909
+msgid "RSS feed"
+msgstr "Feed RSS"
+
+#: modules/filter/filter.admin.inc:346; modules/system/system.admin.inc:189
+msgid "Disable"
+msgstr "Desactivar"
+
+#: modules/block/block.admin.inc:645; modules/comment/comment.module:1145; modules/filter/filter.admin.js:0; modules/locale/locale.module:331; modules/node/content_types.inc:150; modules/node/node.module:3749; modules/shortcut/shortcut.admin.inc:289,339; modules/simpletest/simpletest.install:76; modules/statistics/statistics.module:320; modules/system/system.install:106,142,183; modules/translation/translation.module:132; modules/update/update.manager.inc:224
+msgid "Disabled"
+msgstr "Inactivo(s)"
+
+#: modules/filter/filter.admin.js:0; modules/locale/locale.admin.inc:95,631; modules/locale/locale.module:331; modules/menu/menu.admin.inc:210,318; modules/shortcut/shortcut.admin.inc:289,339; modules/simpletest/simpletest.install:47,55,64,76; modules/system/system.admin.inc:881; modules/system/system.install:147,188,461; modules/translation/translation.module:132; modules/update/update.manager.inc:214
+msgid "Enabled"
+msgstr "Activo"
+
+#: modules/comment/comment.module:1847; modules/system/system.module:541
+msgid "Administration"
+msgstr "Administração"
+
+#: modules/comment/comment-wrapper.tpl.php:42; modules/comment/comment.tokens.inc:14; modules/comment/comment.module:1174,219; themes/bartik/templates/comment-wrapper.tpl.php:42
+msgid "Comments"
+msgstr "Comentários"
+
+#: includes/theme.inc:1923; modules/aggregator/aggregator-summary-items.tpl.php:23
+msgid "More"
+msgstr "Mais"
+
+#: includes/theme.inc:1777; modules/comment/comment.module:2221
+msgid "new"
+msgstr "novo"
+
+#: includes/common.inc:6756; modules/system/system.module:3130; modules/update/update.report.inc:73
+msgid "error"
+msgstr "erro"
+
+#: modules/taxonomy/taxonomy.module:262; modules/taxonomy/taxonomy.info:0
+msgid "Taxonomy"
+msgstr "Taxonomia"
+
+#: cron.php:18,22; includes/common.inc:4929,4945,4976
+msgid "cron"
+msgstr "cron"
+
+#: modules/aggregator/aggregator-item.tpl.php:42; modules/aggregator/aggregator.module:174
+msgid "Categories"
+msgstr "Categorias"
+
+#: modules/aggregator/aggregator.admin.inc:197,594; modules/book/book.admin.inc:134,248; modules/comment/comment.module:2175; modules/node/content_types.inc:346; modules/node/node.pages.inc:405; modules/profile/profile.admin.inc:378,426
+msgid "view"
+msgstr "mostrar"
+
+#: modules/file/file.field.inc:15,404; modules/file/file.info:0; modules/image/image.field.inc:441; modules/system/system.module:267
+msgid "File"
+msgstr "Ficheiro"
+
+#: misc/machine-name.js:0; modules/comment/comment.module:253; modules/contact/contact.admin.inc:36,166; modules/field_ui/field_ui.admin.inc:1048; modules/field_ui/field_ui.module:121; modules/node/node.module:1883,1947; modules/taxonomy/taxonomy.module:297,338; modules/user/user.module:1708
+msgid "Edit"
+msgstr "Editar"
+
+#: modules/dblog/dblog.admin.inc:35,141; modules/statistics/statistics.admin.inc:213
+msgid "Date"
+msgstr "Data"
+
+#: modules/search/search.module:982,998,1005,164; modules/search/search.info:0
+msgid "Search"
+msgstr "Procurar"
+
+#: modules/dblog/dblog.admin.inc:315,345; modules/locale/locale.admin.inc:894,924,1455; modules/menu/menu.admin.inc:640; modules/node/node.admin.inc:207,238; modules/path/path.admin.inc:265; modules/user/user.admin.inc:98,131
+msgid "Reset"
+msgstr "Reiniciar"
+
+#: modules/aggregator/aggregator.admin.inc:212; modules/comment/comment.admin.inc:221; modules/contact/contact.admin.inc:185; modules/menu/menu.admin.inc:515; modules/node/content_types.inc:415; modules/node/node.admin.inc:587; modules/node/node.pages.inc:475,568; modules/shortcut/shortcut.admin.inc:686,728; modules/system/system.admin.inc:1427,2686,2719; modules/system/system.module:2768; modules/user/user.admin.inc:1021; modules/user/user.pages.inc:416; modules/user/user.module:3142
+msgid "This action cannot be undone."
+msgstr "Esta acção não pode ser desfeita."
+
+#: modules/field/modules/number/number.info:0
+msgid "Number"
+msgstr "Número"
+
+#: modules/contact/contact.pages.inc:95,226; modules/dblog/dblog.admin.inc:36,94,157; modules/simpletest/simpletest.pages.inc:250; modules/system/system.module:3053,3150
+msgid "Message"
+msgstr "Mensagem"
+
+#: includes/form.inc:2604; modules/simpletest/simpletest.pages.inc:490; modules/system/system.module:1812; modules/user/user.module:1007,1247,1996
+msgid "Password"
+msgstr "Senha"
+
+#: includes/form.inc:2387; modules/field/modules/options/options.module:413
+msgid "- None -"
+msgstr "- Nenhum -"
+
+#: modules/block/block-admin-display-form.tpl.php:41; modules/book/book.admin.inc:230; modules/book/book.module:508; modules/contact/contact.admin.inc:93; modules/field_ui/field_ui.admin.inc:298,865; modules/file/file.field.inc:811; modules/filter/filter.admin.inc:89; modules/forum/forum.admin.inc:52,155; modules/image/image.admin.inc:731; modules/locale/locale.admin.inc:95,632; modules/menu/menu.admin.inc:211,345; modules/menu/menu.module:664; modules/node/node.module:1758; modules/poll/poll.module:835; modules/profile/profile.admin.inc:171,283; modules/shortcut/shortcut.admin.inc:281,386; modules/taxonomy/taxonomy.admin.inc:95,596,721; modules/user/user.admin.inc:895
+msgid "Weight"
+msgstr "Peso"
+
+#: modules/dashboard/dashboard.module:532; modules/system/system.admin.inc:281,704,1194; modules/system/system.module:2707; modules/taxonomy/taxonomy.admin.inc:58,508
+msgid "The configuration options have been saved."
+msgstr "As opções de configuração foram guardadas."
+
+#: modules/image/image.field.inc:15,253,414; modules/image/image.info:0
+msgid "Image"
+msgstr "Imagem"
+
+#: includes/form.inc:2852; modules/comment/comment.module:1147; modules/node/content_types.inc:152
+msgid "Required"
+msgstr "Obrigatório"
+
+#: modules/forum/forum.admin.inc:298; modules/taxonomy/taxonomy.admin.inc:701
+msgid "root"
+msgstr "raiz"
+
+#: modules/book/book.admin.inc:230; modules/comment/comment.tokens.inc:79; modules/field_ui/field_ui.admin.inc:299,866; modules/forum/forum.admin.inc:50,152
+msgid "Parent"
+msgstr "Pai"
+
+#: modules/book/book.module:533; modules/system/system.admin.inc:1659
+msgid "none"
+msgstr "nenhum"
+
+#: modules/contact/contact.admin.inc:14,72; modules/contact/contact.pages.inc:87; modules/profile/profile.admin.inc:170,232
+msgid "Category"
+msgstr "Categoria"
+
+#: modules/aggregator/aggregator.module:152; modules/book/book.module:136; modules/forum/forum.module:136; modules/image/image.admin.inc:650; modules/menu/menu.module:83; modules/simpletest/simpletest.module:46; modules/system/system.admin.inc:181; modules/system/system.module:620; modules/update/update.module:180; modules/user/user.module:1662
+msgid "Settings"
+msgstr "Definições"
+
+#: modules/aggregator/aggregator.module:117; modules/contact/contact.module:67
+msgid "Add category"
+msgstr "Adicionar categoria"
+
+#: modules/comment/comment.tokens.inc:39; modules/field_ui/field_ui.admin.inc:300; modules/filter/filter.admin.inc:89,129; modules/node/content_types.inc:16,91; modules/profile/profile.admin.inc:168; modules/shortcut/shortcut.admin.inc:75,172,386,471; modules/system/system.admin.inc:882,2595; modules/system/system.tokens.inc:32; modules/taxonomy/taxonomy.admin.inc:142,596,657; modules/taxonomy/taxonomy.tokens.inc:30,52; modules/taxonomy/taxonomy.module:162; modules/trigger/trigger.admin.inc:292; modules/update/update.manager.inc:200; modules/user/user.admin.inc:274,851,895; modules/user/user.tokens.inc:29
+msgid "Name"
+msgstr "Nome"
+
+#: includes/locale.inc:1612; modules/aggregator/aggregator.admin.inc:35,49; modules/book/book.admin.inc:249; modules/comment/comment.admin.inc:122; modules/comment/comment.module:1010,1031; modules/field_ui/field_ui.admin.inc:368; modules/image/image.admin.inc:107,662,667,672; modules/locale/locale.admin.inc:89,1352; modules/menu/menu.admin.inc:127; modules/node/content_types.inc:25; modules/node/node.admin.inc:465; modules/node/node.module:2198; modules/path/path.admin.inc:53; modules/profile/profile.admin.inc:40; modules/shortcut/shortcut.admin.inc:294; modules/system/system.admin.inc:2753; modules/taxonomy/taxonomy.admin.inc:198,203,368,801,805; modules/translation/translation.pages.inc:38; modules/user/user.admin.inc:216; modules/user/user.module:3590
+msgid "edit"
+msgstr "editar"
+
+#: includes/pager.inc:613; modules/book/book-navigation.tpl.php:40
+msgid "Go to previous page"
+msgstr "Regressar à página anterior."
+
+#: includes/pager.inc:614; modules/book/book-navigation.tpl.php:46
+msgid "Go to next page"
+msgstr "Ir para a próxima página."
+
+#: modules/aggregator/aggregator.admin.inc:277; modules/locale/locale.admin.inc:990; modules/locale/locale.module:161
+msgid "Import"
+msgstr "Importar"
+
+#: modules/book/book.admin.inc:15; modules/book/book.module:539; modules/book/book.info:0
+msgid "Book"
+msgstr "Livro"
+
+#: modules/locale/locale.admin.inc:1079,1098; modules/locale/locale.module:170
+msgid "Export"
+msgstr "Exportar"
+
+#: modules/field/field.info:0; modules/field_ui/field_ui.admin.inc:301,864
+msgid "Field"
+msgstr "Campo"
+
+#: modules/field_ui/field_ui.admin.inc:297,451,530,867,1724; modules/system/system.admin.inc:2875,3006
+msgid "Label"
+msgstr "Etiqueta"
+
+#: modules/color/color.module:264; modules/comment/comment.pages.inc:38; modules/comment/comment.module:1985; modules/image/image.admin.inc:56; modules/node/node.pages.inc:274,358
+msgid "Preview"
+msgstr "Pré-visualização"
+
+#: modules/aggregator/aggregator.admin.inc:116,136,320,529,542; modules/comment/comment.module:1979; modules/contact/contact.admin.inc:114; modules/field_ui/field_ui.admin.inc:588,1168; modules/forum/forum.admin.inc:59,167; modules/menu/menu.admin.inc:350,472; modules/node/node.pages.inc:267; modules/path/path.admin.inc:143; modules/shortcut/shortcut.admin.inc:493,610; modules/system/system.admin.inc:3036; modules/taxonomy/taxonomy.admin.inc:38,172,382,739,789; modules/user/user.pages.inc:271
+msgid "Save"
+msgstr "Guardar"
+
+#: modules/help/help.module:14; modules/help/help.info:0; modules/system/system.admin.inc:827,829; modules/system/system.module:0; themes/bartik/bartik.info:0; themes/seven/seven.info:0
+msgid "Help"
+msgstr "Ajuda"
+
+#: includes/language.inc:242; modules/field/modules/list/list.module:317; modules/field/modules/number/number.module:186,196; modules/field/modules/text/text.module:185; modules/field_ui/field_ui.module:171; modules/image/image.admin.inc:671; modules/locale/locale.admin.inc:95; modules/shortcut/shortcut.install:16
+msgid "Default"
+msgstr "Predefinido"
+
+#: modules/field/modules/text/text.module:523; modules/node/node.tokens.inc:51
+msgid "Summary"
+msgstr "Resumo"
+
+#: modules/comment/comment.admin.inc:60; modules/field_ui/field_ui.admin.inc:1017; modules/node/node.admin.inc:384; modules/update/update.module:223; modules/user/user.admin.inc:134,194
+msgid "Update"
+msgstr "Actualizar"
+
+#: modules/locale/locale.module:0; modules/locale/locale.datepicker.js:0; modules/system/system.admin.inc:1892
+msgid "Sunday"
+msgstr "Domingo"
+
+#: modules/locale/locale.module:0; modules/locale/locale.datepicker.js:0; modules/system/system.admin.inc:1892
+msgid "Monday"
+msgstr "Segunda"
+
+#: modules/locale/locale.module:0; modules/locale/locale.datepicker.js:0; modules/system/system.admin.inc:1892
+msgid "Tuesday"
+msgstr "Terça"
+
+#: modules/locale/locale.module:0; modules/locale/locale.datepicker.js:0; modules/system/system.admin.inc:1892
+msgid "Wednesday"
+msgstr "Quarta"
+
+#: modules/locale/locale.module:0; modules/locale/locale.datepicker.js:0; modules/system/system.admin.inc:1892
+msgid "Thursday"
+msgstr "Quinta"
+
+#: modules/locale/locale.module:0; modules/locale/locale.datepicker.js:0; modules/system/system.admin.inc:1892
+msgid "Friday"
+msgstr "Sexta"
+
+#: modules/locale/locale.module:0; modules/locale/locale.datepicker.js:0; modules/system/system.admin.inc:1892
+msgid "Saturday"
+msgstr "Sábado"
+
+#: modules/aggregator/aggregator.info:0; modules/block/block.info:0; modules/blog/blog.info:0; modules/book/book.info:0; modules/color/color.info:0; modules/comment/comment.info:0; modules/contact/contact.info:0; modules/contextual/contextual.info:0; modules/dashboard/dashboard.info:0; modules/dblog/dblog.info:0; modules/field/field.info:0; modules/field/modules/field_sql_storage/field_sql_storage.info:0; modules/field/modules/list/list.info:0; modules/field/modules/number/number.info:0; modules/field/modules/options/options.info:0; modules/field/modules/text/text.info:0; modules/field_ui/field_ui.info:0; modules/file/file.info:0; modules/filter/filter.info:0; modules/forum/forum.info:0; modules/help/help.info:0; modules/image/image.info:0; modules/locale/locale.info:0; modules/menu/menu.info:0; modules/node/node.info:0; modules/openid/openid.info:0; modules/overlay/overlay.info:0; modules/path/path.info:0; modules/php/php.info:0; modules/poll/poll.info:0; modules/profile/profile.info:0; modules/rdf/rdf.info:0; modules/search/search.info:0; modules/shortcut/shortcut.info:0; modules/simpletest/simpletest.info:0; modules/statistics/statistics.info:0; modules/syslog/syslog.info:0; modules/system/system.info:0; modules/taxonomy/taxonomy.info:0; modules/toolbar/toolbar.info:0; modules/tracker/tracker.info:0; modules/translation/translation.info:0; modules/trigger/trigger.info:0; modules/update/update.info:0; modules/user/user.info:0; themes/bartik/bartik.info:0; themes/garland/garland.info:0; themes/seven/seven.info:0; themes/stark/stark.info:0
+msgid "Core"
+msgstr "Núcleo"
+
+#: modules/image/image.admin.inc:145; modules/system/system.admin.inc:1387
+msgid "Add"
+msgstr "Adicionar"
+
+#: modules/aggregator/aggregator.module:203,231; modules/node/node.module:1942; modules/taxonomy/taxonomy.module:293; modules/user/user.module:1684
+msgid "View"
+msgstr "Mostrar"
+
+#: modules/field_ui/field_ui.admin.inc:868; modules/locale/locale.admin.inc:1319; modules/system/system.admin.inc:2034,2744
+msgid "Format"
+msgstr "Formato"
+
+#: modules/aggregator/aggregator.admin.inc:75; modules/comment/comment.tokens.inc:59; modules/locale/locale.module:541; modules/node/node.tokens.inc:59; modules/profile/profile.module:603; modules/statistics/statistics.admin.inc:199; modules/system/system.tokens.inc:44,109; modules/system/system.module:3193; modules/taxonomy/taxonomy.tokens.inc:42; modules/user/user.tokens.inc:37
+msgid "URL"
+msgstr "URL"
+
+#: modules/menu/menu.admin.inc:289,305; modules/path/path.info:0; modules/shortcut/shortcut.admin.inc:480; modules/system/system.tokens.inc:97
+msgid "Path"
+msgstr "Caminho"
+
+#: modules/system/system.admin.inc:1249; modules/system/system.module:649; modules/update/update.report.inc:237
+msgid "Modules"
+msgstr "Módulos"
+
+#: modules/menu/menu.info:0
+msgid "Menu"
+msgstr "Menu"
+
+#: modules/aggregator/aggregator.admin.inc:33,34; modules/aggregator/aggregator.pages.inc:519; modules/user/user.admin.inc:215; modules/user/user.tokens.inc:107
+msgid "never"
+msgstr "nunca"
+
+#: includes/mail.inc:156; modules/contact/contact.pages.inc:161,287
+msgid "mail"
+msgstr "email"
+
+#: modules/comment/comment.admin.inc:69; modules/node/node.admin.inc:399
+msgid "Updated"
+msgstr "Actualizado"
+
+#: includes/actions.inc:63,295,308,356; modules/trigger/trigger.admin.inc:93
+msgid "actions"
+msgstr "acções"
+
+#: modules/field/modules/text/text.module:36; modules/field/modules/text/text.info:0
+msgid "Text"
+msgstr "Texto"
+
+#: modules/aggregator/aggregator.admin.inc:184,197,581,594; modules/aggregator/aggregator.fetcher.inc:57; modules/aggregator/aggregator.pages.inc:16; modules/aggregator/aggregator.parser.inc:89; modules/aggregator/aggregator.module:629,632
+msgid "aggregator"
+msgstr "agregador"
+
+#: modules/poll/poll.pages.inc:58; modules/statistics/statistics.admin.inc:14; modules/statistics/statistics.pages.inc:60; modules/system/system.tokens.inc:113
+msgid "Timestamp"
+msgstr "Registo data/hora"
+
+#: modules/comment/comment.module:2551; modules/node/node.module:3697
+msgid "Keywords"
+msgstr "Palavras-chave"
+
+#: modules/field/modules/number/number.module:220; modules/image/image.module:631
+msgid "<none>"
+msgstr "<nenhum>"
+
+#: modules/trigger/trigger.admin.inc:78; modules/trigger/trigger.module:78
+msgid "Unassign"
+msgstr "Retirar"
+
+#: modules/statistics/statistics.module:169; modules/statistics/statistics.info:0
+msgid "Statistics"
+msgstr "Estatísticas"
+
+#: includes/ajax.inc:434; includes/common.inc:2481
+msgid "You are not authorized to access this page."
+msgstr "Não está autorizado a aceder a esta página."
+
+#: modules/simpletest/drupal_web_test_case.php:169,171; modules/update/update.compare.inc:269
+msgid "Unknown"
+msgstr "Desconhecido"
+
+#: modules/forum/forum-submitted.tpl.php:28; modules/locale/locale.admin.inc:775; modules/translation/translation.pages.inc:48
+msgid "n/a"
+msgstr "não disponível"
+
+#: modules/dblog/dblog.admin.inc:37,145; modules/locale/locale.module:563; modules/statistics/statistics.admin.inc:16,217; modules/statistics/statistics.pages.inc:15; modules/user/user.module:141,152; modules/user/user.info:0
+msgid "User"
+msgstr "Utilizador"
+
+#: modules/comment/comment.module:2487,2514,2536,2577; modules/node/node.module:3553,3563,3573,3583,3593,3603,3613,3630,3729; modules/system/system.module:3127,3234; modules/user/user.module:3507
+msgid "action"
+msgstr "acção"
+
+#: includes/authorize.inc:76; modules/field_ui/field_ui.admin.inc:1566; modules/system/system.admin.inc:1058; modules/update/update.manager.inc:369
+msgid "Continue"
+msgstr "Continuar"
+
+#: modules/aggregator/aggregator.module:216,244; modules/contextual/contextual.js:0; modules/locale/locale.admin.inc:579; modules/system/system.admin.inc:849
+msgid "Configure"
+msgstr "Configurar"
+
+#: modules/system/system.tokens.inc:40; modules/user/user.tokens.inc:33
+msgid "Email"
+msgstr "Email"
+
+#: includes/file.inc:746,842,862,872,879,886,978,1204,1251,1260,1265,1515,1769,2094; modules/file/file.module:615,621
+msgid "file"
+msgstr "ficheiro"
+
+#: modules/node/node.admin.inc:74; modules/user/user.module:3229
+msgid "status"
+msgstr "estado"
+
+#: includes/batch.inc:158; includes/errors.inc:251; includes/unicode.inc:138; modules/system/system.admin.inc:2490
+msgid "Error"
+msgstr "Erro"
+
+#: modules/field/modules/options/options.info:0
+msgid "Options"
+msgstr "Opções"
+
+#: modules/contact/contact.module:90,98; modules/contact/contact.info:0
+msgid "Contact"
+msgstr "Contacto"
+
+#: modules/comment/comment.tokens.inc:84; modules/node/node.module:170; modules/node/node.info:0
+msgid "Node"
+msgstr "Nó"
+
+#: modules/book/book.module:461; modules/menu/menu.module:657
+msgid "Parent item"
+msgstr "Item pai"
+
+#: modules/book/book.admin.inc:63; modules/book/book.module:98
+msgid "Add child page"
+msgstr "Adicionar página filha"
+
+#: modules/comment/comment.admin.inc:39; modules/node/node.admin.inc:367; modules/user/user.admin.inc:177
+msgid "Update options"
+msgstr "Opções de actualização"
+
+#: modules/dblog/dblog.module:166; modules/locale/locale.module:739
+msgid "All"
+msgstr "Todos"
+
+#: modules/poll/poll.module:325; modules/user/user.module:1047
+msgid "Active"
+msgstr "Activo"
+
+#: modules/dashboard/dashboard.js:0; modules/locale/locale.datepicker.js:0
+msgid "Done"
+msgstr "Operação concluída"
+
+#: modules/node/node.module:1901; modules/shortcut/shortcut.install:20
+msgid "Add content"
+msgstr "Adicionar conteúdo"
+
+#: modules/block/block-admin-display-form.tpl.php:39; modules/block/block.info:0
+msgid "Block"
+msgstr "Bloco"
+
+#: modules/statistics/statistics.admin.inc:15,54; modules/statistics/statistics.pages.inc:61
+msgid "Page"
+msgstr "Página"
+
+#: includes/install.core.inc:1716; modules/system/system.admin.inc:400,1456
+msgid "Site name"
+msgstr "Nome do site"
+
+#: includes/errors.inc:213; includes/unicode.inc:206,240
+msgid "php"
+msgstr "php"
+
+#: modules/system/system.module:1041; modules/system/system.install:61,67
+msgid "PHP"
+msgstr "PHP"
+
+#: modules/aggregator/aggregator.admin.inc:65; modules/aggregator/aggregator.processor.inc:75; modules/statistics/statistics.admin.inc:258; modules/system/system.admin.inc:1581
+msgid "Never"
+msgstr "Nunca"
+
+#: modules/system/system.install:363; modules/update/update.report.inc:277; modules/update/update.install:153
+msgid "Up to date"
+msgstr "Actualizado"
+
+#: modules/system/system.install:373; modules/update/update.install:143
+msgid "Out of date"
+msgstr "Desactualizado"
+
+#: modules/system/system.module:0; themes/bartik/bartik.info:0
+msgid "Header"
+msgstr "Cabeçalho"
+
+#: modules/system/system.module:0; themes/bartik/bartik.info:0
+msgid "Footer"
+msgstr "Rodapé"
+
+#: modules/comment/comment.module:1894,1905; modules/contact/contact.pages.inc:67,201
+msgid "Your name"
+msgstr "O seu nome"
+
+#: modules/color/color.module:152; modules/image/image.admin.inc:661
+msgid "Custom"
+msgstr "Personalizar"
+
+#: modules/block/block.admin.inc:384; modules/filter/filter.admin.inc:89,147; modules/user/user.admin.inc:154; modules/user/user.module:1066,1610
+msgid "Roles"
+msgstr "Grupos de utilizador"
+
+#: modules/comment/comment.module:98; modules/comment/comment.install:247; modules/comment/comment.info:0
+msgid "Comment"
+msgstr "Comentar"
+
+#: modules/dblog/dblog.admin.inc:165; modules/statistics/statistics.admin.inc:221
+msgid "Hostname"
+msgstr "Nome do servidor"
+
+#: modules/comment/comment.module:1947; modules/node/content_types.inc:172; modules/node/node.pages.inc:248; modules/translation/translation.pages.inc:40
+msgid "Published"
+msgstr "Publicado"
+
+#: modules/dblog/dblog.admin.inc:310,326,338; modules/filter/filter.info:0; modules/locale/locale.admin.inc:889,905,917; modules/node/node.admin.inc:203,221; modules/path/path.admin.inc:259; modules/user/user.admin.inc:89,114
+msgid "Filter"
+msgstr "Filtro"
+
+#: modules/locale/locale.info:0; modules/system/system.admin.inc:1876
+msgid "Locale"
+msgstr "Localização"
+
+#: modules/node/content_types.inc:173; modules/node/node.pages.inc:253
+msgid "Promoted to front page"
+msgstr "Promovido à página principal"
+
+#: modules/node/content_types.inc:174; modules/node/node.pages.inc:258
+msgid "Sticky at top of lists"
+msgstr "Destacado no topo das listas"
+
+#: modules/poll/poll.tokens.inc:30; modules/poll/poll.module:345
+msgid "Poll duration"
+msgstr "Duração da votação"
+
+#: modules/taxonomy/taxonomy.tokens.inc:70; modules/taxonomy/taxonomy.module:1511
+msgid "Vocabulary"
+msgstr "Vocabulário"
+
+#: includes/install.core.inc:1745; modules/system/system.admin.inc:1468; modules/user/user.module:983
+msgid "E-mail address"
+msgstr "Endereço de email"
+
+#: modules/field_ui/field_ui.admin.inc:1557; modules/field_ui/field_ui.module:137
+msgid "Widget type"
+msgstr "Tipo de widget"
+
+#: modules/poll/poll.pages.inc:57; modules/poll/poll.module:706
+msgid "Vote"
+msgstr "Votar"
+
+#: modules/user/user.admin.inc:199; modules/user/user.module:3234
+msgid "blocked"
+msgstr "bloqueado"
+
+#: includes/theme.maintenance.inc:117; modules/user/user.admin.inc:199; modules/user/user.module:3233
+msgid "active"
+msgstr "activo"
+
+#: modules/aggregator/aggregator.pages.inc:324; modules/aggregator/aggregator.module:187
+msgid "OPML feed"
+msgstr "feed OPML"
+
+#: modules/block/block.admin.inc:140; modules/filter/filter.admin.inc:35; modules/system/system.admin.inc:2889
+msgid "configure"
+msgstr "configurar"
+
+#: modules/aggregator/aggregator.pages.inc:258; modules/aggregator/aggregator.module:208,236
+msgid "Categorize"
+msgstr "Categorizar"
+
+#: modules/comment/comment.module:1881; modules/node/node.pages.inc:218
+msgid "Authored by"
+msgstr "Criado por"
+
+#: modules/field/modules/number/number.module:71,241; modules/image/image.effects.inc:22
+msgid "Scale"
+msgstr "Escala"
+
+#: modules/field/modules/text/text.module:96,189; modules/taxonomy/taxonomy.module:1293
+msgid "Plain text"
+msgstr "Texto simples"
+
+#: modules/dblog/dblog.module:66; modules/statistics/statistics.module:161
+msgid "Details"
+msgstr "Detalhes"
+
+#: modules/path/path.admin.inc:24; modules/system/system.module:922; modules/system/system.info:0
+msgid "System"
+msgstr "Sistema"
+
+#: modules/aggregator/aggregator.processor.inc:130; modules/field_ui/field_ui.admin.inc:1801; modules/node/content_types.inc:241; modules/poll/poll.module:324
+msgid "Unlimited"
+msgstr "Ilimitado"
+
+#: includes/file.inc:512; modules/user/user.module:3015
+msgid "security"
+msgstr "segurança"
+
+#: modules/locale/locale.module:0; modules/locale/locale.datepicker.js:0
+msgid "Mon"
+msgstr "Seg."
+
+#: modules/locale/locale.module:0; modules/locale/locale.datepicker.js:0
+msgid "Tue"
+msgstr "Ter"
+
+#: modules/locale/locale.module:0; modules/locale/locale.datepicker.js:0
+msgid "Wed"
+msgstr "Qua"
+
+#: modules/locale/locale.module:0; modules/locale/locale.datepicker.js:0
+msgid "Thu"
+msgstr "Qui"
+
+#: modules/locale/locale.module:0; modules/locale/locale.datepicker.js:0
+msgid "Fri"
+msgstr "Sex"
+
+#: modules/locale/locale.module:0; modules/locale/locale.datepicker.js:0
+msgid "Sat"
+msgstr "Sáb"
+
+#: modules/locale/locale.module:0; modules/locale/locale.datepicker.js:0
+msgid "Sun"
+msgstr "Dom"
+
+#: modules/locale/locale.module:0; modules/locale/locale.datepicker.js:0
+msgid "May"
+msgstr "Maio"
+
+#: modules/forum/forum-list.tpl.php:37; modules/forum/forum.info:0
+msgid "Forum"
+msgstr "Fórum"
+
+#: themes/bartik/color/color.inc:14; themes/garland/color/color.inc:12
+msgid "Text color"
+msgstr "Cor do texto"
+
+#: modules/blog/blog.module:50; modules/contact/contact.module:24; modules/forum/forum.module:34; modules/tracker/tracker.module:19
+msgid "Navigation"
+msgstr "Navegação"
+
+#: modules/color/color.info:0
+msgid "Color"
+msgstr "Cor"
+
+#: modules/simpletest/drupal_web_test_case.php:1010,1125; modules/user/user.module:1271,1338
+msgid "User login"
+msgstr "Iniciar sessão"
+
+#: modules/simpletest/drupal_web_test_case.php:1121; modules/toolbar/toolbar.module:230; modules/user/user.pages.inc:145; modules/user/user.module:1254,2002,1534
+msgid "Log in"
+msgstr "Entrar"
+
+#: modules/blog/blog.module:29; modules/blog/blog.info:0
+msgid "Blog"
+msgstr "Blogue"
+
+#: modules/comment/comment-wrapper.tpl.php:49; modules/comment/comment.module:638,660,279; themes/bartik/templates/comment-wrapper.tpl.php:49
+msgid "Add new comment"
+msgstr "Adicionar novo comentário"
+
+#: modules/locale/locale.admin.inc:1353; modules/menu/menu.admin.inc:134
+msgid "reset"
+msgstr "reiniciar"
+
+#: modules/block/block.admin.inc:401; modules/user/user.tokens.inc:14
+msgid "Users"
+msgstr "Utilizadores"
+
+#: modules/color/color.install:34; modules/image/image.install:256; modules/openid/openid.install:97
+msgid "Not installed"
+msgstr "Não instalado"
+
+#: modules/dblog/dblog.admin.inc:153; modules/statistics/statistics.admin.inc:209; modules/statistics/statistics.pages.inc:14
+msgid "Referrer"
+msgstr "Referência"
+
+#: modules/poll/poll-bar.tpl.php:26; modules/poll/poll.pages.inc:42
+msgid "1 vote"
+msgid_plural "@count votes"
+msgstr[0] "1 voto"
+msgstr[1] "@count votos"
+
+#: includes/ajax.inc:439; includes/common.inc:2493; modules/system/system.admin.inc:2170
+msgid ""
+"@site is currently under maintenance. We should be back shortly. Thank "
+"you for your patience."
+msgstr ""
+"O site @site está neste momento em manutenção. Contamos voltar "
+"rapidamente. Obrigado pela sua compreensão."
+
+#: modules/filter/filter.admin.inc:45; modules/shortcut/shortcut.admin.inc:306
+msgid "Save changes"
+msgstr "Guardar alterações"
+
+#: authorize.php:43; update.php:244
+msgid "access denied"
+msgstr "acesso negado"
+
+#: includes/common.inc:1980; modules/comment/comment.tokens.inc:135; modules/comment/comment.module:1871,2033; modules/node/node.pages.inc:210,223; modules/node/node.tokens.inc:161; modules/user/user.admin.inc:275; modules/user/user.pages.inc:478,479; modules/user/user.module:810
+msgid "Anonymous"
+msgstr "Anónimo"
+
+#: modules/system/system.admin.inc:1256,1301,2594; modules/system/system.module:667,675
+msgid "Uninstall"
+msgstr "Desinstalar"
+
+#: modules/comment/comment.module:1146; modules/node/content_types.inc:151
+msgid "Optional"
+msgstr "Opcional"
+
+#: modules/profile/profile.info:0
+msgid "Profile"
+msgstr "Perfil"
+
+#: modules/field_ui/field_ui.admin.inc:1815; modules/locale/locale.admin.inc:507
+msgid "Save settings"
+msgstr "Guardar definições"
+
+#: modules/comment/comment.admin.inc:53; modules/node/node.admin.inc:377; modules/trigger/trigger.admin.inc:292; modules/user/user.admin.inc:186
+msgid "Operation"
+msgstr "Operação"
+
+#: modules/tracker/tracker.info:0
+msgid "Tracker"
+msgstr "Tracker"
+
+#: modules/comment/comment.module:2072; modules/node/node.module:966
+msgid "You have to specify a valid date."
+msgstr "Tem que indicar uma data válida."
+
+#: modules/forum/forum.module:1043,1106; modules/tracker/tracker.pages.inc:58
+msgid "1 new"
+msgid_plural "@count new"
+msgstr[0] "1 nova"
+msgstr[1] "@count novas"
+
+#: modules/comment/comment.module:1936; modules/node/node.pages.inc:227
+msgid "Authored on"
+msgstr "Criado em"
+
+#: modules/comment/comment.module:1102,1181,1203; modules/field_ui/field_ui.admin.inc:872,891
+msgid "Hidden"
+msgstr "Oculto"
+
+#: modules/syslog/syslog.info:0
+msgid "Syslog"
+msgstr "Syslog (histórico de sistema)"
+
+#: modules/aggregator/aggregator.admin.inc:213; modules/aggregator/aggregator.module:133
+msgid "Remove items"
+msgstr "Remover itens"
+
+#: modules/aggregator/aggregator.admin.inc:402; modules/filter/filter.module:1206
+msgid "Allowed HTML tags"
+msgstr "Tags HTML permitidas"
+
+#: modules/aggregator/aggregator.admin.inc:32,49; modules/aggregator/aggregator.module:762
+msgid "1 item"
+msgid_plural "@count items"
+msgstr[0] "1 item"
+msgstr[1] "@count itens"
+
+#: modules/menu/menu.admin.inc:549,631; modules/node/content_types.inc:429
+msgid "menu"
+msgstr "menu"
+
+#: modules/comment/comment.admin.inc:179; modules/node/node.admin.inc:282,334; modules/user/user.admin.inc:249
+msgid "The update has been performed."
+msgstr "A actualização foi efectuada."
+
+#: modules/locale/locale.module:572; modules/simpletest/drupal_web_test_case.php:1522,1589,1596,2324,2925,2943,2961,2979,2994,3009,3028,3045,3139,3157
+msgid "Browser"
+msgstr "Navegador"
+
+#: includes/theme.inc:2543; modules/user/user.module:1421
+msgid "View user profile."
+msgstr "Mostrar perfil do utilizador."
+
+#: modules/user/user.admin.inc:738; modules/user/user.pages.inc:327
+msgid "The changes have been saved."
+msgstr "As alterações foram guardadas."
+
+#: modules/node/node.admin.inc:203,222; modules/user/user.admin.inc:89,115
+msgid "Refine"
+msgstr "Melhorar"
+
+#: modules/node/node.admin.inc:206,235; modules/user/user.admin.inc:94,128
+msgid "Undo"
+msgstr "Desfazer"
+
+#: modules/user/user.admin.inc:155; modules/user/user.module:941
+msgid "Member for"
+msgstr "Membro desde"
+
+#: modules/aggregator/aggregator.admin.inc:33; modules/aggregator/aggregator.pages.inc:516; modules/comment/comment.module:581; modules/statistics/statistics.admin.inc:179; modules/user/user.admin.inc:215
+msgid "@time ago"
+msgstr "há @time atrás"
+
+#: authorize.php:146; modules/system/system.admin.inc:1475
+msgid "Front page"
+msgstr "Página principal"
+
+#: includes/locale.inc:1587; modules/locale/locale.module:930,77; modules/node/node.module:2673
+msgid "Languages"
+msgstr "Idiomas"
+
+#: modules/node/content_types.inc:163; modules/node/node.pages.inc:237
+msgid "Publishing options"
+msgstr "Opções de publicação"
+
+#: modules/node/content_types.inc:175; modules/node/node.pages.inc:175
+msgid "Create new revision"
+msgstr "Criar nova revisão"
+
+#: modules/locale/locale.module:0; modules/locale/locale.datepicker.js:0
+msgid "Jan"
+msgstr "Jan"
+
+#: modules/locale/locale.module:0; modules/locale/locale.datepicker.js:0
+msgid "Feb"
+msgstr "Fev"
+
+#: modules/locale/locale.module:0; modules/locale/locale.datepicker.js:0
+msgid "Mar"
+msgstr "Mar"
+
+#: modules/locale/locale.module:0; modules/locale/locale.datepicker.js:0
+msgid "Apr"
+msgstr "Abr"
+
+#: modules/locale/locale.module:0; modules/locale/locale.datepicker.js:0
+msgid "Jun"
+msgstr "Jun"
+
+#: modules/locale/locale.module:0; modules/locale/locale.datepicker.js:0
+msgid "Jul"
+msgstr "Jul"
+
+#: modules/locale/locale.module:0; modules/locale/locale.datepicker.js:0
+msgid "Aug"
+msgstr "Ago"
+
+#: modules/locale/locale.module:0; modules/locale/locale.datepicker.js:0
+msgid "Sep"
+msgstr "Set"
+
+#: modules/locale/locale.module:0; modules/locale/locale.datepicker.js:0
+msgid "Oct"
+msgstr "Out"
+
+#: modules/locale/locale.module:0; modules/locale/locale.datepicker.js:0
+msgid "Nov"
+msgstr "Nov"
+
+#: modules/locale/locale.module:0; modules/locale/locale.datepicker.js:0
+msgid "Dec"
+msgstr "Dez"
+
+#: modules/field/modules/number/number.module:312; modules/field/modules/text/text.module:454
+msgid "Text field"
+msgstr "Campo de texto"
+
+#: modules/image/image.admin.inc:338; modules/node/node.pages.inc:551
+msgid "Revert"
+msgstr "Reverter"
+
+#: modules/node/node.admin.inc:76,96,106; modules/user/user.module:3205,3224,3232
+msgid "any"
+msgstr "qualquer"
+
+#: modules/simpletest/drupal_web_test_case.php:1125; modules/toolbar/toolbar.module:222; modules/user/user.module:1565
+msgid "Log out"
+msgstr "Encerrar sessão"
+
+#: modules/openid/openid.module:619; modules/user/user.admin.inc:13; modules/user/user.module:1258,3546,1540
+msgid "Create new account"
+msgstr "Criar uma nova conta"
+
+#: includes/common.inc:6757; modules/update/update.report.inc:67,79
+msgid "warning"
+msgstr "aviso"
+
+#: modules/statistics/statistics.admin.inc:42,87,140,186; modules/statistics/statistics.pages.inc:46,84
+msgid "No statistics available."
+msgstr "Sem estatísticas disponíveis."
+
+#: includes/install.core.inc:1711; modules/system/system.tokens.inc:17; modules/system/system.module:969
+msgid "Site information"
+msgstr "Informação do site"
+
+#: modules/poll/poll.module:633,111; modules/simpletest/simpletest.pages.inc:239
+msgid "Results"
+msgstr "Resultados"
+
+#: modules/poll/poll.pages.inc:56; modules/statistics/statistics.admin.inc:100
+msgid "Visitor"
+msgstr "Visitante"
+
+#: modules/forum/forum.module:92,98,105; modules/forum/forum.install:35
+msgid "Forums"
+msgstr "Fóruns"
+
+#: modules/image/image.admin.inc:668; modules/node/node.pages.inc:528
+msgid "revert"
+msgstr "reverter"
+
+#: modules/statistics/statistics.module:187; modules/tracker/tracker.module:56
+msgid "Track"
+msgstr "Monitorizar"
+
+#: modules/system/system.admin.inc:837; modules/user/user.module:1595,1604
+msgid "Permissions"
+msgstr "Permissões"
+
+#: modules/poll/poll.info:0
+msgid ""
+"Allows your site to capture votes on different topics in the form of "
+"multiple choice questions."
+msgstr ""
+"Permite ao seu site obter votos em diferentes tópicos sob a forma de "
+"questões de escolha múltipla."
+
+#: themes/bartik/color/color.inc:11; themes/garland/color/color.inc:9
+msgid "Link color"
+msgstr "Cor das ligações"
+
+#: modules/comment/comment.tokens.inc:69; modules/node/node.tokens.inc:69
+msgid "Date created"
+msgstr "Data de criação"
+
+#: modules/simpletest/simpletest.module:33; modules/simpletest/simpletest.info:0; profiles/testing/testing.info:0
+msgid "Testing"
+msgstr "Testando"
+
+#: profiles/standard/standard.info:0
+msgid "Standard"
+msgstr "Padrão"
+
+#: modules/comment/comment.module:1948; modules/node/content_types.js:0; modules/node/node.js:0; modules/translation/translation.pages.inc:40
+msgid "Not published"
+msgstr "Não publicado"
+
+#: modules/statistics/statistics.admin.inc:35; modules/statistics/statistics.pages.inc:37,76
+msgid "details"
+msgstr "Detalhes"
+
+#: includes/image.inc:98; modules/image/image.effects.inc:77,112,146,168,187,240; modules/image/image.module:709,735,749; modules/system/image.gd.inc:121,218
+msgid "image"
+msgstr "imagem"
+
+#: includes/actions.inc:312; modules/trigger/trigger.admin.inc:169
+msgid "Remove orphaned actions"
+msgstr "Remover acções órfãs"
+
+#: includes/form.inc:1236; modules/field/modules/options/options.module:142; modules/file/file.module:548
+msgid "!name field is required."
+msgstr "O campo !name é obrigatório."
+
+#: includes/theme.inc:1531; themes/garland/template.php:17
+msgid "You are here"
+msgstr "Está aqui"
+
+#: includes/form.inc:3990; modules/node/node.admin.inc:267
+msgid "Processing"
+msgstr "A processar"
+
+#: modules/shortcut/shortcut.info:0
+msgid "Shortcut"
+msgstr "Atalho"
+
+#: modules/system/system.admin.inc:1462; modules/system/system.tokens.inc:36
+msgid "Slogan"
+msgstr "Slogan"
+
+#: modules/user/user.admin.inc:960; modules/user/user.module:1626
+msgid "Delete role"
+msgstr "Eliminar grupo"
+
+#: modules/block/block.module:109; modules/blog/blog.module:52
+msgid "Blocks"
+msgstr "Blocos"
+
+#: modules/menu/menu.info:0
+msgid "Allows administrators to customize the site navigation menu."
+msgstr ""
+"Permite aos administradores personalizar o menu de navegação do "
+"site."
+
+#: includes/install.core.inc:1776; modules/system/system.admin.inc:1902
+msgid "Default time zone"
+msgstr "Fuso horário predefinido"
+
+#: modules/field/modules/number/number.info:0
+msgid "Defines numeric field types."
+msgstr "Define tipos de campos numéricos"
+
+#: modules/field/modules/options/options.info:0
+msgid ""
+"Defines selection, check box and radio button widgets for text and "
+"numeric fields."
+msgstr ""
+"Define widgets de selecção, caixa de selecção e botão de opção "
+"para texto e campos numéricos."
+
+#: modules/field/modules/text/text.info:0
+msgid "Defines simple text field types."
+msgstr "Define tipos simples de campos de texto"
+
+#: modules/comment/comment.module:1921; modules/profile/profile.module:370
+msgid ""
+"The content of this field is kept private and will not be shown "
+"publicly."
+msgstr ""
+"O conteúdo deste campo é privado e não irá ser exibido "
+"publicamente."
+
+#: modules/comment/comment.module:615,1352; modules/node/node.module:289
+msgid "1 comment"
+msgid_plural "@count comments"
+msgstr[0] "1 comentário"
+msgstr[1] "@count comentários"
+
+#: modules/system/system.module:2108,2114,2937,2941; modules/user/user.admin.inc:356
+msgid "file system"
+msgstr "sistema de ficheiros"
+
+#: modules/menu/menu.admin.inc:267; modules/menu/menu.module:638
+msgid "Menu link title"
+msgstr "Título da ligação do menu"
+
+#: modules/menu/menu.admin.inc:386; modules/path/path.admin.inc:194
+msgid ""
+"The path '@link_path' is either invalid or you do not have access to "
+"it."
+msgstr "O caminho '@link_path' é inválido ou você não tem acesso ao mesmo."
+
+#: modules/menu/menu.admin.inc:411; modules/menu/menu.module:515
+msgid "There was an error saving the menu link."
+msgstr "Ocorreu um erro a gravar a ligação do menu."
+
+#: modules/rdf/rdf.info:0
+msgid "RDF"
+msgstr "RDF"
+
+#: modules/locale/locale.module:372; modules/node/node.admin.inc:102,161,455
+msgid "Language neutral"
+msgstr "Neutro em relação ao idioma"
+
+#: modules/openid/openid.pages.inc:48,74; modules/openid/openid.info:0
+msgid "OpenID"
+msgstr "OpenID"
+
+#: modules/overlay/overlay.info:0
+msgid "Overlay"
+msgstr ""
+
+#: modules/file/file.info:0
+msgid "Defines a file field type."
+msgstr "Define um tipo de campo de ficheiro."
+
+#: modules/comment/comment.admin.inc:134; modules/comment/comment.module:588
+msgid "No comments available."
+msgstr "Não existem comentários."
+
+#: modules/node/node.admin.inc:14; modules/node/node.module:3756,1843
+msgid "Rebuild permissions"
+msgstr "Reconstruir permissões"
+
+#: modules/aggregator/aggregator.info:0
+msgid "Aggregator"
+msgstr "Agregador"
+
+#: modules/aggregator/aggregator.info:0
+msgid "Aggregates syndicated content (RSS, RDF, and Atom feeds)."
+msgstr "Agrega conteúdo sindicado (RSS, RDF e feeds Atom)."
+
+#: includes/locale.inc:1587; modules/locale/locale.admin.inc:1145
+msgid "Context"
+msgstr "Contexto"
+
+#: themes/bartik/bartik.info:0
+msgid "Featured"
+msgstr "Destacado"
+
+#: modules/update/update.report.inc:268; modules/update/update.install:137
+msgid "Revoked!"
+msgstr "Revogado!"
+
+#: modules/field_ui/field_ui.admin.inc:1468; modules/field_ui/field_ui.module:129
+msgid "Field settings"
+msgstr "Configurações do campo"
+
+#: modules/system/html.tpl.php:48; themes/bartik/templates/maintenance-page.tpl.php:28
+msgid "Skip to main content"
+msgstr ""
+
+#: modules/field_ui/field_ui.admin.inc:452; modules/profile/profile.admin.inc:67
+msgid "Add new field"
+msgstr "Adicionar um novo campo"
+
+#: modules/statistics/statistics.tokens.inc:14; modules/statistics/statistics.module:403
+msgid "Number of views"
+msgstr "Número de visualizações"
+
+#: modules/aggregator/aggregator.module:21; modules/block/block.module:51; modules/blog/blog.module:42; modules/book/book.module:15; modules/color/color.module:10; modules/comment/comment.module:79; modules/contact/contact.module:16; modules/contextual/contextual.module:16; modules/dashboard/dashboard.module:11; modules/dblog/dblog.module:22; modules/field/field.module:126; modules/field/modules/field_sql_storage/field_sql_storage.module:16; modules/field/modules/list/list.module:16; modules/field/modules/number/number.module:16; modules/field/modules/options/options.module:16; modules/field/modules/text/text.module:16; modules/field_ui/field_ui.module:16; modules/file/file.module:19; modules/filter/filter.module:16; modules/forum/forum.module:16; modules/help/help.module:53; modules/image/image.module:44; modules/locale/locale.module:25; modules/menu/menu.module:22; modules/node/node.module:84; modules/openid/openid.module:73; modules/overlay/overlay.module:16; modules/path/path.module:16; modules/php/php.module:16; modules/poll/poll.module:17; modules/profile/profile.module:36; modules/rdf/rdf.module:16; modules/search/search.module:71; modules/shortcut/shortcut.module:25; modules/simpletest/simpletest.module:16; modules/statistics/statistics.module:16; modules/syslog/syslog.module:23; modules/system/system.module:72; modules/taxonomy/taxonomy.module:24; modules/toolbar/toolbar.module:15; modules/tracker/tracker.module:15; modules/translation/translation.module:35; modules/trigger/trigger.module:29; modules/update/update.module:84; modules/user/user.module:44
+msgid "About"
+msgstr "Sobre"
+
+#: includes/install.core.inc:558; modules/system/system.install:38
+msgid "Install profile"
+msgstr "Perfil de instalação"
+
+#: modules/trigger/trigger.info:0
+msgid ""
+"Enables actions to be fired on certain system events, such as when new "
+"content is created."
+msgstr ""
+"Activa acções que são despoletadas qundo ocorrem determinados "
+"eventos do sistema, por exemplo, quando novo conteúdo é criado."
+
+#: modules/taxonomy/taxonomy.info:0
+msgid "Enables the categorization of content."
+msgstr "Permite a categorização de conteúdos."
+
+#: modules/locale/locale.module:153; modules/translation/translation.module:61
+msgid "Translate"
+msgstr "Traduzir"
+
+#: modules/file/file.install:62,67,72,77; modules/system/system.install:454
+msgid "Not enabled"
+msgstr "Não activo"
+
+#: modules/toolbar/toolbar.module:219; modules/user/user.module:161,1917,1524
+msgid "User account"
+msgstr "Conta de utilizador"
+
+#: modules/image/image.admin.inc:513,523; modules/image/image.field.inc:103,132; modules/user/user.admin.inc:406
+msgid "pixels"
+msgstr "píxeis"
+
+#: modules/field/modules/list/list.module:267; modules/taxonomy/taxonomy.module:1266
+msgid "%name: illegal value."
+msgstr "%name: valor irregular."
+
+#: modules/node/node.admin.inc:509,518; modules/node/node.module:2103; modules/tracker/tracker.pages.inc:114
+msgid "No content available."
+msgstr "Conteúdo não disponível"
+
+#: modules/system/system.admin.inc:1567; modules/system/system.module:1034
+msgid "Run cron"
+msgstr "Executar o cron"
+
+#: themes/stark/stark.info:0
+msgid "Stark"
+msgstr "Stark"
+
+#: includes/menu.inc:2139; modules/overlay/overlay.tpl.php:32; themes/garland/page.tpl.php:50; themes/seven/page.tpl.php:12
+msgid "Primary tabs"
+msgstr ""
+
+#: includes/menu.inc:2144; themes/garland/page.tpl.php:51; themes/seven/page.tpl.php:19
+msgid "Secondary tabs"
+msgstr ""
+
+#: modules/node/content_types.inc:108; modules/node/node.module:2539
+msgid "Add new content"
+msgstr "Adicionar novo conteúdo"
+
+#: themes/seven/seven.info:0
+msgid "First sidebar"
+msgstr "Primeira barra lateral"
+
+#: modules/aggregator/aggregator.module:23; modules/block/block.module:53; modules/blog/blog.module:44; modules/book/book.module:17; modules/color/color.module:12; modules/comment/comment.module:81; modules/contact/contact.module:18; modules/contextual/contextual.module:18; modules/dashboard/dashboard.module:13; modules/dblog/dblog.module:24; modules/field/field.module:128; modules/field_ui/field_ui.module:18; modules/file/file.module:21; modules/filter/filter.module:18; modules/forum/forum.module:28; modules/help/help.module:55; modules/image/image.module:46; modules/locale/locale.module:27; modules/menu/menu.module:24; modules/node/node.module:86; modules/openid/openid.module:75; modules/path/path.module:18; modules/php/php.module:18; modules/poll/poll.module:19; modules/profile/profile.module:38; modules/search/search.module:73; modules/shortcut/shortcut.module:27; modules/simpletest/simpletest.module:18; modules/statistics/statistics.module:18; modules/syslog/syslog.module:25; modules/system/system.module:74; modules/taxonomy/taxonomy.module:26; modules/toolbar/toolbar.module:17; modules/tracker/tracker.module:17; modules/translation/translation.module:37; modules/trigger/trigger.module:31; modules/update/update.module:90; modules/user/user.module:46
+msgid "Uses"
+msgstr "Usos"
+
+#: modules/menu/menu.module:101; modules/shortcut/shortcut.module:97
+msgid "List links"
+msgstr "Listar ligações"
+
+#: modules/system/system.module:718; modules/system/system.install:310
+msgid "File system"
+msgstr "Sistema de ficheiros"
+
+#: modules/toolbar/toolbar.info:0
+msgid "Toolbar"
+msgstr "Barra de Ferramentas"
+
+#: modules/blog/blog.pages.inc:104; modules/blog/blog.module:72
+msgid "!name's blog"
+msgstr "do blogue !name"
+
+#: modules/locale/locale.admin.inc:828; modules/locale/locale.module:315
+msgid "All languages"
+msgstr "Todos os idiomas"
+
+#: modules/dashboard/dashboard.module:35; modules/dashboard/dashboard.info:0
+msgid "Dashboard"
+msgstr "Painel de controlo"
+
+#: modules/aggregator/aggregator.processor.inc:130; modules/node/content_types.inc:241
+msgid "1 character"
+msgid_plural "@count characters"
+msgstr[0] "1 carácter"
+msgstr[1] "@count caracteres"
+
+#: modules/locale/locale.admin.inc:180; modules/locale/locale.module:91
+msgid "Add language"
+msgstr "Adicionar idioma"
+
+#: includes/locale.inc:423,482,486,1434,1438,1782,1785,1789,1792,1795; modules/locale/locale.admin.inc:468,1018,1201
+msgid "locale"
+msgstr "localização"
+
+#: includes/update.inc:886; modules/simpletest/drupal_web_test_case.php:520
+msgid "%type: %message in %function (line %line of %file)."
+msgstr "%type: %message in %function (linha %line do %file)."
+
+#: modules/simpletest/simpletest.info:0
+msgid "Provides a framework for unit and functional testing."
+msgstr ""
+
+#: modules/system/page.tpl.php:107; modules/system/system.admin.inc:406; themes/bartik/templates/page.tpl.php:135; themes/garland/template.php:70
+msgid "Main menu"
+msgstr ""
+
+#: modules/trigger/trigger.info:0
+msgid "Trigger"
+msgstr "Gatilho"
+
+#: modules/dblog/dblog.admin.inc:327; modules/locale/locale.admin.inc:906
+msgid "You must select something to filter by."
+msgstr "É obrigatório seleccionar algo para filtrar."
+
+#: modules/poll/poll.module:161,190; modules/poll/poll.info:0
+msgid "Poll"
+msgstr "Votação"
+
+#: modules/php/php.info:0
+msgid "PHP filter"
+msgstr "Filtro de PHP"
+
+#: modules/menu/menu.admin.inc:18; modules/shortcut/shortcut.admin.inc:178
+msgid "list links"
+msgstr "listar ligações"
+
+#: includes/ajax.inc:430; includes/common.inc:2452
+msgid "The requested page could not be found."
+msgstr "A página solicitada não foi encontrada."
+
+#: includes/install.core.inc:1792; modules/system/system.install:464
+msgid "Update notifications"
+msgstr "Actualizar notificações"
+
+#: includes/locale.inc:1587; modules/locale/locale.admin.inc:977,1074,1093
+msgid "Text group"
+msgstr "Grupo de texto"
+
+#: includes/theme.inc:1757; themes/seven/template.php:88
+msgid "sort ascending"
+msgstr "ordenação ascendente"
+
+#: includes/theme.inc:1760; themes/seven/template.php:91
+msgid "sort descending"
+msgstr "ordenação descendente"
+
+#: themes/bartik/color/color.inc:12; themes/garland/color/color.inc:10
+msgid "Header top"
+msgstr "Topo do cabeçalho"
+
+#: themes/bartik/color/color.inc:13; themes/garland/color/color.inc:11
+msgid "Header bottom"
+msgstr "Fundo do cabeçalho"
+
+#: modules/comment/comment.info:0
+msgid "Allows users to comment on and discuss published content."
+msgstr "Possibilita ao utilizador comentar e debater conteúdos publicados."
+
+#: modules/contact/contact.info:0
+msgid "Enables the use of both personal and site-wide contact forms."
+msgstr "Permite a utilização de formulários de contacto pessoal e de site."
+
+#: modules/dblog/dblog.info:0
+msgid "Database logging"
+msgstr "Armazenamento do registo da base de dados"
+
+#: modules/dblog/dblog.info:0
+msgid "Logs and records system events to the database."
+msgstr "Armazena registos e eventos do sistema na base de dados."
+
+#: modules/filter/filter.module:1268; modules/user/user.module:3416
+msgid "Strong"
+msgstr "Negrito"
+
+#: modules/help/help.info:0
+msgid "Manages the display of online help."
+msgstr "Gere a exibição da ajuda em linha."
+
+#: modules/locale/locale.info:0
+msgid ""
+"Adds language handling functionality and enables the translation of "
+"the user interface to languages other than English."
+msgstr ""
+"Adiciona funcionalidades para lidar com diferentes idiomas e activa a "
+"tradução da interface de utilizador para outros idiomas que não o "
+"Inglês."
+
+#: modules/node/node.info:0
+msgid "Allows content to be submitted to the site and displayed on pages."
+msgstr ""
+"Permite que os conteúdos sejam enviados para o site e exibidos em "
+"páginas."
+
+#: modules/openid/openid.info:0
+msgid "Allows users to log into your site using OpenID."
+msgstr ""
+"Permite que os utilizadores iniciem uma sessão no seu site utilizando "
+"o sistema OpenID."
+
+#: modules/path/path.info:0
+msgid "Allows users to rename URLs."
+msgstr "Permite aos utilizadores modificar o nome dos URLs."
+
+#: modules/php/php.info:0
+msgid "Allows embedded PHP code/snippets to be evaluated."
+msgstr "Permite que pedaços de código PHP sejam executados."
+
+#: modules/poll/poll-results--block.tpl.php:26; modules/poll/poll-results.tpl.php:24
+msgid "Total votes: @votes"
+msgstr "Votos totais: @votes"
+
+#: modules/field_ui/field_ui.admin.inc:1615; modules/profile/profile.admin.inc:407
+msgid "Are you sure you want to delete the field %field?"
+msgstr "Tem a certeza que pretende eliminar o campo %field?"
+
+#: modules/profile/profile.pages.inc:116; modules/profile/profile.module:82
+msgid "User list"
+msgstr "Lista de utilizadores"
+
+#: modules/profile/profile.info:0
+msgid "Supports configurable user profiles."
+msgstr "Suporta perfis de utilizador configuráveis."
+
+#: modules/search/search-block-form.tpl.php:38; modules/search/search.module:143
+msgid "Search form"
+msgstr "Formulário de procura"
+
+#: modules/search/search.info:0
+msgid "Enables site-wide keyword searching."
+msgstr "Active a pesquisa por palavras no site."
+
+#: modules/statistics/statistics.info:0
+msgid "Logs access statistics for your site."
+msgstr "Armazena o registo de estatísticas de acesso do seu site."
+
+#: modules/syslog/syslog.info:0
+msgid "Logs and records system events to syslog."
+msgstr "Guarda históricos e eventos do sistema no syslog."
+
+#: modules/system/system.info:0
+msgid "Handles general site configuration for administrators."
+msgstr "Possibilita aos administradores configurar o site."
+
+#: modules/translation/translation.info:0
+msgid "Content translation"
+msgstr "Tradução de conteúdos"
+
+#: modules/translation/translation.info:0
+msgid "Allows content to be translated into different languages."
+msgstr "Permite que os conteúdos sejam traduzidos para diferentes idiomas."
+
+#: modules/user/user.info:0
+msgid "Manages the user registration and login system."
+msgstr ""
+"Gere o processo de registo do utilizador e do sistema de início de "
+"sessões."
+
+#: themes/garland/garland.info:0
+msgid "Garland"
+msgstr "Garland"
+
+#: modules/system/system.admin.inc:2811; modules/system/system.module:859
+msgid "Add format"
+msgstr ""
+
+#: modules/system/system.module:0; themes/bartik/bartik.info:0; themes/seven/seven.info:0
+msgid "Page top"
+msgstr "Topo da página"
+
+#: themes/bartik/bartik.info:0; themes/seven/seven.info:0
+msgid "Page bottom"
+msgstr "Rodapé da página"
+
+#: themes/bartik/bartik.info:0
+msgid "Sidebar first"
+msgstr "Primeira barra lateral"
+
+#: themes/seven/seven.info:0
+msgid "Seven"
+msgstr "Sete"
+
+#: modules/user/user.pages.inc:276,417; modules/user/user.module:1690
+msgid "Cancel account"
+msgstr "Cancelar conta"
+
+#: modules/system/page.tpl.php:108; modules/system/system.admin.inc:407; themes/bartik/templates/page.tpl.php:152; themes/garland/template.php:86
+msgid "Secondary menu"
+msgstr ""
+
+#: modules/comment/comment.tokens.inc:63; modules/node/node.tokens.inc:63; modules/user/user.tokens.inc:41
+msgid "Edit URL"
+msgstr "Editar URL"
+
+#: modules/comment/comment.tokens.inc:74; modules/node/node.tokens.inc:74
+msgid "Date changed"
+msgstr "Data alterada"
+
+#: includes/install.core.inc:1766; modules/system/system.admin.inc:1881
+msgid "Default country"
+msgstr "Pais predefinido"
+
+#: includes/install.inc:600; includes/module.inc:427,435,508
+msgid "system"
+msgstr "sistema"
+
+#: includes/menu.inc:1532; misc/vertical-tabs.js:0; modules/overlay/overlay-child.js:0
+msgid "(active tab)"
+msgstr "(separador activo)"
+
+#: modules/block/block.admin.inc:411; modules/block/block.js:0
+msgid "Not customizable"
+msgstr "Não personalizável"
+
+#: modules/block/block.module:98; modules/dashboard/dashboard.module:86
+msgid "Administer blocks"
+msgstr "Administrar blocos"
+
+#: modules/block/block.info:0
+msgid ""
+"Controls the visual building blocks a page is constructed with. Blocks "
+"are boxes of content rendered into an area, or region, of a web page."
+msgstr ""
+"Controla os blocos de construção visual de uma página que é "
+"construída. Blocos são caixas de conteúdo processado numa área ou "
+"região, de uma página web."
+
+#: modules/blog/blog.info:0
+msgid "Enables multi-user blogs."
+msgstr "Activar blogues multi-utilizador"
+
+#: modules/book/book.admin.inc:39; modules/book/book.module:72
+msgid "Administer book outlines"
+msgstr "Administrar estruturas de livros"
+
+#: modules/book/book.info:0
+msgid "Allows users to create and organize related content in an outline."
+msgstr ""
+"Permite que utilizadores criem e organizem conteúdos relacionados num "
+"esboço."
+
+#: modules/color/color.install:36; modules/image/image.install:258
+msgid ""
+"The GD library for PHP is missing or outdated. Check the <a "
+"href=\"@url\">PHP image documentation</a> for information on how to "
+"correct this."
+msgstr ""
+
+#: modules/color/color.info:0
+msgid "Allows administrators to change the color scheme of compatible themes."
+msgstr ""
+"Permite aos administradores alterar o esquema de cores de temas "
+"compatíveis."
+
+#: modules/contextual/contextual.info:0
+msgid "Contextual links"
+msgstr "Ligações contextuais"
+
+#: modules/contextual/contextual.info:0
+msgid ""
+"Provides contextual links to perform actions related to elements on a "
+"page."
+msgstr ""
+"Fornece ligações contextuais para executar acções relacionadas com "
+"os elementos numa página."
+
+#: modules/dashboard/dashboard.info:0
+msgid ""
+"Provides a dashboard page in the administrative interface for "
+"organizing administrative tasks and tracking information within your "
+"site."
+msgstr ""
+
+#: modules/dashboard/dashboard.module:51; modules/dashboard/dashboard.js:0
+msgid "Customize dashboard"
+msgstr "Personalizar o painel de controlo"
+
+#: modules/field/modules/field_sql_storage/field_sql_storage.info:0
+msgid "Field SQL storage"
+msgstr ""
+
+#: modules/field/modules/field_sql_storage/field_sql_storage.info:0
+msgid "Stores field data in an SQL database."
+msgstr ""
+
+#: modules/field/modules/list/list.info:0
+msgid "Defines list field types. Use with Options to create selection lists."
+msgstr ""
+
+#: modules/field_ui/field_ui.info:0
+msgid "Field UI"
+msgstr "Campo UI"
+
+#: modules/file/file.field.inc:62; modules/image/image.field.inc:49
+msgid "Upload destination"
+msgstr "destino dos ficheiros a carregar"
+
+#: modules/file/file.field.inc:65; modules/image/image.field.inc:52
+msgid ""
+"Select where the final files should be stored. Private file storage "
+"has significantly more overhead than public files, but allows "
+"restricted access to files within this field."
+msgstr ""
+
+#: modules/filter/filter.admin.inc:103; modules/filter/filter.module:109
+msgid "Add text format"
+msgstr "Adicionar formato de texto"
+
+#: modules/filter/filter.info:0
+msgid "Filters content in preparation for display."
+msgstr "Filtra conteúdos quando se prepara para os exibir."
+
+#: modules/forum/forum.info:0
+msgid "Provides discussion forums."
+msgstr ""
+
+#: modules/image/image.info:0
+msgid "Provides image manipulation tools."
+msgstr "Fornece ferramentas de manipulação de imagem."
+
+#: modules/locale/locale.admin.inc:1318; modules/system/system.admin.inc:2033,2065
+msgid "Date type"
+msgstr ""
+
+#: modules/node/node.pages.inc:52; themes/seven/template.php:51
+msgid ""
+"You have not created any content types yet. Go to the <a "
+"href=\"@create-content\">content type creation page</a> to add a new "
+"content type."
+msgstr ""
+
+#: modules/node/node.module:2078,2097; modules/tracker/tracker.module:35
+msgid "Recent content"
+msgstr ""
+
+#: modules/overlay/overlay.info:0
+msgid "Displays the Drupal administration interface in an overlay."
+msgstr ""
+
+#: modules/rdf/rdf.info:0
+msgid ""
+"Enriches your content with metadata to let other applications (e.g. "
+"search engines, aggregators) better understand its relationships and "
+"attributes."
+msgstr ""
+
+#: modules/shortcut/shortcut.info:0
+msgid "Allows users to manage customizable lists of shortcut links."
+msgstr ""
+
+#: modules/system/system.admin.inc:2104; modules/system/system.module:832
+msgid "Add date type"
+msgstr ""
+
+#: modules/toolbar/toolbar.module:93; modules/toolbar/toolbar.js:0
+msgid "Open the drawer"
+msgstr ""
+
+#: modules/toolbar/toolbar.module:97; modules/toolbar/toolbar.js:0
+msgid "Close the drawer"
+msgstr ""
+
+#: modules/toolbar/toolbar.info:0
+msgid ""
+"Provides a toolbar that shows the top-level administration menu items "
+"and links from other modules."
+msgstr ""
+
+#: modules/tracker/tracker.info:0
+msgid "Enables tracking of recent content for users."
+msgstr ""
+
+#: modules/update/update.info:0
+msgid "Update manager"
+msgstr "Gestor de actualizações"
+
+#: modules/update/update.info:0
+msgid ""
+"Checks for available updates, and can securely install or update "
+"modules and themes via a web interface."
+msgstr ""
+
+#: modules/user/user.admin.inc:326; modules/user/user.module:799
+msgid "Administer users"
+msgstr "Administrar utilizadores"
+
+#: modules/user/user.admin.inc:622; modules/user/user.pages.inc:380; modules/user/user.module:3134
+msgid "Notify user when account is canceled."
+msgstr "Notificar utilizador quando a conta é cancelada."
+
+#: modules/user/user.pages.inc:371; modules/user/user.module:3127
+msgid "Require e-mail confirmation to cancel account."
+msgstr "Requerer um email de confirmação para cancelar a conta."
+
+#: modules/user/user.pages.inc:374; modules/user/user.module:3129
+msgid ""
+"When enabled, the user must confirm the account cancellation via "
+"e-mail."
+msgstr ""
+"Quando activo, o utilizador tem de confirmar o cancelamento da conta "
+"por email."
+
+#: modules/user/user.pages.inc:383; modules/user/user.module:3137
+msgid ""
+"When enabled, the user will receive an e-mail notification after the "
+"account has been cancelled."
+msgstr ""
+"Quando activo, o utilizador recebe uma notificação, por email, após "
+"o cancelamento da conta."
+
+#: profiles/minimal/minimal.info:0
+msgid "Minimal"
+msgstr "Mínimo"
+
+#: profiles/minimal/minimal.info:0
+msgid "Start with only a few modules enabled."
+msgstr "Começar com apenas alguns módulos activos."
+
+#: profiles/standard/standard.info:0
+msgid "Install with commonly used features pre-configured."
+msgstr "Instalar com as funcionalidades comuns pré-configuradas."
+
+#: themes/garland/garland.info:0
+msgid ""
+"A multi-column theme which can be configured to modify colors and "
+"switch between fixed and fluid width layouts."
+msgstr ""
+"Um tema multi-coluna que pode ser configurado para modificar as cores "
+"e trocar entre largura fixa ou fluída."
+
+#: themes/seven/seven.info:0
+msgid "A simple one-column, tableless, fluid width administration theme."
+msgstr ""
+"Um tema de administração slimples, de uma coluna, sem tabelas e "
+"largura fluída."
+
+#: themes/stark/stark.info:0
+msgid ""
+"This theme demonstrates Drupal's default HTML markup and CSS styles. "
+"To learn how to build your own theme and override Drupal's default "
+"code, see the <a href=\"http://drupal.org/theme-guide\">Theming "
+"Guide</a>."
+msgstr ""
+
+#: modules/field/field.info:0
+msgid "Field API to add fields to entities like nodes and users."
+msgstr ""
+
+#: includes/database/mysql/schema.inc:300; includes/database/pgsql/schema.inc:285; includes/database/sqlite/schema.inc:235
+msgid "Cannot rename %table to %table_new: table %table doesn't exist."
+msgstr ""
+"Não é possível renomear %table para %table_new: a tabela %table "
+"não existe."
+
+#: includes/database/mysql/schema.inc:303; includes/database/pgsql/schema.inc:288; includes/database/sqlite/schema.inc:238
+msgid "Cannot rename %table to %table_new: table %table_new already exists."
+msgstr ""
+"Não é possível renomear %table para %table_new: a tabela %table_new "
+"já existe."
+
+#: includes/database/mysql/schema.inc:321; includes/database/pgsql/schema.inc:322; includes/database/sqlite/schema.inc:281
+msgid "Cannot add field %table.%field: table doesn't exist."
+msgstr ""
+"Não é possível adicionar o campo %table.%field: a tabela não "
+"existe."
+
+#: includes/database/mysql/schema.inc:324; includes/database/pgsql/schema.inc:325; includes/database/sqlite/schema.inc:284
+msgid "Cannot add field %table.%field: field already exists."
+msgstr "Não é possível adicionar o campo %table.%field: o campo já existe."
+
+#: includes/database/mysql/schema.inc:360; includes/database/pgsql/schema.inc:364; includes/database/sqlite/schema.inc:602
+msgid "Cannot set default value of field %table.%field: field doesn't exist."
+msgstr ""
+"Não é possível definir o valor por defeito do campo %table.%field: "
+"o campo não existe."
+
+#: includes/database/mysql/schema.inc:375; includes/database/pgsql/schema.inc:379; includes/database/sqlite/schema.inc:614
+msgid ""
+"Cannot remove default value of field %table.%field: field doesn't "
+"exist."
+msgstr ""
+"Não é possível remover o valor por defeito do campo %table.%field: "
+"o campo não existe."
+
+#: includes/database/mysql/schema.inc:390; includes/database/pgsql/schema.inc:406; includes/database/sqlite/schema.inc:573
+msgid "Cannot add primary key to table %table: table doesn't exist."
+msgstr ""
+"Não é possível adicionar a chave primária à tabela %table: a "
+"tabela não existe."
+
+#: includes/database/mysql/schema.inc:393; includes/database/pgsql/schema.inc:409; includes/database/sqlite/schema.inc:580
+msgid "Cannot add primary key to table %table: primary key already exists."
+msgstr ""
+"Não é possível adicionar a chave primária à tabela %table: a "
+"chave primária já existe."
+
+#: includes/database/mysql/schema.inc:410; includes/database/pgsql/schema.inc:426; includes/database/sqlite/schema.inc:547
+msgid "Cannot add unique key %name to table %table: table doesn't exist."
+msgstr ""
+"Não é possível adicionar a chave única %name à tabela %table: a "
+"tabela não existe."
+
+#: includes/database/mysql/schema.inc:413; includes/database/pgsql/schema.inc:429; includes/database/sqlite/schema.inc:550
+msgid ""
+"Cannot add unique key %name to table %table: unique key already "
+"exists."
+msgstr ""
+"Não é possível adicionar a chave única %name à tabela %table: a "
+"chave única já existe."
+
+#: includes/database/mysql/schema.inc:430; includes/database/pgsql/schema.inc:446; includes/database/sqlite/schema.inc:515
+msgid "Cannot add index %name to table %table: table doesn't exist."
+msgstr ""
+"Não é possível adicionar o índice %name à tabela %table: a tabela "
+"não existe."
+
+#: includes/database/mysql/schema.inc:433; includes/database/pgsql/schema.inc:449; includes/database/sqlite/schema.inc:518
+msgid "Cannot add index %name to table %table: index already exists."
+msgstr ""
+"Não é possível adicionar o índice %name à tabela %table: o "
+"índice já existe."
+
+#: includes/database/mysql/schema.inc:450; includes/database/pgsql/schema.inc:466; includes/database/sqlite/schema.inc:450
+msgid ""
+"Cannot change the definition of field %table.%name: field doesn't "
+"exist."
+msgstr ""
+"Não é possível alterar a definição do campo %table.%name: o campo "
+"não existe."
+
+#: includes/database/mysql/schema.inc:453; includes/database/pgsql/schema.inc:469; includes/database/sqlite/schema.inc:453
+msgid ""
+"Cannot rename field %table.%name to %name_new: target field already "
+"exists."
+msgstr ""
+"Não é possível renomear o campo %table.%name para %name_new: o "
+"campo pretendido já existe."
+
+#: themes/bartik/bartik.info:0
+msgid "Footer first column"
+msgstr "Rodapé da primeira coluna"
+
+#: themes/bartik/bartik.info:0
+msgid "Footer second column"
+msgstr "Rodapé da segunda coluna"
+
+#: themes/bartik/bartik.info:0
+msgid "Footer third column"
+msgstr "Rodapé terceira coluna"
+
+#: themes/bartik/bartik.info:0
+msgid "Footer fourth column"
+msgstr "Rodapé quarta coluna"
+
+#: themes/bartik/bartik.info:0
+msgid "Bartik"
+msgstr "Bartik"
+
+#: themes/bartik/bartik.info:0
+msgid "A flexible, recolorable theme with many regions."
+msgstr ""
+
+#: themes/bartik/bartik.info:0
+msgid "Highlighted"
+msgstr "Destaque"
+
+#: themes/bartik/bartik.info:0
+msgid "Sidebar second"
+msgstr "Segunda barra lateral"
+
+#: themes/bartik/bartik.info:0
+msgid "Triptych first"
+msgstr ""
+
+#: themes/bartik/bartik.info:0
+msgid "Triptych middle"
+msgstr ""
+
+#: themes/bartik/bartik.info:0
+msgid "Triptych last"
+msgstr ""
+
+#: modules/field_ui/field_ui.info:0
+msgid "User interface for the Field API."
+msgstr ""
+
+#: modules/menu/menu.admin.inc:314; modules/menu/menu.module:647
+msgid "Shown when hovering over the menu link."
+msgstr ""
+
+#: profiles/testing/testing.info:0
+msgid ""
+"Minimal profile for running tests. Includes absolutely required "
+"modules only."
+msgstr ""
+"No perfil mínimo para executar testes. É necessário incluir "
+"absolutamente somente módulos."
+
+#: modules/node/node.admin.inc:168; modules/user/user.admin.inc:58
+msgid "and where %property is %value"
+msgstr "e onde %property é %value"
+
+#: modules/node/node.admin.inc:182; modules/user/user.admin.inc:68
+msgid "and where"
+msgstr "e onde"
+
+#: modules/book/book.admin.inc:194; modules/field_ui/field_ui.admin.inc:329,402,911,1073; modules/file/file.field.inc:690; modules/filter/filter.admin.inc:39,212; modules/image/image.admin.inc:96; modules/locale/locale.admin.inc:31,556; modules/menu/menu.admin.inc:115; modules/profile/profile.admin.inc:36; modules/taxonomy/taxonomy.admin.inc:24; modules/user/user.admin.inc:840
+msgid "Weight for @title"
+msgstr ""
+

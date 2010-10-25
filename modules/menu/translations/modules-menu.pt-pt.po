@@ -1,0 +1,369 @@
+# Portuguese, Portugal translation of Drupal core (7.0-beta2)
+# Copyright (c) 2010 by the Portuguese, Portugal translation team
+# Generated from files:
+#  menu.admin.inc,v 1.90 2010/10/20 07:40:59 webchick
+#  menu.module,v 1.233 2010/09/24 00:37:43 dries
+#  menu.js,v 1.6 2010/04/09 12:24:53 dries
+#  menu.install,v 1.26 2010/08/23 23:38:06 webchick
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Drupal core (7.0-beta2)\n"
+"POT-Creation-Date: 2010-10-25 05:28+0000\n"
+"PO-Revision-Date: 2010-09-10 13:52+0000\n"
+"Language-Team: Portuguese, Portugal\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n!=1);\n"
+
+#: modules/menu/menu.admin.inc:209
+msgid "Menu link"
+msgstr "Ligação de Menu"
+
+#: modules/menu/menu.module:75
+msgid "Add menu"
+msgstr "Adicionar menu"
+
+#: modules/menu/menu.module:115
+msgid "Edit menu"
+msgstr "Editar menu"
+
+#: modules/menu/menu.module:124
+msgid "Delete menu"
+msgstr "Eliminar menu"
+
+#: modules/menu/menu.module:604,694
+msgid "Menu settings"
+msgstr "Configurações de menu"
+
+#: modules/menu/menu.module:70
+msgid "List menus"
+msgstr "Listar menus"
+
+#: modules/menu/menu.module:92
+msgid "Customize menu"
+msgstr "Personalizar menu"
+
+#: modules/menu/menu.module:56
+msgid "Menus"
+msgstr "Menus"
+
+#: modules/menu/menu.admin.inc:640
+msgid "Any customizations will be lost. This action cannot be undone."
+msgstr ""
+"Quaisquer personalizações serão perdidas. Esta acção não pode "
+"ser revertida."
+
+#: modules/menu/menu.admin.inc:362
+msgid ""
+"The menu system stores system paths only, but will use the URL alias "
+"for display. %link_path has been stored as %normal_path"
+msgstr ""
+"O sistema de menus grava apenas os caminhos do sistema, mas mostra o "
+"URL alternativo. %link_path foi gravado como %normal_path"
+
+#: modules/menu/menu.admin.inc:449
+msgid "Menu name"
+msgstr "Nome do menu"
+
+#: modules/menu/menu.admin.inc:516
+msgid "Are you sure you want to delete the custom menu %title?"
+msgstr "Tem a certeza que pretende eliminar o menu personalizado %title?"
+
+#: modules/menu/menu.admin.inc:19
+msgid "edit menu"
+msgstr "editar menu"
+
+#: modules/menu/menu.admin.inc:548
+msgid "The custom menu %title has been deleted."
+msgstr "O menu personalizado %title foi eliminado."
+
+#: modules/menu/menu.module:107
+msgid "Add link"
+msgstr "Adicionar ligação"
+
+#: modules/menu/menu.js:0
+msgid "Not in menu"
+msgstr "Não presente no menu"
+
+#: modules/menu/menu.admin.inc:456
+msgid "URL path"
+msgstr ""
+
+#: modules/menu/menu.admin.inc:20
+msgid "add link"
+msgstr "adicionar ligação"
+
+#: modules/menu/menu.admin.inc:82
+msgid "There are no menu links yet. <a href=\"@link\">Add link</a>."
+msgstr ""
+"Não existe ainda nenhuma ligação no menu. <a "
+"href=\"@link\">Adicionar ligação</a>."
+
+#: modules/menu/menu.admin.inc:269
+msgid "The text to be used for this link in the menu."
+msgstr "O texto a ser usado para esta ligação no menu."
+
+#: modules/menu/menu.admin.inc:291
+msgid ""
+"The path for this menu link. This can be an internal Drupal path such "
+"as %add-node or an external URL such as %drupal. Enter %front to link "
+"to the front page."
+msgstr ""
+"O caminho para esta ligação de menu. Pode ser um caminho interno do "
+"Drupal como %add-node ou um URL externo como %drupal. Coloco %front "
+"para ligar para a página inicial."
+
+#: modules/menu/menu.admin.inc:320
+msgid "Menu links that are not enabled will not be listed in any menu."
+msgstr ""
+"As ligações de menu que não estão activas não serão listadas em "
+"qualquer menu."
+
+#: modules/menu/menu.admin.inc:324
+msgid "Show as expanded"
+msgstr "Mostrar como expandido"
+
+#: modules/menu/menu.admin.inc:326
+msgid ""
+"If selected and this menu link has children, the menu will always "
+"appear expanded."
+msgstr ""
+
+#: modules/menu/menu.admin.inc:337
+msgid "Parent link"
+msgstr ""
+
+#: modules/menu/menu.admin.inc:340
+msgid ""
+"The maximum depth for a link and all its children is fixed at "
+"!maxdepth. Some menu links may not be available as parents if "
+"selecting them would exceed this limit."
+msgstr ""
+
+#: modules/menu/menu.admin.inc:348
+msgid ""
+"Optional. In the menu, the heavier links will sink and the lighter "
+"links will be positioned nearer the top."
+msgstr ""
+
+#: modules/menu/menu.admin.inc:620
+msgid "Are you sure you want to delete the custom menu link %item?"
+msgstr ""
+
+#: modules/menu/menu.admin.inc:630
+msgid "The menu link %title has been deleted."
+msgstr ""
+
+#: modules/menu/menu.admin.inc:640
+msgid "Are you sure you want to reset the link %item to its default values?"
+msgstr ""
+
+#: modules/menu/menu.admin.inc:649
+msgid "The menu link was reset to its default settings."
+msgstr ""
+
+#: modules/menu/menu.admin.inc:669
+msgid "No Main links"
+msgstr "Sem ligações principais"
+
+#: modules/menu/menu.admin.inc:667
+msgid "Source for the Main links"
+msgstr "Origem das ligações pricipais"
+
+#: modules/menu/menu.admin.inc:672
+msgid ""
+"Select what should be displayed as the Main links (typically at the "
+"top of the page)."
+msgstr ""
+"Seleccione o que será mostrado como Ligações Principais "
+"(normalmente no topo da página)"
+
+#: modules/menu/menu.admin.inc:679
+msgid "No Secondary links"
+msgstr "Sem ligações secundárias"
+
+#: modules/menu/menu.admin.inc:677
+msgid "Source for the Secondary links"
+msgstr "Origem das ligações secundárias"
+
+#: modules/menu/menu.admin.inc:682
+msgid ""
+"Select the source for the Secondary links. An advanced option allows "
+"you to use the same source for both Main links (currently %main) and "
+"Secondary links: if your source menu has two levels of hierarchy, the "
+"top level menu links will appear in the Main links, and the children "
+"of the active link will appear in the Secondary links."
+msgstr ""
+
+#: modules/menu/menu.admin.inc:549
+msgid "Deleted custom menu %title and all its menu links."
+msgstr "Menu %title apagado assim como todas as suas ligações."
+
+#: modules/menu/menu.admin.inc:631
+msgid "Deleted menu link %title."
+msgstr "Ligação ao menu %title apagada."
+
+#: modules/menu/menu.admin.inc:513
+msgid ""
+"<strong>Warning:</strong> There is currently 1 menu link in %title. It "
+"will be deleted (system-defined items will be reset)."
+msgid_plural ""
+"<strong>Warning:</strong> There are currently @count menu links in "
+"%title. They will be deleted (system-defined links will be reset)."
+msgstr[0] ""
+msgstr[1] ""
+
+#: modules/menu/menu.module:23
+msgid ""
+"The Menu module provides an interface for managing menus. A menu is a "
+"hierarchical collection of links, which can be within or external to "
+"the site, generally used for navigation. Each menu is rendered in a "
+"block that can be enabled and positioned through the <a "
+"href=\"@blocks\"\">Blocks administration page</a>. You can view and "
+"manage menus on the <a href=\"@menus\">Menus administration page</a>. "
+"For more information, see the online handbook entry for the <a "
+"href=\"@menu\">Menu module</a>."
+msgstr ""
+
+#: modules/menu/menu.module:26
+msgid "Managing menus"
+msgstr ""
+
+#: modules/menu/menu.module:27
+msgid ""
+"Users with the <em>Administer menus and menu items</em> permission can "
+"add, edit and delete custom menus on the <a href=\"@menu\">Menus "
+"administration page</a>. Custom menus can be special site menus, menus "
+"of external links, or any combination of internal and external links. "
+"You may create an unlimited number of additional menus, each of which "
+"will automatically have an associated block. By selecting <em>list "
+"links</em>, you can add, edit, or delete links for a given menu. The "
+"links listing page provides a drag-and-drop interface for controlling "
+"the order of links, and creating a hierarchy within the menu."
+msgstr ""
+
+#: modules/menu/menu.module:28
+msgid "Displaying menus"
+msgstr ""
+
+#: modules/menu/menu.module:29
+msgid ""
+"After you have created a menu, you must enable and position the "
+"associated block on the <a href=\"@blocks\">Blocks administration "
+"page</a>."
+msgstr ""
+
+#: modules/menu/menu.module:33
+msgid ""
+"You can enable the newly-created block for this menu on the <a "
+"href=\"@blocks\">Blocks administration page</a>."
+msgstr ""
+
+#: modules/menu/menu.module:36
+msgid ""
+"Each menu has a corresponding block that is managed on the <a "
+"href=\"@blocks\">Blocks administration page</a>."
+msgstr ""
+
+#: modules/menu/menu.module:46
+msgid "Administer menus and menu items"
+msgstr ""
+
+#: modules/menu/menu.module:618
+msgid "Provide a menu link"
+msgstr ""
+
+#: modules/menu/menu.module:667
+msgid ""
+"Menu links with smaller weights are displayed before links with larger "
+"weights."
+msgstr ""
+
+#: modules/menu/menu.module:704
+msgid "Available menus"
+msgstr ""
+
+#: modules/menu/menu.module:707
+msgid "The menus available to place links in for this content type."
+msgstr ""
+
+#: modules/menu/menu.module:716
+msgid "Default parent item"
+msgstr ""
+
+#: modules/menu/menu.module:719
+msgid ""
+"Choose the menu item to be the default parent for a new link in the "
+"content authoring form."
+msgstr ""
+
+#: modules/menu/menu.module:57
+msgid ""
+"Add new menus to your site, edit existing menus, and rename and "
+"reorganize menu links."
+msgstr ""
+
+#: modules/menu/menu.module:64
+msgid "Parent menu items"
+msgstr ""
+
+#: modules/menu/menu.module:131
+msgid "Edit menu link"
+msgstr ""
+
+#: modules/menu/menu.module:138
+msgid "Reset menu link"
+msgstr ""
+
+#: modules/menu/menu.module:145
+msgid "Delete menu link"
+msgstr ""
+
+#: modules/menu/menu.install:51
+msgid ""
+"The <em>Navigation</em> menu contains links intended for site "
+"visitors. Links are added to the <em>Navigation</em> menu "
+"automatically by some modules."
+msgstr ""
+
+#: modules/menu/menu.install:52
+msgid ""
+"The <em>User</em> menu contains links related to the user's account, "
+"as well as the 'Log out' link."
+msgstr ""
+
+#: modules/menu/menu.install:53
+msgid "The <em>Management</em> menu contains links for administrative tasks."
+msgstr ""
+
+#: modules/menu/menu.install:54
+msgid ""
+"The <em>Main</em> menu is used on many sites to show the major "
+"sections of the site, often in a top navigation bar."
+msgstr ""
+
+#: modules/menu/menu.admin.inc:190,414,598
+msgid "Your configuration has been saved."
+msgstr "A sua configuração foi guardada."
+
+#: modules/menu/menu.admin.inc:659
+msgid ""
+"The menu module allows on-the-fly creation of menu links in the "
+"content authoring forms. To configure these settings for a particular "
+"content type, visit the <a href=\"@content-types\">Content types</a> "
+"page, click the <em>edit</em> link for the content type, and go to the "
+"<em>Menu settings</em> section."
+msgstr ""
+
+#: modules/menu/menu.admin.inc:106
+msgid "Enable @title menu link"
+msgstr ""
+
+#: modules/menu/menu.admin.inc:452
+msgid ""
+"A unique name to construct the URL for the menu. It must only contain "
+"lowercase letters, numbers and hyphens."
+msgstr ""
+

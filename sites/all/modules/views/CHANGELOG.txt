@@ -387,6 +387,33 @@ Views 3.x-7.x-dev
     o #847930 by dereine: Reduce duplicates option not staying set.
     o #865482 by dereine: RSS options form does not include override.
     o #813422 by dereine and killes: Improved time-based caching expiration.
+    o #829550 by hefox: Better testing of batch form use by exposed filters.
+    o #570618 by dereine: Enforce denying access to disabled views more strongly.
+    o #667014 by dereine: Prevent notice with relationships and node row style if relationship has no endpoint node.
+    o #835934 by dereine: Provide relationship from files to users.
+    o #738172 by dereine: Fields rewritten to be links with just a fragment did not work.
+    o #694094 by Ian Ward: Allow more static caches to be resettable. (port by aspilicious)
+    o #811226 by dereine: Fix another notice in area text handler. (port by aspilicious)
+    o #917916 by MyXelf: break delimiter not removed from formatted output. (port by aspilicious)
+    o #918654 by Will White: numeric GROUP BY fields missing numeric format options.
+    o by dereine: Test for views_handler_filter_date.
+    o #785236 by e_log: Add aggregator field item id as a field.
+    o #366886 by Scott Reynolds: For "last comment time" if "count zero is empty" is set, use empty text for nodes with no comments.
+    o #611086 by dereine: add -url token to files that can fetch proper URLs with private filesystems.
+    o #635336 by dereine: Remove unused fields from views.
+    o #795270 by dereine: Remove unnecessary links to sections that will have no settings.
+    o #882800 by dereine: Move "Distinct" option to query settings.
+    o #755342 by jcmarco: Improve SQL date field handling.
+    o #338893 by dereine: Aggregator argument not always properly converted to title.
+    o #787184 introduce the long awaited "Update and Override" button.
+    o #718832 by dereine: Add file extension as a field available within the File group.
+    o #941974 by dereine: Use contextual links in the views ui when possible.
+    o #761102 by dereine: test: user default argument.
+    o by dereine: Fix notice in views_ui_add_page.
+    o #667950 by damZ, dereine: Port #dependency form elements to #states.
+    o Added missing file: modules/taxonomy/views_handler_filter_vocabulary_machine_name.inc
+    o #882800 by rszrama: Fix notice for options['distinct'].
+    o #950246 by ZoeN: Fix dbtng in views_handler_argument_aggregator_fid.
 
 Views 6.x-3.x-dev
     o #396380 by merlinofchaos, dereine and dagmar: Initial support for GROUP BY queries!!!!!!!!!!!!

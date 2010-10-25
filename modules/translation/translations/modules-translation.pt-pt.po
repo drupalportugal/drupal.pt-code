@@ -1,0 +1,184 @@
+# Portuguese, Portugal translation of Drupal core (7.0-beta2)
+# Copyright (c) 2010 by the Portuguese, Portugal translation team
+# Generated from files:
+#  translation.pages.inc,v 1.16 2010/07/17 11:31:36 dries
+#  translation.module,v 1.88 2010/10/09 17:38:41 webchick
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Drupal core (7.0-beta2)\n"
+"POT-Creation-Date: 2010-10-25 05:28+0000\n"
+"PO-Revision-Date: 2010-06-14 18:42+0000\n"
+"Language-Team: Portuguese, Portugal\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n!=1);\n"
+
+#: modules/translation/translation.pages.inc:52
+msgid "Not translated"
+msgstr "Não traduzido"
+
+#: modules/translation/translation.pages.inc:41
+msgid "outdated"
+msgstr "ultrapassado"
+
+#: modules/translation/translation.pages.inc:43
+msgid "<strong>@language_name</strong> (source)"
+msgstr "<strong>@language_name</strong> (código fonte)"
+
+#: modules/translation/translation.pages.inc:50
+msgid "add translation"
+msgstr "adicionar tradução"
+
+#: modules/translation/translation.pages.inc:57
+msgid "Translations of %title"
+msgstr "Tradução de %title"
+
+#: modules/translation/translation.module:114
+msgid "Enabled, with translation"
+msgstr "Activado, com tradução"
+
+#: modules/translation/translation.module:50
+msgid ""
+"Translations of a piece of content are managed with translation sets. "
+"Each translation set has one source post and any number of "
+"translations in any of the <a href=\"!languages\">enabled "
+"languages</a>. All translations are tracked to be up to date or "
+"outdated based on whether the source post was modified significantly."
+msgstr ""
+"Traduções de conteúdo são geridas com conjuntos de traduções. "
+"Cada conjunto de traduções tem uma entrada de origem e um número de "
+"traduções em qualquer dos <a href=\"!languages\">idiomas "
+"activos</a>. Todas as traduções são monitorizadas para verificar se "
+"se encontram actualizadas ou desactualizadas, com base na dimensão "
+"das alterações da entrada de origem."
+
+#: modules/translation/translation.module:116
+msgid ""
+"Enable multilingual support for this content type. If enabled, a "
+"language selection field will be added to the editing form, allowing "
+"you to select from one of the <a href=\"!languages\">enabled "
+"languages</a>. You can also turn on translation for this content type, "
+"which lets you have content translated to any of the enabled "
+"languages. If disabled, new posts are saved with the default language. "
+"Existing content will not be affected by changing this option."
+msgstr ""
+"Activar suporte multi-idioma para este tipo de conteúdo. Ao activar "
+"esta opção, um campo de selecção de idioma será adicionado ao "
+"formulário de edição, permitindo-lhe seleccionar um dos <a "
+"href=\"!languages\">idiomas activos</a>. Também pode activar a "
+"tradução para este tipo de conteúdo, o que lhe permite ter "
+"conteúdo traduzido para qualquer um dos idiomas activos. Se estiver "
+"desactivado, novas entradas serão guardadas com o idioma predefinido. "
+"Conteúdos existentes não serão afectados ao alterar esta opção."
+
+#: modules/translation/translation.module:172
+msgid "Translation settings"
+msgstr "Definições de tradução"
+
+#: modules/translation/translation.module:183
+msgid "Flag translations as outdated"
+msgstr "Marcar tradução como desactualizada"
+
+#: modules/translation/translation.module:185
+msgid ""
+"If you made a significant change, which means translations should be "
+"updated, you can flag all translations of this post as outdated. This "
+"will not change any other property of those posts, like whether they "
+"are published or not."
+msgstr ""
+"Se fez uma alteração considerável, o que significa que as "
+"traduções devem ser actualizadas, pode marcar todas as traduções "
+"desta entrada como desactualizadas. Isto não irá afectar nenhuma "
+"outra propriedade dessas entradas, como se estão publicadas ou não."
+
+#: modules/translation/translation.module:192
+msgid "This translation needs to be updated"
+msgstr "Esta tradução necessita de ser actualizada"
+
+#: modules/translation/translation.module:194
+msgid ""
+"When this option is checked, this translation needs to be updated "
+"because the source post has changed. Uncheck when the translation is "
+"up to date again."
+msgstr ""
+"Quando esta opção está marcada, esta tradução necessita de ser "
+"actualizada porque a origem da entrada foi alterada. Desmarque esta "
+"opção quando a tradução estiver novamente actualizada."
+
+#: modules/translation/translation.module:36
+msgid ""
+"The Content translation module allows content to be translated into "
+"different languages. Working with the <a href=\"@locale\">Locale "
+"module</a> (which manages enabled languages and provides translation "
+"for the site interface), the Content translation module is key to "
+"creating and maintaining translated site content. For more "
+"information, see the online handbook entry for <a "
+"href=\"@translation\">Content translation module</a>."
+msgstr ""
+
+#: modules/translation/translation.module:39
+msgid "Configuring content types for translation"
+msgstr ""
+
+#: modules/translation/translation.module:40
+msgid ""
+"To configure a particular content type for translation, visit the <a "
+"href=\"@content-types\">Content types</a> page, and click the "
+"<em>edit</em> link for the content type. In the <em>Publishing "
+"options</em> section, select <em>Enabled, with translation</em> under "
+"<em>Multilingual support</em>."
+msgstr ""
+
+#: modules/translation/translation.module:41
+msgid "Assigning a language to content"
+msgstr ""
+
+#: modules/translation/translation.module:42
+msgid ""
+"Use the <em>Language</em> drop down to select the appropriate language "
+"when creating or editing content."
+msgstr ""
+
+#: modules/translation/translation.module:43
+msgid "Translating content"
+msgstr "Traduzindo o conteúdo"
+
+#: modules/translation/translation.module:44
+msgid ""
+"Users with the <em>translate content</em> permission can translate "
+"content, if the content type has been configured to allow "
+"translations. To translate content, select the <em>Translation</em> "
+"tab when viewing the content, select the language for which you wish "
+"to provide content, and then enter the content."
+msgstr ""
+
+#: modules/translation/translation.module:45
+msgid "Maintaining translations"
+msgstr ""
+
+#: modules/translation/translation.module:46
+msgid ""
+"If editing content in one language requires that translated versions "
+"also be updated to reflect the change, use the <em>Flag translations "
+"as outdated</em> check box to mark the translations as outdated and in "
+"need of revision. Individual translations may also be marked for "
+"revision by selecting the <em>This translation needs to be "
+"updated</em> check box on the translation editing form."
+msgstr ""
+
+#: modules/translation/translation.module:104
+msgid "Translate content"
+msgstr "Traduzir conteúdos"
+
+#: modules/translation/translation.module:381
+msgid "There is already a translation in this language."
+msgstr ""
+
+#: modules/translation/translation.module:292
+msgid ""
+"A translation of %title in %language already exists, a new %type will "
+"be created instead of a translation."
+msgstr ""
+

@@ -1,0 +1,267 @@
+# Portuguese, Portugal translation of Drupal core (7.0-beta2)
+# Copyright (c) 2010 by the Portuguese, Portugal translation team
+# Generated from files:
+#  poll.pages.inc,v 1.28 2010/10/06 13:38:40 dries
+#  poll.module,v 1.358 2010/10/20 01:31:07 dries
+#  poll.tokens.inc,v 1.5 2010/04/20 09:48:06 webchick
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Drupal core (7.0-beta2)\n"
+"POT-Creation-Date: 2010-10-25 05:28+0000\n"
+"PO-Revision-Date: 2010-10-09 20:37+0000\n"
+"Language-Team: Portuguese, Portugal\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n!=1);\n"
+
+#: modules/poll/poll.pages.inc:42
+msgid "closed"
+msgstr "encerrada"
+
+#: modules/poll/poll.module:193
+msgid "Question"
+msgstr "Questão"
+
+#: modules/poll/poll.module:206,207
+msgid "Poll choices"
+msgstr ""
+
+#: modules/poll/poll.tokens.inc:14
+msgid "Poll votes"
+msgstr ""
+
+#: modules/poll/poll.module:697
+msgid "Choices"
+msgstr "Escolhas"
+
+#: modules/poll/poll.module:100
+msgid "Votes"
+msgstr "Votos"
+
+#: modules/poll/poll.module:833
+msgid "Choice"
+msgstr "Opção"
+
+#: modules/poll/poll.module:631
+msgid "Older polls"
+msgstr "Votações antigas"
+
+#: modules/poll/poll.module:631
+msgid "View the list of polls on this site."
+msgstr "Ver a lista de votações do site."
+
+#: modules/poll/poll.module:211,330
+msgid "Poll settings"
+msgstr "Definições da votação"
+
+#: modules/poll/poll.module:465
+msgid "You must fill in at least two choices."
+msgstr "É obrigatório preencher no mínimo duas opções."
+
+#: modules/poll/poll.pages.inc:42
+msgid "open"
+msgstr "aberta"
+
+#: modules/poll/poll.pages.inc:85
+msgid ""
+"This table lists all the recorded votes for this poll. If anonymous "
+"users are allowed to vote, they will be identified by the IP address "
+"of the computer they used when they voted."
+msgstr ""
+"Esta tabela lista todos os votos desta votação. Se os utilizadores "
+"anónimos estiverem autorizados a votar, serão identificados pelo "
+"endereço IP do computador que utilizaram para votar."
+
+#: modules/poll/poll.module:924
+msgid "Cancel your vote"
+msgstr "Cancelar o seu voto"
+
+#: modules/poll/poll.module:633
+msgid "View the current poll results."
+msgstr "Ver o resultado actual da votação."
+
+#: modules/poll/poll.module:767
+msgid "Your vote was recorded."
+msgstr "O seu voto foi registado."
+
+#: modules/poll/poll.module:302
+msgid ""
+"If the amount of boxes above isn't enough, click here to add more "
+"choices."
+msgstr ""
+"Se o número de campos acima não for suficiente, active esta caixa de "
+"selecção e clique no botão Pré-visualização abaixo para obter "
+"mais campos."
+
+#: modules/poll/poll.module:301
+msgid "More choices"
+msgstr "Mais opções"
+
+#: modules/poll/poll.module:135
+msgid "Most recent poll"
+msgstr "Votação mais recente"
+
+#: modules/poll/poll.module:192
+msgid ""
+"A <em>poll</em> is a question with a set of possible responses. A "
+"<em>poll</em>, once created, automatically provides a simple running "
+"count of the number of votes received for each response."
+msgstr ""
+"Uma votação é uma questão com um conjunto de possíveis respostas. "
+"Uma votação, uma vez criada, automaticamente fornece uma simples "
+"contagem do número de votos recebidos por cada resposta."
+
+#: modules/poll/poll.module:337
+msgid "Poll status"
+msgstr "Estado da votação"
+
+#: modules/poll/poll.module:340
+msgid "When a poll is closed, visitors can no longer vote for it."
+msgstr ""
+"Quando uma votação é encerrada, os visitantes não podem mais votar "
+"nela."
+
+#: modules/poll/poll.module:348
+msgid "After this period, the poll will be closed automatically."
+msgstr "Após este período, a votação será encerrada automaticamente."
+
+#: modules/poll/poll.module:460
+msgid "Negative values are not allowed."
+msgstr "Não são permitidos valores negativos."
+
+#: modules/poll/poll.module:728
+msgid ""
+"Your vote could not be recorded because you did not select any of the "
+"choices."
+msgstr ""
+"O seu voto não pode ser registado porque não seleccionou nenhuma das "
+"opções."
+
+#: modules/poll/poll.module:834
+msgid "Vote count"
+msgstr "Número de votos"
+
+#: modules/poll/poll.module:92
+msgid "Polls"
+msgstr "Votações"
+
+#: modules/poll/poll.tokens.inc:15
+msgid "The number of votes that have been cast on a poll node."
+msgstr ""
+
+#: modules/poll/poll.tokens.inc:18
+msgid "Poll winner"
+msgstr ""
+
+#: modules/poll/poll.tokens.inc:19
+msgid "The winning poll answer."
+msgstr ""
+
+#: modules/poll/poll.tokens.inc:22
+msgid "Poll winner votes"
+msgstr ""
+
+#: modules/poll/poll.tokens.inc:23
+msgid "The number of votes received by the winning poll answer."
+msgstr ""
+
+#: modules/poll/poll.tokens.inc:26
+msgid "Poll winner percent"
+msgstr ""
+
+#: modules/poll/poll.tokens.inc:27
+msgid "The percentage of votes received by the winning poll answer."
+msgstr ""
+
+#: modules/poll/poll.tokens.inc:31
+msgid "The length of time the poll node is set to run."
+msgstr ""
+
+#: modules/poll/poll.module:18
+msgid ""
+"The Poll module can be used to create simple surveys or questionnaires "
+"that display cumulative results. A poll is a good way to receive "
+"feedback from site users and community members. For more information, "
+"see the online handbook entry for the <a href=\"@poll\">Poll "
+"module</a>."
+msgstr ""
+
+#: modules/poll/poll.module:21
+msgid "Creating a poll"
+msgstr "Criar votação"
+
+#: modules/poll/poll.module:22
+msgid ""
+"Users can create a poll by clicking on Poll on the <a "
+"href=\"@add-content\">Add new content</a> page, and entering the "
+"question being posed, the answer choices, and beginning vote counts "
+"for each choice. The status (closed or active) and duration (length of "
+"time the poll remains active for new votes) can also be specified."
+msgstr ""
+
+#: modules/poll/poll.module:23
+msgid "Viewing polls"
+msgstr ""
+
+#: modules/poll/poll.module:24
+msgid ""
+"You can visit the <a href=\"@poll\">Polls</a> page to view all current "
+"polls, or alternately enable the <em>Most recent poll</em> block on "
+"the <a href=\"@blocks\">Blocks administration page</a>. To vote in or "
+"view the results of a specific poll, you can click on the poll itself."
+msgstr ""
+
+#: modules/poll/poll.module:74
+msgid "Vote on polls"
+msgstr ""
+
+#: modules/poll/poll.module:77
+msgid "Cancel and change own votes"
+msgstr ""
+
+#: modules/poll/poll.module:80
+msgid "View voting results"
+msgstr ""
+
+#: modules/poll/poll.module:951
+msgid "Your vote was cancelled."
+msgstr "O seu voto foi cancelado."
+
+#: modules/poll/poll.module:212
+msgid "Poll module settings"
+msgstr "Configurações do módulo votação"
+
+#: modules/poll/poll.module:218,219
+msgid "Poll vote"
+msgstr ""
+
+#: modules/poll/poll.module:223,224
+msgid "Poll results"
+msgstr ""
+
+#: modules/poll/poll.module:393
+msgid "Choice label"
+msgstr ""
+
+#: modules/poll/poll.module:393
+msgid "New choice label"
+msgstr ""
+
+#: modules/poll/poll.module:401
+msgid "Vote count for choice @label"
+msgstr ""
+
+#: modules/poll/poll.module:401
+msgid "Vote count for new choice"
+msgstr ""
+
+#: modules/poll/poll.module:412
+msgid "Weight for choice @label"
+msgstr ""
+
+#: modules/poll/poll.module:412
+msgid "Weight for new choice"
+msgstr ""
+

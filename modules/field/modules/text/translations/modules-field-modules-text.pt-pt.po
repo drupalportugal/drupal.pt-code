@@ -1,0 +1,129 @@
+# Portuguese, Portugal translation of Drupal core (7.0-beta2)
+# Copyright (c) 2010 by the Portuguese, Portugal translation team
+# Generated from files:
+#  text.module,v 1.66 2010/10/22 00:42:42 dries
+#  text.js,v 1.4 2010/06/12 08:18:59 webchick
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Drupal core (7.0-beta2)\n"
+"POT-Creation-Date: 2010-10-25 05:28+0000\n"
+"PO-Revision-Date: 2010-08-22 12:31+0000\n"
+"Language-Team: Portuguese, Portugal\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n!=1);\n"
+
+#: modules/field/modules/text/text.module:93
+msgid "Text processing"
+msgstr "Processamento de texto"
+
+#: modules/field/modules/text/text.module:71
+msgid "Maximum length"
+msgstr "Comprimento máximo"
+
+#: modules/field/modules/text/text.module:490
+msgid "Rows"
+msgstr "Linhas"
+
+#: modules/field/modules/text/text.module:481
+msgid "Size of textfield"
+msgstr "Tamanho do campo de texto"
+
+#: modules/field/modules/text/text.module:199
+msgid "Trimmed"
+msgstr "Reduzido"
+
+#: modules/field/modules/text/text.module:459
+msgid "Text area (multiple rows)"
+msgstr "Àrea de texto (múltiplas linhas)"
+
+#: modules/field/modules/text/text.module:74
+msgid "The maximum length of the field in characters."
+msgstr "O comprimento máximo do campo em caracteres."
+
+#: modules/field/modules/text/text.module:17
+msgid ""
+"The Text module defines various text field types for the Field module. "
+"A text field may contain plain text only, or optionally, may use "
+"Drupal's <a href='@filter-help'>text filters</a> to securely manage "
+"HTML output. Text input fields may be either a single line (text "
+"field), multiple lines (text area), or for greater input control, a "
+"select box, checkbox, or radio buttons. If desired, the field can be "
+"validated, so that it is limited to a set of allowed values. See the "
+"<a href='@field-help'>Field module help page</a> for more information "
+"about fields."
+msgstr ""
+
+#: modules/field/modules/text/text.module:37
+msgid "This field stores varchar text in the database."
+msgstr ""
+
+#: modules/field/modules/text/text.module:44
+msgid "Long text"
+msgstr "Texto longo"
+
+#: modules/field/modules/text/text.module:45
+msgid "This field stores long text in the database."
+msgstr ""
+
+#: modules/field/modules/text/text.module:51
+msgid "Long text and summary"
+msgstr "Texto longo e sumário"
+
+#: modules/field/modules/text/text.module:52
+msgid ""
+"This field stores long text in the database along with optional "
+"summary text."
+msgstr ""
+
+#: modules/field/modules/text/text.module:97
+msgid "Filtered text (user selects text format)"
+msgstr ""
+
+#: modules/field/modules/text/text.module:103
+msgid "Summary input"
+msgstr ""
+
+#: modules/field/modules/text/text.module:105
+msgid ""
+"This allows authors to input an explicit summary, to be displayed "
+"instead of the automatically trimmed text when using the \"Summary or "
+"trimmed\" display type."
+msgstr ""
+
+#: modules/field/modules/text/text.module:128
+msgid "%name: the text may not be longer than %max characters."
+msgstr "%name: o texto não pode ser maior que %max caracteres."
+
+#: modules/field/modules/text/text.module:132
+msgid "%name: the summary may not be longer than %max characters."
+msgstr ""
+
+#: modules/field/modules/text/text.module:209
+msgid "Summary or trimmed"
+msgstr ""
+
+#: modules/field/modules/text/text.module:464
+msgid "Text area with a summary"
+msgstr ""
+
+#: modules/field/modules/text/text.module:525
+msgid "Leave blank to use trimmed value of full text as the summary."
+msgstr ""
+"Deixe em branco para usar a versão reduzida do texto completo como "
+"sumário."
+
+#: modules/field/modules/text/text.js:0
+msgid "Hide summary"
+msgstr "Ocultar sumário"
+
+#: modules/field/modules/text/text.js:0
+msgid "Edit summary"
+msgstr "Editar sumário"
+
+#: modules/field/modules/text/text.module:227,249
+msgid "Trim length"
+msgstr ""
+

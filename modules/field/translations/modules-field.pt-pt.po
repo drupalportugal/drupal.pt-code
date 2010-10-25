@@ -1,0 +1,200 @@
+# Portuguese, Portugal translation of Drupal core (7.0-beta2)
+# Copyright (c) 2010 by the Portuguese, Portugal translation team
+# Generated from files:
+#  field.form.inc,v 1.51 2010/10/20 01:31:06 dries
+#  field.module,v 1.88 2010/10/23 01:34:02 webchick
+#  field.default.inc,v 1.39 2010/08/04 06:55:35 webchick
+#  field.attach.inc,v 1.96 2010/10/03 01:15:33 dries
+#  field.crud.inc,v 1.71 2010/09/29 01:37:02 dries
+#  field.install,v 1.23 2010/10/20 01:15:58 dries
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Drupal core (7.0-beta2)\n"
+"POT-Creation-Date: 2010-10-25 05:28+0000\n"
+"PO-Revision-Date: 2010-02-04 18:09+0000\n"
+"Language-Team: Portuguese, Portugal\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n!=1);\n"
+
+#: modules/field/field.form.inc:252
+msgid "Order"
+msgstr "Ordem"
+
+#: modules/field/field.form.inc:248
+msgid "!title: !required"
+msgstr "!title: !required"
+
+#: modules/field/field.form.inc:204
+msgid "Add another item"
+msgstr "Adicionar outro item"
+
+#: modules/field/field.module:231
+msgid "Updating field type %type with module %module."
+msgstr ""
+
+#: modules/field/field.module:231,240
+msgid "field"
+msgstr "campo"
+
+#: modules/field/field.default.inc:62
+msgid "%name: this field cannot hold more than @count values."
+msgstr ""
+
+#: modules/field/field.module:976
+msgid "%name must be an integer."
+msgstr "%name deve ser um número inteiro."
+
+#: modules/field/field.module:986
+msgid "%name must be a positive integer."
+msgstr "%name deve ser um número inteiro positivo."
+
+#: modules/field/field.module:996
+msgid "%name must be a number."
+msgstr "%name deve ser um número."
+
+#: modules/field/field.attach.inc:29
+msgid "Field validation errors"
+msgstr "Erros de validação de campo"
+
+#: modules/field/field.crud.inc:266
+msgid "Attempt to create a field with a name longer than 32 characters: %name"
+msgstr "Tentativa de se criar um campo com mais de 32 caracteres: %name"
+
+#: modules/field/field.crud.inc:275
+msgid "Attempt to create field name %name which already exists and is active."
+msgstr "Tentativa de se criar um campo %name que já existe e está activo"
+
+#: modules/field/field.crud.inc:276
+msgid ""
+"Attempt to create field name %name which already exists, although it "
+"is inactive."
+msgstr ""
+"Tentativa de se criar um campo %name que já existe, apesar de estar "
+"inactivo."
+
+#: modules/field/field.crud.inc:285
+msgid ""
+"Attempt to create field name %name which is reserved by entity type "
+"%type."
+msgstr ""
+"Tentativa de se criar um campo %name que está reservado pela entidade "
+"de tipo %type."
+
+#: modules/field/field.crud.inc:302
+msgid "Attempt to create a field of unknown type %type."
+msgstr "Tentativa para se criar um campo de tipo desconhecido %type."
+
+#: modules/field/field.crud.inc:318
+msgid "Attempt to create a field with unknown storage type %type."
+msgstr ""
+"Tentativa de se criar um campo com um tipo de armazenamento "
+"desconhecido %type."
+
+#: modules/field/field.crud.inc:657
+msgid "Attempt to create an instance of field @field_name without a bundle."
+msgstr ""
+"Tentativa de se criar uma instância do campo @field_name sem um "
+"pacote."
+
+#: modules/field/field.form.inc:244
+msgid "This field is required. "
+msgstr "Este campo é obrigatório. "
+
+#: modules/field/field.module:130
+msgid "Enabling field types"
+msgstr ""
+
+#: modules/field/field.module:131
+msgid ""
+"The Field module provides the infrastructure for fields and field "
+"attachment; the field types and input widgets themselves are provided "
+"by additional modules. Some of the modules are required; the optional "
+"modules can be enabled from the <a href=\"@modules\">Modules "
+"administration page</a>. Drupal core includes the following field type "
+"modules: Number (required), Text (required), List (required), Taxonomy "
+"(optional), Image (optional), and File (optional); the required "
+"Options module provides input widgets for other field modules. "
+"Additional fields and widgets may be provided by contributed modules, "
+"which you can find in the <a href=\"@contrib\">contributed module "
+"section of Drupal.org</a>. Currently enabled field and input widget "
+"modules:"
+msgstr ""
+
+#: modules/field/field.module:150
+msgid "Managing field data storage"
+msgstr ""
+
+#: modules/field/field.module:151
+msgid ""
+"Developers of field modules can either use the default <a "
+"href=\"@sql-store\">Field SQL storage module</a> to store data for "
+"their fields, or a contributed or custom module developed using the <a "
+"href=\"@storage-api\">field storage API</a>."
+msgstr ""
+
+#: modules/field/field.module:240
+msgid "Updating field storage %type with module %module."
+msgstr ""
+
+#: modules/field/field.crud.inc:650
+msgid ""
+"Attempt to create an instance of a field @field_name that doesn't "
+"exist or is currently inactive."
+msgstr ""
+
+#: modules/field/field.crud.inc:682
+msgid ""
+"Attempt to create an instance of field @field_name on bundle @bundle "
+"that already has an instance of that field."
+msgstr ""
+
+#: modules/field/field.module:127
+msgid ""
+"The Field module allows custom data fields to be attached to Drupal "
+"<em>entities</em> (content nodes, users, taxonomy vocabularies, etc.) "
+"and takes care of storing, loading, editing, and rendering field data. "
+"Most users will not interact with the Field module directly, but will "
+"instead use the <a href=\"@field-ui-help\">Field UI module</a> user "
+"interface. Module developers can use the Field API to make new "
+"entities \"fieldable\" and thus allow fields to be attached to their "
+"entities. For more information, see the online handbook entry for <a "
+"href=\"@field\">Field module</a>."
+msgstr ""
+
+#: modules/field/field.crud.inc:654
+msgid ""
+"Attempt to create an instance of field @field_name without an entity "
+"type."
+msgstr ""
+
+#: modules/field/field.crud.inc:661
+msgid ""
+"Attempt to create an instance of field @field_name on forbidden entity "
+"type @entity_type."
+msgstr ""
+
+#: modules/field/field.crud.inc:716
+msgid "Attempt to update an instance of a nonexistent field @field."
+msgstr ""
+
+#: modules/field/field.crud.inc:723
+msgid ""
+"Attempt to update an instance of field @field on bundle @bundle that "
+"doesn't exist."
+msgstr ""
+
+#: modules/field/field.crud.inc:1138
+msgid "Attempt to purge a field @field_name that still has instances."
+msgstr ""
+
+#: modules/field/field.install:263
+msgid "This function can only be used to delete fields without data"
+msgstr ""
+
+#: modules/field/field.form.inc:175
+msgid "Weight for row @number"
+msgstr ""
+

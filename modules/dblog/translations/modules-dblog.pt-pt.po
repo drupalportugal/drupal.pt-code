@@ -1,0 +1,135 @@
+# Portuguese, Portugal translation of Drupal core (7.0-beta2)
+# Copyright (c) 2010 by the Portuguese, Portugal translation team
+# Generated from files:
+#  dblog.admin.inc,v 1.40 2010/09/09 15:47:03 webchick
+#  dblog.module,v 1.57 2010/10/03 02:14:23 dries
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Drupal core (7.0-beta2)\n"
+"POT-Creation-Date: 2010-10-25 05:28+0000\n"
+"PO-Revision-Date: 2010-04-26 07:29+0000\n"
+"Language-Team: Portuguese, Portugal\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n!=1);\n"
+
+#: modules/dblog/dblog.admin.inc:75,121
+msgid "No log messages available."
+msgstr "Não há mensagens no registo."
+
+#: modules/dblog/dblog.admin.inc:149
+msgid "Location"
+msgstr "Localização"
+
+#: modules/dblog/dblog.admin.inc:161,235
+msgid "Severity"
+msgstr "Severidade"
+
+#: modules/dblog/dblog.admin.inc:93
+msgid "Count"
+msgstr "Contagem"
+
+#: modules/dblog/dblog.admin.inc:287
+msgid "Filter log messages"
+msgstr "FIltrar mensagens no registo"
+
+#: modules/dblog/dblog.module:43
+msgid "View events that have recently been logged."
+msgstr "Exibir eventos registados recentemente."
+
+#: modules/dblog/dblog.module:50
+msgid "Top 'page not found' errors"
+msgstr "Top de erros de 'página não encontrada'"
+
+#: modules/dblog/dblog.module:51
+msgid "View 'page not found' errors (404s)."
+msgstr "Visualizar erros 'página não encontrada' (404)."
+
+#: modules/dblog/dblog.module:58
+msgid "Top 'access denied' errors"
+msgstr "Top de erros 'acesso negado'"
+
+#: modules/dblog/dblog.module:59
+msgid "View 'access denied' errors (403s)."
+msgstr "Visualizar erros 'acesso negado' (403)."
+
+#: modules/dblog/dblog.module:75
+msgid "Top search phrases"
+msgstr "Termos de pesquisa de maior ocorrência"
+
+#: modules/dblog/dblog.module:76
+msgid "View most popular search phrases."
+msgstr "Ver os termos de pesquisa mais populares."
+
+#: modules/dblog/dblog.admin.inc:361,368
+msgid "Clear log messages"
+msgstr "Eliminar mensagens de registo"
+
+#: modules/dblog/dblog.admin.inc:362
+msgid "This will permanently remove the log messages from the database."
+msgstr "Esta acção irá remover as mensagens de relatório da base de dados."
+
+#: modules/dblog/dblog.admin.inc:380
+msgid "Database log cleared."
+msgstr "Relatório da Base de dados limpo."
+
+#: modules/dblog/dblog.module:23
+msgid ""
+"The Database logging module logs system events in the Drupal database. "
+"For more information, see the online handbook entry for the <a "
+"href=\"@dblog\">Database logging module</a>."
+msgstr ""
+
+#: modules/dblog/dblog.module:26
+msgid "Monitoring your site"
+msgstr "Monitorizando o seu site"
+
+#: modules/dblog/dblog.module:28
+msgid "Debugging site problems"
+msgstr ""
+
+#: modules/dblog/dblog.module:27
+msgid ""
+"The Database logging module allows you to view an event log on the <a "
+"href=\"@dblog\">Recent log messages</a> page. The log is a "
+"chronological list of recorded events containing usage data, "
+"performance data, errors, warnings and operational information. "
+"Administrators should check the log on a regular basis to ensure their "
+"site is working properly."
+msgstr ""
+
+#: modules/dblog/dblog.module:29
+msgid ""
+"In case of errors or problems with the site, the <a "
+"href=\"@dblog\">Recent log messages</a> page can be useful for "
+"debugging, since it shows the sequence of events. The log messages "
+"include usage information, warnings, and errors."
+msgstr ""
+
+#: modules/dblog/dblog.module:33
+msgid ""
+"The Database logging module monitors your website, capturing system "
+"events in a log (shown here) to be reviewed by an authorized "
+"individual at a later time. This log is a list of recorded events "
+"containing usage data, performance data, errors, warnings and "
+"operational information. It is vital to check the Recent log messages "
+"report on a regular basis, as it is often the only way to tell what is "
+"going on."
+msgstr ""
+
+#: modules/dblog/dblog.module:164
+msgid "Database log messages to keep"
+msgstr ""
+
+#: modules/dblog/dblog.module:167
+msgid ""
+"The maximum number of messages to keep in the database log. Requires a "
+"<a href=\"@cron\">cron maintenance task</a>."
+msgstr ""
+
+#: modules/dblog/dblog.module:42
+msgid "Recent log messages"
+msgstr ""
+

@@ -1,0 +1,148 @@
+# Portuguese, Portugal translation of Drupal core (7.0-beta2)
+# Copyright (c) 2010 by the Portuguese, Portugal translation team
+# Generated from files:
+#  help.admin.inc,v 1.13 2010/10/01 15:24:18 webchick
+#  help.module,v 1.99 2010/10/04 14:54:10 webchick
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Drupal core (7.0-beta2)\n"
+"POT-Creation-Date: 2010-10-25 05:28+0000\n"
+"PO-Revision-Date: 2010-05-08 08:55+0000\n"
+"Language-Team: Portuguese, Portugal\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n!=1);\n"
+
+#: modules/help/help.admin.inc:15
+msgid "Help topics"
+msgstr "Tópicos de ajuda"
+
+#: modules/help/help.admin.inc:15
+msgid "Help is available on the following items:"
+msgstr "A ajuda está disponível para os seguintes itens:"
+
+#: modules/help/help.admin.inc:30
+msgid "No help is available for module %module."
+msgstr "Não existe ajuda disponível para o módulo %module."
+
+#: modules/help/help.admin.inc:44
+msgid "@module administration pages"
+msgstr "páginas de administração do módulo @module"
+
+#: modules/help/help.module:44
+msgid ""
+"<strong>Configure your website</strong> Once logged in, visit the <a "
+"href=\"@admin\">administration section</a>, where you can <a "
+"href=\"@config\">customize and configure</a> all aspects of your "
+"website."
+msgstr ""
+"<strong>Configure o seu site</strong> Uma vez iniciada a sua sessão, "
+"visite a <a href=\"@admin\">secção de administração</a>, onde pode "
+"<a href=\"@config\">personalizar e configurar</a> todos os aspectos do "
+"seu site."
+
+#: modules/help/help.module:45
+msgid ""
+"<strong>Enable additional functionality</strong> Next, visit the <a "
+"href=\"@modules\">module list</a> and enable features which suit your "
+"specific needs. You can find additional modules in the <a "
+"href=\"@download_modules\">Drupal modules download section</a>."
+msgstr ""
+"<strong>Activar funcionalidades adicionais</strong> De seguida visite "
+"a <a href=\"@modules\">lista de módulos</a> e active as "
+"funcionalidades que se adeqúem às suas necessidades específicas. "
+"Poderá encontrar módulos adicionais na <a "
+"href=\"@download_modules\">Secção de módulos do Drupal</a>."
+
+#: modules/help/help.module:46
+msgid ""
+"<strong>Customize your website design</strong> To change the \"look "
+"and feel\" of your website, visit the <a href=\"@themes\">themes "
+"section</a>. You may choose from one of the included themes or "
+"download additional themes from the <a "
+"href=\"@download_themes\">Drupal themes download section</a>."
+msgstr ""
+"<strong>Personalize o desenho do seu site</strong> Para alterar o "
+"grafismo do seu site, visite a <a href=\"@themes\">secção de "
+"temas</a>. Poderá escolher entre vários temas ou descarregar temas "
+"adicionais a partir da <a href=\"@download_themes\">secção de temas "
+"do Drupal</a>."
+
+#: modules/help/help.module:42
+msgid "Follow these steps to set up and start using your website:"
+msgstr ""
+"Siga estes passos para configurar e iniciar a utilização do seu "
+"site."
+
+#: modules/help/help.module:47
+msgid ""
+"<strong>Start posting content</strong> Finally, you can <a "
+"href=\"@content\">add new content</a> for your website."
+msgstr ""
+"<strong>Comece a publicar conteúdos</strong> Finalmente, pode <a "
+"href=\"@content\">adicionar novos conteúdos</a> ao seu site."
+
+#: modules/help/help.module:49
+msgid ""
+"For more information, refer to the specific topics listed in the next "
+"section or to the <a href=\"@handbook\">online Drupal handbooks</a>. "
+"You may also post at the <a href=\"@forum\">Drupal forum</a> or view "
+"the wide range of <a href=\"@support\">other support options</a> "
+"available."
+msgstr ""
+"Para mais informações consulte os tópicos indicados na próxima "
+"secção ou os <a href=\"@handbook\">manuais em linha do Drupal</a>. "
+"Pode também colocar questões no <a href=\"@forum\">fórum do "
+"Drupal</a> ou consultar  uma escolha alargada de <a href=\"@support\"> "
+"outras opções de suporte</a> disponíveis."
+
+#: modules/help/help.module:54
+msgid ""
+"The Help module provides <a href=\"@help-page\">Help reference "
+"pages</a> and context-sensitive advice to guide you through the use "
+"and configuration of modules. It is a starting point for the online <a "
+"href=\"@handbook\">Drupal handbooks</a>. The handbooks contain more "
+"extensive and up-to-date information, are annotated with "
+"user-contributed comments, and serve as the definitive reference point "
+"for all Drupal documentation. For more information, see the online "
+"handbook entry for the <a href=\"@help\">Help module</a>."
+msgstr ""
+"O módulo Help disponibiliza <a href=\"@help-page\">página de "
+"ajuda</a> e conselhos sensíveis ao contexto para guiá-lo no uso e "
+"configuração dos módulos. É um ponto de partida para os <a "
+"href=\"@handbook\">manuais em linha do Drupal</a>. Os manuais contêm "
+"uma informação mais extensa e actualizada, anotada por outros "
+"utilizadores e que é a documentação mais completa sobre o Drupal. "
+"Para informações adicionais consulte a entrada <a "
+"href=\"\"@help\">módulo Help</a> no manual."
+
+#: modules/help/help.module:57
+msgid "Providing a help reference"
+msgstr "Fornecendo ajuda"
+
+#: modules/help/help.module:58
+msgid ""
+"The Help module displays explanations for using each module listed on "
+"the main <a href=\"@help\">Help reference page</a>."
+msgstr ""
+"O módulo Help mostra explicações de como usar cada módulo listado "
+"na <a href=\"@help\">página principal de ajuda</a>."
+
+#: modules/help/help.module:59
+msgid "Providing context-sensitive help"
+msgstr "Fornecendo ajuda sensível ao contexto"
+
+#: modules/help/help.module:60
+msgid ""
+"The Help module displays context-sensitive advice and explanations on "
+"various pages."
+msgstr ""
+"O módulo Help mostra em diversas páginas, ajuda sensível ao "
+"contexto e explicações."
+
+#: modules/help/help.module:15
+msgid "Reference for usage, configuration, and modules."
+msgstr ""
+
