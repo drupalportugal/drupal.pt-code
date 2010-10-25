@@ -1,4 +1,4 @@
-; $Id: views.info,v 1.7.6.38 2010/10/07 19:40:02 dereine Exp $
+; $Id: views.info,v 1.7.6.42 2010/10/16 15:17:33 dereine Exp $
 name = Views
 description = Create customized lists and queries from your database.
 package = Views
@@ -93,6 +93,7 @@ files[] = modules/comment/views_handler_field_ncs_last_comment_name.inc
 files[] = modules/comment/views_handler_field_ncs_last_updated.inc
 files[] = modules/comment/views_handler_field_node_comment.inc
 files[] = modules/comment/views_handler_field_node_new_comments.inc
+files[] = modules/comment/views_handler_field_last_comment_timestamp.inc
 files[] = modules/comment/views_handler_filter_comment_user_uid.inc
 files[] = modules/comment/views_handler_filter_ncs_last_updated.inc
 files[] = modules/comment/views_handler_filter_node_comment.inc
@@ -161,6 +162,7 @@ files[] = modules/statistics/views_handler_field_accesslog_path.inc
 files[] = modules/system.views.inc
 files[] = modules/system/views_handler_argument_file_fid.inc
 files[] = modules/system/views_handler_field_file.inc
+files[] = modules/system/views_handler_field_file_extension.inc
 files[] = modules/system/views_handler_field_file_filemime.inc
 files[] = modules/system/views_handler_field_file_uri.inc
 files[] = modules/system/views_handler_field_file_status.inc
@@ -282,6 +284,7 @@ files[] = theme/views-view-table.tpl.php
 files[] = theme/views-view-unformatted.tpl.php
 files[] = theme/views-view.tpl.php
 ; Tests
+files[] = tests/handlers/views_handler_filter_date.test
 files[] = tests/views_access.test
 files[] = tests/views_basic.test
 files[] = tests/views_argument_default.test
@@ -293,10 +296,11 @@ files[] = tests/views_handlers.test
 files[] = tests/views_pager.test
 files[] = tests/views_query.test
 files[] = tests/views_test.views_default.inc
+files[] = tests/user/views_user_argument_default.test
 
-; Information added by drupal.org packaging script on 2010-10-13
+; Information added by drupal.org packaging script on 2010-10-23
 version = "7.x-3.x-dev"
 core = "7.x"
 project = "views"
-datestamp = "1286929340"
+datestamp = "1287836505"
 

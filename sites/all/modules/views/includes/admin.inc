@@ -1,5 +1,5 @@
 <?php
-// $Id: admin.inc,v 1.161.4.49 2010/10/12 21:46:33 merlinofchaos Exp $
+// $Id: admin.inc,v 1.161.4.54 2010/10/17 10:42:44 dereine Exp $
 /**
  * @file admin.inc
  * Provides the Views' administrative interface.
@@ -573,7 +573,8 @@ function views_ui_add_page() {
     ),
   );
 
-  return drupal_render(drupal_build_form('views_ui_add_form', $form_state));
+  $form = drupal_build_form('views_ui_add_form', $form_state);
+  return drupal_render($form);
 }
 
 /**
@@ -1019,7 +1020,6 @@ function views_ui_edit_view_form_delete($form, &$form_state) {
  */
 function template_preprocess_views_ui_edit_view(&$vars) {
   $view = &$vars['view'];
-  views_add_js('dependent');
 
   // The form has to be saved as variable because of strict warnings.
   $form = drupal_get_form('views_ui_edit_view_form', $view);
@@ -1115,7 +1115,22 @@ function template_preprocess_views_ui_edit_view(&$vars) {
     }
   }
 
-  $vars['quick_links'] = theme('links', array('links' => $vars['quick_links_raw']));
+  if (module_exists('contextual')) {
+    $build = array(
+      '#prefix' => '<div class="contextual-links-wrapper">',
+      '#suffix' => '</div>',
+      '#theme' => 'links__contextual',
+      '#links' => $vars['quick_links_raw'],
+      '#attributes' => array('class' => array('contextual-links')),
+      '#attached' => array(
+        'library' => array(array('contextual', 'contextual-links')),
+      ),
+    );
+    $vars['quick_links'] = drupal_render($build);
+  }
+  else {
+    $vars['quick_links'] = theme('links__views_quick_links', array('links' => $vars['quick_links_raw']));
+  }
   views_add_css('views-admin');
   views_add_js('ajax');
   drupal_add_js('misc/jquery.form.js');
@@ -1310,7 +1325,12 @@ function template_preprocess_views_ui_edit_item(&$vars) {
     }
   }
 
-  $vars['title'] = l($types[$type]['title'], "admin/structure/views/nojs/config-type/$view->name/$display->id/$type", array('attributes' => array('class' => array('views-ajax-link'), 'id' => 'views-title-' . $type)));
+  if ($display->display_plugin != 'default') {
+    $vars['title'] = l($types[$type]['title'], "admin/structure/views/nojs/config-type/$view->name/$display->id/$type", array('attributes' => array('class' => array('views-ajax-link'), 'id' => 'views-title-' . $type)));
+  }
+  else {
+    $vars['title'] = $types[$type]['title'];
+  }
 
   $fields = array();
 
@@ -1419,16 +1439,29 @@ function views_ui_standard_form_buttons(&$form, &$form_state, $form_id, $name = 
   if (empty($name)) {
     $name = t('Update');
   }
+
   // remove default validate handler
   $form['#validate'] = array();
+
+    // Add the override and update button
+  if ($name == t('Update default display')) {
+    $form['buttons']['override_update'] = array(
+      '#type' => 'submit',
+      '#value' => t('Update and override'),
+      '#submit' => array(
+        'views_ui_edit_display_form_override_update_section',
+        'views_ui_standard_submit',
+        'views_ui_edit_display_form_override_update',
+      ),
+    );
+  }
 
   if (empty($form_state['ok_button'])) {
     // but be sure submit button validates!
     $form['buttons']['submit'] = array(
       '#type' => 'submit',
       '#value' => $name,
-      '#submit' => array($form_id . '_submit'),
-      '#validate' => array('views_ui_standard_submit'),
+      '#submit' => array('views_ui_standard_submit', $form_id . '_submit'),
     );
     // Take sure that the validation handler exists.
     if (function_exists($form_id . '_validate')) {
@@ -2114,6 +2147,24 @@ function views_ui_edit_display_form_override($form, &$form_state) {
   $form_state['rebuild'] = TRUE;
 }
 /**
+ * Override handler and submit views_ui_edit_display_form
+ */
+function views_ui_edit_display_form_override_update(&$form, &$form_state) {
+  $display = &$form_state['view']->display[$form_state['display_id']];
+  $display->handler->options_override($form, $form_state);
+  $display->handler->options_submit($form, $form_state);
+  views_ui_cache_set($form_state['view']);
+}
+
+/**
+ * Override handler and submit views_ui_edit_display_form
+ */
+function views_ui_edit_display_form_override_update_section(&$form, &$form_state) {
+  // Update the #section so it knows what to mark changed.
+  $form['#section'] = str_replace('default-', $form_state['display_id'] . '-', $form['#section']);
+}
+
+/**
  * Form to config items in the views UI.
  */
 function views_ui_config_type_form($form, &$form_state) {
@@ -2380,7 +2431,6 @@ function views_ui_add_item_form($form, &$form_state) {
       '#value' => '<div class="form-item">' . t('There are no @types available to add.', array('@types' =>  $types[$type]['ltitle'])) . '</div>',
     );
   }
-  views_add_js('dependent');
   views_ui_standard_form_buttons($form, $form_state, 'views_ui_add_item_form', t('Add'));
 
   return $form;

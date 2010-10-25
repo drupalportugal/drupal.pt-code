@@ -299,7 +299,7 @@ ini_set('session.cookie_lifetime', 2000000);
  * This needs to be here. This is an old machine.
  * 
  */
-ini_set('max_execution_time', 90);
+ini_set('apc.enabled', 0);
 
 
 /**
