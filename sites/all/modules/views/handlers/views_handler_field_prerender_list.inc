@@ -1,5 +1,5 @@
 <?php
-// $Id: views_handler_field_prerender_list.inc,v 1.3.4.2 2010/05/08 22:05:48 dereine Exp $
+// $Id: views_handler_field_prerender_list.inc,v 1.3.4.4 2010/11/05 07:20:54 dereine Exp $
 
 /**
  * Field handler to provide a list of items.
@@ -38,7 +38,7 @@ class views_handler_field_prerender_list extends views_handler_field {
       '#type' => 'textfield',
       '#title' => t('Separator'),
       '#default_value' => $this->options['separator'],
-      '#process' => array('views_process_dependency'),
+      '#process' => array('ctools_dependent_process'),
       '#dependency' => array('radio:options[type]' => array('separator')),
     );
   }

@@ -1,5 +1,5 @@
 <?php
-// $Id: views_handler_field_numeric.inc,v 1.6.4.2 2010/07/27 21:59:00 merlinofchaos Exp $
+// $Id: views_handler_field_numeric.inc,v 1.6.4.4 2010/11/05 07:20:54 dereine Exp $
 /**
  * Render a field as a numeric value
  *
@@ -41,7 +41,7 @@ class views_handler_field_numeric extends views_handler_field {
         '#title' => t('Precision'),
         '#default_value' => $this->options['precision'],
         '#description' => t('Specify how many digits to print after the decimal point.'),
-        '#process' => array('views_process_dependency'),
+        '#process' => array('ctools_dependent_process'),
         '#dependency' => array('edit-options-set-precision' => array(TRUE)),
         '#size' => 2,
       );
@@ -71,7 +71,7 @@ class views_handler_field_numeric extends views_handler_field {
       '#title' => t('Singular form'),
       '#default_value' => $this->options['format_plural_singular'],
       '#description' => t('Text to use for the singular form.'),
-      '#process' => array('views_process_dependency'),
+      '#process' => array('ctools_dependent_process'),
       '#dependency' => array('edit-options-format-plural' => array(TRUE)),
     );
     $form['format_plural_plural'] = array(
@@ -79,7 +79,7 @@ class views_handler_field_numeric extends views_handler_field {
       '#title' => t('Plural form'),
       '#default_value' => $this->options['format_plural_plural'],
       '#description' => t('Text to use for the plural form, @count will be replaced with the value.'),
-      '#process' => array('views_process_dependency'),
+      '#process' => array('ctools_dependent_process'),
       '#dependency' => array('edit-options-format-plural' => array(TRUE)),
     );
     $form['prefix'] = array(

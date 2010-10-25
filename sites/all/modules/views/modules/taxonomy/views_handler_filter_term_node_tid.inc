@@ -1,5 +1,5 @@
 <?php
-// $Id: views_handler_filter_term_node_tid.inc,v 1.8.6.8 2010/10/07 19:40:02 dereine Exp $
+// $Id: views_handler_filter_term_node_tid.inc,v 1.8.6.11 2010/11/12 07:07:08 dereine Exp $
 
 /**
  * Filter by term id
@@ -73,7 +73,7 @@ class views_handler_filter_term_node_tid extends views_handler_filter_many_to_on
       '#type' => 'checkbox',
       '#title' => t('Show hierarchy in dropdown'),
       '#default_value' => !empty($this->options['hierarchy']),
-      '#process' => array('views_process_dependency'),
+      '#process' => array('ctools_dependent_process'),
       '#dependency' => array('radio:options[type]' => array('select')),
     );
 
@@ -113,7 +113,7 @@ class views_handler_filter_term_node_tid extends views_handler_filter_many_to_on
       );
 
       if ($this->options['limit']) {
-        $form['value']['#autocomplete_path'] = 'taxonomy/autocomplete/' . $vocabulary->vid;
+        $form['value']['#autocomplete_path'] = 'admin/views/ajax/autocomplete/taxonomy/' . $vocabulary->vid;
       }
     }
     else {
@@ -282,7 +282,7 @@ class views_handler_filter_term_node_tid extends views_handler_filter_many_to_on
     }
 
     $query = db_select('taxonomy_term_data', 'td');
-    $query->addJoin('taxonomy_vocabulary', 'tv', 'td.vid = tv.vid');
+    $query->innerJoin('taxonomy_vocabulary', 'tv', 'td.vid = tv.vid');
     $query->fields('td');
     $query->condition('td.name', $names);
     $query->condition('tv.machine_name', $this->options['vocabulary']);

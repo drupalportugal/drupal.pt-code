@@ -1,5 +1,5 @@
 <?php
-// $Id: views_handler_argument_string.inc,v 1.5.4.3 2010/08/16 15:42:46 dereine Exp $
+// $Id: views_handler_argument_string.inc,v 1.5.4.5 2010/11/05 07:20:54 dereine Exp $
 
 /**
  * Basic argument handler to implement string arguments that may have length
@@ -51,7 +51,7 @@ class views_handler_argument_string extends views_handler_argument {
       '#title' => t('Character limit'),
       '#description' => t('How many characters of the argument to filter against. If set to 1, all fields starting with the letter in the argument would be matched.'),
       '#default_value' => $this->options['limit'],
-      '#process' => array('views_process_dependency'),
+      '#process' => array('ctools_dependent_process'),
       '#dependency' => array('edit-options-glossary' => array(TRUE)),
     );
 

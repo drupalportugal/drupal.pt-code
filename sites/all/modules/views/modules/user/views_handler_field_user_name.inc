@@ -1,5 +1,5 @@
 <?php
-// $Id: views_handler_field_user_name.inc,v 1.2.6.1 2009/11/02 22:01:27 merlinofchaos Exp $
+// $Id: views_handler_field_user_name.inc,v 1.2.6.3 2010/11/05 07:20:54 dereine Exp $
 /**
  * Field handler to provide simple renderer that allows using a themed user link
  */
@@ -36,7 +36,7 @@ class views_handler_field_user_name extends views_handler_field_user {
       '#title' => t('Text to display for anonymous users'),
       '#type' => 'textfield',
       '#default_value' => $this->options['anonymous_text'],
-      '#process' => array('views_process_dependency'),
+      '#process' => array('ctools_dependent_process'),
       '#dependency' => array(
         'edit-options-overwrite-anonymous' => array(1),
       ),

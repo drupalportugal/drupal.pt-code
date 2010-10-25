@@ -1,5 +1,5 @@
 <?php
-// $Id: views_plugin_exposed_form.inc,v 1.2.2.13 2010/08/23 16:49:55 dereine Exp $
+// $Id: views_plugin_exposed_form.inc,v 1.2.2.17 2010/11/11 19:43:07 dereine Exp $
 
 /**
  * The base plugin to handle exposed filter forms.
@@ -65,7 +65,7 @@ class views_plugin_exposed_form extends views_plugin {
       '#dependency' => array(
         'edit-exposed-form-options-reset-button' => array(1)
       ),
-      '#process' => array('views_process_dependency'),
+      '#process' => array('ctools_dependent_process'),
     );
 
     $form['exposed_sorts_label'] = array(
@@ -108,6 +108,7 @@ class views_plugin_exposed_form extends views_plugin {
       'method' => 'get',
       'rerender' => TRUE,
       'no_redirect' => TRUE,
+      'always_process' => TRUE,
     );
 
     // Some types of displays (eg. attachments) may wish to use the exposed
@@ -122,7 +123,8 @@ class views_plugin_exposed_form extends views_plugin {
     }
 
     $form_state['exposed_form_plugin'] = $this;
-    $output = drupal_render(drupal_build_form('views_exposed_form', $form_state));
+    $form = drupal_build_form('views_exposed_form', $form_state);
+    $output = drupal_render($form);
     if (!empty($form_state['js settings'])) {
       $this->view->js_settings = $form_state['js settings'];
     }

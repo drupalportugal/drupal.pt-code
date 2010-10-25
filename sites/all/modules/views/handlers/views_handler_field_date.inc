@@ -1,5 +1,5 @@
 <?php
-// $Id: views_handler_field_date.inc,v 1.3.4.2 2010/08/13 22:27:17 merlinofchaos Exp $
+// $Id: views_handler_field_date.inc,v 1.3.4.4 2010/11/05 07:20:54 dereine Exp $
 /**
  * A handler to provide proper displays for dates.
  *
@@ -38,7 +38,7 @@ class views_handler_field_date extends views_handler_field {
       '#title' => t('Custom date format'),
       '#description' => t('If "Custom", see <a href="http://us.php.net/manual/en/function.date.php" target="_blank">the PHP docs</a> for date formats. If "Time ago" this is the the number of different units to display, which defaults to two.'),
       '#default_value' => isset($this->options['custom_date_format']) ? $this->options['custom_date_format'] : '',
-      '#process' => array('views_process_dependency'),
+      '#process' => array('ctools_dependent_process'),
       '#dependency' => array('edit-options-date-format' => array('custom', 'raw time ago', 'time ago', 'raw time span', 'time span')),
     );
   }

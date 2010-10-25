@@ -1,5 +1,5 @@
 <?php
-// $Id: views_plugin_style_table.inc,v 1.7.4.5 2010/03/11 00:06:09 merlinofchaos Exp $
+// $Id: views_plugin_style_table.inc,v 1.7.4.7 2010/11/05 07:20:54 dereine Exp $
 /**
  * @file
  * Contains the table style plugin.
@@ -196,7 +196,7 @@ class views_plugin_style_table extends views_plugin_style {
         $form['info'][$field]['sortable'] = array(
           '#type' => 'checkbox',
           '#default_value' => !empty($this->options['info'][$field]['sortable']),
-          '#process' => array('views_process_dependency'),
+          '#process' => array('ctools_dependent_process'),
           '#dependency' => array($id => array($field)),
         );
         // Provide an ID so we can have such things.
@@ -209,7 +209,7 @@ class views_plugin_style_table extends views_plugin_style {
           // because 'radio' doesn't fully support '#id' =(
           '#attributes' => array('id' => $radio_id),
           '#default_value' => $default,
-          '#process' => array('views_process_dependency'),
+          '#process' => array('ctools_dependent_process'),
           '#dependency' => array($id => array($field)),
         );
       }
@@ -222,14 +222,14 @@ class views_plugin_style_table extends views_plugin_style {
           'views-align-center' => t('Center'),
           'views-align-right' => t('Right'),
           ),
-        '#process' => array('views_process_dependency'),
+        '#process' => array('ctools_dependent_process'),
         '#dependency' => array($id => array($field)),
       );
       $form['info'][$field]['separator'] = array(
         '#type' => 'textfield',
         '#size' => 10,
         '#default_value' => isset($this->options['info'][$field]['separator']) ? $this->options['info'][$field]['separator'] : '',
-        '#process' => array('views_process_dependency'),
+        '#process' => array('ctools_dependent_process'),
         '#dependency' => array($id => array($field)),
       );
 

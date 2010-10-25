@@ -1,5 +1,5 @@
 <?php
-// $Id: views_handler_field.inc,v 1.33.4.26 2010/10/12 22:12:45 merlinofchaos Exp $
+// $Id: views_handler_field.inc,v 1.33.4.30 2010/11/11 19:41:11 dereine Exp $
 /**
  * @defgroup views_field_handlers Views' field handlers
  * @{
@@ -216,7 +216,7 @@ class views_handler_field extends views_handler {
         '#type' => 'textarea',
         '#default_value' => $this->options['alter']['text'],
         '#description' => t('The text to display for this field. You may include HTML. You may enter data from this view as per the "Replacement patterns" below.'),
-        '#process' => array('views_process_dependency'),
+        '#process' => array('ctools_dependent_process'),
         '#dependency' => array(
           'edit-options-alter-alter-text' => array(1)
         ),
@@ -233,7 +233,7 @@ class views_handler_field extends views_handler {
         '#type' => 'textfield',
         '#default_value' => $this->options['alter']['path'],
         '#description' => t('The Drupal path or absolute URL for this link. You may enter data from this view as per the "Replacement patterns" below.'),
-        '#process' => array('views_process_dependency'),
+        '#process' => array('ctools_dependent_process'),
         '#dependency' => array(
           'edit-options-alter-make-link' => array(1)
         ),
@@ -243,7 +243,7 @@ class views_handler_field extends views_handler {
          '#type' => 'checkbox',
          '#title' => t('Use absolute path'),
          '#default_value' => $this->options['alter']['absolute'],
-         '#process' => array('views_process_dependency'),
+         '#process' => array('ctools_dependent_process'),
          '#dependency' => array(
            'edit-options-alter-make-link' => array(1)
          ),
@@ -254,7 +254,7 @@ class views_handler_field extends views_handler {
         '#type' => 'textfield',
         '#default_value' => $this->options['alter']['link_class'],
         '#description' => t('The CSS class to apply to the link.'),
-        '#process' => array('views_process_dependency'),
+        '#process' => array('ctools_dependent_process'),
         '#dependency' => array(
           'edit-options-alter-make-link' => array(1)
         ),
@@ -264,7 +264,7 @@ class views_handler_field extends views_handler {
         '#type' => 'textfield',
         '#default_value' => $this->options['alter']['alt'],
         '#description' => t('Text to place as "alt" text which most browsers display as a tooltip when hovering over the link.'),
-        '#process' => array('views_process_dependency'),
+        '#process' => array('ctools_dependent_process'),
         '#dependency' => array(
           'edit-options-alter-make-link' => array(1)
         ),
@@ -274,7 +274,7 @@ class views_handler_field extends views_handler {
         '#type' => 'textfield',
         '#default_value' => $this->options['alter']['prefix'],
         '#description' => t('Any text to display before this link. You may include HTML.'),
-        '#process' => array('views_process_dependency'),
+        '#process' => array('ctools_dependent_process'),
         '#dependency' => array(
           'edit-options-alter-make-link' => array(1)
         ),
@@ -284,7 +284,7 @@ class views_handler_field extends views_handler {
         '#type' => 'textfield',
         '#default_value' => $this->options['alter']['suffix'],
         '#description' => t('Any text to display after this link. You may include HTML.'),
-        '#process' => array('views_process_dependency'),
+        '#process' => array('ctools_dependent_process'),
         '#dependency' => array(
           'edit-options-alter-make-link' => array(1)
         ),
@@ -294,7 +294,7 @@ class views_handler_field extends views_handler {
         '#type' => 'textfield',
         '#default_value' => $this->options['alter']['target'],
         '#description' => t("Target of the link, such as _blank, _parent or an iframe's name. This field is rarely used."),
-        '#process' => array('views_process_dependency'),
+        '#process' => array('ctools_dependent_process'),
         '#dependency' => array(
           'edit-options-alter-make-link' => array(1)
         ),
@@ -345,7 +345,7 @@ class views_handler_field extends views_handler {
         '#type' => 'hidden',
         '#id' => 'views-tokens-help',
         '#prefix' => '<div><fieldset id="views-tokens-help"><legend>' . t('Replacement patterns') . '</legend>' . $output . '</fieldset></div>',
-        '#process' => array('views_process_dependency'),
+        '#process' => array('ctools_dependent_process'),
         '#dependency' => array(
           'edit-options-alter-make-link' => array(1),
           'edit-options-alter-alter-text' => array(1),
@@ -364,7 +364,7 @@ class views_handler_field extends views_handler {
         '#type' => 'textfield',
         '#default_value' => $this->options['alter']['max_length'],
         '#description' => t('The maximum number of characters this field can be.'),
-        '#process' => array('views_process_dependency'),
+        '#process' => array('ctools_dependent_process'),
         '#dependency' => array(
           'edit-options-alter-trim' => array(1)
         ),
@@ -375,7 +375,7 @@ class views_handler_field extends views_handler {
         '#title' => t('Trim only on a word boundary'),
         '#description' => t('If checked, this field be trimmed only on a word boundary. This is guaranteed to be the maximum characters stated or less. If there are no word boundaries this could trim a field to nothing.'),
         '#default_value' => $this->options['alter']['word_boundary'],
-        '#process' => array('views_process_dependency'),
+        '#process' => array('ctools_dependent_process'),
         '#dependency' => array(
           'edit-options-alter-trim' => array(1)
         ),
@@ -386,7 +386,7 @@ class views_handler_field extends views_handler {
         '#title' => t('Add an ellipsis'),
         '#description' => t('If checked, a "..." will be added if a field was trimmed.'),
         '#default_value' => $this->options['alter']['ellipsis'],
-        '#process' => array('views_process_dependency'),
+        '#process' => array('ctools_dependent_process'),
         '#dependency' => array(
           'edit-options-alter-trim' => array(1)
         ),
@@ -397,7 +397,7 @@ class views_handler_field extends views_handler {
         '#title' => t('Field can contain HTML'),
         '#description' => t('If checked, HTML corrector will be run to ensure tags are properly closed after trimming.'),
         '#default_value' => $this->options['alter']['html'],
-        '#process' => array('views_process_dependency'),
+        '#process' => array('ctools_dependent_process'),
         '#dependency' => array(
           'edit-options-alter-trim' => array(1)
         ),
@@ -408,7 +408,7 @@ class views_handler_field extends views_handler {
         '#title' => t('Strip HTML tags'),
         '#description' => t('If checked, all HTML tags will be stripped.'),
         '#default_value' => $this->options['alter']['strip_tags'],
-        '#process' => array('views_process_dependency'),
+        '#process' => array('ctools_dependent_process'),
       );
     }
 
@@ -614,6 +614,10 @@ class views_handler_field extends views_handler {
     }
     if (isset($url['fragment'])) {
       $path = strtr($path, array('#' . $url['fragment'] => ''));
+      // If the path is empty we want to have a fragment for the current site.
+      if ($path == '') {
+        $options['external'] = TRUE;
+      }
       $options['fragment'] = $url['fragment'];
     }
 
@@ -649,8 +653,16 @@ class views_handler_field extends views_handler {
     if (isset($alter['fragment'])) {
       $options['fragment'] = strtr($alter['fragment'], $tokens);
     }
-    if (isset($this->options['alter']['language'])) {
-      $options['language'] = $this->options['alter']['language'];
+    if (isset($alter['language'])) {
+      $options['language'] = $alter['language'];
+    }
+
+    // If the url came from entity_uri(), pass along the required options.
+    if (isset($alter['entity'])) {
+      $options['entity'] = $alter['entity'];
+    }
+    if (isset($alter['entity_type'])) {
+      $options['entity_type'] = $alter['entity_type'];
     }
 
     $value .= l($text, $path, $options);
@@ -841,4 +853,3 @@ class views_handler_field_xss extends views_handler_field {
 /**
  * @}
  */
-

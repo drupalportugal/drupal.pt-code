@@ -1,5 +1,5 @@
 <?php
-// $Id: views_handler_filter_string.inc,v 1.8.4.2 2010/03/08 19:53:43 merlinofchaos Exp $
+// $Id: views_handler_filter_string.inc,v 1.8.4.4 2010/11/05 07:20:54 dereine Exp $
 
 /**
  * Basic textfield filter to handle string filtering commands
@@ -201,7 +201,7 @@ class views_handler_filter_string extends views_handler_filter {
 
       if ($which == 'all') {
         $form['value'] += array(
-          '#process' => array('views_process_dependency'),
+          '#process' => array('ctools_dependent_process'),
           '#dependency' => array($source => $this->operator_values(1)),
         );
       }

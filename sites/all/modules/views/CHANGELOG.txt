@@ -305,7 +305,7 @@ Views 3.x-7.x-dev
     o #746846 by lavamind: url encoding on options could cause visual problems in jump menu.
     o #839214 by AlexisWilke: Improve encoding on help text snippets.
     o #846054 by celeritas: Exposed form "Reset" button failed to reset if the name was changed in form options.
-    o #870770 by bojany: Exposed filter settings can't be saved. The same patch as #645146.
+    o #870770 by bojanz: Exposed filter settings can't be saved. The same patch as #645146.
     o by dereine: Rename re_render to rerender.
     o by dereine: Fix views_import_access by changing the permission to use PHP for settings
     o by bojanz and dereine: Fix a remaining call to vpr.
@@ -387,6 +387,61 @@ Views 3.x-7.x-dev
     o #847930 by dereine: Reduce duplicates option not staying set.
     o #865482 by dereine: RSS options form does not include override.
     o #813422 by dereine and killes: Improved time-based caching expiration.
+    o #829550 by hefox: Better testing of batch form use by exposed filters.
+    o #570618 by dereine: Enforce denying access to disabled views more strongly.
+    o #667014 by dereine: Prevent notice with relationships and node row style if relationship has no endpoint node.
+    o #835934 by dereine: Provide relationship from files to users.
+    o #738172 by dereine: Fields rewritten to be links with just a fragment did not work.
+    o #694094 by Ian Ward: Allow more static caches to be resettable. (port by aspilicious)
+    o #811226 by dereine: Fix another notice in area text handler. (port by aspilicious)
+    o #917916 by MyXelf: break delimiter not removed from formatted output. (port by aspilicious)
+    o #918654 by Will White: numeric GROUP BY fields missing numeric format options.
+    o by dereine: Test for views_handler_filter_date.
+    o #785236 by e_log: Add aggregator field item id as a field.
+    o #366886 by Scott Reynolds: For "last comment time" if "count zero is empty" is set, use empty text for nodes with no comments.
+    o #611086 by dereine: add -url token to files that can fetch proper URLs with private filesystems.
+    o #635336 by dereine: Remove unused fields from views.
+    o #795270 by dereine: Remove unnecessary links to sections that will have no settings.
+    o #882800 by dereine: Move "Distinct" option to query settings.
+    o #755342 by jcmarco: Improve SQL date field handling.
+    o #338893 by dereine: Aggregator argument not always properly converted to title.
+    o #787184 introduce the long awaited "Update and Override" button.
+    o #718832 by dereine: Add file extension as a field available within the File group.
+    o #941974 by dereine: Use contextual links in the views ui when possible.
+    o #761102 by dereine: test: user default argument.
+    o by dereine: Fix notice in views_ui_add_page.
+    o #667950 by damZ, dereine: Port #dependency form elements to #states.
+    o Added missing file: modules/taxonomy/views_handler_filter_vocabulary_machine_name.inc
+    o #882800 by rszrama: Fix notice for options['distinct'].
+    o #950246 by ZoeN: Fix dbtng in views_handler_argument_aggregator_fid.
+    o #884730 by yched, bojanz, karenS, wundo: Add new UI for formatter settings options to the field settings config.
+    o by dereine: Add the dependeny ctools.
+    o #952576 by yhahn: Use JS_LIBRARY group for adding core library js files.
+    o #563020 by dereine: Replace views object cache with ctools object cache.
+    o #952636 by yhahn: Support string format identifiers in field_markup handler.
+    o #954030 by alweb: Fix title query in views_handler_argument_term_node_tid.
+    o #954784 by tekante: views_join class produces a SQL error when an array is in definition['extra']['value'].
+    o #962756 by bojanz: Field delta shows the placeholder instead of the field name.
+    o #667950 by merlinofchaos, bojanz and dereine: Revert the states patch and use ctools dependency instead.
+    o #960528 by dereine: Clicksort doesn't work for field names that contain special characters.
+    o by dereine: Document add_where for formula.
+    o by dereine: Fix notice in ajax.inc.
+    o #963382 by aidanlis: Fix typo in mathematical expression field help text.
+    o #807614 by dereine: Test filter_numeric.
+    o #928000 by mfer, dereine: form.js dependency missing.
+    o by dereine: Fix some notices.
+    o by dereine: Fix views_exposed_form test.
+    o by dereine: Move test files around.
+    o by dereine: Fix notice in group_by_numeric.
+    o by eporama: Add a test for views_plugin_argument_validate_user.
+    o #788950 by merlinofchaos, bojanz, dereine: Fixed ui when clicking override.
+    o #965432 by bojanz: Display column for single column fields, if that column is not "value".
+    o #965188 by Scott Reynolds: Remove comment.comment column, it does not exist in the database anymore.
+    o #969124 by brenk28: Fix notices in rss feeds related to readmore.
+    o #968286 by bojanz: Let field::render_as_link support entity url options.
+    o #967188 by Island Usurper: Fix exposed data submitted data.
+    o #954916 by becw: taxonomy term id from URL expects taxonomy objects in term fields, none present.
+    o #968372 by becw: "Taxonomy: Term" filter autocomplete broken.
 
 Views 6.x-3.x-dev
     o #396380 by merlinofchaos, dereine and dagmar: Initial support for GROUP BY queries!!!!!!!!!!!!

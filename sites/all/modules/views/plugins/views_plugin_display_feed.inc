@@ -1,5 +1,5 @@
 <?php
-// $Id: views_plugin_display_feed.inc,v 1.7.4.2 2010/07/27 22:19:10 merlinofchaos Exp $
+// $Id: views_plugin_display_feed.inc,v 1.7.4.4 2010/11/05 07:20:54 dereine Exp $
 /**
  * @file
  * Contains the feed display plugin.
@@ -136,7 +136,7 @@ class views_plugin_display_feed extends views_plugin_display_page {
           '#default_value' => $this->get_option('sitename_title'),
         );
         $form['title'] = $title;
-        $form['title']['#process'] = array('views_process_dependency');
+        $form['title']['#process'] = array('ctools_dependent_process');
         $form['title']['#dependency'] = array('edit-sitename-title' => array(FALSE));
         break;
       case 'displays':

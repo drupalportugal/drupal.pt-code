@@ -1,5 +1,5 @@
 <?php
-// $Id: views_handler_filter_numeric.inc,v 1.7.6.2 2010/03/08 19:53:43 merlinofchaos Exp $
+// $Id: views_handler_filter_numeric.inc,v 1.7.6.4 2010/11/05 07:20:54 dereine Exp $
 
 /**
  * Simple filter to handle greater than/less than filters
@@ -148,8 +148,8 @@ class views_handler_filter_numeric extends views_handler_filter {
         '#title' => empty($form_state['exposed']) ? t('Value') : '',
         '#size' => 30,
         '#default_value' => $this->value['value'],
-        '#process' => array('views_process_dependency'),
-        '#dependency' => array($source => $this->operator_values(1)),
+        '#process' => array('ctools_dependent_process'),
+        '#dependency' => array($source => array_map('htmlentities', $this->operator_values(1))),
       );
       if (!empty($form_state['exposed']) && !isset($form_state['input'][$identifier]['value'])) {
         $form_state['input'][$identifier]['value'] = $this->value['value'];
@@ -184,7 +184,7 @@ class views_handler_filter_numeric extends views_handler_filter {
       );
       if ($which == 'all') {
         $dependency = array(
-          '#process' => array('views_process_dependency'),
+          '#process' => array('ctools_dependent_process'),
           '#dependency' => array($source => $this->operator_values(2)),
         );
         $form['value']['min'] += $dependency;

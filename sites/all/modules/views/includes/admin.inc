@@ -1,5 +1,5 @@
 <?php
-// $Id: admin.inc,v 1.161.4.49 2010/10/12 21:46:33 merlinofchaos Exp $
+// $Id: admin.inc,v 1.161.4.58 2010/11/07 19:47:42 dereine Exp $
 /**
  * @file admin.inc
  * Provides the Views' administrative interface.
@@ -573,7 +573,8 @@ function views_ui_add_page() {
     ),
   );
 
-  return drupal_render(drupal_build_form('views_ui_add_form', $form_state));
+  $form = drupal_build_form('views_ui_add_form', $form_state);
+  return drupal_render($form);
 }
 
 /**
@@ -721,7 +722,7 @@ function views_ui_delete_confirm($form, &$form_state, $view) {
  */
 function views_ui_delete_confirm_submit(&$form, &$form_state) {
   $form_state['view']->delete();
-  views_object_cache_clear('view', $form_state['view']->name);
+  ctools_object_cache_clear('view', $form_state['view']->name);
   drupal_set_message(t('The view has been deleted.'));
   $form_state['redirect'] = 'admin/structure/views';
 }
@@ -756,10 +757,7 @@ function views_ui_break_lock_confirm($form, &$form_state, $view) {
  * Submit handler to break_lock a view.
  */
 function views_ui_break_lock_confirm_submit(&$form, &$form_state) {
-  db_delete('views_object_cache')
-    ->condition('obj', 'view')
-    ->condition('name', $form_state['view']->name)
-    ->execute();
+  ctools_object_cache_clear_all('view', $form_state['view']->name);
   $form_state['redirect'] = 'admin/structure/views/edit/' . $form_state['view']->name;
   drupal_set_message(t('The lock has been broken and you may now edit this view.'));
 }
@@ -992,7 +990,7 @@ function views_ui_edit_view_form_submit($form, &$form_state) {
   cache_clear_all();
 
   // Remove this view from cache so we can edit it properly.
-  views_object_cache_clear('view', $form_state['view']->name);
+  ctools_object_cache_clear('view', $form_state['view']->name);
 }
 
 /**
@@ -1000,7 +998,7 @@ function views_ui_edit_view_form_submit($form, &$form_state) {
  */
 function views_ui_edit_view_form_cancel($form, &$form_state) {
   // Remove this view from cache so edits will be lost.
-  views_object_cache_clear('view', $form_state['view']->name);
+  ctools_object_cache_clear('view', $form_state['view']->name);
   if (empty($form['view']->vid)) {
     // I seem to have to drupal_goto here because I can't get fapi to
     // honor the redirect target. Not sure what I screwed up here.
@@ -1019,7 +1017,7 @@ function views_ui_edit_view_form_delete($form, &$form_state) {
  */
 function template_preprocess_views_ui_edit_view(&$vars) {
   $view = &$vars['view'];
-  views_add_js('dependent');
+  ctools_include('dependent');
 
   // The form has to be saved as variable because of strict warnings.
   $form = drupal_get_form('views_ui_edit_view_form', $view);
@@ -1115,12 +1113,27 @@ function template_preprocess_views_ui_edit_view(&$vars) {
     }
   }
 
-  $vars['quick_links'] = theme('links', array('links' => $vars['quick_links_raw']));
+  if (module_exists('contextual')) {
+    $build = array(
+      '#prefix' => '<div class="contextual-links-wrapper">',
+      '#suffix' => '</div>',
+      '#theme' => 'links__contextual',
+      '#links' => $vars['quick_links_raw'],
+      '#attributes' => array('class' => array('contextual-links')),
+      '#attached' => array(
+        'library' => array(array('contextual', 'contextual-links')),
+      ),
+    );
+    $vars['quick_links'] = drupal_render($build);
+  }
+  else {
+    $vars['quick_links'] = theme('links__views_quick_links', array('links' => $vars['quick_links_raw']));
+  }
   views_add_css('views-admin');
   views_add_js('ajax');
-  drupal_add_js('misc/jquery.form.js');
+  drupal_add_js('misc/jquery.form.js', array('group' => JS_LIBRARY));
   // @TODO Remove this line when http://drupal.org/node/561858 is in.
-  drupal_add_js('misc/jquery.cookie.js');
+  drupal_add_js('misc/jquery.cookie.js', array('group' => JS_LIBRARY));
 
   // Also add any js files required by plugins:
   $plugins = views_fetch_plugin_data();
@@ -1310,7 +1323,12 @@ function template_preprocess_views_ui_edit_item(&$vars) {
     }
   }
 
-  $vars['title'] = l($types[$type]['title'], "admin/structure/views/nojs/config-type/$view->name/$display->id/$type", array('attributes' => array('class' => array('views-ajax-link'), 'id' => 'views-title-' . $type)));
+  if ($display->display_plugin != 'default') {
+    $vars['title'] = l($types[$type]['title'], "admin/structure/views/nojs/config-type/$view->name/$display->id/$type", array('attributes' => array('class' => array('views-ajax-link'), 'id' => 'views-title-' . $type)));
+  }
+  else {
+    $vars['title'] = $types[$type]['title'];
+  }
 
   $fields = array();
 
@@ -1419,16 +1437,29 @@ function views_ui_standard_form_buttons(&$form, &$form_state, $form_id, $name = 
   if (empty($name)) {
     $name = t('Update');
   }
+
   // remove default validate handler
   $form['#validate'] = array();
+
+    // Add the override and update button
+  if ($name == t('Update default display')) {
+    $form['buttons']['override_update'] = array(
+      '#type' => 'submit',
+      '#value' => t('Update and override'),
+      '#submit' => array(
+        'views_ui_edit_display_form_override_update_section',
+        'views_ui_standard_submit',
+        'views_ui_edit_display_form_override_update',
+      ),
+    );
+  }
 
   if (empty($form_state['ok_button'])) {
     // but be sure submit button validates!
     $form['buttons']['submit'] = array(
       '#type' => 'submit',
       '#value' => $name,
-      '#submit' => array($form_id . '_submit'),
-      '#validate' => array('views_ui_standard_submit'),
+      '#submit' => array('views_ui_standard_submit', $form_id . '_submit'),
     );
     // Take sure that the validation handler exists.
     if (function_exists($form_id . '_validate')) {
@@ -1670,7 +1701,7 @@ function views_ui_ajax_form($js, $key, $view, $display_id) {
   }
 
   $output = views_ajax_form_wrapper($form_state['form_id'], $form_state);
-  if ($form_state['submitted']) {
+  if ($form_state['submitted'] && empty($form_state['rerender'])) {
     // Sometimes we need to re-generate the form for multi-step type operations.
     $object = NULL;
     if (!empty($view->stack)) {
@@ -2114,6 +2145,24 @@ function views_ui_edit_display_form_override($form, &$form_state) {
   $form_state['rebuild'] = TRUE;
 }
 /**
+ * Override handler and submit views_ui_edit_display_form
+ */
+function views_ui_edit_display_form_override_update(&$form, &$form_state) {
+  $display = &$form_state['view']->display[$form_state['display_id']];
+  $display->handler->options_override($form, $form_state);
+  $display->handler->options_submit($form, $form_state);
+  views_ui_cache_set($form_state['view']);
+}
+
+/**
+ * Override handler and submit views_ui_edit_display_form
+ */
+function views_ui_edit_display_form_override_update_section(&$form, &$form_state) {
+  // Update the #section so it knows what to mark changed.
+  $form['#section'] = str_replace('default-', $form_state['display_id'] . '-', $form['#section']);
+}
+
+/**
  * Form to config items in the views UI.
  */
 function views_ui_config_type_form($form, &$form_state) {
@@ -2316,6 +2365,8 @@ function views_ui_add_item_form($form, &$form_state) {
   $display_id = $form_state['display_id'];
   $type = $form_state['type'];
 
+  ctools_add_js('dependent');
+
   if (!$view->set_display($display_id)) {
     views_ajax_error(t('Invalid display id @display', array('@display' => $display_id)));
   }
@@ -2341,7 +2392,7 @@ function views_ui_add_item_form($form, &$form_state) {
       '#type' => 'select',
       '#title' => t('Groups'),
       '#options' => array(),
-      '#attributes' => array('class' => array('views-master-dependent')),
+      '#attributes' => array('class' => array('ctools-master-dependent')),
     );
 
     $form['name'] = array(
@@ -2361,7 +2412,7 @@ function views_ui_add_item_form($form, &$form_state) {
     }
 
     foreach ($grouped_options as $group => $group_options) {
-      $form['name'][$group . '_start']['#markup'] = '<div class="views-dependent-all views-dependent-' . $group . '">';
+      $form['name'][$group . '_start']['#markup'] = '<div class="ctools-dependent-all ctools-dependent-' . $group . '">';
       foreach ($group_options as $key => $option) {
         $form['name'][$key] = array(
           '#type' => 'checkbox',
@@ -2380,7 +2431,7 @@ function views_ui_add_item_form($form, &$form_state) {
       '#value' => '<div class="form-item">' . t('There are no @types available to add.', array('@types' =>  $types[$type]['ltitle'])) . '</div>',
     );
   }
-  views_add_js('dependent');
+  ctools_include('dependent');
   views_ui_standard_form_buttons($form, $form_state, 'views_ui_add_item_form', t('Add'));
 
   return $form;

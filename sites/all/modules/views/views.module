@@ -1,5 +1,5 @@
 <?php
-// $Id: views.module,v 1.341.4.35 2010/10/12 21:19:27 merlinofchaos Exp $
+// $Id: views.module,v 1.341.4.40 2010/11/05 07:20:54 dereine Exp $
 /**
  * @file
  * Primarily Drupal hooks and global API functions to manipulate views.
@@ -188,6 +188,15 @@ function views_menu() {
   // the generic ajax callback.
   $items['admin/views/ajax/autocomplete/user'] = array(
     'page callback' => 'views_ajax_autocomplete_user',
+    'access callback' => 'user_access',
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+    'file' => 'includes/ajax.inc',
+  );
+  // Define another taxonomy autocomplete because the default one of drupal
+  // does not support a vid a argument anymore
+  $items['admin/views/ajax/autocomplete/taxonomy'] = array(
+    'page callback' => 'views_ajax_autocomplete_taxonomy',
     'access callback' => 'user_access',
     'access arguments' => array('access content'),
     'type' => MENU_CALLBACK,
@@ -589,8 +598,8 @@ function views_include($file) {
 /**
  * Load views files on behalf of modules.
  */
-function views_module_include($file) {
-  foreach (views_get_module_apis() as $module => $info) {
+function views_module_include($file, $reset = FALSE) {
+  foreach (views_get_module_apis($reset) as $module => $info) {
     if (file_exists(DRUPAL_ROOT . "/$info[path]/$module.$file")) {
       require_once DRUPAL_ROOT . "/$info[path]/$module.$file";
     }
@@ -600,9 +609,9 @@ function views_module_include($file) {
 /**
  * Get a list of modules that support the current views API.
  */
-function views_get_module_apis() {
+function views_get_module_apis($reset = FALSE) {
   static $cache = NULL;
-  if (!isset($cache)) {
+  if (!isset($cache) || $reset) {
     $cache = array();
     foreach (module_implements('views_api') as $module) {
       $info = module_invoke($module, 'views_api');
@@ -645,7 +654,7 @@ function views_add_js($file) {
     $base = FALSE;
   }
   if ($ajax && $file == 'ajax') {
-    drupal_add_js('misc/ajax.js', array('weight' => -1));
+    drupal_add_js('misc/ajax.js', array('group' => JS_LIBRARY));
     $ajax = TRUE;
   }
   drupal_add_js(drupal_get_path('module', 'views') . "/js/$file.js");
@@ -654,10 +663,10 @@ function views_add_js($file) {
 /**
  * Load views files on behalf of modules.
  */
-function views_include_handlers() {
+function views_include_handlers($reset = FALSE) {
   static $finished = FALSE;
   // Ensure this only gets run once.
-  if ($finished) {
+  if ($finished && !$reset) {
     return;
   }
 
@@ -672,19 +681,19 @@ function views_include_handlers() {
 /**
  * Load default views files on behalf of modules.
  */
-function views_include_default_views() {
+function views_include_default_views($reset = FALSE) {
   static $finished = FALSE;
   // Ensure this only gets run once.
-  if ($finished) {
+  if ($finished && !$reset) {
     return;
   }
 
   // Default views hooks may be in the normal handler file,
   // or in a separate views_default file at the discretion of
   // the module author.
-  views_include_handlers();
+  views_include_handlers($reset);
 
-  _views_include_default_views();
+  _views_include_default_views($reset);
   $finished = TRUE;
 }
 
@@ -743,9 +752,9 @@ function views_get_handler($table, $field, $key, $override = NULL) {
 /**
  * Fetch Views' data from the cache
  */
-function views_fetch_data($table = NULL) {
+function views_fetch_data($table = NULL, $reset = FALSE) {
   views_include('cache');
-  return _views_fetch_data($table);
+  return _views_fetch_data($table, $reset);
 }
 
 // -----------------------------------------------------------------------
@@ -754,17 +763,17 @@ function views_fetch_data($table = NULL) {
 /**
  * Fetch the plugin data from cache.
  */
-function views_fetch_plugin_data($type = NULL, $plugin = NULL) {
+function views_fetch_plugin_data($type = NULL, $plugin = NULL, $reset = FALSE) {
   views_include('cache');
-  return _views_fetch_plugin_data($type, $plugin);
+  return _views_fetch_plugin_data($type, $plugin, $reset);
 }
 
 /**
  * Get a handler for a plugin
  */
-function views_get_plugin($type, $plugin) {
+function views_get_plugin($type, $plugin, $reset = FALSE) {
   views_include('handlers');
-  $definition = views_fetch_plugin_data($type, $plugin);
+  $definition = views_fetch_plugin_data($type, $plugin, $reset);
   if (!empty($definition)) {
     return _views_create_handler($definition, $type);
   }
@@ -1006,8 +1015,7 @@ function vpr_trace() {
  */
 function views_exposed_form($form, &$form_state) {
   // Don't show the form when batch operations are in progress.
-  $batch =& batch_get();
-  if (!empty($batch)) {
+  if ($batch = batch_get() && isset($batch['current_set'])) {
     return array(
       // Set the theme callback to be nothing to avoid errors in template_preprocess_views_exposed_form().
       '#theme' => '',
@@ -1064,9 +1072,9 @@ function views_exposed_form($form, &$form_state) {
 
   // If using AJAX, we need the form plugin.
   if ($view->use_ajax) {
-    drupal_add_js('misc/jquery.form.js');
+    drupal_add_js('misc/jquery.form.js', array('group' => JS_LIBRARY));
   }
-  views_add_js('dependent');
+  ctools_include('dependent');
 
   $exposed_form_plugin = $form_state['exposed_form_plugin'];
   $exposed_form_plugin->exposed_form_alter($form, $form_state);
@@ -1375,28 +1383,6 @@ function views_views_exportables($op = 'list', $views = NULL, $name = 'foo') {
 
     return $code;
   }
-}
-
-/**
- * Process callback to add dependency to form items.
- *
- * Usage:
- *
- * On any form item, add
- * - @code '#process' => 'views_process_dependency' @endcode
- * - @code '#dependency' => array('id-of-form-without-the-#' => array(list, of, values, that, make, this, gadget, visible)); @endcode
- */
-function views_process_dependency($element) {
-  if (isset($element['#dependency'])) {
-    if (!isset($element['#dependency_count'])) {
-      $element['#dependency_count'] = 1;
-    }
-    views_add_js('dependent');
-    $options['viewsAjax']['formRelationships'][$element['#id']] = array('num' => $element['#dependency_count'], 'values' => $element['#dependency']);
-    drupal_add_js($options, 'setting');
-  }
-
-  return $element;
 }
 
 /**

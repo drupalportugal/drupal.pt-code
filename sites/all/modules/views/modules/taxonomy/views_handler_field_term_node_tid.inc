@@ -1,5 +1,5 @@
 <?php
-// $Id: views_handler_field_term_node_tid.inc,v 1.4.4.4 2010/10/07 19:40:02 dereine Exp $
+// $Id: views_handler_field_term_node_tid.inc,v 1.4.4.6 2010/11/05 07:20:54 dereine Exp $
 
 /**
  * Field handler for terms.
@@ -65,7 +65,7 @@ class views_handler_field_term_node_tid extends views_handler_field_prerender_li
       '#title' => t('Vocabularies'),
       '#options' => $options,
       '#default_value' => $this->options['vocabularies'],
-      '#process' => array('form_process_checkboxes', 'views_process_dependency'),
+      '#process' => array('form_process_checkboxes', 'ctools_dependent_process'),
       '#dependency' => array('edit-options-limit' => array(TRUE)),
     );
   }
