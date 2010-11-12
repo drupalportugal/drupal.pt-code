@@ -1,5 +1,5 @@
 <?php
-// $Id: ajax.inc,v 1.20.4.13 2010/10/17 10:42:44 dereine Exp $
+// $Id: ajax.inc,v 1.20.4.16 2010/11/07 19:47:42 dereine Exp $
 
 /**
  * @file ajax.inc
@@ -197,6 +197,8 @@ function views_ajax_error($message) {
  * This makes some assumptions about the client.
  */
 function views_ajax_form_wrapper($form_id, &$form_state) {
+  ctools_include('dependent');
+
   // This won't override settings already in.
   $form_state += array(
     'rerender' => FALSE,
@@ -215,7 +217,7 @@ function views_ajax_form_wrapper($form_id, &$form_state) {
     drupal_set_title($form_state['title']);
   }
 
-  if (!empty($form_state['ajax']) && empty($form_state['executed'])) {
+  if (!empty($form_state['ajax']) && (empty($form_state['executed']) || !empty($form_state['rerender']))) {
     // If the form didn't execute and we're using ajax, build up a
     // Ajax command list to execute.
     $commands = array();

@@ -1,5 +1,5 @@
 <?php
-// $Id: plugins.inc,v 1.156.4.9 2010/10/17 10:42:44 dereine Exp $
+// $Id: plugins.inc,v 1.156.4.11 2010/11/06 16:52:34 dereine Exp $
 /**
  * @file plugins.inc
  * Built in plugins for Views output handling.
@@ -10,6 +10,7 @@
  * Implements hook_views_plugins
  */
 function views_views_plugins() {
+  $js_path = drupal_get_path('module', 'ctools') . '/js';
   $plugins = array(
     // display, style, row, argument default, argument validator and access.
     'display' => array(
@@ -21,7 +22,7 @@ function views_views_plugins() {
         'theme' => 'views_view',
         'no ui' => TRUE,
         'no remove' => TRUE,
-        'js' => array('misc/collapse.js', 'misc/textarea.js', 'misc/tabledrag.js', 'misc/autocomplete.js', 'misc/states.js'),
+        'js' => array('misc/form.js', 'misc/collapse.js', 'misc/textarea.js', 'misc/tabledrag.js', 'misc/autocomplete.js', "$js_path/dependent.js"),
         'use ajax' => TRUE,
         'use pager' => TRUE,
         'use more' => TRUE,
