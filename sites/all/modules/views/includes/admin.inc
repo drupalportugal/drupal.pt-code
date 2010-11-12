@@ -1,5 +1,5 @@
 <?php
-// $Id: admin.inc,v 1.161.4.54 2010/10/17 10:42:44 dereine Exp $
+// $Id: admin.inc,v 1.161.4.56 2010/10/26 19:06:26 dereine Exp $
 /**
  * @file admin.inc
  * Provides the Views' administrative interface.
@@ -722,7 +722,7 @@ function views_ui_delete_confirm($form, &$form_state, $view) {
  */
 function views_ui_delete_confirm_submit(&$form, &$form_state) {
   $form_state['view']->delete();
-  views_object_cache_clear('view', $form_state['view']->name);
+  ctools_object_cache_clear('view', $form_state['view']->name);
   drupal_set_message(t('The view has been deleted.'));
   $form_state['redirect'] = 'admin/structure/views';
 }
@@ -757,10 +757,7 @@ function views_ui_break_lock_confirm($form, &$form_state, $view) {
  * Submit handler to break_lock a view.
  */
 function views_ui_break_lock_confirm_submit(&$form, &$form_state) {
-  db_delete('views_object_cache')
-    ->condition('obj', 'view')
-    ->condition('name', $form_state['view']->name)
-    ->execute();
+  ctools_object_cache_clear_all('view', $form_state['view']->name);
   $form_state['redirect'] = 'admin/structure/views/edit/' . $form_state['view']->name;
   drupal_set_message(t('The lock has been broken and you may now edit this view.'));
 }
@@ -993,7 +990,7 @@ function views_ui_edit_view_form_submit($form, &$form_state) {
   cache_clear_all();
 
   // Remove this view from cache so we can edit it properly.
-  views_object_cache_clear('view', $form_state['view']->name);
+  ctools_object_cache_clear('view', $form_state['view']->name);
 }
 
 /**
@@ -1001,7 +998,7 @@ function views_ui_edit_view_form_submit($form, &$form_state) {
  */
 function views_ui_edit_view_form_cancel($form, &$form_state) {
   // Remove this view from cache so edits will be lost.
-  views_object_cache_clear('view', $form_state['view']->name);
+  ctools_object_cache_clear('view', $form_state['view']->name);
   if (empty($form['view']->vid)) {
     // I seem to have to drupal_goto here because I can't get fapi to
     // honor the redirect target. Not sure what I screwed up here.
@@ -1133,9 +1130,9 @@ function template_preprocess_views_ui_edit_view(&$vars) {
   }
   views_add_css('views-admin');
   views_add_js('ajax');
-  drupal_add_js('misc/jquery.form.js');
+  drupal_add_js('misc/jquery.form.js', array('group' => JS_LIBRARY));
   // @TODO Remove this line when http://drupal.org/node/561858 is in.
-  drupal_add_js('misc/jquery.cookie.js');
+  drupal_add_js('misc/jquery.cookie.js', array('group' => JS_LIBRARY));
 
   // Also add any js files required by plugins:
   $plugins = views_fetch_plugin_data();

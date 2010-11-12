@@ -414,6 +414,13 @@ Views 3.x-7.x-dev
     o Added missing file: modules/taxonomy/views_handler_filter_vocabulary_machine_name.inc
     o #882800 by rszrama: Fix notice for options['distinct'].
     o #950246 by ZoeN: Fix dbtng in views_handler_argument_aggregator_fid.
+    o #884730 by yched, bojanz, karenS, wundo: Add new UI for formatter settings options to the field settings config.
+    o by dereine: Add the dependeny ctools.
+    o #952576 by yhahn: Use JS_LIBRARY group for adding core library js files.
+    o #563020 by dereine: Replace views object cache with ctools object cache.
+    o #952636 by yhahn: Support string format identifiers in field_markup handler.
+    o #954030 by alweb: Fix title query in views_handler_argument_term_node_tid.
+    o #954784 by tekante: views_join class produces a SQL error when an array is in definition['extra']['value'].
 
 Views 6.x-3.x-dev
     o #396380 by merlinofchaos, dereine and dagmar: Initial support for GROUP BY queries!!!!!!!!!!!!
