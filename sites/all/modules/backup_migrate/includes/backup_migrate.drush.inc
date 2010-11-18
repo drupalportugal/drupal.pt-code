@@ -1,5 +1,5 @@
 <?php
-// $Id: backup_migrate.drush.inc,v 1.1.4.3 2010/05/10 04:01:26 ronan Exp $
+// $Id: backup_migrate.drush.inc,v 1.1.4.4 2010/11/16 15:40:01 ronan Exp $
 
 
 /**
@@ -14,6 +14,7 @@ function backup_migrate_drush_command() {
   $items['bam-backup'] = array(
     'callback' => 'backup_migrate_drush_backup',
     'description' => dt('Backup the site\'s database with Backup and Migrate.'),
+    'aliases' => array('bb'),
     'examples' => array(
       'drush bam-backup' => 'Backup the default databse to the manual backup directory using the default settings.', 
       'drush bam-backup db scheduled mysettings' => 'Backup the database to the scheduled directory using a settings profile called "mysettings"', 
