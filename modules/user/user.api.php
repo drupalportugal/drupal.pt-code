@@ -1,5 +1,4 @@
 <?php
-// $Id: user.api.php,v 1.24 2010/10/03 01:15:34 dries Exp $
 
 /**
  * @file
@@ -25,18 +24,20 @@
  * @see profile_user_load()
  */
 function hook_user_load($users) {
-  $result = db_query('SELECT * FROM {my_table} WHERE uid IN (:uids)', array(':uids' => array_keys($users)));
+  $result = db_query('SELECT uid, foo FROM {my_table} WHERE uid IN (:uids)', array(':uids' => array_keys($users)));
   foreach ($result as $record) {
-    $users[$record->uid]->foo = $result->foo;
+    $users[$record->uid]->foo = $record->foo;
   }
 }
 
 /**
  * Respond to user deletion.
  *
- * This hook is invoked from user_delete_multiple() after the account has been
- * removed from the user tables in the database, and before
- * field_attach_delete() is called.
+ * This hook is invoked from user_delete_multiple() before field_attach_delete()
+ * is called and before users are actually removed from the database.
+ *
+ * Modules should additionally implement hook_user_cancel() to process stored
+ * user data for other account cancellation methods.
  *
  * @param $account
  *   The account that is being deleted.
@@ -52,11 +53,17 @@ function hook_user_delete($account) {
 /**
  * Act on user account cancellations.
  *
- * The user account is being canceled. Depending on the account cancellation
- * method, the module should either do nothing, unpublish content, or anonymize
- * content.
+ * This hook is invoked from user_cancel() before a user account is canceled.
+ * Depending on the account cancellation method, the module should either do
+ * nothing, unpublish content, or anonymize content. See user_cancel_methods()
+ * for the list of default account cancellation methods provided by User module.
+ * Modules may add further methods via hook_user_cancel_methods_alter().
  *
- * Expensive operations should be added to the global batch with batch_set().
+ * This hook is NOT invoked for the 'user_cancel_delete' account cancellation
+ * method. To react on this method, implement hook_user_delete() instead.
+ *
+ * Expensive operations should be added to the global account cancellation batch
+ * by using batch_set().
  *
  * @param $edit
  *   The array of form values submitted by the user.
@@ -67,7 +74,6 @@ function hook_user_delete($account) {
  *
  * @see user_cancel_methods()
  * @see hook_user_cancel_methods_alter()
- * @see user_cancel()
  */
 function hook_user_cancel($edit, $account, $method) {
   switch ($method) {
@@ -120,7 +126,7 @@ function hook_user_cancel($edit, $account, $method) {
  *   a method. If #access is defined, the method cannot be configured as default
  *   method.
  *
- * @param &$methods
+ * @param $methods
  *   An array containing user account cancellation methods, keyed by method id.
  *
  * @see user_cancel_methods()
@@ -207,10 +213,12 @@ function hook_user_categories() {
  * user account object is loaded, modules may add to $edit['data'] in order
  * to have their data serialized on save.
  *
- * @param &$edit
- *   The array of form values submitted by the user.
+ * @param $edit
+ *   The array of form values submitted by the user. Assign values to this
+ *   array to save changes in the database.
  * @param $account
- *   The user object on which the operation is performed.
+ *   The user object on which the operation is performed. Values assigned in
+ *   this object will not be saved in the database.
  * @param $category
  *   The active category of user information being edited.
  *
@@ -218,9 +226,10 @@ function hook_user_categories() {
  * @see hook_user_update()
  */
 function hook_user_presave(&$edit, $account, $category) {
-  // Make sure that our form value 'mymodule_foo' is stored as 'mymodule_bar'.
+  // Make sure that our form value 'mymodule_foo' is stored as
+  // 'mymodule_bar' in the 'data' (serialized) column.
   if (isset($edit['mymodule_foo'])) {
-    $edit['data']['my_module_foo'] = $edit['my_module_foo'];
+    $edit['data']['mymodule_bar'] = $edit['mymodule_foo'];
   }
 }
 
@@ -230,7 +239,7 @@ function hook_user_presave(&$edit, $account, $category) {
  * The module should save its custom additions to the user object into the
  * database.
  *
- * @param &$edit
+ * @param $edit
  *   The array of form values submitted by the user.
  * @param $account
  *   The user object on which the operation is being performed.
@@ -255,7 +264,7 @@ function hook_user_insert(&$edit, $account, $category) {
  * Modules may use this hook to update their user data in a custom storage
  * after a user account has been updated.
  *
- * @param &$edit
+ * @param $edit
  *   The array of form values submitted by the user.
  * @param $account
  *   The user object on which the operation is performed.
@@ -277,20 +286,28 @@ function hook_user_update(&$edit, $account, $category) {
 /**
  * The user just logged in.
  *
- * @param &$edit
+ * @param $edit
  *   The array of form values submitted by the user.
  * @param $account
  *   The user object on which the operation was just performed.
  */
 function hook_user_login(&$edit, $account) {
   // If the user has a NULL time zone, notify them to set a time zone.
-  if (!$user->timezone && variable_get('configurable_timezones', 1) && variable_get('empty_timezone_message', 0)) {
-    drupal_set_message(t('Configure your <a href="@user-edit">account time zone setting</a>.', array('@user-edit' => url("user/$user->uid/edit", array('query' => drupal_get_destination(), 'fragment' => 'edit-timezone')))));
+  if (!$account->timezone && variable_get('configurable_timezones', 1) && variable_get('empty_timezone_message', 0)) {
+    drupal_set_message(t('Configure your <a href="@user-edit">account time zone setting</a>.', array('@user-edit' => url("user/$account->uid/edit", array('query' => drupal_get_destination(), 'fragment' => 'edit-timezone')))));
   }
 }
 
 /**
  * The user just logged out.
+ *
+ * Note that when this hook is invoked, the changes have not yet been written to
+ * the database, because a database transaction is still in progress. The
+ * transaction is not finalized until the save operation is entirely completed
+ * and user_save() goes out of scope. You should not rely on data in the
+ * database at this time as it is not updated yet. You should also note that any
+ * write/update database queries executed from this hook are also not committed
+ * immediately. Check user_save() and db_transaction() for more info.
  *
  * @param $account
  *   The user object on which the operation was just performed.
@@ -310,12 +327,23 @@ function hook_user_logout($account) {
  * The module should format its custom additions for display and add them to the
  * $account->content array.
  *
+ * Note that when this hook is invoked, the changes have not yet been written to
+ * the database, because a database transaction is still in progress. The
+ * transaction is not finalized until the save operation is entirely completed
+ * and user_save() goes out of scope. You should not rely on data in the
+ * database at this time as it is not updated yet. You should also note that any
+ * write/update database queries executed from this hook are also not committed
+ * immediately. Check user_save() and db_transaction() for more info.
+ *
  * @param $account
  *   The user object on which the operation is being performed.
  * @param $view_mode
  *   View mode, e.g. 'full'.
  * @param $langcode
  *   The language code used for rendering.
+ *
+ * @see hook_user_view_alter()
+ * @see hook_entity_view()
  */
 function hook_user_view($account, $view_mode, $langcode) {
   if (user_access('create blog content', $account)) {
@@ -344,6 +372,7 @@ function hook_user_view($account, $view_mode, $langcode) {
  *   A renderable array representing the user.
  *
  * @see user_view()
+ * @see hook_entity_view_alter()
  */
 function hook_user_view_alter(&$build) {
   // Check for the existence of a field added by another module.
@@ -354,6 +383,25 @@ function hook_user_view_alter(&$build) {
 
   // Add a #post_render callback to act on the rendered HTML of the user.
   $build['#post_render'][] = 'my_module_user_post_render';
+}
+
+/**
+ * Inform other modules that a user role is about to be saved.
+ *
+ * Modules implementing this hook can act on the user role object before
+ * it has been saved to the database.
+ *
+ * @param $role
+ *   A user role object.
+ *
+ * @see hook_user_role_insert()
+ * @see hook_user_role_update()
+ */
+function hook_user_role_presave($role) {
+  // Set a UUID for the user role if it doesn't already exist
+  if (empty($role->uuid)) {
+    $role->uuid = uuid_uuid();
+  }
 }
 
 /**

@@ -1,5 +1,4 @@
 <?php
-// $Id: taxonomy.api.php,v 1.10 2010/06/24 22:21:51 webchick Exp $
 
 /**
  * @file
@@ -180,6 +179,58 @@ function hook_taxonomy_term_update($term) {
  */
 function hook_taxonomy_term_delete($term) {
   db_delete('term_synoynm')->condition('tid', $term->tid)->execute();
+}
+
+/**
+ * Act on a taxonomy term that is being assembled before rendering.
+ *
+ * The module may add elements to $term->content prior to rendering. The
+ * structure of $term->content is a renderable array as expected by
+ * drupal_render().
+ *
+ * @param $term
+ *   The term that is being assembled for rendering.
+ * @param $view_mode
+ *   The $view_mode parameter from taxonomy_term_view().
+ * @param $langcode
+ *   The language code used for rendering.
+ *
+ * @see hook_entity_view()
+ */
+function hook_taxonomy_term_view($term, $view_mode, $langcode) {
+  $term->content['my_additional_field'] = array(
+    '#markup' => $additional_field,
+    '#weight' => 10,
+    '#theme' => 'mymodule_my_additional_field',
+  );
+}
+
+/**
+ * Alter the results of taxonomy_term_view().
+ *
+ * This hook is called after the content has been assembled in a structured
+ * array and may be used for doing processing which requires that the complete
+ * taxonomy term content structure has been built.
+ *
+ * If the module wishes to act on the rendered HTML of the term rather than the
+ * structured content array, it may use this hook to add a #post_render
+ * callback. Alternatively, it could also implement
+ * hook_preprocess_taxonomy_term(). See drupal_render() and theme()
+ * documentation respectively for details.
+ *
+ * @param $build
+ *   A renderable array representing the node content.
+ *
+ * @see hook_entity_view_alter()
+ */
+function hook_taxonomy_term_view_alter(&$build) {
+  if ($build['#view_mode'] == 'full' && isset($build['an_additional_field'])) {
+    // Change its weight.
+    $build['an_additional_field']['#weight'] = -10;
+  }
+
+  // Add a #post_render callback to act on the rendered HTML of the term.
+  $build['#post_render'][] = 'my_module_node_post_render';
 }
 
 /**

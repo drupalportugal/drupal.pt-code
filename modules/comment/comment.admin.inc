@@ -1,5 +1,4 @@
 <?php
-// $Id: comment.admin.inc,v 1.51 2010/10/20 01:31:06 dries Exp $
 
 /**
  * @file
@@ -73,6 +72,7 @@ function comment_admin_overview($form, &$form_state, $arg) {
   $query = db_select('comment', 'c')->extend('PagerDefault')->extend('TableSort');
   $query->join('node', 'n', 'n.nid = c.nid');
   $query->addField('n', 'title', 'node_title');
+  $query->addTag('node_access');
   $result = $query
     ->fields('c', array('cid', 'subject', 'name', 'changed'))
     ->condition('c.status', $status)
@@ -98,13 +98,14 @@ function comment_admin_overview($form, &$form_state, $arg) {
     // Remove the first node title from the node_titles array and attach to
     // the comment.
     $comment->node_title = array_shift($node_titles);
+    $comment_body = field_get_items('comment', $comment, 'comment_body');
     $options[$comment->cid] = array(
       'subject' => array(
         'data' => array(
           '#type' => 'link',
           '#title' => $comment->subject,
           '#href' => 'comment/' . $comment->cid,
-          '#options' => array('attributes' => array('title' => truncate_utf8($comment->comment_body[LANGUAGE_NONE][0]['value'], 128)), 'fragment' => 'comment-' . $comment->cid),
+          '#options' => array('attributes' => array('title' => truncate_utf8($comment_body[0]['value'], 128)), 'fragment' => 'comment-' . $comment->cid),
         ),
       ),
       'author' => theme('username', array('account' => $comment)),
@@ -232,7 +233,7 @@ function comment_multiple_delete_confirm_submit($form, &$form_state) {
     cache_clear_all();
     $count = count($form_state['values']['comments']);
     watchdog('content', 'Deleted @count comments.', array('@count' => $count));
-    drupal_set_message(t('Deleted @count comments.', array('@count' => $count)));
+    drupal_set_message(format_plural($count, 'Deleted 1 comment.', 'Deleted @count comments.'));
   }
   $form_state['redirect'] = 'admin/content/comment';
 }

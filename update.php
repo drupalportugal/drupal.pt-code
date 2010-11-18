@@ -1,8 +1,7 @@
 <?php
-// $Id: update.php,v 1.325 2010/10/03 23:33:15 webchick Exp $
 
 /**
- * Root directory of Drupal installation.
+ * Defines the root directory of the Drupal installation.
  */
 define('DRUPAL_ROOT', getcwd());
 
@@ -28,6 +27,9 @@ define('DRUPAL_ROOT', getcwd());
  */
 define('MAINTENANCE_MODE', 'update');
 
+/**
+ * Renders a form with a list of available database updates.
+ */
 function update_selection_page() {
   drupal_set_title('Drupal database update');
   $elements = drupal_get_form('update_script_selection_form');
@@ -38,6 +40,9 @@ function update_selection_page() {
   return $output;
 }
 
+/**
+ * Form constructor for the list of available database module updates.
+ */
 function update_script_selection_form($form, &$form_state) {
   $count = 0;
   $incompatible_count = 0;
@@ -57,9 +62,10 @@ function update_script_selection_form($form, &$form_state) {
   foreach ($updates as $module => $update) {
     if (!isset($update['start'])) {
       $form['start'][$module] = array(
-        '#title' => $module,
-        '#item'  => $update['warning'],
-        '#prefix' => '<div class="warning">',
+        '#type' => 'item',
+        '#title' => $module . ' module',
+        '#markup'  => $update['warning'],
+        '#prefix' => '<div class="messages warning">',
         '#suffix' => '</div>',
       );
       $incompatible_updates_exist = TRUE;
@@ -108,6 +114,9 @@ function update_script_selection_form($form, &$form_state) {
     $form['links'] = array(
       '#markup' => theme('item_list', array('items' => update_helpful_links())),
     );
+
+    // No updates to run, so caches won't get flushed later.  Clear them now.
+    drupal_flush_all_caches();
   }
   else {
     $form['help'] = array(
@@ -138,21 +147,27 @@ function update_script_selection_form($form, &$form_state) {
   return $form;
 }
 
+/**
+ * Provides links to the homepage and administration pages.
+ */
 function update_helpful_links() {
-  // NOTE: we can't use l() here because the URL would point to
-  // 'update.php?q=admin'.
   $links[] = '<a href="' . base_path() . '">Front page</a>';
-  $links[] = '<a href="' . base_path() . '?q=admin">Administration pages</a>';
+  if (user_access('access administration pages')) {
+    $links[] = '<a href="' . base_path() . '?q=admin">Administration pages</a>';
+  }
   return $links;
 }
 
+/**
+ * Displays results of the update script with any accompanying errors.
+ */
 function update_results_page() {
   drupal_set_title('Drupal database update');
   $links = update_helpful_links();
 
   update_task_list();
   // Report end result.
-  if (module_exists('dblog')) {
+  if (module_exists('dblog') && user_access('access site reports')) {
     $log_message = ' All errors have been <a href="' . base_path() . '?q=admin/reports/dblog">logged</a>.';
   }
   else {
@@ -160,7 +175,7 @@ function update_results_page() {
   }
 
   if ($_SESSION['update_success']) {
-    $output = '<p>Updates were attempted. If you see no failures below, you may proceed happily to the <a href="' . base_path() . '?q=admin">administration pages</a>. Otherwise, you may need to update your database manually.' . $log_message . '</p>';
+    $output = '<p>Updates were attempted. If you see no failures below, you may proceed happily back to your <a href="' . base_path() . '">site</a>. Otherwise, you may need to update your database manually.' . $log_message . '</p>';
   }
   else {
     list($module, $version) = array_pop(reset($_SESSION['updates_remaining']));
@@ -179,11 +194,11 @@ function update_results_page() {
 
   // Output a list of queries executed.
   if (!empty($_SESSION['update_results'])) {
-    $output .= '<div id="update-results">';
-    $output .= '<h2>The following updates returned messages</h2>';
+    $all_messages = '';
     foreach ($_SESSION['update_results'] as $module => $updates) {
       if ($module != '#abort') {
-        $output .= '<h3>' . $module . ' module</h3>';
+        $module_has_message = FALSE;
+        $query_messages = '';
         foreach ($updates as $number => $queries) {
           $messages = array();
           foreach ($queries as $query) {
@@ -191,6 +206,7 @@ function update_results_page() {
             if (empty($query['query'])) {
               continue;
             }
+
             if ($query['success']) {
               $messages[] = '<li class="success">' . $query['query'] . '</li>';
             }
@@ -200,14 +216,24 @@ function update_results_page() {
           }
 
           if ($messages) {
-            $output .= '<h4>Update #' . $number . "</h4>\n";
-            $output .= '<ul>' . implode("\n", $messages) . "</ul>\n";
+            $module_has_message = TRUE;
+            $query_messages .= '<h4>Update #' . $number . "</h4>\n";
+            $query_messages .= '<ul>' . implode("\n", $messages) . "</ul>\n";
           }
         }
-        $output .= '</ul>';
+
+        // If there were any messages in the queries then prefix them with the
+        // module name and add it to the global message list.
+        if ($module_has_message) {
+          $all_messages .= '<h3>' . $module . " module</h3>\n" . $query_messages;
+        }
       }
     }
-    $output .= '</div>';
+    if ($all_messages) {
+      $output .= '<div id="update-results"><h2>The following updates returned messages</h2>';
+      $output .= $all_messages;
+      $output .= '</div>';
+    }
   }
   unset($_SESSION['update_results']);
   unset($_SESSION['update_success']);
@@ -215,6 +241,15 @@ function update_results_page() {
   return $output;
 }
 
+/**
+ * Provides an overview of the Drupal database update.
+ *
+ * This page provides cautionary suggestions that should happen before
+ * proceeding with the update to ensure data integrity.
+ *
+ * @return
+ *   Rendered HTML form.
+ */
 function update_info_page() {
   // Change query-strings on css/js files to enforce reload for all users.
   _drupal_flush_css_js();
@@ -234,11 +269,18 @@ function update_info_page() {
   $output .= "<li>Install your new files in the appropriate location, as described in the handbook.</li>\n";
   $output .= "</ol>\n";
   $output .= "<p>When you have performed the steps above, you may proceed.</p>\n";
-  $output .= '<form method="post" action="update.php?op=selection&amp;token=' . $token . '"><p><input type="submit" value="Continue" class="form-submit" /></p></form>';
+  $form_action = check_url(drupal_current_script_url(array('op' => 'selection', 'token' => $token)));
+  $output .= '<form method="post" action="' . $form_action . '"><p><input type="submit" value="Continue" class="form-submit" /></p></form>';
   $output .= "\n";
   return $output;
 }
 
+/**
+ * Renders a 403 access denied page for update.php.
+ *
+ * @return
+ *   Rendered HTML warning with 403 status.
+ */
 function update_access_denied_page() {
   drupal_add_http_header('Status', '403 Forbidden');
   watchdog('access denied', 'update.php', NULL, WATCHDOG_WARNING);
@@ -277,7 +319,7 @@ function update_access_allowed() {
 }
 
 /**
- * Add the update task list to the current page.
+ * Adds the update task list to the current page.
  */
 function update_task_list($active = NULL) {
   // Default list of tasks.
@@ -293,8 +335,7 @@ function update_task_list($active = NULL) {
 }
 
 /**
- * Returns (and optionally stores) extra requirements that only apply during
- * particular parts of the update.php process.
+ * Returns and stores extra requirements that apply during the update process.
  */
 function update_extra_requirements($requirements = NULL) {
   static $extra_requirements = array();
@@ -305,20 +346,26 @@ function update_extra_requirements($requirements = NULL) {
 }
 
 /**
- * Check update requirements and report any errors.
+ * Checks update requirements and reports errors and (optionally) warnings.
+ *
+ * @param $skip_warnings
+ *   (optional) If set to TRUE, requirement warnings will be ignored, and a
+ *   report will only be issued if there are requirement errors. Defaults to
+ *   FALSE.
  */
-function update_check_requirements() {
-  // Check the system module and update.php requirements only.
-  $requirements = module_invoke('system', 'requirements', 'update');
+function update_check_requirements($skip_warnings = FALSE) {
+  // Check requirements of all loaded modules.
+  $requirements = module_invoke_all('requirements', 'update');
   $requirements += update_extra_requirements();
   $severity = drupal_requirements_severity($requirements);
 
-  // If there are issues, report them.
-  if ($severity == REQUIREMENT_ERROR) {
+  // If there are errors, always display them. If there are only warnings, skip
+  // them if the caller has indicated they should be skipped.
+  if ($severity == REQUIREMENT_ERROR || ($severity == REQUIREMENT_WARNING && !$skip_warnings)) {
     update_task_list('requirements');
     drupal_set_title('Requirements problem');
     $status_report = theme('status_report', array('requirements' => $requirements));
-    $status_report .= 'Check the error messages and <a href="' . check_url(request_uri()) . '">try again</a>.';
+    $status_report .= 'Check the error messages and <a href="' . check_url(drupal_requirements_url($severity)) . '">try again</a>.';
     print theme('update_page', array('content' => $status_report));
     exit();
   }
@@ -338,8 +385,17 @@ require_once DRUPAL_ROOT . '/includes/entity.inc';
 require_once DRUPAL_ROOT . '/includes/unicode.inc';
 update_prepare_d7_bootstrap();
 
+// Temporarily disable configurable timezones so the upgrade process uses the
+// site-wide timezone. This prevents a PHP notice during session initlization
+// and before offsets have been converted in user_update_7002().
+$configurable_timezones = variable_get('configurable_timezones', 1);
+$conf['configurable_timezones'] = 0;
+
 // Determine if the current user has access to run update.php.
 drupal_bootstrap(DRUPAL_BOOTSTRAP_SESSION);
+
+// Reset configurable timezones.
+$conf['configurable_timezones'] = $configurable_timezones;
 
 // Only allow the requirements check to proceed if the current user has access
 // to run updates (since it may expose sensitive information about the site's
@@ -365,8 +421,9 @@ if (empty($op) && update_access_allowed()) {
   // Set up theme system for the maintenance page.
   drupal_maintenance_theme();
 
-  // Check the update requirements for Drupal.
-  update_check_requirements();
+  // Check the update requirements for Drupal. Only report on errors at this
+  // stage, since the real requirements check happens further down.
+  update_check_requirements(TRUE);
 
   // Redirect to the update information page if all requirements were met.
   install_goto('update.php?op=info');
@@ -398,6 +455,13 @@ if (update_access_allowed()) {
 
   update_fix_compatibility();
 
+  // Check the update requirements for all modules. If there are warnings, but
+  // no errors, skip reporting them if the user has provided a URL parameter
+  // acknowledging the warnings and indicating a desire to continue anyway. See
+  // drupal_requirements_url().
+  $skip_warnings = !empty($_GET['continue']);
+  update_check_requirements($skip_warnings);
+
   $op = isset($_REQUEST['op']) ? $_REQUEST['op'] : '';
   switch ($op) {
     // update.php ops.
@@ -410,7 +474,12 @@ if (update_access_allowed()) {
 
     case 'Apply pending updates':
       if (isset($_GET['token']) && $_GET['token'] == drupal_get_token('update')) {
-        update_batch($_POST['start'], $base_url . '/update.php?op=results', $base_url . '/update.php');
+        // Generate absolute URLs for the batch processing (using $base_root),
+        // since the batch API will pass them to url() which does not handle
+        // update.php correctly by default.
+        $batch_url = $base_root . drupal_current_script_url();
+        $redirect_url = $base_root . drupal_current_script_url(array('op' => 'results'));
+        update_batch($_POST['start'], $redirect_url, $batch_url);
         break;
       }
 
@@ -433,7 +502,7 @@ else {
   $output = update_access_denied_page();
 }
 if (isset($output) && $output) {
-  // Explictly start a session so that the update.php token will be accepted.
+  // Explicitly start a session so that the update.php token will be accepted.
   drupal_session_start();
   // We defer the display of messages until all updates are done.
   $progress_page = ($batch = batch_get()) && isset($batch['running']);

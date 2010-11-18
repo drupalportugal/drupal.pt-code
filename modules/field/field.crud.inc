@@ -1,204 +1,8 @@
 <?php
-// $Id: field.crud.inc,v 1.71 2010/09/29 01:37:02 dries Exp $
 
 /**
  * @file
  * Field CRUD API, handling field and field instance creation and deletion.
- */
-
-/**
- * @defgroup field_structs Field API data structures
- * @{
- * Represent Field API fields and instances.
- *
- * The Field API defines two primary data structures, Field and
- * Instance, and the concept of a Bundle. A Field defines a
- * particular type of data that can be attached to entities. A Field
- * Instance is a Field attached to a single Bundle. A Bundle is a set
- * of fields that are treated as a group by the Field Attach API and
- * is related to a single fieldable entity type.
- *
- * For example, suppose a site administrator wants Article nodes to
- * have a subtitle and photo. Using the Field API or Field UI module,
- * the administrator creates a field named 'subtitle' of type 'text'
- * and a field named 'photo' of type 'image'. The administrator
- * (again, via a UI) creates two Field Instances, one attaching the
- * field 'subtitle' to the 'node' bundle 'article' and one attaching
- * the field 'photo' to the 'node' bundle 'article'. When the node
- * system uses the Field Attach API to load all fields for an Article
- * node, it passes the node's entity type (which is 'node') and
- * content type (which is 'article') as the node's bundle.
- * field_attach_load() then loads the 'subtitle' and 'photo' fields
- * because they are both attached to the 'node' bundle 'article'.
- *
- * Field definitions are represented as an array of key/value pairs.
- *
- * @param array $field:
- * - id (integer, read-only)
- *     The primary identifier of the field. It is assigned automatically
- *     by field_create_field().
- * - field_name (string)
- *     The name of the field. Each field name is unique within Field API.
- *     When a field is attached to an entity, the field's data is stored
- *     in $entity->$field_name. Maximum length is 32 characters.
- * - type (string)
- *     The type of the field, such as 'text' or 'image'. Field types
- *     are defined by modules that implement hook_field_info().
- * - entity_types (array)
- *     The array of entity types that can hold instances of this field. If
- *     empty or not specified, the field can have instances in any entity type.
- * - cardinality (integer)
- *     The number of values the field can hold. Legal values are any
- *     positive integer or FIELD_CARDINALITY_UNLIMITED.
- * - translatable (integer)
- *     Whether the field is translatable.
- * - locked (integer)
- *     Whether or not the field is available for editing. If TRUE, users can't
- *     change field settings or create new instances of the field in the UI.
- *     Defaults to FALSE.
- * - module (string, read-only)
- *     The name of the module that implements the field type.
- * - active (integer, read-only)
- *     TRUE if the module that implements the field type is currently
- *     enabled, FALSE otherwise.
- * - deleted (integer, read-only)
- *     TRUE if this field has been deleted, FALSE otherwise. Deleted
- *     fields are ignored by the Field Attach API. This property exists
- *     because fields can be marked for deletion but only actually
- *     destroyed by a separate garbage-collection process.
- * - columns (array, read-only).
- *     An array of the Field API columns used to store each value of
- *     this field. The column list may depend on field settings; it is
- *     not constant per field type. Field API column specifications are
- *     exactly like Schema API column specifications but, depending on
- *     the field storage module in use, the name of the column may not
- *     represent an actual column in an SQL database.
- * - indexes (array).
- *     An array of indexes on data columns, using the same definition format
- *     as Schema API index specifications. Only columns that appear in the
- *     'columns' setting are allowed. Note that field types can specify
- *     default indexes, which can be modified or added to when
- *     creating a field.
- * - foreign keys: (optional) An associative array of relations, using the same
- *   structure as the 'foreign keys' definition of hook_schema(). Note, however,
- *   that the field data is not necessarily stored in SQL. Also, the possible
- *   usage is limited, as you cannot specify another field as related, only
- *   existing SQL tables, such as filter formats.
- * - settings (array)
- *     A sub-array of key/value pairs of field-type-specific settings. Each
- *     field type module defines and documents its own field settings.
- * - storage (array)
- *     A sub-array of key/value pairs identifying the storage backend to use for
- *     the for the field.
- *     - type (string)
- *         The storage backend used by the field. Storage backends are defined
- *         by modules that implement hook_field_storage_info().
- *     - module (string, read-only)
- *         The name of the module that implements the storage backend.
- *     - active (integer, read-only)
- *         TRUE if the module that implements the storage backend is currently
- *         enabled, FALSE otherwise.
- *     - settings (array)
- *         A sub-array of key/value pairs of settings. Each storage backend
- *         defines and documents its own settings.
- *
- * Field instance definitions are represented as an array of key/value pairs.
- *
- * @param array $instance:
- * - id (integer, read-only)
- *     The primary identifier of this field instance. It is assigned
- *     automatically by field_create_instance().
- * - field_id (integer, read-only)
- *     The foreign key of the field attached to the bundle by this instance.
- *     It is populated automatically by field_create_instance().
- * - field_name (string)
- *     The name of the field attached to the bundle by this instance.
- * - entity_type (string)
- *     The name of the entity type the instance is attached to.
- * - bundle (string)
- *     The name of the bundle that the field is attached to.
- * - label (string)
- *     A human-readable label for the field when used with this
- *     bundle. For example, the label will be the title of Form API
- *     elements for this instance.
- * - description (string)
- *     A human-readable description for the field when used with this
- *     bundle. For example, the description will be the help text of
- *     Form API elements for this instance.
- * - required (integer)
- *     TRUE if a value for this field is required when used with this
- *     bundle, FALSE otherwise. Currently, required-ness is only enforced
- *     during Form API operations, not by field_attach_load(),
- *     field_attach_insert(), or field_attach_update().
- * - default_value_function (string)
- *     The name of the function, if any, that will provide a default value.
- * - default_value (array)
- *     If default_value_function is not set, then fixed values can be provided.
- * - deleted (integer, read-only)
- *     TRUE if this instance has been deleted, FALSE otherwise.
- *     Deleted instances are ignored by the Field Attach API.
- *     This property exists because instances can be marked for deletion but
- *     only actually destroyed by a separate garbage-collection process.
- * - settings (array)
- *     A sub-array of key/value pairs of field-type-specific instance
- *     settings. Each field type module defines and documents its own
- *     instance settings.
- * - widget (array)
- *     A sub-array of key/value pairs identifying the Form API input widget
- *     for the field when used by this bundle.
- *     - type (string)
- *         The type of the widget, such as text_textfield. Widget types
- *         are defined by modules that implement hook_field_widget_info().
- *     - settings (array)
- *         A sub-array of key/value pairs of widget-type-specific settings.
- *         Each field widget type module defines and documents its own
- *         widget settings.
- *     - weight (float)
- *         The weight of the widget relative to the other elements in entity
- *         edit forms.
- *     - module (string, read-only)
- *         The name of the module that implements the widget type.
- * - display (array)
- *     A sub-array of key/value pairs identifying the way field values should
- *     be displayed in each of the entity type's view modes, plus the 'default'
- *     mode. For each view mode, Field UI lets site administrators define
- *     whether they want to use a dedicated set of display options or the
- *     'default' options to reduce the number of displays to maintain as they
- *     add new fields. For nodes, on a fresh install, only the 'teaser' view
- *     mode is configured to use custom display options, all other view modes
- *     defined use the 'default' options by default. When programmatically
- *     adding field instances on nodes, it is therefore recommended to at least
- *     specify display options for 'default' and 'teaser'.
- *     - default (array)
- *         A sub-array of key/value pairs describing the display options to be
- *         used when the field is being displayed in view modes that are not
- *         configured to use dedicated display options.
- *         - label (string)
- *             Position of the label. 'inline', 'above' and 'hidden' are the
- *             values recognized by the default 'field' theme implementation.
- *         - type (string)
- *             The type of the display formatter, or 'hidden' for no display.
- *         - settings (array)
- *             A sub-array of key/value pairs of display options specific to
- *             the formatter.
- *        - weight (float)
- *            The weight of the field relative to the other entity components
- *            displayed in this view mode.
- *         - module (string, read-only)
- *             The name of the module which implements the display formatter.
- *     - some_mode
- *         A sub-array of key/value pairs describing the display options to be
- *         used when the field is being displayed in the 'some_mode' view mode.
- *         Those options will only be actually applied at run time if the view
- *         mode is not configured to use default settings for this bundle.
- *         - ...
- *     - other_mode
- *        - ...
- *
- * Bundles are represented by two strings, an entity type and a bundle name.
- */
-/**
- * @} End of "defgroup field_structs".
  */
 
 /**
@@ -210,7 +14,10 @@
  * data structures. UI modules will use it to create a user interface.
  *
  * The Field CRUD API uses
- * @link field_structs Field API data structures @endlink.
+ * @link field Field API data structures @endlink.
+ *
+ * See @link field Field API @endlink for information about the other parts of
+ * the Field API.
  */
 
 /**
@@ -234,16 +41,17 @@
  *   - settings: each omitted setting is given the default value defined in
  *     hook_field_info().
  *   - storage:
- *     - type: the storage backend specified in the 'field_default_storage'
+ *     - type: the storage backend specified in the 'field_storage_default'
  *       system variable.
  *     - settings: each omitted setting is given the default value specified in
  *       hook_field_storage_info().
+ *
  * @return
  *   The $field array with the id property filled in.
- * @throw
- *   FieldException
  *
- * See: @link field_structs Field API data structures @endlink.
+ * @throws FieldException
+ *
+ * See: @link field Field API data structures @endlink.
  */
 function field_create_field($field) {
   // Field name is required.
@@ -511,7 +319,11 @@ function field_read_field($field_name, $include_additional = array()) {
  * Reads in fields that match an array of conditions.
  *
  * @param array $params
- *   An array of conditions to match against.
+ *   An array of conditions to match against. Keys are columns from the
+ *   'field_config' table, values are conditions to match. Additionally,
+ *   conditions on the 'entity_type' and 'bundle' columns from the
+ *   'field_config_instance' table are supported (select fields having an
+ *   instance on a given bundle).
  * @param array $include_additional
  *   The default behavior of this function is to not return fields that
  *   are inactive or have been deleted. Setting
@@ -529,8 +341,21 @@ function field_read_fields($params = array(), $include_additional = array()) {
 
   // Turn the conditions into a query.
   foreach ($params as $key => $value) {
+    // Allow filtering on the 'entity_type' and 'bundle' columns of the
+    // field_config_instance table.
+    if ($key == 'entity_type' || $key == 'bundle') {
+      if (empty($fci_join)) {
+        $fci_join = $query->join('field_config_instance', 'fci', 'fc.id = fci.field_id');
+      }
+      $key = 'fci.' . $key;
+    }
+    else {
+      $key = 'fc.' . $key;
+    }
+
     $query->condition($key, $value);
   }
+
   if (!isset($include_additional['include_inactive']) || !$include_additional['include_inactive']) {
     $query
       ->condition('fc.active', 1)
@@ -588,7 +413,7 @@ function field_delete_field($field_name) {
     foreach ($field['bundles'] as $entity_type => $bundles) {
       foreach ($bundles as $bundle) {
         $instance = field_info_instance($entity_type, $field_name, $bundle);
-        field_delete_instance($instance);
+        field_delete_instance($instance, FALSE);
       }
     }
   }
@@ -617,7 +442,6 @@ function field_delete_field($field_name) {
  *   will be given the following default values:
  *   - label: the field name
  *   - description: empty string
- *   - weight: 0
  *   - required: FALSE
  *   - default_value_function: empty string
  *   - settings: each omitted setting is given the default value specified in
@@ -639,10 +463,10 @@ function field_delete_field($field_name) {
  *
  * @return
  *   The $instance array with the id property filled in.
- * @throw
- *   FieldException
  *
- * See: @link field_structs Field API data structures @endlink.
+ * @throws FieldException
+ *
+ * See: @link field Field API data structures @endlink.
  */
 function field_create_instance($instance) {
   $field = field_read_field($instance['field_name']);
@@ -700,13 +524,15 @@ function field_create_instance($instance) {
  * @param $instance
  *   An associative array representing an instance structure. The required
  *   keys and values are:
- *     field_name: The name of an existing field.
- *     bundle: The bundle this field belongs to.
+ *   - entity_type: The type of the entity the field is attached to.
+ *   - bundle: The bundle this field belongs to.
+ *   - field_name: The name of an existing field.
  *   Read-only_id properties are assigned automatically. Any other
  *   properties specified in $instance overwrite the existing values for
  *   the instance.
- * @throw
- *   FieldException
+ *
+ * @throws FieldException
+ *
  * @see field_create_instance()
  */
 function field_update_instance($instance) {
@@ -827,12 +653,11 @@ function _field_write_instance($instance, $update = FALSE) {
 }
 
 /**
- * Reads a single instance record directly from the database.
+ * Reads a single instance record from the database.
  *
- * Generally, you should use the field_info_instance() instead.
- *
- * This function will not return deleted instances. Use
- * field_read_instances() instead for this purpose.
+ * Generally, you should use field_info_instance() instead, as it
+ * provides caching and allows other modules the opportunity to
+ * append additional formatters, widgets, and other information.
  *
  * @param $entity_type
  *   The type of entity to which the field is bound.
@@ -920,8 +745,12 @@ function field_read_instances($params = array(), $include_additional = array()) 
  *
  * @param $instance
  *   An instance structure.
+ * @param $field_cleanup
+ *   If TRUE, the field will be deleted as well if its last instance is being
+ *   deleted. If FALSE, it is the caller's responsibility to handle the case of
+ *   fields left without instances. Defaults to TRUE.
  */
-function field_delete_instance($instance) {
+function field_delete_instance($instance, $field_cleanup = TRUE) {
   // Mark the field instance for deletion.
   db_update('field_config_instance')
     ->fields(array('deleted' => 1))
@@ -930,14 +759,20 @@ function field_delete_instance($instance) {
     ->condition('bundle', $instance['bundle'])
     ->execute();
 
+  // Clear the cache.
+  field_cache_clear();
+
   // Mark instance data for deletion.
   $field = field_info_field($instance['field_name']);
   module_invoke($field['storage']['module'], 'field_storage_delete_instance', $instance);
 
-  // Clear the cache.
-  field_cache_clear();
-
+  // Let modules react to the deletion of the instance.
   module_invoke_all('field_delete_instance', $instance);
+
+  // Delete the field itself if we just deleted its last instance.
+  if ($field_cleanup && count($field['bundles']) == 0) {
+    field_delete_field($field['field_name']);
+  }
 }
 
 /**
@@ -1009,16 +844,20 @@ function field_delete_instance($instance) {
  *     ),
  *   );
  * @endcode
+ *
+ * See @link field Field API @endlink for information about the other parts of
+ * the Field API.
  */
 
 /**
  * Purges a batch of deleted Field API data, instances, or fields.
  *
- * This function will purge deleted field data on up to a specified maximum
- * number of entities and then return. If a deleted field instance with no
- * remaining data records is found, the instance itself will be purged.
- * If a deleted field with no remaining field instances is found, the field
- * itself will be purged.
+ * This function will purge deleted field data in batches. The batch size
+ * is defined as an argument to the function, and once each batch is finished,
+ * it continues with the next batch until all have completed. If a deleted field
+ * instance with no remaining data records is found, the instance itself will
+ * be purged. If a deleted field with no remaining field instances is found, the
+ * field itself will be purged.
  *
  * @param $batch_size
  *   The maximum number of field data records to purge before returning.
@@ -1055,12 +894,11 @@ function field_purge_batch($batch_size) {
     }
   }
 
-  // Retrieve all deleted fields. Any that have no bundles can be purged.
+  // Retrieve all deleted fields. Any that have no instances can be purged.
   $fields = field_read_fields(array('deleted' => 1), array('include_deleted' => 1));
   foreach ($fields as $field) {
-    // field_read_fields() does not return $field['bundles'] which we need.
-    $field = field_info_field_by_id($field['id']);
-    if (!isset($field['bundles']) || count($field['bundles']) == 0) {
+    $instances = field_read_instances(array('field_id' => $field['id']), array('include_deleted' => 1));
+    if (empty($instances)) {
       field_purge_field($field);
     }
   }

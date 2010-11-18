@@ -1,5 +1,4 @@
 <?php
-// $Id: book-export-html.tpl.php,v 1.2 2008/05/15 21:19:24 dries Exp $
 
 /**
  * @file
@@ -11,14 +10,16 @@
  * - $language: Language code. e.g. "en" for english.
  * - $language_rtl: TRUE or FALSE depending on right to left language scripts.
  * - $base_url: URL to home page.
- * - $content: Nodes within the current outline rendered through
+ * - $contents: Nodes within the current outline rendered through
  *   book-node-export-html.tpl.php.
  *
  * @see template_preprocess_book_export_html()
+ *
+ * @ingroup themeable
  */
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="<?php print $language->language; ?>" xml:lang="<?php print $language->language; ?>">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="<?php print $language->language; ?>" xml:lang="<?php print $language->language; ?>" dir="<?php print $dir; ?>">
   <head>
     <title><?php print $title; ?></title>
     <?php print $head; ?>
@@ -41,7 +42,7 @@
      */
     $div_close = '';
     ?>
-    <?php for ($i = 1; $i < $depth; $i++) : ?>
+    <?php for ($i = 1; $i < $depth; $i++): ?>
       <div class="section-<?php print $i; ?>">
       <?php $div_close .= '</div>'; ?>
     <?php endfor; ?>

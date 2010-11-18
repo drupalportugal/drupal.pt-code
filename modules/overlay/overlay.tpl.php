@@ -1,5 +1,4 @@
 <?php
-// $Id: overlay.tpl.php,v 1.4 2010/09/16 19:47:45 dries Exp $
 
 /**
  * @file
@@ -18,9 +17,12 @@
  * @see template_preprocess()
  * @see template_preprocess_overlay()
  * @see template_process()
+ *
+ * @ingroup themeable
  */
 ?>
 
+<?php print render($disable_overlay); ?>
 <div id="overlay" <?php print $attributes; ?>>
   <div id="overlay-titlebar" class="clearfix">
     <div id="overlay-title-wrapper" class="clearfix">

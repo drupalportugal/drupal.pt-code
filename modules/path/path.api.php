@@ -1,5 +1,4 @@
 <?php
-// $Id: path.api.php,v 1.1 2009/10/17 00:52:36 dries Exp $
 
 /**
  * @file
@@ -11,32 +10,62 @@
  * @{
  */
 
-
 /**
- * The path has been inserted.
+ * Respond to a path being inserted.
  *
  * @param $path
- *   The path array.
+ *   An associative array containing the following keys:
+ *   - source: The internal system path.
+ *   - alias: The URL alias.
+ *   - pid: Unique path alias identifier.
+ *   - language: The language of the alias.
+ *
+ * @see path_save()
  */
 function hook_path_insert($path) {
+  db_insert('mytable')
+    ->fields(array(
+      'alias' => $path['alias'],
+      'pid' => $path['pid'],
+    ))
+    ->execute();
 }
 
 /**
- * The path has been updated.
+ * Respond to a path being updated.
  *
  * @param $path
- *   The path array.
+ *   An associative array containing the following keys:
+ *   - source: The internal system path.
+ *   - alias: The URL alias.
+ *   - pid: Unique path alias identifier.
+ *   - language: The language of the alias.
+ *
+ * @see path_save()
  */
 function hook_path_update($path) {
+  db_update('mytable')
+    ->fields(array('alias' => $path['alias']))
+    ->condition('pid', $path['pid'])
+    ->execute();
 }
 
 /**
- * The path has been deleted.
+ * Respond to a path being deleted.
  *
  * @param $path
- *   The path array.
+ *   An associative array containing the following keys:
+ *   - source: The internal system path.
+ *   - alias: The URL alias.
+ *   - pid: Unique path alias identifier.
+ *   - language: The language of the alias.
+ *
+ * @see path_delete()
  */
 function hook_path_delete($path) {
+  db_delete('mytable')
+    ->condition('pid', $path['pid'])
+    ->execute();
 }
 
 /**

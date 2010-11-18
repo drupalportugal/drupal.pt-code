@@ -1,4 +1,3 @@
-// $Id: autocomplete.js,v 1.37 2010/06/13 05:31:02 dries Exp $
 (function ($) {
 
 /**
@@ -12,10 +11,16 @@ Drupal.behaviors.autocomplete = {
       if (!acdb[uri]) {
         acdb[uri] = new Drupal.ACDB(uri);
       }
-      var input = $('#' + this.id.substr(0, this.id.length - 13))
-        .attr('autocomplete', 'OFF')[0];
-      $(input.form).submit(Drupal.autocompleteSubmit);
-      new Drupal.jsAC(input, acdb[uri]);
+      var $input = $('#' + this.id.substr(0, this.id.length - 13))
+        .attr('autocomplete', 'OFF')
+        .attr('aria-autocomplete', 'list');
+      $($input[0].form).submit(Drupal.autocompleteSubmit);
+      $input.parent()
+        .attr('role', 'application')
+        .append($('<span class="element-invisible" aria-live="assertive"></span>')
+          .attr('id', $input.attr('id') + '-autocomplete-aria-live')
+        );
+      new Drupal.jsAC($input, acdb[uri]);
     });
   }
 };
@@ -27,18 +32,19 @@ Drupal.behaviors.autocomplete = {
 Drupal.autocompleteSubmit = function () {
   return $('#autocomplete').each(function () {
     this.owner.hidePopup();
-  }).size() == 0;
+  }).length == 0;
 };
 
 /**
  * An AutoComplete object.
  */
-Drupal.jsAC = function (input, db) {
+Drupal.jsAC = function ($input, db) {
   var ac = this;
-  this.input = input;
+  this.input = $input[0];
+  this.ariaLive = $('#' + this.input.id + '-autocomplete-aria-live');
   this.db = db;
 
-  $(this.input)
+  $input
     .keydown(function (event) { return ac.onkeydown(this, event); })
     .keyup(function (event) { ac.onkeyup(this, event); })
     .blur(function () { ac.hidePopup(); ac.db.cancel(); });
@@ -93,10 +99,12 @@ Drupal.jsAC.prototype.onkeyup = function (input, e) {
       return true;
 
     default: // All other keys.
-      if (input.value.length > 0)
+      if (input.value.length > 0 && !input.readOnly) {
         this.populatePopup();
-      else
+      }
+      else {
         this.hidePopup(e.keyCode);
+      }
       return true;
   }
 };
@@ -117,7 +125,7 @@ Drupal.jsAC.prototype.selectDown = function () {
   }
   else if (this.popup) {
     var lis = $('li', this.popup);
-    if (lis.size() > 0) {
+    if (lis.length > 0) {
       this.highlight(lis.get(0));
     }
   }
@@ -141,6 +149,7 @@ Drupal.jsAC.prototype.highlight = function (node) {
   }
   $(node).addClass('selected');
   this.selected = node;
+  $(this.ariaLive).html($(this.selected).html());
 };
 
 /**
@@ -149,6 +158,7 @@ Drupal.jsAC.prototype.highlight = function (node) {
 Drupal.jsAC.prototype.unhighlight = function (node) {
   $(node).removeClass('selected');
   this.selected = false;
+  $(this.ariaLive).empty();
 };
 
 /**
@@ -166,12 +176,15 @@ Drupal.jsAC.prototype.hidePopup = function (keycode) {
     $(popup).fadeOut('fast', function () { $(popup).remove(); });
   }
   this.selected = false;
+  $(this.ariaLive).empty();
 };
 
 /**
  * Positions the suggestions popup and starts a search.
  */
 Drupal.jsAC.prototype.populatePopup = function () {
+  var $input = $(this.input);
+  var position = $input.position();
   // Show popup.
   if (this.popup) {
     $(this.popup).remove();
@@ -180,11 +193,12 @@ Drupal.jsAC.prototype.populatePopup = function () {
   this.popup = $('<div id="autocomplete"></div>')[0];
   this.popup.owner = this;
   $(this.popup).css({
-    marginTop: this.input.offsetHeight + 'px',
-    width: (this.input.offsetWidth - 4) + 'px',
+    top: parseInt(position.top + this.input.offsetHeight, 10) + 'px',
+    left: parseInt(position.left, 10) + 'px',
+    width: $input.innerWidth() + 'px',
     display: 'none'
   });
-  $(this.input).before(this.popup);
+  $input.before(this.popup);
 
   // Do search.
   this.db.owner = this;
@@ -215,8 +229,9 @@ Drupal.jsAC.prototype.found = function (matches) {
 
   // Show popup with matches, if any.
   if (this.popup) {
-    if (ul.children().size()) {
+    if (ul.children().length) {
       $(this.popup).empty().append(ul).show();
+      $(this.ariaLive).html(Drupal.t('Autocomplete popup'));
     }
     else {
       $(this.popup).css({ visibility: 'hidden' });
@@ -229,6 +244,7 @@ Drupal.jsAC.prototype.setStatus = function (status) {
   switch (status) {
     case 'begin':
       $(this.input).addClass('throbbing');
+      $(this.ariaLive).html(Drupal.t('Searching for matches...'));
       break;
     case 'cancel':
     case 'error':
@@ -273,10 +289,11 @@ Drupal.ACDB.prototype.search = function (searchString) {
   this.timer = setTimeout(function () {
     db.owner.setStatus('begin');
 
-    // Ajax GET request for autocompletion.
+    // Ajax GET request for autocompletion. We use Drupal.encodePath instead of
+    // encodeURIComponent to allow autocomplete search terms to contain slashes.
     $.ajax({
       type: 'GET',
-      url: db.uri + '/' + encodeURIComponent(searchString),
+      url: db.uri + '/' + Drupal.encodePath(searchString),
       dataType: 'json',
       success: function (matches) {
         if (typeof matches.status == 'undefined' || matches.status != 0) {

@@ -1,5 +1,4 @@
 <?php
-// $Id: update.inc,v 1.78 2010/10/22 15:41:45 webchick Exp $
 
 /**
  * @file
@@ -39,7 +38,7 @@ function update_fix_compatibility() {
 }
 
 /**
- * Helper function to test compatibility of a module or theme.
+ * Tests the compatibility of a module or theme.
  */
 function update_check_incompatibility($name, $type = 'module') {
   static $themes, $modules;
@@ -62,8 +61,7 @@ function update_check_incompatibility($name, $type = 'module') {
   if (!isset($file)
       || !isset($file->info['core'])
       || $file->info['core'] != DRUPAL_CORE_COMPATIBILITY
-      || version_compare(phpversion(), $file->info['php']) < 0
-      || ($type == 'module' && empty($file->info['files']))) {
+      || version_compare(phpversion(), $file->info['php']) < 0) {
     return TRUE;
   }
   return FALSE;
@@ -156,7 +154,38 @@ function update_prepare_d7_bootstrap() {
         'description' => $has_required_schema ? '' : 'Please update your Drupal 6 installation to the most recent version before attempting to upgrade to Drupal 7',
       ),
     );
+
+    // Make sure that the database environment is properly set up.
+    try {
+      db_run_tasks(db_driver());
+    }
+    catch (DatabaseTaskException $e) {
+      $requirements['database tasks'] = array(
+        'title' => 'Database environment',
+        'value' => 'There is a problem with your database environment',
+        'severity' => REQUIREMENT_ERROR,
+        'description' => $e->getMessage(),
+      );
+    }
+
     update_extra_requirements($requirements);
+
+    // Allow a D6 session to work, since the upgrade has not been performed yet.
+    $d6_session_name = update_get_d6_session_name();
+    if (!empty($_COOKIE[$d6_session_name])) {
+      // Set the current sid to the one found in the D6 cookie.
+      $sid = $_COOKIE[$d6_session_name];
+      $_COOKIE[session_name()] = $sid;
+      session_id($sid);
+    }
+
+    // Upgrading from D6 to D7.{0,1,2,3,4,8,...} is different than upgrading
+    // from D6 to D7.{5,6,7} which should be considered broken. To be able to
+    // properly handle this difference in node_update_7012 we need to keep track
+    // of whether a D6 > D7 upgrade or a D7 > D7 update is running.
+    // Since variable_set() is not available here, the D6 status is being saved
+    // in a local variable to be able to store it later.
+    $update_d6 = TRUE;
   }
 
   // Create the registry tables.
@@ -187,7 +216,7 @@ function update_prepare_d7_bootstrap() {
     db_create_table('registry_file', $schema['registry_file']);
   }
 
-  // Older versions of Drupal 6 do not include the semaphore table, which is 
+  // Older versions of Drupal 6 do not include the semaphore table, which is
   // required to bootstrap, so we add it now so that we can bootstrap and
   // provide a reasonable error message.
   if (!db_table_exists('semaphore')) {
@@ -281,6 +310,11 @@ function update_prepare_d7_bootstrap() {
     // Set the timezone for this request only.
     $GLOBALS['conf']['date_default_timezone'] = 'UTC';
   }
+
+  // This allows update functions to tell if an upgrade from D6 is running.
+  if (!empty($update_d6)) {
+    variable_set('update_d6', TRUE);
+  }
 }
 
 /**
@@ -334,6 +368,12 @@ function update_fix_d7_block_deltas(&$sandbox, $renamed_deltas, $moved_deltas) {
             ))
             ->fetchField();
           if ($block_exists) {
+            // Delete any existing blocks with the new module+delta.
+            db_delete($table)
+              ->condition('module', $module)
+              ->condition('delta', $new_delta)
+              ->execute();
+            // Rename the old block to the new module+delta.
             db_update($table)
               ->fields(array('delta' => $new_delta))
               ->condition('module', $module)
@@ -351,6 +391,12 @@ function update_fix_d7_block_deltas(&$sandbox, $renamed_deltas, $moved_deltas) {
             ))
             ->fetchField();
           if ($block_exists) {
+            // Delete any existing blocks with the new module+delta.
+            db_delete($table)
+              ->condition('module', $new_module)
+              ->condition('delta', $delta)
+              ->execute();
+            // Rename the old block to the new module+delta.
             db_update($table)
               ->fields(array('module' => $new_module))
               ->condition('module', $old_module)
@@ -364,15 +410,18 @@ function update_fix_d7_block_deltas(&$sandbox, $renamed_deltas, $moved_deltas) {
     // Initialize batch update information.
     $sandbox['progress'] = 0;
     $sandbox['last_user_processed'] = -1;
-    $sandbox['max'] = db_query("SELECT COUNT(*) FROM {users} WHERE data IS NOT NULL")->fetchField();
+    $sandbox['max'] = db_query("SELECT COUNT(*) FROM {users} WHERE data LIKE :block", array(
+        ':block' => '%' . db_like(serialize('block')) . '%',
+      ))
+      ->fetchField();
   }
   // Now do the batch update of the user-specific block visibility settings.
   $limit = 100;
   $result = db_select('users', 'u')
     ->fields('u', array('uid', 'data'))
     ->condition('uid', $sandbox['last_user_processed'], '>')
+    ->condition('data', '%' . db_like(serialize('block')) . '%', 'LIKE')
     ->orderBy('uid', 'ASC')
-    ->where('data IS NOT NULL')
     ->range(0, $limit)
     ->execute();
   foreach ($result as $row) {
@@ -467,6 +516,9 @@ function update_fix_d7_requirements() {
     db_add_index('system', 'system_list', array('weight', 'name'));
 
     // Add the cache_path table.
+    if (db_table_exists('cache_path')) {
+      db_drop_table('cache_path');
+    }
     require_once('./modules/system/system.install');
     $schema['cache_path'] = system_schema_cache_7054();
     $schema['cache_path']['description'] = 'Cache table used for path alias lookups.';
@@ -694,15 +746,22 @@ function update_fix_d7_requirements() {
       db_add_field('locales_source', 'context', array('type' => 'varchar', 'length' => 255, 'not null' => TRUE, 'default' => '', 'description' => 'The context this string applies to.'));
     }
 
-    // Rename 'site_offline_message' variable to 'maintenance_mode_message'.
+    // Rename 'site_offline_message' variable to 'maintenance_mode_message'
+    // and 'site_offline' variable to 'maintenance_mode'.
     // Old variable is removed in update for system.module, see
-    // system_update_7036().
+    // system_update_7072().
     if ($message = variable_get('site_offline_message', NULL)) {
       variable_set('maintenance_mode_message', $message);
     }
+    // Old variable is removed in update for system.module, see
+    // system_update_7069().
+    $site_offline = variable_get('site_offline', -1);
+    if ($site_offline != -1) {
+      variable_set('maintenance_mode', $site_offline);
+    }
 
     // Add ssid column and index.
-    db_add_field('sessions', 'ssid', array('description' => "Secure session ID. The value is generated by PHP's Session API.", 'type' => 'varchar', 'length' => 128, 'not null' => TRUE, 'default' => ''));
+    db_add_field('sessions', 'ssid', array('description' => "Secure session ID. The value is generated by Drupal's session handlers.", 'type' => 'varchar', 'length' => 128, 'not null' => TRUE, 'default' => ''));
     db_add_index('sessions', 'ssid', array('ssid'));
     // Drop existing primary key.
     db_drop_primary_key('sessions');
@@ -726,12 +785,12 @@ function update_fix_d7_requirements() {
 /**
  * Register the currently installed profile in the system table.
  *
- * Install profiles are now treated as modules by Drupal, and have an upgrade
- * path based on their schema version in the system table.
+ * Installation profiles are now treated as modules by Drupal, and have an
+ * upgrade path based on their schema version in the system table.
  *
- * The install profile will be set to schema_version 0, as it has already been
- * installed. Any other hook_update_N functions provided by the install profile
- * will be run by update.php.
+ * The installation profile will be set to schema_version 0, as it has already
+ * been installed. Any other hook_update_N functions provided by the
+ * installation profile will be run by update.php.
  */
 function update_fix_d7_install_profile() {
   $profile = drupal_get_profile();
@@ -759,9 +818,6 @@ function update_fix_d7_install_profile() {
       'files' => array(),
     );
 
-    // The install profile is always required.
-    $file->info['required'] = TRUE;
-
     $values = array(
       'filename' => $filename,
       'name' => $profile,
@@ -772,10 +828,10 @@ function update_fix_d7_install_profile() {
       'owner' => '',
     );
 
-    // Install profile hooks are always executed last by the module system
+    // Installation profile hooks are always executed last by the module system
     $values['weight'] = 1000;
 
-    // Initializing the system table entry for the install profile
+    // Initializing the system table entry for the installation profile
     db_insert('system')
       ->fields(array_keys($values))
       ->values($values)
@@ -784,7 +840,8 @@ function update_fix_d7_install_profile() {
     // Reset the cached schema version.
     drupal_get_installed_schema_version($profile, TRUE);
 
-    // Load the updates again to make sure the install profile updates are loaded
+    // Load the updates again to make sure the installation profile updates
+    // are loaded.
     drupal_load_updates();
   }
 }
@@ -820,7 +877,38 @@ function update_parse_db_url($db_url, $db_prefix) {
 }
 
 /**
- * Perform one update and store the results for display on finished page.
+ * Constructs a session name compatible with a D6 environment.
+ *
+ * @return
+ *   D6-compatible session name string.
+ *
+ * @see drupal_settings_initialize()
+ */
+function update_get_d6_session_name() {
+  global $base_url, $cookie_domain;
+  $cookie_secure = ini_get('session.cookie_secure');
+
+  // If a custom cookie domain is set in settings.php, that variable forms
+  // the basis of the session name. Re-compute the D7 hashing method to find
+  // out if $cookie_domain was used as the session name.
+  if (($cookie_secure ? 'SSESS' : 'SESS') . substr(hash('sha256', $cookie_domain), 0, 32) == session_name()) {
+    $session_name = $cookie_domain;
+  }
+  else {
+    // Otherwise use $base_url as session name, without the protocol
+    // to use the same session identifiers across HTTP and HTTPS.
+    list( , $session_name) = explode('://', $base_url, 2);
+  }
+
+  if ($cookie_secure) {
+    $session_name .= 'SSL';
+  }
+
+  return 'SESS' . md5($session_name);
+}
+
+/**
+ * Performs one update and stores the results for display on the results page.
  *
  * If an update function completes successfully, it should return a message
  * as a string indicating success, for example:
@@ -883,7 +971,8 @@ function update_do_one($module, $number, $dependency_map, &$context) {
 
       require_once DRUPAL_ROOT . '/includes/errors.inc';
       $variables = _drupal_decode_exception($e);
-      $ret['#abort'] = array('success' => FALSE, 'query' => t('%type: %message in %function (line %line of %file).', $variables));
+      // The exception message is run through check_plain() by _drupal_decode_exception().
+      $ret['#abort'] = array('success' => FALSE, 'query' => t('%type: !message in %function (line %line of %file).', $variables));
     }
   }
 
@@ -919,7 +1008,7 @@ function update_do_one($module, $number, $dependency_map, &$context) {
 class DrupalUpdateException extends Exception { }
 
 /**
- * Start the database update batch process.
+ * Starts the database update batch process.
  *
  * @param $start
  *   An array whose keys contain the names of modules to be updated during the
@@ -989,7 +1078,7 @@ function update_batch($start, $redirect = NULL, $url = NULL, $batch = array(), $
 }
 
 /**
- * Finish the update process and store results for eventual display.
+ * Finishes the update process and stores the results for eventual display.
  *
  * After the updates run, all caches are flushed. The update results are
  * stored into the session (for example, to be displayed on the update results
@@ -1006,6 +1095,10 @@ function update_batch($start, $redirect = NULL, $url = NULL, $batch = array(), $
  * @see update_batch()
  */
 function update_finished($success, $results, $operations) {
+  // Remove the D6 upgrade flag variable so that subsequent update runs do not
+  // get the wrong context.
+  variable_del('update_d6');
+
   // Clear the caches in case the data has been updated.
   drupal_flush_all_caches();
 
@@ -1022,7 +1115,7 @@ function update_finished($success, $results, $operations) {
 }
 
 /**
- * Return a list of all the pending database updates.
+ * Returns a list of all the pending database updates.
  *
  * @return
  *   An associative array keyed by module name which contains all information
@@ -1316,7 +1409,7 @@ function update_already_performed($module, $number) {
 }
 
 /**
- * Invoke hook_update_dependencies() in all installed modules.
+ * Invokes hook_update_dependencies() in all installed modules.
  *
  * This function is similar to module_invoke_all(), with the main difference
  * that it does not require that a module be enabled to invoke its hook, only
@@ -1334,7 +1427,7 @@ function update_retrieve_dependencies() {
   $return = array();
   // Get a list of installed modules, arranged so that we invoke their hooks in
   // the same order that module_invoke_all() does.
-  $modules = db_query("SELECT name FROM {system} WHERE type = 'module' AND schema_version != :schema ORDER BY weight ASC, name ASC", array(':schema' => SCHEMA_UNINSTALLED))->fetchCol();
+  $modules = db_query("SELECT name FROM {system} WHERE type = 'module' AND schema_version <> :schema ORDER BY weight ASC, name ASC", array(':schema' => SCHEMA_UNINSTALLED))->fetchCol();
   foreach ($modules as $module) {
     $function = $module . '_update_dependencies';
     if (function_exists($function)) {
@@ -1382,17 +1475,3 @@ function update_retrieve_dependencies() {
 
   return $return;
 }
-
-/**
- * @defgroup update-api-6.x-to-7.x Update versions of API functions.
- * @{
- * Functions similar to normal API function but not firing hooks.
- *
- * During update, it is impossible to judge the consequences of firing a hook
- * as it might hit a module not yet updated. So simplified versions of some
- * core APIs are provided.
- */
-
-/**
- * @} End of "defgroup update-api-6.x-to-7.x"
- */

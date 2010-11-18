@@ -1,5 +1,4 @@
 <?php
-// $Id: html.tpl.php,v 1.4 2010/05/26 10:47:20 dries Exp $
 
 /**
  * @file
@@ -13,7 +12,15 @@
  *   $language->dir contains the language direction. It will either be 'ltr' or 'rtl'.
  * - $rdf_namespaces: All the RDF namespace prefixes used in the HTML document.
  * - $grddl_profile: A GRDDL profile allowing agents to extract the RDF data.
- * - $head_title: A modified version of the page title, for use in the TITLE tag.
+ * - $head_title: A modified version of the page title, for use in the TITLE
+ *   tag.
+ * - $head_title_array: (array) An associative array containing the string parts
+ *   that were used to generate the $head_title variable, already prepared to be
+ *   output as TITLE tag. The key/value pairs may contain one or more of the
+ *   following, depending on conditions:
+ *   - title: The title of the current page, if any.
+ *   - name: The name of the site.
+ *   - slogan: The slogan of the site, if any, and if there is no title.
  * - $head: Markup for the HEAD section (including meta tags, keyword tags, and
  *   so on).
  * - $styles: Style tags necessary to import all CSS files for the page.
@@ -32,6 +39,8 @@
  * @see template_preprocess()
  * @see template_preprocess_html()
  * @see template_process()
+ *
+ * @ingroup themeable
  */
 ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML+RDFa 1.0//EN"
   "http://www.w3.org/MarkUp/DTD/xhtml-rdfa-1.dtd">
@@ -45,7 +54,7 @@
 </head>
 <body class="<?php print $classes; ?>" <?php print $attributes;?>>
   <div id="skip-link">
-    <a href="#main-content"><?php print t('Skip to main content'); ?></a>
+    <a href="#main-content" class="element-invisible element-focusable"><?php print t('Skip to main content'); ?></a>
   </div>
   <?php print $page_top; ?>
   <?php print $page; ?>

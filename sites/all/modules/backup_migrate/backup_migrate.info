@@ -9,9 +9,9 @@ files[] = includes/destinations.inc
 files[] = includes/profiles.inc
 files[] = includes/schedules.inc
 
-; Information added by drupal.org packaging script on 2010-10-17
+; Information added by drupal.org packaging script on 2010-11-17
 version = "7.x-2.x-dev"
 core = "7.x"
 project = "backup_migrate"
-datestamp = "1287273825"
+datestamp = "1289952386"
 

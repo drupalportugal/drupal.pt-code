@@ -1,5 +1,4 @@
 <?php
-// $Id: page.tpl.php,v 1.7 2010/10/05 01:48:11 dries Exp $
 
 /**
  * @file
@@ -7,7 +6,7 @@
  *
  * The doctype, html, head and body tags are not in this template. Instead they
  * can be found in the html.tpl.php template normally located in the
- * modules/system folder.
+ * modules/system directory.
  *
  * Available variables:
  *
@@ -83,6 +82,7 @@
  * @see template_preprocess_page()
  * @see template_process()
  * @see bartik_process_page()
+ * @see html.tpl.php
  */
 ?>
 <div id="page-wrapper"><div id="page">
@@ -146,7 +146,7 @@
           'links' => $secondary_menu,
           'attributes' => array(
             'id' => 'secondary-menu-links',
-            'class' => array('links', 'clearfix'),
+            'class' => array('links', 'inline', 'clearfix'),
           ),
           'heading' => array(
             'text' => t('Secondary menu'),

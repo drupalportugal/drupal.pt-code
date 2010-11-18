@@ -1,4 +1,7 @@
-/* $Id: dblog.css,v 1.10 2010/09/09 15:47:03 webchick Exp $ */
+/**
+ * @file
+ * Admin styles for the Database Logging module.
+ */
 
 .form-item-type,
 .form-item-severity {
@@ -53,7 +56,9 @@ table#admin-dblog td.icon {
 table#admin-dblog tr.dblog-warning td.icon {
   background-image: url(../../misc/message-16-warning.png);
 }
-table#admin-dblog tr.dblog-error td.icon {
+table#admin-dblog tr.dblog-error td.icon,
+table#admin-dblog tr.dblog-critical td.icon,
+table#admin-dblog tr.dblog-alert td.icon,
+table#admin-dblog tr.dblog-emerg td.icon {
   background-image: url(../../misc/message-16-error.png);
 }
-

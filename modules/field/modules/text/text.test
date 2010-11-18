@@ -1,5 +1,9 @@
 <?php
-// $Id: text.test,v 1.30 2010/10/20 01:15:58 dries Exp $
+
+/**
+ * @file
+ * Tests for text.module.
+ */
 
 class TextFieldTestCase extends DrupalWebTestCase {
   protected $instance;
@@ -215,8 +219,8 @@ class TextFieldTestCase extends DrupalWebTestCase {
     // Display edition form.
     // We should now have a 'text format' selector.
     $this->drupalGet('test-entity/manage/' . $id . '/edit');
-    $this->assertFieldByName("{$this->field_name}[$langcode][0][value]", '', t('Widget is displayed'));
-    $this->assertFieldByName("{$this->field_name}[$langcode][0][format]", '', t('Format selector is displayed'));
+    $this->assertFieldByName("{$this->field_name}[$langcode][0][value]", NULL, t('Widget is displayed'));
+    $this->assertFieldByName("{$this->field_name}[$langcode][0][format]", NULL, t('Format selector is displayed'));
 
     // Edit and change the text format to the new one that was created.
     $edit = array(
@@ -240,6 +244,11 @@ class TextSummaryTestCase extends DrupalWebTestCase {
       'description' => 'Test text_summary() with different strings and lengths.',
       'group' => 'Field types',
     );
+  }
+
+  function setUp() {
+    parent::setUp();
+    $this->article_creator = $this->drupalCreateUser(array('create article content', 'edit own article content'));
   }
 
   /**
@@ -376,6 +385,24 @@ class TextSummaryTestCase extends DrupalWebTestCase {
     $summary = text_summary($text, $format, $size);
     $this->assertIdentical($summary, $expected, t('Generated summary "@summary" matches expected "@expected".', array('@summary' => $summary, '@expected' => $expected)));
   }
+
+  /**
+   * Test sending only summary.
+   */
+  function testOnlyTextSummary() {
+    // Login as article creator.
+    $this->drupalLogin($this->article_creator);
+    // Create article with summary but empty body.
+    $summary = $this->randomName();
+    $edit = array(
+      "title" => $this->randomName(),
+      "body[und][0][summary]" => $summary,
+    );
+    $this->drupalPost('node/add/article', $edit, t('Save'));
+    $node = $this->drupalGetNodeByTitle($edit['title']);
+
+    $this->assertIdentical($node->body['und'][0]['summary'], $summary, t('Article with with summary and no body has been submitted.'));
+  }
 }
 
 class TextTranslationTestCase extends DrupalWebTestCase {
@@ -437,7 +464,7 @@ class TextTranslationTestCase extends DrupalWebTestCase {
     $node = $this->drupalGetNodeByTitle($edit['title']);
     $this->drupalGet("node/$node->nid/translate");
     $this->clickLink(t('add translation'));
-    $this->assertFieldByXPath("//textarea[@name='body[fr][0][value]']", $body, t('The textfield widget is populated.'));
+    $this->assertFieldByXPath("//textarea[@name='body[$langcode][0][value]']", $body, t('The textfield widget is populated.'));
   }
 
   /**
@@ -457,17 +484,17 @@ class TextTranslationTestCase extends DrupalWebTestCase {
     );
 
     // Create an article with the first body input format set to "Full HTML".
-    $langcode = 'en';
     $title = $this->randomName();
     $edit = array(
       'title' => $title,
-      'language' => $langcode,
+      'language' => 'en',
     );
     $this->drupalPost('node/add/article', $edit, t('Save'));
 
     // Populate the body field: the first item gets the "Full HTML" input
     // format, the second one "Filtered HTML".
     $formats = array('full_html', 'filtered_html');
+    $langcode = LANGUAGE_NONE;
     foreach ($body as $delta => $value) {
       $edit = array(
         "body[$langcode][$delta][value]" => $value,

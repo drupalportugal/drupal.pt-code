@@ -7,9 +7,9 @@ dependencies[] = views
 core = 7.x
 files[] = views_export.module
 
-; Information added by drupal.org packaging script on 2010-11-12
+; Information added by drupal.org packaging script on 2010-11-21
 version = "7.x-3.x-dev"
 core = "7.x"
 project = "views"
-datestamp = "1289564878"
+datestamp = "1290342319"
 

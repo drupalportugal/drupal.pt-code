@@ -1,5 +1,4 @@
 <?php
-// $Id: field.default.inc,v 1.39 2010/08/04 06:55:35 webchick Exp $
 
 /**
  * @file
@@ -11,13 +10,36 @@
  * the corresponding field_attach_[operation]() function.
  */
 
+/**
+ * Extracts field values from submitted form values.
+ *
+ * @param $entity_type
+ *   The type of $entity.
+ * @param $entity
+ *   The entity for the operation.
+ * @param $field
+ *   The field structure for the operation.
+ * @param $instance
+ *   The instance structure for $field on $entity's bundle.
+ * @param $langcode
+ *   The language associated to $items.
+ * @param $items
+ *   The field values. This parameter is altered by reference to receive the
+ *   incoming form values.
+ * @param $form
+ *   The form structure where field elements are attached to. This might be a
+ *   full form structure, or a sub-element of a larger form.
+ * @param $form_state
+ *   The form state.
+ */
 function field_default_extract_form_values($entity_type, $entity, $field, $instance, $langcode, &$items, $form, &$form_state) {
-  $field_name = $field['field_name'];
-
-  if (isset($form_state['values'][$field_name][$langcode])) {
-    $items = $form_state['values'][$field_name][$langcode];
+  $path = array_merge($form['#parents'], array($field['field_name'], $langcode));
+  $key_exists = NULL;
+  $values = drupal_array_get_nested_value($form_state['values'], $path, $key_exists);
+  if ($key_exists) {
     // Remove the 'value' of the 'add more' button.
-    unset($items['add_more']);
+    unset($values['add_more']);
+    $items = $values;
   }
 }
 
@@ -59,7 +81,7 @@ function field_default_validate($entity_type, $entity, $field, $instance, $langc
   if ($field['cardinality'] != FIELD_CARDINALITY_UNLIMITED && count($items) > $field['cardinality']) {
     $errors[$field['field_name']][$langcode][0][] = array(
       'error' => 'field_cardinality',
-      'message' => t('%name: this field cannot hold more than @count values.', array('%name' => t($instance['label']), '@count' => $field['cardinality'])),
+      'message' => t('%name: this field cannot hold more than @count values.', array('%name' => $instance['label'], '@count' => $field['cardinality'])),
     );
   }
 }
@@ -112,21 +134,25 @@ function field_default_insert($entity_type, $entity, $field, $instance, $langcod
  *   - the name of a view mode
  *   - or an array of display settings to use for display, as found in the
  *     'display' entry of $instance definitions.
-*/
+ */
 function field_default_prepare_view($entity_type, $entities, $field, $instances, $langcode, &$items, $display) {
   // Group entities, instances and items by formatter module.
   $modules = array();
   foreach ($instances as $id => $instance) {
     if (is_string($display)) {
       $view_mode = $display;
-      $display = field_get_display($instance, $view_mode);
+      $instance_display = field_get_display($instance, $view_mode, $entities[$id]);
     }
-    if ($display['type'] !== 'hidden') {
-      $module = $display['module'];
+    else {
+      $instance_display = $display;
+    }
+
+    if ($instance_display['type'] !== 'hidden') {
+      $module = $instance_display['module'];
       $modules[$module] = $module;
       $grouped_entities[$module][$id] = $entities[$id];
       $grouped_instances[$module][$id] = $instance;
-      $grouped_displays[$module][$id] = $display;
+      $grouped_displays[$module][$id] = $instance_display;
       // hook_field_formatter_prepare_view() alters $items by reference.
       $grouped_items[$module][$id] = &$items[$id];
     }
@@ -142,17 +168,16 @@ function field_default_prepare_view($entity_type, $entities, $field, $instances,
 }
 
 /**
- * Builds a renderable array for field values.
+ * Builds a renderable array for one field on one entity instance.
  *
  * @param $entity_type
  *   The type of $entity; e.g. 'node' or 'user'.
- * @param $entities
- *   An array of entities being displayed, keyed by entity id.
+ * @param $entity
+ *   A single object of type $entity_type.
  * @param $field
  *   The field structure for the operation.
- * @param $instances
- *   Array of instance structures for $field for each entity, keyed by entity
- *   id.
+ * @param $instance
+ *   An array containing each field on $entity's bundle.
  * @param $langcode
  *   The language associated to $items.
  * @param $items
@@ -171,7 +196,7 @@ function field_default_view($entity_type, $entity, $field, $instance, $langcode,
   // Prepare incoming display specifications.
   if (is_string($display)) {
     $view_mode = $display;
-    $display = field_get_display($instance, $view_mode);
+    $display = field_get_display($instance, $view_mode, $entity);
   }
   else {
     $view_mode = '_custom_display';
@@ -188,7 +213,7 @@ function field_default_view($entity_type, $entity, $field, $instance, $langcode,
         $info = array(
           '#theme' => 'field',
           '#weight' => $display['weight'],
-          '#title' => t($instance['label']),
+          '#title' => $instance['label'],
           '#access' => field_access('view', $field, $entity_type, $entity),
           '#label_display' => $display['label'],
           '#view_mode' => $view_mode,

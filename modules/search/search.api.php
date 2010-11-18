@@ -1,5 +1,4 @@
 <?php
-// $Id: search.api.php,v 1.30 2010/09/27 01:08:40 dries Exp $
 
 /**
  * @file
@@ -23,13 +22,11 @@
  * on your module's type of content. If you want to have your content
  * indexed in the standard search index, your module should also implement
  * hook_update_index(). If your search type has settings, you can implement
- * hook_search_admin() to add them to the search settings page. You can also
- * alter the display of your module's search results by implementing
- * hook_search_page(). You can use hook_form_FORM_ID_alter(), with
- * FORM_ID set to 'search', to add fields to the search form (see
- * node_form_search_form_alter() for an example). You can use
- * hook_search_access() to limit access to searching, and hook_search_page() to
- * override how search results are displayed.
+ * hook_search_admin() to add them to the search settings page. You can use
+ * hook_form_FORM_ID_alter(), with FORM_ID set to 'search_form', to add fields
+ * to the search form (see node_form_search_form_alter() for an example).
+ * You can use hook_search_access() to limit access to searching,
+ * and hook_search_page() to override how search results are displayed.
  *
  * @return
  *   Array with optional keys:
@@ -108,6 +105,10 @@ function hook_search_reset() {
 /**
  * Report the status of indexing.
  *
+ * The core search module only invokes this hook on active modules.
+ * Implementing modules do not need to check whether they are active when
+ * calculating their return values.
+ *
  * @return
  *  An associative array with the key-value pairs:
  *  - 'remaining': The number of items left to index.
@@ -169,7 +170,7 @@ function hook_search_admin() {
  * parameters to the search expression.
  *
  * See node_search_execute() for an example of a module that uses the search
- * index, and user_execute_search() for an example that doesn't ues the search
+ * index, and user_search_execute() for an example that doesn't use the search
  * index.
  *
  * @param $keys
@@ -181,13 +182,14 @@ function hook_search_admin() {
  *   An array of search results. To use the default search result
  *   display, each item should have the following keys':
  *   - 'link': Required. The URL of the found item.
- *   - 'type': The type of item.
+ *   - 'type': The type of item (such as the content type).
  *   - 'title': Required. The name of the item.
  *   - 'user': The author of the item.
  *   - 'date': A timestamp when the item was last modified.
  *   - 'extra': An array of optional extra information items.
  *   - 'snippet': An excerpt or preview to show with the result (can be
  *     generated with search_excerpt()).
+ *   - 'language': Language code for the item (usually two characters).
  *
  * @ingroup search
  */
@@ -272,8 +274,8 @@ function hook_search_page($results) {
 
   foreach ($results as $entry) {
     $output[] = array(
-      '#theme' => 'search_result', 
-      '#result' => $entry, 
+      '#theme' => 'search_result',
+      '#result' => $entry,
       '#module' => 'my_module_name',
     );
   }

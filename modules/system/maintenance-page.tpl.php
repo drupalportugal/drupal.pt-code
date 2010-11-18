@@ -1,15 +1,16 @@
 <?php
-// $Id: maintenance-page.tpl.php,v 1.9 2010/02/23 05:02:02 webchick Exp $
 
 /**
  * @file
  * Default theme implementation to display a single Drupal page while offline.
  *
- * All the available variables are mirrored in page.tpl.php. Some may be left
- * blank but they are provided for consistency.
+ * All the available variables are mirrored in html.tpl.php and page.tpl.php.
+ * Some may be blank but they are provided for consistency.
  *
  * @see template_preprocess()
  * @see template_preprocess_maintenance_page()
+ *
+ * @ingroup themeable
  */
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"

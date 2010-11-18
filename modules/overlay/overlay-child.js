@@ -1,4 +1,7 @@
-// $Id: overlay-child.js,v 1.10 2010/07/08 12:20:23 dries Exp $
+/**
+ * @file
+ * Attaches the behaviors for the Overlay child pages.
+ */
 
 (function ($) {
 
@@ -57,6 +60,19 @@ Drupal.behaviors.overlayChild = {
 
     // Attach child related behaviors to the iframe document.
     Drupal.overlayChild.attachBehaviors(context, settings);
+
+    // There are two links within the message that informs people about the
+    // overlay and how to disable it. Make sure both links are visible when
+    // either one has focus and add a class to the wrapper for styling purposes.
+    $('#overlay-disable-message', context)
+      .focusin(function () {
+        $(this).addClass('overlay-disable-message-focused');
+        $('a.element-focusable', this).removeClass('element-invisible');
+      })
+      .focusout(function () {
+        $(this).removeClass('overlay-disable-message-focused');
+        $('a.element-focusable', this).addClass('element-invisible');
+      });
   }
 };
 

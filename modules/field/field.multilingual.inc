@@ -1,5 +1,4 @@
 <?php
-// $Id: field.multilingual.inc,v 1.14 2010/10/09 03:43:31 webchick Exp $
 
 /**
  * @file
@@ -7,7 +6,7 @@
  */
 
 /**
- * @defgroup field_language Field language API
+ * @defgroup field_language Field Language API
  * @{
  * Handling of multilingual fields.
  *
@@ -21,7 +20,7 @@
  * - For untranslatable fields this set only contains LANGUAGE_NONE.
  * - For translatable fields this set can contain any language code. By default
  *   it is the list returned by field_content_languages(), which contains all
- *   enabled languages with the addition of LANGUAGE_NONE. This default can be
+ *   installed languages with the addition of LANGUAGE_NONE. This default can be
  *   altered by modules implementing hook_field_available_languages_alter().
  *
  * The available languages for a particular field are returned by
@@ -58,6 +57,9 @@
  *   even disabled by modules implementing hook_field_language_alter(), making
  *   it possible to choose the first approach. The display language for each
  *   field is returned by field_language().
+ *
+ * See @link field Field API @endlink for information about the other parts of
+ * the Field API.
  */
 
 /**

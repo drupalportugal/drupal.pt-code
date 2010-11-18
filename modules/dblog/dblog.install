@@ -1,5 +1,4 @@
 <?php
-// $Id: dblog.install,v 1.23 2010/09/05 19:56:03 dries Exp $
 
 /**
  * @file
@@ -86,6 +85,7 @@ function dblog_schema() {
     'indexes' => array(
       'type' => array('type'),
       'uid' => array('uid'),
+      'severity' => array('severity'),
     ),
   );
 
@@ -93,7 +93,14 @@ function dblog_schema() {
 }
 
 /**
- * @defgroup updates-6.x-to-7.x database logging updates from 6.x to 7.x
+ * Implements hook_uninstall().
+ */
+function dblog_uninstall() {
+  variable_del('dblog_row_limit');
+}
+
+/**
+ * @addtogroup updates-6.x-to-7.x
  * @{
  */
 
@@ -132,6 +139,21 @@ function dblog_update_7001() {
 }
 
 /**
- * @} End of "defgroup updates-6.x-to-7.x"
- * The next series of updates should start at 8000.
+ * @} End of "addtogroup updates-6.x-to-7.x".
+ */
+
+/**
+ * @addtogroup updates-7.x-extra
+ * @{
+ */
+
+/**
+ * Add an index to the severity column in the watchdog database table.
+ */
+function dblog_update_7002() {
+  db_add_index('watchdog', 'severity', array('severity'));
+}
+
+/**
+ * @} End of "addtogroup updates-7.x-extra".
  */

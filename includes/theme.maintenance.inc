@@ -1,5 +1,4 @@
 <?php
-// $Id: theme.maintenance.inc,v 1.67 2010/09/19 18:10:41 dries Exp $
 
 /**
  * @file
@@ -11,9 +10,9 @@
  *
  * Used for site installs, updates and when the site is in maintenance mode.
  * It also applies when the database is unavailable or bootstrap was not
- * complete. Seven is always used for the initial install and update operations.
- * In other cases, Bartik is used, but this can be overridden by setting a
- * "maintenance_theme" key in the $conf variable in settings.php.
+ * complete. Seven is always used for the initial install and update
+ * operations. In other cases, Bartik is used, but this can be overridden by
+ * setting a "maintenance_theme" key in the $conf variable in settings.php.
  */
 function _drupal_maintenance_theme() {
   global $theme, $theme_key, $conf;
@@ -41,7 +40,6 @@ function _drupal_maintenance_theme() {
     // to work. See _drupal_log_error().
     if (!class_exists('Database', FALSE)) {
       require_once DRUPAL_ROOT . '/includes/database/database.inc';
-      spl_autoload_register('db_autoload');
     }
 
     // We use the default theme as the maintenance theme. If a default theme
@@ -87,7 +85,7 @@ function _drupal_maintenance_theme() {
 }
 
 /**
- * This builds the registry when the site needs to bypass any database calls.
+ * Builds the registry when the site needs to bypass any database calls.
  */
 function _theme_load_offline_registry($theme, $base_theme = NULL, $theme_engine = NULL) {
   return _theme_build_registry($theme, $base_theme, $theme_engine);
@@ -162,7 +160,7 @@ function theme_update_page($variables) {
 }
 
 /**
- * Returns HTML for a report of the results from an operation run via authorize.php.
+ * Returns HTML for a results report of an operation run by authorize.php.
  *
  * @param $variables
  *   An associative array containing:
@@ -176,13 +174,14 @@ function theme_authorize_report($variables) {
   if (!empty($messages)) {
     $output .= '<div id="authorize-results">';
     foreach ($messages as $heading => $logs) {
-      $output .= '<h3>' . check_plain($heading) . '</h3>';
+      $items = array();
       foreach ($logs as $number => $log_message) {
         if ($number === '#abort') {
           continue;
         }
-        $output .= theme('authorize_message', array('message' => $log_message['message'], 'success' => $log_message['success']));
+        $items[] = theme('authorize_message', array('message' => $log_message['message'], 'success' => $log_message['success']));
       }
+      $output .= theme('item_list',  array('items' => $items, 'title' => $heading));
     }
     $output .= '</div>';
   }
@@ -200,14 +199,13 @@ function theme_authorize_report($variables) {
  * @ingroup themeable
  */
 function theme_authorize_message($variables) {
-  $output = '';
   $message = $variables['message'];
   $success = $variables['success'];
   if ($success) {
-    $output .= '<li class="success">' . $message . '</li>';
+    $item = array('data' => $message, 'class' => array('success'));
   }
   else {
-    $output .= '<li class="failure"><strong>' . t('Failed') . ':</strong> ' . $message . '</li>';
+    $item = array('data' => '<strong>' . $message . '</strong>', 'class' => array('failure'));
   }
-  return $output;
+  return $item;
 }

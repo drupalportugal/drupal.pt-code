@@ -1,5 +1,4 @@
 <?php
-// $Id: schema.inc,v 1.43 2010/10/22 15:18:56 webchick Exp $
 
 /**
  * @file
@@ -8,7 +7,7 @@
 
 
 /**
- * @ingroup schemaapi
+ * @addtogroup schemaapi
  * @{
  */
 
@@ -132,8 +131,13 @@ class DatabaseSchema_mysql extends DatabaseSchema {
   protected function createFieldSql($name, $spec) {
     $sql = "`" . $name . "` " . $spec['mysql_type'];
 
-    if (in_array($spec['mysql_type'], array('VARCHAR', 'CHAR', 'TINYTEXT', 'MEDIUMTEXT', 'LONGTEXT', 'TEXT')) && isset($spec['length'])) {
-      $sql .= '(' . $spec['length'] . ')';
+    if (in_array($spec['mysql_type'], array('VARCHAR', 'CHAR', 'TINYTEXT', 'MEDIUMTEXT', 'LONGTEXT', 'TEXT'))) {
+      if (isset($spec['length'])) {
+        $sql .= '(' . $spec['length'] . ')';
+      }
+      if (!empty($spec['binary'])) {
+        $sql .= ' BINARY';
+      }
     }
     elseif (isset($spec['precision']) && isset($spec['scale'])) {
       $sql .= '(' . $spec['precision'] . ', ' . $spec['scale'] . ')';
@@ -337,7 +341,7 @@ class DatabaseSchema_mysql extends DatabaseSchema {
     $this->connection->query($query);
     if (isset($spec['initial'])) {
       $this->connection->update($table)
-        ->fields(array($field, $spec['initial']))
+        ->fields(array($field => $spec['initial']))
         ->execute();
     }
     if ($fixnull) {
@@ -382,7 +386,7 @@ class DatabaseSchema_mysql extends DatabaseSchema {
     // Returns one row for each column in the index. Result is string or FALSE.
     // Details at http://dev.mysql.com/doc/refman/5.0/en/show-index.html
     $row = $this->connection->query('SHOW INDEX FROM {' . $table . "} WHERE key_name = '$name'")->fetchAssoc();
-    return isset($row['key_name']);
+    return isset($row['Key_name']);
   }
 
   public function addPrimaryKey($table, $fields) {
@@ -528,5 +532,5 @@ class DatabaseSchema_mysql extends DatabaseSchema {
 }
 
 /**
- * @} End of "ingroup schemaapi".
+ * @} End of "addtogroup schemaapi".
  */

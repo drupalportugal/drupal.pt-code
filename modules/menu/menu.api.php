@@ -1,5 +1,4 @@
 <?php
-// $Id: menu.api.php,v 1.25 2010/04/28 05:08:24 webchick Exp $
 
 /**
  * @file
@@ -12,7 +11,7 @@
  */
 
 /**
- * Informs modules that a custom menu was created.
+ * Respond to a custom menu creation.
  *
  * This hook is used to notify modules that a custom menu has been created.
  * Contributed modules may use the information to perform actions based on the
@@ -35,7 +34,7 @@ function hook_menu_insert($menu) {
 }
 
 /**
- * Informs modules that a custom menu was updated.
+ * Respond to a custom menu update.
  *
  * This hook is used to notify modules that a custom menu has been updated.
  * Contributed modules may use the information to perform actions based on the
@@ -60,14 +59,14 @@ function hook_menu_update($menu) {
 }
 
 /**
- * Informs modules that a custom menu was deleted.
+ * Respond to a custom menu deletion.
  *
  * This hook is used to notify modules that a custom menu along with all links
  * contained in it (if any) has been deleted. Contributed modules may use the
  * information to perform actions based on the information entered into the menu
  * system.
  *
- * @param $link
+ * @param $menu
  *   An array representing a custom menu:
  *   - menu_name: The unique name of the custom menu.
  *   - title: The human readable menu title.

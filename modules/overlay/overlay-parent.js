@@ -1,4 +1,7 @@
-// $Id: overlay-parent.js,v 1.55 2010/09/29 00:50:46 dries Exp $
+/**
+ * @file
+ * Attaches the behaviors for the Overlay parent pages.
+ */
 
 (function ($) {
 
@@ -7,6 +10,10 @@
  */
 Drupal.behaviors.overlayParent = {
   attach: function (context, settings) {
+    if (Drupal.overlay.isOpen) {
+      Drupal.overlay.makeDocumentUntabbable(context);
+    }
+
     if (this.processed) {
       return;
     }
@@ -79,6 +86,7 @@ Drupal.overlay.open = function (url) {
   this.isOpening = false;
   this.isOpen = true;
   $(document.documentElement).addClass('overlay-open');
+  this.makeDocumentUntabbable();
 
   // Allow other scripts to respond to this event.
   $(document).trigger('drupalOverlayOpen');
@@ -121,8 +129,7 @@ Drupal.overlay.create = function () {
     .bind('drupalOverlayClose' + eventClass, $.proxy(this, 'eventhandlerRefreshPage'))
     .bind('drupalOverlayBeforeClose' + eventClass +
           ' drupalOverlayBeforeLoad' + eventClass +
-          ' drupalOverlayResize' + eventClass, $.proxy(this, 'eventhandlerDispatchEvent'))
-    .bind('keydown' + eventClass, $.proxy(this, 'eventhandlerRestrictKeyboardNavigation'));
+          ' drupalOverlayResize' + eventClass, $.proxy(this, 'eventhandlerDispatchEvent'));
 
   if ($('.overlay-displace-top, .overlay-displace-bottom').length) {
     $(document)
@@ -158,8 +165,6 @@ Drupal.overlay.load = function (url) {
   // entry using URL fragments.
   iframeDocument.location.replace(url);
 
-  // Immediately move the focus to the iframe.
-  this.inactiveFrame.focus();
   return true;
 };
 
@@ -188,6 +193,7 @@ Drupal.overlay.close = function () {
   $(document.documentElement).removeClass('overlay-open');
   // Restore the original document title.
   document.title = this.originalTitle;
+  this.makeDocumentTabbable();
 
   // Allow other scripts to respond to this event.
   $(document).trigger('drupalOverlayClose');
@@ -206,8 +212,6 @@ Drupal.overlay.close = function () {
  */
 Drupal.overlay.destroy = function () {
   $([document, window]).unbind('.drupal-overlay-open');
-  this.$iframeA.unbind('.drupal-overlay');
-  this.$iframeB.unbind('.drupal-overlay');
   this.$container.remove();
 
   this.$container = null;
@@ -271,7 +275,7 @@ Drupal.overlay.loadChild = function (event) {
 
   this.isLoading = false;
   $(document.documentElement).removeClass('overlay-loading');
-  event.data.sibling.removeClass('overlay-active');
+  event.data.sibling.removeClass('overlay-active').attr({ 'tabindex': -1 });
 
   // Only continue when overlay is still open and not closing.
   if (this.isOpen && !this.isClosing) {
@@ -283,11 +287,17 @@ Drupal.overlay.loadChild = function (event) {
       this.activeFrame = $(iframe)
         .addClass('overlay-active')
         // Add a title attribute to the iframe for accessibility.
-        .attr('title', Drupal.t('@title dialog', { '@title': iframeWindow.jQuery('#overlay-title').text() }));
+        .attr('title', Drupal.t('@title dialog', { '@title': iframeWindow.jQuery('#overlay-title').text() })).removeAttr('tabindex');
       this.inactiveFrame = event.data.sibling;
 
       // Load an empty document into the inactive iframe.
       (this.inactiveFrame[0].contentDocument || this.inactiveFrame[0].contentWindow.document).location.replace('about:blank');
+
+      // Move the focus to just before the "skip to main content" link inside
+      // the overlay.
+      this.activeFrame.focus();
+      var skipLink = iframeWindow.jQuery('a:first');
+      Drupal.overlay.setFocusBefore(skipLink, iframeWindow.document);
 
       // Allow other scripts to respond to this event.
       $(document).trigger('drupalOverlayLoad');
@@ -302,21 +312,60 @@ Drupal.overlay.loadChild = function (event) {
 };
 
 /**
+ * Creates a placeholder element to receive document focus.
+ *
+ * Setting the document focus to a link will make it visible, even if it's a
+ * "skip to main content" link that should normally be visible only when the
+ * user tabs to it. This function can be used to set the document focus to
+ * just before such an invisible link.
+ *
+ * @param $element
+ *   The jQuery element that should receive focus on the next tab press.
+ * @param document
+ *   The iframe window element to which the placeholder should be added. The
+ *   placeholder element has to be created inside the same iframe as the element
+ *   it precedes, to keep IE happy. (http://bugs.jquery.com/ticket/4059)
+ */
+Drupal.overlay.setFocusBefore = function ($element, document) {
+  // Create an anchor inside the placeholder document.
+  var placeholder = document.createElement('a');
+  var $placeholder = $(placeholder).addClass('element-invisible').attr('href', '#');
+  // Put the placeholder where it belongs, and set the document focus to it.
+  $placeholder.insertBefore($element);
+  $placeholder.focus();
+  // Make the placeholder disappear as soon as it loses focus, so that it
+  // doesn't appear in the tab order again.
+  $placeholder.one('blur', function () {
+    $(this).remove();
+  });
+};
+
+/**
  * Check if the given link is in the administrative section of the site.
  *
  * @param url
- *   The url to be tested.
+ *   The URL to be tested.
  *
  * @return boolean
  *   TRUE if the URL represents an administrative link, FALSE otherwise.
  */
 Drupal.overlay.isAdminLink = function (url) {
+  if (Drupal.overlay.isExternalLink(url)) {
+    return false;
+  }
+
   var path = this.getPath(url);
 
   // Turn the list of administrative paths into a regular expression.
   if (!this.adminPathRegExp) {
-    var adminPaths = '^(' + Drupal.settings.overlay.paths.admin.replace(/\s+/g, ')$|^(') + ')$';
-    var nonAdminPaths = '^(' + Drupal.settings.overlay.paths.non_admin.replace(/\s+/g, ')$|^(') + ')$';
+    var prefix = '';
+    if (Drupal.settings.overlay.pathPrefixes.length) {
+      // Allow path prefixes used for language negatiation followed by slash,
+      // and the empty string.
+      prefix = '(' + Drupal.settings.overlay.pathPrefixes.join('/|') + '/|)';
+    }
+    var adminPaths = '^' + prefix + '(' + Drupal.settings.overlay.paths.admin.replace(/\s+/g, '|') + ')$';
+    var nonAdminPaths = '^' + prefix + '(' + Drupal.settings.overlay.paths.non_admin.replace(/\s+/g, '|') + ')$';
     adminPaths = adminPaths.replace(/\*/g, '.*');
     nonAdminPaths = nonAdminPaths.replace(/\*/g, '.*');
     this.adminPathRegExp = new RegExp(adminPaths);
@@ -324,6 +373,20 @@ Drupal.overlay.isAdminLink = function (url) {
   }
 
   return this.adminPathRegExp.exec(path) && !this.nonAdminPathRegExp.exec(path);
+};
+
+/**
+ * Determine whether a link is external to the site.
+ *
+ * @param url
+ *   The URL to be tested.
+ *
+ * @return boolean
+ *   TRUE if the URL is external to the site, FALSE otherwise.
+ */
+Drupal.overlay.isExternalLink = function (url) {
+  var re = RegExp('^((f|ht)tps?:)?//(?!' + window.location.host + ')');
+  return re.test(url);
 };
 
 /**
@@ -377,6 +440,27 @@ Drupal.overlay.eventhandlerAlterDisplacedElements = function (event) {
   // IE6 doesn't support maxWidth, use width instead.
   var maxWidthName = (typeof document.body.style.maxWidth == 'string') ? 'maxWidth' : 'width';
 
+  if (Drupal.overlay.leftSidedScrollbarOffset === undefined && $(document.documentElement).attr('dir') === 'rtl') {
+    // We can't use element.clientLeft to detect whether scrollbars are placed
+    // on the left side of the element when direction is set to "rtl" as most
+    // browsers dont't support it correctly.
+    // http://www.gtalbot.org/BugzillaSection/DocumentAllDHTMLproperties.html
+    // There seems to be absolutely no way to detect whether the scrollbar
+    // is on the left side in Opera; always expect scrollbar to be on the left.
+    if ($.browser.opera) {
+      Drupal.overlay.leftSidedScrollbarOffset = document.documentElement.clientWidth - this.iframeWindow.document.documentElement.clientWidth + this.iframeWindow.document.documentElement.clientLeft;
+    }
+    else if (this.iframeWindow.document.documentElement.clientLeft) {
+      Drupal.overlay.leftSidedScrollbarOffset = this.iframeWindow.document.documentElement.clientLeft;
+    }
+    else {
+      var el1 = $('<div style="direction: rtl; overflow: scroll;"></div>').appendTo(document.body);
+      var el2 = $('<div></div>').appendTo(el1);
+      Drupal.overlay.leftSidedScrollbarOffset = parseInt(el2[0].offsetLeft - el1[0].offsetLeft);
+      el1.remove();
+    }
+  }
+
   // Consider any element that should be visible above the overlay (such as
   // a toolbar).
   $('.overlay-displace-top, .overlay-displace-bottom').each(function () {
@@ -385,6 +469,10 @@ Drupal.overlay.eventhandlerAlterDisplacedElements = function (event) {
     // In IE, Shadow filter makes element to overlap the scrollbar with 1px.
     if (this.filters && this.filters.length && this.filters.item('DXImageTransform.Microsoft.Shadow')) {
       maxWidth -= 1;
+    }
+
+    if (Drupal.overlay.leftSidedScrollbarOffset) {
+      $(this).css('left', Drupal.overlay.leftSidedScrollbarOffset);
     }
 
     // Prevent displaced elements overlapping window's scrollbar.
@@ -399,7 +487,12 @@ Drupal.overlay.eventhandlerAlterDisplacedElements = function (event) {
     var offset = $(this).offset();
     var offsetRight = offset.left + $(this).outerWidth();
     if ((data.drupalOverlay && data.drupalOverlay.clip) || offsetRight > maxWidth) {
-      $(this).css('clip', 'rect(auto, ' + (maxWidth - offset.left) + 'px, ' + (documentHeight - offset.top) + 'px, auto)');
+      if (Drupal.overlay.leftSidedScrollbarOffset) {
+        $(this).css('clip', 'rect(auto, auto, ' + (documentHeight - offset.top) + 'px, ' + (Drupal.overlay.leftSidedScrollbarOffset + 2) + 'px)');
+      }
+      else {
+        $(this).css('clip', 'rect(auto, ' + (maxWidth - offset.left) + 'px, ' + (documentHeight - offset.top) + 'px, auto)');
+      }
       (data.drupalOverlay = data.drupalOverlay || {}).clip = true;
     }
   });
@@ -417,7 +510,7 @@ Drupal.overlay.eventhandlerAlterDisplacedElements = function (event) {
 Drupal.overlay.eventhandlerRestoreDisplacedElements = function (event) {
   var $displacedElements = $('.overlay-displace-top, .overlay-displace-bottom');
   try {
-    $displacedElements.css({ maxWidth: null, clip: null });
+    $displacedElements.css({ maxWidth: '', clip: '' });
   }
   // IE bug that doesn't allow unsetting style.clip (http://dev.jquery.com/ticket/6512).
   catch (err) {
@@ -472,7 +565,7 @@ Drupal.overlay.eventhandlerOverrideLink = function (event) {
 
   var target = $target[0];
   var href = target.href;
-  // Only handle links that have an href attribute and use the http(s) protocol.
+  // Only handle links that have an href attribute and use the HTTP(S) protocol.
   if (href != undefined && href != '' && target.protocol.match(/^https?\:/)) {
     var anchor = href.replace(target.ownerDocument.location.href, '');
     // Skip anchor links.
@@ -519,7 +612,14 @@ Drupal.overlay.eventhandlerOverrideLink = function (event) {
       else {
         // Add the overlay-context state to the link, so "overlay-restore" links
         // can restore the context.
-        $target.attr('href', $.param.fragment(href, { 'overlay-context': this.getPath(window.location) + window.location.search }));
+        if ($target[0].hash) {
+          // Leave links with an existing fragment alone. Adding an extra
+          // parameter to a link like "node/1#section-1" breaks the link.
+        }
+        else {
+          // For links with no existing fragment, add the overlay context.
+          $target.attr('href', $.param.fragment(href, { 'overlay-context': this.getPath(window.location) + window.location.search }));
+        }
 
         // When the link has a destination query parameter and that destination
         // is an admin link we need to fragmentize it. This will make it reopen
@@ -530,8 +630,11 @@ Drupal.overlay.eventhandlerOverrideLink = function (event) {
           $target.attr('href', $.param.querystring(href, { destination: fragmentizedDestination }));
         }
 
-        // Make the link open in the immediate parent of the frame.
-        $target.attr('target', '_parent');
+        // Make the link open in the immediate parent of the frame, unless the
+        // link already has a different target.
+        if (!$target.attr('target')) {
+          $target.attr('target', '_parent');
+        }
       }
     }
   }
@@ -625,37 +728,6 @@ Drupal.overlay.eventhandlerRefreshPage = function (event) {
 };
 
 /**
- * Event handler: makes sure that when the overlay is open no elements (except
- * for elements inside any displaced elements) of the parent document are
- * reachable through keyboard (TAB) navigation.
- *
- * @param event
- *   Event being triggered, with the following restrictions:
- *   - event.type: keydown
- *   - event.currentTarget: document
- */
-Drupal.overlay.eventhandlerRestrictKeyboardNavigation = function (event) {
-  if (!this.$tabbables) {
-    this.$tabbables = $(':tabbable');
-  }
-
-  if (event.keyCode && event.keyCode == $.ui.keyCode.TAB) {
-    // Whenever the focus is not inside the overlay (or a displaced element)
-    // move the focus along until it is.
-    var direction = event.shiftKey ? -1 : 1;
-    var current = this.$tabbables.index(event.target);
-    var $allowedParent = '#overlay-container, .overlay-displace-top, .overlay-displace-bottom';
-    if (current != -1 && this.$tabbables[current + direction] && !this.$tabbables.eq(current + direction).closest($allowedParent).length) {
-      while (this.$tabbables[current + direction] && !this.$tabbables.eq(current + direction).closest($allowedParent).length) {
-        current = current + direction;
-      }
-      // Move focus.
-      this.$tabbables.eq(current).focus();
-    }
-  }
-};
-
-/**
  * Event handler: dispatches events to the overlay document.
  *
  * @param event
@@ -673,7 +745,7 @@ Drupal.overlay.eventhandlerDispatchEvent = function (event) {
  * Make a regular admin link into a URL that will trigger the overlay to open.
  *
  * @param link
- *   A Javascript Link object (i.e. an <a> element).
+ *   A JavaScript Link object (i.e. an <a> element).
  * @param parentLocation
  *   (optional) URL to override the parent window's location with.
  *
@@ -803,13 +875,127 @@ Drupal.overlay.getDisplacement = function (region) {
   if (lastDisplaced.length) {
     displacement = lastDisplaced.offset().top + lastDisplaced.outerHeight();
 
-    // Remove height added by IE Shadow filter.
-    if (lastDisplaced[0].filters && lastDisplaced[0].filters.length && lastDisplaced[0].filters.item('DXImageTransform.Microsoft.Shadow')) {
+    // In modern browsers (including IE9), when box-shadow is defined, use the
+    // normal height.
+    var cssBoxShadowValue = lastDisplaced.css('box-shadow');
+    var boxShadow = (typeof cssBoxShadowValue !== 'undefined' && cssBoxShadowValue !== 'none');
+    // In IE8 and below, we use the shadow filter to apply box-shadow styles to
+    // the toolbar. It adds some extra height that we need to remove.
+    if (!boxShadow && /DXImageTransform\.Microsoft\.Shadow/.test(lastDisplaced.css('filter'))) {
       displacement -= lastDisplaced[0].filters.item('DXImageTransform.Microsoft.Shadow').strength;
       displacement = Math.max(0, displacement);
     }
   }
   return displacement;
+};
+
+/**
+ * Makes elements outside the overlay unreachable via the tab key.
+ *
+ * @param context
+ *   The part of the DOM that should have its tabindexes changed. Defaults to
+ *   the entire page.
+ */
+Drupal.overlay.makeDocumentUntabbable = function (context) {
+  // Manipulating tabindexes for the entire document is unacceptably slow in IE6
+  // and IE7, so in those browsers, the underlying page will still be reachable
+  // via the tab key. However, we still make the links within the Disable
+  // message unreachable, because the same message also exists within the
+  // child document. The duplicate copy in the underlying document is only for
+  // assisting screen-reader users navigating the document with reading commands
+  // that follow markup order rather than tab order.
+  if (jQuery.browser.msie && parseInt(jQuery.browser.version, 10) < 8) {
+    $('#overlay-disable-message a', context).attr('tabindex', -1);
+    return;
+  }
+
+  context = context || document.body;
+  var $overlay, $tabbable, $hasTabindex;
+
+  // Determine which elements on the page already have a tabindex.
+  $hasTabindex = $('[tabindex] :not(.overlay-element)', context);
+  // Record the tabindex for each element, so we can restore it later.
+  $hasTabindex.each(Drupal.overlay._recordTabindex);
+  // Add the tabbable elements from the current context to any that we might
+  // have previously recorded.
+  Drupal.overlay._hasTabindex = $hasTabindex.add(Drupal.overlay._hasTabindex);
+
+  // Set tabindex to -1 on everything outside the overlay and toolbars, so that
+  // the underlying page is unreachable.
+
+  // By default, browsers make a, area, button, input, object, select, textarea,
+  // and iframe elements reachable via the tab key.
+  $tabbable = $('a, area, button, input, object, select, textarea, iframe');
+  // If another element (like a div) has a tabindex, it's also tabbable.
+  $tabbable = $tabbable.add($hasTabindex);
+  // Leave links inside the overlay and toolbars alone.
+  $overlay = $('.overlay-element, #overlay-container, .overlay-displace-top, .overlay-displace-bottom').find('*');
+  $tabbable = $tabbable.not($overlay);
+  // We now have a list of everything in the underlying document that could
+  // possibly be reachable via the tab key. Make it all unreachable.
+  $tabbable.attr('tabindex', -1);
+};
+
+/**
+ * Restores the original tabindex value of a group of elements.
+ *
+ * @param context
+ *   The part of the DOM that should have its tabindexes restored. Defaults to
+ *   the entire page.
+ */
+Drupal.overlay.makeDocumentTabbable = function (context) {
+  // Manipulating tabindexes is unacceptably slow in IE6 and IE7. In those
+  // browsers, the underlying page was never made unreachable via tab, so
+  // there is no work to be done here.
+  if (jQuery.browser.msie && parseInt(jQuery.browser.version, 10) < 8) {
+    return;
+  }
+
+  var $needsTabindex;
+  context = context || document.body;
+
+  // Make the underlying document tabbable again by removing all existing
+  // tabindex attributes.
+  var $tabindex = $('[tabindex]', context);
+  if (jQuery.browser.msie && parseInt(jQuery.browser.version, 10) < 8) {
+    // removeAttr('tabindex') is broken in IE6-7, but the DOM function
+    // removeAttribute works.
+    var i;
+    var length = $tabindex.length;
+    for (i = 0; i < length; i++) {
+      $tabindex[i].removeAttribute('tabIndex');
+    }
+  }
+  else {
+    $tabindex.removeAttr('tabindex');
+  }
+
+  // Restore the tabindex attributes that existed before the overlay was opened.
+  $needsTabindex = $(Drupal.overlay._hasTabindex, context);
+  $needsTabindex.each(Drupal.overlay._restoreTabindex);
+  Drupal.overlay._hasTabindex = Drupal.overlay._hasTabindex.not($needsTabindex);
+};
+
+/**
+ * Record the tabindex for an element, using $.data.
+ *
+ * Meant to be used as a jQuery.fn.each callback.
+ */
+Drupal.overlay._recordTabindex = function () {
+  var $element = $(this);
+  var tabindex = $(this).attr('tabindex');
+  $element.data('drupalOverlayOriginalTabIndex', tabindex);
+};
+
+/**
+ * Restore an element's original tabindex.
+ *
+ * Meant to be used as a jQuery.fn.each callback.
+ */
+Drupal.overlay._restoreTabindex = function () {
+  var $element = $(this);
+  var tabindex = $element.data('drupalOverlayOriginalTabIndex');
+  $element.attr('tabindex', tabindex);
 };
 
 /**

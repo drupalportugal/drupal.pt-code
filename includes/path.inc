@@ -1,5 +1,4 @@
 <?php
-// $Id: path.inc,v 1.71 2010/08/09 00:13:06 dries Exp $
 
 /**
  * @file
@@ -14,12 +13,12 @@
  * Initialize the $_GET['q'] variable to the proper normal path.
  */
 function drupal_path_initialize() {
-  if (!empty($_GET['q'])) {
-    $_GET['q'] = drupal_get_normal_path($_GET['q']);
+  // Ensure $_GET['q'] is set before calling drupal_normal_path(), to support
+  // path caching with hook_url_inbound_alter().
+  if (empty($_GET['q'])) {
+    $_GET['q'] = variable_get('site_frontpage', 'node');
   }
-  else {
-    $_GET['q'] = drupal_get_normal_path(variable_get('site_frontpage', 'node'));
-  }
+  $_GET['q'] = drupal_get_normal_path($_GET['q']);
 }
 
 /**
@@ -94,13 +93,30 @@ function drupal_lookup_path($action, $path = '', $path_language = NULL) {
         if ($cached = cache_get($cid, 'cache_path')) {
           $cache['system_paths'] = $cached->data;
           // Now fetch the aliases corresponding to these system paths.
-          // We order by ASC and overwrite array keys to ensure the correct
-          // alias is used when there are multiple aliases per path.
-          $cache['map'][$path_language] = db_query("SELECT source, alias FROM {url_alias} WHERE source IN (:system) AND language IN (:language, :language_none) ORDER BY language ASC, pid ASC", array(
+          $args = array(
             ':system' => $cache['system_paths'],
             ':language' => $path_language,
             ':language_none' => LANGUAGE_NONE,
-          ))->fetchAllKeyed();
+          );
+          // Always get the language-specific alias before the language-neutral
+          // one. For example 'de' is less than 'und' so the order needs to be
+          // ASC, while 'xx-lolspeak' is more than 'und' so the order needs to
+          // be DESC. We also order by pid ASC so that fetchAllKeyed() returns
+          // the most recently created alias for each source. Subsequent queries
+          // using fetchField() must use pid DESC to have the same effect.
+          // For performance reasons, the query builder is not used here.
+          if ($path_language == LANGUAGE_NONE) {
+            // Prevent PDO from complaining about a token the query doesn't use.
+            unset($args[':language']);
+            $result = db_query('SELECT source, alias FROM {url_alias} WHERE source IN (:system) AND language = :language_none ORDER BY pid ASC', $args);
+          }
+          elseif ($path_language < LANGUAGE_NONE) {
+            $result = db_query('SELECT source, alias FROM {url_alias} WHERE source IN (:system) AND language IN (:language, :language_none) ORDER BY language ASC, pid ASC', $args);
+          }
+          else {
+            $result = db_query('SELECT source, alias FROM {url_alias} WHERE source IN (:system) AND language IN (:language, :language_none) ORDER BY language DESC, pid ASC', $args);
+          }
+          $cache['map'][$path_language] = $result->fetchAllKeyed();
           // Keep a record of paths with no alias to avoid querying twice.
           $cache['no_aliases'][$path_language] = array_flip(array_diff_key($cache['system_paths'], array_keys($cache['map'][$path_language])));
         }
@@ -117,12 +133,22 @@ function drupal_lookup_path($action, $path = '', $path_language = NULL) {
       }
       // For system paths which were not cached, query aliases individually.
       elseif (!isset($cache['no_aliases'][$path_language][$path])) {
-        // Get the most fitting result falling back with alias without language
-        $alias = db_query("SELECT alias FROM {url_alias} WHERE source = :source AND language IN (:language, :language_none) ORDER BY language DESC, pid DESC", array(
+        $args = array(
           ':source' => $path,
           ':language' => $path_language,
           ':language_none' => LANGUAGE_NONE,
-        ))->fetchField();
+        );
+        // See the queries above.
+        if ($path_language == LANGUAGE_NONE) {
+          unset($args[':language']);
+          $alias = db_query("SELECT alias FROM {url_alias} WHERE source = :source AND language = :language_none ORDER BY pid DESC", $args)->fetchField();
+        }
+        elseif ($path_language > LANGUAGE_NONE) {
+          $alias = db_query("SELECT alias FROM {url_alias} WHERE source = :source AND language IN (:language, :language_none) ORDER BY language DESC, pid DESC", $args)->fetchField();
+        }
+        else {
+          $alias = db_query("SELECT alias FROM {url_alias} WHERE source = :source AND language IN (:language, :language_none) ORDER BY language ASC, pid DESC", $args)->fetchField();
+        }
         $cache['map'][$path_language][$path] = $alias;
         return $alias;
       }
@@ -133,12 +159,23 @@ function drupal_lookup_path($action, $path = '', $path_language = NULL) {
       // Look for the value $path within the cached $map
       $source = FALSE;
       if (!isset($cache['map'][$path_language]) || !($source = array_search($path, $cache['map'][$path_language]))) {
-        // Get the most fitting result falling back with alias without language
-        if ($source = db_query("SELECT source FROM {url_alias} WHERE alias = :alias AND language IN (:language, :language_none) ORDER BY language DESC, pid DESC", array(
-                     ':alias' => $path,
-                     ':language' => $path_language,
-                     ':language_none' => LANGUAGE_NONE))
-            ->fetchField()) {
+        $args = array(
+          ':alias' => $path,
+          ':language' => $path_language,
+          ':language_none' => LANGUAGE_NONE,
+        );
+        // See the queries above.
+        if ($path_language == LANGUAGE_NONE) {
+          unset($args[':language']);
+          $result = db_query("SELECT source FROM {url_alias} WHERE alias = :alias AND language = :language_none ORDER BY pid DESC", $args);
+        }
+        elseif ($path_language > LANGUAGE_NONE) {
+          $result = db_query("SELECT source FROM {url_alias} WHERE alias = :alias AND language IN (:language, :language_none) ORDER BY language DESC, pid DESC", $args);
+        }
+        else {
+          $result = db_query("SELECT source FROM {url_alias} WHERE alias = :alias AND language IN (:language, :language_none) ORDER BY language ASC, pid DESC", $args);
+        }
+        if ($source = $result->fetchField()) {
           $cache['map'][$path_language][$source] = $path;
         }
         else {
@@ -349,7 +386,7 @@ function drupal_path_alias_whitelist_rebuild($source = NULL) {
 }
 
 /**
- * Fetch a specific URL alias from the database.
+ * Fetches a specific URL alias from the database.
  *
  * @param $conditions
  *   A string representing the source, a number representing the pid, or an
@@ -394,21 +431,27 @@ function path_load($conditions) {
  *   - language: (optional) The language of the alias.
  */
 function path_save(&$path) {
-  $path += array('pid' => NULL, 'language' => LANGUAGE_NONE);
+  $path += array('language' => LANGUAGE_NONE);
 
-  // Insert or update the alias.
-  $status = drupal_write_record('url_alias', $path, (!empty($path['pid']) ? 'pid' : array()));
-
-  // Verify that a record was written.
-  if ($status) {
-    if ($status === SAVED_NEW) {
-      module_invoke_all('path_insert', $path);
-    }
-    else {
-      module_invoke_all('path_update', $path);
-    }
-    drupal_clear_path_cache($path['source']);
+  // Load the stored alias, if any.
+  if (!empty($path['pid']) && !isset($path['original'])) {
+    $path['original'] = path_load($path['pid']);
   }
+
+  if (empty($path['pid'])) {
+    drupal_write_record('url_alias', $path);
+    module_invoke_all('path_insert', $path);
+  }
+  else {
+    drupal_write_record('url_alias', $path, array('pid'));
+    module_invoke_all('path_update', $path);
+  }
+
+  // Clear internal properties.
+  unset($path['original']);
+
+  // Clear the static alias cache.
+  drupal_clear_path_cache($path['source']);
 }
 
 /**
@@ -432,11 +475,11 @@ function path_delete($criteria) {
 }
 
 /**
- * Determine whether a path is in the administrative section of the site.
+ * Determines whether a path is in the administrative section of the site.
  *
- * By default, paths are considered to be non-administrative. If a path does not
- * match any of the patterns in path_get_admin_paths(), or if it matches both
- * administrative and non-administrative patterns, it is considered
+ * By default, paths are considered to be non-administrative. If a path does
+ * not match any of the patterns in path_get_admin_paths(), or if it matches
+ * both administrative and non-administrative patterns, it is considered
  * non-administrative.
  *
  * @param $path
@@ -460,7 +503,7 @@ function path_is_admin($path) {
 }
 
 /**
- * Get a list of administrative and non-administrative paths.
+ * Gets a list of administrative and non-administrative paths.
  *
  * @return array
  *   An associative array containing the following keys:

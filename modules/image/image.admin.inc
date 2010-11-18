@@ -1,5 +1,4 @@
 <?php
-// $Id: image.admin.inc,v 1.27 2010/10/21 20:50:43 webchick Exp $
 
 /**
  * @file
@@ -227,7 +226,7 @@ function image_style_form_submit($form, &$form_state) {
 
   image_style_save($style);
   if ($form_state['values']['op'] == t('Update style')) {
-    drupal_set_message('Changes to the style have been saved.');
+    drupal_set_message(t('Changes to the style have been saved.'));
   }
   $form_state['redirect'] = 'admin/config/media/image-styles/edit/' . $style['name'];
 }
@@ -293,7 +292,7 @@ function image_style_name_validate($element, $form_state) {
  * @ingroup forms
  * @see image_style_delete_form_submit()
  */
-function image_style_delete_form($form, $form_state, $style) {
+function image_style_delete_form($form, &$form_state, $style) {
   $form_state['image_style'] = $style;
 
   $replacement_styles = array_diff_key(image_style_options(), array($style['name'] => ''));
@@ -327,7 +326,7 @@ function image_style_delete_form_submit($form, &$form_state) {
 /**
  * Confirmation form to revert a database style to its default.
  */
-function image_style_revert_form($form, $form_state, $style) {
+function image_style_revert_form($form, &$form_state, $style) {
   $form_state['image_style'] = $style;
 
   return confirm_form(
@@ -343,7 +342,7 @@ function image_style_revert_form($form, $form_state, $style) {
  * Submit handler to convert an overridden style to its default.
  */
 function image_style_revert_form_submit($form, &$form_state) {
-  drupal_set_message(t('The %style style has been revert to its defaults.', array('%style' => $form_state['image_style']['name'])));
+  drupal_set_message(t('The %style style has been reverted to its defaults.', array('%style' => $form_state['image_style']['name'])));
   image_default_style_revert($form_state['image_style']);
   $form_state['redirect'] = 'admin/config/media/image-styles';
 }
@@ -700,10 +699,10 @@ function theme_image_style_effects($variables) {
   $rows = array();
 
   foreach (element_children($form) as $key) {
+    $row = array();
+    $form[$key]['weight']['#attributes']['class'] = array('image-effect-order-weight');
     if (is_numeric($key)) {
-      $form[$key]['weight']['#attributes']['class'] = array('image-effect-order-weight');
       $summary = drupal_render($form[$key]['summary']);
-      $row = array();
       $row[] = drupal_render($form[$key]['label']) . (empty($summary) ? '' : ' ' . $summary);
       $row[] = drupal_render($form[$key]['weight']);
       $row[] = drupal_render($form[$key]['configure']);
@@ -711,8 +710,6 @@ function theme_image_style_effects($variables) {
     }
     else {
       // Add the row for adding a new image effect.
-      $form['new']['weight']['#attributes']['class'] = array('image-effect-order-weight');
-      $row = array();
       $row[] = '<div class="image-style-new">' . drupal_render($form['new']['new']) . drupal_render($form['new']['add']) . '</div>';
       $row[] = drupal_render($form['new']['weight']);
       $row[] = array('data' => '', 'colspan' => 2);
@@ -721,7 +718,7 @@ function theme_image_style_effects($variables) {
     if (!isset($form[$key]['#access']) || $form[$key]['#access']) {
       $rows[] = array(
         'data' => $row,
-        'class' => !empty($form[$key]['weight']['#access']) ? array('draggable') : array(),
+        'class' => !empty($form[$key]['weight']['#access']) || $key == 'new' ? array('draggable') : array(),
       );
     }
   }

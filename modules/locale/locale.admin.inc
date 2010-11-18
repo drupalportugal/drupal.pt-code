@@ -1,5 +1,4 @@
 <?php
-// $Id: locale.admin.inc,v 1.20 2010/10/20 01:31:07 dries Exp $
 
 /**
  * @file
@@ -7,8 +6,12 @@
  */
 
 /**
- * @defgroup locale-language-overview Language overview functionality
+ * @defgroup locale-language-administration Language administration interface
  * @{
+ * Administration interface for languages.
+ *
+ * These functions provide the user interface to show, add, edit and
+ * delete languages as well as providing options for language negotiation.
  */
 
 /**
@@ -77,9 +80,19 @@ function theme_locale_languages_overview_form($variables) {
       if ($key == $default->language) {
         $form['enabled'][$key]['#attributes']['disabled'] = 'disabled';
       }
+
+      // Add invisible labels for the checkboxes and radio buttons in the table
+      // for accessibility. These changes are only required and valid when the
+      // form is themed as a table, so it would be wrong to perform them in the
+      // form constructor.
+      $title = drupal_render($form['name'][$key]);
+      $form['enabled'][$key]['#title'] = t('Enable !title', array('!title' => $title));
+      $form['enabled'][$key]['#title_display'] = 'invisible';
+      $form['site_default'][$key]['#title'] = t('Set !title as default', array('!title' => $title));
+      $form['site_default'][$key]['#title_display'] = 'invisible';
       $rows[] = array(
         'data' => array(
-          '<strong>' . drupal_render($form['name'][$key]) . '</strong>',
+          '<strong>' . $title . '</strong>',
           drupal_render($form['native'][$key]),
           check_plain($key),
           drupal_render($form['direction'][$key]),
@@ -107,7 +120,9 @@ function theme_locale_languages_overview_form($variables) {
 function locale_languages_overview_form_submit($form, &$form_state) {
   $languages = language_list();
   $default = language_default();
+  $url_prefixes = variable_get('locale_language_negotiation_url_part', LOCALE_LANGUAGE_NEGOTIATION_URL_PREFIX) == LOCALE_LANGUAGE_NEGOTIATION_URL_PREFIX;
   $enabled_count = 0;
+
   foreach ($languages as $langcode => $language) {
     if ($form_state['values']['site_default'] == $langcode || $default->language == $langcode) {
       // Automatically enable the default language and the language
@@ -115,6 +130,16 @@ function locale_languages_overview_form_submit($form, &$form_state) {
       // value from that disabled checkbox).
       $form_state['values']['enabled'][$langcode] = 1;
     }
+
+    // If language URL prefixes are enabled we must clear language domains and
+    // assign a valid prefix to each non-default language.
+    if ($url_prefixes) {
+      $language->domain = '';
+      if (empty($language->prefix) && $form_state['values']['site_default'] != $langcode) {
+        $language->prefix = $langcode;
+      }
+    }
+
     if ($form_state['values']['enabled'][$langcode]) {
       $enabled_count++;
       $language->enabled = 1;
@@ -122,19 +147,25 @@ function locale_languages_overview_form_submit($form, &$form_state) {
     else {
       $language->enabled = 0;
     }
+
     $language->weight = $form_state['values']['weight'][$langcode];
+
     db_update('languages')
       ->fields(array(
         'enabled' => $language->enabled,
         'weight' => $language->weight,
+        'prefix' => $language->prefix,
+        'domain' => $language->domain,
       ))
       ->condition('language', $langcode)
       ->execute();
+
     $languages[$langcode] = $language;
   }
-  drupal_set_message(t('Configuration saved.'));
+
   variable_set('language_default', $languages[$form_state['values']['site_default']]);
   variable_set('language_count', $enabled_count);
+  drupal_set_message(t('Configuration saved.'));
 
   // Changing the language settings impacts the interface.
   cache_clear_all('*', 'cache_page', TRUE);
@@ -143,14 +174,6 @@ function locale_languages_overview_form_submit($form, &$form_state) {
   $form_state['redirect'] = 'admin/config/regional/language';
   return;
 }
-/**
- * @} End of "locale-language-overview"
- */
-
-/**
- * @defgroup locale-language-add-edit Language addition and editing functionality
- * @{
- */
 
 /**
  * User interface for the language addition screen.
@@ -252,8 +275,7 @@ function _locale_languages_common_controls(&$form, $language = NULL) {
   else {
     $form['langcode'] = array('#type' => 'textfield',
       '#title' => t('Language code'),
-      '#size' => 12,
-      '#maxlength' => 60,
+      '#maxlength' => 12,
       '#required' => TRUE,
       '#default_value' => @$language->language,
       '#disabled' => (isset($language->language)),
@@ -284,7 +306,7 @@ function _locale_languages_common_controls(&$form, $language = NULL) {
     '#title' => t('Language domain'),
     '#maxlength' => 128,
     '#default_value' => @$language->domain,
-    '#description' => t('URL <strong>including protocol</strong> to use for this language, if your <em>Detection and selection</em> settings use URL domains. For the default language, this value may be left blank. <strong>Modifying this value may break existing URLs. Use with caution in a production environment.</strong> Example: Specifying "http://example.de" or "http://de.example.com" as language domains for German results in URLs like "http://example.de/contact" and "http://de.example.com/contact", respectively.'),
+    '#description' => t('The domain name to use for this language if URL domains are used for <em>Detection and selection</em>. Leave blank for the default language. <strong>Changing this value may break existing URLs.</strong> Example: Specifying "de.example.com" as language domain for German will result in an URL like "http://de.example.com/contact".'),
   );
   $form['direction'] = array('#type' => 'radios',
     '#title' => t('Direction'),
@@ -366,13 +388,13 @@ function locale_languages_edit_form_validate($form, &$form_state) {
     form_set_error('prefix', t('Domain and path prefix values should not be set at the same time.'));
   }
   if (!empty($form_state['values']['domain']) && $duplicate = db_query("SELECT language FROM {languages} WHERE domain = :domain AND language <> :language", array(':domain' => $form_state['values']['domain'], ':language' => $form_state['values']['langcode']))->fetchField()) {
-    form_set_error('domain', t('The domain (%domain) is already tied to a language (%language).', array('%domain' => $form_state['values']['domain'], '%language' => $duplicate->language)));
+    form_set_error('domain', t('The domain (%domain) is already tied to a language (%language).', array('%domain' => $form_state['values']['domain'], '%language' => $duplicate)));
   }
   if (empty($form_state['values']['prefix']) && language_default('language') != $form_state['values']['langcode'] && empty($form_state['values']['domain'])) {
     form_set_error('prefix', t('Only the default language can have both the domain and prefix empty.'));
   }
   if (!empty($form_state['values']['prefix']) && $duplicate = db_query("SELECT language FROM {languages} WHERE prefix = :prefix AND language <> :language", array(':prefix' => $form_state['values']['prefix'], ':language' => $form_state['values']['langcode']))->fetchField()) {
-    form_set_error('prefix', t('The prefix (%prefix) is already tied to a language (%language).', array('%prefix' => $form_state['values']['prefix'], '%language' => $duplicate->language)));
+    form_set_error('prefix', t('The prefix (%prefix) is already tied to a language (%language).', array('%prefix' => $form_state['values']['prefix'], '%language' => $duplicate)));
   }
 }
 
@@ -403,14 +425,6 @@ function locale_languages_edit_form_submit($form, &$form_state) {
   $form_state['redirect'] = 'admin/config/regional/language';
   return;
 }
-/**
- * @} End of "locale-language-add-edit"
- */
-
-/**
- * @defgroup locale-language-delete Language deletion functionality
- * @{
- */
 
 /**
  * User interface for the language deletion confirmation screen.
@@ -462,6 +476,9 @@ function locale_languages_delete_form_submit($form, &$form_state) {
       ->fields(array('language' => ''))
       ->condition('language', $form_state['values']['langcode'])
       ->execute();
+    if ($languages[$form_state['values']['langcode']]->enabled) {
+      variable_set('language_count', variable_get('language_count', 1) - 1);
+    }
     module_invoke_all('multilingual_settings_changed');
     $variables = array('%locale' => $languages[$form_state['values']['langcode']]->name);
     drupal_set_message(t('The language %locale has been removed.', $variables));
@@ -474,14 +491,6 @@ function locale_languages_delete_form_submit($form, &$form_state) {
   $form_state['redirect'] = 'admin/config/regional/language';
   return;
 }
-/**
- * @} End of "locale-language-add-edit"
- */
-
-/**
- * @defgroup locale-languages-negotiation Language negotiation options
- * @{
- */
 
 /**
  * Setting for language negotiation options
@@ -541,6 +550,12 @@ function _locale_languages_configure_form_language_table(&$form, $type) {
   asort($providers_weight);
 
   foreach ($providers_weight as $id => $weight) {
+    // A language provider might be no more available if the defining module has
+    // been disabled after the last configuration saving.
+    if (!isset($language_providers[$id])) {
+      continue;
+    }
+
     $enabled = isset($enabled_providers[$id]);
     $provider = $language_providers[$id];
 
@@ -658,7 +673,6 @@ function theme_locale_languages_configure_form($variables) {
  * Submit handler for language negotiation settings.
  */
 function locale_languages_configure_form_submit($form, &$form_state) {
-  $language_types = array();
   $configurable_types = $form['#language_types'];
 
   foreach ($configurable_types as $type) {
@@ -666,7 +680,6 @@ function locale_languages_configure_form_submit($form, &$form_state) {
     $enabled_providers = $form_state['values'][$type]['enabled'];
     $enabled_providers[LANGUAGE_NEGOTIATION_DEFAULT] = TRUE;
     $providers_weight = $form_state['values'][$type]['weight'];
-    $language_types[$type] = TRUE;
 
     foreach ($providers_weight as $id => $weight) {
       if ($enabled_providers[$id]) {
@@ -680,27 +693,11 @@ function locale_languages_configure_form_submit($form, &$form_state) {
     variable_set("locale_language_providers_weight_$type", $providers_weight);
   }
 
-  // Save non-configurable language types negotiation.
-  $language_types_info = language_types_info();
-  $defined_providers = $form['#language_providers'];
-  foreach ($language_types_info as $type => $info) {
-    if (isset($info['fixed'])) {
-      $language_types[$type] = FALSE;
-      $negotiation = array();
-      foreach ($info['fixed'] as $weight => $id) {
-        if (isset($defined_providers[$id])) {
-          $negotiation[$id] = $defined_providers[$id];
-          $negotiation[$id]['weight'] = $weight;
-        }
-      }
-      language_negotiation_set($type, $negotiation);
-    }
-  }
+  // Update non-configurable language types and the related language negotiation
+  // configuration.
+  language_types_set();
 
-  // Save language types.
-  variable_set('language_types', $language_types);
-
-  $form_state['redirect'] = 'admin/config/regional/language';
+  $form_state['redirect'] = 'admin/config/regional/language/configure';
   drupal_set_message(t('Language negotiation configuration saved.'));
 }
 
@@ -741,12 +738,16 @@ function locale_language_providers_session_form($form, &$form_state) {
 }
 
 /**
- * @} End of "locale-languages-negotiation"
+ * @} End of "locale-language-administration"
  */
 
 /**
- * @defgroup locale-translate-overview Translation overview screen.
+ * @defgroup locale-translate-administration-screens Translation administration screens
  * @{
+ * Screens for translation administration.
+ *
+ * These functions provide various screens as administration interface
+ * to import, export and view translations.
  */
 
 /**
@@ -785,14 +786,6 @@ function locale_translate_overview_screen() {
 
   return theme('table', array('header' => $headers, 'rows' => $rows));
 }
-/**
- * @} End of "locale-translate-overview"
- */
-
-/**
- * @defgroup locale-translate-seek Translation search screen.
- * @{
- */
 
 /**
  * String search screen.
@@ -930,15 +923,6 @@ function locale_translation_filter_form_submit($form, &$form_state) {
 }
 
 /**
- * @} End of "locale-translate-seek"
- */
-
-/**
- * @defgroup locale-translate-import Translation import screen.
- * @{
- */
-
-/**
  * User interface for the translation import screen.
  */
 function locale_translate_import_form($form) {
@@ -1027,14 +1011,6 @@ function locale_translate_import_form_submit($form, &$form_state) {
   $form_state['redirect'] = 'admin/config/regional/translate';
   return;
 }
-/**
- * @} End of "locale-translate-import"
- */
-
-/**
- * @defgroup locale-translate-export Translation export screen.
- * @{
- */
 
 /**
  * User interface for the translation export screen.
@@ -1114,12 +1090,16 @@ function locale_translate_export_po_form_submit($form, &$form_state) {
   _locale_export_po($language, _locale_export_po_generate($language, _locale_export_get_strings($language, $form_state['values']['group'])));
 }
 /**
- * @} End of "locale-translate-export"
+ * @} End of "locale-translate-administration-screens"
  */
 
 /**
- * @defgroup locale-translate-edit Translation text editing
+ * @defgroup locale-translate-edit-delete Translation editing/deletion interface
  * @{
+ * Edit and delete translation strings.
+ *
+ * These functions provide the user interface to edit and delete
+ * translation strings.
  */
 
 /**
@@ -1254,14 +1234,6 @@ function locale_translate_edit_form_submit($form, &$form_state) {
   $form_state['redirect'] = 'admin/config/regional/translate/translate';
   return;
 }
-/**
- * @} End of "locale-translate-edit"
- */
-
-/**
- * @defgroup locale-translate-delete Translation delete interface.
- * @{
- */
 
 /**
  * String deletion confirmation page.
@@ -1300,7 +1272,7 @@ function locale_translate_delete_form_submit($form, &$form_state) {
   $form_state['redirect'] = 'admin/config/regional/translate/translate';
 }
 /**
- * @} End of "locale-translate-delete"
+ * @} End of "locale-translate-edit-delete"
  */
 
 /**

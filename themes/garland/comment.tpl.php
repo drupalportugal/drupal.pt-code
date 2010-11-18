@@ -1,13 +1,12 @@
 <?php
-// $Id: comment.tpl.php,v 1.20 2010/01/04 03:57:19 webchick Exp $
 ?>
 <div class="<?php print $classes . ' ' . $zebra; ?>"<?php print $attributes; ?>>
 
   <div class="clearfix">
 
-    <span class="submitted"><?php print $created; ?> — <?php print $author; ?></span>
+    <span class="submitted"><?php print $submitted ?></span>
 
-  <?php if ($new) : ?>
+  <?php if ($new): ?>
     <span class="new"><?php print drupal_ucfirst($new) ?></span>
   <?php endif; ?>
 
