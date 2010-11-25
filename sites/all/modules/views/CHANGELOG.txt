@@ -449,4 +449,31 @@ Views 3.x-7.x-dev
     o #881680 by brianV and longwave: Avoid unnecessary invoking of view objects for argument validation when no argument validation is necessary.
     o #767244 by Magnus: Fix some untranslatable strings due to less than and greater than characters.
     o #855280 by dereine: Exposed forms set "Input required" lose exposed sorts.
+    o #935388 by infojunkie: Add post_build and post_execute hooks similar to post_render.
     o #973496 by das-peter: Don't use call-time-reference for comment_view.
+    o #938806 by jenlampton: Node: title field should link to node by default.
+    o #956654 by mdupont: Translation for "offset" field in dates needed work.
+    o #931390 by dww: Optimize boolean logic by using "= 1" rather than "<> 0" for faster queries.
+    o #567918 by iamjon: Improve documentation for token replacement.
+    o #881468 by longwave: Improve performance by static caching results of argument validation because menu likes to double validate things.
+    o #964266 by dereine: cache_expire() missing $type.
+    o #477984 by demeritcowboy, fatstar415, mike dodd, dagmar: Properly handle value for "empty" and "not empty" special operators.
+    o #768060 by EmmanueleQuinto, xjm, others: Make sure that render alter options do not accidentally get blown up for empty fields.
+    o #847724 by dereine: Allow jump menu "Summary" style to customize choose text, just like the regular summary style.
+    o #669636 by dereine and bojanz: Convert the rest of the field handlers that have link options to use the advanced render.
+    o #871578 by dereine: Comment "new" might not work right without a comment count field.
+    o #910864 by Bevan, dereine: exposed filter blocks should not be cached by core block caching.
+    o Remove unused/lost view::render_exposed_form.
+    o #776830: Fix pager settings on attachments and feeds.
+    o #835544 by iamjon: export broke if key contained an apostrophe.
+    o #941990 by master-of-magic: Link to node when using relationships could occasionally lose track and create bad links.
+    o #833790: Click sort could break on fields that were actually formulas.
+    o #963454 by dereine: Remove related terms data definitions.
+    o #976098 by dereine: Fix notice in field field handler render function.
+    o #626732 by dereine: Fix analyze ok-button and added a test for it.
+    o #338584 by superbaloo: Allow displays to be re-ordered in the UI.
+    o #502348: Move advanced rendering up the chain a little bit to allow for non-standard uses of fields, such as grouping, to use advanced rendering features.
+    o #943984 by Kars-T: Remove extraneous line of code.
+    o #751970 by dereine: View list form auto submit on change.
+    o #502348 followup.
+    o #977846 by dereine: Use ctools_process_dependency for table plugin. (follow up of #502348).

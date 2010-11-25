@@ -1,0 +1,160 @@
+<?php
+// $Id: pathauto.install,v 1.26 2010/08/07 21:27:00 davereid Exp $
+
+/**
+ * @file
+ * Install, update, and uninstall functions for Pathauto.
+ *
+ * @ingroup pathauto
+ */
+
+/**
+ * Implements hook_install().
+ */
+function pathauto_install() {
+  // Set some default variables necessary for the module to perform.
+  variable_set('pathauto_node_pattern', 'content/[node:title]');
+  variable_set('pathauto_taxonomy_pattern', '[term:vocabulary]/[term:name]');
+  variable_set('pathauto_forum_pattern', '[term:vocabulary]/[term:name]');
+  variable_set('pathauto_user_pattern', 'users/[user:name]');
+  variable_set('pathauto_blog_pattern', 'blogs/[user:name]');
+
+  // Set the default separator character to replace instead of remove (default).
+  variable_set('pathauto_punctuation_hyphen', 1);
+
+  // Set the weight to 1
+  db_update('system')
+    ->fields(array('weight' => 1))
+    ->condition('type', 'module')
+    ->condition('name', 'pathauto')
+    ->execute();
+}
+
+/**
+ * Implements hook_uninstall().
+ */
+function pathauto_uninstall() {
+  // Delete all the pathauto variables and then clear the variable cache
+  db_query("DELETE FROM {variable} WHERE name LIKE 'pathauto_%'");
+  cache_clear_all('variables', 'cache');
+}
+
+/**
+ * Set the weight a little heavier to allow taxonomy to do its work.
+ */
+function pathauto_update_1() {
+  db_update('system')
+    ->fields(array('weight' => 1))
+    ->condition('type', 'module')
+    ->condition('name', 'pathauto')
+    ->execute();
+}
+
+/**
+ * pathauto_update_4 was a backport of a feature which is in core of Drupal 6
+ * hence it is removed from the 6.x branch even though the goal is to support
+ * Pathauto 5.x-1.x -> 6.x-2.x upgrades.
+ */
+
+/**
+ * Delete the pathauto_node_supportsfeeds.
+ */
+function pathauto_update_3() {
+  // Do nothing, this update was a mistake
+}
+
+/**
+ * New style naming for the punctuation chars.
+ */
+function pathauto_update_4() {
+  variable_set('pathauto_punctuation_quotes', variable_get('pathauto_quotes', 0));
+  variable_del('pathauto_quotes');
+}
+
+/**
+ * Remove the url_alias_extra table which wasn't used.
+ */
+function pathauto_update_7() {
+  if (db_table_exists('url_alias_extra')) {
+    db_drop_table('url_alias_extra');
+  }
+}
+
+/**
+ * Remove the unsupported user/%/contact and user/%/tracker pattern variables.
+ */
+function pathauto_update_6200() {
+  variable_del('pathauto_contact_bulkupdate');
+  variable_del('pathauto_contact_pattern');
+  variable_del('pathauto_contact_supportsfeeds');
+  variable_del('pathauto_contact_applytofeeds');
+  variable_del('pathauto_tracker_bulkupdate');
+  variable_del('pathauto_tracker_pattern');
+  variable_del('pathauto_tracker_supportsfeeds');
+  variable_del('pathauto_tracker_applytofeeds');
+}
+
+/**
+ * Empty update since it is handled by pathauto_update_7000().
+ */
+function pathauto_update_6201() {
+}
+
+/**
+ * Remove obsolete variables since batch API is now used.
+ */
+function pathauto_update_7000() {
+  variable_del('pathauto_max_bulk_update');
+  variable_del('pathauto_node_bulkupdate');
+  variable_del('pathauto_taxonomy_bulkupdate');
+  variable_del('pathauto_forum_bulkupdate');
+  variable_del('pathauto_user_bulkupdate');
+  variable_del('pathauto_blog_bulkupdate');
+  variable_del('pathauto_modulelist');
+  variable_del('pathauto_indexaliases');
+  variable_del('pathauto_indexaliases_bulkupdate');
+}
+
+/**
+ * Taxonomy and forum feed suffixes changed from '0\/feed' to 'feed'.
+ */
+function pathauto_update_7001() {
+  if (variable_get('pathauto_taxonomy_applytofeeds', '') == '0/feed') {
+    variable_set('pathauto_taxonomy_applytofeeds', 'feed');
+  }
+  if (variable_get('pathauto_forum_applytofeeds', '') == '0/feed') {
+    variable_set('pathauto_forum_applytofeeds', 'feed');
+  }
+}
+
+/**
+ * Update pathauto_taxonomy_[vid]_pattern variables to pathauto_taxonomy_[machinename]_pattern.
+ */
+function pathauto_update_7002() {
+  if (module_exists('taxonomy')) {
+    $vocabularies = taxonomy_get_vocabularies();
+    foreach ($vocabularies as $vid => $vocabulary) {
+      if ($vid == variable_get('forum_nav_vocabulary', '')) {
+        // Skip the forum vocabulary.
+        continue;
+      }
+      if ($pattern = variable_get('pathauto_taxonomy_' . $vid . '_pattern')) {
+        variable_set('pathauto_taxonomy_' . $vocabulary->machine_name . '_pattern', $pattern);
+      }
+      variable_del('pathauto_taxonomy_' . $vid . '_pattern');
+    }
+  }
+}
+
+/**
+ * Build a list of Drupal 6 tokens and their Drupal 7 token names.
+ */
+function _pathauto_upgrade_token_list() {
+  $tokens = array(
+    //'catpath' => 'node:term-lowest:parent:path][node:term-lowest',
+    //'catalias' => 'node:term-lowest:path',
+    'termpath' => 'term:parent:path][term:name',
+    'termalias' => 'term:path',
+    'bookpathalias' => 'node:book:parent:path',
+  );
+}
