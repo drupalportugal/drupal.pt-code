@@ -1,5 +1,4 @@
 <?php
-// $Id: system.install,v 1.524 2010/11/13 17:40:09 webchick Exp $
 
 /**
  * @file
@@ -17,7 +16,7 @@
 function system_requirements($phase) {
   global $base_url;
   $requirements = array();
-  // Ensure translations don't break at install time
+  // Ensure translations don't break during installation.
   $t = get_t();
 
   // Report Drupal version
@@ -29,11 +28,11 @@ function system_requirements($phase) {
       'weight' => -10,
     );
 
-    // Display the currently active install profile, if the site
-    // is not running the default install profile.
+    // Display the currently active installation profile, if the site
+    // is not running the default installation profile.
     $profile = drupal_get_profile();
     if ($profile != 'standard') {
-      $info = install_profile_info($profile);
+      $info = system_get_info('module', $profile);
       $requirements['install_profile'] = array(
         'title' => $t('Install profile'),
         'value' => $t('%profile_name (%profile-%version)', array(
@@ -188,6 +187,19 @@ function system_requirements($phase) {
       $requirements['database_extensions']['value'] = $t('Enabled');
     }
   }
+  else {
+    // Database information.
+    $class = 'DatabaseTasks_' . Database::getConnection()->driver();
+    $tasks = new $class();
+    $requirements['database_system'] = array(
+      'title' => $t('Database system'),
+      'value' => $tasks->name(),
+    );
+    $requirements['database_system_version'] = array(
+      'title' => $t('Database system version'),
+      'value' => Database::getConnection()->version(),
+    );
+  }
 
   // Test PHP memory_limit
   $memory_limit = ini_get('memory_limit');
@@ -296,7 +308,7 @@ function system_requirements($phase) {
     variable_get('file_private_path', FALSE),
   );
 
-  // Do not check for the temporary files directory at install time
+  // Do not check for the temporary files directory during installation
   // unless it has been set in settings.php. In this case the user has
   // no alternative but to fix the directory if it is not writable.
   if ($phase == 'install') {
@@ -400,7 +412,7 @@ function system_requirements($phase) {
     $profile = drupal_get_profile();
     $files = system_rebuild_module_data();
     foreach ($files as $module => $file) {
-      // Ignore disabled modules and install profiles.
+      // Ignore disabled modules and installation profiles.
       if (!$file->status || $module == $profile) {
         continue;
       }
@@ -453,7 +465,7 @@ function system_requirements($phase) {
       $requirements['update status'] = array(
         'value' => $t('Not enabled'),
         'severity' => REQUIREMENT_WARNING,
-        'description' => $t('Update notifications are not enabled. It is <strong>highly recommended</strong> that you enable the update status module from the <a href="@module">module administration page</a> in order to stay up-to-date on new releases. For more information, <a href="@update">Update status handbook page</a>.', array('@update' => 'http://drupal.org/handbook/modules/update', '@module' => url('admin/modules'))),
+        'description' => $t('Update notifications are not enabled. It is <strong>highly recommended</strong> that you enable the update manager module from the <a href="@module">module administration page</a> in order to stay up-to-date on new releases. For more information, <a href="@update">Update status handbook page</a>.', array('@update' => 'http://drupal.org/documentation/modules/update', '@module' => url('admin/modules'))),
       );
     }
     else {
@@ -732,6 +744,7 @@ function system_schema() {
         'type' => 'varchar',
         'length' => 100,
         'not null' => TRUE,
+        'binary' => TRUE,
       ),
       'type' => array(
         'description' => 'The date format type, e.g. medium.',
@@ -805,6 +818,7 @@ function system_schema() {
         'length' => 255,
         'not null' => TRUE,
         'default' => '',
+        'binary' => TRUE,
       ),
       'filemime' => array(
         'description' => "The file's MIME type.",
@@ -940,33 +954,6 @@ function system_schema() {
     ),
   );
 
-  $schema['history'] = array(
-    'description' => 'A record of which {users} have read which {node}s.',
-    'fields' => array(
-      'uid' => array(
-        'description' => 'The {users}.uid that read the {node} nid.',
-        'type' => 'int',
-        'not null' => TRUE,
-        'default' => 0,
-      ),
-      'nid' => array(
-        'description' => 'The {node}.nid that was read.',
-        'type' => 'int',
-        'not null' => TRUE,
-        'default' => 0,
-      ),
-      'timestamp' => array(
-        'description' => 'The Unix timestamp at which the read occurred.',
-        'type' => 'int',
-        'not null' => TRUE,
-        'default' => 0,
-      ),
-    ),
-    'primary key' => array('uid', 'nid'),
-    'indexes' => array(
-      'nid' => array('nid'),
-    ),
-  );
   $schema['menu_router'] = array(
     'description' => 'Maps paths to various callbacks (access, page and title)',
     'fields' => array(
@@ -1542,7 +1529,7 @@ function system_schema() {
         'default' => '',
       ),
       'type' => array(
-        'description' => 'The type of the item, either module, theme, theme_engine, or profile.',
+        'description' => 'The type of the item, either module, theme, or theme_engine.',
         'type' => 'varchar',
         'length' => 12,
         'not null' => TRUE,
@@ -1617,7 +1604,7 @@ function system_schema() {
         'default' => '',
       ),
       'language' => array(
-        'description' => 'The language this alias is for; if blank, the alias will be used for unknown languages. Each Drupal path can have an alias for each supported language.',
+        'description' => "The language this alias is for; if 'und', the alias will be used for unknown languages. Each Drupal path can have an alias for each supported language.",
         'type' => 'varchar',
         'length' => 12,
         'not null' => TRUE,
@@ -1696,17 +1683,32 @@ function system_update_last_removed() {
  * Implements hook_update_dependencies().
  */
 function system_update_dependencies() {
-  // Update 7053 adds new blocks, so make sure the block tables are updated.
+  // system_update_7053() queries the {block} table, so it must run after
+  // block_update_7002(), which creates that table.
   $dependencies['system'][7053] = array(
     'block' => 7002,
+  );
+
+  // system_update_7061() queries the {node_revision} table, so it must run
+  // after node_update_7001(), which renames the {node_revisions} table.
+  $dependencies['system'][7061] = array(
+    'node' => 7001,
+  );
+
+  // system_update_7067() migrates role permissions and therefore must run
+  // after the {role} and {role_permission} tables are properly set up, which
+  // happens in user_update_7007().
+  $dependencies['system'][7067] = array(
+    'user' => 7007,
   );
 
   return $dependencies;
 }
 
 /**
- * @defgroup updates-6.x-to-7.x System updates from 6.x to 7.x
+ * @defgroup updates-6.x-to-7.x Updates from 6.x to 7.x
  * @{
+ * Update functions from 6.x to 7.x.
  */
 
 /**
@@ -1715,17 +1717,18 @@ function system_update_dependencies() {
 function system_update_7000() {
   $result = db_query("SELECT rid, perm FROM {permission} ORDER BY rid");
   foreach ($result as $role) {
-    $renamed_permission = preg_replace('/(?<=^|,\ )create\ blog\ entries(?=,|$)/', 'create blog content', $role->perm);
-    $renamed_permission = preg_replace('/(?<=^|,\ )edit\ own\ blog\ entries(?=,|$)/', 'edit own blog content', $role->perm);
-    $renamed_permission = preg_replace('/(?<=^|,\ )edit\ any\ blog\ entry(?=,|$)/', 'edit any blog content', $role->perm);
-    $renamed_permission = preg_replace('/(?<=^|,\ )delete\ own\ blog\ entries(?=,|$)/', 'delete own blog content', $role->perm);
-    $renamed_permission = preg_replace('/(?<=^|,\ )delete\ any\ blog\ entry(?=,|$)/', 'delete any blog content', $role->perm);
+    $renamed_permission = $role->perm;
+    $renamed_permission = preg_replace('/(?<=^|,\ )create\ blog\ entries(?=,|$)/', 'create blog content', $renamed_permission);
+    $renamed_permission = preg_replace('/(?<=^|,\ )edit\ own\ blog\ entries(?=,|$)/', 'edit own blog content', $renamed_permission);
+    $renamed_permission = preg_replace('/(?<=^|,\ )edit\ any\ blog\ entry(?=,|$)/', 'edit any blog content', $renamed_permission);
+    $renamed_permission = preg_replace('/(?<=^|,\ )delete\ own\ blog\ entries(?=,|$)/', 'delete own blog content', $renamed_permission);
+    $renamed_permission = preg_replace('/(?<=^|,\ )delete\ any\ blog\ entry(?=,|$)/', 'delete any blog content', $renamed_permission);
 
-    $renamed_permission = preg_replace('/(?<=^|,\ )create\ forum\ topics(?=,|$)/', 'create forum content', $role->perm);
-    $renamed_permission = preg_replace('/(?<=^|,\ )delete\ any\ forum\ topic(?=,|$)/', 'delete any forum content', $role->perm);
-    $renamed_permission = preg_replace('/(?<=^|,\ )delete\ own\ forum\ topics(?=,|$)/', 'delete own forum content', $role->perm);
-    $renamed_permission = preg_replace('/(?<=^|,\ )edit\ any\ forum\ topic(?=,|$)/', 'edit any forum content', $role->perm);
-    $renamed_permission = preg_replace('/(?<=^|,\ )edit\ own\ forum\ topics(?=,|$)/', 'edit own forum content', $role->perm);
+    $renamed_permission = preg_replace('/(?<=^|,\ )create\ forum\ topics(?=,|$)/', 'create forum content', $renamed_permission);
+    $renamed_permission = preg_replace('/(?<=^|,\ )delete\ any\ forum\ topic(?=,|$)/', 'delete any forum content', $renamed_permission);
+    $renamed_permission = preg_replace('/(?<=^|,\ )delete\ own\ forum\ topics(?=,|$)/', 'delete own forum content', $renamed_permission);
+    $renamed_permission = preg_replace('/(?<=^|,\ )edit\ any\ forum\ topic(?=,|$)/', 'edit any forum content', $renamed_permission);
+    $renamed_permission = preg_replace('/(?<=^|,\ )edit\ own\ forum\ topics(?=,|$)/', 'edit own forum content', $renamed_permission);
 
     if ($renamed_permission != $role->perm) {
       db_update('permission')
@@ -1880,9 +1883,6 @@ function system_update_7005() {
 
 /**
  * Convert to new method of storing permissions.
- *
- * This update is in system.install rather than user.install so that
- * all modules can use the updated permission scheme during their updates.
  */
 function system_update_7007() {
   // Copy the permissions from the old {permission} table to the new {role_permission} table.
@@ -1890,7 +1890,7 @@ function system_update_7007() {
   $result = db_query("SELECT rid, perm FROM {permission} ORDER BY rid ASC");
   $query = db_insert('role_permission')->fields(array('rid', 'permission'));
   foreach ($result as $role) {
-    foreach (explode(', ', $role->perm) as $perm) {
+    foreach (array_unique(explode(', ', $role->perm)) as $perm) {
       $query->values(array(
         'rid' => $role->rid,
         'permission' => $perm,
@@ -2102,21 +2102,6 @@ function system_update_7021() {
 }
 
 /**
- * Add the substr_index() function to PostgreSQL.
- *
- * Note: this should go into the driver itself, but we have no support
- * for driver-specific updates yet.
- */
-function system_update_7024() {
-  if (db_driver() == 'pgsql') {
-    db_query('CREATE OR REPLACE FUNCTION "substring_index"(text, text, integer) RETURNS text AS
-      \'SELECT array_to_string((string_to_array($1, $2)) [1:$3], $2);\'
-      LANGUAGE \'sql\''
-    );
-  }
-}
-
-/**
  * Enable field type modules.
  */
 function system_update_7027() {
@@ -2157,7 +2142,7 @@ function system_update_7033() {
 }
 
 /**
- * Migrate the file_downloads setting and create the new {file_managed} table.
+ * Migrate the file path settings and create the new {file_managed} table.
  */
 function system_update_7034() {
   $files_directory = variable_get('file_directory_path', NULL);
@@ -2197,6 +2182,7 @@ function system_update_7034() {
         'length' => 255,
         'not null' => TRUE,
         'default' => '',
+        'binary' => TRUE,
       ),
       'uri' => array(
         'description' => 'URI of file.',
@@ -2204,6 +2190,7 @@ function system_update_7034() {
         'length' => 255,
         'not null' => TRUE,
         'default' => '',
+        'binary' => TRUE,
       ),
       'filemime' => array(
         'description' => "The file's MIME type.",
@@ -2266,10 +2253,6 @@ function system_update_7036() {
     ));
   }
   $insert->execute();
-
-  // Remove obsolete variable 'site_offline_message'. See
-  // update_fix_d7_requirements().
-  variable_del('site_offline_message');
 }
 
 /**
@@ -2292,6 +2275,9 @@ function system_update_7042() {
   // provided any meaningful unique constraint ('pid' is a primary key).
   db_add_index('url_alias', 'source_language_pid', array('source', 'language', 'pid'));
   db_add_index('url_alias', 'alias_language_pid', array('alias', 'language', 'pid'));
+
+  // Now that the URL aliases are correct, we can rebuild the whitelist.
+  drupal_path_alias_whitelist_rebuild();
 }
 
 /**
@@ -2750,15 +2736,37 @@ function system_update_7061(&$sandbox) {
   }
 
   if (!isset($sandbox['progress'])) {
+    // Delete stale rows from {upload} where the fid is not in the {files} table.
+    db_delete('upload')
+      ->notExists(
+        db_select('files', 'f')
+        ->fields('f', array('fid'))
+        ->where('f.fid = {upload}.fid')
+      )
+      ->execute();
+
+    // Delete stale rows from {upload} where the vid is not in the
+    // {node_revision} table. The table has already been renamed in
+    // node_update_7001().
+    db_delete('upload')
+      ->notExists(
+        db_select('node_revision', 'nr')
+        ->fields('nr', array('vid'))
+        ->where('nr.vid = {upload}.vid')
+      )
+      ->execute();
+
     // Retrieve a list of node revisions that have uploaded files attached.
     // DISTINCT queries are expensive, especially when paged, so we store the
     // data in its own table for the duration of the update.
-    $table = array(
-      'description' => t('Stores temporary data for system_update_7061.'),
-      'fields' => array('vid' => array('type' => 'int')),
-      'primary key' => array('vid'),
-    );
-    db_create_table('system_update_7061', $table);
+    if (!db_table_exists('system_update_7061')) {
+      $table = array(
+        'description' => t('Stores temporary data for system_update_7061.'),
+        'fields' => array('vid' => array('type' => 'int')),
+        'primary key' => array('vid'),
+      );
+      db_create_table('system_update_7061', $table);
+    }
     $query = db_select('upload', 'u');
     $query->distinct();
     $query->addField('u','vid');
@@ -2814,9 +2822,9 @@ function system_update_7061(&$sandbox) {
     $scheme = file_default_scheme() . '://';
     foreach ($node_revisions as $vid => $revision) {
       foreach ($revision['file'][LANGUAGE_NONE] as $delta => $file) {
-        // We will convert filepaths to uri using the default scheme
+        // We will convert filepaths to URI using the default scheme
         // and stripping off the existing file directory path.
-        $file['uri'] = $scheme . str_replace($basename, '', $file['filepath']);
+        $file['uri'] = $scheme . preg_replace('!^' . preg_quote($basename) . '!', '', $file['filepath']);
         $file['uri'] = file_stream_wrapper_uri_normalize($file['uri']);
         unset($file['filepath']);
         // Insert into the file_managed table.
@@ -2918,6 +2926,187 @@ function system_update_7065() {
 }
 
 /**
- * @} End of "defgroup updates-6.x-to-7.x"
+ * Migrate the 'file_directory_temp' variable.
+ */
+function system_update_7066() {
+  $d6_file_directory_temp = variable_get('file_directory_temp', file_directory_temp());
+  variable_set('file_temporary_path', $d6_file_directory_temp);
+  variable_del('file_directory_temp');
+}
+
+/**
+ * Grant administrators permission to view the administration theme.
+ */
+function system_update_7067() {
+  // Users with access to administration pages already see the administration
+  // theme in some places (if one is enabled on the site), so we want them to
+  // continue seeing it.
+  $admin_roles = user_roles(FALSE, 'access administration pages');
+  foreach (array_keys($admin_roles) as $rid) {
+    _update_7000_user_role_grant_permissions($rid, array('view the administration theme'), 'system');
+  }
+  // The above check is not guaranteed to reach all administrative users of the
+  // site, so if the site is currently using an administration theme, display a
+  // message also.
+  if (variable_get('admin_theme')) {
+    if (empty($admin_roles)) {
+      drupal_set_message('The new "View the administration theme" permission is required in order to view your site\'s administration theme. You can grant this permission to your site\'s administrators on the <a href="' . url('admin/people/permissions', array('fragment' => 'module-system')) . '">permissions page</a>.');
+    }
+    else {
+      drupal_set_message('The new "View the administration theme" permission is required in order to view your site\'s administration theme. This permission has been automatically granted to the following roles: <em>' . check_plain(implode(', ', $admin_roles)) . '</em>. You can grant this permission to other roles on the <a href="' . url('admin/people/permissions', array('fragment' => 'module-system')) . '">permissions page</a>.');
+    }
+  }
+}
+
+/**
+ * Update {url_alias}.language description.
+ */
+function system_update_7068() {
+  $spec = array(
+    'description' => "The language this alias is for; if 'und', the alias will be used for unknown languages. Each Drupal path can have an alias for each supported language.",
+    'type' => 'varchar',
+    'length' => 12,
+    'not null' => TRUE,
+    'default' => '',
+  );
+  db_change_field('url_alias', 'language', 'language', $spec);
+}
+
+/**
+ * Remove the obsolete 'site_offline' variable.
+ *
+ * @see update_fix_d7_requirements()
+ */
+function system_update_7069() {
+  variable_del('site_offline');
+}
+
+/**
+ * @} End of "defgroup updates-6.x-to-7.x".
+ * The next series of updates should start at 8000.
+ */
+
+/**
+ * @defgroup updates-7.x-extra Extra updates for 7.x
+ * @{
+ * Update functions between 7.x versions.
+ */
+
+/**
+ * Remove the obsolete 'drupal_badge_color' and 'drupal_badge_size' variables.
+ */
+function system_update_7070() {
+  variable_del('drupal_badge_color');
+  variable_del('drupal_badge_size');
+}
+
+/**
+ * Add index missed during upgrade, and fix field default.
+ */
+function system_update_7071() {
+  db_drop_index('date_format_type', 'title');
+  db_add_index('date_format_type', 'title', array('title'));
+  db_change_field('registry', 'filename', 'filename', array(
+    'type' => 'varchar',
+    'length' => 255,
+    'not null' => TRUE,
+  ));
+}
+
+/**
+ * Remove the obsolete 'site_offline_message' variable.
+ *
+ * @see update_fix_d7_requirements()
+ */
+function system_update_7072() {
+  variable_del('site_offline_message');
+}
+
+/**
+ * Add binary to {file_managed}, in case system_update_7034() was run without
+ * it.
+ */
+function system_update_7073() {
+  db_change_field('file_managed', 'filename', 'filename', array(
+    'description' => 'Name of the file with no path components. This may differ from the basename of the URI if the file is renamed to avoid overwriting an existing file.',
+    'type' => 'varchar',
+    'length' => 255,
+    'not null' => TRUE,
+    'default' => '',
+    'binary' => TRUE,
+  ));
+  db_drop_unique_key('file_managed', 'uri');
+  db_change_field('file_managed', 'uri', 'uri', array(
+    'description' => 'The URI to access the file (either local or remote).',
+    'type' => 'varchar',
+    'length' => 255,
+    'not null' => TRUE,
+    'default' => '',
+    'binary' => TRUE,
+  ));
+  db_add_unique_key('file_managed', 'uri', array('uri'));
+}
+
+/**
+ * This update has been removed and will not run.
+ */
+function system_update_7074() {
+  // This update function previously converted menu_links query strings to
+  // arrays. It has been removed for now due to incompatibility with
+  // PostgreSQL.
+}
+
+/**
+ * Convert menu_links query strings into arrays.
+ */
+function system_update_7076() {
+  $query = db_select('menu_links', 'ml', array('fetch' => PDO::FETCH_ASSOC))
+    ->fields('ml', array('mlid', 'options'));
+  foreach ($query->execute() as $menu_link) {
+    if (strpos($menu_link['options'], 'query') !== FALSE) {
+      $menu_link['options'] = unserialize($menu_link['options']);
+      if (isset($menu_link['options']['query']) && is_string($menu_link['options']['query'])) {
+        $menu_link['options']['query'] = drupal_get_query_array($menu_link['options']['query']);
+        db_update('menu_links')
+          ->fields(array(
+            'options' => serialize($menu_link['options']),
+          ))
+          ->condition('mlid', $menu_link['mlid'], '=')
+          ->execute();
+      }
+    }
+  }
+}
+
+/**
+ * Revert {file_managed}.filename changed to a binary column.
+ */
+function system_update_7077() {
+  db_change_field('file_managed', 'filename', 'filename', array(
+    'description' => 'Name of the file with no path components. This may differ from the basename of the URI if the file is renamed to avoid overwriting an existing file.',
+    'type' => 'varchar',
+    'length' => 255,
+    'not null' => TRUE,
+    'default' => '',
+  ));
+}
+
+
+/**
+ * Add binary to {date_formats}.format.
+ */
+function system_update_7078() {
+  db_drop_unique_key('date_formats', 'formats');
+  db_change_field('date_formats', 'format', 'format', array(
+    'description' => 'The date format string.',
+    'type' => 'varchar',
+    'length' => 100,
+    'not null' => TRUE,
+    'binary' => TRUE,
+  ), array('unique keys' => array('formats' => array('format', 'type'))));
+}
+
+/**
+ * @} End of "defgroup updates-7.x-extra".
  * The next series of updates should start at 8000.
  */

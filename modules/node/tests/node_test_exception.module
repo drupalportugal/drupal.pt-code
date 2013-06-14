@@ -1,10 +1,8 @@
 <?php
-// $Id: node_test_exception.module,v 1.4 2010/01/09 21:54:01 webchick Exp $
 
 /**
  * @file
- * Dummy module implementing node related hooks to test API interaction with
- * the Node module.
+ * A module implementing node related hooks to test API interaction.
  */
 
 /**

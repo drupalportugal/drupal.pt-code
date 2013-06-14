@@ -1,5 +1,4 @@
 <?php
-// $Id: contact.install,v 1.25 2010/06/08 03:48:14 webchick Exp $
 
 /**
  * @file
@@ -90,7 +89,26 @@ function contact_uninstall() {
 }
 
 /**
- * @defgroup updates-6.x-to-7.x Contact updates from 6.x to 7.x
+ * Implements hook_update_dependencies().
+ */
+function contact_update_dependencies() {
+  // contact_update_7001() relies on the {role_permission} table being updated
+  // to the new format and filled with data.
+  $dependencies['contact'][7001] = array(
+    'system' => 7007,
+  );
+
+  // contact_update_7002() relies on the {role_permission} table having the
+  // module field, which is created in user_update_7006().
+  $dependencies['contact'][7002] = array(
+    'user' => 7006,
+  );
+
+  return $dependencies;
+}
+
+/**
+ * @addtogroup updates-6.x-to-7.x
  * @{
  */
 
@@ -146,6 +164,5 @@ function contact_update_7003() {
 }
 
 /**
- * @} End of "defgroup updates-6.x-to-7.x"
- * The next series of updates should start at 8000.
+ * @} End of "addtogroup updates-6.x-to-7.x".
  */

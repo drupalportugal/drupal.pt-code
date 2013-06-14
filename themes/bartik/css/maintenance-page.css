@@ -1,14 +1,16 @@
-/* $Id: maintenance-page.css,v 1.5 2010/10/01 07:05:22 webchick Exp $ */
 
 body.maintenance-page {
   background-color: #fff;
   color: #000;
 }
 .maintenance-page #page-wrapper {
+  background: #fff;
   margin-left: auto;
   margin-right: auto;
+  min-width: 0;
+  min-height: 0;
   width: 800px;
-  border: 1px solid #cbcbcb;
+  border: 1px solid #ddd;
   margin-top: 40px;
 }
 .maintenance-page #page {
@@ -23,7 +25,6 @@ body.maintenance-page {
   width: auto;
 }
 .maintenance-page #header div.section,
-.maintenance-page #messages,
 .maintenance-page #main {
   width: 700px;
 }
@@ -57,6 +58,10 @@ body.maintenance-page {
   padding: 0;
   margin-top: 30px;
 }
+.maintenance-page #messages div.messages {
+  margin: 0;
+}
 .maintenance-page #messages div.section {
   padding: 0;
+  width: auto;
 }

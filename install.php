@@ -1,5 +1,4 @@
 <?php
-// $Id: install.php,v 1.238 2010/10/22 02:53:19 webchick Exp $
 
 /**
  * @file
@@ -7,12 +6,12 @@
  */
 
 /**
- * Root directory of Drupal installation.
+ * Defines the root directory of the Drupal installation.
  */
 define('DRUPAL_ROOT', getcwd());
 
 /**
- * Global flag to indicate that site is in installation mode.
+ * Global flag to indicate the site is in installation mode.
  */
 define('MAINTENANCE_MODE', 'install');
 

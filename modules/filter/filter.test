@@ -1,5 +1,9 @@
 <?php
-// $Id: filter.test,v 1.80 2010/10/23 02:26:11 webchick Exp $
+
+/**
+ * @file
+ * Tests for filter.module.
+ */
 
 /**
  * Tests for text format and filter CRUD operations.
@@ -18,7 +22,7 @@ class FilterCRUDTestCase extends DrupalWebTestCase {
   }
 
   /**
-   * Test CRUD operations for text formats and filters.
+   * Tests CRUD operations for text formats and filters.
    */
   function testTextFormatCRUD() {
     // Add a text format with minimum data only.
@@ -69,7 +73,7 @@ class FilterCRUDTestCase extends DrupalWebTestCase {
   }
 
   /**
-   * Verify that a text format is properly stored.
+   * Verifies that a text format is properly stored.
    */
   function verifyTextFormat($format) {
     $t_args = array('%format' => $format->name);
@@ -107,7 +111,7 @@ class FilterCRUDTestCase extends DrupalWebTestCase {
   }
 
   /**
-   * Verify that filters are properly stored for a text format.
+   * Verifies that filters are properly stored for a text format.
    */
   function verifyFilters($format) {
     // Verify filter database records.
@@ -156,6 +160,9 @@ class FilterCRUDTestCase extends DrupalWebTestCase {
   }
 }
 
+/**
+ * Tests the administrative functionality of the Filter module.
+ */
 class FilterAdminTestCase extends DrupalWebTestCase {
   public static function getInfo() {
     return array(
@@ -169,8 +176,8 @@ class FilterAdminTestCase extends DrupalWebTestCase {
     parent::setUp();
 
     // Create users.
-    $filtered_html_format = db_query_range('SELECT * FROM {filter_format} WHERE name = :name', 0, 1, array(':name' => 'Filtered HTML'))->fetchObject();
-    $full_html_format = db_query_range('SELECT * FROM {filter_format} WHERE name = :name', 0, 1, array(':name' => 'Full HTML'))->fetchObject();
+    $filtered_html_format = filter_format_load('filtered_html');
+    $full_html_format = filter_format_load('full_html');
     $this->admin_user = $this->drupalCreateUser(array(
       'administer filters',
       filter_permission_name($filtered_html_format),
@@ -181,37 +188,55 @@ class FilterAdminTestCase extends DrupalWebTestCase {
     $this->drupalLogin($this->admin_user);
   }
 
+  /**
+   * Tests the format administration functionality.
+   */
   function testFormatAdmin() {
     // Add text format.
     $this->drupalGet('admin/config/content/formats');
     $this->clickLink('Add text format');
+    $format_id = drupal_strtolower($this->randomName());
+    $name = $this->randomName();
     $edit = array(
-      'format' => drupal_strtolower($this->randomName()),
-      'name' => $this->randomName(),
+      'format' => $format_id,
+      'name' => $name,
     );
     $this->drupalPost(NULL, $edit, t('Save configuration'));
 
-    // Edit text format.
-    $format = $this->getFormat($edit['name']);
+    // Verify default weight of the text format.
     $this->drupalGet('admin/config/content/formats');
-    $this->assertRaw('admin/config/content/formats/' . $format->format);
-    $this->drupalGet('admin/config/content/formats/' . $format->format);
+    $this->assertFieldByName("formats[$format_id][weight]", 0, t('Text format weight was saved.'));
+
+    // Change the weight of the text format.
+    $edit = array(
+      "formats[$format_id][weight]" => 5,
+    );
+    $this->drupalPost('admin/config/content/formats', $edit, t('Save changes'));
+    $this->assertFieldByName("formats[$format_id][weight]", 5, t('Text format weight was saved.'));
+
+    // Edit text format.
+    $this->drupalGet('admin/config/content/formats');
+    $this->assertLinkByHref('admin/config/content/formats/' . $format_id);
+    $this->drupalGet('admin/config/content/formats/' . $format_id);
     $this->drupalPost(NULL, array(), t('Save configuration'));
 
-    // Disable text format.
+    // Verify that the custom weight of the text format has been retained.
     $this->drupalGet('admin/config/content/formats');
-    $this->assertRaw('admin/config/content/formats/' . $format->format . '/disable');
-    $this->drupalGet('admin/config/content/formats/' . $format->format . '/disable');
+    $this->assertFieldByName("formats[$format_id][weight]", 5, t('Text format weight was retained.'));
+
+    // Disable text format.
+    $this->assertLinkByHref('admin/config/content/formats/' . $format_id . '/disable');
+    $this->drupalGet('admin/config/content/formats/' . $format_id . '/disable');
     $this->drupalPost(NULL, array(), t('Disable'));
 
     // Verify that disabled text format no longer exists.
-    $this->drupalGet('admin/config/content/formats/' . $format->format);
+    $this->drupalGet('admin/config/content/formats/' . $format_id);
     $this->assertResponse(404, t('Disabled text format no longer exists.'));
 
     // Attempt to create a format of the same machine name as the disabled
     // format but with a different human readable name.
     $edit = array(
-      'format' => $format->format,
+      'format' => $format_id,
       'name' => 'New format',
     );
     $this->drupalPost('admin/config/content/formats/add', $edit, t('Save configuration'));
@@ -221,14 +246,16 @@ class FilterAdminTestCase extends DrupalWebTestCase {
     // disabled format but with a different machine name.
     $edit = array(
       'format' => 'new_format',
-      'name' => $format->name,
+      'name' => $name,
     );
     $this->drupalPost('admin/config/content/formats/add', $edit, t('Save configuration'));
-    $this->assertText('Text format names must be unique. A format named ' . check_plain($format->name) . ' already exists.');
+    $this->assertRaw(t('Text format names must be unique. A format named %name already exists.', array(
+      '%name' => $name,
+    )));
   }
 
   /**
-   * Test filter administration functionality.
+   * Tests filter administration functionality.
    */
   function testFilterAdmin() {
     // URL filter.
@@ -236,10 +263,12 @@ class FilterAdminTestCase extends DrupalWebTestCase {
     // Line filter.
     $second_filter = 'filter_autop';
 
-    list($filtered, $full, $plain) = $this->checkFilterFormats();
+    $filtered = 'filtered_html';
+    $full = 'full_html';
+    $plain = 'plain_text';
 
     // Check that the fallback format exists and cannot be disabled.
-    $this->assertTrue(!empty($plain) && $plain == filter_fallback_format(), t('The fallback format is set to plain text.'));
+    $this->assertTrue($plain == filter_fallback_format(), t('The fallback format is set to plain text.'));
     $this->drupalGet('admin/config/content/formats');
     $this->assertNoRaw('admin/config/content/formats/' . $plain . '/disable', t('Disable link for the fallback format not found.'));
     $this->drupalGet('admin/config/content/formats/' . $plain . '/disable');
@@ -291,16 +320,17 @@ class FilterAdminTestCase extends DrupalWebTestCase {
     $edit = array();
     $edit['format'] = drupal_strtolower($this->randomName());
     $edit['name'] = $this->randomName();
-    $edit['roles[2]'] = 1;
+    $edit['roles[' . DRUPAL_AUTHENTICATED_RID . ']'] = 1;
     $edit['filters[' . $second_filter . '][status]'] = TRUE;
     $edit['filters[' . $first_filter . '][status]'] = TRUE;
     $this->drupalPost('admin/config/content/formats/add', $edit, t('Save configuration'));
     $this->assertRaw(t('Added text format %format.', array('%format' => $edit['name'])), t('New filter created.'));
 
-    $format = $this->getFormat($edit['name']);
+    drupal_static_reset('filter_formats');
+    $format = filter_format_load($edit['format']);
     $this->assertNotNull($format, t('Format found in database.'));
 
-    $this->assertFieldByName('roles[2]', '', t('Role found.'));
+    $this->assertFieldByName('roles[' . DRUPAL_AUTHENTICATED_RID . ']', '', t('Role found.'));
     $this->assertFieldByName('filters[' . $second_filter . '][status]', '', t('Line break filter found.'));
     $this->assertFieldByName('filters[' . $first_filter . '][status]', '', t('Url filter found.'));
 
@@ -311,8 +341,8 @@ class FilterAdminTestCase extends DrupalWebTestCase {
     // Allow authenticated users on full HTML.
     $format = filter_format_load($full);
     $edit = array();
-    $edit['roles[1]'] = 0;
-    $edit['roles[2]'] = 1;
+    $edit['roles[' . DRUPAL_ANONYMOUS_RID . ']'] = 0;
+    $edit['roles[' . DRUPAL_AUTHENTICATED_RID . ']'] = 1;
     $this->drupalPost('admin/config/content/formats/' . $full, $edit, t('Save configuration'));
     $this->assertRaw(t('The text format %format has been updated.', array('%format' => $format->name)), t('Full HTML format successfully updated.'));
 
@@ -362,10 +392,10 @@ class FilterAdminTestCase extends DrupalWebTestCase {
 
     // Full HTML.
     $edit = array();
-    $edit['roles[2]'] = FALSE;
+    $edit['roles[' . DRUPAL_AUTHENTICATED_RID . ']'] = FALSE;
     $this->drupalPost('admin/config/content/formats/' . $full, $edit, t('Save configuration'));
     $this->assertRaw(t('The text format %format has been updated.', array('%format' => $format->name)), t('Full HTML format successfully reverted.'));
-    $this->assertFieldByName('roles[2]', $edit['roles[2]'], t('Changes reverted.'));
+    $this->assertFieldByName('roles[' . DRUPAL_AUTHENTICATED_RID . ']', $edit['roles[' . DRUPAL_AUTHENTICATED_RID . ']'], t('Changes reverted.'));
 
     // Filter order.
     $edit = array();
@@ -377,50 +407,55 @@ class FilterAdminTestCase extends DrupalWebTestCase {
   }
 
   /**
-   * Query the database to get the three basic formats.
-   *
-   * @return
-   *   An array containing filtered, full, and plain text format ids.
+   * Tests the URL filter settings form is properly validated.
    */
-  function checkFilterFormats() {
-    $result = db_query('SELECT format, name FROM {filter_format}');
-
-    $filtered = -1;
-    $full = -1;
-    $plain = -1;
-    foreach ($result as $format) {
-      if ($format->name == 'Filtered HTML') {
-        $filtered = $format->format;
-      }
-      elseif ($format->name == 'Full HTML') {
-        $full = $format->format;
-      }
-      elseif ($format->name == 'Plain text') {
-        $plain = $format->format;
-      }
-    }
-
-    return array($filtered, $full, $plain);
-  }
-
-  /**
-   * Retrieve a text format object by name.
-   *
-   * @param $name
-   *   The name of a text format.
-   * @return
-   *   A text format object.
-   */
-  function getFormat($name) {
-    return db_query("SELECT * FROM {filter_format} WHERE name = :name", array(':name' => $name))->fetchObject();
+  function testUrlFilterAdmin() {
+    // The form does not save with an invalid filter URL length.
+    $edit = array(
+      'filters[filter_url][settings][filter_url_length]' => $this->randomName(4),
+    );
+    $this->drupalPost('admin/config/content/formats/filtered_html', $edit, t('Save configuration'));
+    $this->assertNoRaw(t('The text format %format has been updated.', array('%format' => 'Filtered HTML')));
   }
 }
 
+/**
+ * Tests the filter format access functionality in the Filter module.
+ */
 class FilterFormatAccessTestCase extends DrupalWebTestCase {
+  /**
+   * A user with administrative permissions.
+   *
+   * @var object
+   */
   protected $admin_user;
+
+  /**
+   * A user with 'administer filters' permission.
+   *
+   * @var object
+   */
   protected $filter_admin_user;
+
+  /**
+   * A user with permission to create and edit own content.
+   *
+   * @var object
+   */
   protected $web_user;
+
+  /**
+   * An object representing an allowed text format.
+   *
+   * @var object
+   */
   protected $allowed_format;
+
+  /**
+   * An object representing a disallowed text format.
+   *
+   * @var object
+   */
   protected $disallowed_format;
 
   public static function getInfo() {
@@ -452,8 +487,7 @@ class FilterFormatAccessTestCase extends DrupalWebTestCase {
       );
       $this->drupalPost('admin/config/content/formats/add', $edit, t('Save configuration'));
       $this->resetFilterCaches();
-      $format_id = db_query("SELECT format FROM {filter_format} WHERE name = :name", array(':name' => $edit['name']))->fetchField();
-      $formats[] = filter_format_load($format_id);
+      $formats[] = filter_format_load($edit['format']);
     }
     list($this->allowed_format, $this->disallowed_format) = $formats;
     $this->drupalLogout();
@@ -475,6 +509,9 @@ class FilterFormatAccessTestCase extends DrupalWebTestCase {
     ));
   }
 
+  /**
+   * Tests the Filter format access permissions functionality.
+   */
   function testFormatPermissions() {
     // Make sure that a regular user only has access to the text format they
     // were granted access to, as well to the fallback format.
@@ -511,6 +548,9 @@ class FilterFormatAccessTestCase extends DrupalWebTestCase {
     $this->assertTrue(isset($options[filter_fallback_format()]), t('The fallback format appears as an option when adding a new node.'));
   }
 
+  /**
+   * Tests if text format is available to a role.
+   */
   function testFormatRoles() {
     // Get the role ID assigned to the regular user; it must be the maximum.
     $rid = max(array_keys($this->web_user->roles));
@@ -532,13 +572,13 @@ class FilterFormatAccessTestCase extends DrupalWebTestCase {
   }
 
   /**
-   * Test editing a page using a disallowed text format.
+   * Tests editing a page using a disallowed text format.
    *
-   * Verifies that regular users and administrators are able to edit a page,
-   * but not allowed to change the fields which use an inaccessible text
-   * format. Also verifies that fields which use a text format that does not
-   * exist can be edited by administrators only, but that the administrator is
-   * forced to choose a new format before saving the page.
+   * Verifies that regular users and administrators are able to edit a page, but
+   * not allowed to change the fields which use an inaccessible text format.
+   * Also verifies that fields which use a text format that does not exist can
+   * be edited by administrators only, but that the administrator is forced to
+   * choose a new format before saving the page.
    */
   function testFormatWidgetPermissions() {
     $langcode = LANGUAGE_NONE;
@@ -654,7 +694,7 @@ class FilterFormatAccessTestCase extends DrupalWebTestCase {
   }
 
   /**
-   * Rebuild text format and permission caches in the thread running the tests.
+   * Rebuilds text format and permission caches in the thread running the tests.
    */
   protected function resetFilterCaches() {
     filter_formats_reset();
@@ -662,6 +702,9 @@ class FilterFormatAccessTestCase extends DrupalWebTestCase {
   }
 }
 
+/**
+ * Tests the default filter functionality in the Filter module.
+ */
 class FilterDefaultFormatTestCase extends DrupalWebTestCase {
   public static function getInfo() {
     return array(
@@ -671,6 +714,9 @@ class FilterDefaultFormatTestCase extends DrupalWebTestCase {
     );
   }
 
+  /**
+   * Tests if the default text format is accessible to users.
+   */
   function testDefaultTextFormats() {
     // Create two text formats, and two users. The first user has access to
     // both formats, but the second user only has access to the second one.
@@ -684,8 +730,7 @@ class FilterDefaultFormatTestCase extends DrupalWebTestCase {
       );
       $this->drupalPost('admin/config/content/formats/add', $edit, t('Save configuration'));
       $this->resetFilterCaches();
-      $format_id = db_query("SELECT format FROM {filter_format} WHERE name = :name", array(':name' => $edit['name']))->fetchField();
-      $formats[] = filter_format_load($format_id);
+      $formats[] = filter_format_load($edit['format']);
     }
     list($first_format, $second_format) = $formats;
     $first_user = $this->drupalCreateUser(array(filter_permission_name($first_format), filter_permission_name($second_format)));
@@ -715,7 +760,7 @@ class FilterDefaultFormatTestCase extends DrupalWebTestCase {
   }
 
   /**
-   * Rebuild text format and permission caches in the thread running the tests.
+   * Rebuilds text format and permission caches in the thread running the tests.
    */
   protected function resetFilterCaches() {
     filter_formats_reset();
@@ -723,6 +768,9 @@ class FilterDefaultFormatTestCase extends DrupalWebTestCase {
   }
 }
 
+/**
+ * Tests the behavior of check_markup() when it is called without text format.
+ */
 class FilterNoFormatTestCase extends DrupalWebTestCase {
   public static function getInfo() {
     return array(
@@ -732,6 +780,12 @@ class FilterNoFormatTestCase extends DrupalWebTestCase {
     );
   }
 
+  /**
+   * Tests text without format.
+   *
+   * Tests if text with no format is filtered the same way as text in the
+   * fallback format.
+   */
   function testCheckMarkupNoFormat() {
     // Create some text. Include some HTML and line breaks, so we get a good
     // test of the filtering that is applied to it.
@@ -762,7 +816,10 @@ class FilterSecurityTestCase extends DrupalWebTestCase {
   }
 
   /**
-   * Test that filtered content is emptied when an actively used filter module is disabled.
+   * Tests removal of filtered content when an active filter is disabled.
+   *
+   * Tests that filtered content is emptied when an actively used filter module
+   * is disabled.
    */
   function testDisableFilterModule() {
     // Create a new node.
@@ -805,11 +862,11 @@ class FilterUnitTestCase extends DrupalUnitTestCase {
   }
 
   /**
-   * Test the line break filter.
+   * Tests the line break filter.
    */
   function testLineBreakFilter() {
     // Setup dummy filter object.
-    $filter = new stdClass;
+    $filter = new stdClass();
     $filter->callback = '_filter_autop';
 
     // Since the line break filter naturally needs plenty of newlines in test
@@ -848,6 +905,25 @@ class FilterUnitTestCase extends DrupalUnitTestCase {
       ),
       '<blockquote><pre>aaa</pre></blockquote>' => array(
         "<blockquote><pre>aaa</pre></blockquote>" => TRUE,
+      ),
+      "<pre>aaa\nbbb\nccc</pre>\nddd\neee" => array(
+        "<pre>aaa\nbbb\nccc</pre>" => TRUE,
+        "<p>ddd<br />\neee</p>" => TRUE,
+      ),
+      // Comments remain unchanged and subsequent lines/paragraphs are
+      // transformed normally.
+      "aaa<!--comment-->\n\nbbb\n\nccc\n\nddd<!--comment\nwith linebreak-->\n\neee\n\nfff" => array(
+        "<p>aaa</p>\n<!--comment--><p>\nbbb</p>\n<p>ccc</p>\n<p>ddd</p>" => TRUE,
+        "<!--comment\nwith linebreak--><p>\neee</p>\n<p>fff</p>" => TRUE,
+      ),
+      // Check that a comment in a PRE will result that the text after
+      // the comment, but still in PRE, is not transformed.
+      "<pre>aaa\nbbb<!-- comment -->\n\nccc</pre>\nddd" => array(
+        "<pre>aaa\nbbb<!-- comment -->\n\nccc</pre>" => TRUE,
+      ),
+      // Bug 810824, paragraphs were appearing around iframe tags.
+      "<iframe>aaa</iframe>\n\n" => array(
+        "<p><iframe>aaa</iframe></p>" => FALSE,
       ),
     );
     $this->assertFilteredString($filter, $tests);
@@ -1046,7 +1122,7 @@ class FilterUnitTestCase extends DrupalUnitTestCase {
   }
 
   /**
-   * Test filter settings, defaults, access restrictions and similar.
+   * Tests filter settings, defaults, access restrictions and similar.
    *
    * @todo This is for functions like filter_filter and check_markup, whose
    *   functionality is not completely focused on filtering. Some ideas:
@@ -1102,7 +1178,7 @@ class FilterUnitTestCase extends DrupalUnitTestCase {
   }
 
   /**
-   * Test the spam deterrent.
+   * Tests the spam deterrent.
    */
   function testNoFollowFilter() {
     // Setup dummy filter object.
@@ -1133,7 +1209,7 @@ class FilterUnitTestCase extends DrupalUnitTestCase {
   }
 
   /**
-   * Test the loose, admin HTML filter.
+   * Tests the loose, admin HTML filter.
    */
   function testFilterXSSAdmin() {
     // DRUPAL-SA-2008-044
@@ -1154,7 +1230,7 @@ class FilterUnitTestCase extends DrupalUnitTestCase {
    */
   function testHtmlEscapeFilter() {
     // Setup dummy filter object.
-    $filter = new stdClass;
+    $filter = new stdClass();
     $filter->callback = '_filter_html_escape';
 
     $tests = array(
@@ -1172,7 +1248,7 @@ class FilterUnitTestCase extends DrupalUnitTestCase {
    */
   function testUrlFilter() {
     // Setup dummy filter object.
-    $filter = new stdClass;
+    $filter = new stdClass();
     $filter->callback = '_filter_url';
     $filter->settings = array(
       'filter_url_length' => 496,
@@ -1180,6 +1256,11 @@ class FilterUnitTestCase extends DrupalUnitTestCase {
     // @todo Possible categories:
     // - absolute, mail, partial
     // - characters/encoding, surrounding markup, security
+
+    // Create a e-mail that is too long.
+    $long_email = str_repeat('a', 254) . '@example.com';
+    $too_long_email = str_repeat('b', 255) . '@example.com';
+
 
     // Filter selection/pattern matching.
     $tests = array(
@@ -1192,15 +1273,18 @@ http://example.com or www.example.com
       ),
       // MAILTO URLs.
       '
-person@example.com or mailto:person2@example.com
+person@example.com or mailto:person2@example.com or ' . $long_email . ' but not ' . $too_long_email . '
 ' => array(
         '<a href="mailto:person@example.com">person@example.com</a>' => TRUE,
         '<a href="mailto:person2@example.com">mailto:person2@example.com</a>' => TRUE,
+        '<a href="mailto:' . $long_email . '">' . $long_email . '</a>' => TRUE,
+        '<a href="mailto:' . $too_long_email . '">' . $too_long_email . '</a>' => FALSE,
       ),
-      // URI parts.
+      // URI parts and special characters.
       '
 http://trailingslash.com/ or www.trailingslash.com/
 http://host.com/some/path?query=foo&bar[baz]=beer#fragment or www.host.com/some/path?query=foo&bar[baz]=beer#fragment
+http://twitter.com/#!/example/status/22376963142324226
 ftp://user:pass@ftp.example.com/~home/dir1
 sftp://user@nonstandardport:222/dir
 ssh://192.168.0.100/srv/git/drupal.git
@@ -1209,6 +1293,7 @@ ssh://192.168.0.100/srv/git/drupal.git
         '<a href="http://www.trailingslash.com/">www.trailingslash.com/</a>' => TRUE,
         '<a href="http://host.com/some/path?query=foo&amp;bar[baz]=beer#fragment">http://host.com/some/path?query=foo&amp;bar[baz]=beer#fragment</a>' => TRUE,
         '<a href="http://www.host.com/some/path?query=foo&amp;bar[baz]=beer#fragment">www.host.com/some/path?query=foo&amp;bar[baz]=beer#fragment</a>' => TRUE,
+        '<a href="http://twitter.com/#!/example/status/22376963142324226">http://twitter.com/#!/example/status/22376963142324226</a>' => TRUE,
         '<a href="ftp://user:pass@ftp.example.com/~home/dir1">ftp://user:pass@ftp.example.com/~home/dir1</a>' => TRUE,
         '<a href="sftp://user@nonstandardport:222/dir">sftp://user@nonstandardport:222/dir</a>' => TRUE,
         '<a href="ssh://192.168.0.100/srv/git/drupal.git">ssh://192.168.0.100/srv/git/drupal.git</a>' => TRUE,
@@ -1478,7 +1563,7 @@ www.example.com with a newline in comments -->
         if (!$success) {
           $this->verbose('Source:<pre>' . check_plain(var_export($source, TRUE)) . '</pre>'
             . '<hr />' . 'Result:<pre>' . check_plain(var_export($result, TRUE)) . '</pre>'
-            . '<hr />' . ($is_expected ? 'Found:' : 'Not found:')
+            . '<hr />' . ($is_expected ? 'Expected:' : 'Not expected:')
             . '<pre>' . check_plain(var_export($value, TRUE)) . '</pre>'
           );
         }
@@ -1505,7 +1590,7 @@ www.example.com with a newline in comments -->
    */
   function testUrlFilterContent() {
     // Setup dummy filter object.
-    $filter = new stdClass;
+    $filter = new stdClass();
     $filter->settings = array(
       'filter_url_length' => 496,
     );
@@ -1518,7 +1603,7 @@ www.example.com with a newline in comments -->
   }
 
   /**
-   * Test the HTML corrector filter.
+   * Tests the HTML corrector filter.
    *
    * @todo This test could really use some validity checking function.
    */
@@ -1633,6 +1718,79 @@ alert("test")
  /* Styling */ body {color:red}
 /*--><!]]>*/
 </style></p>', t('HTML corrector -- CDATA added to a style element.'));
+
+    $filtered_data = _filter_htmlcorrector('<p><style>
+/*<![CDATA[*/
+/* Styling */
+body {color:red}
+/*]]>*/
+</style></p>');
+    $this->assertEqual($filtered_data, '<p><style>
+<!--/*--><![CDATA[/* ><!--*/
+
+/*<![CDATA[*/
+/* Styling */
+body {color:red}
+/*]]]]><![CDATA[>*/
+
+/*--><!]]>*/
+</style></p>',
+      t('HTML corrector -- Existing cdata section @pattern_name properly escaped', array('@pattern_name' => '/*<![CDATA[*/'))
+    );
+
+    $filtered_data = _filter_htmlcorrector('<p><style>
+  <!--/*--><![CDATA[/* ><!--*/
+  /* Styling */
+  body {color:red}
+  /*--><!]]>*/
+</style></p>');
+    $this->assertEqual($filtered_data, '<p><style>
+<!--/*--><![CDATA[/* ><!--*/
+
+  <!--/*--><![CDATA[/* ><!--*/
+  /* Styling */
+  body {color:red}
+  /*--><!]]]]><![CDATA[>*/
+
+/*--><!]]>*/
+</style></p>',
+      t('HTML corrector -- Existing cdata section @pattern_name properly escaped', array('@pattern_name' => '<!--/*--><![CDATA[/* ><!--*/'))
+    );
+
+    $filtered_data = _filter_htmlcorrector('<p><script type="text/javascript">
+<!--//--><![CDATA[// ><!--
+  alert("test");
+//--><!]]>
+</script></p>');
+    $this->assertEqual($filtered_data, '<p><script type="text/javascript">
+<!--//--><![CDATA[// ><!--
+
+<!--//--><![CDATA[// ><!--
+  alert("test");
+//--><!]]]]><![CDATA[>
+
+//--><!]]>
+</script></p>',
+      t('HTML corrector -- Existing cdata section @pattern_name properly escaped', array('@pattern_name' => '<!--//--><![CDATA[// ><!--'))
+    );
+
+    $filtered_data = _filter_htmlcorrector('<p><script type="text/javascript">
+// <![CDATA[
+  alert("test");
+// ]]>
+</script></p>');
+    $this->assertEqual($filtered_data, '<p><script type="text/javascript">
+<!--//--><![CDATA[// ><!--
+
+// <![CDATA[
+  alert("test");
+// ]]]]><![CDATA[>
+
+//--><!]]>
+</script></p>',
+      t('HTML corrector -- Existing cdata section @pattern_name properly escaped', array('@pattern_name' => '// <![CDATA['))
+    );
+
   }
 
   /**
@@ -1649,9 +1807,9 @@ alert("test")
    * @param $needle
    *   Lowercase, plain text to look for.
    * @param $message
-   *   Message to display if failed.
+   *   (optional) Message to display if failed. Defaults to an empty string.
    * @param $group
-   *   The group this message belongs to, defaults to 'Other'.
+   *   (optional) The group this message belongs to. Defaults to 'Other'.
    * @return
    *   TRUE on pass, FALSE on fail.
    */
@@ -1673,9 +1831,9 @@ alert("test")
    * @param $needle
    *   Lowercase, plain text to look for.
    * @param $message
-   *   Message to display if failed.
+   *   (optional) Message to display if failed. Defaults to an empty string.
    * @param $group
-   *   The group this message belongs to, defaults to 'Other'.
+   *   (optional) The group this message belongs to. Defaults to 'Other'.
    * @return
    *   TRUE on pass, FALSE on fail.
    */
@@ -1685,7 +1843,7 @@ alert("test")
 }
 
 /**
- * Tests for filter hook invocation.
+ * Tests for Filter's hook invocations.
  */
 class FilterHooksTestCase extends DrupalWebTestCase {
   public static function getInfo() {
@@ -1703,7 +1861,10 @@ class FilterHooksTestCase extends DrupalWebTestCase {
   }
 
   /**
-   * Test that hooks run correctly on creating, editing, and deleting a text format.
+   * Tests hooks on format management.
+   *
+   * Tests that hooks run correctly on creating, editing, and deleting a text
+   * format.
    */
   function testFilterHooks() {
     // Add a text format.
@@ -1711,16 +1872,16 @@ class FilterHooksTestCase extends DrupalWebTestCase {
     $edit = array();
     $edit['format'] = drupal_strtolower($this->randomName());
     $edit['name'] = $name;
-    $edit['roles[1]'] = 1;
+    $edit['roles[' . DRUPAL_ANONYMOUS_RID . ']'] = 1;
     $this->drupalPost('admin/config/content/formats/add', $edit, t('Save configuration'));
     $this->assertRaw(t('Added text format %format.', array('%format' => $name)), t('New format created.'));
     $this->assertText('hook_filter_format_insert invoked.', t('hook_filter_format_insert was invoked.'));
 
-    $format_id = db_query("SELECT format FROM {filter_format} WHERE name = :name", array(':name' => $name))->fetchField();
+    $format_id = $edit['format'];
 
     // Update text format.
     $edit = array();
-    $edit['roles[2]'] = 1;
+    $edit['roles[' . DRUPAL_AUTHENTICATED_RID . ']'] = 1;
     $this->drupalPost('admin/config/content/formats/' . $format_id, $edit, t('Save configuration'));
     $this->assertRaw(t('The text format %format has been updated.', array('%format' => $name)), t('Format successfully updated.'));
     $this->assertText('hook_filter_format_update invoked.', t('hook_filter_format_update() was invoked.'));
@@ -1746,3 +1907,66 @@ class FilterHooksTestCase extends DrupalWebTestCase {
   }
 }
 
+/**
+ * Tests filter settings.
+ */
+class FilterSettingsTestCase extends DrupalWebTestCase {
+  /**
+   * The installation profile to use with this test class.
+   *
+   * @var string
+   */
+  protected $profile = 'testing';
+
+  public static function getInfo() {
+    return array(
+      'name' => 'Filter settings',
+      'description' => 'Tests filter settings.',
+      'group' => 'Filter',
+    );
+  }
+
+  /**
+   * Tests explicit and implicit default settings for filters.
+   */
+  function testFilterDefaults() {
+    $filter_info = filter_filter_info();
+    $filters = array_fill_keys(array_keys($filter_info), array());
+
+    // Create text format using filter default settings.
+    $filter_defaults_format = (object) array(
+      'format' => 'filter_defaults',
+      'name' => 'Filter defaults',
+      'filters' => $filters,
+    );
+    filter_format_save($filter_defaults_format);
+
+    // Verify that default weights defined in hook_filter_info() were applied.
+    $saved_settings = array();
+    foreach ($filter_defaults_format->filters as $name => $settings) {
+      $expected_weight = (isset($filter_info[$name]['weight']) ? $filter_info[$name]['weight'] : 0);
+      $this->assertEqual($settings['weight'], $expected_weight, format_string('@name filter weight %saved equals %default', array(
+        '@name' => $name,
+        '%saved' => $settings['weight'],
+        '%default' => $expected_weight,
+      )));
+      $saved_settings[$name]['weight'] = $expected_weight;
+    }
+
+    // Re-save the text format.
+    filter_format_save($filter_defaults_format);
+    // Reload it from scratch.
+    filter_formats_reset();
+    $filter_defaults_format = filter_format_load($filter_defaults_format->format);
+    $filter_defaults_format->filters = filter_list_format($filter_defaults_format->format);
+
+    // Verify that saved filter settings have not been changed.
+    foreach ($filter_defaults_format->filters as $name => $settings) {
+      $this->assertEqual($settings->weight, $saved_settings[$name]['weight'], format_string('@name filter weight %saved equals %previous', array(
+        '@name' => $name,
+        '%saved' => $settings->weight,
+        '%previous' => $saved_settings[$name]['weight'],
+      )));
+    }
+  }
+}

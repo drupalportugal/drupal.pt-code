@@ -1,5 +1,4 @@
 <?php
-// $Id: locale.module,v 1.306 2010/11/05 20:33:56 dries Exp $
 
 /**
  * @file
@@ -23,14 +22,14 @@ function locale_help($path, $arg) {
     case 'admin/help#locale':
       $output = '';
       $output .= '<h3>' . t('About') . '</h3>';
-      $output .= '<p>' . t('The Locale module allows your Drupal site to be presented in languages other than the default English, and to be multilingual. The Locale module works by maintaining a database of translations, and examining text as it is about to be displayed. When a translation of the text is available in the language to be displayed, the translation is displayed rather than the original text. When a translation is unavailable, the original text is displayed, and then stored for review by a translator. For more information, see the online handbook entry for <a href="@locale">Locale module</a>.', array('@locale' => 'http://drupal.org/handbook/modules/locale/')) . '</p>';
+      $output .= '<p>' . t('The Locale module allows your Drupal site to be presented in languages other than the default English, and to be multilingual. The Locale module works by maintaining a database of translations, and examining text as it is about to be displayed. When a translation of the text is available in the language to be displayed, the translation is displayed rather than the original text. When a translation is unavailable, the original text is displayed, and then stored for review by a translator. For more information, see the online handbook entry for <a href="@locale">Locale module</a>.', array('@locale' => 'http://drupal.org/documentation/modules/locale/')) . '</p>';
       $output .= '<h3>' . t('Uses') . '</h3>';
       $output .= '<dl>';
       $output .= '<dt>' . t('Translating interface text') . '</dt>';
       $output .= '<dd>' . t('Translations of text in the Drupal interface may be provided by:');
       $output .= '<ul>';
       $output .= '<li>' . t("Translating within your site, using the Locale module's integrated <a href='@translate'>translation interface</a>.", array('@translate' => url('admin/config/regional/translate'))) . '</li>';
-      $output .= '<li>' . t('Importing files from a set of existing translations, known as a translation package. A translation package enables the display of a specific version of Drupal in a specific language, and contains files in the Gettext Portable Object (<em>.po</em>) format. Although not all languages are available for every version of Drupal, translation packages for many languages are available for download from the <a href="@translations">Drupal translations page</a>.', array('@translations' => 'http://drupal.org/project/translations')) . '</li>';
+      $output .= '<li>' . t('Importing files from a set of existing translations, known as a translation package. A translation package enables the display of a specific version of Drupal in a specific language, and contains files in the Gettext Portable Object (<em>.po</em>) format. Although not all languages are available for every version of Drupal, translation packages for many languages are available for download from the <a href="@translations">Drupal translations page</a>.', array('@translations' => 'http://localize.drupal.org')) . '</li>';
       $output .= '<li>' . t("If an existing translation package does not meet your needs, the Gettext Portable Object (<em>.po</em>) files within a package may be modified, or new <em>.po</em> files may be created, using a desktop Gettext editor. The Locale module's <a href='@import'>import</a> feature allows the translated strings from a new or modified <em>.po</em> file to be added to your site. The Locale module's <a href='@export'>export</a> feature generates files from your site's translated strings, that can either be shared with others or edited offline by a Gettext translation editor.", array('@import' => url('admin/config/regional/translate/import'), '@export' => url('admin/config/regional/translate/export'))) . '</li>';
       $output .= '</ul></dd>';
       $output .= '<dt>' . t('Configuring a multilingual site') . '</dt>';
@@ -38,7 +37,7 @@ function locale_help($path, $arg) {
       $output .= '</dl>';
       return $output;
     case 'admin/config/regional/language':
-      $output = '<p>' . t('With multiple languages enabled, interface text can be translated, registered users may select their preferred language, and authors can assign a specific language to content. <a href="@translations">Download contributed translations</a> from Drupal.org.', array('@translations' => 'http://drupal.org/project/translations')) . '</p>';
+      $output = '<p>' . t('With multiple languages enabled, interface text can be translated, registered users may select their preferred language, and authors can assign a specific language to content. <a href="@translations">Download contributed translations</a> from Drupal.org.', array('@translations' => 'http://localize.drupal.org')) . '</p>';
       return $output;
     case 'admin/config/regional/language/add':
       return '<p>' . t('Add a language to be supported by your site. If your desired language is not available in the <em>Language name</em> drop-down, click <em>Custom language</em> and provide a language code and other details manually. When providing a language code manually, be sure to enter a standardized language code, since this code may be used by browsers to determine an appropriate display language.') . '</p>';
@@ -54,15 +53,15 @@ function locale_help($path, $arg) {
       return $output;
     case 'admin/config/regional/translate/import':
       $output = '<p>' . t('This page imports the translated strings contained in an individual Gettext Portable Object (<em>.po</em>) file. Normally distributed as part of a translation package (each translation package may contain several <em>.po</em> files), a <em>.po</em> file may need to be imported after offline editing in a Gettext translation editor. Importing an individual <em>.po</em> file may be a lengthy process.') . '</p>';
-      $output .= '<p>' . t('Note that the <em>.po</em> files within a translation package are imported automatically (if available) when new modules or themes are enabled, or as new languages are added. Since this page only allows the import of one <em>.po</em> file at a time, it may be simpler to download and extract a translation package into your Drupal installation directory and <a href="@language-add">add the language</a> (which automatically imports all <em>.po</em> files within the package). Translation packages are available for download on the <a href="@translations">Drupal translation page</a>.', array('@language-add' => url('admin/config/regional/language/add'), '@translations' => 'http://drupal.org/project/translations')) . '</p>';
+      $output .= '<p>' . t('Note that the <em>.po</em> files within a translation package are imported automatically (if available) when new modules or themes are enabled, or as new languages are added. Since this page only allows the import of one <em>.po</em> file at a time, it may be simpler to download and extract a translation package into your Drupal installation directory and <a href="@language-add">add the language</a> (which automatically imports all <em>.po</em> files within the package). Translation packages are available for download on the <a href="@translations">Drupal translation page</a>.', array('@language-add' => url('admin/config/regional/language/add'), '@translations' => 'http://localize.drupal.org')) . '</p>';
       return $output;
     case 'admin/config/regional/translate/export':
       return '<p>' . t('This page exports the translated strings used by your site. An export file may be in Gettext Portable Object (<em>.po</em>) form, which includes both the original string and the translation (used to share translations with others), or in Gettext Portable Object Template (<em>.pot</em>) form, which includes the original strings only (used to create new translations with a Gettext translation editor).') . '</p>';
     case 'admin/config/regional/translate/translate':
       return '<p>' . t('This page allows a translator to search for specific translated and untranslated strings, and is used when creating or editing translations. (Note: For translation tasks involving many strings, it may be more convenient to <a href="@export">export</a> strings for offline editing in a desktop Gettext translation editor.) Searches may be limited to strings found within a specific text group or in a specific language.', array('@export' => url('admin/config/regional/translate/export'))) . '</p>';
-    case 'admin/structure/block/manage':
-      if ($arg[4] == 'locale' && $arg[5] == 0) {
-        return '<p>' . t('This block is only shown if <a href="@languages">at least two languages are enabled</a> and <a href="@configuration">language negotiation</a> is set to something other than <em>None</em>.', array('@languages' => url('admin/config/regional/language'), '@configuration' => url('admin/config/regional/language/configure'))) . '</p>';
+    case 'admin/structure/block/manage/%/%':
+      if ($arg[4] == 'locale' && $arg[5] == 'language') {
+        return '<p>' . t('This block is only shown if <a href="@languages">at least two languages are enabled</a> and <a href="@configuration">language negotiation</a> is set to <em>URL</em> or <em>Session</em>.', array('@languages' => url('admin/config/regional/language'), '@configuration' => url('admin/config/regional/language/configure'))) . '</p>';
       }
       break;
   }
@@ -254,6 +253,7 @@ function locale_permission() {
     ),
     'translate interface' => array(
       'title' => t('Translate interface texts'),
+      'restrict access' => TRUE,
     ),
   );
 }
@@ -386,28 +386,61 @@ function locale_form_node_form_alter(&$form, &$form_state) {
 /**
  * Form submit handler for node_form().
  *
- * Checks if Locale is registered as a translation handler and handle possible
- * node language changes.
- *
  * This submit handler needs to run before entity_form_submit_build_entity()
  * is invoked by node_form_submit_build_node(), because it alters the values of
  * attached fields. Therefore, it cannot be a hook_node_submit() implementation.
  */
 function locale_field_node_form_submit($form, &$form_state) {
-  if (field_has_translation_handler('node', 'locale')) {
-    $node = (object) $form_state['values'];
-    $available_languages = field_content_languages();
-    list(, , $bundle) = entity_extract_ids('node', $node);
+  locale_field_entity_form_submit('node', $form, $form_state);
+}
 
-    foreach (field_info_instances('node', $bundle) as $instance) {
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function locale_form_comment_form_alter(&$form, &$form_state, $form_id) {
+  // If a content type has multilingual support we set the content language as
+  // comment language.
+  if ($form['language']['#value'] == LANGUAGE_NONE && locale_multilingual_node_type($form['#node']->type)) {
+    global $language_content;
+    $form['language']['#value'] = $language_content->language;
+    $submit_callback = 'locale_field_comment_form_submit';
+    array_unshift($form['actions']['preview']['#submit'], $submit_callback);
+    array_unshift($form['#submit'], $submit_callback);
+  }
+}
+
+/**
+ * Form submit handler for comment_form().
+ *
+ * This submit handler needs to run before entity_form_submit_build_entity()
+ * is invoked by comment_form_submit_build_comment(), because it alters the
+ * values of attached fields.
+ */
+function locale_field_comment_form_submit($form, &$form_state) {
+  locale_field_entity_form_submit('comment', $form, $form_state);
+}
+
+/**
+ * Handles field language on submit for the given entity type.
+ *
+ * Checks if Locale is registered as a translation handler and handle possible
+ * language changes.
+ */
+function locale_field_entity_form_submit($entity_type, $form, &$form_state ) {
+  if (field_has_translation_handler($entity_type, 'locale')) {
+    $entity = (object) $form_state['values'];
+    $current_language = entity_language($entity_type, $entity);
+    list(, , $bundle) = entity_extract_ids($entity_type, $entity);
+
+    foreach (field_info_instances($entity_type, $bundle) as $instance) {
       $field_name = $instance['field_name'];
       $field = field_info_field($field_name);
       $previous_language = $form[$field_name]['#language'];
 
       // Handle a possible language change: new language values are inserted,
       // previous ones are deleted.
-      if ($field['translatable'] && $previous_language != $node->language) {
-        $form_state['values'][$field_name][$node->language] = $node->{$field_name}[$previous_language];
+      if ($field['translatable'] && $previous_language != $current_language) {
+        $form_state['values'][$field_name][$current_language] = $entity->{$field_name}[$previous_language];
         $form_state['values'][$field_name][$previous_language] = array();
       }
     }
@@ -491,6 +524,9 @@ function locale_field_language_fallback(&$display_language, $entity, $langcode) 
  */
 function locale_entity_info_alter(&$entity_info) {
   $entity_info['node']['translation']['locale'] = TRUE;
+  if (isset($entity_info['comment'])) {
+    $entity_info['comment']['translation']['locale'] = TRUE;
+  }
 }
 
 /**
@@ -514,6 +550,8 @@ function locale_language_types_info() {
       'description' => t('Order of language detection methods for user interface text. If a translation of user interface text is available in the detected language, it will be displayed.'),
     ),
     LANGUAGE_TYPE_CONTENT => array(
+      'name' => t('Content'),
+      'description' => t('Order of language detection methods for content. If a version of content is available in the detected language, it will be displayed.'),
       'fixed' => array(LOCALE_LANGUAGE_NEGOTIATION_INTERFACE),
     ),
     LANGUAGE_TYPE_URL => array(
@@ -594,6 +632,22 @@ function locale_language_negotiation_info() {
   return $providers;
 }
 
+/**
+ * Implements hook_modules_enabled().
+ */
+function locale_modules_enabled($modules) {
+  include_once DRUPAL_ROOT . '/includes/language.inc';
+  language_types_set();
+  language_negotiation_purge();
+}
+
+/**
+ * Implements hook_modules_disabled().
+ */
+function locale_modules_disabled($modules) {
+  locale_modules_enabled($modules);
+}
+
 // ---------------------------------------------------------------------------------
 // Locale core functionality
 
@@ -613,7 +667,14 @@ function locale_language_negotiation_info() {
  */
 function locale($string = NULL, $context = NULL, $langcode = NULL) {
   global $language;
-  $locale_t = &drupal_static(__FUNCTION__);
+
+  // Use the advanced drupal_static() pattern, since this is called very often.
+  static $drupal_static_fast;
+  if (!isset($drupal_static_fast)) {
+    $drupal_static_fast['locale'] = &drupal_static(__FUNCTION__);
+  }
+  $locale_t = &$drupal_static_fast['locale'];
+
 
   if (!isset($string)) {
     // Return all cached strings if no string was specified
@@ -675,13 +736,15 @@ function locale($string = NULL, $context = NULL, $langcode = NULL) {
     }
     else {
       // We don't have the source string, cache this as untranslated.
-      db_insert('locales_source')
-        ->fields(array(
+      db_merge('locales_source')
+        ->insertFields(array(
           'location' => request_uri(),
+          'version' => VERSION,
+        ))
+        ->key(array(
           'source' => $string,
           'context' => (string) $context,
           'textgroup' => 'default',
-          'version' => VERSION,
         ))
         ->execute();
       $locale_t[$langcode][$context][$string] = TRUE;
@@ -710,30 +773,50 @@ function locale_reset() {
  * @param $langcode
  *   Optional language code to translate to a language other than
  *   what is used to display the page.
+ *
+ * @return
+ *   The numeric index of the plural variant to use for this $langcode and
+ *   $count combination or -1 if the language was not found or does not have a
+ *   plural formula.
  */
 function locale_get_plural($count, $langcode = NULL) {
   global $language;
-  $locale_formula = &drupal_static(__FUNCTION__, array());
-  $plurals = &drupal_static(__FUNCTION__ . ':plurals', array());
+
+  // Used to locally cache the plural formulas for all languages.
+  $plural_formulas = &drupal_static(__FUNCTION__, array());
+
+  // Used to store precomputed plural indexes corresponding to numbers
+  // individually for each language.
+  $plural_indexes = &drupal_static(__FUNCTION__ . ':plurals', array());
 
   $langcode = $langcode ? $langcode : $language->language;
 
-  if (!isset($plurals[$langcode][$count])) {
-    if (empty($locale_formula)) {
-      $language_list = language_list();
-      $locale_formula[$langcode] = $language_list[$langcode]->formula;
+  if (!isset($plural_indexes[$langcode][$count])) {
+    // Retrieve and statically cache the plural formulas for all languages.
+    if (empty($plural_formulas)) {
+      foreach (language_list() as $installed_language) {
+        $plural_formulas[$installed_language->language] = $installed_language->formula;
+      }
     }
-    if ($locale_formula[$langcode]) {
+    // If there is a plural formula for the language, evaluate it for the given
+    // $count and statically cache the result for the combination of language
+    // and count, since the result will always be identical.
+    if (!empty($plural_formulas[$langcode])) {
+      // $n is used inside the expression in the eval().
       $n = $count;
-      $plurals[$langcode][$count] = @eval('return intval(' . $locale_formula[$langcode] . ');');
-      return $plurals[$langcode][$count];
+      $plural_indexes[$langcode][$count] = @eval('return intval(' . $plural_formulas[$langcode] . ');');
     }
+    // In case there is no plural formula for English (no imported translation
+    // for English), use a default formula.
+    elseif ($langcode == 'en') {
+      $plural_indexes[$langcode][$count] = (int) ($count != 1);
+    }
+    // Otherwise, return -1 (unknown).
     else {
-      $plurals[$langcode][$count] = -1;
-      return -1;
+      $plural_indexes[$langcode][$count] = -1;
     }
   }
-  return $plurals[$langcode][$count];
+  return $plural_indexes[$langcode][$count];
 }
 
 
@@ -773,7 +856,24 @@ function locale_language_list($field = 'name', $all = FALSE) {
 }
 
 /**
- * Imports translations when new modules or themes are installed or enabled.
+ * Implements hook_modules_installed().
+ */
+function locale_modules_installed($modules) {
+  locale_system_update($modules);
+}
+
+/**
+ * Implements hook_themes_enabled().
+ *
+ * @todo This is technically wrong. We must not import upon enabling, but upon
+ *   initial installation. The theme system is missing an installation hook.
+ */
+function locale_themes_enabled($themes) {
+  locale_system_update($themes);
+}
+
+/**
+ * Imports translations when new modules or themes are installed.
  *
  * This function will either import translation for the component change
  * right away, or start a batch if more files need to be imported.
@@ -886,15 +986,22 @@ function locale_css_alter(&$css) {
  * Provides the language support for the jQuery UI Date Picker.
  */
 function locale_library_alter(&$libraries, $module) {
-  global $language;
-  if ($module == 'system' && isset($libraries['system']['ui.datepicker'])) {
+  if ($module == 'system' && isset($libraries['ui.datepicker'])) {
+    global $language;
+    // locale.datepicker.js should be added in the JS_LIBRARY group, so that
+    // this attach behavior will execute early. JS_LIBRARY is the default for
+    // hook_library_info_alter(), thus does not have to be specified explicitly.
     $datepicker = drupal_get_path('module', 'locale') . '/locale.datepicker.js';
-    $libraries['system']['ui.datepicker']['js'][$datepicker] = array('group' => JS_THEME);
-    $libraries['system']['ui.datepicker']['js'][] = array(
+    $libraries['ui.datepicker']['js'][$datepicker] = array();
+    $libraries['ui.datepicker']['js'][] = array(
       'data' => array(
-        'jqueryuidatepicker' => array(
-          'rtl' => $language->direction == LANGUAGE_RTL,
-          'firstDay' => variable_get('date_first_day', 0),
+        'jquery' => array(
+          'ui' => array(
+            'datepicker' => array(
+              'isRTL' => $language->direction == LANGUAGE_RTL,
+              'firstDay' => variable_get('date_first_day', 0),
+            ),
+          ),
         ),
       ),
       'type' => 'setting',
@@ -912,7 +1019,7 @@ function locale_block_info() {
   include_once DRUPAL_ROOT . '/includes/language.inc';
   $block = array();
   $info = language_types_info();
-  foreach (language_types_configurable() as $type) {
+  foreach (language_types_configurable(FALSE) as $type) {
     $block[$type] = array(
       'info' => t('Language switcher (@type)', array('@type' => $info[$type]['name'])),
       // Not worth caching.
@@ -962,17 +1069,16 @@ function locale_url_outbound_alter(&$path, &$options, $original_path) {
       include_once DRUPAL_ROOT . '/includes/language.inc';
 
       foreach (language_types_configurable() as $type) {
-        // Get url rewriter callbacks only from enabled language providers.
+        // Get URL rewriter callbacks only from enabled language providers.
         $negotiation = variable_get("language_negotiation_$type", array());
 
         foreach ($negotiation as $id => $provider) {
-          if (isset($provider['file'])) {
-            require_once DRUPAL_ROOT . '/' . $provider['file'];
-          }
-
-          // Avoid duplicate callback entries.
           if (isset($provider['callbacks']['url_rewrite'])) {
-            $callbacks[$provider['callbacks']['url_rewrite']] = NULL;
+            if (isset($provider['file'])) {
+              require_once DRUPAL_ROOT . '/' . $provider['file'];
+            }
+            // Avoid duplicate callback entries.
+            $callbacks[$provider['callbacks']['url_rewrite']] = TRUE;
           }
         }
       }
@@ -988,17 +1094,5 @@ function locale_url_outbound_alter(&$path, &$options, $original_path) {
     if (empty($callbacks)) {
       unset($options['language']);
     }
-  }
-}
-
-/**
- * Implements hook_form_FORM_ID_alter().
- */
-function locale_form_comment_form_alter(&$form, &$form_state, $form_id) {
-  // If a content type has multilingual support we set the content language as
-  // comment language.
-  if ($form['language']['#value'] == LANGUAGE_NONE && locale_multilingual_node_type($form['#node']->type)) {
-    global $language_content;
-    $form['language']['#value'] = $language_content->language;
   }
 }

@@ -1,5 +1,4 @@
 <?php
-// $Id: install.inc,v 1.6 2010/11/13 23:07:16 webchick Exp $
 
 /**
  * @file
@@ -21,7 +20,7 @@ class DatabaseTasks_mysql extends DatabaseTasks {
    * Returns a human-readable name string for MySQL and equivalent databases.
    */
   public function name() {
-    return 'MySQL, MariaDB, or equivalent';
+    return st('MySQL, MariaDB, or equivalent');
   }
 
   /**

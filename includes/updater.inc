@@ -1,5 +1,4 @@
 <?php
-// $Id: updater.inc,v 1.7 2010/09/01 20:08:17 dries Exp $
 
 /**
  * @file
@@ -137,12 +136,12 @@ class Updater {
    *   Path to the info file.
    */
   public static function findInfoFile($directory) {
-    $info_files = file_scan_directory($directory, '/.*\.info/');
+    $info_files = file_scan_directory($directory, '/.*\.info$/');
     if (!$info_files) {
       return FALSE;
     }
     foreach ($info_files as $info_file) {
-      if (drupal_substr($info_file->filename, 0, -5) == basename($directory)) {
+      if (drupal_substr($info_file->filename, 0, -5) == drupal_basename($directory)) {
         // Info file Has the same name as the directory, return it.
         return $info_file->uri;
       }
@@ -164,7 +163,7 @@ class Updater {
    *   The name of the project.
    */
   public static function getProjectName($directory) {
-    return basename($directory);
+    return drupal_basename($directory);
   }
 
   /**
@@ -179,8 +178,11 @@ class Updater {
   public static function getProjectTitle($directory) {
     $info_file = self::findInfoFile($directory);
     $info = drupal_parse_info_file($info_file);
-    if (!$info) {
-      throw new UpdaterException(t('Unable to parse info file.'));
+    if (empty($info)) {
+      throw new UpdaterException(t('Unable to parse info file: %info_file.', array('%info_file' => $info_file)));
+    }
+    if (empty($info['name'])) {
+      throw new UpdaterException(t("The info file (%info_file) does not define a 'name' attribute.", array('%info_file' => $info_file)));
     }
     return $info['name'];
   }
@@ -328,7 +330,7 @@ class Updater {
           }
           catch (FileTransferException $e) {
             $message = t($e->getMessage(), $e->arguments);
-            $throw_message = t('Unable to create %directory due to the following: %reason', array('%directory' => $install_location, '%reason' => $message));
+            $throw_message = t('Unable to create %directory due to the following: %reason', array('%directory' => $directory, '%reason' => $message));
             throw new UpdaterException($throw_message);
           }
         }

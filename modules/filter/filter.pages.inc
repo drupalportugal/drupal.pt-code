@@ -1,14 +1,18 @@
 <?php
-// $Id: filter.pages.inc,v 1.11 2010/09/16 18:00:43 dries Exp $
 
 /**
  * @file
- * User page callbacks for the filter module.
+ * User page callbacks for the Filter module.
  */
 
-
 /**
- * Menu callback; show a page with long filter tips.
+ * Page callback: Displays a page with long filter tips.
+ *
+ * @return string
+ *   An HTML-formatted string.
+ *
+ * @see filter_menu()
+ * @see theme_filter_tips()
  */
 function filter_tips_long() {
   $format_id = arg(2);
@@ -21,13 +25,12 @@ function filter_tips_long() {
   return $output;
 }
 
-
 /**
  * Returns HTML for a set of filter tips.
  *
  * @param $variables
  *   An associative array containing:
- *   - tips: An array containing descriptions and a CSS id in the form of
+ *   - tips: An array containing descriptions and a CSS ID in the form of
  *     'module-name/filter-id' (only used when $long is TRUE) for each
  *     filter in one or more text formats. Example:
  *     @code
@@ -40,7 +43,7 @@ function filter_tips_long() {
  *         ),
  *       );
  *     @endcode
- *   - long: (optional) Whether the passed in filter tips contain extended
+ *   - long: (optional) Whether the passed-in filter tips contain extended
  *     explanations, i.e. intended to be output on the path 'filter/tips'
  *     (TRUE), or are in a short format, i.e. suitable to be displayed below a
  *     form element. Defaults to FALSE.

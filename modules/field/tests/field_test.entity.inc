@@ -1,5 +1,4 @@
 <?php
-// $Id: field_test.entity.inc,v 1.15 2010/11/05 19:57:28 dries Exp $
 
 /**
  * @file
@@ -10,6 +9,12 @@
  * Implements hook_entity_info().
  */
 function field_test_entity_info() {
+  // If requested, clear the field cache while this hook is being called. See
+  // testFieldInfoCache().
+  if (variable_get('field_test_clear_info_cache_in_hook_entity_info', FALSE)) {
+    field_info_cache_clear();
+  }
+
   $bundles = variable_get('field_test_bundles', array('test_bundle' => array('label' => 'Test Bundle')));
   $test_entity_modes = array(
     'full' => array(
@@ -24,7 +29,7 @@ function field_test_entity_info() {
 
   return array(
     'test_entity' => array(
-      'name' => t('Test Entity'),
+      'label' => t('Test Entity'),
       'fieldable' => TRUE,
       'field cache' => FALSE,
       'base table' => 'test_entity',
@@ -39,7 +44,7 @@ function field_test_entity_info() {
     ),
     // This entity type doesn't get form handling for now...
     'test_cacheable_entity' => array(
-      'name' => t('Test Entity, cacheable'),
+      'label' => t('Test Entity, cacheable'),
       'fieldable' => TRUE,
       'field cache' => TRUE,
       'entity keys' => array(
@@ -51,7 +56,7 @@ function field_test_entity_info() {
       'view modes' => $test_entity_modes,
     ),
     'test_entity_bundle_key' => array(
-      'name' => t('Test Entity with a bundle key.'),
+      'label' => t('Test Entity with a bundle key.'),
       'base table' => 'test_entity_bundle_key',
       'fieldable' => TRUE,
       'field cache' => FALSE,
@@ -59,12 +64,12 @@ function field_test_entity_info() {
         'id' => 'ftid',
         'bundle' => 'fttype',
       ),
-      'bundles' => array('bundle1' => array('label' => 'Bundle1'), 'bundle2' => array('label' => 'Bundle2')),
+      'bundles' => array('bundle1' => array('label' => 'Bundle1'), 'bundle2' => array('label' => 'Bundle2')) + $bundles,
       'view modes' => $test_entity_modes,
     ),
     // In this case, the bundle key is not stored in the database.
     'test_entity_bundle' => array(
-      'name' => t('Test Entity with a specified bundle.'),
+      'label' => t('Test Entity with a specified bundle.'),
       'base table' => 'test_entity_bundle',
       'fieldable' => TRUE,
       'controller class' => 'TestEntityBundleController',
@@ -73,12 +78,12 @@ function field_test_entity_info() {
         'id' => 'ftid',
         'bundle' => 'fttype',
       ),
-      'bundles' => array('test_entity_2' => array('label' => 'Test entity 2')),
+      'bundles' => array('test_entity_2' => array('label' => 'Test entity 2')) + $bundles,
       'view modes' => $test_entity_modes,
     ),
     // @see EntityPropertiesTestCase::testEntityLabel()
     'test_entity_no_label' => array(
-      'name' => t('Test entity without label'),
+      'label' => t('Test entity without label'),
       'fieldable' => TRUE,
       'field cache' => FALSE,
       'base table' => 'test_entity',
@@ -91,7 +96,7 @@ function field_test_entity_info() {
       'view modes' => $test_entity_modes,
     ),
     'test_entity_label' => array(
-      'name' => t('Test entity label'),
+      'label' => t('Test entity label'),
       'fieldable' => TRUE,
       'field cache' => FALSE,
       'base table' => 'test_entity',
@@ -105,7 +110,7 @@ function field_test_entity_info() {
       'view modes' => $test_entity_modes,
     ),
     'test_entity_label_callback' => array(
-      'name' => t('Test entity label callback'),
+      'label' => t('Test entity label callback'),
       'fieldable' => TRUE,
       'field cache' => FALSE,
       'base table' => 'test_entity',
@@ -355,7 +360,6 @@ function field_test_entity_form($form, &$form_state, $entity, $add = FALSE) {
   }
 
   // Add field widgets.
-  $form['#builder_function'] = 'field_test_entity_form_submit_builder';
   field_attach_form('test_entity', $entity, $form, $form_state);
 
   if (!$add) {
@@ -387,7 +391,7 @@ function field_test_entity_form_validate($form, &$form_state) {
  * Submit handler for field_test_entity_form().
  */
 function field_test_entity_form_submit($form, &$form_state) {
-  $entity = $form['#builder_function']($form, $form_state);
+  $entity = field_test_entity_form_submit_build_test_entity($form, $form_state);
   $insert = empty($entity->ftid);
   field_test_entity_save($entity);
 
@@ -407,10 +411,74 @@ function field_test_entity_form_submit($form, &$form_state) {
 /**
  * Updates the form state's entity by processing this submission's values.
  */
-function field_test_entity_form_submit_builder($form, &$form_state) {
+function field_test_entity_form_submit_build_test_entity($form, &$form_state) {
   $entity = $form_state['test_entity'];
   entity_form_submit_build_entity('test_entity', $entity, $form, $form_state);
   return $entity;
+}
+
+/**
+ * Form combining two separate entities.
+ */
+function field_test_entity_nested_form($form, &$form_state, $entity_1, $entity_2) {
+  // First entity.
+  foreach (array('ftid', 'ftvid', 'fttype') as $key) {
+    $form[$key] = array(
+      '#type' => 'value',
+      '#value' => $entity_1->$key,
+    );
+  }
+  field_attach_form('test_entity', $entity_1, $form, $form_state);
+
+  // Second entity.
+  $form['entity_2'] = array(
+    '#type' => 'fieldset',
+    '#title' => t('Second entity'),
+    '#tree' => TRUE,
+    '#parents' => array('entity_2'),
+    '#weight' => 50,
+  );
+  foreach (array('ftid', 'ftvid', 'fttype') as $key) {
+    $form['entity_2'][$key] = array(
+      '#type' => 'value',
+      '#value' => $entity_2->$key,
+    );
+  }
+  field_attach_form('test_entity', $entity_2, $form['entity_2'], $form_state);
+
+  $form['save'] = array(
+    '#type' => 'submit',
+    '#value' => t('Save'),
+    '#weight' => 100,
+  );
+
+  return $form;
+}
+
+/**
+ * Validate handler for field_test_entity_nested_form().
+ */
+function field_test_entity_nested_form_validate($form, &$form_state) {
+  $entity_1 = (object) $form_state['values'];
+  field_attach_form_validate('test_entity', $entity_1, $form, $form_state);
+
+  $entity_2 = (object) $form_state['values']['entity_2'];
+  field_attach_form_validate('test_entity', $entity_2, $form['entity_2'], $form_state);
+}
+
+/**
+ * Submit handler for field_test_entity_nested_form().
+ */
+function field_test_entity_nested_form_submit($form, &$form_state) {
+  $entity_1 = (object) $form_state['values'];
+  field_attach_submit('test_entity', $entity_1, $form, $form_state);
+  field_test_entity_save($entity_1);
+
+  $entity_2 = (object) $form_state['values']['entity_2'];
+  field_attach_submit('test_entity', $entity_2, $form['entity_2'], $form_state);
+  field_test_entity_save($entity_2);
+
+  drupal_set_message(t('test_entities @id_1 and @id_2 have been updated.', array('@id_1' => $entity_1->ftid, '@id_2' => $entity_2->ftid)));
 }
 
 /**

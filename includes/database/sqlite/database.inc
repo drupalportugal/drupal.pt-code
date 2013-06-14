@@ -1,5 +1,4 @@
 <?php
-// $Id: database.inc,v 1.39 2010/10/03 01:29:41 dries Exp $
 
 /**
  * @file
@@ -7,7 +6,7 @@
  */
 
 /**
- * @ingroup database
+ * @addtogroup database
  * @{
  */
 
@@ -24,7 +23,7 @@ class DatabaseConnection_sqlite extends DatabaseConnection {
    * Version of sqlite lower then 3.6.8 can't use savepoints.
    * See http://www.sqlite.org/releaselog/3_6_8.html
    *
-   * @var bool
+   * @var boolean
    */
   protected $savepointSupport = FALSE;
 
@@ -35,23 +34,63 @@ class DatabaseConnection_sqlite extends DatabaseConnection {
    */
   protected $willRollback;
 
+  /**
+   * All databases attached to the current database. This is used to allow
+   * prefixes to be safely handled without locking the table
+   *
+   * @var array
+   */
+  protected $attachedDatabases = array();
+
+  /**
+   * Whether or not a table has been dropped this request: the destructor will
+   * only try to get rid of unnecessary databases if there is potential of them
+   * being empty.
+   *
+   * This variable is set to public because DatabaseSchema_sqlite needs to
+   * access it. However, it should not be manually set.
+   *
+   * @var boolean
+   */
+  var $tableDropped = FALSE;
+
   public function __construct(array $connection_options = array()) {
     // We don't need a specific PDOStatement class here, we simulate it below.
     $this->statementClass = NULL;
 
     // This driver defaults to transaction support, except if explicitly passed FALSE.
-    $this->transactionSupport = !isset($connection_options['transactions']) || $connection_options['transactions'] !== FALSE;
+    $this->transactionSupport = $this->transactionalDDLSupport = !isset($connection_options['transactions']) || $connection_options['transactions'] !== FALSE;
 
     $this->connectionOptions = $connection_options;
 
-    parent::__construct('sqlite:' . $connection_options['database'], '', '', array(
-      // Force column names to lower case.
-      PDO::ATTR_CASE => PDO::CASE_LOWER,
+    // Allow PDO options to be overridden.
+    $connection_options += array(
+      'pdo' => array(),
+    );
+    $connection_options['pdo'] += array(
       // Convert numeric values to strings when fetching.
       PDO::ATTR_STRINGIFY_FETCHES => TRUE,
-    ));
+    );
+    parent::__construct('sqlite:' . $connection_options['database'], '', '', $connection_options['pdo']);
 
-    $this->exec('PRAGMA encoding="UTF-8"');
+    // Attach one database for each registered prefix.
+    $prefixes = $this->prefixes;
+    foreach ($prefixes as $table => &$prefix) {
+      // Empty prefix means query the main database -- no need to attach anything.
+      if (!empty($prefix)) {
+        // Only attach the database once.
+        if (!isset($this->attachedDatabases[$prefix])) {
+          $this->attachedDatabases[$prefix] = $prefix;
+          $this->query('ATTACH DATABASE :database AS :prefix', array(':database' => $connection_options['database'] . '-' . $prefix, ':prefix' => $prefix));
+        }
+
+        // Add a ., so queries become prefix.table, which is proper syntax for
+        // querying an attached database.
+        $prefix .= '.';
+      }
+    }
+    // Regenerate the prefixes replacement table.
+    $this->setPrefix($prefixes);
 
     // Detect support for SAVEPOINT.
     $version = $this->query('SELECT sqlite_version()')->fetchField();
@@ -67,6 +106,41 @@ class DatabaseConnection_sqlite extends DatabaseConnection {
     $this->sqliteCreateFunction('substring', array($this, 'sqlFunctionSubstring'), 3);
     $this->sqliteCreateFunction('substring_index', array($this, 'sqlFunctionSubstringIndex'), 3);
     $this->sqliteCreateFunction('rand', array($this, 'sqlFunctionRand'));
+
+    // Execute sqlite init_commands.
+    if (isset($connection_options['init_commands'])) {
+      $this->exec(implode('; ', $connection_options['init_commands']));
+    }
+  }
+
+  /**
+   * Destructor for the SQLite connection.
+   *
+   * We prune empty databases on destruct, but only if tables have been
+   * dropped. This is especially needed when running the test suite, which
+   * creates and destroy databases several times in a row.
+   */
+  public function __destruct() {
+    if ($this->tableDropped && !empty($this->attachedDatabases)) {
+      foreach ($this->attachedDatabases as $prefix) {
+        // Check if the database is now empty, ignore the internal SQLite tables.
+        try {
+          $count = $this->query('SELECT COUNT(*) FROM ' . $prefix . '.sqlite_master WHERE type = :type AND name NOT LIKE :pattern', array(':type' => 'table', ':pattern' => 'sqlite_%'))->fetchField();
+
+          // We can prune the database file if it doesn't have any tables.
+          if ($count == 0) {
+            // Detach the database.
+            $this->query('DETACH DATABASE :schema', array(':schema' => $prefix));
+            // Destroy the database file.
+            unlink($this->connectionOptions['database'] . '-' . $prefix);
+          }
+        }
+        catch (Exception $e) {
+          // Ignore the exception and continue. There is nothing we can do here
+          // to report the error or fail safe.
+        }
+      }
+    }
   }
 
   /**
@@ -172,7 +246,9 @@ class DatabaseConnection_sqlite extends DatabaseConnection {
     // Generate a new temporary table name and protect it from prefixing.
     // SQLite requires that temporary tables to be non-qualified.
     $tablename = $this->generateTemporaryTableName();
-    $this->prefixes[$tablename] = '';
+    $prefixes = $this->prefixes;
+    $prefixes[$tablename] = '';
+    $this->setPrefix($prefixes);
 
     $this->query(preg_replace('/^SELECT/i', 'CREATE TEMPORARY TABLE ' . $tablename . ' AS SELECT', $query), $args, $options);
     return $tablename;
@@ -439,5 +515,5 @@ class DatabaseStatement_sqlite extends DatabaseStatementPrefetch implements Iter
 }
 
 /**
- * @} End of "ingroup database".
+ * @} End of "addtogroup database".
  */

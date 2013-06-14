@@ -1,11 +1,25 @@
 <?php
-// $Id: user.admin.inc,v 1.120 2010/10/20 01:31:07 dries Exp $
 
 /**
  * @file
  * Admin page callback file for the user module.
  */
 
+/**
+ * Page callback: Generates the appropriate user administration form.
+ *
+ * This function generates the user registration, multiple user cancellation,
+ * or filtered user list admin form, depending on the argument and the POST
+ * form values.
+ *
+ * @param string $callback_arg
+ *   (optional) Indicates which form to build. Defaults to '', which will
+ *   trigger the user filter form. If the POST value 'op' is present, this
+ *   function uses that value as the callback argument.
+ *
+ * @return string
+ *   A renderable form array for the respective request.
+ */
 function user_admin($callback_arg = '') {
   $op = isset($_POST['op']) ? $_POST['op'] : $callback_arg;
 
@@ -99,7 +113,7 @@ function user_filter_form() {
     );
   }
 
-  drupal_add_js('misc/form.js');
+  drupal_add_library('system', 'drupal.form');
 
   return $form;
 }
@@ -414,6 +428,7 @@ function user_admin_settings() {
     '#maxlength' => 10,
     '#field_suffix' => ' ' . t('KB'),
     '#description' => t('Maximum allowed file size for uploaded pictures. Upload size is normally limited only by the PHP maximum post and file upload settings, and images are automatically scaled down to the dimensions specified above.'),
+    '#element_validate' => array('element_validate_integer_positive'),
   );
   $form['personalization']['pictures']['user_picture_guidelines'] = array(
     '#type' => 'textarea',
@@ -678,11 +693,11 @@ function user_admin_permissions($form, $form_state, $rid = NULL) {
   // display name.
   $modules = array();
   foreach (module_implements('permission') as $module) {
-    $modules[$module_info[$module]['name']] = $module;
+    $modules[$module] = $module_info[$module]['name'];
   }
-  ksort($modules);
+  asort($modules);
 
-  foreach ($modules as $display_name => $module) {
+  foreach ($modules as $module => $display_name) {
     if ($permissions = module_invoke($module, 'permission')) {
       $form['permission'][] = array(
         '#markup' => $module_info[$module]['name'],
@@ -713,7 +728,12 @@ function user_admin_permissions($form, $form_state, $rid = NULL) {
 
   // Have to build checkboxes here after checkbox arrays are built
   foreach ($role_names as $rid => $name) {
-    $form['checkboxes'][$rid] = array('#type' => 'checkboxes', '#options' => $options, '#default_value' => isset($status[$rid]) ? $status[$rid] : array());
+    $form['checkboxes'][$rid] = array(
+      '#type' => 'checkboxes',
+      '#options' => $options,
+      '#default_value' => isset($status[$rid]) ? $status[$rid] : array(),
+      '#attributes' => array('class' => array('rid-' . $rid)),
+    );
     $form['role_names'][$rid] = array('#markup' => check_plain($name), '#tree' => TRUE);
   }
 
@@ -767,7 +787,7 @@ function theme_user_admin_permissions($variables) {
         'class' => array('permission'),
       );
       foreach (element_children($form['checkboxes']) as $rid) {
-        $form['checkboxes'][$rid][$key]['#title'] = $roles[$rid] . ': ' . t($key);
+        $form['checkboxes'][$rid][$key]['#title'] = $roles[$rid] . ': ' . $form['permission'][$key]['#markup'];
         $form['checkboxes'][$rid][$key]['#title_display'] = 'invisible';
         $row[] = array('data' => drupal_render($form['checkboxes'][$rid][$key]), 'class' => array('checkbox'));
       }
@@ -837,7 +857,7 @@ function user_admin_roles($form, $form_state) {
     $form['roles'][$rid]['#weight'] = $order;
     $form['roles'][$rid]['weight'] = array(
       '#type' => 'textfield',
-      '#title' => t('Weight for @title', array('@title' => $name['label'])),
+      '#title' => t('Weight for @title', array('@title' => $name)),
       '#title_display' => 'invisible',
       '#size' => 4,
       '#default_value' => $order,
@@ -878,6 +898,7 @@ function user_admin_roles_order_submit($form, &$form_state) {
     $role->weight = $role_values['weight'];
     user_role_save($role);
   }
+  drupal_set_message(t('The role settings have been updated.'));
 }
 
 /**

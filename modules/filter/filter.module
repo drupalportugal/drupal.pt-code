@@ -1,9 +1,8 @@
 <?php
-// $Id: filter.module,v 1.358 2010/10/31 13:08:29 dries Exp $
 
 /**
  * @file
- * Framework for handling filtering of content.
+ * Framework for handling the filtering of content.
  */
 
 /**
@@ -14,7 +13,7 @@ function filter_help($path, $arg) {
     case 'admin/help#filter':
       $output = '';
       $output .= '<h3>' . t('About') . '</h3>';
-      $output .= '<p>' . t('The Filter module allows administrators to configure text formats. A text format defines the HTML tags, codes, and other input allowed in content and comments, and is a key feature in guarding against potentially damaging input from malicious users. For more information, see the online handbook entry for <a href="@filter">Filter module</a>.', array('@filter' => 'http://drupal.org/handbook/modules/filter/')) . '</p>';
+      $output .= '<p>' . t('The Filter module allows administrators to configure text formats. A text format defines the HTML tags, codes, and other input allowed in content and comments, and is a key feature in guarding against potentially damaging input from malicious users. For more information, see the online handbook entry for <a href="@filter">Filter module</a>.', array('@filter' => 'http://drupal.org/documentation/modules/filter/')) . '</p>';
       $output .= '<h3>' . t('Uses') . '</h3>';
       $output .= '<dl>';
       $output .= '<dt>' . t('Configuring text formats') . '</dt>';
@@ -72,6 +71,7 @@ function filter_theme() {
  * Implements hook_element_info().
  *
  * @see filter_process_format()
+ * @see text_format_wrapper()
  */
 function filter_element_info() {
   $type['text_format'] = array(
@@ -133,13 +133,16 @@ function filter_menu() {
 }
 
 /**
- * Access callback for deleting text formats.
+ * Access callback: Checks access for disabling text formats.
  *
  * @param $format
  *   A text format object.
+ *
  * @return
  *   TRUE if the text format can be disabled by the current user, FALSE
  *   otherwise.
+ *
+ * @see filter_menu()
  */
 function _filter_disable_format_access($format) {
   // The fallback format can never be disabled.
@@ -147,7 +150,7 @@ function _filter_disable_format_access($format) {
 }
 
 /**
- * Load a text format object from the database.
+ * Loads a text format object from the database.
  *
  * @param $format_id
  *   The format ID.
@@ -165,27 +168,32 @@ function filter_format_load($format_id) {
 }
 
 /**
- * Save a text format object to the database.
+ * Saves a text format object to the database.
  *
  * @param $format
- *   A format object using the properties:
- *   - 'format': A machine-readable name representing the ID of the text format
+ *   A format object having the properties:
+ *   - format: A machine-readable name representing the ID of the text format
  *     to save. If this corresponds to an existing text format, that format
  *     will be updated; otherwise, a new format will be created.
- *   - 'name': The title of the text format.
- *   - 'weight': (optional) The weight of the text format, which controls its
+ *   - name: The title of the text format.
+ *   - status: (optional) An integer indicating whether the text format is
+ *     enabled (1) or not (0). Defaults to 1.
+ *   - weight: (optional) The weight of the text format, which controls its
  *     placement in text format lists. If omitted, the weight is set to 0.
- *   - 'filters': (optional) An associative, multi-dimensional array of filters
+ *   - filters: (optional) An associative, multi-dimensional array of filters
  *     assigned to the text format, keyed by the name of each filter and using
  *     the properties:
- *     - 'weight': (optional) The weight of the filter in the text format. If
+ *     - weight: (optional) The weight of the filter in the text format. If
  *       omitted, either the currently stored weight is retained (if there is
  *       one), or the filter is assigned a weight of 10, which will usually
  *       put it at the bottom of the list.
- *     - 'status': (optional) A boolean indicating whether the filter is
+ *     - status: (optional) A boolean indicating whether the filter is
  *       enabled in the text format. If omitted, the filter will be disabled.
- *     - 'settings': (optional) An array of configured settings for the filter.
+ *     - settings: (optional) An array of configured settings for the filter.
  *       See hook_filter_info() for details.
+ *
+ * @return
+ *   SAVED_NEW or SAVED_UPDATED.
  */
 function filter_format_save($format) {
   $format->name = trim($format->name);
@@ -214,9 +222,11 @@ function filter_format_save($format) {
   }
   $filter_info = filter_get_filters();
   foreach ($filter_info as $name => $filter) {
-    // Add new filters without weight to the bottom.
+    // If the format does not specify an explicit weight for a filter, assign
+    // a default weight, either defined in hook_filter_info(), or the default of
+    // 0 by filter_get_filters()
     if (!isset($format->filters[$name]['weight'])) {
-      $format->filters[$name]['weight'] = 10;
+      $format->filters[$name]['weight'] = $filter['weight'];
     }
     $format->filters[$name]['status'] = isset($format->filters[$name]['status']) ? $format->filters[$name]['status'] : 0;
     $format->filters[$name]['module'] = $filter['module'];
@@ -268,7 +278,7 @@ function filter_format_save($format) {
 }
 
 /**
- * Disable a text format.
+ * Disables a text format.
  *
  * There is no core facility to re-enable a disabled format. It is not deleted
  * to keep information for contrib and to make sure the format ID is never
@@ -310,7 +320,15 @@ function filter_format_exists($format_id) {
 }
 
 /**
- * Display a text format form title.
+ * Displays a text format form title.
+ *
+ * @param object $format
+ *   A format object.
+ *
+ * @return string
+ *   The name of the format.
+ *
+ * @see filter_menu()
  */
 function filter_admin_format_title($format) {
   return $format->name;
@@ -347,6 +365,7 @@ function filter_permission() {
  *
  * @param $format
  *   An object representing a text format.
+ *
  * @return
  *   The machine-readable permission name, or FALSE if the provided text format
  *   is malformed or is the fallback format (which is available to all users).
@@ -377,11 +396,13 @@ function filter_modules_disabled($modules) {
 }
 
 /**
- * Retrieve a list of text formats, ordered by weight.
+ * Retrieves a list of text formats, ordered by weight.
  *
  * @param $account
  *   (optional) If provided, only those formats that are allowed for this user
- *   account will be returned. All formats will be returned otherwise.
+ *   account will be returned. All formats will be returned otherwise. Defaults
+ *   to NULL.
+ *
  * @return
  *   An array of text format objects, keyed by the format ID and ordered by
  *   weight.
@@ -424,7 +445,7 @@ function filter_formats($account = NULL) {
 }
 
 /**
- * Resets text format caches.
+ * Resets the text format caches.
  *
  * @see filter_formats()
  */
@@ -440,6 +461,7 @@ function filter_formats_reset() {
  *
  * @param $format
  *   An object representing the text format.
+ *
  * @return
  *   An array of role names, keyed by role ID.
  */
@@ -458,6 +480,7 @@ function filter_get_roles_by_format($format) {
  *
  * @param $rid
  *   The user role ID to retrieve text formats for.
+ *
  * @return
  *   An array of text format objects that are allowed for the role, keyed by
  *   the text format ID and ordered by weight.
@@ -491,7 +514,8 @@ function filter_get_formats_by_role($rid) {
  *
  * @param $account
  *   (optional) The user account to check. Defaults to the currently logged-in
- *   user.
+ *   user. Defaults to NULL.
+ *
  * @return
  *   The ID of the user's default text format.
  *
@@ -522,15 +546,18 @@ function filter_default_format($account = NULL) {
  * format is initialized to output plain text. Installation profiles and site
  * administrators have the freedom to configure it further.
  *
- * Note that the fallback format is completely distinct from the default
- * format, which differs per user and is simply the first format which that
- * user has access to. The default and fallback formats are only guaranteed to
- * be the same for users who do not have access to any other format; otherwise,
- * the fallback format's weight determines its placement with respect to the
- * user's other formats.
+ * Note that the fallback format is completely distinct from the default format,
+ * which differs per user and is simply the first format which that user has
+ * access to. The default and fallback formats are only guaranteed to be the
+ * same for users who do not have access to any other format; otherwise, the
+ * fallback format's weight determines its placement with respect to the user's
+ * other formats.
  *
- * Any modules implementing a format deletion functionality must not delete
- * this format.
+ * Any modules implementing a format deletion functionality must not delete this
+ * format.
+ *
+ * @return
+ *   The ID of the fallback text format.
  *
  * @see hook_filter_format_disable()
  * @see filter_default_format()
@@ -547,6 +574,9 @@ function filter_fallback_format() {
 
 /**
  * Returns the title of the fallback text format.
+ *
+ * @return string
+ *   The title of the fallback text format.
  */
 function filter_fallback_format_title() {
   $fallback_format = filter_format_load(filter_fallback_format());
@@ -554,7 +584,10 @@ function filter_fallback_format_title() {
 }
 
 /**
- * Return a list of all filters provided by modules.
+ * Returns a list of all filters provided by modules.
+ *
+ * @return array
+ *   An array of filter formats.
  */
 function filter_get_filters() {
   $filters = &drupal_static(__FUNCTION__, array());
@@ -585,14 +618,16 @@ function filter_get_filters() {
 }
 
 /**
- * Helper function for sorting the filter list by filter name.
+ * Sorts an array of filters by filter name.
+ *
+ * Callback for uasort() within filter_get_filters().
  */
 function _filter_list_cmp($a, $b) {
   return strcmp($a['title'], $b['title']);
 }
 
 /**
- * Check if text in a certain text format is allowed to be cached.
+ * Checks if the text in a certain text format is allowed to be cached.
  *
  * This function can be used to check whether the result of the filtering
  * process can be cached. A text format may allow caching depending on the
@@ -600,6 +635,7 @@ function _filter_list_cmp($a, $b) {
  *
  * @param $format_id
  *   The text format ID to check.
+ *
  * @return
  *   TRUE if the given text format allows caching, FALSE otherwise.
  */
@@ -616,6 +652,7 @@ function filter_format_allowcache($format_id) {
  *
  * @param $format
  *   The text format object to check.
+ *
  * @return
  *   TRUE if all the filters enabled in the given text format allow caching,
  *   FALSE otherwise.
@@ -637,7 +674,7 @@ function _filter_format_is_cacheable($format) {
 }
 
 /**
- * Retrieve a list of filters for a given text format.
+ * Retrieves a list of filters for a given text format.
  *
  * Note that this function returns all associated filters regardless of whether
  * they are enabled or disabled. All functions working with the filter
@@ -670,7 +707,8 @@ function filter_list_format($format_id) {
 
   if (!isset($filters[$format_id])) {
     $format_filters = array();
-    foreach ($filters['all'][$format_id] as $name => $filter) {
+    $filter_map = isset($filters['all'][$format_id]) ? $filters['all'][$format_id] : array();
+    foreach ($filter_map as $name => $filter) {
       if (isset($filter_info[$name])) {
         $filter->title = $filter_info[$name]['title'];
         // Unpack stored filter settings.
@@ -690,7 +728,7 @@ function filter_list_format($format_id) {
 }
 
 /**
- * Run all the enabled filters on a piece of text.
+ * Runs all the enabled filters on a piece of text.
  *
  * Note: Because filters can inject JavaScript or execute PHP code, security is
  * vital here. When a user supplies a text format, you should validate it using
@@ -701,16 +739,20 @@ function filter_list_format($format_id) {
  * @param $text
  *   The text to be filtered.
  * @param $format_id
- *   The format id of the text to be filtered. If no format is assigned, the
- *   fallback format will be used.
+ *   (optional) The format ID of the text to be filtered. If no format is
+ *   assigned, the fallback format will be used. Defaults to NULL.
  * @param $langcode
- *   Optional: the language code of the text to be filtered, e.g. 'en' for
+ *   (optional) The language code of the text to be filtered, e.g. 'en' for
  *   English. This allows filters to be language aware so language specific
- *   text replacement can be implemented.
+ *   text replacement can be implemented. Defaults to an empty string.
  * @param $cache
- *   Boolean whether to cache the filtered output in the {cache_filter} table.
- *   The caller may set this to FALSE when the output is already cached
- *   elsewhere to avoid duplicate cache lookups and storage.
+ *   (optional) A Boolean indicating whether to cache the filtered output in the
+ *   {cache_filter} table. The caller may set this to FALSE when the output is
+ *   already cached elsewhere to avoid duplicate cache lookups and storage.
+ *   Defaults to FALSE.
+ *
+ * @return
+ *   The filtered text.
  *
  * @ingroup sanitization
  */
@@ -758,9 +800,12 @@ function check_markup($text, $format_id = NULL, $langcode = '', $cache = FALSE) 
     }
   }
 
-  // Store in cache with a minimum expiration time of 1 day.
+  // Cache the filtered text. This cache is infinitely valid. It becomes
+  // obsolete when $text changes (which leads to a new $cache_id). It is
+  // automatically flushed when the text format is updated.
+  // @see filter_format_save()
   if ($cache) {
-    cache_set($cache_id, $text, 'cache_filter', REQUEST_TIME + (60 * 60 * 24));
+    cache_set($cache_id, $text, 'cache_filter');
   }
 
   return $text;
@@ -777,8 +822,8 @@ function check_markup($text, $format_id = NULL, $langcode = '', $cache = FALSE) 
  *   the text format id specified in #format or the user's default format by
  *   default, if NULL.
  *
- * The resulting value for the element will be an array holding the value and the
- * format.  For example, the value for the body element will be:
+ * The resulting value for the element will be an array holding the value and
+ * the format. For example, the value for the body element will be:
  * @code
  *   $form_state['values']['body']['value'] = 'foo';
  *   $form_state['values']['body']['format'] = 'foo';
@@ -788,7 +833,7 @@ function check_markup($text, $format_id = NULL, $langcode = '', $cache = FALSE) 
  *   The form element to process. Properties used:
  *   - #base_type: The form element #type to use for the 'value' element.
  *     'textarea' by default.
- *   - #format: (optional) The text format id to preselect. If NULL or not set,
+ *   - #format: (optional) The text format ID to preselect. If NULL or not set,
  *     the default format for the current user will be used.
  *
  * @return
@@ -926,7 +971,7 @@ function filter_process_format($element) {
 }
 
 /**
- * #pre_render callback for #type 'text_format' to hide field value from prying eyes.
+ * Render API callback: Hides the field value of 'text_format' elements.
  *
  * To not break form processing and previews if a user does not have access to a
  * stored text format, the expanded form elements in filter_process_format() are
@@ -969,7 +1014,7 @@ function theme_text_format_wrapper($variables) {
  *   An object representing the text format.
  * @param $account
  *   (optional) The user account to check access for; if omitted, the currently
- *   logged-in user is used.
+ *   logged-in user is used. Defaults to NULL.
  *
  * @return
  *   Boolean TRUE if the user is allowed to access the given format.
@@ -991,7 +1036,20 @@ function filter_access($format, $account = NULL) {
 }
 
 /**
- * Helper function for fetching filter tips.
+ * Retrieves the filter tips.
+ *
+ * @param $format_id
+ *   The ID of the text format for which to retrieve tips, or -1 to return tips
+ *   for all formats accessible to the current user.
+ * @param $long
+ *   (optional) Boolean indicating whether the long form of tips should be
+ *   returned. Defaults to FALSE.
+ *
+ * @return
+ *   An associative array of filtering tips, keyed by filter name. Each
+ *   filtering tip is an associative array with elements:
+ *   - tip: Tip text.
+ *   - id: Filter ID.
  */
 function _filter_tips($format_id, $long = FALSE) {
   global $user;
@@ -1025,14 +1083,14 @@ function _filter_tips($format_id, $long = FALSE) {
 /**
  * Parses an HTML snippet and returns it as a DOM object.
  *
- * This function loads the body part of a partial (X)HTML document
- * and returns a full DOMDocument object that represents this document.
- * You can use filter_dom_serialize() to serialize this DOMDocument
- * back to a XHTML snippet.
+ * This function loads the body part of a partial (X)HTML document and returns
+ * a full DOMDocument object that represents this document. You can use
+ * filter_dom_serialize() to serialize this DOMDocument back to a XHTML
+ * snippet.
  *
  * @param $text
- *   The partial (X)HTML snippet to load. Invalid mark-up
- *   will be corrected on import.
+ *   The partial (X)HTML snippet to load. Invalid mark-up will be corrected on
+ *   import.
  * @return
  *   A DOMDocument that represents the loaded (X)HTML snippet.
  */
@@ -1047,15 +1105,14 @@ function filter_dom_load($text) {
 /**
  * Converts a DOM object back to an HTML snippet.
  *
- * The function serializes the body part of a DOMDocument
- * back to an XHTML snippet.
- *
- * The resulting XHTML snippet will be properly formatted
- * to be compatible with HTML user agents.
+ * The function serializes the body part of a DOMDocument back to an XHTML
+ * snippet. The resulting XHTML snippet will be properly formatted to be
+ * compatible with HTML user agents.
  *
  * @param $dom_document
  *   A DOMDocument object to serialize, only the tags below
  *   the first <body> node will be converted.
+ *
  * @return
  *   A valid (X)HTML snippet, as a string.
  */
@@ -1085,16 +1142,18 @@ function filter_dom_serialize($dom_document) {
  * throw exceptions.
  *
  * This function attempts to solve the problem by creating a DocumentFragment
- * and immitating the behavior in drupal_get_js(), commenting the CDATA tag.
+ * and imitating the behavior in drupal_get_js(), commenting the CDATA tag.
  *
  * @param $dom_document
  *   The DOMDocument containing the $dom_element.
  * @param $dom_element
  *   The element potentially containing a CDATA node.
  * @param $comment_start
- *   String to use as a comment start marker to escape the CDATA declaration.
+ *   (optional) A string to use as a comment start marker to escape the CDATA
+ *   declaration. Defaults to '//'.
  * @param $comment_end
- *   String to use as a comment end marker to escape the CDATA declaration.
+ *   (optional) A string to use as a comment end marker to escape the CDATA
+ *   declaration. Defaults to an empty string.
  */
 function filter_dom_serialize_escape_cdata_element($dom_document, $dom_element, $comment_start = '//', $comment_end = '') {
   foreach ($dom_element->childNodes as $node) {
@@ -1102,8 +1161,15 @@ function filter_dom_serialize_escape_cdata_element($dom_document, $dom_element, 
       // See drupal_get_js().  This code is more or less duplicated there.
       $embed_prefix = "\n<!--{$comment_start}--><![CDATA[{$comment_start} ><!--{$comment_end}\n";
       $embed_suffix = "\n{$comment_start}--><!]]>{$comment_end}\n";
+
+      // Prevent invalid cdata escaping as this would throw a DOM error.
+      // This is the same behavior as found in libxml2.
+      // Related W3C standard: http://www.w3.org/TR/REC-xml/#dt-cdsection
+      // Fix explanation: http://en.wikipedia.org/wiki/CDATA#Nesting
+      $data = str_replace(']]>', ']]]]><![CDATA[>', $node->data);
+
       $fragment = $dom_document->createDocumentFragment();
-      $fragment->appendXML($embed_prefix . $node->data . $embed_suffix);
+      $fragment->appendXML($embed_prefix . $data . $embed_suffix);
       $dom_element->appendChild($fragment);
       $dom_element->removeChild($node);
     }
@@ -1116,7 +1182,7 @@ function filter_dom_serialize_escape_cdata_element($dom_document, $dom_element, 
  * @ingroup themeable
  */
 function theme_filter_tips_more_info() {
-  return '<p>' . l(t('More information about text formats'), 'filter/tips') . '</p>';
+  return '<p>' . l(t('More information about text formats'), 'filter/tips', array('attributes' => array('target' => '_blank'))) . '</p>';
 }
 
 /**
@@ -1142,7 +1208,7 @@ function theme_filter_guidelines($variables) {
 /**
  * @defgroup standard_filters Standard filters
  * @{
- * Filters implemented by the filter.module.
+ * Filters implemented by the Filter module.
  */
 
 /**
@@ -1190,31 +1256,36 @@ function filter_filter_info() {
 }
 
 /**
- * Settings callback for the HTML filter.
+ * Filter settings callback for the HTML content filter.
+ *
+ * See hook_filter_FILTER_settings() for documentation of parameters and return
+ * value.
  */
 function _filter_html_settings($form, &$form_state, $filter, $format, $defaults) {
+  $filter->settings += $defaults;
+
   $settings['allowed_html'] = array(
     '#type' => 'textfield',
     '#title' => t('Allowed HTML tags'),
-    '#default_value' => isset($filter->settings['allowed_html']) ? $filter->settings['allowed_html'] : $defaults['allowed_html'],
+    '#default_value' => $filter->settings['allowed_html'],
     '#maxlength' => 1024,
     '#description' => t('A list of HTML tags that can be used. JavaScript event attributes, JavaScript URLs, and CSS are always stripped.'),
   );
   $settings['filter_html_help'] = array(
     '#type' => 'checkbox',
     '#title' => t('Display basic HTML help in long filter tips'),
-    '#default_value' => isset($filter->settings['filter_html_help']) ? $filter->settings['filter_html_help'] : $defaults['filter_html_help'],
+    '#default_value' => $filter->settings['filter_html_help'],
   );
   $settings['filter_html_nofollow'] = array(
     '#type' => 'checkbox',
     '#title' => t('Add rel="nofollow" to all links'),
-    '#default_value' => isset($filter->settings['filter_html_nofollow']) ? $filter->settings['filter_html_nofollow'] : $defaults['filter_html_nofollow'],
+    '#default_value' => $filter->settings['filter_html_nofollow'],
   );
   return $settings;
 }
 
 /**
- * HTML filter. Provides filtering of input into accepted HTML.
+ * Provides filtering of input into accepted HTML.
  */
 function _filter_html($text, $filter) {
   $allowed_tags = preg_split('/\s+|<|>/', $filter->settings['allowed_html'], -1, PREG_SPLIT_NO_EMPTY);
@@ -1233,7 +1304,9 @@ function _filter_html($text, $filter) {
 }
 
 /**
- * Filter tips callback for HTML filter.
+ * Filter tips callback: Provides help for the HTML filter.
+ *
+ * @see filter_filter_info()
  */
 function _filter_html_tips($filter, $format, $long = FALSE) {
   global $base_url;
@@ -1257,7 +1330,7 @@ function _filter_html_tips($filter, $format, $long = FALSE) {
     'a' => array(t('Anchors are used to make links to other pages.'), '<a href="' . $base_url . '">' . check_plain(variable_get('site_name', 'Drupal')) . '</a>'),
     'br' => array(t('By default line break tags are automatically added, so use this tag to add additional ones. Use of this tag is different because it is not used with an open/close pair like all the others. Use the extra " /" inside the tag to maintain XHTML 1.0 compatibility'), t('Text with <br />line break')),
     'p' => array(t('By default paragraph tags are automatically added, so use this tag to add additional ones.'), '<p>' . t('Paragraph one.') . '</p> <p>' . t('Paragraph two.') . '</p>'),
-    'strong' => array(t('Strong'), '<strong>' . t('Strong') . '</strong>'),
+    'strong' => array(t('Strong', array(), array('context' => 'Font weight')), '<strong>' . t('Strong', array(), array('context' => 'Font weight')) . '</strong>'),
     'em' => array(t('Emphasized'), '<em>' . t('Emphasized') . '</em>'),
     'cite' => array(t('Cited'), '<cite>' . t('Cited') . '</cite>'),
     'code' => array(t('Coded text used to show programming source code'), '<code>' . t('Coded') . '</code>'),
@@ -1331,23 +1404,28 @@ function _filter_html_tips($filter, $format, $long = FALSE) {
 }
 
 /**
- * Settings callback for URL filter.
+ * Filter URL settings callback: Provides settings for the URL filter.
+ *
+ * @see filter_filter_info()
  */
 function _filter_url_settings($form, &$form_state, $filter, $format, $defaults) {
+  $filter->settings += $defaults;
+
   $settings['filter_url_length'] = array(
     '#type' => 'textfield',
     '#title' => t('Maximum link text length'),
-    '#default_value' => isset($filter->settings['filter_url_length']) ? $filter->settings['filter_url_length'] : $defaults['filter_url_length'],
+    '#default_value' => $filter->settings['filter_url_length'],
     '#size' => 5,
     '#maxlength' => 4,
     '#field_suffix' => t('characters'),
     '#description' => t('URLs longer than this number of characters will be truncated to prevent long strings that break formatting. The link itself will be retained; just the text portion of the link will be truncated.'),
+    '#element_validate' => array('element_validate_integer_positive'),
   );
   return $settings;
 }
 
 /**
- * URL filter. Automatically converts text into hyperlinks.
+ * Converts text into hyperlinks automatically.
  *
  * This filter identifies and makes clickable three types of "links".
  * - URLs like http://example.com.
@@ -1386,7 +1464,7 @@ function _filter_url($text, $filter) {
   $domain = '(?:[A-Za-z0-9._+-]+\.)?[A-Za-z]{2,64}\b';
   $ip = '(?:[0-9]{1,3}\.){3}[0-9]{1,3}';
   $auth = '[a-zA-Z0-9:%_+*~#?&=.,/;-]+@';
-  $trail = '[a-zA-Z0-9:%_+*~#&\[\]=/;?\.,-]*[a-zA-Z0-9:%_+*~#&\[\]=/;-]';
+  $trail = '[a-zA-Z0-9:%_+*~#&\[\]=/;?!\.,-]*[a-zA-Z0-9:%_+*~#&\[\]=/;-]';
 
   // Prepare pattern for optional trailing punctuation.
   // Even these characters could have a valid meaning for the URL, such usage is
@@ -1400,7 +1478,7 @@ function _filter_url($text, $filter) {
   $tasks['_filter_url_parse_full_links'] = $pattern;
 
   // Match e-mail addresses.
-  $url_pattern = "[A-Za-z0-9._-]+@(?:$domain)";
+  $url_pattern = "[A-Za-z0-9._-]{1,254}@(?:$domain)";
   $pattern = "`($url_pattern)`";
   $tasks['_filter_url_parse_email_links'] = $pattern;
 
@@ -1470,7 +1548,9 @@ function _filter_url($text, $filter) {
 }
 
 /**
- * preg_replace callback to make links out of absolute URLs.
+ * Makes links out of absolute URLs.
+ *
+ * Callback for preg_replace_callback() within _filter_url().
  */
 function _filter_url_parse_full_links($match) {
   // The $i:th parenthesis in the regexp contains the URL.
@@ -1483,7 +1563,9 @@ function _filter_url_parse_full_links($match) {
 }
 
 /**
- * preg_replace callback to make links out of e-mail addresses.
+ * Makes links out of e-mail addresses.
+ *
+ * Callback for preg_replace_callback() within _filter_url().
  */
 function _filter_url_parse_email_links($match) {
   // The $i:th parenthesis in the regexp contains the URL.
@@ -1496,7 +1578,9 @@ function _filter_url_parse_email_links($match) {
 }
 
 /**
- * preg_replace callback to make links out of domain names starting with "www."
+ * Makes links out of domain names starting with "www."
+ *
+ * Callback for preg_replace_callback() within _filter_url().
  */
 function _filter_url_parse_partial_links($match) {
   // The $i:th parenthesis in the regexp contains the URL.
@@ -1509,14 +1593,17 @@ function _filter_url_parse_partial_links($match) {
 }
 
 /**
- * preg_replace callback to escape contents of HTML comments
+ * Escapes the contents of HTML comments.
+ *
+ * Callback for preg_replace_callback() within _filter_url().
  *
  * @param $match
  *   An array containing matches to replace from preg_replace_callback(),
  *   whereas $match[1] is expected to contain the content to be filtered.
  * @param $escape
- *   (optional) Boolean whether to escape (TRUE) or unescape comments (FALSE).
- *   Defaults to neither. If TRUE, statically cached $comments are reset.
+ *   (optional) A Boolean indicating whether to escape (TRUE) or unescape
+ *   comments (FALSE). Defaults to NULL, indicating neither. If TRUE, statically
+ *   cached $comments are reset.
  */
 function _filter_url_escape_comments($match, $escape = NULL) {
   static $mode, $comments = array();
@@ -1563,32 +1650,36 @@ function _filter_url_trim($text, $length = NULL) {
 }
 
 /**
- * Filter tips callback for URL filter.
+ * Filter tips callback: Provides help for the URL filter.
+ *
+ * @see filter_filter_info()
  */
 function _filter_url_tips($filter, $format, $long = FALSE) {
   return t('Web page addresses and e-mail addresses turn into links automatically.');
 }
 
 /**
- * Scan input and make sure that all HTML tags are properly closed and nested.
+ * Scans the input and makes sure that HTML tags are properly closed.
  */
 function _filter_htmlcorrector($text) {
   return filter_dom_serialize(filter_dom_load($text));
 }
 
 /**
- * Convert line breaks into <p> and <br> in an intelligent fashion.
+ * Converts line breaks into <p> and <br> in an intelligent fashion.
+ *
  * Based on: http://photomatt.net/scripts/autop
  */
 function _filter_autop($text) {
   // All block level tags
   $block = '(?:table|thead|tfoot|caption|colgroup|tbody|tr|td|th|div|dl|dd|dt|ul|ol|li|pre|select|form|blockquote|address|p|h[1-6]|hr)';
 
-  // Split at opening and closing PRE, SCRIPT, STYLE, OBJECT tags and comments.
-  // We don't apply any processing to the contents of these tags to avoid messing
-  // up code. We look for matched pairs and allow basic nesting. For example:
+  // Split at opening and closing PRE, SCRIPT, STYLE, OBJECT, IFRAME tags
+  // and comments. We don't apply any processing to the contents of these tags
+  // to avoid messing up code. We look for matched pairs and allow basic
+  // nesting. For example:
   // "processed <pre> ignored <script> ignored </script> ignored </pre> processed"
-  $chunks = preg_split('@(<!--.*?-->|</?(?:pre|script|style|object|!--)[^>]*>)@i', $text, -1, PREG_SPLIT_DELIM_CAPTURE);
+  $chunks = preg_split('@(<!--.*?-->|</?(?:pre|script|style|object|iframe|!--)[^>]*>)@i', $text, -1, PREG_SPLIT_DELIM_CAPTURE);
   // Note: PHP ensures the array consists of alternating delimiters and literals
   // and begins and ends with a literal (inserting NULL as required).
   $ignore = FALSE;
@@ -1596,9 +1687,14 @@ function _filter_autop($text) {
   $output = '';
   foreach ($chunks as $i => $chunk) {
     if ($i % 2) {
-      // Opening or closing tag?
-      $open = ($chunk[1] != '/' || $chunk[1] != '!');
       $comment = (substr($chunk, 0, 4) == '<!--');
+      if ($comment) {
+        // Nothing to do, this is a comment.
+        $output .= $chunk;
+        continue;
+      }
+      // Opening or closing tag?
+      $open = ($chunk[1] != '/');
       list($tag) = preg_split('/[ >]/', substr($chunk, 2 - $open), 2);
       if (!$ignore) {
         if ($open) {
@@ -1607,7 +1703,7 @@ function _filter_autop($text) {
         }
       }
       // Only allow a matching tag to close it.
-      elseif ((!$open && $ignoretag == $tag) || $comment) {
+      elseif (!$open && $ignoretag == $tag) {
         $ignore = FALSE;
         $ignoretag = '';
       }
@@ -1637,7 +1733,9 @@ function _filter_autop($text) {
 }
 
 /**
- * Filter tips callback for auto-paragraph filter.
+ * Filter tips callback: Provides help for the auto-paragraph filter.
+ *
+ * @see filter_filter_info()
  */
 function _filter_autop_tips($filter, $format, $long = FALSE) {
   if ($long) {
@@ -1656,7 +1754,9 @@ function _filter_html_escape($text) {
 }
 
 /**
- * Filter tips callback for HTML escaping filter.
+ * Filter tips callback: Provides help for the HTML escaping filter.
+ *
+ * @see filter_filter_info()
  */
 function _filter_html_escape_tips($filter, $format, $long = FALSE) {
   return t('No HTML tags allowed.');

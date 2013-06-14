@@ -1,13 +1,12 @@
 <?php
-// $Id: date.inc,v 1.1 2009/10/13 21:34:14 dries Exp $
 
 /**
  * @file
- * Initialize the list of date formats and their locales.
+ * Initializes the list of date formats and their locales.
  */
 
 /**
- * Implements hook_date_formats().
+ * Provides a default system list of date formats for system_date_formats().
  */
 function system_default_date_formats() {
   $formats = array();

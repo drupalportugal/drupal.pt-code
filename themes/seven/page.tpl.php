@@ -1,6 +1,4 @@
-<?php
-// $Id: page.tpl.php,v 1.14 2010/10/05 00:29:14 dries Exp $
-?>
+
   <div id="branding" class="clearfix">
     <?php print $breadcrumb; ?>
     <?php print render($title_prefix); ?>
@@ -8,16 +6,12 @@
       <h1 class="page-title"><?php print $title; ?></h1>
     <?php endif; ?>
     <?php print render($title_suffix); ?>
-    <?php if ($primary_local_tasks): ?>
-      <h2 class="element-invisible"><?php print t('Primary tabs'); ?></h2>
-      <ul class="tabs primary"><?php print render($primary_local_tasks); ?></ul>
-    <?php endif; ?>
+    <?php print render($primary_local_tasks); ?>
   </div>
 
   <div id="page">
     <?php if ($secondary_local_tasks): ?>
-      <h2 class="element-invisible"><?php print t('Secondary tabs'); ?></h2>
-      <ul class="tabs secondary"><?php print render($secondary_local_tasks); ?></ul>
+      <div class="tabs-secondary clearfix"><?php print render($secondary_local_tasks); ?></div>
     <?php endif; ?>
 
     <div id="content" class="clearfix">

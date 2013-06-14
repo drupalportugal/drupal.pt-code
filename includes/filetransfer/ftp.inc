@@ -1,5 +1,4 @@
 <?php
-// $Id: ftp.inc,v 1.14 2010/10/05 02:08:53 dries Exp $
 
 /**
  * Base class for FTP implementations.
@@ -24,8 +23,10 @@ abstract class FileTransferFTP extends FileTransfer {
    *   options. If the FTP PHP extension is available, use it.
    */
   static function factory($jail, $settings) {
-    $settings['hostname'] = empty($settings['hostname']) ? 'localhost' : $settings['hostname'];
-    $settings['port'] = empty($settings['port']) ? 21 : $settings['port'];
+    $username = empty($settings['username']) ? '' : $settings['username'];
+    $password = empty($settings['password']) ? '' : $settings['password'];
+    $hostname = empty($settings['advanced']['hostname']) ? 'localhost' : $settings['advanced']['hostname'];
+    $port = empty($settings['advanced']['port']) ? 21 : $settings['advanced']['port'];
 
     if (function_exists('ftp_connect')) {
       $class = 'FileTransferFTPExtension';
@@ -34,7 +35,16 @@ abstract class FileTransferFTP extends FileTransfer {
       throw new FileTransferException('No FTP backend available.');
     }
 
-    return new $class($jail, $settings['username'], $settings['password'], $settings['hostname'], $settings['port']);
+    return new $class($jail, $username, $password, $hostname, $port);
+  }
+
+  /**
+   * Returns the form to configure the FileTransfer class for FTP.
+   */
+  public function getSettingsForm() {
+    $form = parent::getSettingsForm();
+    $form['advanced']['port']['#default_value'] = 21;
+    return $form;
   }
 }
 

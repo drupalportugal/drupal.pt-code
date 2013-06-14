@@ -1,14 +1,12 @@
-; $Id: error_test.info,v 1.1 2009/05/22 15:03:46 webchick Exp $
 name = "Error test"
 description = "Support module for error and exception testing."
 package = Testing
 version = VERSION
 core = 7.x
-files[] = error_test.module
 hidden = TRUE
 
-; Information added by drupal.org packaging script on 2010-11-14
-version = "7.0-beta3"
+; Information added by drupal.org packaging script on 2013-04-03
+version = "7.22"
 project = "drupal"
-datestamp = "1289694732"
+datestamp = "1365027012"
 

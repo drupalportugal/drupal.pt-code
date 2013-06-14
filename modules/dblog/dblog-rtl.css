@@ -1,4 +1,7 @@
-/* $Id: dblog-rtl.css,v 1.6 2010/04/28 20:08:38 dries Exp $ */
+/**
+ * @file
+ * Right-to-Left styling for the Database Logging module.
+ */
 
 .form-item-type,
 .form-item-severity {

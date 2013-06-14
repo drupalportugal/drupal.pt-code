@@ -1,5 +1,4 @@
 <?php
-// $Id: search.pages.inc,v 1.23 2010/08/18 18:40:50 dries Exp $
 
 /**
  * @file
@@ -16,7 +15,6 @@
  */
 function search_view($module = NULL, $keys = '') {
   $info = FALSE;
-  $redirect = FALSE;
   $keys = trim($keys);
   // Also try to pull search keywords out of the $_REQUEST variable to
   // support old GET format of searches for existing links.
@@ -77,8 +75,9 @@ function search_view($module = NULL, $keys = '') {
  * Process variables for search-results.tpl.php.
  *
  * The $variables array contains the following arguments:
- * - $results
- * - $module
+ * - $results: Search results array.
+ * - $module: Module the search results came from (module implementing
+ *   hook_search_info()).
  *
  * @see search-results.tpl.php
  */
@@ -104,9 +103,15 @@ function template_preprocess_search_results(&$variables) {
  * @see search-result.tpl.php
  */
 function template_preprocess_search_result(&$variables) {
+  global $language;
+
   $result = $variables['result'];
   $variables['url'] = check_url($result['link']);
   $variables['title'] = check_plain($result['title']);
+  if (isset($result['language']) && $result['language'] != $language->language && $result['language'] != LANGUAGE_NONE) {
+    $variables['title_attributes_array']['xml:lang'] = $result['language'];
+    $variables['content_attributes_array']['xml:lang'] = $result['language'];
+  }
 
   $info = array();
   if (!empty($result['module'])) {
@@ -150,5 +155,4 @@ function search_form_submit($form, &$form_state) {
   }
 
   $form_state['redirect'] = $form_state['action'] . '/' . $keys;
-  return;
 }

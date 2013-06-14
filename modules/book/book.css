@@ -1,4 +1,7 @@
-/* $Id: book.css,v 1.12 2009/08/24 03:11:34 webchick Exp $ */
+ /**
+  * @file
+  * Styling for the Book module.
+  */
 
 .book-navigation .menu {
   border-top: 1px solid #888;

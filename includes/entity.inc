@@ -1,5 +1,4 @@
 <?php
-// $Id: entity.inc,v 1.17 2010/11/05 19:57:28 dries Exp $
 
 /**
  * Interface for entity controller classes.
@@ -24,8 +23,12 @@ interface DrupalEntityControllerInterface {
 
   /**
    * Resets the internal, static entity cache.
+   *
+   * @param $ids
+   *   (optional) If specified, the cache is reset for the entities with the
+   *   given ids only.
    */
-  public function resetCache();
+  public function resetCache(array $ids = NULL);
 
   /**
    * Loads one or more entities.
@@ -36,7 +39,8 @@ interface DrupalEntityControllerInterface {
    *   An array of conditions in the form 'field' => $value.
    *
    * @return
-   *   An array of entity objects indexed by their ids.
+   *   An array of entity objects indexed by their ids. When no results are
+   *   found, an empty array is returned.
    */
   public function load($ids = array(), $conditions = array());
 }
@@ -139,8 +143,15 @@ class DrupalDefaultEntityController implements DrupalEntityControllerInterface {
   /**
    * Implements DrupalEntityControllerInterface::resetCache().
    */
-  public function resetCache() {
-    $this->entityCache = array();
+  public function resetCache(array $ids = NULL) {
+    if (isset($ids)) {
+      foreach ($ids as $id) {
+        unset($this->entityCache[$id]);
+      }
+    }
+    else {
+      $this->entityCache = array();
+    }
   }
 
   /**
@@ -285,6 +296,7 @@ class DrupalDefaultEntityController implements DrupalEntityControllerInterface {
 
   /**
    * Attaches data to entities upon loading.
+   *
    * This will attach fields, if the entity is fieldable. It calls
    * hook_entity_load() for modules which need to add data to all entities.
    * It also calls hook_TYPE_load() on the loaded entities. For example
@@ -296,7 +308,7 @@ class DrupalDefaultEntityController implements DrupalEntityControllerInterface {
    * @param $queried_entities
    *   Associative array of query results, keyed on the entity ID.
    * @param $revision_id
-   *   ID of the revision that was loaded, or FALSE if teh most current revision
+   *   ID of the revision that was loaded, or FALSE if the most current revision
    *   was loaded.
    */
   protected function attachLoad(&$queried_entities, $revision_id = FALSE) {
@@ -398,25 +410,36 @@ class EntityFieldQueryException extends Exception {}
  * direct access to the collected properties in order to handle alternate
  * execution routines. We therefore use public properties for simplicity. Note
  * that code that is simply creating and running a field query should still use
- * the appropriate methods add conditions on the query.
+ * the appropriate methods to add conditions on the query.
  *
  * Storage engines are not required to support every type of query. By default,
  * an EntityFieldQueryException will be raised if an unsupported condition is
  * specified or if the query has field conditions or sorts that are stored in
  * different field storage engines. However, this logic can be overridden in
- * hook_entity_query().
+ * hook_entity_query_alter().
  *
  * Also note that this query does not automatically respect entity access
  * restrictions. Node access control is performed by the SQL storage engine but
  * other storage engines might not do this.
  */
 class EntityFieldQuery {
+
   /**
    * Indicates that both deleted and non-deleted fields should be returned.
    *
    * @see EntityFieldQuery::deleted()
    */
   const RETURN_ALL = NULL;
+
+  /**
+   * TRUE if the query has already been altered, FALSE if it hasn't.
+   *
+   * Used in alter hooks to check for cloned queries that have already been
+   * altered prior to the clone (for example, the pager count query).
+   *
+   * @var boolean
+   */
+  public $altered = FALSE;
 
   /**
    * Associative array of entity-generic metadata conditions.
@@ -435,6 +458,21 @@ class EntityFieldQuery {
    * @see EntityFieldQuery::fieldCondition()
    */
   public $fieldConditions = array();
+
+  /**
+   * List of field meta conditions (language and delta).
+   *
+   * Field conditions operate on columns specified by hook_field_schema(),
+   * the meta conditions operate on columns added by the system: delta
+   * and language. These can not be mixed with the field conditions because
+   * field columns can have any name including delta and language.
+   *
+   * @var array
+   *
+   * @see EntityFieldQuery::fieldLanguageCondition()
+   * @see EntityFieldQuery::fieldDeltaCondition()
+   */
+  public $fieldMetaConditions = array();
 
   /**
    * List of property conditions.
@@ -460,6 +498,15 @@ class EntityFieldQuery {
    * @see EntityFieldQuery::range()
    */
   public $range = array();
+
+  /**
+   * The query pager data.
+   *
+   * @var array
+   *
+   * @see EntityFieldQuery::pager()
+   */
+  public $pager = array();
 
   /**
    * Query behavior for deleted data.
@@ -549,9 +596,7 @@ class EntityFieldQuery {
    *
    * 'bundle', 'revision_id' and 'entity_id' have no such restrictions.
    *
-   * Note: The "comment" and "taxonomy_term" entity types don't support bundle
-   * conditions. For "taxonomy_term", propertyCondition('vid') can be used
-   * instead.
+   * Note: The "comment" entity type does not support bundle conditions.
    *
    * @param $name
    *   'entity_type', 'bundle', 'revision_id' or 'entity_id'.
@@ -561,18 +606,25 @@ class EntityFieldQuery {
    *   dependent on $operator.
    * @param $operator
    *   Possible values:
-   *   - '=', '!=', '>', '>=', '<', '<=', 'STARTS_WITH', 'CONTAINS': These
+   *   - '=', '<>', '>', '>=', '<', '<=', 'STARTS_WITH', 'CONTAINS': These
    *     operators expect $value to be a literal of the same type as the
    *     column.
    *   - 'IN', 'NOT IN': These operators expect $value to be an array of
    *     literals of the same type as the column.
    *   - 'BETWEEN': This operator expects $value to be an array of two literals
    *     of the same type as the column.
+   *   The operator can be omitted, and will default to 'IN' if the value is an
+   *   array, or to '=' otherwise.
    *
    * @return EntityFieldQuery
    *   The called object.
    */
   public function entityCondition($name, $value, $operator = NULL) {
+    // The '!=' operator is deprecated in favour of the '<>' operator since the
+    // latter is ANSI SQL compatible.
+    if ($operator == '!=') {
+      $operator = '<>';
+    }
     $this->entityConditions[$name] = array(
       'value' => $value,
       'operator' => $operator,
@@ -582,7 +634,92 @@ class EntityFieldQuery {
 
   /**
    * Adds a condition on field values.
+   * 
+   * Note that entities with empty field values will be excluded from the
+   * EntityFieldQuery results when using this method.
    *
+   * @param $field
+   *   Either a field name or a field array.
+   * @param $column
+   *   The column that should hold the value to be matched.
+   * @param $value
+   *   The value to test the column value against.
+   * @param $operator
+   *   The operator to be used to test the given value.
+   * @param $delta_group
+   *   An arbitrary identifier: conditions in the same group must have the same
+   *   $delta_group.
+   * @param $language_group
+   *   An arbitrary identifier: conditions in the same group must have the same
+   *   $language_group.
+   *
+   * @return EntityFieldQuery
+   *   The called object.
+   *
+   * @see EntityFieldQuery::addFieldCondition
+   * @see EntityFieldQuery::deleted
+   */
+  public function fieldCondition($field, $column = NULL, $value = NULL, $operator = NULL, $delta_group = NULL, $language_group = NULL) {
+    return $this->addFieldCondition($this->fieldConditions, $field, $column, $value, $operator, $delta_group, $language_group);
+  }
+
+  /**
+   * Adds a condition on the field language column.
+   *
+   * @param $field
+   *   Either a field name or a field array.
+   * @param $value
+   *   The value to test the column value against.
+   * @param $operator
+   *   The operator to be used to test the given value.
+   * @param $delta_group
+   *   An arbitrary identifier: conditions in the same group must have the same
+   *   $delta_group.
+   * @param $language_group
+   *   An arbitrary identifier: conditions in the same group must have the same
+   *   $language_group.
+   *
+   * @return EntityFieldQuery
+   *   The called object.
+   *
+   * @see EntityFieldQuery::addFieldCondition
+   * @see EntityFieldQuery::deleted
+   */
+  public function fieldLanguageCondition($field, $value = NULL, $operator = NULL, $delta_group = NULL, $language_group = NULL) {
+    return $this->addFieldCondition($this->fieldMetaConditions, $field, 'language', $value, $operator, $delta_group, $language_group);
+  }
+
+  /**
+   * Adds a condition on the field delta column.
+   *
+   * @param $field
+   *   Either a field name or a field array.
+   * @param $value
+   *   The value to test the column value against.
+   * @param $operator
+   *   The operator to be used to test the given value.
+   * @param $delta_group
+   *   An arbitrary identifier: conditions in the same group must have the same
+   *   $delta_group.
+   * @param $language_group
+   *   An arbitrary identifier: conditions in the same group must have the same
+   *   $language_group.
+   *
+   * @return EntityFieldQuery
+   *   The called object.
+   *
+   * @see EntityFieldQuery::addFieldCondition
+   * @see EntityFieldQuery::deleted
+   */
+  public function fieldDeltaCondition($field, $value = NULL, $operator = NULL, $delta_group = NULL, $language_group = NULL) {
+    return $this->addFieldCondition($this->fieldMetaConditions, $field, 'delta', $value, $operator, $delta_group, $language_group);
+  }
+
+  /**
+   * Adds the given condition to the proper condition array.
+   *
+   * @param $conditions
+   *   A reference to an array of conditions.
    * @param $field
    *   Either a field name or a field array.
    * @param $column
@@ -595,13 +732,15 @@ class EntityFieldQuery {
    *   element in the array is dependent on $operator.
    * @param $operator
    *   Possible values:
-   *   - '=', '!=', '>', '>=', '<', '<=', 'STARTS_WITH', 'CONTAINS': These
+   *   - '=', '<>', '>', '>=', '<', '<=', 'STARTS_WITH', 'CONTAINS': These
    *     operators expect $value to be a literal of the same type as the
    *     column.
    *   - 'IN', 'NOT IN': These operators expect $value to be an array of
    *     literals of the same type as the column.
    *   - 'BETWEEN': This operator expects $value to be an array of two literals
    *     of the same type as the column.
+   *   The operator can be omitted, and will default to 'IN' if the value is an
+   *   array, or to '=' otherwise.
    * @param $delta_group
    *   An arbitrary identifier: conditions in the same group must have the same
    *   $delta_group. For example, let's presume a multivalue field which has
@@ -619,15 +758,24 @@ class EntityFieldQuery {
    * @return EntityFieldQuery
    *   The called object.
    */
-  public function fieldCondition($field, $column = NULL, $value = NULL, $operator = NULL, $delta_group = NULL, $language_group = NULL) {
-    if (is_scalar($field)) {
-      $field = field_info_field($field);
+  protected function addFieldCondition(&$conditions, $field, $column = NULL, $value = NULL, $operator = NULL, $delta_group = NULL, $language_group = NULL) {
+    // The '!=' operator is deprecated in favour of the '<>' operator since the
+    // latter is ANSI SQL compatible.
+    if ($operator == '!=') {
+      $operator = '<>';
     }
-    // Ensure the same index is used for fieldConditions as for fields.
+    if (is_scalar($field)) {
+      $field_definition = field_info_field($field);
+      if (empty($field_definition)) {
+        throw new EntityFieldQueryException(t('Unknown field: @field_name', array('@field_name' => $field)));
+      }
+      $field = $field_definition;
+    }
+    // Ensure the same index is used for field conditions as for fields.
     $index = count($this->fields);
     $this->fields[$index] = $field;
     if (isset($column)) {
-      $this->fieldConditions[$index] = array(
+      $conditions[$index] = array(
         'field' => $field,
         'column' => $column,
         'value' => $value,
@@ -656,7 +804,7 @@ class EntityFieldQuery {
    *   array is dependent on $operator.
    * @param $operator
    *   Possible values:
-   *   - '=', '!=', '>', '>=', '<', '<=', 'STARTS_WITH', 'CONTAINS': These
+   *   - '=', '<>', '>', '>=', '<', '<=', 'STARTS_WITH', 'CONTAINS': These
    *     operators expect $value to be a literal of the same type as the
    *     column.
    *   - 'IN', 'NOT IN': These operators expect $value to be an array of
@@ -670,6 +818,11 @@ class EntityFieldQuery {
    *   The called object.
    */
   public function propertyCondition($column, $value, $operator = NULL) {
+    // The '!=' operator is deprecated in favour of the '<>' operator since the
+    // latter is ANSI SQL compatible.
+    if ($operator == '!=') {
+      $operator = '<>';
+    }
     $this->propertyConditions[] = array(
       'column' => $column,
       'value' => $value,
@@ -708,7 +861,9 @@ class EntityFieldQuery {
    * Orders the result set by a given field column.
    *
    * If called multiple times, the query will order by each specified column in
-   * the order this method is called.
+   * the order this method is called. Note that entities with empty field
+   * values will be excluded from the EntityFieldQuery results when using this
+   * method.
    *
    * @param $field
    *   Either a field name or a field array.
@@ -723,7 +878,11 @@ class EntityFieldQuery {
    */
   public function fieldOrderBy($field, $column, $direction = 'ASC') {
     if (is_scalar($field)) {
-      $field = field_info_field($field);
+      $field_definition = field_info_field($field);
+      if (empty($field_definition)) {
+        throw new EntityFieldQueryException(t('Unknown field: @field_name', array('@field_name' => $field)));
+      }
+      $field = $field_definition;
     }
     // Save the index used for the new field, for later use in field storage.
     $index = count($this->fields);
@@ -795,6 +954,69 @@ class EntityFieldQuery {
       'start' => $start,
       'length' => $length,
     );
+    return $this;
+  }
+
+  /**
+   * Enables a pager for the query.
+   *
+   * @param $limit
+   *   An integer specifying the number of elements per page.  If passed a false
+   *   value (FALSE, 0, NULL), the pager is disabled.
+   * @param $element
+   *   An optional integer to distinguish between multiple pagers on one page.
+   *   If not provided, one is automatically calculated.
+   *
+   * @return EntityFieldQuery
+   *   The called object.
+   */
+  public function pager($limit = 10, $element = NULL) {
+    if (!isset($element)) {
+      $element = PagerDefault::$maxElement++;
+    }
+    elseif ($element >= PagerDefault::$maxElement) {
+      PagerDefault::$maxElement = $element + 1;
+    }
+
+    $this->pager = array(
+      'limit' => $limit,
+      'element' => $element,
+    );
+    return $this;
+  }
+
+  /**
+   * Enables sortable tables for this query.
+   *
+   * @param $headers
+   *   An EFQ Header array based on which the order clause is added to the
+   *   query.
+   *
+   * @return EntityFieldQuery
+   *   The called object.
+   */
+  public function tableSort(&$headers) {
+    // If 'field' is not initialized, the header columns aren't clickable
+    foreach ($headers as $key =>$header) {
+      if (is_array($header) && isset($header['specifier'])) {
+        $headers[$key]['field'] = '';
+      }
+    }
+
+    $order = tablesort_get_order($headers);
+    $direction = tablesort_get_sort($headers);
+    foreach ($headers as $header) {
+      if (is_array($header) && ($header['data'] == $order['name'])) {
+        if ($header['type'] == 'field') {
+          $this->fieldOrderBy($header['specifier']['field'], $header['specifier']['column'], $direction);
+        }
+        else {
+          $header['direction'] = $direction;
+          $this->order[] = $header;
+        }
+      }
+    }
+
     return $this;
   }
 
@@ -890,12 +1112,13 @@ class EntityFieldQuery {
    * contains everything necessary for processing.
    *
    * @return
-   *   Either a number if count() was called or an array of associative
-   *   arrays of stub entities. The outer array keys are entity types, and the
-   *   inner array keys are the relevant ID. (In most this cases this will be
-   *   the entity ID. The only exception is when age=FIELD_LOAD_REVISION is used
-   *   and field conditions or sorts are present -- in this case, the key will
-   *   be the revision ID.) The inner array values are always stub entities, as
+   *   Either a number if count() was called or an array of associative arrays
+   *   of stub entities. The outer array keys are entity types, and the inner
+   *   array keys are the relevant ID. (In most cases this will be the entity
+   *   ID. The only exception is when age=FIELD_LOAD_REVISION is used and field
+   *   conditions or sorts are present -- in this case, the key will be the
+   *   revision ID.) The entity type will only exist in the outer array if
+   *   results were found. The inner array values are always stub entities, as
    *   returned by entity_create_stub_entity(). To traverse the returned array:
    *   @code
    *     foreach ($query->execute() as $entity_type => $entities) {
@@ -905,12 +1128,18 @@ class EntityFieldQuery {
    *   the entities found:
    *   @code
    *     $result = $query->execute();
-   *     $entities = entity_load($my_type, array_keys($result[$my_type]));
+   *     if (!empty($result[$my_type])) {
+   *       $entities = entity_load($my_type, array_keys($result[$my_type]));
+   *     }
    *   @endcode
    */
   public function execute() {
     // Give a chance to other modules to alter the query.
     drupal_alter('entity_query', $this);
+    $this->altered = TRUE;
+
+    // Initialize the pager.
+    $this->initializePager();
 
     // Execute the query using the correct callback.
     $result = call_user_func($this->queryCallback(), $this);
@@ -966,7 +1195,6 @@ class EntityFieldQuery {
       throw new EntityFieldQueryException(t('For this query an entity type must be specified.'));
     }
     $entity_type = $this->entityConditions['entity_type']['value'];
-    unset($this->entityConditions['entity_type']);
     $entity_info = entity_get_info($entity_type);
     if (empty($entity_info['base table'])) {
       throw new EntityFieldQueryException(t('Entity %entity has no base table.', array('%entity' => $entity_type)));
@@ -977,7 +1205,7 @@ class EntityFieldQuery {
     $select_query->addExpression(':entity_type', 'entity_type', array(':entity_type' => $entity_type));
     // Process the property conditions.
     foreach ($this->propertyConditions as $property_condition) {
-      $this->addCondition($select_query, "$base_table." . $property_condition['column'], $property_condition);
+      $this->addCondition($select_query, $base_table . '.' . $property_condition['column'], $property_condition);
     }
     // Process the four possible entity condition.
     // The id field is always present in entity keys.
@@ -985,7 +1213,7 @@ class EntityFieldQuery {
     $id_map['entity_id'] = $sql_field;
     $select_query->addField($base_table, $sql_field, 'entity_id');
     if (isset($this->entityConditions['entity_id'])) {
-      $this->addCondition($select_query, $sql_field, $this->entityConditions['entity_id']);
+      $this->addCondition($select_query, $base_table . '.' . $sql_field, $this->entityConditions['entity_id']);
     }
 
     // If there is a revision key defined, use it.
@@ -993,7 +1221,7 @@ class EntityFieldQuery {
       $sql_field = $entity_info['entity keys']['revision'];
       $select_query->addField($base_table, $sql_field, 'revision_id');
       if (isset($this->entityConditions['revision_id'])) {
-        $this->addCondition($select_query, $sql_field, $this->entityConditions['revision_id']);
+        $this->addCondition($select_query, $base_table . '.' . $sql_field, $this->entityConditions['revision_id']);
       }
     }
     else {
@@ -1018,7 +1246,13 @@ class EntityFieldQuery {
     }
     $id_map['bundle'] = $sql_field;
     if (isset($this->entityConditions['bundle'])) {
-      $this->addCondition($select_query, $sql_field, $this->entityConditions['bundle'], $having);
+      if (!empty($entity_info['entity keys']['bundle'])) {
+        $this->addCondition($select_query, $base_table . '.' . $sql_field, $this->entityConditions['bundle'], $having);
+      }
+      else {
+        // This entity has no bundle, so invalidate the query.
+        $select_query->where('1 = 0');
+      }
     }
 
     // Order the query.
@@ -1031,11 +1265,28 @@ class EntityFieldQuery {
         $select_query->orderBy($id_map[$key], $order['direction']);
       }
       elseif ($order['type'] == 'property') {
-        $select_query->orderBy("$base_table." . $order['specifier'], $order['direction']);
+        $select_query->orderBy($base_table . '.' . $order['specifier'], $order['direction']);
       }
     }
 
     return $this->finishQuery($select_query);
+  }
+
+  /**
+   * Gets the total number of results and initializes a pager for the query.
+   *
+   * The pager can be disabled by either setting the pager limit to 0, or by
+   * setting this query to be a count query.
+   */
+  function initializePager() {
+    if ($this->pager && !empty($this->pager['limit']) && !$this->count) {
+      $page = pager_find_page($this->pager['element']);
+      $count_query = clone $this;
+      $this->pager['total'] = $count_query->count()->execute();
+      $this->pager['start'] = $page * $this->pager['limit'];
+      pager_default_initialize($this->pager['total'], $this->pager['limit'], $this->pager['element']);
+      $this->range($this->pager['start'], $this->pager['limit']);
+    }
   }
 
   /**
@@ -1107,3 +1358,8 @@ class EntityFieldQuery {
   }
 
 }
+
+/**
+ * Defines an exception thrown when a malformed entity is passed.
+ */
+class EntityMalformedException extends Exception { }

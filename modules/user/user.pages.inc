@@ -1,5 +1,4 @@
 <?php
-// $Id: user.pages.inc,v 1.76 2010/10/25 00:15:11 dries Exp $
 
 /**
  * @file
@@ -77,9 +76,11 @@ function user_pass_submit($form, &$form_state) {
 
   $account = $form_state['values']['account'];
   // Mail one time login URL and instructions using current language.
-  _user_mail_notify('password_reset', $account, $language);
-  watchdog('user', 'Password reset instructions mailed to %name at %email.', array('%name' => $account->name, '%email' => $account->mail));
-  drupal_set_message(t('Further instructions have been sent to your e-mail address.'));
+  $mail = _user_mail_notify('password_reset', $account, $language);
+  if (!empty($mail)) {
+    watchdog('user', 'Password reset instructions mailed to %name at %email.', array('%name' => $account->name, '%email' => $account->mail));
+    drupal_set_message(t('Further instructions have been sent to your e-mail address.'));
+  }
 
   $form_state['redirect'] = 'user';
   return;
@@ -112,8 +113,9 @@ function user_pass_reset($form, &$form_state, $uid, $timestamp, $hashed_pass, $a
     drupal_goto();
   }
   else {
-    // Time out, in seconds, until login URL expires. 24 hours = 86400 seconds.
-    $timeout = 86400;
+    // Time out, in seconds, until login URL expires. Defaults to 24 hours =
+    // 86400 seconds.
+    $timeout = variable_get('user_password_reset_timeout', 86400);
     $current = REQUEST_TIME;
     // Some redundant checks for extra security ?
     $users = user_load_multiple(array($uid), array('status' => '1'));
@@ -126,12 +128,12 @@ function user_pass_reset($form, &$form_state, $uid, $timestamp, $hashed_pass, $a
       elseif ($account->uid && $timestamp >= $account->login && $timestamp <= $current && $hashed_pass == user_pass_rehash($account->pass, $timestamp, $account->login)) {
         // First stage is a confirmation form, then login
         if ($action == 'login') {
-          watchdog('user', 'User %name used one-time login link at time %timestamp.', array('%name' => $account->name, '%timestamp' => $timestamp));
           // Set the new user.
           $user = $account;
           // user_login_finalize() also updates the login timestamp of the
           // user, which invalidates further use of the one-time login link.
           user_login_finalize();
+          watchdog('user', 'User %name used one-time login link at time %timestamp.', array('%name' => $account->name, '%timestamp' => $timestamp));
           drupal_set_message(t('You have just used your one-time login link. It is no longer necessary to use this link to log in. Please change your password.'));
           // Let the user's password be changed without the current password check.
           $token = drupal_hash_base64(drupal_random_bytes(55));
@@ -261,7 +263,8 @@ function user_profile_form($form, &$form_state, $account, $category = 'account')
   if ($category == 'account') {
     user_account_form($form, $form_state);
     // Attach field widgets.
-    field_attach_form('user', $account, $form, $form_state);
+    $langcode = entity_language('user', $account);
+    field_attach_form('user', $account, $form, $form_state, $langcode);
   }
 
   $form['actions'] = array('#type' => 'actions');
@@ -453,7 +456,7 @@ function user_cancel_confirm_form_submit($form, &$form_state) {
 /**
  * Helper function to return available account cancellation methods.
  *
- * Please refer to the documentation of hook_user_cancel_methods_alter().
+ * See documentation of hook_user_cancel_methods_alter().
  *
  * @return
  *   An array containing all account cancellation methods as form elements.
@@ -466,19 +469,19 @@ function user_cancel_confirm_form_submit($form, &$form_state) {
 function user_cancel_methods() {
   $methods = array(
     'user_cancel_block' => array(
-      'title' => t('Disable the account and keep all content.'),
+      'title' => t('Disable the account and keep its content.'),
       'description' => t('Your account will be blocked and you will no longer be able to log in. All of your content will remain attributed to your user name.'),
     ),
     'user_cancel_block_unpublish' => array(
-      'title' => t('Disable the account and unpublish all content.'),
+      'title' => t('Disable the account and unpublish its content.'),
       'description' => t('Your account will be blocked and you will no longer be able to log in. All of your content will be hidden from everyone but administrators.'),
     ),
     'user_cancel_reassign' => array(
-      'title' => t('Delete the account and make all content belong to the %anonymous-name user.', array('%anonymous-name' => variable_get('anonymous', t('Anonymous')))),
+      'title' => t('Delete the account and make its content belong to the %anonymous-name user.', array('%anonymous-name' => variable_get('anonymous', t('Anonymous')))),
       'description' => t('Your account will be removed and all account information deleted. All of your content will be assigned to the %anonymous-name user.', array('%anonymous-name' => variable_get('anonymous', t('Anonymous')))),
     ),
     'user_cancel_delete' => array(
-      'title' => t('Delete the account and all content.'),
+      'title' => t('Delete the account and its content.'),
       'description' => t('Your account will be removed and all account information deleted. All of your content will also be deleted.'),
       'access' => user_access('administer users'),
     ),

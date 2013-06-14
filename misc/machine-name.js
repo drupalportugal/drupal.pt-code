@@ -1,4 +1,3 @@
-// $Id: machine-name.js,v 1.1 2010/10/13 17:09:00 webchick Exp $
 (function ($) {
 
 /**
@@ -20,6 +19,10 @@ Drupal.behaviors.machineName = {
    *     disallowed characters in the machine name; e.g., '[^a-z0-9]+'.
    *   - replace: A character to replace disallowed characters with; e.g., '_'
    *     or '-'.
+   *   - standalone: Whether the preview should stay in its own element rather
+   *     than the suffix of the source element.
+   *   - field_prefix: The #field_prefix of the form element.
+   *   - field_suffix: The #field_suffix of the form element.
    */
   attach: function (context, settings) {
     var self = this;
@@ -27,7 +30,7 @@ Drupal.behaviors.machineName = {
       var $source = $(source_id, context).addClass('machine-name-source');
       var $target = $(options.target, context).addClass('machine-name-target');
       var $suffix = $(options.suffix, context);
-      var $wrapper = $target.parents('.form-item:first');
+      var $wrapper = $target.closest('.form-item');
       // All elements have to exist.
       if (!$source.length || !$target.length || !$suffix.length || !$wrapper.length) {
         return;
@@ -36,42 +39,55 @@ Drupal.behaviors.machineName = {
       if ($target.hasClass('error')) {
         return;
       }
+      // Figure out the maximum length for the machine name.
+      options.maxlength = $target.attr('maxlength');
       // Hide the form item container of the machine name form element.
       $wrapper.hide();
-      // Append the machine name preview to the source field.
-      if ($target.is(':disabled')) {
+      // Determine the initial machine name value. Unless the machine name form
+      // element is disabled or not empty, the initial default value is based on
+      // the human-readable form element value.
+      if ($target.is(':disabled') || $target.val() != '') {
         var machine = $target.val();
       }
       else {
         var machine = self.transliterate($source.val(), options);
       }
-      var $preview = $('<span class="machine-name-value">' + machine + '</span>');
-      $suffix.empty()
-        .append(' ').append('<span class="machine-name-label">' + options.label + ':</span>')
-        .append(' ').append($preview);
+      // Append the machine name preview to the source field.
+      var $preview = $('<span class="machine-name-value">' + options.field_prefix + Drupal.checkPlain(machine) + options.field_suffix + '</span>');
+      $suffix.empty();
+      if (options.label) {
+        $suffix.append(' ').append('<span class="machine-name-label">' + options.label + ':</span>');
+      }
+      $suffix.append(' ').append($preview);
 
-      // Append a link to edit the machine name, if it is editable, and only if
-      // one of the following conditions is met:
-      // - the machine name is empty.
-      // - the human-readable name is equal to the existing machine name.
-      if (!$target.is(':disabled') && ($target.val() == '' || $target.val() == machine)) {
-        var $link = $('<span class="admin-link"><a href="#">' + Drupal.t('Edit') + '</a></span>')
-          .click(function () {
-            $wrapper.show();
-            $target.focus();
-            $suffix.hide();
-            $source.unbind('keyup.machineName');
-            return false;
-          });
-        $suffix.append(' ').append($link);
+      // If the machine name cannot be edited, stop further processing.
+      if ($target.is(':disabled')) {
+        return;
+      }
 
-        // Preview machine name in realtime when the human-readable name changes.
-        $source.bind('keyup.machineName change.machineName', function () {
+      // If it is editable, append an edit link.
+      var $link = $('<span class="admin-link"><a href="#">' + Drupal.t('Edit') + '</a></span>')
+        .click(function () {
+          $wrapper.show();
+          $target.focus();
+          $suffix.hide();
+          $source.unbind('.machineName');
+          return false;
+        });
+      $suffix.append(' ').append($link);
+
+      // Preview the machine name in realtime when the human-readable name
+      // changes, but only if there is no machine name yet; i.e., only upon
+      // initial creation, not when editing.
+      if ($target.val() == '') {
+        $source.bind('keyup.machineName change.machineName input.machineName', function () {
           machine = self.transliterate($(this).val(), options);
           // Set the machine name to the transliterated value.
-          if (machine != options.replace && machine != '') {
-            $target.val(machine);
-            $preview.text(machine);
+          if (machine != '') {
+            if (machine != options.replace) {
+              $target.val(machine);
+              $preview.html(options.field_prefix + Drupal.checkPlain(machine) + options.field_suffix);
+            }
             $suffix.show();
           }
           else {
@@ -97,13 +113,14 @@ Drupal.behaviors.machineName = {
    *     disallowed characters in the machine name; e.g., '[^a-z0-9]+'.
    *   - replace: A character to replace disallowed characters with; e.g., '_'
    *     or '-'.
+   *   - maxlength: The maximum length of the machine name.
    *
    * @return
    *   The transliterated source string.
    */
   transliterate: function (source, settings) {
     var rx = new RegExp(settings.replace_pattern, 'g');
-    return source.toLowerCase().replace(rx, settings.replace);
+    return source.toLowerCase().replace(rx, settings.replace).substr(0, settings.maxlength);
   }
 };
 

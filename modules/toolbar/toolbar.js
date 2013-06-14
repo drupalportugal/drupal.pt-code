@@ -1,4 +1,3 @@
-// $Id: toolbar.js,v 1.19 2010/06/08 05:16:29 webchick Exp $
 (function ($) {
 
 Drupal.toolbar = Drupal.toolbar || {};
@@ -42,7 +41,7 @@ Drupal.toolbar.init = function() {
  * Collapse the toolbar.
  */
 Drupal.toolbar.collapse = function() {
-  var toggle_text = Drupal.t('Open the drawer');
+  var toggle_text = Drupal.t('Show shortcuts');
   $('#toolbar div.toolbar-drawer').addClass('collapsed');
   $('#toolbar a.toggle')
     .removeClass('toggle-active')
@@ -64,7 +63,7 @@ Drupal.toolbar.collapse = function() {
  * Expand the toolbar.
  */
 Drupal.toolbar.expand = function() {
-  var toggle_text = Drupal.t('Close the drawer');
+  var toggle_text = Drupal.t('Hide shortcuts');
   $('#toolbar div.toolbar-drawer').removeClass('collapsed');
   $('#toolbar a.toggle')
     .addClass('toggle-active')
@@ -95,11 +94,16 @@ Drupal.toolbar.toggle = function() {
 };
 
 Drupal.toolbar.height = function() {
-  var height = $('#toolbar').outerHeight();
-  // In IE, Shadow filter adds some extra height, so we need to remove it from
-  // the returned height.
-  if ($('#toolbar').css('filter').match(/DXImageTransform\.Microsoft\.Shadow/)) {
-    height -= $('#toolbar').get(0).filters.item("DXImageTransform.Microsoft.Shadow").strength;
+  var $toolbar = $('#toolbar');
+  var height = $toolbar.outerHeight();
+  // In modern browsers (including IE9), when box-shadow is defined, use the
+  // normal height.
+  var cssBoxShadowValue = $toolbar.css('box-shadow');
+  var boxShadow = (typeof cssBoxShadowValue !== 'undefined' && cssBoxShadowValue !== 'none');
+  // In IE8 and below, we use the shadow filter to apply box-shadow styles to
+  // the toolbar. It adds some extra height that we need to remove.
+  if (!boxShadow && /DXImageTransform\.Microsoft\.Shadow/.test($toolbar.css('filter'))) {
+    height -= $toolbar[0].filters.item("DXImageTransform.Microsoft.Shadow").strength;
   }
   return height;
 };

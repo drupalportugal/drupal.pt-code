@@ -1,5 +1,4 @@
 <?php
-// $Id: comment.tpl.php,v 1.18 2010/01/07 05:23:51 webchick Exp $
 
 /**
  * @file
@@ -19,6 +18,8 @@
  *   desired parameters on the $comment->changed variable.
  * - $new: New comment marker.
  * - $permalink: Comment permalink.
+ * - $submitted: Submission information created from $author and $created during
+ *   template_preprocess_comment().
  * - $picture: Authors picture.
  * - $signature: Authors signature.
  * - $status: Comment status. Possible values are:
@@ -54,6 +55,8 @@
  * @see template_preprocess_comment()
  * @see template_process()
  * @see theme_comment()
+ *
+ * @ingroup themeable
  */
 ?>
 <div class="<?php print $classes; ?> clearfix"<?php print $attributes; ?>>
@@ -69,10 +72,7 @@
 
   <div class="submitted">
     <?php print $permalink; ?>
-    <?php
-      print t('Submitted by !username on !datetime.',
-        array('!username' => $author, '!datetime' => $created));
-    ?>
+    <?php print $submitted; ?>
   </div>
 
   <div class="content"<?php print $content_attributes; ?>>

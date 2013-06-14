@@ -1,5 +1,4 @@
 <?php
-// $Id: template.php,v 1.24 2010/10/05 19:59:10 dries Exp $
 
 /**
  * Override or insert variables into the maintenance page template.
@@ -18,17 +17,23 @@ function seven_preprocess_maintenance_page(&$vars) {
  */
 function seven_preprocess_html(&$vars) {
   // Add conditional CSS for IE8 and below.
-  drupal_add_css(path_to_theme() . '/ie.css', array('group' => CSS_THEME, 'browsers' => array('IE' => 'lte IE 8', '!IE' => FALSE), 'preprocess' => FALSE));
+  drupal_add_css(path_to_theme() . '/ie.css', array('group' => CSS_THEME, 'browsers' => array('IE' => 'lte IE 8', '!IE' => FALSE), 'weight' => 999, 'preprocess' => FALSE));
+  // Add conditional CSS for IE7 and below.
+  drupal_add_css(path_to_theme() . '/ie7.css', array('group' => CSS_THEME, 'browsers' => array('IE' => 'lte IE 7', '!IE' => FALSE), 'weight' => 999, 'preprocess' => FALSE));
   // Add conditional CSS for IE6.
-  drupal_add_css(path_to_theme() . '/ie6.css', array('group' => CSS_THEME, 'browsers' => array('IE' => 'lt IE 7', '!IE' => FALSE), 'preprocess' => FALSE));
+  drupal_add_css(path_to_theme() . '/ie6.css', array('group' => CSS_THEME, 'browsers' => array('IE' => 'lte IE 6', '!IE' => FALSE), 'weight' => 999, 'preprocess' => FALSE));
 }
 
 /**
  * Override or insert variables into the page template.
  */
 function seven_preprocess_page(&$vars) {
-  $vars['primary_local_tasks'] = menu_primary_local_tasks();
-  $vars['secondary_local_tasks'] = menu_secondary_local_tasks();
+  $vars['primary_local_tasks'] = $vars['tabs'];
+  unset($vars['primary_local_tasks']['#secondary']);
+  $vars['secondary_local_tasks'] = array(
+    '#theme' => 'menu_local_tasks',
+    '#secondary' => $vars['tabs']['#secondary'],
+  );
 }
 
 /**
@@ -85,10 +90,10 @@ function seven_tablesort_indicator($variables) {
   $style = $variables['style'];
   $theme_path = drupal_get_path('theme', 'seven');
   if ($style == 'asc') {
-    return theme('image', array('path' => $theme_path . '/images/arrow-asc.png', 'alt' => t('sort ascending'), 'title' => t('sort ascending')));
+    return theme('image', array('path' => $theme_path . '/images/arrow-asc.png', 'alt' => t('sort ascending'), 'width' => 13, 'height' => 13, 'title' => t('sort ascending')));
   }
   else {
-    return theme('image', array('path' => $theme_path . '/images/arrow-desc.png', 'alt' => t('sort descending'), 'title' => t('sort descending')));
+    return theme('image', array('path' => $theme_path . '/images/arrow-desc.png', 'alt' => t('sort descending'), 'width' => 13, 'height' => 13, 'title' => t('sort descending')));
   }
 }
 
@@ -99,9 +104,15 @@ function seven_css_alter(&$css) {
   // Use Seven's vertical tabs style instead of the default one.
   if (isset($css['misc/vertical-tabs.css'])) {
     $css['misc/vertical-tabs.css']['data'] = drupal_get_path('theme', 'seven') . '/vertical-tabs.css';
+    $css['misc/vertical-tabs.css']['type'] = 'file';
+  }
+  if (isset($css['misc/vertical-tabs-rtl.css'])) {
+    $css['misc/vertical-tabs-rtl.css']['data'] = drupal_get_path('theme', 'seven') . '/vertical-tabs-rtl.css';
+    $css['misc/vertical-tabs-rtl.css']['type'] = 'file';
   }
   // Use Seven's jQuery UI theme style instead of the default one.
   if (isset($css['misc/ui/jquery.ui.theme.css'])) {
     $css['misc/ui/jquery.ui.theme.css']['data'] = drupal_get_path('theme', 'seven') . '/jquery.ui.theme.css';
+    $css['misc/ui/jquery.ui.theme.css']['type'] = 'file';
   }
 }

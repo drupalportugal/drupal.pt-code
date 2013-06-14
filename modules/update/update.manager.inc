@@ -1,9 +1,9 @@
 <?php
-// $Id: update.manager.inc,v 1.24 2010/07/29 02:27:43 dries Exp $
 
 /**
  * @file
- * Administrative screens and processing functions for the update manager.
+ * Administrative screens and processing functions of the Update Manager module.
+ *
  * This allows site administrators with the 'administer software updates'
  * permission to either upgrade existing projects, or download and install new
  * ones, so long as the killswitch setting ('allow_authorize_operations') is
@@ -12,50 +12,58 @@
  * To install new code, the administrator is prompted for either the URL of an
  * archive file, or to directly upload the archive file. The archive is loaded
  * into a temporary location, extracted, and verified. If everything is
- * successful, the user is redirected to authorize.php to type in their file
- * transfer credentials and authorize the installation to proceed with
- * elevated privileges, such that the extracted files can be copied out of the
- * temporary location and into the live web root.
+ * successful, the user is redirected to authorize.php to type in file transfer
+ * credentials and authorize the installation to proceed with elevated
+ * privileges, such that the extracted files can be copied out of the temporary
+ * location and into the live web root.
  *
  * Updating existing code is a more elaborate process. The first step is a
- * selection form where the user is presented with a table of installed
- * projects that are missing newer releases. The user selects which projects
- * they wish to upgrade, and presses the "Download updates" button to
- * continue. This sets up a batch to fetch all the selected releases, and
- * redirects to admin/update/download to display the batch progress bar as it
- * runs. Each batch operation is responsible for downloading a single file,
- * extracting the archive, and verifying the contents. If there are any
- * errors, the user is redirected back to the first page with the error
- * messages. If all downloads were extacted and verified, the user is instead
- * redirected to admin/update/ready, a landing page which reminds them to
- * backup their database and asks if they want to put the site offline during
- * the upgrade. Once the user presses the "Install updates" button, they are
- * redirected to authorize.php to supply their web root file access
- * credentials. The authorized operation (which lives in update.authorize.inc)
- * sets up a batch to copy each extracted update from the temporary location
- * into the live web root.
+ * selection form where the user is presented with a table of installed projects
+ * that are missing newer releases. The user selects which projects they wish to
+ * update, and presses the "Download updates" button to continue. This sets up a
+ * batch to fetch all the selected releases, and redirects to
+ * admin/update/download to display the batch progress bar as it runs. Each
+ * batch operation is responsible for downloading a single file, extracting the
+ * archive, and verifying the contents. If there are any errors, the user is
+ * redirected back to the first page with the error messages. If all downloads
+ * were extacted and verified, the user is instead redirected to
+ * admin/update/ready, a landing page which reminds them to backup their
+ * database and asks if they want to put the site offline during the update.
+ * Once the user presses the "Install updates" button, they are redirected to
+ * authorize.php to supply their web root file access credentials. The
+ * authorized operation (which lives in update.authorize.inc) sets up a batch to
+ * copy each extracted update from the temporary location into the live web
+ * root.
  */
 
 /**
- * @defgroup update_manager_update Update manager for updating existing code.
+ * @defgroup update_manager_update Update Manager module: update
  * @{
+ * Update Manager module functionality for updating existing code.
+ *
+ * Provides a user interface to update existing code.
  */
 
 /**
- * Build the form for the update manager page to update existing projects.
+ * Form constructor for the update form of the Update Manager module.
  *
  * This presents a table with all projects that have available updates with
  * checkboxes to select which ones to upgrade.
  *
- * @param $form
- * @param $form_state
  * @param $context
- *   String representing the context from which we're trying to update, can be:
- *   'module', 'theme' or 'report'.
- * @return
- *   The form array for selecting which projects to update.
+ *   String representing the context from which we're trying to update.
+ *   Allowed values are 'module', 'theme', and 'report'.
+ *
+ * @see update_manager_update_form_validate()
+ * @see update_manager_update_form_submit()
+ * @see update_menu()
+ * @ingroup forms
  */
 function update_manager_update_form($form, $form_state = array(), $context) {
+  if (!_update_manager_check_backends($form, 'update')) {
+    return $form;
+  }
+
   $form['#theme'] = 'update_manager_update_form';
 
   $available = update_get_available(TRUE);
@@ -112,7 +120,7 @@ function update_manager_update_form($form, $form_state = array(), $context) {
     }
 
     $recommended_release = $project['releases'][$project['recommended']];
-    $recommended_version = $recommended_release['version'] . ' ' . l(t('(Release notes)'), $recommended_release['release_link'], array('attributes' => array('title' => t('Release notes for @project_name', array('@project_name' => $project_name)))));
+    $recommended_version = $recommended_release['version'] . ' ' . l(t('(Release notes)'), $recommended_release['release_link'], array('attributes' => array('title' => t('Release notes for @project_title', array('@project_title' => $project['title'])))));
     if ($recommended_release['version_major'] != $project['existing_major']) {
       $recommended_version .= '<div title="Major upgrade warning" class="update-major-version-warning">' . t('This update is a major version update which means that it may not be backwards compatible with your currently running version.  It is recommended that you read the release notes and proceed at your own risk.') . '</div>';
     }
@@ -156,10 +164,16 @@ function update_manager_update_form($form, $form_state = array(), $context) {
     $needs_manual = $project['project_type'] == 'core';
 
     if ($needs_manual) {
-      // Since it won't be tableselect, #weight will add an extra column to the
-      // table if it's defined, so just unset it. The order doesn't matter that
-      // much in the manual updates table, anyway.
+      // There are no checkboxes in the 'Manual updates' table so it will be
+      // rendered by theme('table'), not theme('tableselect'). Since the data
+      // formats are incompatible, we convert now to the format expected by
+      // theme('table').
       unset($entry['#weight']);
+      $attributes = $entry['#attributes'];
+      unset($entry['#attributes']);
+      $entry = array(
+        'data' => $entry,
+      ) + $attributes;
     }
     else {
       $form['project_downloads'][$name] = array(
@@ -251,7 +265,7 @@ function update_manager_update_form($form, $form_state = array(), $context) {
 }
 
 /**
- * Returns HTML for the first page in the update manager wizard to select projects.
+ * Returns HTML for the first page in the process of updating projects.
  *
  * @param $variables
  *   An associative array containing:
@@ -268,7 +282,11 @@ function theme_update_manager_update_form($variables) {
 }
 
 /**
- * Validation callback to ensure that at least one project is selected.
+ * Form validation handler for update_manager_update_form().
+ *
+ * Ensures that at least one project is selected.
+ *
+ * @see update_manager_update_form_submit()
  */
 function update_manager_update_form_validate($form, &$form_state) {
   if (!empty($form_state['values']['projects'])) {
@@ -283,11 +301,11 @@ function update_manager_update_form_validate($form, &$form_state) {
 }
 
 /**
- * Submit function for the main update form.
+ * Form submission handler for update_manager_update_form().
  *
- * This sets up a batch to download, extract and verify the selected releases
+ * Sets up a batch that downloads, extracts, and verifies the selected releases.
  *
- * @see update_manager_update_form()
+ * @see update_manager_update_form_validate()
  */
 function update_manager_update_form_submit($form, &$form_state) {
   $projects = array();
@@ -317,7 +335,12 @@ function update_manager_update_form_submit($form, &$form_state) {
 }
 
 /**
- * Batch callback invoked when the download batch is completed.
+ * Batch callback: Performs actions when the download batch is completed.
+ *
+ * @param $success
+ *   TRUE if the batch operation was successful, FALSE if there were errors.
+ * @param $results
+ *   An associative array of results from the batch operation.
  */
 function update_manager_download_batch_finished($success, $results) {
   if (!empty($results['errors'])) {
@@ -340,24 +363,34 @@ function update_manager_download_batch_finished($success, $results) {
 }
 
 /**
+ * Form constructor for the update ready form.
+ *
  * Build the form when the site is ready to update (after downloading).
  *
  * This form is an intermediary step in the automated update workflow. It is
- * presented to the site administrator after all the required updates have
- * been downloaded and verified. The point of this page is to encourage the
- * user to backup their site, gives them the opportunity to put the site
- * offline, and then asks them to confirm that the update should continue.
- * After this step, the user is redirected to authorize.php to enter their
- * file transfer credentials and attempt to complete the update.
+ * presented to the site administrator after all the required updates have been
+ * downloaded and verified. The point of this page is to encourage the user to
+ * backup their site, give them the opportunity to put the site offline, and
+ * then ask them to confirm that the update should continue. After this step,
+ * the user is redirected to authorize.php to enter their file transfer
+ * credentials and attempt to complete the update.
+ *
+ * @see update_manager_update_ready_form_submit()
+ * @see update_menu()
+ * @ingroup forms
  */
 function update_manager_update_ready_form($form, &$form_state) {
+  if (!_update_manager_check_backends($form, 'update')) {
+    return $form;
+  }
+
   $form['backup'] = array(
     '#prefix' => '<strong>',
     '#markup' => t('Back up your database and site before you continue. <a href="@backup_url">Learn how</a>.', array('@backup_url' => url('http://drupal.org/node/22281'))),
     '#suffix' => '</strong>',
   );
 
-  $form['site_offline'] = array(
+  $form['maintenance_mode'] = array(
     '#title' => t('Perform updates with site in maintenance mode (strongly recommended)'),
     '#type' => 'checkbox',
     '#default_value' => TRUE,
@@ -373,21 +406,23 @@ function update_manager_update_ready_form($form, &$form_state) {
 }
 
 /**
- * Submit handler for the form to confirm that an update should continue.
+ * Form submission handler for update_manager_update_ready_form().
  *
  * If the site administrator requested that the site is put offline during the
- * update, do so now. Otherwise, pull information about all the required
- * updates out of the SESSION, figure out what Updater class is needed for
- * each one, generate an array of update operations to perform, and hand it
- * all off to system_authorized_init(), then redirect to authorize.php.
+ * update, do so now. Otherwise, pull information about all the required updates
+ * out of the SESSION, figure out what Drupal\Core\Updater\Updater class is
+ * needed for each one, generate an array of update operations to perform, and
+ * hand it all off to system_authorized_init(), then redirect to authorize.php.
  *
  * @see update_authorize_run_update()
  * @see system_authorized_init()
  * @see system_authorized_get_url()
  */
 function update_manager_update_ready_form_submit($form, &$form_state) {
-  if ($form_state['values']['site_offline'] == TRUE) {
-    variable_set('site_offline', TRUE);
+  // Store maintenance_mode setting so we can restore it when done.
+  $_SESSION['maintenance_mode'] = variable_get('maintenance_mode', FALSE);
+  if ($form_state['values']['maintenance_mode'] == TRUE) {
+    variable_set('maintenance_mode', TRUE);
   }
 
   if (!empty($_SESSION['update_manager_update_projects'])) {
@@ -425,7 +460,7 @@ function update_manager_update_ready_form_submit($form, &$form_state) {
     // credentials and invoke update_authorize_run_update() indirectly with
     // whatever FileTransfer object authorize.php creates for us.
     else {
-      system_authorized_init('update_authorize_run_update', drupal_get_path('module', 'update') . '/update.authorize.inc', array($updates));
+      system_authorized_init('update_authorize_run_update', drupal_get_path('module', 'update') . '/update.authorize.inc', array($updates), t('Update manager'));
       $form_state['redirect'] = system_authorized_get_url();
     }
   }
@@ -436,30 +471,41 @@ function update_manager_update_ready_form_submit($form, &$form_state) {
  */
 
 /**
- * @defgroup update_manager_install Update manager for installing new code.
+ * @defgroup update_manager_install Update Manager module: install
  * @{
+ * Update Manager module functionality for installing new code.
+ *
+ * Provides a user interface to install new code.
  */
 
 /**
- * Build the form for the update manager page to install new projects.
+ * Form constructor for the install form of the Update Manager module.
  *
  * This presents a place to enter a URL or upload an archive file to use to
  * install a new module or theme.
  *
- * @param $form
- * @param $form_state
  * @param $context
- *   String representing the context from which we're trying to install, can
- *   be: 'module', 'theme' or 'report'.
- * @return
- *   The form array for selecting which project to install.
+ *   String representing the context from which we're trying to install.
+ *   Allowed values are 'module', 'theme', and 'report'.
+ *
+ * @see update_manager_install_form_validate()
+ * @see update_manager_install_form_submit()
+ * @see update_menu()
+ * @ingroup forms
  */
 function update_manager_install_form($form, &$form_state, $context) {
-  $form = array();
+  if (!_update_manager_check_backends($form, 'install')) {
+    return $form;
+  }
 
   $form['help_text'] = array(
     '#prefix' => '<p>',
-    '#markup' => t('To install a new module or theme, either enter the URL of an archive file you wish to install, or upload the archive file that you have downloaded. You can find <a href="@module_url">modules</a> and <a href="@theme_url">themes</a> at <a href="@drupal_org_url">http://drupal.org</a>.<br/>The following archive extensions are supported: %extensions.', array('@module_url' => 'http://drupal.org/project/modules', '@theme_url' => 'http://drupal.org/project/themes', '@drupal_org_url' => 'http://drupal.org', '%extensions' => archiver_get_extensions())),
+    '#markup' => t('You can find <a href="@module_url">modules</a> and <a href="@theme_url">themes</a> on <a href="@drupal_org_url">drupal.org</a>. The following file extensions are supported: %extensions.', array(
+      '@module_url' => 'http://drupal.org/project/modules',
+      '@theme_url' => 'http://drupal.org/project/themes',
+      '@drupal_org_url' => 'http://drupal.org',
+      '%extensions' => archiver_get_extensions(),
+    )),
     '#suffix' => '</p>',
   );
 
@@ -491,7 +537,76 @@ function update_manager_install_form($form, &$form_state, $context) {
 }
 
 /**
- * Validate the form for installing a new project via the update manager.
+ * Checks for file transfer backends and prepares a form fragment about them.
+ *
+ * @param array $form
+ *   Reference to the form array we're building.
+ * @param string $operation
+ *   The update manager operation we're in the middle of. Can be either 'update'
+ *   or 'install'. Use to provide operation-specific interface text.
+ *
+ * @return
+ *   TRUE if the update manager should continue to the next step in the
+ *   workflow, or FALSE if we've hit a fatal configuration and must halt the
+ *   workflow.
+ */
+function _update_manager_check_backends(&$form, $operation) {
+  // If file transfers will be performed locally, we do not need to display any
+  // warnings or notices to the user and should automatically continue the
+  // workflow, since we won't be using a FileTransfer backend that requires
+  // user input or a specific server configuration.
+  if (update_manager_local_transfers_allowed()) {
+    return TRUE;
+  }
+
+  // Otherwise, show the available backends.
+  $form['available_backends'] = array(
+    '#prefix' => '<p>',
+    '#suffix' => '</p>',
+  );
+
+  $available_backends = drupal_get_filetransfer_info();
+  if (empty($available_backends)) {
+    if ($operation == 'update') {
+      $form['available_backends']['#markup'] = t('Your server does not support updating modules and themes from this interface. Instead, update modules and themes by uploading the new versions directly to the server, as described in the <a href="@handbook_url">handbook</a>.', array('@handbook_url' => 'http://drupal.org/getting-started/install-contrib'));
+    }
+    else {
+      $form['available_backends']['#markup'] = t('Your server does not support installing modules and themes from this interface. Instead, install modules and themes by uploading them directly to the server, as described in the <a href="@handbook_url">handbook</a>.', array('@handbook_url' => 'http://drupal.org/getting-started/install-contrib'));
+    }
+    return FALSE;
+  }
+
+  $backend_names = array();
+  foreach ($available_backends as $backend) {
+    $backend_names[] = $backend['title'];
+  }
+  if ($operation == 'update') {
+    $form['available_backends']['#markup'] = format_plural(
+      count($available_backends),
+      'Updating modules and themes requires <strong>@backends access</strong> to your server. See the <a href="@handbook_url">handbook</a> for other update methods.',
+      'Updating modules and themes requires access to your server via one of the following methods: <strong>@backends</strong>. See the <a href="@handbook_url">handbook</a> for other update methods.',
+      array(
+        '@backends' => implode(', ', $backend_names),
+        '@handbook_url' => 'http://drupal.org/getting-started/install-contrib',
+      ));
+  }
+  else {
+    $form['available_backends']['#markup'] = format_plural(
+      count($available_backends),
+      'Installing modules and themes requires <strong>@backends access</strong> to your server. See the <a href="@handbook_url">handbook</a> for other installation methods.',
+      'Installing modules and themes requires access to your server via one of the following methods: <strong>@backends</strong>. See the <a href="@handbook_url">handbook</a> for other installation methods.',
+      array(
+        '@backends' => implode(', ', $backend_names),
+        '@handbook_url' => 'http://drupal.org/getting-started/install-contrib',
+      ));
+  }
+  return TRUE;
+}
+
+/**
+ * Form validation handler for update_manager_install_form().
+ *
+ * @see update_manager_install_form_submit()
  */
 function update_manager_install_form_validate($form, &$form_state) {
   if (!($form_state['values']['project_url'] XOR !empty($_FILES['files']['name']['project_upload']))) {
@@ -506,7 +621,7 @@ function update_manager_install_form_validate($form, &$form_state) {
 }
 
 /**
- * Handle form submission when installing new projects via the update manager.
+ * Form submission handler for update_manager_install_form().
  *
  * Either downloads the file specified in the URL to a temporary cache, or
  * uploads the file attached to the form, then attempts to extract the archive
@@ -516,6 +631,7 @@ function update_manager_install_form_validate($form, &$form_state) {
  * via authorize.php which will copy the extracted files from the temporary
  * location into the live site.
  *
+ * @see update_manager_install_form_validate()
  * @see update_authorize_run_install()
  * @see system_authorized_init()
  * @see system_authorized_get_url()
@@ -554,14 +670,22 @@ function update_manager_install_form_submit($form, &$form_state) {
     form_set_error($field, t('Provided archive contains no files.'));
     return;
   }
-  // Unfortunately, we can only use the directory name for this. :(
-  $project = drupal_substr($files[0], 0, -1);
 
-  try {
-    update_manager_archive_verify($project, $local_cache, $directory);
-  }
-  catch (Exception $e) {
-    form_set_error($field, $e->getMessage());
+  // Unfortunately, we can only use the directory name to determine the project
+  // name. Some archivers list the first file as the directory (i.e., MODULE/)
+  // and others list an actual file (i.e., MODULE/README.TXT).
+  $project = strtok($files[0], '/\\');
+
+  $archive_errors = update_manager_archive_verify($project, $local_cache, $directory);
+  if (!empty($archive_errors)) {
+    form_set_error($field, array_shift($archive_errors));
+    // @todo: Fix me in D8: We need a way to set multiple errors on the same
+    // form element and have all of them appear!
+    if (!empty($archive_errors)) {
+      foreach ($archive_errors as $error) {
+        drupal_set_message($error, 'error');
+      }
+    }
     return;
   }
 
@@ -569,8 +693,21 @@ function update_manager_install_form_submit($form, &$form_state) {
   drupal_get_updaters();
 
   $project_location = $directory . '/' . $project;
-  $updater = Updater::factory($project_location);
-  $project_title = Updater::getProjectTitle($project_location);
+  try {
+    $updater = Updater::factory($project_location);
+  }
+  catch (Exception $e) {
+    form_set_error($field, $e->getMessage());
+    return;
+  }
+
+  try {
+    $project_title = Updater::getProjectTitle($project_location);
+  }
+  catch (Exception $e) {
+    form_set_error($field, $e->getMessage());
+    return;
+  }
 
   if (!$project_title) {
     form_set_error($field, t('Unable to determine %project name.', array('%project' => $project)));
@@ -602,7 +739,7 @@ function update_manager_install_form_submit($form, &$form_state) {
   // credentials and invoke update_authorize_run_install() indirectly with
   // whatever FileTransfer object authorize.php creates for us.
   else {
-    system_authorized_init('update_authorize_run_install', drupal_get_path('module', 'update') . '/update.authorize.inc', $arguments);
+    system_authorized_init('update_authorize_run_install', drupal_get_path('module', 'update') . '/update.authorize.inc', $arguments, t('Update manager'));
     $form_state['redirect'] = system_authorized_get_url();
   }
 }
@@ -612,54 +749,54 @@ function update_manager_install_form_submit($form, &$form_state) {
  */
 
 /**
- * @defgroup update_manager_file Update manager file management functions.
+ * @defgroup update_manager_file Update Manager module: file management
  * @{
+ * Update Manager module file management functions.
+ *
+ * These functions are used by the update manager to copy, extract, and verify
+ * archive files.
  */
 
 /**
- * Return the directory where update archive files should be extracted.
+ * Unpacks a downloaded archive file.
  *
- * If the directory does not already exist, attempt to create it.
- *
- * @return
- *   The full path to the temporary directory where update file archives
- *   should be extracted.
- */
-function _update_manager_extract_directory() {
-  $directory = &drupal_static(__FUNCTION__, '');
-  if (empty($directory)) {
-    $directory = 'temporary://update-extraction';
-    if (!file_exists($directory)) {
-      mkdir($directory);
-    }
-  }
-  return $directory;
-}
-
-/**
- * Unpack a downloaded archive file.
- *
- * @param string $project
- *   The short name of the project to download.
  * @param string $file
  *   The filename of the archive you wish to extract.
  * @param string $directory
  *   The directory you wish to extract the archive into.
+ *
  * @return Archiver
  *   The Archiver object used to extract the archive.
- * @throws Exception on failure.
+ *
+ * @throws Exception
  */
 function update_manager_archive_extract($file, $directory) {
   $archiver = archiver_get_archiver($file);
   if (!$archiver) {
     throw new Exception(t('Cannot extract %file, not a valid archive.', array ('%file' => $file)));
   }
+
+  // Remove the directory if it exists, otherwise it might contain a mixture of
+  // old files mixed with the new files (e.g. in cases where files were removed
+  // from a later release).
+  $files = $archiver->listContents();
+
+  // Unfortunately, we can only use the directory name to determine the project
+  // name. Some archivers list the first file as the directory (i.e., MODULE/)
+  // and others list an actual file (i.e., MODULE/README.TXT).
+  $project = strtok($files[0], '/\\');
+
+  $extract_location = $directory . '/' . $project;
+  if (file_exists($extract_location)) {
+    file_unmanaged_delete_recursive($extract_location);
+  }
+
   $archiver->extract($directory);
   return $archiver;
 }
 
 /**
- * Verify an archive after it has been downloaded and extracted.
+ * Verifies an archive after it has been downloaded and extracted.
  *
  * This function is responsible for invoking hook_verify_update_archive().
  *
@@ -670,21 +807,18 @@ function update_manager_archive_extract($file, $directory) {
  * @param string $directory
  *   The directory that the archive was extracted into.
  *
- * @return void
- * @throws Exception on failure.
- *
+ * @return array
+ *   An array of error messages to display if the archive was invalid. If there
+ *   are no errors, it will be an empty array.
  */
 function update_manager_archive_verify($project, $archive_file, $directory) {
-  $failures = module_invoke_all('verify_update_archive', $project, $archive_file, $directory);
-  if (!empty($failures)) {
-    throw new Exception(t('Unable to extract %file', array('%file' => $archive_file)));
-  }
+  return module_invoke_all('verify_update_archive', $project, $archive_file, $directory);
 }
 
 /**
- * Copies a file from $url to the temporary directory for updates.
+ * Copies a file from the specified URL to the temporary directory for updates.
  *
- * If the file has already been downloaded, returns the the local path.
+ * Returns the local path if the file has already been downloaded.
  *
  * @param $url
  *   The URL of the file on the server.
@@ -701,15 +835,11 @@ function update_manager_file_get($url) {
   }
 
   // Check the cache and download the file if needed.
-  $cache_directory = 'temporary://update-cache';
-  $local = $cache_directory . '/' . basename($parsed_url['path']);
+  $cache_directory = _update_manager_cache_directory();
+  $local = $cache_directory . '/' . drupal_basename($parsed_url['path']);
 
-  if (!file_exists($cache_directory)) {
-    mkdir($cache_directory);
-  }
-
-  if (!file_exists($local)) {
-    return system_retrieve_file($url, $local);
+  if (!file_exists($local) || update_delete_file_if_stale($local)) {
+    return system_retrieve_file($url, $local, FALSE, FILE_EXISTS_REPLACE);
   }
   else {
     return $local;
@@ -717,18 +847,18 @@ function update_manager_file_get($url) {
 }
 
 /**
- * Batch operation: download, unpack, and verify a project.
+ * Batch callback: Downloads, unpacks, and verifies a project.
  *
- * This function assumes that the provided URL points to a file archive of
- * some sort. The URL can have any scheme that we have a file stream wrapper
- * to support. The file is downloaded to a local cache.
+ * This function assumes that the provided URL points to a file archive of some
+ * sort. The URL can have any scheme that we have a file stream wrapper to
+ * support. The file is downloaded to a local cache.
  *
  * @param string $project
  *   The short name of the project to download.
  * @param string $url
  *   The URL to download a specific project release archive file.
- * @param array &$context
- *   Reference to an array used for BatchAPI storage.
+ * @param array $context
+ *   Reference to an array used for Batch API storage.
  *
  * @see update_manager_download_page()
  */
@@ -758,17 +888,54 @@ function update_manager_batch_project_get($project, $url, &$context) {
   }
 
   // Verify it.
-  try {
-    update_manager_archive_verify($project, $local_cache, $extract_directory);
-  }
-  catch (Exception $e) {
-    $context['results']['errors'][$project] = $e->getMessage();
+  $archive_errors = update_manager_archive_verify($project, $local_cache, $extract_directory);
+  if (!empty($archive_errors)) {
+    // We just need to make sure our array keys don't collide, so use the
+    // numeric keys from the $archive_errors array.
+    foreach ($archive_errors as $key => $error) {
+      $context['results']['errors']["$project-$key"] = $error;
+    }
     return;
   }
 
   // Yay, success.
   $context['results']['projects'][$project] = $url;
   $context['finished'] = 1;
+}
+
+/**
+ * Determines if file transfers will be performed locally.
+ *
+ * If the server is configured such that webserver-created files have the same
+ * owner as the configuration directory (e.g., sites/default) where new code
+ * will eventually be installed, the update manager can transfer files entirely
+ * locally, without changing their ownership (in other words, without prompting
+ * the user for FTP, SSH or other credentials).
+ *
+ * This server configuration is an inherent security weakness because it allows
+ * a malicious webserver process to append arbitrary PHP code and then execute
+ * it. However, it is supported here because it is a common configuration on
+ * shared hosting, and there is nothing Drupal can do to prevent it.
+ *
+ * @return
+ *   TRUE if local file transfers are allowed on this server, or FALSE if not.
+ *
+ * @see update_manager_update_ready_form_submit()
+ * @see update_manager_install_form_submit()
+ * @see install_check_requirements()
+ */
+function update_manager_local_transfers_allowed() {
+  // Compare the owner of a webserver-created temporary file to the owner of
+  // the configuration directory to determine if local transfers will be
+  // allowed.
+  $temporary_file = drupal_tempnam('temporary://', 'update_');
+  $local_transfers_allowed = fileowner($temporary_file) === fileowner(conf_path());
+
+  // Clean up. If this fails, we can ignore it (since this is just a temporary
+  // file anyway).
+  @drupal_unlink($temporary_file);
+
+  return $local_transfers_allowed;
 }
 
 /**
