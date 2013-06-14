@@ -1,5 +1,4 @@
 <?php
-// $Id: stylizer.install,v 1.2 2010/10/11 22:18:23 sdboyer Exp $
 
 /**
  * Schema for stylizer.
@@ -19,6 +18,12 @@ function stylizer_schema_1() {
       'can disable' => TRUE,
       'identifier' => 'style',
       'primary key' => 'sid',
+      'api' => array(
+        'owner' => 'stylizer',
+        'api' => 'stylizer',
+        'minimum_version' => 1,
+        'current_version' => 1,
+      ),
     ),
     'fields' => array(
       'sid' => array(

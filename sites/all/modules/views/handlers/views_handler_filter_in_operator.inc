@@ -1,14 +1,21 @@
 <?php
-// $Id: views_handler_filter_in_operator.inc,v 1.12.4.8 2010/11/05 07:20:54 dereine Exp $
 /**
  * Simple filter to handle matching of multiple options selectable via checkboxes
  *
  * Definition items:
- * - numeric: If set to true, this item will use numeric operators instead of string.
+ * - options callback: The function to call in order to generate the value options. If omitted, the options 'Yes' and 'No' will be used.
+ * - options arguments: An array of arguments to pass to the options callback.
  *
+ * @ingroup views_filter_handlers
  */
 class views_handler_filter_in_operator extends views_handler_filter {
   var $value_form_type = 'checkboxes';
+
+  /**
+   * @var array
+   * Stores all operations which are available on the form.
+   */
+  var $value_options = NULL;
 
   function construct() {
     parent::construct();
@@ -23,6 +30,9 @@ class views_handler_filter_in_operator extends views_handler_filter {
    *
    * This can use a guard to be used to reduce database hits as much as
    * possible.
+   *
+   * @return
+   *   Return the stored values in $this->value_options if someone expects it.
    */
   function get_value_options() {
     if (isset($this->value_options)) {
@@ -30,11 +40,18 @@ class views_handler_filter_in_operator extends views_handler_filter {
     }
 
     if (isset($this->definition['options callback']) && is_callable($this->definition['options callback'])) {
-      $this->value_options = call_user_func($this->definition['options callback']);
+      if (isset($this->definition['options arguments']) && is_array($this->definition['options arguments'])) {
+        $this->value_options = call_user_func_array($this->definition['options callback'], $this->definition['options arguments']);
+      }
+      else {
+        $this->value_options = call_user_func($this->definition['options callback']);
+      }
     }
     else {
       $this->value_options = array(t('Yes'), t('No'));
     }
+
+    return $this->value_options;
   }
 
   function expose_options() {
@@ -42,8 +59,8 @@ class views_handler_filter_in_operator extends views_handler_filter {
     $this->options['expose']['reduce'] = FALSE;
   }
 
-  function expose_form_right(&$form, &$form_state) {
-    parent::expose_form_right($form, $form_state);
+  function expose_form(&$form, &$form_state) {
+    parent::expose_form($form, $form_state);
     $form['expose']['reduce'] = array(
       '#type' => 'checkbox',
       '#title' => t('Limit list to selected items'),
@@ -130,9 +147,15 @@ class views_handler_filter_in_operator extends views_handler_filter {
 
   function value_form(&$form, &$form_state) {
     $form['value'] = array();
+    $options = array();
+
+    if (empty($form_state['exposed'])) {
+      // Add a select all option to the value form.
+      $options = array('all' => t('Select all'));
+    }
 
     $this->get_value_options();
-    $options = $this->value_options;
+    $options += $this->value_options;
     $default_value = (array) $this->value;
 
     $which = 'all';
@@ -142,24 +165,24 @@ class views_handler_filter_in_operator extends views_handler_filter {
     if (!empty($form_state['exposed'])) {
       $identifier = $this->options['expose']['identifier'];
 
-      if (empty($this->options['expose']['use_operator']) || empty($this->options['expose']['operator'])) {
+      if (empty($this->options['expose']['use_operator']) || empty($this->options['expose']['operator_id'])) {
         // exposed and locked.
         $which = in_array($this->operator, $this->operator_values(1)) ? 'value' : 'none';
       }
       else {
-        $source = 'edit-' . drupal_html_id($this->options['expose']['operator']);
+        $source = 'edit-' . drupal_html_id($this->options['expose']['operator_id']);
       }
 
       if (!empty($this->options['expose']['reduce'])) {
         $options = $this->reduce_value_options();
 
-        if (empty($this->options['expose']['single']) && !empty($this->options['expose']['optional'])) {
+        if (!empty($this->options['expose']['multiple']) && empty($this->options['expose']['required'])) {
           $default_value = array();
         }
       }
 
-      if (!empty($this->options['expose']['single'])) {
-        if (!empty($this->options['expose']['optional']) && (empty($default_value) || !empty($this->options['expose']['reduce']))) {
+      if (empty($this->options['expose']['multiple'])) {
+        if (empty($this->options['expose']['required']) && (empty($default_value) || !empty($this->options['expose']['reduce']))) {
           $default_value = 'All';
         }
         elseif (empty($default_value)) {
@@ -187,27 +210,12 @@ class views_handler_filter_in_operator extends views_handler_filter {
         $form_state['input'][$identifier] = $default_value;
       }
 
-      $process = array();
-      if ($this->value_form_type == 'checkboxes') {
-        // If this form element will use checkboxes in the UI, we need to
-        // check_plain() all the options ourselves since FAPI is inconsistent
-        // about this. However, instead of directly doing that to the #options
-        // right now, we define a #process callback since we might change our
-        // mind later and convert this into a 'select' form element, which
-        // would lead to double-escaping the options.
-        $process[] = 'views_process_check_options';
-      }
       if ($which == 'all') {
-        if (empty($form_state['exposed']) && ($this->value_form_type == 'checkboxes' || $this->value_form_type == 'radios')) {
-          $process[] = "form_process_$this->value_form_type";
+        if (empty($form_state['exposed']) && (in_array($this->value_form_type, array('checkbox', 'checkboxes', 'radios', 'select')))) {
           $form['value']['#prefix'] = '<div id="edit-options-value-wrapper">';
           $form['value']['#suffix'] = '</div>';
         }
-        $process[] = 'ctools_dependent_process';
         $form['value']['#dependency'] = array($source => $this->operator_values(1));
-      }
-      if (!empty($process)) {
-        $form['value']['#process'] = $process;
       }
     }
   }
@@ -250,9 +258,9 @@ class views_handler_filter_in_operator extends views_handler_filter {
       return TRUE;
     }
 
-    // If this is single and optional, this says that yes this filter will
+    // If this is non-multiple and non-required, then this filter will
     // participate, but using the default settings, *if* 'limit is true.
-    if (!empty($this->options['expose']['single']) && !empty($this->options['expose']['optional']) && !empty($this->options['expose']['limit'])) {
+    if (empty($this->options['expose']['multiple']) && empty($this->options['expose']['required']) && !empty($this->options['expose']['limit'])) {
       $identifier = $this->options['expose']['identifier'];
       if ($input[$identifier] == 'All') {
         return TRUE;
@@ -308,18 +316,25 @@ class views_handler_filter_in_operator extends views_handler_filter {
 
         $keys = $this->value;
         $value = array_shift($keys);
-        $values = check_plain($this->value_options[$value]);
+        if (isset($this->value_options[$value])) {
+          $values = check_plain($this->value_options[$value]);
+        }
+        else {
+          $values = '';
+        }
       }
       else {
         foreach ($this->value as $value) {
           if ($values !== '') {
             $values .= ', ';
           }
-          if (strlen($values) > 8) {
+          if (drupal_strlen($values) > 8) {
             $values .= '...';
             break;
           }
-          $values .= check_plain($this->value_options[$value]);
+          if (isset($this->value_options[$value])) {
+            $values .= check_plain($this->value_options[$value]);
+          }
         }
       }
     }
@@ -355,5 +370,48 @@ class views_handler_filter_in_operator extends views_handler_filter {
     }
 
     $this->query->add_where($this->options['group'], "$this->table_alias.$this->real_field", NULL, $operator);
+  }
+
+  function validate() {
+    $this->get_value_options();
+    $errors = array();
+
+    // If the operator is an operator which doesn't require a value, there is
+    // no need for additional validation.
+    if (in_array($this->operator, $this->operator_values(0))) {
+      return array();
+    }
+
+    if (!in_array($this->operator, $this->operator_values(1))) {
+      $errors[] = t('The operator is invalid on filter: @filter.', array('@filter' => $this->ui_name(TRUE)));
+    }
+    if (is_array($this->value)) {
+      if (!isset($this->value_options)) {
+        // Don't validate if there are none value options provided, for example for special handlers.
+        return $errors;
+      }
+      if ($this->options['exposed'] && !$this->options['expose']['required'] && empty($this->value)) {
+        // Don't validate if the field is exposed and no default value is provided.
+        return $errors;
+      }
+
+      // Some filter_in_operator usage uses optgroups forms, so flatten it.
+      $flat_options = form_options_flatten($this->value_options, TRUE);
+
+      // Remove every element which is not known.
+      foreach ($this->value as $value) {
+        if (!isset($flat_options[$value])) {
+          unset($this->value[$value]);
+        }
+      }
+      // Choose different kind of ouput for 0, a single and multiple values.
+      if (count($this->value) == 0) {
+        $errors[] = t('No valid values found on filter: @filter.', array('@filter' => $this->ui_name(TRUE)));
+      }
+    }
+    elseif (!empty($this->value) && ($this->operator == 'in' || $this->operator == 'not in')) {
+      $errors[] = t('The value @value is not an array for @operator on filter: @filter', array('@value' => views_var_export($this->value), '@operator' => $this->operator, '@filter' => $this->ui_name(TRUE)));
+    }
+    return $errors;
   }
 }

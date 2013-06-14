@@ -1,5 +1,4 @@
 <?php
-// $Id: views_handler_field_prerender_list.inc,v 1.3.4.4 2010/11/05 07:20:54 dereine Exp $
 
 /**
  * Field handler to provide a list of items.
@@ -12,6 +11,16 @@
  * @ingroup views_field_handlers
  */
 class views_handler_field_prerender_list extends views_handler_field {
+  /**
+   * Stores all items which are used to render the items.
+   * It should be keyed first by the id of the base table, for example nid.
+   * The second key is the id of the thing which is displayed multiple times
+   * per row, for example the tid.
+   *
+   * @var array
+   */
+  var $items = array();
+
   function option_definition() {
     $options = parent::option_definition();
 
@@ -22,7 +31,6 @@ class views_handler_field_prerender_list extends views_handler_field {
   }
 
   function options_form(&$form, &$form_state) {
-    parent::options_form($form, $form_state);
     $form['type'] = array(
       '#type' => 'radios',
       '#title' => t('Display type'),
@@ -38,9 +46,9 @@ class views_handler_field_prerender_list extends views_handler_field {
       '#type' => 'textfield',
       '#title' => t('Separator'),
       '#default_value' => $this->options['separator'],
-      '#process' => array('ctools_dependent_process'),
       '#dependency' => array('radio:options[type]' => array('separator')),
     );
+    parent::options_form($form, $form_state);
   }
 
   /**
@@ -51,10 +59,10 @@ class views_handler_field_prerender_list extends views_handler_field {
    * exists, this will not get used by advanced_render.
    */
   function render($values) {
-    $field = $values->{$this->field_alias};
+    $field = $this->get_value($values);
     if (!empty($this->items[$field])) {
       if ($this->options['type'] == 'separator') {
-        return implode(check_plain($this->options['separator']), $this->items[$field]);
+        return implode($this->sanitize_value($this->options['separator']), $this->items[$field]);
       }
       else {
         return theme('item_list',
@@ -76,7 +84,7 @@ class views_handler_field_prerender_list extends views_handler_field {
   function render_items($items) {
     if (!empty($items)) {
       if ($this->options['type'] == 'separator') {
-        return implode(check_plain($this->options['separator']), $items);
+        return implode($this->sanitize_value($this->options['separator']), $items);
       }
       else {
         return theme('item_list',
@@ -100,12 +108,35 @@ class views_handler_field_prerender_list extends views_handler_field {
    * should also be in this array.
    */
   function get_items($values) {
-    $field = $values->{$this->field_alias};
+    // Only the parent get_value returns a single field.
+    $field = parent::get_value($values);
     if (!empty($this->items[$field])) {
       return $this->items[$field];
     }
 
     return array();
+  }
+
+  /**
+   * Get the value that's supposed to be rendered.
+   *
+   * @param $values
+   *   An object containing all retrieved values.
+   * @param $field
+   *   Optional name of the field where the value is stored.
+   * @param $raw
+   *   Use the raw data and not the data defined in pre_render
+   */
+  function get_value($values, $field = NULL, $raw = FALSE) {
+    if ($raw) {
+      return parent::get_value($values, $field);
+    }
+    $item = $this->get_items($values);
+    $item = (array) $item;
+    if (isset($field) && isset($item[$field])) {
+      return $item[$field];
+    }
+    return $item;
   }
 
   /**

@@ -1,5 +1,4 @@
 <?php
-// $Id: panels_mini.install,v 1.7 2010/10/11 22:56:02 sdboyer Exp $
 
 /**
  * Implementation of hook_schema().
@@ -99,9 +98,11 @@ function panels_mini_schema_1() {
  * Implementation of hook_uninstall().
  */
 function panels_mini_uninstall() {
-  $result = db_query("SELECT * FROM {panels_mini}");
   $panels_exists = db_table_exists('panels_display');
-  while ($panel_mini = db_fetch_object($result)) {
+
+  $result = db_query("SELECT * FROM {panels_mini}");
+  $deltas = array();
+  foreach ($result as $panel_mini) {
     // Delete all associated displays.
     if (!function_exists('panels_delete_display')) {
       require_once drupal_get_path('module', 'panels') .'/panels.module';
@@ -110,67 +111,14 @@ function panels_mini_uninstall() {
       panels_delete_display($panel_mini->did);
     }
 
+    $deltas[] = $panel_mini->pid;
+  }
+
+  if ($deltas) {
     // Delete all configured blocks.
-    db_query("DELETE FROM {blocks} WHERE module = 'panels_mini' AND delta = %d", $panel_mini->pid);
+    db_delete('block')
+      ->condition('module', 'panels_mini')
+      ->condition('delta', $deltas)
+      ->execute();
   }
-}
-
-/**
- * Update all blocks to use 'name' as delta, not 'pid'.
- */
-function panels_mini_update_6300() {
-  $ret = array();
-  $result = db_query("SELECT name, pid from {panels_mini}");
-  while ($mini = db_fetch_object($result)) {
-    db_query("UPDATE {blocks} SET delta = '%s' WHERE module = 'panels_mini' AND delta = %d", $mini->name, $mini->pid);
-  }
-  return $ret;
-}
-
-/**
- * Update all panel mini blocks to not use block caching.
- */
-function panels_mini_update_6301() {
-  $ret = array();
-  $ret[] = update_sql("UPDATE {blocks} SET cache = -1 WHERE module = 'panels_mini'");
-  return $ret;
-}
-
-/**
- * Add the admin description field.
- */
-function panels_mini_update_6302() {
-  $ret = array();
-  $field = array(
-    'type' => 'text',
-    'size' => 'big',
-    'description' => 'Administrative description of this mini panel.',
-    'object default' => '',
-  );
-
-  db_add_field($ret, 'panels_mini', 'admin_description', $field);
-  return $ret;
-}
-
-/**
- * Add the admin description field.
- */
-function panels_mini_update_6303() {
-  $ret = array();
-  $field = array(
-    'type' => 'varchar',
-    'length' => '128',
-    'description' => 'The administrative title of the mini panel.',
-  );
-
-  db_add_field($ret, 'panels_mini', 'admin_title', $field);
-
-  $result = db_query("SELECT pid, did, title FROM {panels_mini}");
-  while ($mini = db_fetch_object($result)) {
-    db_query("UPDATE {panels_mini} SET admin_title = '%s' WHERE pid = %d", $mini->title, $mini->pid);
-    db_query("UPDATE {panels_display} SET title = '%s' WHERE did = %d", $mini->title, $mini->pid);
-  }
-
-  db_drop_field($ret, 'panels_mini', 'title');
-  return $ret;
 }

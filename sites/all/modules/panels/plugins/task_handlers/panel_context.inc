@@ -1,5 +1,4 @@
 <?php
-// $Id: panel_context.inc,v 1.4 2010/10/11 22:56:03 sdboyer Exp $
 
 /**
  * @file
@@ -108,6 +107,7 @@ $plugin = array(
       'ajax' => FALSE,
       'silent' => TRUE,
       'form info' => array('finish text' => t('Preview')),
+      'no update and save' => TRUE,
     ),
   ),
 
@@ -115,6 +115,8 @@ $plugin = array(
 
   // Callback to render the data.
   'render' => 'panels_panel_context_render',
+  // Callback to return addressable data
+  'addressable callback' => 'panels_panel_context_get_addressable',
 
   // Various callbacks for operations performed on the handler to ensure
   // related data is updated properly.
@@ -183,6 +185,8 @@ $plugin = array(
     'title' => t('Panel'),
     'no_blocks' => FALSE,
     'pipeline' => 'standard',
+    'body_classes_to_remove' => '',
+    'body_classes_to_add' => '',
     'css_id' => '',
     'css' => '',
     'contexts' => array(),
@@ -273,13 +277,23 @@ function panels_panel_context_render($handler, $base_contexts, $args, $test = TR
     if (!$filename) {
       $filename = ctools_css_store($css_id, $handler->conf['css']);
     }
-    ctools_css_add_css($filename);
+    drupal_add_css($filename);
   }
 
   // With an argument, this actually sets the display.
   panels_get_current_page_display($display);
 
   $renderer = panels_get_renderer($handler->conf['pipeline'], $display);
+
+  // Remove and add body element classes
+  $panel_body_css = &drupal_static('panel_body_css');
+
+  if (isset($handler->conf['body_classes_to_remove']) && !isset($panel_body_css['body_classes_to_remove'])) {
+    $panel_body_css['body_classes_to_remove'] = $handler->conf['body_classes_to_remove'];
+  }
+  if (isset($handler->conf['body_classes_to_add']) && !isset($panel_body_css['body_classes_to_add'])) {
+    $panel_body_css['body_classes_to_add'] = $handler->conf['body_classes_to_add'];
+  }
 
   $info = array(
     'content' => panels_render_display($display, $renderer),
@@ -664,14 +678,19 @@ function panels_panel_context_edit_content($form, &$form_state) {
   $form_state['page']->display_cache[$form_state['handler_id']] = $cache;
 
   $form = panels_edit_display_form($form, $form_state);
-  // Make sure the theme will work since our form id is different.
-  $form['#theme'] = 'panels_edit_display_form';
 
   if (!isset($form_state['type']) || $form_state['type'] != 'add' && !empty($form_state['handler_id']) && !empty($form['buttons'])) {
     $form['buttons']['preview'] = $form['buttons']['return'];
     $form['buttons']['preview']['#value'] = t('Update and preview');
   }
   return $form;
+}
+
+/**
+ * Validate changes to the panel content form.
+ */
+function panels_panel_context_edit_content_validate(&$form, &$form_state) {
+  panels_edit_display_form_validate($form, $form_state);
 }
 
 function panels_panel_context_edit_content_submit(&$form, &$form_state) {
@@ -705,6 +724,22 @@ function panels_panel_context_edit_settings($form, &$form_state) {
     '#default_value' => $conf['no_blocks'],
     '#title' => t('Disable Drupal blocks/regions'),
     '#description' => t('Check this to have the page disable all regions displayed in the theme. Note that some themes support this setting better than others. If in doubt, try with stock themes to see.'),
+  );
+
+  $form['conf']['body_classes_to_remove'] = array(
+    '#type' => 'textfield',
+    '#size' => 128,
+    '#default_value' => $conf['body_classes_to_remove'],
+    '#title' => t('Remove body CSS classes'),
+    '#description' => t('The CSS classes to remove from the body element of this page. Separated by a space. For example: no-sidebars one-sidebar sidebar-first sidebar-second two-sidebars.'),
+  );
+
+  $form['conf']['body_classes_to_add'] = array(
+    '#type' => 'textfield',
+    '#size' => 128,
+    '#default_value' => $conf['body_classes_to_add'],
+    '#title' => t('Add body CSS classes'),
+    '#description' => t('The CSS classes to add to the body element of this page. Separated by a space. For example: no-sidebars one-sidebar sidebar-first sidebar-second two-sidebars.'),
   );
 
   ctools_include('plugins', 'panels');
@@ -762,6 +797,8 @@ function panels_panel_context_edit_settings($form, &$form_state) {
  */
 function panels_panel_context_edit_settings_submit(&$form, &$form_state) {
   $form_state['handler']->conf['no_blocks'] = $form_state['values']['no_blocks'];
+  $form_state['handler']->conf['body_classes_to_remove'] = $form_state['values']['body_classes_to_remove'];
+  $form_state['handler']->conf['body_classes_to_add'] = $form_state['values']['body_classes_to_add'];
   $form_state['handler']->conf['pipeline'] = $form_state['values']['pipeline'];
   $form_state['handler']->conf['css_id'] = $form_state['values']['css_id'];
   $form_state['handler']->conf['css'] = $form_state['values']['css'];
@@ -820,4 +857,24 @@ function panels_panel_context_edit_preview_submit(&$form, &$form_state) {
   $form_state['content'] = panels_render_display($display);
   $form_state['redirect'] = FALSE;
   $form_state['rerender'] = TRUE;
+}
+
+function panels_panel_context_get_addressable($task, $subtask_name, $handler, $address, $contexts, $arguments, $type) {
+  // Load the display
+  $display = panels_panel_context_get_display($handler);
+
+  $display->context = $contexts;
+  $display->args = $arguments;
+  $display->css_id = $handler->conf['css_id'];
+  $display->cache_key = 'panel_context:' . $task->name . ':' . $handler->name;
+
+  $renderer = panels_get_renderer($handler->conf['pipeline'], $display);
+  if ($type == 'content') {
+    $renderer->prepare();
+
+    $pid = array_shift($address);
+    if (!empty($renderer->prepared['panes'][$pid])) {
+      return $renderer->render_pane($renderer->prepared['panes'][$pid]);
+    }
+  }
 }

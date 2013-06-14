@@ -1,0 +1,89 @@
+/* Common Tables ---*/
+table {
+  font-size: 100%;
+  margin: 0 0 .5em;
+  padding: 0;
+  width: auto;
+}
+
+table.sticky-header {
+  z-index: 10;
+}
+
+table,
+td,
+th {
+  vertical-align: middle;
+}
+
+caption,
+th,
+td {
+  text-align: left;
+}
+
+thead {
+}
+
+thead th {
+  background: #333;
+  color: #fff;
+  font-weight: bold;
+}
+
+thead th a {
+  color: #cdcdcd;
+  text-decoration: none;
+}
+
+thead th a:hover,
+thead th a:active,
+thead th a:focus {
+  color: #fff;
+  text-decoration: none;
+}
+
+tbody {
+  border-top: 0;
+}
+
+td,
+th {
+  padding: 6px 15px;
+}
+
+tr.even,
+tr.odd {
+  background-color: transparent;
+  border-bottom: 1px solid #cdcdcd;
+}
+
+tr.odd,
+tr.info {
+}
+
+tr.even {
+  background: #f6f7f8;
+}
+
+tr.drag {
+}
+
+tr.drag-previous {
+}
+
+tr.odd td.active {
+}
+
+tr.even td.active {
+}
+
+td.region,
+td.module,
+td.container td.category {
+}
+
+table.sticky-table td,
+table.sticky-table th {
+  padding: 6px 15px;
+}

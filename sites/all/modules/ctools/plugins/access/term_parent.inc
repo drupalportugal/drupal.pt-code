@@ -1,5 +1,4 @@
 <?php
-// $Id: term_parent.inc,v 1.2 2010/10/11 22:18:22 sdboyer Exp $
 
 /**
  * @file
@@ -19,7 +18,7 @@ $plugin = array(
   'settings form validation' => 'ctools_term_parent_ctools_access_settings_validate',
   'settings form submit' => 'ctools_term_parent_ctools_access_settings_submit',
   'summary' => 'ctools_term_parent_ctools_access_summary',
-  'required context' => new ctools_context_required(t('Term'), array('term', 'terms')),
+  'required context' => new ctools_context_required(t('Term'), array('taxonomy_term', 'terms')),
 );
 
 /**
@@ -72,7 +71,7 @@ function ctools_term_parent_ctools_access_check($conf, $context) {
   }
   $vid = $conf['vid'];
 
-  $count = db_result(db_query('SELECT COUNT(*) FROM {term_hierarchy} th INNER JOIN {term_data} td ON th.parent = td.tid WHERE th.tid = %d AND td.vid = %d',  $context->data->tid, $vid));
+  $count = db_query('SELECT COUNT(*) FROM {taxonomy_term_hierarchy} th INNER JOIN {taxonomy_term_data} td ON th.parent = td.tid WHERE th.tid = :tid AND td.vid = :vid', array(':tid' => $context->data->tid, ':vid' => $vid))->fetchField();
 
   return $count ? TRUE : FALSE;
 }

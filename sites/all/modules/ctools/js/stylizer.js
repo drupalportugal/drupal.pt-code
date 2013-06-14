@@ -1,4 +1,3 @@
-// $Id: stylizer.js,v 1.2 2010/10/11 22:18:22 sdboyer Exp $
 
 (function ($) {
   Drupal.CTools = Drupal.CTools || {};
@@ -184,11 +183,12 @@
       };
 
       // Add hook
+      var $this = $(this);
       var hook = $('<div class="hook"></div>');
-      $(this).after(hook);
+      $this.after(hook);
       hooks.push(hook);
 
-      $(this).parent().find('.lock').click();
+      $this.parent().find('.lock').click();
       this.i = i;
       inputs.push(this);
     })

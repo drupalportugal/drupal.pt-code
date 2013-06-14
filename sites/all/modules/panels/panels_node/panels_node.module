@@ -1,5 +1,4 @@
 <?php
-// $Id: panels_node.module,v 1.8 2010/10/11 22:56:02 sdboyer Exp $
 
 
 /**
@@ -92,12 +91,29 @@ function panels_node_menu() {
   return $items;
 }
 
+/**
+ * Access callback to determine if a user has edit access
+ */
 function panels_node_edit_node($node) {
   if (!isset($node->panels_node)) {
     return FALSE;
   }
 
   return node_access('update', $node);
+}
+
+/**
+ * Override of node add page to force layout selection prior
+ * to actually editing a node.
+ */
+function panels_node_add() {
+  $output = '';
+
+  ctools_include('plugins', 'panels');
+  ctools_include('common', 'panels');
+
+  $layouts = panels_common_get_allowed_layouts('panels_node');
+  return panels_common_print_layout_links($layouts, 'node/add/panel', array('query' => $_GET));
 }
 
 // ---------------------------------------------------------------------------
@@ -115,7 +131,10 @@ function panels_node_node_info() {
   return array(
     'panel' => array(
       'name' => t('Panel'),
-      'base' => 'panels_node',
+      // We use panels_node_hook so that panels_node private
+      // callbacks do not get confused with panels versions of
+      // nodeapi callbacks.
+      'base' => 'panels_node_hook',
       'body_label' => t('Teaser'),
       'description' => t("A panel layout broken up into rows and columns."),
     ),
@@ -125,39 +144,37 @@ function panels_node_node_info() {
 /**
  * Implementation of hook_access().
  */
-function panels_node_access($op, $node, $account) {
+function panels_node_node_access($node, $op, $account) {
+  if ($op == 'create' && $node != 'panel') {
+    return NODE_ACCESS_IGNORE;
+  }
+
+  if (is_object($node) && $node->type != 'panel') {
+    return NODE_ACCESS_IGNORE;
+  }
+
   if (user_access('administer panel-nodes', $account)) {
-    return TRUE;
+    return NODE_ACCESS_ALLOW;
   }
 
   if ($op == 'create' && user_access('create panel-nodes', $account)) {
-    return TRUE;
+    return NODE_ACCESS_ALLOW;
   }
 
   if ($op == 'update' && (user_access('edit any panel-nodes', $account) || $node->uid == $account->uid && user_access('edit own panel-nodes', $account))) {
-    return TRUE;
+    return NODE_ACCESS_ALLOW;
   }
 
 
   if ($op == 'delete' && (user_access('delete any panel-nodes') || $node->uid == $account->uid && user_access('delete own panel-nodes'))) {
-    return TRUE;
+    return NODE_ACCESS_ALLOW;
   }
-}
-
-function panels_node_add() {
-  $output = '';
-
-  ctools_include('plugins', 'panels');
-  ctools_include('common', 'panels');
-
-  $layouts = panels_common_get_allowed_layouts('panels_node');
-  return panels_common_print_layout_links($layouts, 'node/add/panel', array('query' => $_GET));
 }
 
 /**
  * Implementation of hook_form().
  */
-function panels_node_form(&$node, &$form_state) {
+function panels_node_hook_form(&$node, &$form_state) {
   ctools_include('plugins', 'panels');
 
   $form['panels_node']['#tree'] = TRUE;
@@ -207,29 +224,17 @@ function panels_node_form(&$node, &$form_state) {
   // Mostly borrowed from panel_context.inc
   $pipelines = panels_get_renderer_pipelines();
 
-  // If there are no pipelines, that probably means we're operating in
-  // legacy mode.
-  if (empty($pipelines)) {
-    // We retain the original pipeline so we don't wreck things by installing
-    // old modules.
-    $form['panels_node']['pipeline'] = array(
-      '#type' => 'value',
-      '#value' => isset($node->panels_node['pipeline']) ? $node->panels_node['pipeline'] : 'standard',
-    );
+  $options = array();
+  foreach ($pipelines as $name => $pipeline) {
+    $options[$name] = check_plain($pipeline->admin_title) . '<div class="description">' . check_plain($pipeline->admin_description) . '</div>';
   }
-  else {
-    $options = array();
-    foreach ($pipelines as $name => $pipeline) {
-      $options[$name] = check_plain($pipeline->admin_title) . '<div class="description">' . check_plain($pipeline->admin_description) . '</div>';
-    }
 
-    $form['panels_node']['pipeline'] = array(
-      '#type' => 'radios',
-      '#options' => $options,
-      '#title' => t('Renderer'),
-      '#default_value' => $node->panels_node['pipeline'] ? $node->panels_node['pipeline'] : 'standard',
-    );
-  }
+  $form['panels_node']['pipeline'] = array(
+    '#type' => 'radios',
+    '#options' => $options,
+    '#title' => t('Renderer'),
+    '#default_value' => isset($node->panels_node['pipeline']) ? $node->panels_node['pipeline'] : 'standard',
+  );
 
   return $form;
 }
@@ -237,7 +242,7 @@ function panels_node_form(&$node, &$form_state) {
 /**
  * Implementation of hook_validate().
  */
-function panels_node_validate($node, $form, &$form_state) {
+function panels_node_hook_validate($node, $form, &$form_state) {
   if (!$node->nid && empty($node->panels_node['layout'])) {
     form_error($form['panels_node']['layout'], t('Please select a layout.'));
   }
@@ -250,7 +255,7 @@ function panels_node_validate($node, $form, &$form_state) {
  * to have completely separate displays, and we'd have to copy them,
  * and that's going to be a LOT of data.
  */
-function panels_node_load($nodes) {
+function panels_node_hook_load($nodes) {
   // We shortcut this because only in some really drastic corruption circumstance will this
   // not work.
   $result = db_query("SELECT * FROM {panels_node} WHERE nid IN (:nids)", array(':nids' => array_keys($nodes)));
@@ -262,7 +267,7 @@ function panels_node_load($nodes) {
 /**
  * Implementation of hook_insert().
  */
-function panels_node_insert(&$node) {
+function panels_node_hook_insert(&$node) {
   // Create a new display and record that.
   $display = panels_new_display();
   $display->layout = $node->panels_node['layout'];
@@ -290,7 +295,7 @@ function panels_node_insert(&$node) {
 /**
  * Implementation of hook_delete().
  */
-function panels_node_delete(&$node) {
+function panels_node_hook_delete(&$node) {
   db_delete('panels_node')->condition('nid', $node->nid)->execute();
   if (!empty($node->panels_node['did'])) {
     panels_delete_display($node->panels_node['did']);
@@ -300,8 +305,8 @@ function panels_node_delete(&$node) {
 /**
  * Implementation of hook_update().
  */
-function panels_node_update($node) {
-  db_insert('panels_node')
+function panels_node_hook_update($node) {
+  db_update('panels_node')
     ->condition('nid', $node->nid)
     ->fields(array(
       'css_id' => $node->panels_node['css_id'],
@@ -313,15 +318,7 @@ function panels_node_update($node) {
 /**
  * Implementation of hook_view().
  */
-function panels_node_view($node, $view_mode) {
-  // Because we have the module 'panels' and the module 'panels_node'
-  // and because Drupal has hook_view and hook_node_view, this
-  // erroneously gets run for 'panels' hook 'node_view'. We detect
-  // this because the arguments are slightly different.
-  if (count(func_get_args()) != 4) {
-    return;
-  }
-
+function panels_node_hook_view($node, $view_mode) {
   static $rendering = array();
 
   // Prevent loops if someone foolishly puts the node inside itself:

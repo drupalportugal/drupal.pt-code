@@ -1,5 +1,4 @@
 <?php
-// $Id: views_basic.test,v 1.1.4.4 2010/05/24 11:18:18 dereine Exp $
 
 /**
  * Basic test class for Views query builder tests.
@@ -7,9 +6,9 @@
 class ViewsBasicTest extends ViewsSqlTest {
   public static function getInfo() {
     return array(
-      'name' => t('Basic query test'),
-      'description' => t('A basic query test for Views.'),
-      'group' => t('Views')
+      'name' => 'Basic query test',
+      'description' => 'A basic query test for Views.',
+      'group' => 'Views'
     );
   }
 

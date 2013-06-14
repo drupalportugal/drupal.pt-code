@@ -1,5 +1,4 @@
 <?php
-// $Id: panels-onecol.tpl.php,v 1.3 2010/10/11 22:56:01 sdboyer Exp $
 /**
  * @file
  * Template for a 3 column panel layout.

@@ -1,0 +1,11 @@
+/**
+ * @file
+ * Stylesheet for the Contact Form Blocks module.
+ */
+
+/* Reset the fixed width of input form text fields to use a dynamic width
+ * depending on the parent elements.
+ */
+.block-contact-form-blocks input[type=text] {
+  width: 94%;
+}

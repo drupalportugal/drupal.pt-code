@@ -1,5 +1,4 @@
 <?php
-// $Id: views_plugin_style_table.inc,v 1.7.4.9 2010/11/21 11:12:04 dereine Exp $
 /**
  * @file
  * Contains the table style plugin.
@@ -11,6 +10,19 @@
  * @ingroup views_style_plugins
  */
 class views_plugin_style_table extends views_plugin_style {
+
+  /**
+   * Contains the current active sort column.
+   * @var string
+   */
+  public $active;
+
+  /**
+   * Contains the current active sort order, either desc or asc.
+   * @var string
+   */
+  public $order;
+
   function option_definition() {
     $options = parent::option_definition();
 
@@ -20,12 +32,16 @@ class views_plugin_style_table extends views_plugin_style {
     $options['override'] = array('default' => TRUE);
     $options['sticky'] = array('default' => FALSE);
     $options['order'] = array('default' => 'asc');
+    $options['summary'] = array('default' => '', 'translatable' => TRUE);
+    $options['empty_table'] = array('default' => FALSE);
 
     return $options;
   }
 
   /**
-   * Determine if we should provide sorting based upon $_GET inputs.
+   * Determine if we should provide sorting based upon $_GET inputs
+   *
+   * @return bool
    */
   function build_sort() {
     if (!isset($_GET['order']) && ($this->options['default'] == -1 || empty($this->view->field[$this->options['default']]))) {
@@ -51,7 +67,12 @@ class views_plugin_style_table extends views_plugin_style {
         return;
       }
       $sort = $this->options['default'];
-      $this->order = !empty($this->options['order']) ? $this->options['order'] : 'asc';
+      if (!empty($this->options['info'][$sort]['default_sort_order'])) {
+        $this->order = $this->options['info'][$sort]['default_sort_order'];
+      }
+      else {
+        $this->order = !empty($this->options['order']) ? $this->options['order'] : 'asc';
+      }
     }
     else {
       $sort = $_GET['order'];
@@ -96,13 +117,15 @@ class views_plugin_style_table extends views_plugin_style {
    *   be requested from the current display. The running render should
    *   send the fields through, as they may be different than what the
    *   display has listed due to access control or other changes.
+   *
+   * @return array
+   *    An array of all the sanitized columns.
    */
   function sanitize_columns($columns, $fields = NULL) {
     $sanitized = array();
     if ($fields === NULL) {
       $fields = $this->display->handler->get_option('fields');
     }
-
     // Preconfigure the sanitized array so that the order is retained.
     foreach ($fields as $field => $info) {
       // Set to itself so that if it isn't touched, it gets column
@@ -137,7 +160,7 @@ class views_plugin_style_table extends views_plugin_style {
     $handlers = $this->display->handler->get_handlers('field');
     if (empty($handlers)) {
       $form['error_markup'] = array(
-        '#markup' => '<div class="error form-item description">' . t('You need at least one field before you can configure your table settings') . '</div>',
+        '#markup' => '<div class="error messages">' . t('You need at least one field before you can configure your table settings') . '</div>',
       );
       return;
     }
@@ -155,12 +178,12 @@ class views_plugin_style_table extends views_plugin_style {
       '#description' => t('(Sticky header effects will not be active for preview below, only on live output.)'),
     );
 
-    $form['order'] = array(
-      '#type' => 'select',
-      '#title' => t('Default sort order'),
-      '#options' => array('asc' => t('Ascending'), 'desc' => t('Descending')),
-      '#default_value' => $this->options['order'],
-      '#description' => t('If a default sort order is selected, what order should it use by default.'),
+    $form['summary'] = array(
+      '#type' => 'textfield',
+      '#title' => t('Table summary'),
+      '#description' => t('This value will be displayed as table-summary attribute in the html. Set this for better accessiblity of your site.'),
+      '#default_value' => $this->options['summary'],
+      '#maxlength' => 255,
     );
 
     // Note: views UI registers this theme handler on our behalf. Your module
@@ -196,14 +219,12 @@ class views_plugin_style_table extends views_plugin_style {
         $form['info'][$field]['sortable'] = array(
           '#type' => 'checkbox',
           '#default_value' => !empty($this->options['info'][$field]['sortable']),
-          '#process' => array('ctools_dependent_process'),
           '#dependency' => array($id => array($field)),
         );
         $form['info'][$field]['default_sort_order'] = array(
           '#type' => 'select',
           '#options' => array('asc' => t('Ascending'), 'desc' => t('Descending')),
           '#default_value' => !empty($this->options['info'][$field]['default_sort_order']) ? $this->options['info'][$field]['default_sort_order'] : 'asc',
-          '#process' => array('ctools_dependent_process'),
           '#dependency_count' => 2,
           '#dependency' => array($id => array($field), 'edit-style-options-info-' . $safe . '-sortable' => array(1)),
         );
@@ -217,7 +238,6 @@ class views_plugin_style_table extends views_plugin_style {
           // because 'radio' doesn't fully support '#id' =(
           '#attributes' => array('id' => $radio_id),
           '#default_value' => $default,
-          '#process' => array('ctools_dependent_process'),
           '#dependency' => array($id => array($field)),
         );
       }
@@ -230,14 +250,17 @@ class views_plugin_style_table extends views_plugin_style {
           'views-align-center' => t('Center'),
           'views-align-right' => t('Right'),
           ),
-        '#process' => array('ctools_dependent_process'),
         '#dependency' => array($id => array($field)),
       );
       $form['info'][$field]['separator'] = array(
         '#type' => 'textfield',
         '#size' => 10,
         '#default_value' => isset($this->options['info'][$field]['separator']) ? $this->options['info'][$field]['separator'] : '',
-        '#process' => array('ctools_dependent_process'),
+        '#dependency' => array($id => array($field)),
+      );
+      $form['info'][$field]['empty_column'] = array(
+        '#type' => 'checkbox',
+        '#default_value' => isset($this->options['info'][$field]['empty_column']) ? $this->options['info'][$field]['empty_column'] : FALSE,
         '#dependency' => array($id => array($field)),
       );
 
@@ -256,8 +279,19 @@ class views_plugin_style_table extends views_plugin_style {
       '#default_value' => $default,
     );
 
+    $form['empty_table'] = array(
+      '#type' => 'checkbox',
+      '#title' => t('Show the empty text in the table'),
+      '#default_value' => $this->options['empty_table'],
+      '#description' => t('Per default the table is hidden for an empty view. With this option it is posible to show an empty table with the text in it.'),
+    );
+
     $form['description_markup'] = array(
       '#markup' => '<div class="description form-item">' . t('Place fields into columns; you may combine multiple fields into the same column. If you do, the separator in the column specified will be used to separate the fields. Check the sortable box to make that column click sortable, and check the default sort radio to determine which column will be sorted by default, if any. You may control column order and field labels in the fields section.') . '</div>',
     );
+  }
+
+  function even_empty() {
+    return parent::even_empty() || !empty($this->options['empty_table']);
   }
 }

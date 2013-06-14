@@ -1,5 +1,4 @@
 <?php
-// $Id: ctools_ajax_sample.module,v 1.2 2010/10/11 22:18:23 sdboyer Exp $
 
 /**
  * @file
@@ -25,6 +24,13 @@ function ctools_ajax_sample_menu() {
     'page callback' => 'ctools_ajax_simple_form',
     'access callback' => TRUE,
     'type' => MENU_CALLBACK,
+  );
+  $items['ctools_ajax_sample/%ctools_js/hello'] = array(
+      'title' => 'Hello World',
+      'page callback' => 'ctools_ajax_sample_hello',
+      'page arguments' => array(1),
+      'access callback' => TRUE,
+      'type' => MENU_CALLBACK,
   );
   $items['ctools_ajax_sample/%ctools_js/tablenix/%'] = array(
       'title' => 'Hello World',
@@ -129,7 +135,7 @@ function ctools_ajax_sample_page() {
       ),
       'animation' => 'fadeIn',
       'modalTheme' => 'CToolsSampleModal',
-      'throbber' => theme('image', ctools_image_path('ajax-loader.gif', 'ctools_ajax_sample'), t('Loading...'), t('Loading')),
+      'throbber' => theme('image', array('path' => ctools_image_path('ajax-loader.gif', 'ctools_ajax_sample'), 'alt' => t('Loading...'), 'title' => t('Loading'))),
     ),
   );
 
@@ -148,7 +154,8 @@ function ctools_ajax_sample_page() {
   if ($user->uid == 0) {
     $links[] = ctools_modal_text_button(t('Modal Login (default style)'), 'ctools_ajax_sample/nojs/login', t('Login via modal'));
 
-    // The extra class points to the info in ctools-sample-style which we added to the settings.
+    // The extra class points to the info in ctools-sample-style which we added
+    // to the settings, prefixed with 'ctools-modal'.
     $links[] = ctools_modal_text_button(t('Modal Login (custom style)'), 'ctools_ajax_sample/nojs/login', t('Login via modal'),  'ctools-modal-ctools-sample-style');
   }
 
@@ -180,7 +187,7 @@ function ctools_ajax_sample_page() {
     );
   }
 
-  $output .= theme('table', array('header' => $header, 'rows' => $rows, array('class' => 'ajax-sample-table')));
+  $output .= theme('table', array('header' => $header, 'rows' => $rows, array('class' => array('ajax-sample-table'))));
 
   // Show examples of ctools javascript widgets
   $output .= '<h2>'. t('CTools Javascript Widgets') .'</h2>';
@@ -260,9 +267,8 @@ function ctools_ajax_sample_login($js = NULL) {
     'ajax' => TRUE,
   );
   $output = ctools_modal_form_wrapper('user_login', $form_state);
-  if (empty($output)) {
-    // empty $output signifies success, so we'll use it as our $commands
-    // array.
+  if (!empty($form_state['executed'])) {
+    // We'll just overwrite the form output if it was successful.
     $output = array();
     $inplace = ctools_ajax_text_button(t('remain here'), 'ctools_ajax_sample/nojs/login/inplace', t('Go to your account'));
     $account = ctools_ajax_text_button(t('your account'), 'ctools_ajax_sample/nojs/login/user', t('Go to your account'));
@@ -282,6 +288,7 @@ function ctools_ajax_sample_login_success($js, $action) {
   }
 
   ctools_include('ajax');
+  ctools_add_js('ajax-responder');
   $commands = array();
   if ($action == 'inplace') {
     // stay here
@@ -554,6 +561,7 @@ function ctools_ajax_sample_start($form, &$form_state) {
     '#default_value' => $form_state['object']->type,
     '#required' => TRUE,
   );
+
   return $form;
 }
 
@@ -690,6 +698,7 @@ function ctools_ajax_sample_configure_raptor($form, &$form_state) {
 function ctools_ajax_sample_configure_raptor_submit(&$form, &$form_state) {
   $form_state['object']->name = $form_state['values']['name'];
   $form_state['object']->raptor = $form_state['values']['raptor'];
+  $form_state['object']->domesticated = $form_state['values']['domesticated'];
 }
 
 /**
@@ -708,7 +717,8 @@ function ctools_ajax_sample_show_raptor($object) {
  */
 function ctools_ajax_sample_jump_menu_form() {
   $url = url('ctools_ajax_sample/jumped');
-  $form = ctools_jump_menu(array(), array($url => t('Jump!')), array());
+  $form_state = array();
+  $form = ctools_jump_menu(array(), $form_state, array($url => t('Jump!')), array());
   return $form;
 }
 
@@ -729,8 +739,10 @@ function ctools_ajax_sample_ajax_button_form() {
 
   $form['url'] = array(
     '#type' => 'hidden',
+    // The name of the class is the #id of $form['ajax_button'] with "-url"
+    // suffix.
     '#attributes' => array('class' => array('ctools-ajax-sample-button-url')),
-    '#value' => 'ctools_ajax_sample/nojs/animal',
+    '#value' => url('ctools_ajax_sample/nojs/animal'),
   );
 
   $form['ajax_button'] = array(

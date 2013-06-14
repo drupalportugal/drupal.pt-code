@@ -1,5 +1,4 @@
 <?php
-// $Id: pathauto.pathauto.inc,v 1.4 2010/08/07 21:27:00 davereid Exp $
 
 /**
  * @file
@@ -53,12 +52,11 @@ function node_pathauto($op) {
       $settings = array();
       $settings['module'] = 'node';
       $settings['token_type'] = 'node';
-      $settings['groupheader'] = t('Node paths');
-      $settings['patterndescr'] = t('Default path pattern (applies to all node types with blank patterns below)');
+      $settings['groupheader'] = t('Content paths');
+      $settings['patterndescr'] = t('Default path pattern (applies to all content types with blank patterns below)');
       $settings['patterndefault'] = 'content/[node:title]';
       $settings['batch_update_callback'] = 'node_pathauto_bulk_update_batch_process';
       $settings['batch_file'] = drupal_get_path('module', 'pathauto') . '/pathauto.pathauto.inc';
-      $settings['supportsfeeds'] = 'feed';
 
       $languages = array();
       if (module_exists('locale')) {
@@ -67,7 +65,7 @@ function node_pathauto($op) {
 
       foreach (node_type_get_names() as $node_type => $node_name) {
         if (count($languages) && variable_get('language_content_type_' . $node_type, 0)) {
-          $settings['patternitems'][$node_type] = t('Default path pattern for @node_type (applies to all @node_type node types with blank patterns below)', array('@node_type' => $node_name));
+          $settings['patternitems'][$node_type] = t('Default path pattern for @node_type (applies to all @node_type content types with blank patterns below)', array('@node_type' => $node_name));
           foreach ($languages as $lang_code => $lang_name) {
             $settings['patternitems'][$node_type . '_' . $lang_code] = t('Pattern for all @language @node_type paths', array('@node_type' => $node_name, '@language' => $lang_name));
           }
@@ -92,8 +90,7 @@ function node_pathauto_bulk_update_batch_process(&$context) {
   }
 
   $query = db_select('node', 'n');
-  $concat = _pathauto_sql_concat("'node/'", 'n.nid');
-  $query->leftJoin('url_alias', 'ua', "$concat = ua.source");
+  $query->leftJoin('url_alias', 'ua', "CONCAT('node/', n.nid) = ua.source");
   $query->addField('n', 'nid');
   $query->isNull('ua.source');
   $query->condition('n.nid', $context['sandbox']['current'], '>');
@@ -132,12 +129,11 @@ function taxonomy_pathauto($op) {
   switch ($op) {
     case 'settings':
       $settings = array();
-      $settings['module'] = 'taxonomy';
+      $settings['module'] = 'taxonomy_term';
       $settings['token_type'] = 'term';
       $settings['groupheader'] = t('Taxonomy term paths');
       $settings['patterndescr'] = t('Default path pattern (applies to all vocabularies with blank patterns below)');
       $settings['patterndefault'] = '[term:vocabulary]/[term:name]';
-      $settings['supportsfeeds'] = 'feed';
       $settings['batch_update_callback'] = 'taxonomy_pathauto_bulk_update_batch_process';
       $settings['batch_file'] = drupal_get_path('module', 'pathauto') . '/pathauto.pathauto.inc';
 
@@ -168,10 +164,10 @@ function taxonomy_pathauto_bulk_update_batch_process(&$context) {
   }
 
   $query = db_select('taxonomy_term_data', 'td');
-  $concat = _pathauto_sql_concat("'taxonomy/term/'", 'td.tid');
-  $query->leftJoin('url_alias', 'ua', "$concat = ua.source");
+  $query->leftJoin('url_alias', 'ua', "CONCAT('taxonomy/term/', td.tid) = ua.source");
   $query->addField('td', 'tid');
   $query->isNull('ua.source');
+  $query->condition('td.tid', $context['sandbox']['current'], '>');
   // Exclude the forums terms.
   if ($forum_vid = variable_get('forum_nav_vocabulary', '')) {
     $query->condition('td.vid', $forum_vid, '<>');
@@ -216,7 +212,6 @@ function forum_pathauto($op) {
       $settings['groupheader'] = t('Forum paths');
       $settings['patterndescr'] = t('Pattern for forums and forum containers');
       $settings['patterndefault'] = '[term:vocabulary]/[term:name]';
-      $settings['supportsfeeds'] = 'feed';
       $settings['batch_update_callback'] = 'forum_pathauto_bulk_update_batch_process';
       $settings['batch_file'] = drupal_get_path('module', 'pathauto') . '/pathauto.pathauto.inc';
       return (object) $settings;
@@ -235,11 +230,11 @@ function forum_pathauto_bulk_update_batch_process(&$context) {
   }
 
   $query = db_select('taxonomy_term_data', 'td');
-  $concat = _pathauto_sql_concat("'forum/'", 'td.tid');
-  $query->leftJoin('url_alias', 'ua', "$concat = ua.source");
+  $query->leftJoin('url_alias', 'ua', "CONCAT('forum/', td.tid) = ua.source");
   $query->addField('td', 'tid');
   $query->isNull('ua.source');
-  $query->condition('vid', variable_get('forum_nav_vocabulary', ''));
+  $query->condition('td.tid', $context['sandbox']['current'], '>');
+  $query->condition('td.vid', variable_get('forum_nav_vocabulary', ''));
   $query->orderBy('td.tid');
   $query->addTag('pathauto_bulk_update');
   $query->addMetaData('entity', 'taxonomy_term');
@@ -261,7 +256,7 @@ function forum_pathauto_bulk_update_batch_process(&$context) {
   pathauto_taxonomy_term_update_alias_multiple($tids, 'bulkupdate');
   $context['sandbox']['count'] += count($tids);
   $context['sandbox']['current'] = max($tids);
-  $context['message'] = t('Updated alias for fourm @tid.', array('@tid' => end($tids)));
+  $context['message'] = t('Updated alias for forum @tid.', array('@tid' => end($tids)));
 
   if ($context['sandbox']['count'] != $context['sandbox']['total']) {
     $context['finished'] = $context['sandbox']['count'] / $context['sandbox']['total'];
@@ -298,8 +293,7 @@ function user_pathauto_bulk_update_batch_process(&$context) {
   }
 
   $query = db_select('users', 'u');
-  $concat = _pathauto_sql_concat("'user/'", 'u.uid');
-  $query->leftJoin('url_alias', 'ua', "$concat = ua.source");
+  $query->leftJoin('url_alias', 'ua', "CONCAT('user/', u.uid) = ua.source");
   $query->addField('u', 'uid');
   $query->isNull('ua.source');
   $query->condition('u.uid', $context['sandbox']['current'], '>');
@@ -343,7 +337,6 @@ function blog_pathauto($op) {
       $settings['groupheader'] = t('Blog paths');
       $settings['patterndescr'] = t('Pattern for blog page paths');
       $settings['patterndefault'] = 'blogs/[user:name]';
-      $settings['supportsfeeds'] = 'feed';
       $settings['batch_update_callback'] = 'blog_pathauto_bulk_update_batch_process';
       $settings['batch_file'] = drupal_get_path('module', 'pathauto') . '/pathauto.pathauto.inc';
       return (object) $settings;
@@ -362,8 +355,7 @@ function blog_pathauto_bulk_update_batch_process(&$context) {
   }
 
   $query = db_select('users', 'u');
-  $concat = _pathauto_sql_concat("'blog/'", 'u.uid');
-  $query->leftJoin('url_alias', 'ua', "$concat = ua.source");
+  $query->leftJoin('url_alias', 'ua', "CONCAT('blog/', u.uid) = ua.source");
   $query->addField('u', 'uid');
   $query->isNull('ua.source');
   $query->condition('u.uid', $context['sandbox']['current'], '>');

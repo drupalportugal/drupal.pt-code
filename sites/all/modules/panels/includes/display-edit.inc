@@ -1,5 +1,4 @@
 <?php
-// $Id: display-edit.inc,v 1.10 2010/10/11 22:56:01 sdboyer Exp $
 
 /*
  * @file
@@ -69,10 +68,11 @@ function panels_edit_display_form($form, &$form_state) {
     $links = $renderer->get_display_links();
   }
   else {
+    $renderer->no_edit_links = TRUE;
     $links = '';
   }
   $form['hide']['display-settings'] = array(
-    '#value' => $links,
+    '#markup' => $links,
   );
 
   $form += panels_edit_display_settings_form($form, $form_state);
@@ -133,6 +133,13 @@ function panels_edit_display_form($form, &$form_state) {
 }
 
 /**
+ * Handle form validation of the display content editor.
+ */
+function panels_edit_display_form_validate($form, &$form_state) {
+  panels_edit_display_settings_form_validate($form, $form_state);
+}
+
+/**
  * Handle form submission of the display content editor.
  *
  * This reads the location of the various panes from the form, which will
@@ -146,16 +153,24 @@ function panels_edit_display_form_submit($form, &$form_state) {
   $display->content = array();
 
   if (!empty($form_state['values']['panel']['pane'])) {
-    foreach ($form_state['values']['panel']['pane'] as $panel_id => $panes) {
-      $display->panels[$panel_id] = array();
+    foreach ($form_state['values']['panel']['pane'] as $region_id => $panes) {
+      $display->panels[$region_id] = array();
       if ($panes) {
         $pids = explode(',', $panes);
         // need to filter the array, b/c passing it in a hidden field can generate trash
         foreach (array_filter($pids) as $pid) {
           if ($old_content[$pid]) {
-            $display->panels[$panel_id][] = $pid;
-            $old_content[$pid]->panel = $panel_id;
+            $display->panels[$region_id][] = $pid;
+            $old_content[$pid]->panel = $region_id;
             $display->content[$pid] = $old_content[$pid];
+
+            // If the panel has region locking, make sure that the region
+            // the panel is in is applicable. This can happen if the panel
+            // was moved and then the lock changed and the server didn't
+            // know.
+            if (!empty($old_content[$pid]->locks) && $old_content[$pid]->locks['type'] == 'regions') {
+              $old_content[$pid]->locks['regions'][$region_id] = $region_id;
+            }
           }
         }
       }
@@ -228,6 +243,7 @@ function panels_edit_display_settings_form($form, &$form_state) {
       '#description' => t('The title of this panel. If left blank, a default title may be used. Set to No Title if you want the title to actually be blank.'),
       '#process' => array('ctools_dependent_process'),
       '#dependency' => array('edit-display-title-hide-title' => array(PANELS_TITLE_FIXED)),
+      '#maxlength' => 255,
     );
 
     if (!empty($display->context)) {

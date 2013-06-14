@@ -1,5 +1,4 @@
 <?php
-// $Id: panels-dashboard-block.tpl.php,v 1.2 2010/09/07 09:42:13 sdboyer Exp $
 ?>
 <div class="dashboard-block">
   <h3 class="dashboard-title"><?php print $block['title']; ?></h3>

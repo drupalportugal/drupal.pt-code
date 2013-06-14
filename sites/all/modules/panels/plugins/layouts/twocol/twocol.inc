@@ -1,5 +1,4 @@
 <?php
-// $Id: twocol.inc,v 1.4 2010/10/11 22:56:01 sdboyer Exp $
 
 // Plugin definition
 $plugin = array(

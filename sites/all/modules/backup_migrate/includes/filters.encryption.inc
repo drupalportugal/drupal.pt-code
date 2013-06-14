@@ -1,5 +1,4 @@
 <?php
-// $Id: filters.encryption.inc,v 1.2.2.2 2010/05/08 22:01:12 ronan Exp $
 
 
 /**
@@ -33,7 +32,7 @@ class backup_migrate_filter_encryption extends backup_migrate_filter {
    * Get the form for the settings for this filter.
    */
   function backup_settings_default() {
-    return array('compression' => 'none');
+    return array('encryption' => 'none');
   }
 
   /**
@@ -55,18 +54,11 @@ class backup_migrate_filter_encryption extends backup_migrate_filter {
       $form['file']['encryption'] = array(
         "#type" => 'item',
         "#title" => t("File Encryption"),
-        "#value" => t('Install the !link to enable backup file encryption.', array('!link' => l(t('AES Encryption Module'), 'http://drupal.org/project/aes'))),
+        "#markup" => t('Install the !link to enable backup file encryption.', array('!link' => l(t('AES Encryption Module'), 'http://drupal.org/project/aes'))),
       );
     }
 
     return $form;
-  }
-
-  /**
-   * Submit the settings form. Any values returned will be saved.
-   */
-  function backup_settings_form_submit($form_values) {
-    return $form_values;
   }
 
   /**

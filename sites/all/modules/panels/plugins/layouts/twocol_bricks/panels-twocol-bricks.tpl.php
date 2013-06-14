@@ -1,5 +1,4 @@
 <?php
-// $Id: panels-twocol-bricks.tpl.php,v 1.3 2010/10/11 22:56:02 sdboyer Exp $
 /**
  * @file
  * Template for a 2 column panel layout.

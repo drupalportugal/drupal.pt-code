@@ -1,5 +1,4 @@
 <?php
-// $Id: panels_mini.module,v 1.8 2010/10/11 22:56:02 sdboyer Exp $
 
 /**
  * @file panels_mini.module
@@ -75,7 +74,7 @@ function panels_mini_block_info() {
 
   $minis = panels_mini_load_all();
   foreach ($minis as $panel_mini) {
-    if (empty($mini->disabled) && empty($mini->requiredcontext)) {
+    if (empty($panel_mini->disabled) && empty($panel_mini->requiredcontext)) {
       $blocks[$panel_mini->name] = array(
         'info' => t('Mini panel: "@title"', array('@title' => $panel_mini->admin_title)),
         'cache' => DRUPAL_NO_CACHE,
@@ -260,10 +259,9 @@ function panels_mini_delete($mini) {
     ->condition('name', $mini->name)
     ->execute();
 
-  if ($mini->type != t('Overridden')) {
-    // Also remove from blocks table as long as there isn't a default that may appear.
-    db_query("DELETE FROM {blocks} WHERE module = 'panels_mini' AND delta = '%s'", $mini->name);
-    db_delete('blocks')
+  if (db_table_exists('block') && $mini->type != t('Overridden')) {
+    // Also remove from block table as long as there isn't a default that may appear.
+    db_delete('block')
       ->condition('delta', $mini->name)
       ->condition('module', 'panels_mini')
       ->execute();

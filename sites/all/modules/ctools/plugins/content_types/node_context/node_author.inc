@@ -1,5 +1,4 @@
 <?php
-// $Id: node_author.inc,v 1.3 2010/10/11 22:18:22 sdboyer Exp $
 
 /**
  * Plugins are described by creating a $plugin array which will be used
@@ -27,12 +26,13 @@ function ctools_node_author_content_type_render($subtype, $conf, $panel_args, $c
 
   // Get a shortcut to the node.
   $node = $context->data;
+  $user = user_load($node->uid);
 
   // Build the content type block.
   $block = new stdClass();
   $block->module  = 'node_author';
   $block->title   = t('Author');
-  $block->content = !empty($conf['link']) ? theme('username', $node) : check_plain($node->name ? $node->name : variable_get('anonymous', t('Anonymous')));
+  $block->content = !empty($conf['link']) ? theme('username', array('account' => $user, 'link_path' => 'user/' . $node->uid)) : check_plain(format_username($node));
   $block->delta   = $node->nid;
 
   return $block;

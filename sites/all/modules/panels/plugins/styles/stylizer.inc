@@ -1,5 +1,4 @@
 <?php
-// $Id: stylizer.inc,v 1.3 2010/10/11 22:56:01 sdboyer Exp $
 
 /**
  * @file
@@ -88,19 +87,30 @@ function panels_stylizer_get_substyles($plugin, $style_name) {
   return $styles;
 }
 
+/**
+ * Get style settings for a stylizer style.
+ *
+ * Because style settings can come from a couple of different places,
+ * depending on if it's a custom style in the panel or a custom style
+ * in the database, we have a tricky way of looking for this info.
+ */
 function _panels_stylizer_get_style($plugin, $style_settings) {
   if (!empty($plugin['style'])) {
     return $plugin['style']->settings;
   }
-  else if ($style_settings['style'] == '$') {
+
+  if (empty($style_settings)) {
+    return array();
+  }
+
+  if ($style_settings['style'] == '$') {
     return $style_settings['settings'];
   }
-  else {
-    ctools_include('export');
-    $style = ctools_export_crud_load('stylizer', $style_settings['style']);
-    if ($style) {
-      return $style->settings;
-    }
+
+  ctools_include('export');
+  $style = ctools_export_crud_load('stylizer', $style_settings['style']);
+  if ($style) {
+    return $style->settings;
   }
 }
 
@@ -174,7 +184,9 @@ function theme_panels_stylizer_stylizer_style_render_pane($vars) {
 function panels_stylizer_stylizer_style_settings_form($style_settings, $display, $pid, $type, $form_state) {
   // Just redirect this to the custom style settings ajax.
   panels_stylizer_pane_add_style($form_state['renderer'], array(), $style_settings, $type, $pid);
-  ctools_ajax_render($form_state['renderer']->commands);
+  print ajax_render($form_state['renderer']->commands);
+  ajax_footer();
+  exit;
 }
 
 

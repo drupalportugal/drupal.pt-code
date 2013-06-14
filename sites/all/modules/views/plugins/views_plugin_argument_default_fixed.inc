@@ -1,5 +1,4 @@
 <?php
-// $Id: views_plugin_argument_default_fixed.inc,v 1.1.4.2 2010/01/28 22:45:04 dereine Exp $
 /**
  * @file
  * Contains the fixed argument default plugin.
@@ -17,9 +16,10 @@ class views_plugin_argument_default_fixed extends views_plugin_argument_default 
   }
 
   function options_form(&$form, &$form_state) {
+    parent::options_form($form, $form_state);
     $form['argument'] = array(
       '#type' => 'textfield',
-      '#title' => t('Default argument'),
+      '#title' => t('Fixed value'),
       '#default_value' => $this->options['argument'],
     );
   }
@@ -41,4 +41,3 @@ class views_plugin_argument_default_fixed extends views_plugin_argument_default 
 /**
  * @}
  */
-

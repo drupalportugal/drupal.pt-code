@@ -1,5 +1,4 @@
 <?php
-// $Id: translation.views.inc,v 1.8.6.4 2010/07/19 09:18:42 dereine Exp $
 
 /**
  * @file
@@ -28,7 +27,7 @@ function translation_views_data_alter(&$data) {
 
   // Language field
   $data['node']['language'] = array(
-    'group' => t('Node translation'),
+    'group' => t('Content translation'),
     'title' => t('Language'),
     'help' => t('The language the content is in.'),
     'field' => array(
@@ -41,11 +40,14 @@ function translation_views_data_alter(&$data) {
     'argument' => array(
       'handler' => 'views_handler_argument_node_language',
     ),
+    'sort' => array(
+      'handler' => 'views_handler_sort',
+    ),
   );
 
   // The translation ID (nid of the "source" translation)
   $data['node']['tnid'] = array(
-    'group' => t('Node translation'),
+    'group' => t('Content translation'),
     'title' => t('Translation set node ID'),
     'help' => t('The ID of the translation set the content belongs to.'),
     'field' => array(
@@ -76,7 +78,7 @@ function translation_views_data_alter(&$data) {
 
   // The source translation.
   $data['node']['translation'] = array(
-    'group' => t('Node translation'),
+    'group' => t('Content translation'),
     'title' => t('Translations'),
     'help' => t('Versions of content in different languages.'),
     'relationship' => array(
@@ -93,9 +95,9 @@ function translation_views_data_alter(&$data) {
 
   // The source translation.
   $data['node']['source_translation'] = array(
-    'group' => t('Node translation'),
+    'group' => t('Content translation'),
     'title' => t('Source translation'),
-    'help' => t('Nodes that are either untranslated or are the original versions of a translation set.'),
+    'help' => t('Content that is either untranslated or is the original version of a translation set.'),
     'filter' => array(
       'handler' => 'views_handler_filter_node_tnid',
     ),
@@ -105,7 +107,7 @@ function translation_views_data_alter(&$data) {
   $data['node']['child_translation'] = array(
     'group' => t('Node translation'),
     'title' => t('Child translation'),
-    'help' => t('Nodes that are translations of a source translation.'),
+    'help' => t('Content that is a translation of a source translation.'),
     'filter' => array(
       'handler' => 'views_handler_filter_node_tnid_child',
     ),
@@ -113,9 +115,9 @@ function translation_views_data_alter(&$data) {
 
   // Translation status
   $data['node']['translate'] = array(
-    'group' => t('Node translation'),
+    'group' => t('Content translation'),
     'title' => t('Translation status'),
-    'help' => t('The translation status of the node--whether or not the translation needs to be updated.'),
+    'help' => t('The translation status of the content - whether or not the translation needs to be updated.'),
     'field' => array(
       'handler' => 'views_handler_field_boolean',
       'click sortable' => TRUE,
@@ -132,7 +134,7 @@ function translation_views_data_alter(&$data) {
 
   // Translate node link.
   $data['node']['translate_node'] = array(
-    'group' => t('Node translation'),
+    'group' => t('Content translation'),
     'title' => t('Translate link'),
     'help' => t('Provide a simple link to translate the node.'),
     'field' => array(

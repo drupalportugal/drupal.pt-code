@@ -1,5 +1,4 @@
 <?php
-// $Id: node.inc,v 1.18 2010/10/11 22:18:23 sdboyer Exp $
 
 /**
  * @file
@@ -26,6 +25,10 @@ $plugin = array(
     '#type' => 'textfield',
     '#description' => t('Enter the node ID of a node for this context.'),
   ),
+  // This context is deprecated and should not be usable in the UI.
+  'no ui' => TRUE,
+  'no required context ui' => TRUE,
+  'superceded by' => 'entity:node',
 );
 
 /**
@@ -115,19 +118,19 @@ function ctools_context_node_settings_form_validate($form, &$form_state) {
 
   $nid          = $form_state['values']['node'];
   $preg_matches = array();
-  $match        = preg_match('/\[nid: (\d+)\]/', $nid, $preg_matches);
+  $match        = preg_match('/\[id: (\d+)\]/', $nid, $preg_matches);
   if (!$match) {
-    $match = preg_match('/^nid: (\d+)/', $nid, $preg_matches);
+    $match = preg_match('/^id: (\d+)/', $nid, $preg_matches);
   }
 
   if ($match) {
     $nid = $preg_matches[1];
   }
   if (is_numeric($nid)) {
-    $node = db_query('SELECT nid FROM {node} WHERE nid = :nid', array(':nid' => $nid))->fetchObject();
+    $node = db_query('SELECT nid, status FROM {node} WHERE nid = :nid', array(':nid' => $nid))->fetchObject();
   }
   else {
-    $node = db_query('SELECT nid FROM {node} WHERE LOWER(title) = LOWER(:title)', array(':title' => $nid))->fetchObject();
+    $node = db_query('SELECT nid, status FROM {node} WHERE LOWER(title) = LOWER(:title)', array(':title' => $nid))->fetchObject();
   }
 
   // Do not allow unpublished nodes to be selected by unprivileged users
@@ -136,7 +139,6 @@ function ctools_context_node_settings_form_validate($form, &$form_state) {
   }
   else {
     form_set_value($form['nid'], $node->nid, $form_state);
-    // $form_state['values']['nid'] = $node->nid;
   }
 }
 
@@ -155,16 +157,11 @@ function ctools_context_node_settings_form_submit($form, &$form_state) {
  * Provide a list of ways that this context can be converted to a string.
  */
 function ctools_context_node_convert_list() {
-  $list = array(
-    'nid' => t('Node ID'),
-    'vid' => t('Node revision ID'),
-    'title' => t('Node title'),
-    'uid' => t('Author UID'),
-    'type' => t('Node type'),
-  );
-
-  if (module_exists('token')) {
-    $list += reset(token_get_list(array('node')));
+  $tokens = token_info();
+  foreach ($tokens['tokens']['node'] as $id => $info) {
+    if (!isset($list[$id])) {
+      $list[$id] = $info['name'];
+    }
   }
 
   return $list;
@@ -174,22 +171,11 @@ function ctools_context_node_convert_list() {
  * Convert a context into a string.
  */
 function ctools_context_node_convert($context, $type) {
-  switch ($type) {
-    case 'nid':
-      return $context->data->nid;
-    case 'vid':
-      return $context->data->vid;
-    case 'title':
-      return $context->data->title;
-    case 'uid':
-      return $context->data->uid;
-    case 'type':
-      return $context->data->type;
-  }
-  if (module_exists('token')) {
-    $values = token_get_values('node', $context->data);
-    if ($key = array_search($type, $values->tokens)) {
-      return $values->values[$key];
+  $tokens = token_info();
+  if (isset($tokens['tokens']['node'][$type])) {
+    $values = token_generate('node', array($type => $type), array('node' => $context->data));
+    if (isset($values[$type])) {
+      return $values[$type];
     }
   }
 }

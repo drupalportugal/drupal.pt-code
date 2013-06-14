@@ -1,5 +1,4 @@
 <?php
-// $Id: node_view.inc,v 1.5 2010/10/11 22:18:23 sdboyer Exp $
 
 /**
  * @file
@@ -38,6 +37,7 @@ function page_manager_node_view_page_manager_tasks() {
     // Allow this to be enabled or disabled:
     'disabled' => variable_get('page_manager_node_view_disabled', TRUE),
     'enable callback' => 'page_manager_node_view_enable',
+    'access callback' => 'page_manager_node_view_access_check',
   );
 }
 
@@ -55,7 +55,7 @@ function page_manager_node_view_menu_alter(&$items, $task) {
   // Override the node view handler for our purpose.
   $callback = $items['node/%node']['page callback'];
   if ($callback == 'node_page_view' || variable_get('page_manager_override_anyway', FALSE)) {
-    $items['node/%node']['page callback'] = 'page_manager_node_view';
+    $items['node/%node']['page callback'] = 'page_manager_node_view_page';
     $items['node/%node']['file path'] = $task['path'];
     $items['node/%node']['file'] = $task['file'];
   }
@@ -77,17 +77,25 @@ function page_manager_node_view_menu_alter(&$items, $task) {
  * to run with it. If no one does, it passes through to Drupal core's
  * node view, which is node_page_view().
  */
-function page_manager_node_view($node) {
+function page_manager_node_view_page($node) {
   // Load my task plugin
   $task = page_manager_get_task('node_view');
 
   // Load the node into a context.
   ctools_include('context');
   ctools_include('context-task-handler');
+
+  // We need to mimic Drupal's behavior of setting the node title here.
+  drupal_set_title($node->title);
+  $uri = entity_uri('node', $node);
+  // Set the node path as the canonical URL to prevent duplicate content.
+  drupal_add_html_head_link(array('rel' => 'canonical', 'href' => url($uri['path'], $uri['options'])), TRUE);
+  // Set the non-aliased path as a default shortlink.
+  drupal_add_html_head_link(array('rel' => 'shortlink', 'href' => url($uri['path'], array_merge($uri['options'], array('alias' => TRUE)))), TRUE);
   $contexts = ctools_context_handler_get_task_contexts($task, '', array($node));
 
   $output = ctools_context_handler_render($task, '', $contexts, array($node->nid));
-  if ($output !== FALSE) {
+  if ($output != FALSE) {
     node_tag_new($node);
     return $output;
   }
@@ -117,7 +125,7 @@ function page_manager_node_view_get_arguments($task, $subtask_id) {
       'keyword' => 'node',
       'identifier' => t('Node being viewed'),
       'id' => 1,
-      'name' => 'nid',
+      'name' => 'entity_id:node',
       'settings' => array(),
     ),
   );
@@ -141,4 +149,21 @@ function page_manager_node_view_enable($cache, $status) {
   if (!$status) {
     $GLOBALS['page_manager_enabling_node_view'] = TRUE;
   }
+}
+
+/**
+ * Callback to determine if a page is accessible.
+ *
+ * @param $task
+ *   The task plugin.
+ * @param $subtask_id
+ *   The subtask id
+ * @param $contexts
+ *   The contexts loaded for the task.
+ * @return
+ *   TRUE if the current user can access the page.
+ */
+function page_manager_node_view_access_check($task, $subtask_id, $contexts) {
+  $context = reset($contexts);
+  return node_access('view', $context->data);
 }

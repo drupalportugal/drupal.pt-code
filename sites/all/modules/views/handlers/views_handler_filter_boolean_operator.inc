@@ -1,5 +1,4 @@
 <?php
-// $Id: views_handler_filter_boolean_operator.inc,v 1.6.4.6 2010/11/18 00:43:18 merlinofchaos Exp $
 /**
  * Simple filter to handle matching of boolean values
  *
@@ -9,10 +8,16 @@
  *    - true-false: True/false (this is the default)
  *    - yes-no: Yes/No
  *    - on-off: On/Off
+ *    - enabled-disabled: Enabled/Disabled
+ * - accept null: Treat a NULL value as false.
+ * - use equal: If you use this flag the query will use = 1 instead of <> 0.
+ *   This might be helpful for performance reasons.
+ *
+ * @ingroup views_filter_handlers
  */
 class views_handler_filter_boolean_operator extends views_handler_filter {
   // exposed filter options
-  var $no_single = TRUE;
+  var $always_multiple = TRUE;
   // Don't display empty space where the operator would be.
   var $no_operator = TRUE;
   // Whether to accept NULL as a false value or not
@@ -23,7 +28,10 @@ class views_handler_filter_boolean_operator extends views_handler_filter {
     if (isset($this->definition['label'])) {
       $this->value_value = $this->definition['label'];
     }
-    if (isset($this->definition['accept_null'])) {
+    if (isset($this->definition['accept null'])) {
+      $this->accept_null = (bool) $this->definition['accept null'];
+    }
+    else if (isset($this->definition['accept_null'])) {
       $this->accept_null = (bool) $this->definition['accept_null'];
     }
     $this->value_options = NULL;
@@ -49,6 +57,9 @@ class views_handler_filter_boolean_operator extends views_handler_filter {
       }
       if ($this->definition['type'] == 'on-off') {
         $this->value_options = array(1 => t('On'), 0 => t('Off'));
+      }
+      if ($this->definition['type'] == 'enabled-disabled') {
+        $this->value_options = array(1 => t('Enabled'), 0 => t('Disabled'));
       }
     }
 
@@ -95,17 +106,19 @@ class views_handler_filter_boolean_operator extends views_handler_filter {
         $form_state['input'][$identifier] = $this->value;
       }
       // If we're configuring an exposed filter, add an <Any> option.
-      $any_label = variable_get('views_exposed_filter_any_label', 'old_any') == 'old_any' ? '<Any>' : t('- Any -');
-      if ($form['value']['#type'] != 'select') {
-        $any_label = check_plain($any_label);
+      if (empty($form_state['exposed']) || empty($this->options['expose']['required'])) {
+        $any_label = variable_get('views_exposed_filter_any_label', 'new_any') == 'old_any' ? '<Any>' : t('- Any -');
+        if ($form['value']['#type'] != 'select') {
+          $any_label = check_plain($any_label);
+        }
+        $form['value']['#options'] = array('All' => $any_label) + $form['value']['#options'];
       }
-      $form['value']['#options'] = array('All' => $any_label) + $form['value']['#options'];
     }
   }
 
   function value_validate($form, &$form_state) {
-    if ($form_state['values']['options']['value'] == 'All' && empty($form_state['values']['options']['expose']['optional'])) {
-      form_set_error('value', t('You must select a value unless this is an optional exposed filter.'));
+    if ($form_state['values']['options']['value'] == 'All' && !empty($form_state['values']['options']['expose']['required'])) {
+      form_set_error('value', t('You must select a value unless this is an non-required exposed filter.'));
     }
   }
 
@@ -125,9 +138,9 @@ class views_handler_filter_boolean_operator extends views_handler_filter {
 
   function expose_options() {
     parent::expose_options();
-    $this->options['expose']['operator'] = '';
+    $this->options['expose']['operator_id'] = '';
     $this->options['expose']['label'] = $this->value_value;
-    $this->options['expose']['optional'] = FALSE;
+    $this->options['expose']['required'] = TRUE;
   }
 
   function query() {

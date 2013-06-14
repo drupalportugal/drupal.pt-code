@@ -1,5 +1,4 @@
 <?php
-// $Id: ctools_custom_content.module,v 1.2 2010/10/11 22:18:21 sdboyer Exp $
 
 /**
  * @file
@@ -83,7 +82,7 @@ function ctools_custom_content_panels_dashboard_blocks(&$vars) {
   }
 
   if ($rows) {
-    $content = theme('table', array(), $rows, array('class' => 'panels-manage'));
+    $content = theme('table', array('rows' => $rows, 'attributes' => array('class' => 'panels-manage')));
   }
   else {
     $content = '<p>' . t('There are no custom content panes.') . '</p>';

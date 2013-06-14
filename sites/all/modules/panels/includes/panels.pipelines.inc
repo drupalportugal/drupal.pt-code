@@ -1,5 +1,4 @@
 <?php
-// $Id: panels.pipelines.inc,v 1.2 2010/09/07 09:42:11 sdboyer Exp $
 
 /**
  * @file
@@ -7,7 +6,7 @@
  */
 
 /**
- * Implementation of hook_default_panels_layout()
+ * Implements hook_default_panels_renderer_pipeline().
  */
 function panels_default_panels_renderer_pipeline() {
   $pipelines = array();

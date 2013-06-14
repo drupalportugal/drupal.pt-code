@@ -1,5 +1,4 @@
 <?php
-// $Id: views_plugin_row_node_rss.inc,v 1.7.4.7 2010/11/11 19:41:11 dereine Exp $
 /**
  * @file
  * Contains the node RSS row style plugin.
@@ -21,8 +20,20 @@ class views_plugin_row_node_rss extends views_plugin_row {
     $options = parent::option_definition();
 
     $options['item_length'] = array('default' => 'default');
+    $options['links'] = FALSE;
 
     return $options;
+  }
+
+  /**
+   * Override init function to convert fulltext view-mode to full.
+   */
+  function init(&$view, &$display, $options = NULL) {
+    parent::init($view, $display, $options);
+
+    if ($this->options['item_length'] == 'fulltext') {
+      $this->options['item_length'] = 'full';
+    }
   }
 
   function options_form(&$form, &$form_state) {
@@ -31,21 +42,46 @@ class views_plugin_row_node_rss extends views_plugin_row {
     $form['item_length'] = array(
       '#type' => 'select',
       '#title' => t('Display type'),
-      '#options' => array(
-        'fulltext' => t('Full text'),
-        'teaser' => t('Title plus teaser'),
-        'title' => t('Title only'),
-        'default' => t('Use default RSS settings'),
-      ),
+      '#options' => $this->options_form_summary_options(),
       '#default_value' => $this->options['item_length'],
+    );
+    $form['links'] = array(
+      '#type' => 'checkbox',
+      '#title' => t('Display links'),
+      '#default_value' => $this->options['links'],
     );
   }
 
+  /**
+   * Return the main options, which are shown in the summary title.
+   */
+  function options_form_summary_options() {
+    $entity_info = entity_get_info('node');
+    $options = array();
+    if (!empty($entity_info['view modes'])) {
+      foreach ($entity_info['view modes'] as $mode => $settings) {
+        $options[$mode] = $settings['label'];
+      }
+    }
+    $options['title'] = t('Title only');
+    $options['default'] = t('Use site default RSS settings');
+    return $options;
+  }
+
+  function summary_title() {
+    $options = $this->options_form_summary_options();
+    return check_plain($options[$this->options['item_length']]);
+  }
+
+
   function pre_render($values) {
+    $nids = array();
     foreach ($values as $row) {
       $nids[] = $row->{$this->field_alias};
     }
-    $this->nodes = node_load_multiple($nids);
+    if (!empty($nids)) {
+      $this->nodes = node_load_multiple($nids);
+    }
   }
 
   function render($row) {
@@ -57,9 +93,9 @@ class views_plugin_row_node_rss extends views_plugin_row {
       return;
     }
 
-    $item_length = $this->options['item_length'];
-    if ($item_length == 'default') {
-      $item_length = variable_get('feed_item_length', 'teaser');
+    $display_mode = $this->options['item_length'];
+    if ($display_mode == 'default') {
+      $display_mode = variable_get('feed_item_length', 'teaser');
     }
 
     // Load the specified node:
@@ -70,44 +106,61 @@ class views_plugin_row_node_rss extends views_plugin_row {
 
     $item_text = '';
 
+    $uri = entity_uri('node', $node);
+    $node->link = url($uri['path'], $uri['options'] + array('absolute' => TRUE));
     $node->rss_namespaces = array();
     $node->rss_elements = array(
-      array('key' => 'pubDate', 'value' => gmdate('r', $node->created)),
-      array('key' => 'dc:creator', 'value' => $node->name, 'namespace' => array('xmlns:dc' => 'http://purl.org/dc/elements/1.1/')),
-      array('key' => 'guid', 'value' => $node->nid . ' at ' . $base_url, 'attributes' => array('isPermaLink' => 'false'))
+      array(
+        'key' => 'pubDate',
+        'value' => gmdate('r', $node->created),
+      ),
+      array(
+        'key' => 'dc:creator',
+        'value' => $node->name,
+      ),
+      array(
+        'key' => 'guid',
+        'value' => $node->nid . ' at ' . $base_url,
+        'attributes' => array('isPermaLink' => 'false'),
+      ),
     );
 
     // The node gets built and modules add to or modify $node->rss_elements
     // and $node->rss_namespaces.
-    node_build_content($node, 'rss');
 
-    foreach ($node->rss_elements as $element) {
-      if (isset($element['namespace'])) {
-        $this->view->style_plugin->namespaces = array_merge($this->view->style_plugin->namespaces, $element['namespace']);
-      }
+    $build_mode = $display_mode;
+
+    $build = node_view($node, $build_mode);
+    unset($build['#theme']);
+
+    if (!empty($node->rss_namespaces)) {
+      $this->view->style_plugin->namespaces = array_merge($this->view->style_plugin->namespaces, $node->rss_namespaces);
+    } else if (module_exists('rdf')) {
+      $this->view->style_plugin->namespaces = array_merge($this->view->style_plugin->namespaces, rdf_get_namespaces());
     }
 
-    if ($item_length != 'title' && !empty($node->content)) {
+    // Hide the links if desired.
+    if (!$this->options['links']) {
+      hide($build['links']);
+    }
+
+    if ($display_mode != 'title') {
       // We render node contents and force links to be last.
-      $links = drupal_render($node->content['links']);
-      $item_text .= drupal_render($node->content) . $links;
+      $build['links']['#weight'] = 1000;
+      $item_text .= drupal_render($build);
     }
 
+    $item = new stdClass();
     $item->description = $item_text;
     $item->title = $node->title;
-    $item->link = url("node/$node->nid", array('absolute' => TRUE));
+    $item->link = $node->link;
     $item->elements = $node->rss_elements;
     $item->nid = $node->nid;
-    if (isset($node->readmore)) {
-      $item->readmore = $node->readmore;
-    }
 
-    return theme($this->theme_functions(),
-      array(
-        'view' => $this->view,
-        'options' => $this->options,
-        'row' => $item
-      ));
+    return theme($this->theme_functions(), array(
+      'view' => $this->view,
+      'options' => $this->options,
+      'row' => $item
+    ));
   }
 }
-

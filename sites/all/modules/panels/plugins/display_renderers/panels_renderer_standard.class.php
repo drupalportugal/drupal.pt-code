@@ -1,5 +1,4 @@
 <?php
-// $Id: panels_renderer_standard.class.php,v 1.5 2010/10/11 22:56:01 sdboyer Exp $
 
 /**
  * The standard render pipeline for a Panels display object.
@@ -168,7 +167,7 @@ class panels_renderer_standard {
     $layout = panels_get_layout($display->layout);
     $this->display = &$display;
     $this->plugins['layout'] = $layout;
-    if (!isset($layout['panels'])) {
+    if (!isset($layout['regions'])) {
       $this->plugins['layout']['regions'] = panels_get_regions($layout, $display);
     }
 
@@ -312,7 +311,6 @@ class panels_renderer_standard {
       foreach ($this->plugins['layout']['regions'] as $region_id => $title) {
         // Ensure this region has at least an empty panes array.
         $panes = !empty($region_pane_list[$region_id]) ? $region_pane_list[$region_id] : array();
-
         if (empty($settings[$region_id]['style']) || $settings[$region_id]['style'] == -1) {
           $regions[$region_id] = $default;
         }
@@ -340,6 +338,9 @@ class panels_renderer_standard {
    *  Themed & rendered HTML output.
    */
   function render() {
+    // Let the display refer back to the renderer.
+    $this->display->renderer_handler = $this;
+
     // Attach out-of-band data first.
     $this->add_meta();
 
@@ -421,20 +422,13 @@ class panels_renderer_standard {
    * @see drupal_add_css
    */
   function add_css($filename) {
-//    $path = file_create_path($filename);
     switch ($this->meta_location) {
       case 'standard':
         drupal_add_css($filename);
         break;
       case 'inline':
-//        if ($path) {
-//          $url = file_create_url($filename);
-//        }
-//        else {
-          $url = base_path() . $filename;
-//        }
-
-        $this->prefix .= '<link type="text/css" rel="stylesheet" media="' . $media . '" href="' . $url . '" />'."\n";
+        $url = base_path() . $filename;
+        $this->prefix .= '<link type="text/css" rel="stylesheet" href="' . $url . '" />'."\n";
         break;
     }
   }
@@ -530,14 +524,23 @@ class panels_renderer_standard {
       $content = $cache->content;
     }
     else {
+      if ($caching) {
+        // This is created before rendering so that calls to drupal_add_js
+        // and drupal_add_css will be captured.
+        $cache = new panels_cache_object();
+      }
+
       $content = ctools_content_render($pane->type, $pane->subtype, $pane->configuration, array(), $this->display->args, $this->display->context);
+
+      if (empty($content)) {
+        return;
+      }
 
       foreach (module_implements('panels_pane_content_alter') as $module) {
         $function = $module . '_panels_pane_content_alter';
-        $function($content, $pane, $this->display->args, $this->display->context);
+        $function($content, $pane, $this->display->args, $this->display->context, $this, $this->display);
       }
-      if ($caching) {
-        $cache = new panels_cache_object();
+      if ($caching && isset($cache)) {
         $cache->set_content($content);
         panels_set_cached_content($cache, $this->display, $this->display->args, $this->display->context, $pane);
         $content = $cache->content;
@@ -546,12 +549,12 @@ class panels_renderer_standard {
 
     // Pass long the css_id that is usually available.
     if (!empty($pane->css['css_id'])) {
-      $content->css_id = $pane->css['css_id'];
+      $content->css_id = check_plain($pane->css['css_id']);
     }
 
     // Pass long the css_class that is usually available.
     if (!empty($pane->css['css_class'])) {
-      $content->css_class = $pane->css['css_class'];
+      $content->css_class = check_plain($pane->css['css_class']);
     }
 
     return $content;
@@ -612,6 +615,7 @@ class panels_renderer_standard {
       $owner_id = $this->display->owner->id;
     }
 
-    return theme($style['render region'], array('display' => $this->display, 'owner_id' => $owner_id, 'panes' => $panes, 'settings' => $style_settings, 'region_id' => $region_id, 'style' => $style));
+    $output = theme($style['render region'], array('display' => $this->display, 'owner_id' => $owner_id, 'panes' => $panes, 'settings' => $style_settings, 'region_id' => $region_id, 'style' => $style));
+    return $output;
   }
 }

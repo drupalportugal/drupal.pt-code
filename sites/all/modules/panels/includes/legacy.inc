@@ -1,5 +1,4 @@
 <?php
-// $Id: legacy.inc,v 1.3 2010/10/11 22:56:01 sdboyer Exp $
 
 /**
  * Legacy state manager for Panels.

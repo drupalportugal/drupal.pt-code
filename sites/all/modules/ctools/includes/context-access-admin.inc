@@ -1,5 +1,4 @@
 <?php
-// $Id: context-access-admin.inc,v 1.12 2010/10/11 22:18:22 sdboyer Exp $
 
 /**
  * @file
@@ -100,7 +99,7 @@
  * form into your own, and instead call
  *
  * @code{
- *   $form = array_merge($form, ctools_access_admin_form($form_state));
+ *   $form = ctools_access_admin_form($form, $form_state);
  * }
  *
  * You'll be responsible for adding a submit button.
@@ -240,7 +239,7 @@ function ctools_access_admin_form_submit($form, &$form_state) {
 
   $function = $form_state['module'] . '_ctools_access_clear';
   if (function_exists($function)) {
-    $function($form_state['argument']);
+    $function($form_state['callback argument']);
   }
 }
 

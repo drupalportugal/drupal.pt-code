@@ -1,5 +1,4 @@
 <?php
-// $Id: views_handler_argument_date.inc,v 1.3.6.3 2010/03/11 08:30:24 dereine Exp $
 /**
  * Abstract argument handler for dates.
  *
@@ -62,6 +61,34 @@ class views_handler_argument_date extends views_handler_argument_formula {
     }
 
     return parent::get_default_argument($raw);
+  }
 
+  /**
+   * The date handler provides some default argument types, which aren't argument default plugins,
+   * so addapt the export mechanism.
+   */
+  function export_plugin($indent, $prefix, $storage, $option, $definition, $parents) {
+
+    // Only use a special behaviour for the special argument types, else just
+    // use the default behaviour.
+    if ($option == 'default_argument_type') {
+      $type = 'argument default';
+      $option_name = 'default_argument_options';
+
+      $plugin = $this->get_plugin($type);
+      $name = $this->options[$option];
+      if (in_array($name, array('date', 'node_created', 'node_changed'))) {
+
+        // Write which plugin to use.
+        $output = $indent . $prefix . "['$option'] = '$name';\n";
+        return $output;
+      }
+    }
+    return parent::export_plugin($indent, $prefix, $storage, $option, $definition, $parents);
+  }
+
+
+  function get_sort_name() {
+    return t('Date', array(), array('context' => 'Sort order'));
   }
 }

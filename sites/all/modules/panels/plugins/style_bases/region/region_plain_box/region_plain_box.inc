@@ -1,5 +1,4 @@
 <?php
-// $Id: region_plain_box.inc,v 1.2 2010/09/07 09:42:12 sdboyer Exp $
 
 /**
  * @file

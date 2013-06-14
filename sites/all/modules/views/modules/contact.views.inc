@@ -1,5 +1,4 @@
 <?php
-//$Id: contact.views.inc,v 1.1.6.2 2010/07/19 09:18:42 dereine Exp $
 /**
  * @file
  * Provide views data and handlers for contact.module
@@ -15,4 +14,3 @@ function contact_views_data() {
   );
   return $data;
 }
-

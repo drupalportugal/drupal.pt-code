@@ -1,15 +1,15 @@
-/* $Id: onecol.css,v 1.2 2010/01/21 07:11:42 sdboyer Exp $ */
 
-.panel-1col { 
+.panel-1col {
 /*  overflow: hidden;  */
 }
 
-.panel-2col .panel-col-first .inside { 
+.panel-2col .panel-col-first .inside {
   margin: 0;
 }
 
 
-.panel-1col .panel-col { 
+.panel-1col .panel-col {
+  width: 100%;
 }
 
 #panels-edit-display .panel-pane,

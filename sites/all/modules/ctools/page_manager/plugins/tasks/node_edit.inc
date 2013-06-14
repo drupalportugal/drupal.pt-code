@@ -1,5 +1,4 @@
 <?php
-// $Id: node_edit.inc,v 1.4 2009/09/27 03:41:02 merlinofchaos Exp $
 
 /**
  * Specialized implementation of hook_page_manager_task_tasks(). See api-task.html for
@@ -28,6 +27,7 @@ function page_manager_node_edit_page_manager_tasks() {
     // Allow this to be enabled or disabled:
     'disabled' => variable_get('page_manager_node_edit_disabled', TRUE),
     'enable callback' => 'page_manager_node_edit_enable',
+    'access callback' => 'page_manager_node_edit_access_check',
   );
 }
 
@@ -97,8 +97,8 @@ function page_manager_node_edit($node) {
     // Fall back!
     // We've already built the form with the context, so we can't build it again, or
     // form_clean_id will mess up our ids. But we don't really need to, either:
-    $context = current($contexts);
-    $output = drupal_render_form($context->form_id, $context->form);
+    $context = reset($contexts);
+    $output = $context->form;
   }
 
   return $output;
@@ -123,7 +123,7 @@ function page_manager_node_add($type) {
     'uid' => $user->uid,
     'name' => (isset($user->name) ? $user->name : ''),
     'type' => $type,
-    'language' => '',
+    'language' => LANGUAGE_NONE,
   );
 
   drupal_set_title(t('Create @name', array('@name' => $types[$type]->name)));
@@ -165,4 +165,21 @@ function page_manager_node_edit_enable($cache, $status) {
   if (!$status) {
     $GLOBALS['page_manager_enabling_node_edit'] = TRUE;
   }
+}
+
+/**
+ * Callback to determine if a page is accessible.
+ *
+ * @param $task
+ *   The task plugin.
+ * @param $subtask_id
+ *   The subtask id
+ * @param $contexts
+ *   The contexts loaded for the task.
+ * @return
+ *   TRUE if the current user can access the page.
+ */
+function page_manager_node_edit_access_check($task, $subtask_id, $contexts) {
+  $context = reset($contexts);
+  return node_access('update', $context->data);
 }

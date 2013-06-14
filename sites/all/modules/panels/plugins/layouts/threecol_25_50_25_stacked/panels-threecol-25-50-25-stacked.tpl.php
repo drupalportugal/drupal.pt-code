@@ -1,5 +1,4 @@
 <?php
-// $Id: panels-threecol-25-50-25-stacked.tpl.php,v 1.4 2010/10/11 22:56:03 sdboyer Exp $
 /**
  * @file
  * Template for a 3 column panel layout.

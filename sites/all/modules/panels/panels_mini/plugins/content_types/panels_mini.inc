@@ -1,5 +1,4 @@
 <?php
-// $Id: panels_mini.inc,v 1.4 2010/10/11 22:56:02 sdboyer Exp $
 
 /**
  * @file
@@ -48,6 +47,11 @@ function panels_mini_panels_mini_content_type_content_types($plugin) {
  * Return an info array describing a single mini panel.
  */
 function _panels_mini_panels_mini_content_type_content_type($mini) {
+  if (empty($mini)) {
+    // The mini panel is deleted or missing.
+    return;
+  }
+
   if (!empty($mini->disabled)) {
     return;
   }

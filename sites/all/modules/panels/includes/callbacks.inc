@@ -1,5 +1,4 @@
 <?php
-// $Id: callbacks.inc,v 1.5 2010/10/11 22:56:01 sdboyer Exp $
 /**
  * @file callbacks.inc
  * Minor menu callbacks for Panels helpers.

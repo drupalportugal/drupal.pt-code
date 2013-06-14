@@ -1,5 +1,4 @@
 <?php
-// $Id: views_handler_field_xss.test,v 1.1.2.1 2010/11/07 11:32:25 dereine Exp $
 
 /**
  * @see CommonXssUnitTest
@@ -49,6 +48,6 @@ class ViewsHandlerTestXss extends ViewsSqlTest {
       $view->result[$counter]->views_test_name = $input;
       $this->assertEqual($view->field['name']->advanced_render($view->result[$counter]), $expected_result);
       $counter++;
-    } 
+    }
   }
 }

@@ -1,0 +1,140 @@
+; Theme info
+name = 'tb_purity'
+description = 'TB Purity. Requires the <a href="http://drupal.org/project/nucleus">Nucleus</a> base theme.'
+core = '7.x'
+engine = 'phptemplate'
+base theme = 'nucleus'
+screenshot = 'screenshot.png'
+
+; Stylesheets
+stylesheets[all][] = 'css/html-elements.css'
+stylesheets[all][] = 'css/forms.css'
+stylesheets[all][] = 'css/tables.css'
+stylesheets[all][] = 'css/page.css'
+stylesheets[all][] = 'css/articles.css'
+stylesheets[all][] = 'css/comments.css'
+stylesheets[all][] = 'css/fields.css'
+stylesheets[all][] = 'css/blocks.css'
+stylesheets[all][] = 'css/panel-panes.css'
+stylesheets[all][] = 'css/navigation.css'
+stylesheets[all][] = 'css/forum.css'
+stylesheets[all][] = 'css/fonts.css'
+stylesheets[all][] = 'css/css3.css'
+stylesheets[all][] = 'css/ie7.css'
+stylesheets[print][] = 'css/print.css'
+
+; Scripts in this theme
+scripts[] = 'js/tb_purity.js'
+scripts[] = 'js/jquery.matchHeights.min.js'
+
+; Core regions
+regions[content] = 'Main content'
+regions[header] = 'Header'
+regions[menu_bar] = 'Menu bar'
+regions[slideshow] = 'Slideshow'
+regions[highlighted] = 'Highlighted'
+regions[footer] = 'Footer'
+regions[help] = 'Help'
+regions[page_top] = 'Page top'
+regions[page_bottom] = 'Page bottom'
+
+; Sidebar regions
+regions[sidebar_first] = 'Sidebar first'
+regions[sidebar_second] = 'Sidebar second'
+
+; Theme regions
+regions[panel_first_1] = 'Panel first'
+
+regions[panel_second_1] = 'Panel second column 1'
+regions[panel_second_2] = 'Panel second column 2'
+regions[panel_second_3] = 'Panel second column 3'
+regions[panel_second_4] = 'Panel second column 4'
+
+pages[default] = 'Normal page'
+
+; Features (core settings)
+features[] = 'logo'
+features[] = 'name'
+features[] = 'slogan'
+features[] = 'node_user_picture'
+features[] = 'comment_user_picture'
+features[] = 'comment_user_verification'
+features[] = 'favicon'
+features[] = 'go_to_top_button'
+features[] = 'secondary_menu'
+
+; Breadcrumb
+settings[breadcrumb_display] = 'yes'
+settings[breadcrumb_separator] = ' &#187; '
+settings[breadcrumb_home] = 1
+
+; Layout
+settings[grid] = 'fixed-grid-24'
+settings[layout_width] = '960px'
+settings[page_layout] = 'default'
+
+; Sidebar width settings
+settings[sidebar_first_width] = 5
+settings[sidebar_second_width] = 6
+
+; Panel width settings
+settings[panel_first_1_width] = 24
+
+settings[panel_second_1_width] = 6
+settings[panel_second_2_width] = 6
+settings[panel_second_3_width] = 6
+settings[panel_second_4_width] = 6
+
+; Fonts
+settings[base_font] = 'bf-tahoma'
+settings[font_size] = 'fs-medium'
+
+; Font Settings
+default_fonts[sss] = 'Calibri, Candara, Helvetica Neue, Trebuchet MS, Arial, Helvetica, sans-serif'
+default_fonts[ssl] = 'Verdana, Geneva, Arial, Helvetica, sans-serif'
+default_fonts[a] = 'Arial, Helvetica, sans-serif'
+default_fonts[ss] = 'Garamond, Perpetua, Times New Roman, serif'
+default_fonts[sl] = 'Georgia, Baskerville, Palatino, Palatino Linotype, Book Antiqua, Times New Roman, serif'
+default_fonts[m] = 'Segoe UI, Myriad Pro, Myriad, Arial, Helvetica, sans-serif;'
+default_fonts[l] = 'Lucida Sans Unicode, Lucida Sans, Lucida Grande, Verdana, Geneva, sans-serif'
+default_fonts[ms] = 'Consolas, Monaco, Courier New, Courier, monospace'
+default_fonts[tahoma] = 'Tahoma, sans-serif'
+
+block_styles[rounded] = 'Rounded'
+block_styles[xhtml] = 'XHTML'
+block_styles[raw] = 'Raw'
+
+; Superfish Styles
+superfish_styles[purity] = 'Purity Style for Superfish'
+'
+; Quictabs Styles
+quicktabs_styles[purity] = 'Purity Style for Quicktabs'
+
+settings[default_region_footer_style] = 'raw'
+settings[default_region_sidebar_first_style] = 'xhtml'
+settings[default_region_sidebar_second_style] = 'rounded'
+settings[superfish_extend_style_1] = 'purity'
+settings[superfish_extend_style_2] = 'purity'
+settings[quicktabs_extend_style_quicktabs] = 'purity'
+
+settings[toggle_logo] = 1
+settings[toggle_name] = 0
+settings[toggle_slogan] = 0
+settings[toggle_node_user_picture] = 1
+settings[toggle_comment_user_picture] = 1
+settings[toggle_comment_user_verification] = 1
+settings[toggle_favicon] = 1
+settings[toggle_secondary_menu] = 0
+settings[default_logo] = 1
+settings[default_favicon] = 1
+settings[default_logo] = 1
+settings[logo_path] = ''
+settings[default_favicon] = 1
+settings[favicon_path] = ''
+
+; Information added by drupal.org packaging script on 2012-03-30
+version = "7.x-1.0-alpha1"
+core = "7.x"
+project = "tb_purity"
+datestamp = "1333101060"
+

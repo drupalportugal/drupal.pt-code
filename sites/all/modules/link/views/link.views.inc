@@ -1,5 +1,4 @@
 <?php
-// $Id: link.views.inc,v 1.2.2.1 2009/11/09 06:40:51 herc Exp $
 /**
  * @file
  * Contains functions handling views integration.
@@ -8,7 +7,7 @@
 /**
  * Implementation of hook_views_handlers().
  */
-function link_views_handlers() {
+/*function link_views_handlers() {
   return array(
     'info' => array(
       'path' => drupal_get_path('module', 'link') .'/views',
@@ -22,12 +21,14 @@ function link_views_handlers() {
       ),
     ),
   );
-}
+}*/
 
 /**
  * Return CCK Views data for the link_field_settings($op == 'views data').
+ *
+ * @TODO: Is there some way to tell views I have formatters for it?
  */
-function link_views_content_field_data($field) {
+/*function link_views_content_field_data($field) {
   // Build the automatic views data provided for us by CCK.
   // This creates all the information necessary for the "url" field.
   $data = content_views_field_views_data($field);
@@ -109,4 +110,4 @@ function link_views_content_field_data($field) {
   );
 
   return $data;
-}
+}*/

@@ -1,5 +1,4 @@
 <?php
-// $Id: poll.inc,v 1.2 2010/01/29 21:21:21 merlinofchaos Exp $
 
 /**
  * Specialized implementation of hook_page_manager_task_tasks(). See api-task.html for
@@ -29,6 +28,7 @@ function page_manager_poll_page_manager_tasks() {
     // Allow this to be enabled or disabled:
     'disabled' => variable_get('page_manager_poll_disabled', TRUE),
     'enable callback' => 'page_manager_poll_enable',
+    'access callback' => 'page_manager_poll_access_check',
   );
 }
 
@@ -102,4 +102,20 @@ function page_manager_poll_enable($cache, $status) {
   if (!$status) {
     $GLOBALS['page_manager_enabling_poll'] = TRUE;
   }
+}
+
+/**
+ * Callback to determine if a page is accessible.
+ *
+ * @param $task
+ *   The task plugin.
+ * @param $subtask_id
+ *   The subtask id
+ * @param $contexts
+ *   The contexts loaded for the task.
+ * @return
+ *   TRUE if the current user can access the page.
+ */
+function page_manager_poll_access_check($task, $subtask_id, $contexts) {
+  return user_access('access content');
 }

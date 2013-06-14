@@ -1,5 +1,4 @@
 <?php
-// $Id: threecol_25_50_25.inc,v 1.4 2010/10/11 22:56:02 sdboyer Exp $
 
 /**
  * implementation of hook_panels_layouts

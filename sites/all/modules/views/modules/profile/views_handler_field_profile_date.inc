@@ -1,10 +1,11 @@
 <?php
-// $Id: views_handler_field_profile_date.inc,v 1.1 2008/09/03 19:21:29 merlinofchaos Exp $
 /**
  * Field handler display a profile date
  *
  * The dates are stored serialized, which makes them mostly useless from
  * SQL. About all we can do is unserialize and display them.
+ *
+ * @ingroup views_field_handlers
  */
 class views_handler_field_profile_date extends views_handler_field_date {
   function options_form(&$form, &$form_state) {
@@ -16,11 +17,12 @@ class views_handler_field_profile_date extends views_handler_field_date {
   /**
    * Display a profile field of type 'date'
    */
-  function render($value) {
-    if (!$value->{$this->field_alias}) {
+  function render($values) {
+    $value = $this->get_value($values);
+    if (!$value) {
       return;
     }
-    $value = unserialize($value->{$this->field_alias});
+    $value = unserialize($value);
     $format = $this->options['date_format'];
     switch ($format) {
       case 'custom':
@@ -42,7 +44,7 @@ class views_handler_field_profile_date extends views_handler_field_date {
     // birthdays.
 
     // But we *can* deal with non-year stuff:
-    $date = gmmktime(0, 0, 0, $value['month'], $value['day'], 1970);
+    $date = gmmktime(0, 0, 0, $value['month'], $value['day'], $value['year']);
     $replace = array(
       // day
       'd' => sprintf('%02d', $value['day']),
@@ -79,4 +81,3 @@ class views_handler_field_profile_date extends views_handler_field_date {
     return strtr($format, $replace);
   }
 }
-

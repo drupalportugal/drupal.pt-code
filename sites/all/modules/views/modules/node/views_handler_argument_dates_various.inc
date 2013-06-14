@@ -1,6 +1,11 @@
 <?php
-// $Id: views_handler_argument_dates_various.inc,v 1.4.6.3 2010/09/19 08:18:11 dereine Exp $
 /**
+ * @defgroup views_argument_handlers Handlers for arguments
+ * @{
+ */
+
+/**
+ * @file
  * Argument handler for a full date (CCYYMMDD)
  */
 class views_handler_argument_node_created_fulldate extends views_handler_argument_date {
@@ -168,3 +173,7 @@ class views_handler_argument_node_created_week extends views_handler_argument_da
     return t('Week @week', array('@week' => $created));
   }
 }
+
+/**
+ * @}
+ */

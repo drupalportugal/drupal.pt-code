@@ -1,5 +1,4 @@
 <?php
-// $Id: panels_layouts.inc,v 1.3 2010/10/11 22:56:02 sdboyer Exp $
 
 $plugin = array(
   'schema' => 'panels_layout',
@@ -17,6 +16,8 @@ $plugin = array(
   'title plural' => t('layouts'),
   'title plural proper' => t('Layouts'),
 
-  'class' => 'panels_layouts_ui',
+  'handler' => array(
+    'class' => 'panels_layouts_ui',
+  ),
 );
 

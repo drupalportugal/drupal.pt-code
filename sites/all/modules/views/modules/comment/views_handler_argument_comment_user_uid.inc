@@ -1,9 +1,10 @@
 <?php
-// $Id: views_handler_argument_comment_user_uid.inc,v 1.2.4.2 2010/01/28 00:00:56 dereine Exp $
 
 /**
  * Argument handler to accept a user id to check for nodes that
  * user posted or commented on.
+ *
+ * @ingroup views_argument_handlers
  */
 class views_handler_argument_comment_user_uid extends views_handler_argument {
   function title() {
@@ -34,19 +35,22 @@ class views_handler_argument_comment_user_uid extends views_handler_argument {
     }
   }
 
-  function query() {
+  function query($group_by = FALSE) {
     $this->ensure_my_table();
 
     $subselect = db_select('comment', 'c');
     $subselect->addField('c', 'cid');
-    $subselect->condition('uid', $this->argument);
-    $subselect->condition('nid', "$this->table_alias.nid");
-    $subselect = $subselect->countQuery();
+    $subselect->condition('c.uid', $this->argument);
+    $subselect->where("c.nid = $this->table_alias.nid");
 
     $condition = db_or()
-      ->condition("$this->table_alias.uid", $this->argument, $this->operator)
-      ->condition(0, $subselect, '<');
+      ->condition("$this->table_alias.uid", $this->argument, '=')
+      ->exists($subselect);
 
     $this->query->add_where(0, $condition);
+  }
+
+  function get_sort_name() {
+    return t('Numerical', array(), array('context' => 'Sort order'));
   }
 }

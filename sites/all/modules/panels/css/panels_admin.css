@@ -1,4 +1,3 @@
-/* $Id: panels_admin.css,v 1.5 2010/09/07 09:42:11 sdboyer Exp $ */
 
 .layout-link {
   float: left;
@@ -68,20 +67,23 @@
 
 /* styles for the choose layout page */
 .panels-layouts-checkboxes .form-checkboxes .form-item,
-#panels-choose-layout .form-radios .form-item {
+#panels-choose-layout .form-type-radio,
+.panels-choose-layout .form-type-radio {
   float: left;
   margin-right: .5em;
   width: 90px;
 }
 
 .panels-layouts-checkboxes .form-checkboxes .form-item .layout-icon,
-#panels-choose-layout .form-radios .form-item .layout-icon {
+#panels-choose-layout .form-type-radio .form-item .layout-icon,
+.panels-choose-layout .form-type-radio .form-item .layout-icon {
   float: none;
   height: 11em;
   width: 90px;
 }
-.panels-layouts-checkboxes .form-checkboxes .option,
-#panels-choose-layout .form-radios .form-item .option {
+.panels-layouts-checkboxes .form-checkboxes .option input,
+#panels-choose-layout .form-type-radio input,
+.panels-choose-layout .form-type-radio input {
   width: 50px;
   display: block;
   text-align: center;

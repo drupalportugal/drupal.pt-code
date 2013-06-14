@@ -1,4 +1,3 @@
-// $Id: panels-base.js,v 1.2 2010/01/21 07:11:41 sdboyer Exp $
 /**
  * @file
  * Implement basic methods required by all of panels.

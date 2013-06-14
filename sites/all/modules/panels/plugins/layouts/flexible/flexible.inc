@@ -1,5 +1,4 @@
 <?php
-// $Id: flexible.inc,v 1.4 2010/10/11 22:56:00 sdboyer Exp $
 
 /**
  * Implementation of hook_panels_layouts()
@@ -94,7 +93,9 @@ function panels_flexible_convert_settings(&$settings, &$layout) {
 
   if (!empty($layout['layout'])) {
     $settings = $layout['layout']->settings;
-    return $settings;
+    if ($settings) {
+      return $settings;
+    }
   }
 
   if (empty($settings)) {
@@ -377,7 +378,7 @@ function theme_panels_flexible($vars) {
     // because the display does not truly exist, so we'll stick it in the
     // head tag. We also do this if we've been told we're in the layout
     // editor so that it always gets fresh CSS.
-    drupal_add_css($css, 'inline');
+    drupal_add_css($css, array('type' => 'inline', 'preprocess' => FALSE));
   }
 
   // Also store the CSS on the display in case the live preview or something
@@ -418,7 +419,7 @@ function theme_panels_flexible_admin($vars) {
   $css = panels_flexible_render_css($renderer);
 
   // For the administrative view, add CSS directly to head.
-  drupal_add_css($css, 'inline');
+  drupal_add_css($css, array('type' => 'inline', 'preprocess' => FALSE));
 
   if (empty($display->editing_layout)) {
     $output = '<input type="submit" id="panels-flexible-toggle-layout" class="form-submit" value ="' .
@@ -592,7 +593,8 @@ function panels_flexible_render_splitter($renderer, $left_id, $right_id) {
     $right_class = $left_class;
   }
 
-  $output = '<div class="panels-flexible-splitter flexible-splitter-for-' . $left_class . '">';
+  $output = '<div tabindex="0"
+    class="panels-flexible-splitter flexible-splitter-for-' . $left_class . '">';
 
   // Name the left object
   $output .= '<span class="panels-flexible-splitter-left">';
@@ -882,19 +884,23 @@ function panels_flexible_get_css_group(&$css, $renderer, $list, $owner_id, $type
     // If there is any total remaining, we need to offset the splitter
     // by this much too.
     if ($left_total) {
+      // Add this even if it's 0 so we can handle removals.
+      $css["$owner_id-inside"]['padding-left'] = '0px';
       if ($renderer->admin || count($middle)) {
         $css["$owner_id-middle"]['margin-left'] = $left_total . 'px';
         // IE hack
         $css["* html $owner_id-left"]['left'] = $left_total . "px";
+        // Make this one very specific to the admin CSS so that preview
+        // does not stomp it.
+        $css[".panel-flexible-admin $owner_id-inside"]['padding-left'] = '0px';
       }
       else {
         $css["$owner_id-inside"]['margin-left'] = '-' . $left_total . 'px';
+        $css["$owner_id-inside"]['padding-left'] = $left_total . 'px';
         // IE hack
         $css["* html $owner_id-inside"]['left'] = $left_total . "px";
       }
     }
-    // Add this even if it's 0 so we can handle removals.
-    $css["$owner_id-inside"]['padding-left'] = '0px';
     if ($right_total) {
       $css["$owner_id-middle"]['margin-right'] = $right_total . 'px';
     }
@@ -1374,7 +1380,11 @@ function panels_ajax_flexible_edit_add($handler, $id, $location = 'left') {
 
     if (!empty($form_state['sibling'])) {
       $sibling_width = '#panels-dnd-main .' . $renderer->base[$item['type']] . '-' . $form_state['sibling'] . '-width';
-      $output[] = ajax_command_html($sibling_width, $settings['items'][$form_state['sibling']]['width']);
+      $output[] = array(
+        'command' => 'flexible_set_width',
+        'selector' => $sibling_width,
+        'width' => $settings['items'][$form_state['sibling']]['width'],
+      );
     }
     foreach ($css as $selector => $data) {
       $output[] = ajax_command_css($selector, $data);
@@ -1681,7 +1691,7 @@ function panels_ajax_flexible_edit_reuse($handler) {
   );
 
   $output = ctools_modal_form_wrapper('panels_flexible_reuse_form', $form_state);
-  if (empty($output)) {
+  if (!empty($form_state['executed'])) {
     // Create the new layout.
     ctools_include('export');
     $layout = ctools_export_crud_new('panels_layout');
@@ -1725,9 +1735,13 @@ function panels_flexible_reuse_form($form, &$form_state) {
   );
 
   $form['name'] = array(
-    '#type' => 'textfield',
+    '#type' => 'machine_name',
     '#title' => t('Machine name'),
     '#description' => t('The machine readable name of this layout. It must be unique, and it must contain only alphanumeric characters and underscores. Once created, you will not be able to change this value!'),
+    '#machine_name' => array(
+      'exists' => 'panels_flexible_edit_name_exists',
+      'source' => array('admin_title'),
+    ),
   );
 
   $form['category'] = array(
@@ -1771,4 +1785,14 @@ function panels_flexible_reuse_form_validate(&$form, &$form_state) {
   if (preg_match('/[^a-zA-Z0-9_]/', $form_state['values']['name'])) {
     form_error($form['name'], t('Name must be alphanumeric or underscores only.'));
   }
+}
+
+/**
+ * Test for #machine_name type to see if an export exists.
+ */
+function panels_flexible_edit_name_exists($name, $element, &$form_state) {
+  ctools_include('export');
+  $plugin = $form_state['plugin'];
+
+  return (empty($form_state['item']->export_ui_allow_overwrite) && ctools_export_crud_load($plugin['schema'], $name));
 }

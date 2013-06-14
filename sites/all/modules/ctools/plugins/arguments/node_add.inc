@@ -1,5 +1,4 @@
 <?php
-// $Id: node_add.inc,v 1.5 2010/01/29 20:18:01 merlinofchaos Exp $
 
 /**
  * @file
@@ -26,10 +25,6 @@ function ctools_node_add_context($arg = NULL, $conf = NULL, $empty = FALSE) {
   // If unset it wants a generic, unfilled context.
   if (!isset($arg)) {
     return ctools_context_create_empty('node_add_form');
-  }
-
-  if (array_filter($conf['types']) && empty($conf['types'][$arg])) {
-    return NULL;
   }
 
   return ctools_context_create('node_add_form', $arg);

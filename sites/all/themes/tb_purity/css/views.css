@@ -1,0 +1,139 @@
+/* COMMON VIEWS ELEMENTS
+--------------------------------------------------------------*/
+/* Views Field ---*/
+.views-field {
+}
+
+.field-content {
+}
+
+/* Views Field Title */
+.views-field-title {
+  font-weight: bold;
+}
+
+.views-field-title .field-content {
+}
+
+.views-field-title a {
+}
+
+/* Views Field Image */
+.views-field-field-image {
+  display: block;
+  float: left;
+  margin: 10px 8px 0 0;
+}
+
+.views-field-field-image .field-content {
+}
+
+/* Views Field Body */
+.views-field-body {
+}
+
+.views-field-body .field-content {
+}
+
+/* Views Field Changed */
+.views-field-changed {
+}
+
+.views-field-changed .field-content {
+  color: #999;
+  font-size: 0.92em;
+}
+
+/* Views Inline Grid ---*/
+.cols-1 .views-col {
+  width: 100%;
+}
+
+.cols-2 .views-col {
+  width: 50%;
+}
+
+.cols-3 .views-col {
+  width: 33.33%;
+}
+
+.cols-4 .views-col {
+  width: 25%;
+}
+
+.cols-5 .views-col {
+  width: 20%;
+}
+
+.cols-6 .views-col {
+  width: 16.66%;
+}
+
+/* SLIDESHOW
+--------------------------------------------------------------*/
+#slideshow-wrapper .container {
+  background: #f6f7f8;
+  border-bottom: 1px solid #cdcdcd;
+  position: relative;
+}
+
+#slideshow-wrapper .block-content {
+  padding: 0;
+}
+
+/* Slideshow Navigation ---*/
+#slideshow-wrapper .views-slideshow-controls-bottom {
+  background: #333;
+  bottom: 20px;
+  color: #cdcdcd;
+  font-size: .92em;
+  height: auto;
+  position: absolute;
+  right: 0;
+  text-transform: uppercase;
+  width: auto;
+  z-index: 20; /* if you have more than 18 images in slideshow, increase this value */
+}
+
+#slideshow-wrapper .views-slideshow-controls-top {
+  display: none;
+}
+
+#slideshow-wrapper .views_slideshow_controls_text {
+  float: left;
+}
+
+#slideshow-wrapper .views_slideshow_controls_text span {
+  cursor: pointer;
+  display: inline-block;
+  padding: 6px;
+}
+
+#slideshow-wrapper .views_slideshow_controls_text span:hover {
+  background: #08c;
+  text-decoration: none;
+}
+
+#slideshow-wrapper .views_slideshow_controls_text span a {
+  color: #ddd;
+  font-size: .917em;
+}
+
+#slideshow-wrapper .views_slideshow_controls_text span a:hover,
+#slideshow-wrapper .views_slideshow_controls_text span a:focus {
+  text-decoration: none;
+}
+
+#slideshow-wrapper .views_slideshow_slide_counter {
+  border-left: 1px solid #666;
+  float: left;
+  padding: 5px;
+}
+
+/* VIEWS - GRID
+--------------------------------------------------------------*/
+.views-col {
+}
+
+.views-row {
+}

@@ -1,5 +1,4 @@
 <?php
-// $Id: db.inc,v 1.2 2009/07/06 04:26:53 ronan Exp $
 
 
 /**
@@ -97,14 +96,24 @@ function _backup_migrate_default_exclude_tables() {
 function _backup_migrate_default_structure_only_tables() {
   $core = array(
     'cache',
+    'cache_admin_menu',
+    'cache_browscap',
+    'cache_content',
     'cache_filter',
     'cache_calendar_ical',
+    'cache_location',
     'cache_menu',
     'cache_page',
+    'cache_reptag',
     'cache_views',
+    'cache_views_data',
     'cache_block',
     'cache_update',
     'cache_form',
+    'cache_bootstrap',
+    'cache_field',
+    'cache_image',
+    'cache_path',
     'sessions',
     'search_dataset',
     'search_index',

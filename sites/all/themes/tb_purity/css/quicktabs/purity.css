@@ -1,0 +1,191 @@
+.quicktabs_wrapper {
+}
+
+.quicktabs_main {
+  padding-top: 1em;
+}
+
+.quicktabs-style-purity ul.quicktabs-tabs {
+  background: #f4f4f4 url(../images/line.gif) repeat-x left bottom;
+  border-radius: 5px 5px 0 0;
+  height: 30px;
+  margin: 0;
+  overflow: hidden;
+  padding: 0;
+}
+
+.quicktabs-style-purity ul.quicktabs-tabs li {
+  background: none;
+  border-right: 1px solid #ccc;
+  display: block;
+  float: left;
+  list-style: none;
+  margin: 0;
+  overflow: hidden;
+  padding: 0;
+  white-space: nowrap;
+}
+
+.quicktabs-style-purity ul.quicktabs-tabs li.last {
+  border-right: none;
+}
+
+.quicktabs-style-purity ul.quicktabs-tabs li.last.active {
+  border-right: 1px solid #ccc;
+}
+
+.quicktabs-style-purity ul.quicktabs-tabs li a {
+  color: #333;
+  display: block;
+  float: left;
+  font-weight: bold;
+  padding: .5em .75em;
+}
+
+.quicktabs-style-purity ul.quicktabs-tabs li a:hover,
+.quicktabs-style-purity ul.quicktabs-tabs li a:active,
+.quicktabs-style-purity ul.quicktabs-tabs li a:focus {
+  text-decoration: none;
+}
+
+.quicktabs-style-purity ul.quicktabs-tabs li.active {
+  line-height: 18px;
+}
+
+.quicktabs-style-purity ul.quicktabs-tabs li.active a {
+  background: #fff;
+  color: #333;
+  font-weight: bold;
+  line-height: 18px;
+}
+
+.view-tags .item-list ul li {
+  background: none;
+  border-bottom: none;
+  display: inline-block;
+  float: left;
+  font-size: 1.1em;
+  margin: 0;
+  min-height: 0;
+  padding: 0 10px 0 0;
+}
+
+/* --- Arcodion --- */
+.quick-accordion-purity {
+  font-family: Arial, Helvetica, sans-serif; /* Override the font */
+  font-size: 1em; /* Ensure font size is approriate with the container */
+}
+
+/* Accordion Header */
+.quick-accordion-purity .ui-accordion-header {
+  background: #ccc;
+  border-radius: 0;
+  color: #333;
+  font-weight: bold;
+}
+
+.quick-accordion-purity .ui-accordion-header:first-child {
+  border-radius: 5px 5px 0 0;
+  margin-top: 0;
+}
+
+.quick-accordion-purity .ui-accordion-header a {
+  color: #333;
+  font-size: 1em;
+  padding: 0.25em 0.5em 0.25em 2em;
+}
+
+.quick-accordion-purity .ui-state-default .ui-icon {
+  background: url(../../images/arrow.png) no-repeat 5px 5px;
+}
+
+/* Hover Accordion Header */
+.quick-accordion-purity .ui-state-hover {
+  background: #333;
+  border: 1px solid #333;
+  color: #fff;
+}
+
+.quick-accordion-purity .ui-state-hover a {
+  color: #fff;
+}
+
+.quick-accordion-purity .ui-state-hover .ui-icon {
+  background: url(../../images/arrow-2.png) no-repeat 5px 5px;
+}
+
+/* Active Accordion Header */
+.quick-accordion-purity .ui-state-active {
+  background: #007fc8;
+  color: #fff;
+}
+
+.quick-accordion-purity .ui-state-active a {
+  color: #fff;
+}
+
+.quick-accordion-purity .ui-state-active .ui-icon {
+  background: url(../../images/arrow-3.png) no-repeat 5px 5px;
+}
+
+/* Accordion Content */
+.quick-accordion-purity .ui-accordion-content {
+  border: none;
+  border-radius: 0;
+  overflow: hidden;
+  padding: .5em;
+}
+
+/* --- UI Tabs --- */
+.quicktabs-ui-purity {
+  border: 1px solid #ccc;
+  border-radius: 0;
+  font-family: Arial, Helvetica, sans-serif; /* Override the font */
+  font-size: 1em; /* Ensure font size is approriate with the container */
+  padding: 0;
+}
+
+/* Tabs */
+.quicktabs-ui-purity .ui-tabs-nav {
+  background: #ccc;
+  border: 0;
+  border-bottom: 1px solid #ccc;
+  border-radius: 0;
+  margin: 0;
+  padding: .25em .25em 0;
+}
+
+.quicktabs-ui-purity .ui-tabs-nav li {
+  background: #f4f4f4;
+  border: 1px solid #ccc;
+  border-bottom: 0;
+}
+
+.quicktabs-ui-purity .ui-tabs-nav li a {
+  color: #333;
+  font-weight: bold;
+  padding: .375em .75em;
+}
+
+/* Hover Tabs */
+.quicktabs-ui-purity .ui-tabs-nav li.ui-state-hover {
+}
+
+.quicktabs-ui-purity .ui-tabs-nav li.ui-state-hover a {
+}
+
+/* Selected Tabs */
+.quicktabs-ui-purity .ui-tabs-nav li.ui-tabs-selected {
+  background: #fff;
+  border: 1px solid #ccc;
+  border-bottom: 0;
+}
+
+.quicktabs-ui-purity .ui-tabs-nav li.ui-tabs-selected a {
+  color: #333;
+}
+
+/* Tabs Content */
+.quicktabs-ui-purity .ui-tabs-panel {
+  padding: .5em;
+}

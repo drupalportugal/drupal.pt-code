@@ -1,12 +1,13 @@
 <?php
-// $Id: views_handler_argument_vocabulary_vid.inc,v 1.1.6.1 2009/11/02 22:01:26 merlinofchaos Exp $
 
 /**
  * Argument handler to accept a vocabulary id.
+ *
+ * @ingroup views_argument_handlers
  */
-class views_handler_argument_vocabulary_vid extends views_handler_argument {
+class views_handler_argument_vocabulary_vid extends views_handler_argument_numeric {
   /**
-   * Override the behavior of title(). Get the name of the user.
+   * Override the behavior of title(). Get the name of the vocabulary.
    */
   function title() {
     $title = db_query("SELECT v.name FROM {taxonomy_vocabulary} v WHERE v.vid = :vid", array(':vid' => $this->argument))->fetchField();

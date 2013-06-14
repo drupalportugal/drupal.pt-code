@@ -1,5 +1,4 @@
 <?php
-// $Id: views_content_plugin_style_ctools_context.inc,v 1.2 2010/10/11 22:18:23 sdboyer Exp $
 /**
  * @file
  * Contains the default style plugin.
@@ -15,17 +14,6 @@ class views_content_plugin_style_ctools_context extends views_plugin_style {
   var $rows = array();
 
   /**
-   * Set default options
-   */
-  function options(&$options) {
-    parent::options($options);
-  }
-
-  function options_form(&$form, &$form_state) {
-    parent::options_form($form, $form_state);
-  }
-
-  /**
    * Render the display in this style.
    */
   function render() {
@@ -34,10 +22,16 @@ class views_content_plugin_style_ctools_context extends views_plugin_style {
     }
 
     $this->rows = array();
+    $this->groups = array();
     if ($this->uses_row_plugin() && empty($this->row_plugin)) {
       vpr('views_plugin_style_default: Missing row plugin');
       return;
     }
+
+    // Some engines like solr key results on ids, but rendering really expects
+    // things to be keyed exclusively by row index. Using array_values()
+    // guarantees that.
+    $this->view->result = array_values($this->view->result);
 
     // Group the rows according to the grouping field, if specified.
     $sets = $this->render_grouping($this->view->result, $this->options['grouping']);
@@ -49,6 +43,7 @@ class views_content_plugin_style_ctools_context extends views_plugin_style {
       foreach ($records as $row_index => $row) {
         $this->view->row_index = $row_index;
         $this->rows[$row_index] = $this->row_plugin->render($row);
+        $this->groups[$row_index] = $title;
       }
     }
     unset($this->view->row_index);

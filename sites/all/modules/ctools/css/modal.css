@@ -1,4 +1,3 @@
-/* $Id: modal.css,v 1.8 2010/09/07 09:02:50 sdboyer Exp $ */
 div.ctools-modal-content {
   background: #fff;
   color: #000;
@@ -24,7 +23,6 @@ div.ctools-modal-content .modal-header {
 
 div.ctools-modal-content .modal-header a {
   color: white;
-  float: right;
 }
 
 div.ctools-modal-content .modal-content {
@@ -38,6 +36,7 @@ div.ctools-modal-content .modal-form {
 
 div.ctools-modal-content a.close {
   color: white;
+  float: right;
 }
 
 div.ctools-modal-content a.close:hover {
@@ -103,4 +102,25 @@ div.ctools-modal-content .container-inline .form-item {
 #views-exposed-pane-wrapper .form-item {
   margin-top: 0;
   margin-bottom: 0;
+}
+
+div.ctools-modal-content label.hidden-options {
+  background: transparent url(../images/arrow-active.png) no-repeat right;
+  height: 12px;
+  padding-right: 12px;
+}
+
+div.ctools-modal-content label.expanded-options {
+  background: transparent url(../images/expanded-options.png) no-repeat right;
+  height: 12px;
+  padding-right: 16px;
+}
+
+div.ctools-modal-content .option-text-aligner label.expanded-options,
+div.ctools-modal-content .option-text-aligner label.hidden-options {
+  background: none;
+}
+
+div.ctools-modal-content .dependent-options {
+  padding-left: 30px;
 }

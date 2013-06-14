@@ -1,5 +1,4 @@
 <?php
-// $Id: user_view.inc,v 1.6 2010/09/07 09:02:50 sdboyer Exp $
 
 /**
  * @file
@@ -32,6 +31,7 @@ function page_manager_user_view_page_manager_tasks() {
     // Allow this to be enabled or disabled:
     'disabled' => variable_get('page_manager_user_view_disabled', TRUE),
     'enable callback' => 'page_manager_user_view_enable',
+    'access callback' => 'page_manager_user_view_access_check',
   );
 }
 
@@ -47,16 +47,16 @@ function page_manager_user_view_menu_alter(&$items, $task) {
   }
 
   // Override the user view handler for our purpose.
-  if ($items['user/%user_uid_optional']['page callback'] == 'user_view' || variable_get('page_manager_override_anyway', FALSE)) {
-    $items['user/%user_uid_optional']['page callback'] = 'page_manager_user_view';
-    $items['user/%user_uid_optional']['file path'] = $task['path'];
-    $items['user/%user_uid_optional']['file'] = $task['file'];
+  if ($items['user/%user']['page callback'] == 'user_view_page' || variable_get('page_manager_override_anyway', FALSE)) {
+    $items['user/%user']['page callback'] = 'page_manager_user_view_page';
+    $items['user/%user']['file path'] = $task['path'];
+    $items['user/%user']['file'] = $task['file'];
   }
   else {
     // automatically disable this task if it cannot be enabled.
     variable_set('page_manager_user_view_disabled', TRUE);
     if (!empty($GLOBALS['page_manager_enabling_user_view'])) {
-      drupal_set_message(t('Page manager module is unable to enable user/%user because some other module already has overridden with %callback.', array('%callback' => $items['user/%user_uid_optional']['page callback'])), 'error');
+      drupal_set_message(t('Page manager module is unable to enable user/%user because some other module already has overridden with %callback.', array('%callback' => $items['user/%user']['page callback'])), 'error');
     }
   }
 }
@@ -68,7 +68,7 @@ function page_manager_user_view_menu_alter(&$items, $task) {
  * to run with it. If no one does, it passes through to Drupal core's
  * user view, which is user_page_view().
  */
-function page_manager_user_view($account) {
+function page_manager_user_view_page($account) {
   // Load my task plugin:
   $task = page_manager_get_task('user_view');
 
@@ -77,17 +77,32 @@ function page_manager_user_view($account) {
   ctools_include('context-task-handler');
   $contexts = ctools_context_handler_get_task_contexts($task, '', array($account));
 
+  // Build content. @todo -- this may not be right.
+  user_build_content($account);
+
   $output = ctools_context_handler_render($task, '', $contexts, array($account->uid));
-  if ($output === FALSE) {
-    // Fall back!
+  if ($output != FALSE) {
+    return $output;
+  }
+
+  $function = 'user_view';
+  foreach (module_implements('page_manager_override') as $module) {
+    $call = $module . '_page_manager_override';
+    if (($rc = $call('user_view')) && function_exists($rc)) {
+      $function = $rc;
+      break;
+    }
+  }
+
+  // Otherwise, fall back.
+  if ($function == 'user_view') {
     module_load_include('inc', 'user', 'user.pages');
-    $output = user_view($account);
   }
-  else {
-    //fire off "view" op so that triggers still work
-    user_module_invoke('view', $array = array(), $account);
-  }
-  return $output;
+  //fire off "view" op so that triggers still work
+  // @todo -- this doesn't work anymore, and the alternatives seem bad.
+  // will have to figure out how to fix this.
+//  user_module_invoke('view', $array = array(), $account);
+  return $function($account);
 }
 
 /**
@@ -102,7 +117,7 @@ function page_manager_user_view_get_arguments($task, $subtask_id) {
       'keyword' => 'user',
       'identifier' => t('User being viewed'),
       'id' => 1,
-      'name' => 'uid',
+      'name' => 'entity_id:user',
       'settings' => array(),
     ),
   );
@@ -126,4 +141,21 @@ function page_manager_user_view_enable($cache, $status) {
   if (!$status) {
     $GLOBALS['page_manager_enabling_user_view'] = TRUE;
   }
+}
+
+/**
+ * Callback to determine if a page is accessible.
+ *
+ * @param $task
+ *   The task plugin.
+ * @param $subtask_id
+ *   The subtask id
+ * @param $contexts
+ *   The contexts loaded for the task.
+ * @return
+ *   TRUE if the current user can access the page.
+ */
+function page_manager_user_view_access_check($task, $subtask_id, $contexts) {
+  $context = reset($contexts);
+  return user_view_access($context->data);
 }

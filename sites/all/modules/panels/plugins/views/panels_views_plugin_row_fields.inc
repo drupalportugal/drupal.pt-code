@@ -1,5 +1,4 @@
 <?php
-// $Id: panels_views_plugin_row_fields.inc,v 1.3 2010/10/11 22:56:02 sdboyer Exp $
 /**
  * @file
  * Contains the base row style plugin.
@@ -13,13 +12,10 @@
  *
  * @ingroup views_row_plugins
  */
-class panels_views_plugin_row_fields extends views_plugin_row {
+class panels_views_plugin_row_fields extends views_plugin_row_fields {
   function option_definition() {
     $options = parent::option_definition();
 
-    $options['inline'] = array('default' => array());
-    $options['separator'] = array('default' => '');
-    $options['hide_empty'] = array('default' => FALSE);
     $options['layout'] = array('default' => 'twocol');
     $options['regions'] = array('default' => array());
 
@@ -30,34 +26,7 @@ class panels_views_plugin_row_fields extends views_plugin_row {
    * Provide a form for setting options.
    */
   function options_form(&$form, &$form_state) {
-    $fields = $this->display->handler->get_field_labels();
-
-    if (empty($this->options['inline'])) {
-      $this->options['inline'] = array();
-    }
-
-    $form['inline'] = array(
-      '#type' => 'checkboxes',
-      '#title' => t('Inline fields'),
-      '#options' => $fields,
-      '#default_value' => $this->options['inline'],
-      '#description' => t('Inline fields will be displayed next to each other rather than one after another.'),
-    );
-
-    $form['separator'] = array(
-      '#title' => t('Separator'),
-      '#type' => 'textfield',
-      '#size' => 10,
-      '#default_value' => isset($this->options['separator']) ? $this->options['separator'] : '',
-      '#description' => t('The separator may be placed between inline fields to keep them from squishing up next to each other. You can use HTML in this field.'),
-    );
-
-    $form['hide_empty'] = array(
-      '#type' => 'checkbox',
-      '#title' => t('Hide empty fields'),
-      '#default_value' => $this->options['hide_empty'],
-      '#description' => t('Do not display fields, labels or markup for fields that are empty.'),
-    );
+    parent::options_form($form, $form_state);
 
     ctools_include('plugins', 'panels');
     $layouts = panels_get_layouts();
@@ -87,6 +56,7 @@ class panels_views_plugin_row_fields extends views_plugin_row {
     );
 
     if (!empty($current_layout)) {
+      $fields = $this->display->handler->get_field_labels();
       $regions = panels_get_regions($current_layout, panels_new_display());
       foreach ($fields as $id => $title) {
         $form['regions'][$id] = array(
@@ -105,7 +75,7 @@ class panels_views_plugin_row_fields extends views_plugin_row {
    * Perform any necessary changes to the form values prior to storage.
    * There is no need for this function to actually store the data.
    */
-  function options_submit($form, &$form_state) {
+  function options_submit(&$form, &$form_state) {
     $form_state['values']['row_options']['inline'] = array_filter($form_state['values']['row_options']['inline']);
   }
 
@@ -169,11 +139,11 @@ class panels_views_plugin_row_fields extends views_plugin_row {
     // render them into the content array.
     foreach ($this->region_fields as $region_id => $fields) {
       $this->view->field = $fields;
-      $content[$region_id] = theme($this->theme_functions(), array('view' => $this->view, 'options' => $this->options, 'row' => $row, 'field_alias' => $this->field_alias));
+      $content[$region_id] = theme($this->theme_functions(), array('view' => $this->view, 'options' => $this->options, 'row' => $row));
     }
 
     // Restore our $fields array.
-    $view->field = $fields;
+    $this->view->field = $fields;
 
     // Now that we have a rendered content array, render it.
     return panels_print_layout($layout, $content, $meta);

@@ -1,5 +1,4 @@
 <?php
-// $Id: pathauto.install,v 1.26 2010/08/07 21:27:00 davereid Exp $
 
 /**
  * @file
@@ -14,7 +13,7 @@
 function pathauto_install() {
   // Set some default variables necessary for the module to perform.
   variable_set('pathauto_node_pattern', 'content/[node:title]');
-  variable_set('pathauto_taxonomy_pattern', '[term:vocabulary]/[term:name]');
+  variable_set('pathauto_taxonomy_term_pattern', '[term:vocabulary]/[term:name]');
   variable_set('pathauto_forum_pattern', '[term:vocabulary]/[term:name]');
   variable_set('pathauto_user_pattern', 'users/[user:name]');
   variable_set('pathauto_blog_pattern', 'blogs/[user:name]');
@@ -40,47 +39,6 @@ function pathauto_uninstall() {
 }
 
 /**
- * Set the weight a little heavier to allow taxonomy to do its work.
- */
-function pathauto_update_1() {
-  db_update('system')
-    ->fields(array('weight' => 1))
-    ->condition('type', 'module')
-    ->condition('name', 'pathauto')
-    ->execute();
-}
-
-/**
- * pathauto_update_4 was a backport of a feature which is in core of Drupal 6
- * hence it is removed from the 6.x branch even though the goal is to support
- * Pathauto 5.x-1.x -> 6.x-2.x upgrades.
- */
-
-/**
- * Delete the pathauto_node_supportsfeeds.
- */
-function pathauto_update_3() {
-  // Do nothing, this update was a mistake
-}
-
-/**
- * New style naming for the punctuation chars.
- */
-function pathauto_update_4() {
-  variable_set('pathauto_punctuation_quotes', variable_get('pathauto_quotes', 0));
-  variable_del('pathauto_quotes');
-}
-
-/**
- * Remove the url_alias_extra table which wasn't used.
- */
-function pathauto_update_7() {
-  if (db_table_exists('url_alias_extra')) {
-    db_drop_table('url_alias_extra');
-  }
-}
-
-/**
  * Remove the unsupported user/%/contact and user/%/tracker pattern variables.
  */
 function pathauto_update_6200() {
@@ -101,6 +59,12 @@ function pathauto_update_6201() {
 }
 
 /**
+ * Empty update since it is handled by pathauto_update_7004().
+ */
+function pathauto_update_6202() {
+}
+
+/**
  * Remove obsolete variables since batch API is now used.
  */
 function pathauto_update_7000() {
@@ -116,15 +80,9 @@ function pathauto_update_7000() {
 }
 
 /**
- * Taxonomy and forum feed suffixes changed from '0\/feed' to 'feed'.
+ * Empty update since feed paths are no longer supported.
  */
 function pathauto_update_7001() {
-  if (variable_get('pathauto_taxonomy_applytofeeds', '') == '0/feed') {
-    variable_set('pathauto_taxonomy_applytofeeds', 'feed');
-  }
-  if (variable_get('pathauto_forum_applytofeeds', '') == '0/feed') {
-    variable_set('pathauto_forum_applytofeeds', 'feed');
-  }
 }
 
 /**
@@ -138,12 +96,76 @@ function pathauto_update_7002() {
         // Skip the forum vocabulary.
         continue;
       }
-      if ($pattern = variable_get('pathauto_taxonomy_' . $vid . '_pattern')) {
+      if ($pattern = variable_get('pathauto_taxonomy_' . $vid . '_pattern', '')) {
         variable_set('pathauto_taxonomy_' . $vocabulary->machine_name . '_pattern', $pattern);
       }
       variable_del('pathauto_taxonomy_' . $vid . '_pattern');
     }
   }
+}
+
+/**
+ * Rename 'taxonomy' variables to use the entity type 'taxonomy_term'.
+ */
+function pathauto_update_7003() {
+  $variables = db_select('variable', 'v')
+    ->fields('v', array('name'))
+    ->condition(db_and()
+      ->condition('name', db_like("pathauto_taxonomy_") . '%', 'LIKE')
+      ->condition('name', db_like("pathauto_taxonomy_term_") . '%', 'NOT LIKE')
+    )
+    ->execute()
+    ->fetchCol();
+  foreach ($variables as $variable) {
+    $value = variable_get($variable);
+    variable_del($variable);
+    $variable = strtr($variable, array('pathauto_taxonomy_' => 'pathauto_taxonomy_term_'));
+    variable_set($variable, $value);
+  }
+}
+
+/**
+ * Remove obsolete variables for removed feed handling.
+ */
+function pathauto_update_7004() {
+  variable_del('pathauto_node_supportsfeeds');
+  variable_del('pathauto_node_applytofeeds');
+  variable_del('pathauto_taxonomy_supportsfeeds');
+  variable_del('pathauto_taxonomy_applytofeeds');
+  variable_del('pathauto_forum_supportsfeeds');
+  variable_del('pathauto_forum_applytofeeds');
+  variable_del('pathauto_user_supportsfeeds');
+  variable_del('pathauto_user_applytofeeds');
+  variable_del('pathauto_blog_supportsfeeds');
+  variable_del('pathauto_blog_applytofeeds');
+}
+
+/**
+ * Fix original incorrect tokens in taxonomy and forum patterns.
+ */
+function pathauto_update_7005() {
+  $replacements = array(
+    '[vocabulary:name]' => '[term:vocabulary]',
+    '[vocabulary:' => '[term:vocabulary:',
+    '[term:catpath]' => '[term:name]',
+    '[term:path]' => '[term:name]',
+  );
+  $variables = db_select('variable', 'v')
+    ->fields('v', array('name'))
+    ->condition(db_or()
+      ->condition('name', db_like("pathauto_taxonomy_term_") . '%' . db_like('pattern'), 'LIKE')
+      ->condition('name', db_like("pathauto_forum_") . '%' . db_like('pattern'), 'LIKE')
+    )
+    ->execute()
+    ->fetchCol();
+  foreach ($variables as $variable) {
+    if ($pattern = variable_get($variable)) {
+      $pattern = strtr($pattern, $replacements);
+      variable_set($variable, $pattern);
+    }
+  }
+
+  return 'Your Pathauto taxonomy and forum patterns have been corrected. You may wish to regenerate your taxonomy and forum term URL aliases.';
 }
 
 /**
@@ -153,8 +175,8 @@ function _pathauto_upgrade_token_list() {
   $tokens = array(
     //'catpath' => 'node:term-lowest:parent:path][node:term-lowest',
     //'catalias' => 'node:term-lowest:path',
-    'termpath' => 'term:parent:path][term:name',
-    'termalias' => 'term:path',
-    'bookpathalias' => 'node:book:parent:path',
+    //'termpath' => 'term:parent:path][term:name',
+    //'termalias' => 'term:url:alias',
+    //'bookpathalias' => 'node:book:parent:path',
   );
 }

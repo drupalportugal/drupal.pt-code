@@ -1,18 +1,19 @@
 <?php
-// $Id: views_handler_field_profile_list.inc,v 1.4.4.2 2010/03/22 19:28:19 merlinofchaos Exp $
 /**
  * Field handler display a profile list item.
+ *
+ * @ingroup views_field_handlers
  */
 class views_handler_field_profile_list extends views_handler_field_prerender_list {
   /**
    * Break up our field into a proper list.
    */
-  function pre_render($values) {
+  function pre_render(&$values) {
     $this->items = array();
     foreach ($values as $value) {
-      $field = $value->{$this->field_alias};
+      $field = $this->get_value($value);
       $this->items[$field] = array();
-      foreach (split("[,\n\r]", $field) as $item) {
+      foreach (preg_split("/[,\n\r]/", $field) as $item) {
         if ($item != '' && $item !== NULL) {
           $this->items[$field][] = array('item' => $item);
         }

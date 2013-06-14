@@ -1,5 +1,4 @@
 <?php
-// $Id: views_plugin_argument_default.inc,v 1.2.4.2 2010/01/28 22:44:37 dereine Exp $
 /**
  * @file
  * Contains the fixed argument default plugin.
@@ -57,7 +56,7 @@ class views_plugin_argument_default extends views_plugin {
   /**
    * Provide the default form form for submitting options
    */
-  function options_submit(&$form, &$form_state) { }
+  function options_submit(&$form, &$form_state, &$options = array()) { }
 
   /**
    * Determine if the administrator has the privileges to use this
@@ -76,7 +75,7 @@ class views_plugin_argument_default extends views_plugin {
     if (!$this->access()) {
       $form[$option_name]['#disabled'] = TRUE;
       $form[$option_name]['#value'] = $form[$this->option_name]['#default_value'];
-      $form[$option_name]['#description'] .= ' <strong>' . t('Note: you do not have permission to modify this. If you change the default argument type, this setting will be lost and you will NOT be able to get it back.') . '</strong>';
+      $form[$option_name]['#description'] .= ' <strong>' . t('Note: you do not have permission to modify this. If you change the default filter type, this setting will be lost and you will NOT be able to get it back.') . '</strong>';
     }
   }
 
@@ -94,4 +93,3 @@ class views_plugin_argument_default extends views_plugin {
 /**
  * @}
  */
-

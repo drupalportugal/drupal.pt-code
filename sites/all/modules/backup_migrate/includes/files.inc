@@ -1,11 +1,12 @@
 <?php
-// $Id: files.inc,v 1.2.2.3 2010/09/09 18:56:30 ronan Exp $
 
 
 /**
  * @file
  * General file handling code for Backup and Migrate.
  */
+
+define('BACKUP_MIGRATE_FILENAME_MAXLENGTH', 255);
 
 /**
  * Add a file to the temporary files list for deletion when we're done.
@@ -26,6 +27,7 @@ function backup_migrate_temp_files_add($filepath = NULL) {
 function _backup_migrate_temp_files_delete() {
   // Delete the temp files created during this run.
   foreach (backup_migrate_temp_files_add() as $file) {
+    $file = drupal_realpath($file);
     if (file_exists($file) && is_writable($file)) {
       unlink($file);
     }
@@ -39,7 +41,7 @@ function _backup_migrate_temp_files_delete() {
       // Delete 'backup_migrate_' files in the temp directory that are older than the expire time.
       // We should only attempt to delete writable files to prevent errors in shared environments.
       // This could still cause issues in shared environments with poorly configured file permissions.
-      if (strpos($file, 'backup_migrate_') === 0 && is_writable($file) && @filectime($file) < $expire) {
+      if (strpos($file, 'backup_migrate_') === 0 && is_writable("$dir/$file") && @filectime("$dir/$file") < $expire) {
         unlink("$dir/$file");
       }
     }
@@ -62,17 +64,31 @@ function _backup_migrate_filetypes() {
 }
 
 /**
+ * Adjust the length of a filename to allow for a string to be appended,
+ * staying within the maximum filename limit.
+ */
+function _backup_migrate_filename_append_prepare($filename, $append_str) {
+  $max_name_len = BACKUP_MIGRATE_FILENAME_MAXLENGTH - drupal_strlen($append_str);
+  if (drupal_strlen($filename) > $max_name_len) {
+    $filename = drupal_substr($filename, 0, $max_name_len);
+  }
+  return $filename;
+}
+
+/**
  * Construct a filename using token and some cleaning.
  */
-function _backup_migrate_clean_filename($filename) {
+function _backup_migrate_construct_filename($filename, $timestamp='') {
   $filename = token_replace($filename);
   $filename = preg_replace("/[^a-zA-Z0-9\.\-_]/", "", $filename);
-  if (drupal_strlen($filename) > 50) {
-    $filename = drupal_substr($filename, 0, 50);
-  }
+  $filename = _backup_migrate_filename_append_prepare($filename, $timestamp);
+  $filename .= '-' . $timestamp;
+  $filename = trim($filename, '-');
+
   if (drupal_strlen($filename) == 0) {
     $filename = 'untitled';
   }
+
   return $filename;
 }
 
@@ -326,6 +342,7 @@ class backup_file {
 
     // Start buffering and throw away the results so that errors don't get appended to the file.
     ob_start('_backup_migrate_file_dispose_buffer');
+    backup_migrate_cleanup();
     module_invoke_all('exit');
     exit();
   }
@@ -413,8 +430,15 @@ class backup_file {
    */
   function temporary_file() {
     $file = drupal_tempnam('temporary://', 'backup_migrate_');
-    $file .= '.'. $this->extension();
+    // Add the version without the extension. The tempnam function creates this for us.
     backup_migrate_temp_files_add($file);
+
+    if ($this->extension()) {
+      $file .= '.'. $this->extension();
+      // Add the version with the extension. This is the one we will actually use.
+      backup_migrate_temp_files_add($file);
+    }
     $this->path = $file;
   }
 }
+

@@ -1,5 +1,4 @@
 <?php
-// $Id: page-wizard.inc,v 1.3 2010/10/11 22:56:01 sdboyer Exp $
 
 /**
  * @file
@@ -66,8 +65,6 @@ function panels_page_wizard_add_content(&$form, &$form_state) {
   $form_state['display_title'] = !empty($cache->display_title);
 
   $form = panels_edit_display_form($form, $form_state);
-  // Make sure the theme will work since our form id is different.
-  $form['#theme'] = 'panels_edit_display_form';
 }
 
 /**

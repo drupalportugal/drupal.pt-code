@@ -1,0 +1,19 @@
+/* block.css */
+.block-rounded .block-inner {
+  -moz-border-radius: 5px;
+  -webkit-border-radiu: 5px;
+  border-radius: 5px;
+}
+
+/* navigation.css */
+#menu-bar-wrapper .block-superfish .sf-menu li.sfHover ul {
+  -moz-box-shadow: 1px 3px 5px rgba(0, 0, 0, 0.5);
+  -webkit-box-shadow: 1px 3px 5px rgba(0, 0, 0, 0.5);
+  box-shadow: 1px 3px 5px rgba(0, 0, 0, 0.5);
+}
+
+#menu-bar-wrapper .block-superfish .sf-menu.sf-navbar li.sfHover ul {
+  -moz-box-shadow: none;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}

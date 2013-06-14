@@ -1,7 +1,13 @@
-// $Id: panels_ipe.js,v 1.5 2010/10/11 22:56:02 sdboyer Exp $
 
 // Ensure the $ alias is owned by jQuery.
 (function($) {
+
+// randomly lock a pane.
+// @debug only
+Drupal.settings.Panels = Drupal.settings.Panels || {};
+Drupal.settings.Panels.RegionLock = {
+  10: { 'top': false, 'left': true, 'middle': true }
+}
 
 Drupal.PanelsIPE = {
   editors: {},
@@ -17,18 +23,21 @@ Drupal.PanelsIPE = {
         }
         return false;
       });
-  },
+  }
 }
 
-// A ready function should be sufficient for this, at least for now
-$(function() {
-  $.each(Drupal.settings.PanelsIPECacheKeys, function() {
-    Drupal.PanelsIPE.editors[this] = new DrupalPanelsIPE(this, Drupal.settings.PanelsIPESettings[this]);
-  });
-});
 
 Drupal.behaviors.PanelsIPE = {
   attach: function(context) {
+    for (var i in Drupal.settings.PanelsIPECacheKeys) {
+      var key = Drupal.settings.PanelsIPECacheKeys[i];
+      $('div#panels-ipe-display-' + key + ':not(.panels-ipe-processed)')
+        .addClass('panels-ipe-processed')
+        .each(function() {
+          Drupal.PanelsIPE.editors[key] = new DrupalPanelsIPE(key);
+          Drupal.PanelsIPE.editors[key].showContainer();
+        });
+    }
     Drupal.PanelsIPE.bindClickDelete(context);
   }
 };
@@ -44,27 +53,112 @@ Drupal.behaviors.PanelsIPE = {
  * discrete IPE elements. This will result in greater IPE flexibility.
  */
 function DrupalPanelsIPE(cache_key, cfg) {
+  cfg = cfg || {};
   var ipe = this;
   this.key = cache_key;
+  this.lockPath = null;
   this.state = {};
+  this.container = $('#panels-ipe-control-container');
   this.control = $('div#panels-ipe-control-' + cache_key);
   this.initButton = $('div.panels-ipe-startedit', this.control);
   this.cfg = cfg;
   this.changed = false;
   this.sortableOptions = $.extend({
-    revert: 200,
-    dropOnEmpty: true, // default
     opacity: 0.75, // opacity of sortable while sorting
-    // placeholder: 'draggable-placeholder',
-    // forcePlaceholderSize: true,
     items: 'div.panels-ipe-portlet-wrapper',
     handle: 'div.panels-ipe-draghandle',
-    tolerance: 'pointer',
-    cursorAt: 'top',
-    update: this.setChanged,
-    scroll: true
-    // containment: ipe.topParent,
+    cancel: '.panels-ipe-nodrag',
+    dropOnEmpty: true
   }, cfg.sortableOptions || {});
+
+  this.regions = [];
+  this.sortables = {};
+
+  $(document).bind('CToolsDetachBehaviors', function() {
+    // If the IPE is off and the container is not visible, then we need
+    // to reshow the container on modal close.
+    if (!$('.panels-ipe-form-container', ipe.control).html() && !ipe.container.is(':visible')) {
+      ipe.showContainer();
+      ipe.cancelLock();
+    }
+  });
+
+  // If a user navigates away from a locked IPE, cancel the lock in the background.
+  $(window).bind('unload', function() {
+    ipe.cancelLock(true);
+  });
+
+  /**
+   * If something caused us to abort what we were doing, send a background
+   * cancel lock request to the server so that we do not leave stale locks
+   * hanging around.
+   */
+  this.cancelLock = function(sync) {
+    // If there's a lockpath and an ajax available, inform server to clear lock.
+    // We borrow the ajax options from the customize this page link.
+    if (ipe.lockPath && Drupal.ajax['panels-ipe-customize-page']) {
+      var ajaxOptions = {
+        type: 'POST',
+        url: ipe.lockPath
+      }
+
+      if (sync) {
+        ajaxOptions.async = false;
+      }
+
+      // Make sure we don't somehow get another one:
+      ipe.lockPath = null;
+
+      // Send the request. This is synchronous to prevent being cancelled.
+      $.ajax(ajaxOptions);
+    }
+  }
+
+  this.activateSortable = function(event, ui) {
+    if (!Drupal.settings.Panels || !Drupal.settings.Panels.RegionLock) {
+      // don't bother if there are no region locks in play.
+      return;
+    }
+
+    var region = event.data.region;
+    var paneId = ui.item.attr('id').replace('panels-ipe-paneid-', '');
+
+    var disabledRegions = false;
+
+    // Determined if this pane is locked out of this region.
+    if (!Drupal.settings.Panels.RegionLock[paneId] || Drupal.settings.Panels.RegionLock[paneId][region]) {
+      ipe.sortables[region].sortable('enable');
+      ipe.sortables[region].sortable('refresh');
+    }
+    else {
+      disabledRegions = true;
+      ipe.sortables[region].sortable('disable');
+      ipe.sortables[region].sortable('refresh');
+    }
+
+    // If we disabled regions, we need to
+    if (disabledRegions) {
+      $(event.srcElement).bind('dragstop', function(event, ui) {
+        // Go through
+      });
+    }
+  };
+
+  // When dragging is stopped, we need to ensure all sortable regions are enabled.
+  this.enableRegions = function(event, ui) {
+    for (var i in ipe.regions) {
+      ipe.sortables[ipe.regions[i]].sortable('enable');
+      ipe.sortables[ipe.regions[i]].sortable('refresh');
+    }
+  }
+
+  this.initSorting = function() {
+    var $region = $(this).parents('.panels-ipe-region');
+    var region = $region.attr('id').replace('panels-ipe-regionid-', '');
+    ipe.sortables[region] = $(this).sortable(ipe.sortableOptions);
+    ipe.regions.push(region);
+    $(this).bind('sortactivate', {region: region}, ipe.activateSortable);
+  };
 
   this.initEditing = function(formdata) {
     ipe.topParent = $('div#panels-ipe-display-' + cache_key);
@@ -74,7 +168,7 @@ function DrupalPanelsIPE(cache_key, cfg) {
     // parameters used here.
     ipe.changed = false;
 
-    $('div.panels-ipe-sort-container', ipe.topParent).sortable(ipe.sortable_options);
+    $('div.panels-ipe-sort-container', ipe.topParent).each(ipe.initSorting);
 
     // Since the connectWith option only does a one-way hookup, iterate over
     // all sortable regions to connect them with one another.
@@ -85,6 +179,8 @@ function DrupalPanelsIPE(cache_key, cfg) {
       ipe.changed = true;
     });
 
+    $('div.panels-ipe-sort-container', ipe.topParent).bind('sortstop', this.enableRegions);
+
     $('.panels-ipe-form-container', ipe.control).append(formdata);
 
     $('input:submit:not(.ajax-processed)', ipe.control).addClass('ajax-processed').each(function() {
@@ -94,40 +190,65 @@ function DrupalPanelsIPE(cache_key, cfg) {
       element_settings.setClick = true;
       element_settings.event = 'click';
       element_settings.progress = { 'type': 'throbber' };
+      element_settings.ipe_cache_key = cache_key;
 
       var base = $(this).attr('id');
-      Drupal.ajax[base] = new Drupal.ajax(base, this, element_settings);
-      if ($(this).attr('id') == 'panels-ipe-save') {
-        Drupal.ajax[base].options.beforeSerialize = function (element_settings, options) {
-          ipe.saveEditing();
-          return Drupal.ajax[base].beforeSerialize(element_settings, options);
-        };
-      }
-      if ($(this).attr('id') == 'panels-ipe-cancel') {
-        Drupal.ajax[base].options.beforeSend = function () {
-          return ipe.cancelEditing();
-        };
-      }
+      Drupal.ajax[ipe.base] = new Drupal.ajax(base, this, element_settings);
     });
 
     // Perform visual effects in a particular sequence.
-    ipe.initButton.css('position', 'absolute');
-    ipe.initButton.fadeOut('normal');
-    $('.panels-ipe-on').show('normal');
-//    $('.panels-ipe-on').fadeIn('normal');
+    // .show() + .hide() cannot have speeds associated with them, otherwise
+    // it clears out inline styles.
+    $('.panels-ipe-on').show();
+    ipe.showForm();
     ipe.topParent.addClass('panels-ipe-editing');
-  }
 
-  this.endEditing = function(data) {
+    //Reposition the "Add new pane" button
+    $('.panels-ipe-newblock').each(function() {
+      var link_width_half = parseInt($(this).children('a').outerWidth() / 2);
+
+      $(this).css('margin-left', '-' + link_width_half + 'px');
+
+      $(this).css('margin-top', '-' + parseInt($(this).children('a').outerHeight() / 2) + 'px');
+
+      $(this).parents('.panels-ipe-placeholder').find('h3').css('width', parseInt(($(this).parents('.panels-ipe-placeholder').width() / 2) - link_width_half) + 'px');
+    });
+
+  };
+
+  this.hideContainer = function() {
+    ipe.container.slideUp('fast');
+  };
+
+  this.showContainer = function() {
+    ipe.container.slideDown('normal');
+  };
+
+  this.showButtons = function() {
+    $('.panels-ipe-form-container').hide();
+    $('.panels-ipe-button-container').show();
+    ipe.showContainer();
+  };
+
+  this.showForm = function() {
+    $('.panels-ipe-button-container').hide();
+    $('.panels-ipe-form-container').show();
+    ipe.showContainer();
+  };
+
+  this.endEditing = function() {
+    ipe.lockPath = null;
     $('.panels-ipe-form-container', ipe.control).empty();
     // Re-show all the IPE non-editing meta-elements
     $('div.panels-ipe-off').show('fast');
 
+    ipe.showButtons();
     // Re-hide all the IPE meta-elements
-    $('div.panels-ipe-on').hide('fast');
-    ipe.initButton.css('position', 'static');
-    ipe.topParent.removeClass('panels-ipe-editing');
-   $('div.panels-ipe-sort-container', ipe.topParent).sortable("destroy");
+    $('div.panels-ipe-on').hide();
+    if (ipe.topParent) {
+      ipe.topParent.removeClass('panels-ipe-editing');
+      $('div.panels-ipe-sort-container', ipe.topParent).sortable("destroy");
+    }
   };
 
   this.saveEditing = function() {
@@ -147,24 +268,30 @@ function DrupalPanelsIPE(cache_key, cfg) {
     });
   }
 
+  this.cancelIPE = function() {
+    ipe.hideContainer();
+    ipe.topParent.fadeOut('medium', function() {
+      ipe.topParent.replaceWith(ipe.backup.clone());
+      ipe.topParent = $('div#panels-ipe-display-' + ipe.key);
+
+      // Processing of these things got lost in the cloning, but the classes remained behind.
+      // @todo this isn't ideal but I can't seem to figure out how to keep an unprocessed backup
+      // that will later get processed.
+      $('.ctools-use-modal-processed', ipe.topParent).removeClass('ctools-use-modal-processed');
+      $('.pane-delete-processed', ipe.topParent).removeClass('pane-delete-processed');
+      ipe.topParent.fadeIn('medium');
+      Drupal.attachBehaviors();
+    });
+  };
+
   this.cancelEditing = function() {
     if (ipe.topParent.hasClass('changed')) {
       ipe.changed = true;
     }
 
     if (!ipe.changed || confirm(Drupal.t('This will discard all unsaved changes. Are you sure?'))) {
-      ipe.topParent.fadeOut('medium', function() {
-        ipe.topParent.replaceWith(ipe.backup.clone());
-        ipe.topParent = $('div#panels-ipe-display-' + ipe.key);
-
-        // Processing of these things got lost in the cloning, but the classes remained behind.
-        // @todo this isn't ideal but I can't seem to figure out how to keep an unprocessed backup
-        // that will later get processed.
-        $('.ctools-use-modal-processed', ipe.topParent).removeClass('ctools-use-modal-processed');
-        $('.pane-delete-processed', ipe.topParent).removeClass('pane-delete-processed');
-        ipe.topParent.fadeIn('medium');
-        Drupal.attachBehaviors();
-      });
+      this.cancelIPE();
+      return true;
     }
     else {
       // Cancel the submission.
@@ -180,78 +307,115 @@ function DrupalPanelsIPE(cache_key, cfg) {
       // Move our gadgets outside of the sort container so that sortables
       // cannot be placed after them.
       $('div.panels-ipe-portlet-static', this).each(function() {
-        $(this).appendTo($(this).parent().parent());
+        $(this).prependTo($(this).parent().parent());
       });
 
-      // Add a marker so we can drag things to empty containers.
-      $('div.panels-ipe-sort-container', this).append('<div>&nbsp;</div>');
+      // Also remove the last panel separator.
+      $('div.panel-separator', this).filter(':last').remove();
     });
   }
 
   this.createSortContainers();
 
-  var element_settings = {
-    url: ipe.cfg.formPath,
-    event: 'click',
-    keypress: false,
-    // No throbber at all.
-    progress: { 'type': 'none' }
-  };
-
-  Drupal.ajax['ipe-ajax'] = new Drupal.ajax('ipe-ajax', $('div.panels-ipe-startedit', this.control).get(0), element_settings);
-
-/*
-  var ajaxOptions = {
-    type: "POST",
-    url: ,
-    data: { 'js': 1 },
-    global: true,
-    success: Drupal.CTools.AJAX.respond,
-    error: function(xhr) {
-      Drupal.CTools.AJAX.handleErrors(xhr, ipe.cfg.formPath);
-    },
-    dataType: 'json'
-  };
-
-  $('div.panels-ipe-startedit', this.control).click(function() {
-    var $this = $(this);
-    $.ajax(ajaxOptions);
-  });
-  */
 };
 
 $(function() {
   Drupal.ajax.prototype.commands.initIPE = function(ajax, data, status) {
     if (Drupal.PanelsIPE.editors[data.key]) {
       Drupal.PanelsIPE.editors[data.key].initEditing(data.data);
+      Drupal.PanelsIPE.editors[data.key].lockPath = data.lockPath;
+    }
+  };
+
+  Drupal.ajax.prototype.commands.IPEsetLockState = function(ajax, data, status) {
+    if (Drupal.PanelsIPE.editors[data.key]) {
+      Drupal.PanelsIPE.editors[data.key].lockPath = data.lockPath;
+    }
+  };
+
+  Drupal.ajax.prototype.commands.cancelIPE = function(ajax, data, status) {
+    if (Drupal.PanelsIPE.editors[data.key]) {
+      Drupal.PanelsIPE.editors[data.key].cancelIPE();
+      Drupal.PanelsIPE.editors[data.key].endEditing();
     }
   };
 
   Drupal.ajax.prototype.commands.unlockIPE = function(ajax, data, status) {
     if (confirm(data.message)) {
-      var ajaxOptions = {
-        type: "POST",
-        url: data.break_path,
-        data: { 'js': 1 },
-        global: true,
-        success: Drupal.CTools.AJAX.respond,
-        error: function(xhr) {
-          Drupal.CTools.AJAX.handleErrors(xhr, ipe.cfg.formPath);
-        },
-        dataType: 'json'
-      };
-
+      var ajaxOptions = ajax.options;
+      ajaxOptions.url = data.break_path;
       $.ajax(ajaxOptions);
-    };
+    }
+    else {
+      Drupal.PanelsIPE.editors[data.key].endEditing();
+    }
   };
 
   Drupal.ajax.prototype.commands.endIPE = function(ajax, data, status) {
     if (Drupal.PanelsIPE.editors[data.key]) {
-      Drupal.PanelsIPE.editors[data.key].endEditing(data);
+      Drupal.PanelsIPE.editors[data.key].endEditing();
     }
   };
 
+  /**
+   * Override the eventResponse on ajax.js so we can add a little extra
+   * behavior.
+   */
+  Drupal.ajax.prototype.ipeReplacedEventResponse = Drupal.ajax.prototype.eventResponse;
+  Drupal.ajax.prototype.eventResponse = function (element, event) {
+    if ($(this.element).attr('id') == 'panels-ipe-cancel') {
+      if (!Drupal.PanelsIPE.editors[this.element_settings.ipe_cache_key].cancelEditing()) {
+        return false;
+      }
+    }
+
+    var retval = this.ipeReplacedEventResponse(element, event);
+    if (this.ajaxing && this.element_settings.ipe_cache_key) {
+      // Move the throbber so that it appears outside our container.
+      if (this.progress.element) {
+        $(this.progress.element).addClass('ipe-throbber').appendTo($('body'));
+      }
+      Drupal.PanelsIPE.editors[this.element_settings.ipe_cache_key].hideContainer();
+    }
+    // @TODO $('#panels-ipe-throbber-backdrop').remove();
+    return retval;
+  };
+
+  /**
+   * Override the eventResponse on ajax.js so we can add a little extra
+   * behavior.
+   */
+  Drupal.ajax.prototype.ipeReplacedError = Drupal.ajax.prototype.error;
+  Drupal.ajax.prototype.error = function (response, uri) {
+    var retval = this.ipeReplacedError(response, uri);
+    if (this.element_settings.ipe_cache_key) {
+      Drupal.PanelsIPE.editors[this.element_settings.ipe_cache_key].showContainer();
+    }
+  };
+
+  Drupal.ajax.prototype.ipeReplacedBeforeSerialize = Drupal.ajax.prototype.beforeSerialize;
+  Drupal.ajax.prototype.beforeSerialize = function (element_settings, options) {
+    if ($(this.element).attr('id') == 'panels-ipe-save') {
+      Drupal.PanelsIPE.editors[this.element_settings.ipe_cache_key].saveEditing();
+    };
+    return this.ipeReplacedBeforeSerialize(element_settings, options);
+  };
 
 });
+
+/**
+ * Apply margin to bottom of the page.
+ *
+ * Note that directly applying marginBottom does not work in IE. To prevent
+ * flickering/jumping page content with client-side caching, this is a regular
+ * Drupal behavior.
+ *
+ * @see admin_menu.js via https://drupal.org/project/admin_menu
+ */
+Drupal.behaviors.panelsIpeMarginBottom = {
+  attach: function () {
+    $('body:not(.panels-ipe)').addClass('panels-ipe');
+  }
+};
 
 })(jQuery);

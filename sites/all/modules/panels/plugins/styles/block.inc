@@ -1,5 +1,4 @@
 <?php
-// $Id: block.inc,v 1.4 2010/10/11 22:56:01 sdboyer Exp $
 
 /**
  * @file
@@ -21,26 +20,37 @@ $plugin = array(
  */
 function theme_panels_block_style_render_pane($vars) {
   $content = $vars['content'];
+  $pane = $vars['pane'];
 
   if (empty($content->content)) {
     return;
   }
 
-  if (!empty($content->title)) {
-    $content->subject = $content->title;
+  $block = clone($content);
+
+  if (!empty($block->title)) {
+    $block->subject = $block->title;
   }
 
-  $content->region = $pane->panel;
-  if (!isset($content->module)) {
-    $content->module = $content->type;
+  $block->region = $pane->panel;
+  if (!isset($block->module)) {
+    $block->module = $block->type;
   }
-  if (!isset($content->delta)) {
-    $content->delta = $content->subtype;
+  if (!isset($block->delta)) {
+    $block->delta = $block->subtype;
   }
+
+  $build = $block->content;
+  if (is_string($build)) {
+    $build = array('#markup' => $build);
+  }
+
+  $build['#block'] = $block;
+  $build['#theme_wrappers'][] = 'block';
 
   // If using per pane classes, $block->css_class will need to be added in your
   // preprocess or template, along with any other Panels specific field you
   // might want to utilize.
-  return theme('block', array('block' => $content));
+  return drupal_render($build);
 }
 

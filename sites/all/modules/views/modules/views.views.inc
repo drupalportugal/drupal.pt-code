@@ -1,5 +1,4 @@
 <?php
-// $Id: views.views.inc,v 1.7.4.4 2010/11/05 21:55:20 dereine Exp $
 /**
  * @file
  * Provide views data and handlers that aren't tied to any other module.
@@ -17,6 +16,7 @@
 function views_views_data() {
   $data['views']['table']['group'] = t('Global');
   $data['views']['table']['join'] = array(
+    // #global is a special flag which let's a table appear all the time.
     '#global' => array(),
   );
 
@@ -30,7 +30,7 @@ function views_views_data() {
 
   $data['views']['null'] = array(
     'title' => t('Null'),
-    'help' => t('Allow an argument to be ignored. The query will not be altered by this argument.'),
+    'help' => t('Allow a contextual filter value to be ignored. The query will not be altered by this contextual filter value. Can be used when contextual filter values come from the URL, and a part of the URL needs to be ignored.'),
     'argument' => array(
       'handler' => 'views_handler_argument_null',
     ),
@@ -60,12 +60,39 @@ function views_views_data() {
     ),
   );
 
+  $data['views']['view'] = array(
+    'title' => t('View area'),
+    'help' => t('Insert a view inside an area.'),
+    'area' => array(
+      'handler' => 'views_handler_area_view',
+    ),
+  );
+
+  $data['views']['result'] = array(
+    'title' => t('Result summary'),
+    'help' => t('Shows result summary, for example the items per page.'),
+    'area' => array(
+      'handler' => 'views_handler_area_result',
+    ),
+  );
+
+  if (module_exists('contextual')) {
+    $data['views']['contextual_links'] = array(
+      'title' => t('Contextual Links'),
+      'help' => t('Display fields in a contextual links menu.'),
+      'field' => array(
+        'handler' => 'views_handler_field_contextual_links',
+      ),
+    );
+  }
+
   if (module_invoke('ctools', 'api_version', '1.7.1')) {
     $data['views']['expression'] = array(
       'title' => t('Math expression'),
       'help' => t('Evaluates a mathematical expression and displays it.'),
       'field' => array(
         'handler' => 'views_handler_field_math',
+        'float' => TRUE,
       ),
     );
   }

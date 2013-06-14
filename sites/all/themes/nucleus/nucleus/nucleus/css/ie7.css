@@ -1,0 +1,5 @@
+.fluid .panel-column-last,
+.fluid .grid-last {
+  float: none !important;
+  width: auto !important;
+}

@@ -1,5 +1,4 @@
 <?php
-// $Id: plugins.inc,v 1.16 2010/10/11 22:56:01 sdboyer Exp $
 
 /**
  * @file
@@ -127,13 +126,10 @@ class panels_cache_object {
    * When constructed, take a snapshot of our existing out of band data.
    */
   function panels_cache_object() {
-    $this->head = drupal_set_html_head();
+    $this->head = drupal_add_html_head();
     $this->css = drupal_add_css();
     $this->tokens = ctools_set_page_token();
-
-    foreach (array('header', 'footer') as $scope) {
-      $this->js[$scope] = drupal_add_js(NULL, NULL, $scope);
-    }
+    $this->js = drupal_add_js();
   }
 
   /**
@@ -159,58 +155,40 @@ class panels_cache_object {
     $this->ready = TRUE;
 
     // Simple replacement for head
-    $this->head = str_replace($this->head, '', drupal_set_html_head());
+    $this->head = str_replace($this->head, '', drupal_add_html_head());
 
     // Slightly less simple for CSS:
     $css = drupal_add_css();
     $start = $this->css;
     $this->css = array();
 
-    foreach ($css as $media => $medias) {
-      foreach ($medias as $type => $types) {
-        foreach ($types as $path => $preprocess) {
-          if (!isset($start[$media][$type][$path])) {
-            $this->css[] = array($path, $type, $media, $preprocess);
-          }
-        }
+    foreach ($css as $name => $data) {
+      if (!isset($start[$name])) {
+        $this->css[$name] = $data;
       }
     }
 
-    $js = array();
-    // A little less simple for js
-    foreach (array('header', 'footer') as $scope) {
-      $js[$scope] = drupal_add_js(NULL, NULL, $scope);
-    }
+    $js = drupal_add_js();
 
     $start = $this->js;
     $this->js = array();
 
-    foreach ($js as $scope => $scopes) {
-      foreach ($scopes as $type => $types) {
-        foreach ($types as $id => $info) {
-          if (!isset($start[$scope][$type][$id])) {
-            switch ($type) {
-              case 'setting':
-                $this->js[] = array($info, $type, $scope);
-                break;
+    // If there are any differences between the old and the new javascript then
+    // store them to be added later.
+    if ($diff = array_diff_assoc($js, $start)) {
+      $this->js = $diff;
+    }
 
-              case 'inline':
-                $this->js[] = array($info['code'], $type, $scope, $info['defer']);
-                break;
-
-              default:
-                $this->js[] = array($id, $type, $scope, $info['defer'], $info['cache']);
-            }
-          }
-        }
-      }
+    // Special case the settings key and get the difference of the data.
+    if ($settings_diff = array_diff_assoc($js['settings']['data'], $start['settings']['data'])) {
+      $this->js['settings'] = $settings_diff;
     }
 
     // And for tokens:
     $tokens = ctools_set_page_token();
     foreach ($this->tokens as $token => $argument) {
       if (isset($tokens[$token])) {
-        unset($tokens);
+        unset($tokens[$token]);
       }
     }
 
@@ -222,16 +200,23 @@ class panels_cache_object {
    */
   function restore() {
     if (!empty($this->head)) {
-      drupal_set_html_head($this->head);
+      drupal_add_html_head($this->head);
     }
     if (!empty($this->css)) {
       foreach ($this->css as $args) {
-        call_user_func_array('drupal_add_css', $args);
+        drupal_add_css($args['data'], $args);
       }
     }
     if (!empty($this->js)) {
-      foreach ($this->js as $args) {
-        call_user_func_array('drupal_add_js', $args);
+      foreach ($this->js as $key => $args) {
+        if ($key !== 'settings') {
+          drupal_add_js($args['data'], $args);
+        }
+        else {
+          foreach ($args as $setting) {
+            drupal_add_js($setting, 'setting');
+          }
+        }
       }
     }
 

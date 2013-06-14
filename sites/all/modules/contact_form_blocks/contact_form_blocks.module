@@ -1,0 +1,237 @@
+<?php
+/**
+ * @file
+ * Makes your site-wide contact forms available as Drupal Blocks.
+ *
+ * @author Bernhard Fürst
+ * @author Artem cross Shymko
+ */
+
+/**
+ * Implements hook_menu().
+ */
+function contact_form_blocks_menu() {
+  $items = array();
+
+  $items['admin/config/system/contact_form_blocks'] = array(
+    'title' => 'Contact blocks',
+    'description' => 'Contact blocks settings',
+    'page arguments' => array('contact_form_blocks_settings'),
+    'page callback' => 'drupal_get_form',
+    'access arguments' => array('administer contact forms'),
+  );
+
+  return $items;
+}
+
+/**
+ * Implements hook_admin_paths().
+ *
+ * Provides the Admin paths for overlay module.
+ */
+function contact_form_blocks_admin_paths() {
+  $paths = array(
+    'admin/config/system/contact_form_blocks' => TRUE,
+  );
+  return $paths;
+}
+
+/**
+ * Implements hook_block_info().
+ */
+function contact_form_blocks_block_info() {
+  $enabled_categories = variable_get('contact_form_blocks_site_wide_categories', array());
+  $categories = contact_form_blocks_get_categories();
+  // Allow blocks for enabled categories only.
+  $categories = array_intersect_key($categories, $enabled_categories);
+  // Add block for site-wide contact form.
+  $categories = array(0 => t('Global')) + $categories;
+
+  $blocks = array();
+  foreach ($categories as $cid => $info) {
+    $blocks[$cid]['info'] = sprintf('%s: %s', t('Contact form'), $info);
+  }
+  return $blocks;
+}
+
+/**
+ * Implements hook_block_view().
+ */
+function contact_form_blocks_block_view($delta = '') {
+  if ($delta == '0') {
+    return contact_form_global_form_content();
+  }
+  else {
+    $enabled_categories = variable_get('contact_form_blocks_site_wide_categories', array());
+    if (isset($enabled_categories[$delta])) {
+      // Display block only for enabled categories.
+      return contact_form_blocks_content($delta);
+    }
+  }
+}
+
+/**
+ * Builds HTML code for the contact form with specific category.
+ *
+ * @param int $category
+ *   The contact.cid of the contact form category.
+ *
+ * @return
+ *   Content/title array for Blocks
+ */
+function contact_form_blocks_content($category) {
+  // Check if flood control has been activated for sending e-mails.
+  $limit = variable_get('contact_threshold_limit', 5);
+  $window = variable_get('contact_threshold_window', 3600);
+  if (!flood_is_allowed('contact', $limit, $window) && !user_access('administer contact forms')) {
+    return array('content' => t("You cannot send more than %limit messages in @interval. Try again later.", array('%limit' => $limit, '@interval' => format_interval($window))));
+  }
+
+  // Get all existing contact categories.
+  $categories = contact_form_blocks_get_categories();
+  // Set the block title.
+  $content['subject'] = $categories[$category];
+
+  // Load the contact module's code to get the contact form.
+  module_load_include('inc', 'contact', 'contact.pages');
+
+  // Append the category to the original "contact_site_form" form_id to be able
+  // to handle multiple contact forms on one page.
+  $form_state = array();
+  $form = drupal_build_form('contact_site_form', $form_state);
+  $form['cid'] = array('#type' => 'value', '#value' => $category);
+  $content['content'] = drupal_render($form);
+
+  // Add some modifications to the CSS.
+  drupal_add_css(drupal_get_path('module', 'contact_form_blocks') . '/contact_form_blocks.css');
+
+  return $content;
+}
+
+/**
+ * Builds HTML code for the global contact form.
+ *
+ * @return
+ *   Content/title array for Block.
+ */
+function contact_form_global_form_content() {
+  // Check if flood control has been activated for sending e-mails.
+  $limit = variable_get('contact_threshold_limit', 5);
+  $window = variable_get('contact_threshold_window', 3600);
+  if (!flood_is_allowed('contact', $limit, $window) && !user_access('administer contact forms')) {
+    return array('content' => t("You cannot send more than %limit messages in @interval. Try again later.", array('%limit' => $limit, '@interval' => format_interval($window))));
+  }
+
+  // Load the contact module's code to get the contact form.
+  module_load_include('inc', 'contact', 'contact.pages');
+
+  $form_state = array();
+  $form = drupal_build_form('contact_site_form', $form_state);
+  $content['content'] = drupal_render($form);
+
+  // Add some modifications to the CSS.
+  drupal_add_css(drupal_get_path('module', 'contact_form_blocks') . '/contact_form_blocks.css');
+
+  return $content;
+}
+
+/**
+ * Gets all the contact categories from the database.
+ *
+ * @return
+ *  Keyed array of categories.
+ */
+function contact_form_blocks_get_categories() {
+  $categories = &drupal_static(__FUNCTION__);
+  if (!isset($categories)) {
+    // Get all the contact categories from the database.
+    $categories = db_select('contact', 'c')
+      ->addTag('translatable')
+      ->fields('c', array('cid', 'category'))
+      ->orderBy('weight')
+      ->orderBy('category')
+      ->execute()
+      ->fetchAllKeyed();
+  }
+  return $categories;
+}
+
+/**
+ * Form builder; the admin settings form.
+ */
+function contact_form_blocks_settings($form) {
+  $categories = contact_form_blocks_get_categories();
+
+  // Warning if no contact categories being set.
+  if (empty($categories)) {
+    // Message same as in contact_site_form().
+    drupal_set_message(t('The contact form has not been configured. <a href="@add">Add one or more categories</a> to the form.', array('@add' => url('admin/structure/contact/add'))));
+    return array();
+  }
+
+  $form['contact_form_blocks_categories'] = array(
+    '#type' => 'checkboxes',
+    '#title' => t('Categories to be shown in the site wide contact form'),
+    '#default_value' => variable_get('contact_form_blocks_site_wide_categories', array()),
+    '#options' => $categories,
+  );
+  $form['actions']['submit'] = array('#type' => 'submit', '#value' => t('Save configuration'));
+
+  return $form;
+}
+
+/**
+ * Form submission handler for contact_form_blocks_settings().
+ *
+ * @see contact_form_blocks_settings()
+ */
+function contact_form_blocks_settings_submit($form, &$form_state) {
+  // Filter only enabled values.
+  $enabled_categories = array_filter($form_state['values']['contact_form_blocks_categories']);
+  variable_set('contact_form_blocks_site_wide_categories', $enabled_categories);
+  drupal_set_message(t('The configuration options have been saved.'));
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ *
+ * @see contact_site_form()
+ */
+function contact_form_blocks_form_contact_site_form_alter(&$form, &$form_state, $form_id) {
+  $form['#submit'][] = '_contact_form_blocks_submit';
+}
+
+/**
+ * Extra form submission handler for contact_site_form().
+ */
+function _contact_form_blocks_submit($form, &$form_state) {
+  // Redirect user back to page with form instead of frontpage.
+  $destination = drupal_get_destination();
+  $form_state['redirect'] = $destination['destination'];
+  // Clear all caches to renew block list.
+  cache_clear_all();
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ *
+ * @see contact_category_delete_form()
+ */
+function contact_form_blocks_contact_category_delete_form_alter(&$form, &$form_state, $form_id) {
+  $form['#submit'][] = '_contact_form_blocks_category_delete';
+}
+
+/**
+ * Extra form submission handler for contact_category_delete_form().
+ */
+function _contact_form_blocks_category_delete($form, &$form_state) {
+  $enabled_categories = variable_get('contact_form_blocks_site_wide_categories', array());
+  $contact = $form['contact']['#value'];
+  if (isset($enabled_categories[$contact['cid']])) {
+    // Remove deleted category from allowed blocks.
+    unset($enabled_categories[$contact['cid']]);
+    variable_set('contact_form_blocks_site_wide_categories', $enabled_categories);
+    // Re-build cache to remove block for deleted category.
+    cache_clear_all();
+  }
+}
