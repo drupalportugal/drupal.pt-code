@@ -1,5 +1,4 @@
 <?php
-// $Id: term.inc,v 1.11 2010/10/11 22:18:23 sdboyer Exp $
 
 /**
  * @file
@@ -25,10 +24,14 @@ $plugin = array(
   'convert list' => array(
     'tid' => t('Term ID'),
     'name' => t('Term name'),
+    'name_dashed' => t('Term name, lowercased and spaces converted to dashes'),
     'description' => t('Term Description'),
     'vid' => t('Vocabulary ID'),
   ),
   'convert' => 'ctools_context_term_convert',
+  // This context is deprecated and should not be usable in the UI.
+  'no ui' => TRUE,
+  'no required context ui' => TRUE,
 );
 
 /**
@@ -87,7 +90,6 @@ function ctools_context_term_settings_form($form, &$form_state) {
       '#type' => 'textfield',
       '#description' => t('Select a term from @vocabulary.', array('@vocabulary' => $vocabulary->name)) . $description,
       '#autocomplete_path' => 'taxonomy/autocomplete/' . $vocabulary->vid,
-      '#process' => array('ctools_dependent_process'),
       '#dependency' => array('ctools-select-vid' => array($vocabulary->vid)),
     );
 
@@ -125,7 +127,7 @@ function ctools_context_term_settings_form_validate($form, &$form_state) {
     return;
   }
 
-  $term = db_query('SELECT tid FROM {taxonomy_term_data} WHERE LOWER(name) = LOWER(:name) AND t.vid = :vid', array(':name' => $form_state['values']['taxonomy'][$vid], ':vid' => $vid))->fetchObject();
+  $term = db_query('SELECT tid FROM {taxonomy_term_data} WHERE LOWER(name) = LOWER(:name) AND vid = :vid', array(':name' => $form_state['values']['taxonomy'][$vid], ':vid' => $vid))->fetchObject();
 
   if (!$term) {
     form_error($form['taxonomy'][$vid], t('Invalid term selected.'));
@@ -154,6 +156,8 @@ function ctools_context_term_convert($context, $type) {
       return $context->data->tid;
     case 'name':
       return $context->data->name;
+    case 'name_dashed':
+      return drupal_strtolower(str_replace(' ', '-', $context->data->name));
     case 'vid':
       return $context->data->vid;
     case 'description':

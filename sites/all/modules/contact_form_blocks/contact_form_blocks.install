@@ -1,0 +1,22 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall functions for the contact_form_blocks module.
+ */
+
+/**
+ * Implements hook_uninstall().
+ */
+function contact_form_blocks_uninstall() {
+  variable_del('contact_form_blocks_site_wide_categories');
+}
+
+/**
+ * Clean-up variable. Remove disabled values.
+ */
+function contact_form_blocks_update_7000() {
+  $categories = variable_get('contact_form_blocks_site_wide_categories', array());
+  $categories = array_filter($categories);
+  variable_set('contact_form_blocks_site_wide_categories', $categories);
+}

@@ -1,5 +1,4 @@
 <?php
-// $Id: views_content.views.inc,v 1.4 2010/09/07 09:02:51 sdboyer Exp $
 
 /**
  * @file
@@ -14,11 +13,13 @@ function views_content_views_plugins() {
     'display' => array(
       'panel_pane' => array(
         'title' => t('Content pane'),
+        'admin' => t('Content pane'),
         'help' => t('Is available as content for a panel or dashboard display.'),
         'handler' => 'views_content_plugin_display_panel_pane',
         'path' => drupal_get_path('module', 'views_content') . '/plugins/views',
         'theme path' => drupal_get_path('module', 'views') . '/theme',
         'theme' => 'views_view',
+        'register theme' => FALSE,
         'use ajax' => TRUE,
         'use pager' => TRUE,
         'use more' => TRUE,
@@ -27,11 +28,13 @@ function views_content_views_plugins() {
       ),
       'ctools_context' => array(
         'title' => t('Context'),
+        'admin' => t('Context'),
         'help' => t('Makes the view results available as a context for use in Panels and other applications.'),
         'handler' => 'views_content_plugin_display_ctools_context',
         'path' => drupal_get_path('module', 'views_content') . '/plugins/views',
         'theme path' => drupal_get_path('module', 'views') . '/theme',
         'theme' => 'views_view',
+        'register theme' => FALSE,
         'use ajax' => FALSE,
         'use pager' => TRUE,
         'use more' => FALSE,
@@ -48,7 +51,9 @@ function views_content_views_plugins() {
         'path' => drupal_get_path('module', 'views_content') . '/plugins/views',
         'theme path' => drupal_get_path('module', 'views') . '/theme',
         'theme' => 'views_view_unformatted',
+        'register theme' => FALSE,
         'uses row plugin' => TRUE,
+        'uses row class' => TRUE,
         'uses fields' => TRUE,
         'uses options' => TRUE,
         'type' => 'context',

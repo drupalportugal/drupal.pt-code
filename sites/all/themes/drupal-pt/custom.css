@@ -1,0 +1,193 @@
+/*
+ * CSS file for bartik override
+ */
+ 
+/* Header color */
+
+#header {
+  background-color: #61BA29;
+  background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#FFFFFF), to(#61BA29));
+  background-image: -moz-linear-gradient(-90deg, #FFFFFF, #61BA29);
+} 
+
+.region-header, .region-header a, .region-header li a.active, #header #name-and-slogan, #header #name-and-slogan a, #secondary-menu-links li a {
+  color: #292929;
+}
+
+/* Override views grids */
+.view-content table {
+  font-size: 1em;
+}
+ 
+.views-view-grid td {
+  padding: 20px 10px;
+  vertical-align: top;
+}
+
+.views-view-grid td .field-items,
+.views-view-grid td .field-items .field-item {
+  float: none;
+  padding: 0 5px;
+}
+
+.views-view-grid .field-type-image img {
+  margin: 0;
+}
+
+/* View content font size */
+.view-content p {
+  font-size: 1.071em;
+}
+
+/* Imitate bartik taxonomy pages */
+.view-content h2 a {
+  color: #181818;
+}
+
+/* Eventos Block */
+#block-views-all-events-view-block-1 .view-all-events-view .views-row {
+  border-bottom: 1px solid #D3D7D9;
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+}
+
+/* Eventos Page */
+.page-eventos .view-all-events-view .views-field-title {
+  margin-bottom: 1em;
+}
+
+.page-eventos .view-all-events-view .views-field-entity-id-3 {
+  float: left;
+  margin-right: 1em;
+}
+
+.page-eventos .view-all-events-view .views-row {
+  border-bottom: 1px solid #D3D7D9;
+  margin-bottom: 30px;
+  padding-bottom: 15px;
+}
+
+/* Evento Page */
+.node-evento .field-name-field-link-registos {
+  margin: 2em 0;
+}
+
+.node-evento .field-name-field-link-registos .field-items {
+  background-color: #F6F6F2;
+  line-height: 1.5em;
+  padding: 20px;
+  margin-top: 5px;
+}
+
+/* Showcase page */
+.view-showcase .views-view-grid td {
+  text-align: center;
+}
+
+/* Showcase frontpage block */
+.block .showcase-frontpage-block {
+  background-color: #F6F6F2;
+  padding: 20px;
+}
+
+.block .showcase-frontpage-block .view-header {
+  float: right;
+  width: 180px;
+  padding: 10px;
+}
+
+.block .showcase-frontpage-block .view-content {
+  border-right: 2px dotted #D3D7D9;
+  float: left;
+  padding-right: 18px;
+  width: 420px;
+}
+
+.block .showcase-frontpage-block .view-content .views_slideshow_slide {
+  padding: 8px;
+  border: 1px solid #D3D7D9;
+  background-color: #fff;
+}
+
+.block .showcase-frontpage-block .view-content .views-field-title {
+  margin-bottom: 8px;
+}
+
+.block .showcase-frontpage-block .view-content .field-type-image {
+  min-height: 305px;
+  width: 400px;
+}
+
+.block .showcase-frontpage-block img {
+  margin: 0;
+  border: 1px solid #F6F6F2;
+}
+
+.block .showcase-frontpage-block .field-type-link-field {
+  margin-top: 8px;
+  text-align: right;
+}
+
+.block .view-showcase .more-link {
+  clear: right;
+  float: right;
+  padding: 0 10px;
+}
+
+/* Funcionalidades page */
+.view-funcionalidades tr {
+  background-color: transparent;
+}
+
+.view-funcionalidades tr td{
+  border: 0 none;
+}
+
+.view-funcionalidades .node-funcionalidade h2 {
+  background: transparent url(images/large-icons.png) no-repeat scroll 0 0;
+  height: 48px;
+  margin-left: 10px;
+  padding: 0 0 0 70px;
+}
+
+.view-funcionalidades #node-19 h2 /*construir*/ {
+  background-position: 0 -669px;
+}
+
+.view-funcionalidades #node-20 h2 /*criar*/ {
+}
+
+.view-funcionalidades #node-21 h2 /*administrar*/ {
+  background-position: 0 -383px;
+}
+
+.view-funcionalidades #node-22 h2 /*design-e-branding*/ {
+  background-position: 0 -287px;
+}
+
+.view-funcionalidades #node-23 h2 /*organizar-e-pesquisar*/ {
+  background-position: 0 -94px;
+}
+
+.view-funcionalidades #node-24 h2 /*ampliar*/ {
+  background-position: 0 -187px;
+}
+
+.view-funcionalidades #node-25 h2 /*fluxos-de-trabalho*/ {
+  background-position: 0 -574px;
+}
+
+.view-funcionalidades #node-27 h2 /*arquitectura-de-servicos*/ {
+  background-position: 0 -480px;
+}
+
+/* Footer blocks */
+#triptych .block {
+  border: 0 none;
+}
+
+#triptych .block ul li, #triptych .block ol li {
+  border-bottom: 1px solid #DFDFDF;
+  margin: 5px 0;
+  padding: 5px 0;
+}

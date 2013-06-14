@@ -1,5 +1,4 @@
 <?php
-//$Id: profile.views.inc,v 1.10.4.6 2010/08/19 06:03:47 dereine Exp $
 /**
  * @file
  * Provide views data and handlers for user.module
@@ -15,6 +14,7 @@
  * Implements hook_views_data()
  */
 function profile_views_data() {
+  $data['profile_values']['moved to'] = 'profile_value';
   // Define the base group of this table. Fields that don't
   // have a group defined will go into this field by default.
   $data['profile_value']['table']['group']  = t('Profile');
@@ -33,8 +33,8 @@ function profile_views_data() {
   );
 
   $fields = profile_views_get_fields();
-  foreach($fields as $field) {
-    $table_name = 'profile_value_' . $field->name;
+  foreach ($fields as $field) {
+    $table_name = 'profile_value_' . str_replace('-', '_', $field->name);
     $data[$table_name] = array(
       'table' => array(
         'group' => t('Profile'),
@@ -149,6 +149,7 @@ function profile_views_fetch_field($field) {
         ),
         'filter' => array(
           'handler' => 'views_handler_filter_boolean_operator',
+          'accept null' => TRUE,
         ),
         // @todo there ought to be a boolean argument handler
       );

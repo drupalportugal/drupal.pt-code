@@ -1,5 +1,4 @@
 <?php
-// $Id: vid.inc,v 1.6 2010/01/29 20:18:01 merlinofchaos Exp $
 
 /**
  * @file
@@ -21,6 +20,7 @@ $plugin = array(
     '#type' => 'textfield',
     '#description' => t('Enter the vocabulary ID for this argument'),
   ),
+  'no ui' => TRUE,
 );
 
 /**
@@ -29,7 +29,7 @@ $plugin = array(
 function ctools_vid_context($arg = NULL, $conf = NULL, $empty = FALSE) {
   // If unset it wants a generic, unfilled context.
   if ($empty) {
-    return ctools_context_create_empty('vocabulary');
+    return ctools_context_create_empty('entity:taxonomy_vocabulary');
   }
 
   if (!is_numeric($arg)) {

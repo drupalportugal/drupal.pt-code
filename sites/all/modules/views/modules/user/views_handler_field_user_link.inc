@@ -1,7 +1,8 @@
 <?php
-// $Id: views_handler_field_user_link.inc,v 1.1.6.1 2010/11/18 07:29:03 dereine Exp $
 /**
  * Field handler to present a link to the user.
+ *
+ * @ingroup views_field_handlers
  */
 class views_handler_field_user_link extends views_handler_field {
   function construct() {
@@ -16,12 +17,12 @@ class views_handler_field_user_link extends views_handler_field {
   }
 
   function options_form(&$form, &$form_state) {
-    parent::options_form($form, $form_state);
     $form['text'] = array(
       '#type' => 'textfield',
       '#title' => t('Text to display'),
       '#default_value' => $this->options['text'],
     );
+    parent::options_form($form, $form_state);
   }
 
   // An example of field level access control.
@@ -35,18 +36,17 @@ class views_handler_field_user_link extends views_handler_field {
   }
 
   function render($values) {
-    return $this->render_link(check_plain($values->{$this->field_alias}), $values);
+    $value = $this->get_value($values, 'uid');
+    return $this->render_link($this->sanitize_value($value), $values);
   }
 
   function render_link($data, $values) {
-    $uid = $values->{$this->aliases['uid']};
     $text = !empty($this->options['text']) ? $this->options['text'] : t('view');
 
     $this->options['alter']['make_link'] = TRUE;
-    $this->options['alter']['path'] = "user/" . $uid;
+    $this->options['alter']['path'] = "user/" . $data;
 
     return $text;
   }
 
 }
-

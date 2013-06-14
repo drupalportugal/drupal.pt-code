@@ -1,5 +1,4 @@
 <?php
-// $Id: content.inc,v 1.19 2010/10/11 22:18:22 sdboyer Exp $
 
 /**
  * @file
@@ -48,6 +47,14 @@ function ctools_content_process(&$plugin, $info) {
     $plugin['add form'] = $function_base . 'edit_form';
   }
 
+  if (!isset($plugin['description'])) {
+    $plugin['description'] = '';
+  }
+
+  if (!isset($plugin['icon'])) {
+    $plugin['icon'] = ctools_content_admin_icon($plugin);
+  }
+
   // Another ease of use check:
   if (!isset($plugin['content types'])) {
     // If a subtype plugin exists, try to use it. Otherwise assume single.
@@ -58,7 +65,7 @@ function ctools_content_process(&$plugin, $info) {
       $type = array(
         'title' => $plugin['title'],
         'description' => $plugin['description'],
-        'icon' => $plugin['icon'],
+        'icon' => ctools_content_admin_icon($plugin),
         'category' => $plugin['category'],
       );
 
@@ -209,6 +216,8 @@ function ctools_content_prepare_subtype(&$subtype, $plugin) {
       $subtype[$key] = $plugin[$key];
     }
   }
+
+  drupal_alter('ctools_content_subtype', $subtype, $plugin);
 }
 
 /**
@@ -269,6 +278,10 @@ function ctools_content_render($type, $subtype, $conf, $keywords = array(), $arg
     }
 
     $content = $function($subtype, $conf, $args, $pane_context, $incoming_content);
+
+    if (empty($content)) {
+      return;
+    }
 
     // Set up some defaults and other massaging on the content before we hand
     // it back to the caller.
@@ -445,9 +458,12 @@ function ctools_content_admin_info($type, $subtype, $conf, $context = NULL) {
   if ($function = ctools_plugin_get_function($plugin, 'admin info')) {
     $output = $function($subtype, $conf, $context);
   }
+
   if (empty($output) || !is_object($output)) {
     $output = new stdClass();
-    $output->title = t('No info');
+    // replace the _ with " " for a better output
+    $subtype = check_plain(str_replace("_", " ", $subtype));
+    $output->title = $subtype;
     $output->content = t('No info available.');
   }
   return $output;
@@ -487,7 +503,6 @@ function ctools_content_configure_form_defaults($form, &$form_state) {
       '#default_value' => isset($conf['override_title_text']) ? $conf['override_title_text'] : '',
       '#size' => 35,
       '#id' => 'override-title-textfield',
-      '#process' => array('ctools_dependent_process'),
       '#dependency' => array('override-title-checkbox' => array(1)),
       '#dependency_type' => 'disable',
     );
@@ -735,6 +750,35 @@ function ctools_content_select_context($plugin, $subtype, $conf, $contexts) {
     return;
   }
 
+  // Deal with dynamic required contexts not getting updated in the panes.
+  // For example, Views let you dynamically change context info. While
+  // we cannot be perfect, one thing we can do is if no context at all
+  // was asked for, and then was later added but none is selected, make
+  // a best guess as to what context should be used. THis is right more
+  // than it's wrong.
+  if (is_array($subtype_info['required context'])) {
+    if (empty($conf['context']) || count($subtype_info['required context']) != count($conf['context'])) {
+      foreach ($subtype_info['required context'] as $index => $required) {
+        if (!isset($conf['context'][$index])) {
+          $filtered = ctools_context_filter($contexts, $required);
+          if ($filtered) {
+            $keys = array_keys($filtered);
+            $conf['context'][$index] = array_shift($keys);
+          }
+        }
+      }
+    }
+  }
+  else {
+    if (empty($conf['context'])) {
+      $filtered = ctools_context_filter($contexts, $subtype_info['required context']);
+      if ($filtered) {
+        $keys = array_keys($filtered);
+        $conf['context'] = array_shift($keys);
+      }
+    }
+  }
+
   if (empty($conf['context'])) {
     return;
   }
@@ -742,4 +786,33 @@ function ctools_content_select_context($plugin, $subtype, $conf, $contexts) {
   $context = ctools_context_select($contexts, $subtype_info['required context'], $conf['context']);
 
   return $context;
+}
+
+/**
+ * Fetch a piece of content from the addressable content system.
+ *
+ * @param $address
+ *   A string or an array representing the address of the content.
+ * @param $type
+ *   The type of content to return. The type is dependent on what
+ *   the content actually is. The default, 'content' means a simple
+ *   string representing the content. However, richer systems may
+ *   offer more options. For example, Panels might allow the
+ *   fetching of 'display' and 'pane' objects. Page Manager
+ *   might allow for the fetching of 'task_handler' objects
+ *   (AKA variants).
+ */
+function ctools_get_addressable_content($address, $type = 'content') {
+  if (!is_array($address)) {
+    $address = explode('::', $address);
+  }
+
+  if (!$address) {
+    return;
+  }
+
+  // This removes the module from the address so the
+  // implementor is not responsible for that part.
+  $module = array_shift($address);
+  return module_invoke($module, 'addressable_content', $address, $type);
 }

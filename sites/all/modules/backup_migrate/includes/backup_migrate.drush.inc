@@ -1,5 +1,4 @@
 <?php
-// $Id: backup_migrate.drush.inc,v 1.1.4.4 2010/11/16 15:40:01 ronan Exp $
 
 
 /**
@@ -33,6 +32,9 @@ function backup_migrate_drush_command() {
       'source'        => "Required. The id of the source (usually a database) to restore the backup to. Use 'drush bam-sources' to get a list of sources. Defaults to 'db'",
       'destination'   => "Required. The id of destination to send the backup file to. Use 'drush bam-destinations' to get a list of destinations. Defaults to 'manual'",
       'backup id'     => "Required. The id of a backup file restore. Use 'drush bam-backups' to get a list of available backup files.",
+    ),
+    'options' => array(
+      'yes' => 'Skip confirmation',
     ),
   );
   $items['bam-destinations'] = array(
@@ -109,6 +111,11 @@ function backup_migrate_drush_backup($source_id = 'db', $destination_id = 'manua
  * Restore to the default database.
  */
 function backup_migrate_drush_restore($source_id = '', $destination_id = '', $file_id = '') {
+  drush_print(dt('Restoring will delete some or all of your data and cannot be undone. ALWAYS TEST YOUR BACKUPS ON A NON-PRODUCTION SERVER!'));
+  if (!drush_confirm(dt('Are you sure you want to restore the database?'))) {
+    return drush_user_abort();
+  }
+
   backup_migrate_include('profiles', 'destinations');
 
   // Set the message mode to drush output.

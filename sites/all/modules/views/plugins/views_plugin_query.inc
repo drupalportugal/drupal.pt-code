@@ -1,5 +1,4 @@
 <?php
-// $Id: views_plugin_query.inc,v 1.1.4.10 2010/08/24 16:13:23 dereine Exp $
 /**
  * @file views_plugin_query.inc
  * Defines the base query class, which is the underlying layer in a View.
@@ -18,7 +17,9 @@ class views_plugin_query extends views_plugin {
    * Constructor; Create the basic query object and fill with default values.
    */
   function init($base_table, $base_field, $options) {
-    $this->options = $options;
+    $this->base_table = $base_table;
+    $this->base_field = $base_field;
+    $this->unpack_options($this->options, $options);
   }
 
   /**
@@ -32,11 +33,17 @@ class views_plugin_query extends views_plugin {
 
   /**
    * Let modules modify the query just prior to finalizing it.
+   *
+   * @param view $view
+   *   The view which is executed.
    */
   function alter(&$view) {  }
 
   /**
    * Builds the necessary info to execute the query.
+   *
+   * @param view $view
+   *   The view which is executed.
    */
   function build(&$view) { }
 
@@ -46,6 +53,11 @@ class views_plugin_query extends views_plugin {
    *
    * Values to set: $view->result, $view->total_rows, $view->execute_time,
    * $view->pager['current_page'].
+   *
+   * $view->result should contain an array of objects.
+   *
+   * @param view $view
+   *   The view which is executed.
    */
   function execute(&$view) {  }
 
@@ -54,6 +66,9 @@ class views_plugin_query extends views_plugin {
    *
    * This signature is something that can be used when perusing query logs to
    * discern where particular queries might be coming from.
+   *
+   * @param view $view
+   *   The view which is executed.
    */
   function add_signature(&$view) { }
 
@@ -67,7 +82,9 @@ class views_plugin_query extends views_plugin {
   /**
    * Add settings for the ui.
    */
-  function options_form(&$form, &$form_state) { }
+  function options_form(&$form, &$form_state) {
+    parent::options_form($form, $form_state);
+  }
 
   function options_validate(&$form, &$form_state) { }
 
@@ -94,13 +111,59 @@ class views_plugin_query extends views_plugin {
   /**
    * Render the pager, if necessary.
    */
-  function render_pager() {
+  function render_pager($exposed_input) {
     if (!empty($this->pager) && $this->pager->use_pager()) {
-      $exposed_input = isset($this->view->exposed_data_raw) ? $this->view->exposed_data_raw : NULL;
       return $this->pager->render($exposed_input);
     }
+
     return '';
   }
 
+  /**
+   * Create a new grouping for the WHERE or HAVING clause.
+   *
+   * @param $type
+   *   Either 'AND' or 'OR'. All items within this group will be added
+   *   to the WHERE clause with this logical operator.
+   * @param $group
+   *   An ID to use for this group. If unspecified, an ID will be generated.
+   * @param $where
+   *   'where' or 'having'.
+   *
+   * @return $group
+   *   The group ID generated.
+   */
+  function set_where_group($type = 'AND', $group = NULL, $where = 'where') {
+    // Set an alias.
+    $groups = &$this->$where;
 
+    if (!isset($group)) {
+      $group = empty($groups) ? 1 : max(array_keys($groups)) + 1;
+    }
+
+    // Create an empty group
+    if (empty($groups[$group])) {
+      $groups[$group] = array('conditions' => array(), 'args' => array());
+    }
+
+    $groups[$group]['type'] = strtoupper($type);
+    return $group;
+  }
+
+  /**
+   * Control how all WHERE and HAVING groups are put together.
+   *
+   * @param $type
+   *   Either 'AND' or 'OR'
+   */
+  function set_group_operator($type = 'AND') {
+    $this->group_operator = strtoupper($type);
+  }
+
+  /**
+   * Returns the according entity objects for the given query results.
+   */
+  function get_result_entities($results, $relationship = NULL) {
+    return FALSE;
+  }
 }

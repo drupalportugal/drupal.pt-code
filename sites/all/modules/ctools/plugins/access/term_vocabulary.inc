@@ -1,5 +1,4 @@
 <?php
-// $Id: term_vocabulary.inc,v 1.8 2010/10/11 22:18:22 sdboyer Exp $
 
 /**
  * @file
@@ -18,7 +17,7 @@ $plugin = array(
   'settings form' => 'ctools_term_vocabulary_ctools_access_settings',
   'settings form submit' => 'ctools_term_vocabulary_ctools_access_settings_submit',
   'summary' => 'ctools_term_vocabulary_ctools_access_summary',
-  'required context' => new ctools_context_required(t('Vocabulary'), array('term', 'terms', 'vocabulary')),
+  'required context' => new ctools_context_required(t('Vocabulary'), array('taxonomy_term', 'terms', 'taxonomy_vocabulary')),
 );
 
 /**

@@ -1,5 +1,4 @@
 <?php
-// $Id: crud.inc,v 1.2.2.3 2010/10/16 23:08:56 ronan Exp $
 
 /**
  * @file
@@ -66,7 +65,7 @@ function backup_migrate_crud_menu() {
  * Page callback to create a new item.
  */
 function backup_migrate_crud_ui_create() {
-  if ($type = backup_migrate_crud_type_load(arg(3))) {
+  if ($type = backup_migrate_crud_type_load(arg(BACKUP_MIGRATE_MENU_DEPTH))) {
     $item = $type->create(array());
     return drupal_get_form('backup_migrate_crud_edit_form', $item);
   }
@@ -77,7 +76,7 @@ function backup_migrate_crud_ui_create() {
  */
 function backup_migrate_crud_ui_list() {
   $out = '';
-  if ($type = backup_migrate_crud_type_load(arg(3))) {
+  if ($type = backup_migrate_crud_type_load(arg(BACKUP_MIGRATE_MENU_DEPTH))) {
     $out = $type->get_list();
   }
   return $out;
@@ -87,11 +86,11 @@ function backup_migrate_crud_ui_list() {
  * Page callback to edit an item.
  */
 function backup_migrate_crud_ui_edit($item_id = NULL) {
-  if ($type = backup_migrate_crud_type_load(arg(3))) {
+  if ($type = backup_migrate_crud_type_load(arg(BACKUP_MIGRATE_MENU_DEPTH))) {
     if ($item_id && $item = $type->item($item_id)) {
       return drupal_get_form('backup_migrate_crud_edit_form', $item);
     }
-    drupal_goto(BACKUP_MIGRATE_MENU_PATH. '/' . arg(3));
+    drupal_goto(BACKUP_MIGRATE_MENU_PATH. '/' . arg(BACKUP_MIGRATE_MENU_DEPTH));
   }
 }
 
@@ -134,11 +133,11 @@ function backup_migrate_crud_edit_form_submit($form, &$form_state) {
  * Page callback to delete an item.
  */
 function backup_migrate_crud_ui_delete($item_id = NULL) {
-  if ($type = backup_migrate_crud_type_load(arg(3))) {
+  if ($type = backup_migrate_crud_type_load(arg(BACKUP_MIGRATE_MENU_DEPTH))) {
     if ($item_id && $item = $type->item($item_id)) {
       return drupal_get_form('backup_migrate_crud_delete_confirm_form', $item);
     }
-    drupal_goto('admin/content/backup_migrate/'. arg(3));
+    drupal_goto('admin/content/backup_migrate/'. arg(BACKUP_MIGRATE_MENU_DEPTH));
   }
 }
 
@@ -169,11 +168,11 @@ function backup_migrate_crud_delete_confirm_form_submit($form, &$form_state) {
  * Export an item.
  */
 function backup_migrate_crud_ui_export($item_id = NULL) {
-  if ($type = backup_migrate_crud_type_load(arg(3))) {
+  if ($type = backup_migrate_crud_type_load(arg(BACKUP_MIGRATE_MENU_DEPTH))) {
     if ($item_id && $item = $type->item($item_id)) {
       return drupal_get_form('backup_migrate_crud_export_form', $item->export());
     }
-    drupal_goto(BACKUP_MIGRATE_MENU_PATH . '/' . arg(3));
+    drupal_goto(BACKUP_MIGRATE_MENU_PATH . '/' . arg(BACKUP_MIGRATE_MENU_DEPTH));
   }
 }
 
@@ -259,7 +258,7 @@ class backup_migrate_item {
    */  
   function delete() {
     $keys = (array)$this->get_primary_key();
-    db_query("DELETE FROM {$this->db_table} WHERE $keys[0] = :id", array(':id' => $this->get_id()));
+    db_query('DELETE FROM {' . $this->db_table . '} WHERE ' . $keys[0] . ' = :id', array(':id' => $this->get_id()));
   }
 
 
@@ -315,6 +314,20 @@ class backup_migrate_item {
       $params[$field] = empty($info['serialize']) ? $data[$field] : unserialize($data[$field]);
     }
     $this->from_array($params);
+  }
+
+
+  /**
+   * Decode a loaded db row (unserialize necessary fields).
+   */
+  function decode_db_row($data) {
+    $params = array();
+    $schema = $this->get_schema();
+    // Load fields as specified in the schema.
+    foreach ($schema['fields'] as $field => $info) {
+      $params[$field] = empty($info['serialize']) ? $data[$field] : unserialize($data[$field]);
+    }
+    return $params;
   }
 
   /**
@@ -494,7 +507,7 @@ class backup_migrate_item {
     );
     $form['actions'] = array('#prefix' => '<div class="container-inline">', '#suffix' => '</div>', '#weight' => 99);
     $form['actions']['submit'] = array('#type' => 'submit', '#value' => t('Save !type', array('!type' => t($this->singular))));
-    $form['actions']['cancel'] = array('#value' => l(t('Cancel'), BACKUP_MIGRATE_MENU_PATH . '/destination'));
+    $form['actions']['cancel'] = array('#markup' => l(t('Cancel'), BACKUP_MIGRATE_MENU_PATH . '/destination'));
     return $form;
   }
 
@@ -618,8 +631,8 @@ class backup_migrate_item {
     // Get the items from the db.
     $result = db_query("SELECT * FROM {{$this->db_table}}", array(), array('fetch' => PDO::FETCH_ASSOC));
     foreach ($result as $info) {
+      $info = $this->decode_db_row($info);
       if ($item = $this->create($info)) {
-        $item->load_row($info);
         $item->storage = empty($items[$item->get_id()]) ? BACKUP_MIGRATE_STORAGE_DB : BACKUP_MIGRATE_STORAGE_OVERRIDEN;
         $items[$item->get_id()] = $item;
       }

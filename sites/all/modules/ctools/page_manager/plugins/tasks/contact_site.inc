@@ -1,5 +1,4 @@
 <?php
-// $Id: contact_site.inc,v 1.3 2010/01/29 21:21:20 merlinofchaos Exp $
 
 /**
  * Specialized implementation of hook_page_manager_task_tasks(). See api-task.html for
@@ -29,6 +28,7 @@ function page_manager_contact_site_page_manager_tasks() {
     // Allow this to be enabled or disabled:
     'disabled' => variable_get('page_manager_contact_site_disabled', TRUE),
     'enable callback' => 'page_manager_contact_site_enable',
+    'access callback' => 'page_manager_contact_access_check',
   );
 }
 
@@ -44,8 +44,12 @@ function page_manager_contact_site_menu_alter(&$items, $task) {
   }
 
   $callback = $items['contact']['page callback'];
+  if ($callback == 'drupal_get_form') {
+    $callback = $items['contact']['page arguments'][0];
+  }
+
   // Override the node edit handler for our purpose.
-  if ($callback == 'contact_site_page' || variable_get('page_manager_override_anyway', FALSE)) {
+  if ($callback == 'contact_site_form' || variable_get('page_manager_override_anyway', FALSE)) {
     $items['contact']['page callback'] = 'page_manager_contact_site';
     $items['contact']['file path'] = $task['path'];
     $items['contact']['file'] = $task['file'];
@@ -61,7 +65,7 @@ function page_manager_contact_site_menu_alter(&$items, $task) {
 }
 
 /**
- * Entry point for our overridden node edit.
+ * Entry point for our overridden site contact.
  *
  * This function asks its assigned handlers who, if anyone, would like
  * to run with it. If no one does, it passes through to Drupal core's
@@ -79,7 +83,7 @@ function page_manager_contact_site() {
   }
 
   module_load_include('inc', 'contact', 'contact.pages');
-  $function = 'contact_site_page';
+  $function = 'contact_site_form';
   foreach (module_implements('page_manager_override') as $module) {
     $call = $module . '_page_manager_override';
     if (($rc = $call('contact_site')) && function_exists($rc)) {
@@ -89,6 +93,10 @@ function page_manager_contact_site() {
   }
 
   // Otherwise, fall back.
+  if ($function == 'contact_site_form') {
+    return drupal_get_form($function);
+  }
+
   return $function();
 }
 
@@ -102,4 +110,20 @@ function page_manager_contact_site_enable($cache, $status) {
   if (!$status) {
     $GLOBALS['page_manager_enabling_contact_site'] = TRUE;
   }
+}
+
+/**
+ * Callback to determine if a page is accessible.
+ *
+ * @param $task
+ *   The task plugin.
+ * @param $subtask_id
+ *   The subtask id
+ * @param $contexts
+ *   The contexts loaded for the task.
+ * @return
+ *   TRUE if the current user can access the page.
+ */
+function page_manager_contact_access_check($task, $subtask_id, $contexts) {
+  return user_access('access site-wide contact form');
 }

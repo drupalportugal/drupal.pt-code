@@ -1,0 +1,488 @@
+.grid-1 {
+  padding-right: 0.25%;
+}
+.grid-2 {
+  padding-right: 0.5%;
+}
+.grid-3 {
+  padding-right: 0.75%;
+}
+.grid-4 {
+  padding-right: 0%;
+}
+.grid-5 {
+  padding-right: 0.25%;
+}
+.grid-6 {
+  padding-right: 0.5%;
+}
+.grid-7 {
+  padding-right: 0.75%;
+}
+.grid-8 {
+  padding-right: 0%;
+}
+.grid-9 {
+  padding-right: 0.25%;
+}
+.grid-10 {
+  padding-right: 0.5%;
+}
+.grid-11 {
+  padding-right: 0.75%;
+}
+.grid-12 {
+  padding-right: 0%;
+}
+.grid-13 {
+  padding-right: 0.25%;
+}
+.grid-14 {
+  padding-right: 0.5%;
+}
+.grid-15 {
+  padding-right: 0.75%;
+}
+.grid-16 {
+  padding-right: 0%;
+}
+
+/* for grouped 16 columns */
+.group-16 .grid-1 {
+  padding-right: 0.25%;
+}
+.group-16 .grid-2 {
+  padding-right: 0.5%;
+}
+.group-16 .grid-3 {
+  padding-right: 0.75%;
+}
+.group-16 .grid-4 {
+  padding-right: 0%;
+}
+.group-16 .grid-5 {
+  padding-right: 0.25%;
+}
+.group-16 .grid-6 {
+  padding-right: 0.5%;
+}
+.group-16 .grid-7 {
+  padding-right: 0.75%;
+}
+.group-16 .grid-8 {
+  padding-right: 0%;
+}
+.group-16 .grid-9 {
+  padding-right: 0.25%;
+}
+.group-16 .grid-10 {
+  padding-right: 0.5%;
+}
+.group-16 .grid-11 {
+  padding-right: 0.75%;
+}
+.group-16 .grid-12 {
+  padding-right: 0%;
+}
+.group-16 .grid-13 {
+  padding-right: 0.25%;
+}
+.group-16 .grid-14 {
+  padding-right: 0.5%;
+}
+.group-16 .grid-15 {
+  padding-right: 0.75%;
+}
+.group-16 .grid-16 {
+  padding-right: 0%;
+}
+
+/* for grouped 15 columns */
+.group-15 .grid-1 {
+  padding-right: 0.6666%;
+}
+.group-15 .grid-2 {
+  padding-right: 0.3333%;
+}
+.group-15 .grid-3 {
+  padding-right: 0%;
+}
+.group-15 .grid-4 {
+  padding-right: 0.6666%;
+}
+.group-15 .grid-5 {
+  padding-right: 0.3333%;
+}
+.group-15 .grid-6 {
+  padding-right: 0%;
+}
+.group-15 .grid-7 {
+  padding-right: 0.6666%;
+}
+.group-15 .grid-8 {
+  padding-right: 0.3333%;
+}
+.group-15 .grid-9 {
+  padding-right: 0%;
+}
+.group-15 .grid-10 {
+  padding-right: 0.6666%;
+}
+.group-15 .grid-11 {
+  padding-right: 0.3333%;
+}
+.group-15 .grid-12 {
+  padding-right: 0%;
+}
+.group-15 .grid-13 {
+  padding-right: 0.6666%;
+}
+.group-15 .grid-14 {
+  padding-right: 0.3333%;
+}
+.group-15 .grid-15 {
+  padding-right: 0%;
+}
+
+/* for grouped 14 columns */
+.group-14 .grid-1 {
+  padding-right: 0.1428%;
+}
+.group-14 .grid-2 {
+  padding-right: 0.2857%;
+}
+.group-14 .grid-3 {
+  padding-right: 0.4285%;
+}
+.group-14 .grid-4 {
+  padding-right: 0.5714%;
+}
+.group-14 .grid-5 {
+  padding-right: 0.7142%;
+}
+.group-14 .grid-6 {
+  padding-right: 0.8571%;
+}
+.group-14 .grid-7 {
+  padding-right: 0%;
+}
+.group-14 .grid-8 {
+  padding-right: 0.1428%;
+}
+.group-14 .grid-9 {
+  padding-right: 0.2857%;
+}
+.group-14 .grid-10 {
+  padding-right: 0.4285%;
+}
+.group-14 .grid-11 {
+  padding-right: 0.5714%;
+}
+.group-14 .grid-12 {
+  padding-right: 0.7142%;
+}
+.group-14 .grid-13 {
+  padding-right: 0.8571%;
+}
+.group-14 .grid-14 {
+  padding-right: 0%;
+}
+
+/* for grouped 13 columns */
+.group-13 .grid-1 {
+  padding-right: 0.6923%;
+}
+.group-13 .grid-2 {
+  padding-right: 0.3846%;
+}
+.group-13 .grid-3 {
+  padding-right: 0.0769%;
+}
+.group-13 .grid-4 {
+  padding-right: 0.7692%;
+}
+.group-13 .grid-5 {
+  padding-right: 0.4615%;
+}
+.group-13 .grid-6 {
+  padding-right: 0.1538%;
+}
+.group-13 .grid-7 {
+  padding-right: 0.8461%;
+}
+.group-13 .grid-8 {
+  padding-right: 0.5384%;
+}
+.group-13 .grid-9 {
+  padding-right: 0.2307%;
+}
+.group-13 .grid-10 {
+  padding-right: 0.923%;
+}
+.group-13 .grid-11 {
+  padding-right: 0.6153%;
+}
+.group-13 .grid-12 {
+  padding-right: 0.3076%;
+}
+.group-13 .grid-13 {
+  padding-right: 0%;
+}
+
+/* for grouped 12 columns */
+.group-12 .grid-1 {
+  padding-right: 0.3333%;
+}
+.group-12 .grid-2 {
+  padding-right: 0.6666%;
+}
+.group-12 .grid-3 {
+  padding-right: 0%;
+}
+.group-12 .grid-4 {
+  padding-right: 0.3333%;
+}
+.group-12 .grid-5 {
+  padding-right: 0.6666%;
+}
+.group-12 .grid-6 {
+  padding-right: 0%;
+}
+.group-12 .grid-7 {
+  padding-right: 0.3333%;
+}
+.group-12 .grid-8 {
+  padding-right: 0.6666%;
+}
+.group-12 .grid-9 {
+  padding-right: 0%;
+}
+.group-12 .grid-10 {
+  padding-right: 0.3333%;
+}
+.group-12 .grid-11 {
+  padding-right: 0.6666%;
+}
+.group-12 .grid-12 {
+  padding-right: 0%;
+}
+
+/* for grouped 11 columns */
+.group-11 .grid-1 {
+  padding-right: 0.0909%;
+}
+.group-11 .grid-2 {
+  padding-right: 0.1818%;
+}
+.group-11 .grid-3 {
+  padding-right: 0.2727%;
+}
+.group-11 .grid-4 {
+  padding-right: 0.3636%;
+}
+.group-11 .grid-5 {
+  padding-right: 0.4545%;
+}
+.group-11 .grid-6 {
+  padding-right: 0.5454%;
+}
+.group-11 .grid-7 {
+  padding-right: 0.6363%;
+}
+.group-11 .grid-8 {
+  padding-right: 0.7272%;
+}
+.group-11 .grid-9 {
+  padding-right: 0.8181%;
+}
+.group-11 .grid-10 {
+  padding-right: 0.909%;
+}
+.group-11 .grid-11 {
+  padding-right: 0%;
+}
+
+/* for grouped 10 columns */
+.group-10 .grid-1 {
+  padding-right: 0%;
+}
+.group-10 .grid-2 {
+  padding-right: 0%;
+}
+.group-10 .grid-3 {
+  padding-right: 0%;
+}
+.group-10 .grid-4 {
+  padding-right: 0%;
+}
+.group-10 .grid-5 {
+  padding-right: 0%;
+}
+.group-10 .grid-6 {
+  padding-right: 0%;
+}
+.group-10 .grid-7 {
+  padding-right: 0%;
+}
+.group-10 .grid-8 {
+  padding-right: 0%;
+}
+.group-10 .grid-9 {
+  padding-right: 0%;
+}
+.group-10 .grid-10 {
+  padding-right: 0%;
+}
+
+/* for grouped 9 columns */
+.group-9 .grid-1 {
+  padding-right: 0.1111%;
+}
+.group-9 .grid-2 {
+  padding-right: 0.2222%;
+}
+.group-9 .grid-3 {
+  padding-right: 0.3333%;
+}
+.group-9 .grid-4 {
+  padding-right: 0.4444%;
+}
+.group-9 .grid-5 {
+  padding-right: 0.5555%;
+}
+.group-9 .grid-6 {
+  padding-right: 0.6666%;
+}
+.group-9 .grid-7 {
+  padding-right: 0.7777%;
+}
+.group-9 .grid-8 {
+  padding-right: 0.8888%;
+}
+.group-9 .grid-9 {
+  padding-right: 0%;
+}
+
+/* for grouped 8 columns */
+.group-8 .grid-1 {
+  padding-right: 0.5%;
+}
+.group-8 .grid-2 {
+  padding-right: 0%;
+}
+.group-8 .grid-3 {
+  padding-right: 0.5%;
+}
+.group-8 .grid-4 {
+  padding-right: 0%;
+}
+.group-8 .grid-5 {
+  padding-right: 0.5%;
+}
+.group-8 .grid-6 {
+  padding-right: 0%;
+}
+.group-8 .grid-7 {
+  padding-right: 0.5%;
+}
+.group-8 .grid-8 {
+  padding-right: 0%;
+}
+
+/* for grouped 7 columns */
+.group-7 .grid-1 {
+  padding-right: 0.2857%;
+}
+.group-7 .grid-2 {
+  padding-right: 0.5714%;
+}
+.group-7 .grid-3 {
+  padding-right: 0.8571%;
+}
+.group-7 .grid-4 {
+  padding-right: 0.1428%;
+}
+.group-7 .grid-5 {
+  padding-right: 0.4285%;
+}
+.group-7 .grid-6 {
+  padding-right: 0.7142%;
+}
+.group-7 .grid-7 {
+  padding-right: 0%;
+}
+
+/* for grouped 6 columns */
+.group-6 .grid-1 {
+  padding-right: 0.6666%;
+}
+.group-6 .grid-2 {
+  padding-right: 0.3333%;
+}
+.group-6 .grid-3 {
+  padding-right: 0%;
+}
+.group-6 .grid-4 {
+  padding-right: 0.6666%;
+}
+.group-6 .grid-5 {
+  padding-right: 0.3333%;
+}
+.group-6 .grid-6 {
+  padding-right: 0%;
+}
+
+/* for grouped 5 columns */
+.group-5 .grid-1 {
+  padding-right: 0%;
+}
+.group-5 .grid-2 {
+  padding-right: 0%;
+}
+.group-5 .grid-3 {
+  padding-right: 0%;
+}
+.group-5 .grid-4 {
+  padding-right: 0%;
+}
+.group-5 .grid-5 {
+  padding-right: 0%;
+}
+
+/* for grouped 4 columns */
+.group-4 .grid-1 {
+  padding-right: 0%;
+}
+.group-4 .grid-2 {
+  padding-right: 0%;
+}
+.group-4 .grid-3 {
+  padding-right: 0%;
+}
+.group-4 .grid-4 {
+  padding-right: 0%;
+}
+
+/* for grouped 3 columns */
+.group-3 .grid-1 {
+  padding-right: 0.3333%;
+}
+.group-3 .grid-2 {
+  padding-right: 0.6666%;
+}
+.group-3 .grid-3 {
+  padding-right: 0%;
+}
+
+/* for grouped 2 columns */
+.group-2 .grid-1 {
+  padding-right: 0%;
+}
+.group-2 .grid-2 {
+  padding-right: 0%;
+}
+
+/* for grouped 1 columns */
+.group-1 .grid-1 {
+  padding-right: 0%;
+}

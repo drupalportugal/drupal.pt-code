@@ -1,5 +1,4 @@
 <?php
-// $Id: destinations.file.inc,v 1.2.2.4 2010/09/13 03:22:58 ronan Exp $
 
 
 /**
@@ -21,27 +20,37 @@ class backup_migrate_destination_files extends backup_migrate_destination {
   }
 
   /**
+   * Get the file location.
+   */
+  function get_realpath() {
+    return drupal_realpath($this->get_location());
+  }
+
+  /**
    * File save destination callback.
    */
-  function save_file($file, $settings) {
+  function _save_file($file, $settings) {
     if ($dir = $this->get_location()) {
-      if ($this->check_dir($dir)) {
+      if ($dir = $this->check_dir($dir)) {
         $filepath = rtrim($dir, "/") ."/". $file->filename();
-        $filepath = drupal_realpath($filepath);
-        rename($file->filepath(), $filepath);
-
-        // chmod, chown and chgrp the file if needed.
-        if ($chmod = $this->settings('chmod')) {
-          if (!@chmod($filepath, octdec($chmod))) {
-            _backup_migrate_message('Unable to set the file mode for: @file', array('@file' => $filepath), 'error');
+        if (file_unmanaged_move($file->filepath(), $filepath)) {
+  
+          // chmod, chown and chgrp the file if needed.
+          if ($chmod = $this->settings('chmod')) {
+            if (!@drupal_chmod($filepath, octdec($chmod))) {
+              _backup_migrate_message('Unable to set the file mode for: @file', array('@file' => $filepath), 'error');
+            }
           }
-        }
-        if ($chgrp = $this->settings('chgrp')) {
-          if (!@chgrp($filepath, $chgrp)) {
-            _backup_migrate_message('Unable to set the file group for: @file', array('@file' => $filepath), 'error');
+          if ($chgrp = $this->settings('chgrp')) {
+            if (!@chgrp($filepath, $chgrp)) {
+              _backup_migrate_message('Unable to set the file group for: @file', array('@file' => $filepath), 'error');
+            }
           }
+          return $file;
         }
-        return $file;
+        else {
+          _backup_migrate_message('Unable to save the file to the directory: @dir', array('@dir' => $dir), 'error');
+        }
       }
     }
   }
@@ -67,9 +76,9 @@ class backup_migrate_destination_files extends backup_migrate_destination {
   /**
    * File list destination callback.
    */
-  function list_files() {
+  function _list_files() {
     $files = array();
-    if ($dir = $this->get_location()) {
+    if ($dir = $this->get_realpath()) {
       if ($handle = @opendir($dir)) {
         backup_migrate_include('files');
         while (FALSE !== ($file = readdir($handle))) {
@@ -93,8 +102,11 @@ class backup_migrate_destination_files extends backup_migrate_destination {
    * Get the filepath from the given file id.
    */
   function get_filepath($file_id) {
-    $filepath = rtrim($this->get_location(), '/') .'/'. $file_id;
-    return $filepath;
+    if ($dir = $this->get_realpath()) {
+      $filepath = rtrim($dir, '/') .'/'. $file_id;
+      return $filepath;
+    }
+    return FALSE;
   }
 
   /**
@@ -163,7 +175,7 @@ class backup_migrate_destination_files extends backup_migrate_destination {
    * Prepare the destination directory for the backups.
    */
   function check_dir($directory) {
-    if (!file_prepare_directory($directory, FILE_CREATE_DIRECTORY | FILE_CREATE_DIRECTORY)) {
+    if (!file_prepare_directory($directory, FILE_CREATE_DIRECTORY)) {
       // Unable to create destination directory.
       _backup_migrate_message("Unable to create or write to the save directory '%directory'. Please check the file permissions that directory and try again.", array('%directory' => $directory), "error");
       return FALSE;
@@ -180,23 +192,7 @@ class backup_migrate_destination_files extends backup_migrate_destination {
    * Check that a web accessible directory has been properly secured, othewise attempt to secure it.
    */
   function check_web_dir($directory) {
-    // Check for a htaccess file which adequately protects the backup files.
-    $htaccess_lines = "order allow,deny\ndeny from all\n";
-    if (!is_file($directory .'/.htaccess') || strpos(file_get_contents($directory .'/.htaccess'), $htaccess_lines) === FALSE) {
-      // Attempt to protect the backup files from public access using htaccess.
-      if (($fp = @fopen($directory .'/.htaccess', 'w')) && @fputs($fp, $htaccess_lines)) {
-        fclose($fp);
-        chmod($directory .'/.htaccess', 0664);
-      }
-      // Unable to create htaccess... warn the user.
-      else {
-        $message = "Security warning: Couldn't modify .htaccess file. Please create a .htaccess file in your %directory directory which contains the following lines: <code>!htaccess</code> or add them to the existing .htaccess file";
-        $replace = array('%directory' => $directory, '!htaccess' => '<br />'. nl2br(check_plain($htaccess_lines)));
-        drupal_set_message(t($message, $replace), "error");
-        watchdog('security', t($message, $replace), WATCHDOG_ERROR);
-        return FALSE;
-      }
-    }
+    file_create_htaccess($directory, TRUE);
 
     // Check the user agent to make sure we're not responding to a request from drupal itself.
     // That should prevent infinite loops which could be caused by poormanscron in some circumstances.
@@ -205,7 +201,7 @@ class backup_migrate_destination_files extends backup_migrate_destination {
     }
 
     // Check to see if the destination is publicly accessible
-    $test_contents = "this file should not be publicly accesible";
+    $test_contents = "this file should not be publicly accessible";
     // Create the the text.txt file if it's not already there.
     if (!is_file($directory .'/test.txt') || file_get_contents($directory .'/test.txt') != $test_contents) {
       if ($fp = fopen($directory .'/test.txt', 'w')) {
@@ -244,8 +240,9 @@ class backup_migrate_destination_files extends backup_migrate_destination {
    */
   function test_file_readable_remotely($path, $contents) {
     $url = file_create_url($path);
+    // TODO: Proper checking for absolute paths.
     $result = drupal_http_request($url);
-    if (strpos($result->data, $contents) !== FALSE) {
+    if (!empty($result->data) && strpos($result->data, $contents) !== FALSE) {
       return TRUE;
     }
     return FALSE;

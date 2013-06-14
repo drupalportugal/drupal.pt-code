@@ -1,5 +1,4 @@
 <?php
-// $Id: wizard.inc,v 1.18 2010/10/11 22:18:22 sdboyer Exp $
 
 /**
  * @file
@@ -35,9 +34,6 @@
  * Remember that the form builders for this form will receive
  * &$form, &$form_state, NOT just &$form_state and no additional args.
  *
- * Do NOT use #required => TRUE with these forms as that validation
- * cannot be skipped for the CANCEL button.
- *
  * @param $form_info
  *   An array of form info. @todo document the array.
  * @param $step
@@ -47,9 +43,13 @@
  *   whatever information the form(s) involved left for it.
  */
 function ctools_wizard_multistep_form($form_info, $step, &$form_state) {
+  // Make sure 'wizard' always exists for the form when dealing
+  // with form caching.
+  ctools_form_include($form_state, 'wizard');
+
   // allow order array to be optional
   if (empty($form_info['order'])) {
-    foreach($form_info['forms'] as $step_id => $params) {
+    foreach ($form_info['forms'] as $step_id => $params) {
       $form_info['order'][$step_id] = $params['title'];
     }
   }
@@ -105,11 +105,11 @@ function ctools_wizard_multistep_form($form_info, $step, &$form_state) {
   if (!empty($info['include'])) {
     if (is_array($info['include'])) {
       foreach ($info['include'] as $file) {
-        require_once DRUPAL_ROOT . '/' . $file;
+        ctools_form_include_file($form_state, $file);
       }
     }
     else {
-      require_once DRUPAL_ROOT . '/' . $info['include'];
+      ctools_form_include_file($form_state, $info['include']);
     }
   }
 
@@ -191,7 +191,12 @@ function ctools_wizard_multistep_form($form_info, $step, &$form_state) {
     if (empty($form_state['ajax'])) {
       // redirect, if one is set.
       if ($form_state['redirect']) {
-        call_user_func_array('drupal_goto', $form_state['redirect']);
+        if (is_array($form_state['redirect'])) {
+          call_user_func_array('drupal_goto', $form_state['redirect']);
+        }
+        else {
+          drupal_goto($form_state['redirect']);
+        }
       }
     }
     else if (isset($form_state['ajax next'])) {
@@ -251,16 +256,13 @@ function ctools_wizard_wrapper($form, &$form_state) {
 
     if (!empty($form_info['show trail'])) {
       if (!empty($form_info['free trail'])) {
-        // ctools_wizard_get_path() returns results suitable for #redirect
-        // which can only be directly used in drupal_goto. We have to futz
-        // with it.
+        // ctools_wizard_get_path() returns results suitable for
+        // $form_state['redirect] which can only be directly used in
+        // drupal_goto. We have to futz a bit with it.
         $path = ctools_wizard_get_path($form_info, $id);
         $options = array();
         if (!empty($path[1])) {
-          $options['query'] = $path[1];
-        }
-        if (!empty($path[2])) {
-          $options['fragment'] = $path[2];
+          $options = $path[1];
         }
         $title = l($title, $path[0], $options);
       }
@@ -280,8 +282,7 @@ function ctools_wizard_wrapper($form, &$form_state) {
   if (empty($form_info['no buttons'])) {
     // Ensure buttons stay on the bottom.
     $form['buttons'] = array(
-      '#prefix' => '<div class="clearfix">',
-      '#suffix' => '</div>',
+      '#type' => 'actions',
       '#weight' => 1000,
     );
 
@@ -297,7 +298,7 @@ function ctools_wizard_wrapper($form, &$form_state) {
         '#next' => $form_state['previous'],
         '#wizard type' => 'next',
         '#weight' => -2000,
-        '#skip validation' => TRUE,
+        '#limit_validation_errors' => array(),
         // hardcode the submit so that it doesn't try to save data.
         '#submit' => array('ctools_wizard_submit'),
         '#attributes' => $button_attributes,
@@ -352,7 +353,7 @@ function ctools_wizard_wrapper($form, &$form_state) {
         '#value' => $form_info['cancel text'],
         '#wizard type' => 'cancel',
         // hardcode the submit so that it doesn't try to save data.
-        '#skip validation' => TRUE,
+        '#limit_validation_errors' => array(),
         '#submit' => array('ctools_wizard_submit'),
         '#attributes' => $button_attributes,
       );
@@ -429,6 +430,12 @@ function ctools_wizard_submit(&$form, &$form_state) {
       }
       else if ($type == 'next') {
         $form_state['redirect'] = ctools_wizard_get_path($form_state['form_info'], $form_state['clicked_button']['#next']);
+        if (!empty($_GET['destination'])) {
+          // We don't want drupal_goto redirect this request
+          // back. ctools_wizard_get_path ensures that the destination is
+          // carried over on subsequent pages.
+          unset($_GET['destination']);
+        }
       }
       else if (isset($form_state['form_info']['return path'])) {
         $form_state['redirect'] = $form_state['form_info']['return path'];
@@ -448,11 +455,27 @@ function ctools_wizard_get_path($form_info, $step) {
     foreach ($form_info['path'] as $id => $part) {
       $form_info['path'][$id] = str_replace('%step', $step, $form_info['path'][$id]);
     }
-    return $form_info['path'];
+    $path = $form_info['path'];
   }
   else {
-    return array(str_replace('%step', $step, $form_info['path']));
+    $path = array(str_replace('%step', $step, $form_info['path']));
   }
+
+  // If destination is set, carry it over so it'll take effect when
+  // saving. The submit handler will unset destination to avoid drupal_goto
+  // redirecting us.
+  if (!empty($_GET['destination'])) {
+    // Ensure that options is an array.
+    if (!isset($path[1]) || !is_array($path[1])) {
+      $path[1] = array();
+    }
+    // Ensure that the query part of options is an array.
+    $path[1] += array('query' => array());
+    // Add the destination parameter, if not set already.
+    $path[1]['query'] += drupal_get_destination();
+  }
+
+  return $path;
 }
 
 /**
@@ -483,7 +506,7 @@ function ctools_wizard_defaults(&$form_info) {
 
   $form_info = $form_info + $defaults;
   // set form callbacks if they aren't defined
-  foreach($form_info['forms'] as $step => $params) {
+  foreach ($form_info['forms'] as $step => $params) {
     if (!$params['form id']) {
        $form_callback = $hook . '_' . $step . '_form';
        $form_info['forms'][$step]['form id'] = $form_callback;
@@ -499,7 +522,7 @@ function ctools_wizard_defaults(&$form_info) {
     'finish callback' => '_finish',
   );
 
-  foreach($callbacks as $key => $callback) {
+  foreach ($callbacks as $key => $callback) {
     // never overwrite if explicity defined
     if (empty($form_info[$key])) {
       $wizard_callback = $hook . $callback;

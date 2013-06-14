@@ -1,0 +1,197 @@
+.region-content .views-row {
+  margin-bottom: 30px; /* Articles spacing */
+}
+
+/* Articles (nodes) ---*/
+.article {
+  margin-bottom: 40px;
+}
+
+/* Article Title ---*/
+.article > .header {
+  border-bottom: 1px solid #cdcdcd;
+  padding-bottom: .5em;
+}
+
+.node-title {
+  color: #333;
+  font-size: 1.5em;
+  font-weight: bold;
+  line-height: 1.2;
+  padding-top: 10px;
+}
+
+.node-title a,
+.node-title a:visited {
+  color: #08c;
+}
+
+.node-title a:hover,
+.node-title a:focus {
+  color: #333;
+  text-decoration: none;
+}
+
+.node-title a:active {
+  color: #333;
+  text-decoration: none;
+}
+
+/* Skinr article title alignment */
+.ta-l .article-title {
+  text-align: left;
+}
+
+.ta-r .article-title {
+  text-align: right;
+}
+
+.ta-c .article-title {
+  text-align: center;
+}
+
+/* User Picture ---*/
+.article .user-picture {
+  display: inline-block;
+  vertical-align: text-top;
+}
+
+.article .user-picture img {
+  max-height: 16px;
+}
+
+/* Meta ---*/
+.node-author {
+  color: #999;
+}
+
+.username {
+}
+
+.article > .submitted {
+  color: #7b7b7b;
+  line-height: 1;
+  padding: 0.5em 0 1.5em;
+}
+
+.article > .submitted .username {
+}
+
+.article > .submitted .time {
+}
+
+/* Field Image ---*/
+.article .field-type-image {
+  border: 1px solid #cdcdcd;
+  float: right;
+  margin: .5em 0 1em 1em;
+  padding: 3px;
+}
+
+/* Lists ---*/
+.article ul {
+}
+
+.article ul li {
+}
+
+.article ol {
+}
+
+.article ol li {
+}
+
+/* Links ---*/
+.article .menu {
+  margin-top: 1em;
+}
+
+.article ul.links {
+  color: #999;
+  font-size: .92em;
+  margin: 0;
+}
+
+.article ul.links li {
+  background: none;
+  display: inline-block;
+  float: left;
+  margin: 0 5px 5px 0;
+  padding: 0 0 2px;
+  white-space: nowrap;
+}
+
+.article ul.links li a {
+  background: url(images/grad-1.gif) repeat-x top #cdcdcd;
+  border: 1px solid #cdcdcd;
+  color: #666;
+  display: inline-block;
+  font-weight: bold;
+  padding: 2px 10px;
+  text-decoration: none;
+  text-transform: capitalize;
+  vertical-align: middle;
+}
+
+.article ul.links li.node-readmore a,
+.article ul.links li a:hover,
+.article ul.links li a:focus,
+.article ul.links li a:active {
+  background: url(images/grad-d1.gif) repeat-x top #08c;
+  border: 1px solid #08c;
+  color: #fff;
+}
+
+.article ul.links li.comment-add a {
+}
+
+.article ul.links li.comment-comments a {
+}
+
+.article ul.links li.comment-new-comments a {
+}
+
+.article ul.links li.blog_usernames_blog a {
+}
+
+.article ul.links li.print_html a {
+}
+
+.article ul.links li.print_email a {
+}
+
+.article ul.links li.print_pdf a {
+}
+
+.article ul.links li.first {
+}
+
+.article ul.links li.last {
+}
+
+/* Workflow states ---*/
+.article-add {
+}
+
+.article-edit {
+}
+
+.article-delete {
+}
+
+.article-preview {
+}
+
+.article-sticky {
+}
+
+.article-promoted {
+}
+
+/* Status ---*/
+.article-unpublished {
+}
+
+/* Theme the teaser ---*/
+.article-teaser {
+}

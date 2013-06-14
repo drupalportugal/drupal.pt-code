@@ -1,5 +1,4 @@
 <?php
-// $Id: views_query.test,v 1.1.2.13 2010/10/05 12:29:56 dereine Exp $
 
 /**
  * @file
@@ -7,7 +6,7 @@
  */
 
 /**
- * Abstract class for views testing
+ * Abstract class for views testing.
  */
 abstract class ViewsTestCase extends DrupalWebTestCase {
   /**
@@ -30,7 +29,7 @@ abstract class ViewsTestCase extends DrupalWebTestCase {
   }
 
   /**
-   * Helper function: verify a result set returned by view.
+   * Helper function: verify a result set returned by view..
    *
    * Inverse of ViewsTestCase::assertIdenticalResultset().
    *
@@ -112,6 +111,9 @@ abstract class ViewsTestCase extends DrupalWebTestCase {
 
   /**
    * Helper function to execute a view with debugging.
+   *
+   * @param view $view
+   * @param array $args
    */
   protected function executeView($view, $args = array()) {
     $view->set_display();
@@ -124,7 +126,7 @@ abstract class ViewsTestCase extends DrupalWebTestCase {
 abstract class ViewsSqlTest extends ViewsTestCase {
 
   protected function setUp() {
-    parent::setUp('views');
+    parent::setUp('views', 'views_ui');
 
     // Define the schema and views data variable before enabling the test module.
     variable_set('views_test_schema', $this->schemaDefinition());
@@ -142,6 +144,21 @@ abstract class ViewsSqlTest extends ViewsTestCase {
       $query->values($record);
     }
     $query->execute();
+    $this->checkPermissions(array(), TRUE);
+  }
+
+  /**
+   * This function allows to enable views ui from a higher class which can't change the setup function anymore.
+   *
+   * @TODO
+   *   Convert existing setUp functions.
+   */
+  function enableViewsUi() {
+    module_enable(array('views_ui'));
+    // @TODO Figure out why it's required to clear the cache here.
+    views_module_include('views_default', TRUE);
+    views_get_all_views(TRUE);
+    menu_rebuild();
   }
 
   /**
@@ -298,9 +315,6 @@ abstract class ViewsSqlTest extends ViewsTestCase {
     return $data;
   }
 
-  /**
-   * The views plugin definition. Override it if you test provides a plugin.
-   */
   protected function viewsPlugins() {
     return array();
   }
@@ -345,6 +359,8 @@ abstract class ViewsSqlTest extends ViewsTestCase {
 
   /**
    * Build and return a basic view of the views_test table.
+   *
+   * @return view
    */
   protected function getBasicView() {
     views_include('view');
@@ -356,7 +372,7 @@ abstract class ViewsSqlTest extends ViewsTestCase {
     $view->base_table = 'views_test';
 
     // Set up the fields we need.
-    $display = $view->new_display('default', 'Defaults', 'default');
+    $display = $view->new_display('default', 'Master', 'default');
     $display->override_option('fields', array(
       'id' => array(
         'id' => 'id',

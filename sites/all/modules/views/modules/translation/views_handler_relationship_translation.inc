@@ -1,9 +1,10 @@
 <?php
-// $Id: views_handler_relationship_translation.inc,v 1.1 2008/09/30 22:07:15 merlinofchaos Exp $
 
 /**
  * Handles relationships for content translation sets and provides multiple
  * options.
+ *
+ * @ingroup views_relationship_handlers
  */
 class views_handler_relationship_translation extends views_handler_relationship {
   function option_definition() {

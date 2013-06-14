@@ -1,5 +1,4 @@
 <?php
-// $Id: views_handler_field_math.inc,v 1.1.2.3 2010/11/05 07:20:54 dereine Exp $
 /**
  * Render a mathematical expression as a numeric value
  *
@@ -32,13 +31,13 @@ class views_handler_field_math extends views_handler_field_numeric {
     // Then move the existing help:
     $form['expression_help'] = $form['alter']['help'];
     unset($form['expression_help']['#dependency']);
-    unset($form['expression_help']['#process']);
     unset($form['alter']['help']);
   }
 
   function render($values) {
     ctools_include('math-expr');
-    $value = strtr($this->options['expression'], $this->get_render_tokens(array()));
+    $tokens = array_map('floatval', $this->get_render_tokens(array()));
+    $value = strtr($this->options['expression'], $tokens);
     $expressions = explode(';', $value);
     $math = new ctools_math_expr;
     foreach ($expressions as $expression) {
@@ -67,7 +66,12 @@ class views_handler_field_math extends views_handler_field_numeric {
       return '';
     }
 
-    return check_plain($this->options['prefix'] . $value . $this->options['suffix']);
+    // Should we format as a plural.
+    if (!empty($this->options['format_plural']) && ($value != 0 || !$this->options['empty_zero'])) {
+      $value = format_plural($value, $this->options['format_plural_singular'], $this->options['format_plural_plural']);
+    }
+
+    return $this->sanitize_value($this->options['prefix'] . $value . $this->options['suffix']);
   }
 
   function query() { }

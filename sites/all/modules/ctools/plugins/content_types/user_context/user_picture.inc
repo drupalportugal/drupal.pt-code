@@ -1,5 +1,4 @@
 <?php
-// $Id: user_picture.inc,v 1.6 2010/10/11 22:18:22 sdboyer Exp $
 
 /**
  * Plugins are described by creating a $plugin array which will be used
@@ -15,17 +14,30 @@ $plugin = array(
 );
 
 function ctools_user_picture_content_type_render($subtype, $conf, $panel_args, $context) {
-  $account = isset($context->data) ? clone($context->data) : NULL;
-  $block = new stdClass();
-  $block->module = 'term-list';
+  global $user;
 
-  if ($account === FALSE || ($account->access == 0 && !user_access('administer users'))) {
-    return drupal_not_found();
+  if (empty($context->data)) {
+    return;
   }
 
-  $block->title = check_plain($account->name);
-  $block->content = theme('user_picture', $account);
+  $account = clone $context->data;
 
+  // Check if user has permissions to access the user
+  if ($user->uid != $account->uid && (!user_access('access user profiles') && !user_access('administer users'))) {
+    return;
+  }
+
+  $block = new stdClass();
+  $block->module = 'user-profile';
+  $block->title = check_plain($account->name);
+
+  $element['user_picture'] = array(
+    '#theme' => 'user_picture',
+    '#account' => $account,
+  );
+
+
+  $block->content = $element;
   return $block;
 }
 

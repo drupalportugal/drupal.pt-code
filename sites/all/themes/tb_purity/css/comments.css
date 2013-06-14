@@ -1,0 +1,213 @@
+/**
+*
+* TODO: check classes still apply in D7 - in particular the unpublished classes and the extra classes.
+*/
+
+/* Comment wrapper: wraps all comments and the comment form. */
+#comments {
+}
+
+#comments > h2 {
+  background: #333;
+  color: #fff;
+  font-size: 1.1em;
+  margin-top: 1em;
+  padding: 5px 10px;
+}
+
+/* Wrapper class for each individual comment. */
+.comment {
+  border-bottom: 1px solid #cdcdcd;
+  margin-bottom: 0;
+  margin-top: 0;
+  padding: 15px 10px;
+}
+
+/* Indentation */
+#comments .indented {
+  background: url(images/indent-tree.gif) no-repeat left 10px;
+  margin-bottom: 1em;
+  margin-left: 0;
+  padding-left: 20px;
+}
+
+#comments .indented .comment {
+  border-top: 0;
+  margin-top: 0;
+}
+
+/* Comment Title */
+.comment > .header {
+  border-bottom: 0;
+  padding-bottom: 0;
+}
+
+.comment-title {
+  font-size: 1.1em;
+}
+
+.comment-title a,
+.comment-title a:visited {
+  text-decoration: none;
+}
+
+.comment-title a:hover,
+.comment-title a:active,
+.comment-title a:focus {
+  text-decoration: underline;
+}
+
+/* Skinr comment title alignment. */
+.ta-l .comment-title {
+  text-align: left;
+}
+
+.ta-r .comment-title {
+  text-align: right;
+}
+
+.ta-c .comment-title {
+  text-align: center;
+}
+
+/* Comment "new" notification */
+.comment-title .new {
+  color: #ff8000;
+}
+
+/* User Picture */
+.comment .user-picture {
+}
+
+.comment .user-picture img {
+}
+
+/* Comment Content */
+.comment-content {
+}
+
+/* Submitted */
+.comment > .footer {
+  color: #7b7b7b;
+  margin-bottom: 1em;
+}
+
+.comment > .footer .username {
+}
+
+.comment > .footer .time {
+}
+
+.comment > .footer a,
+.comment > .footer a:visited {
+}
+
+.comment > .footer a:hover,
+.comment > .footer a:active,
+.comment > .footer a:focus {
+}
+
+/* Links */
+.comment ul.links {
+  display: block;
+  margin: 0;
+  padding: 0;
+}
+
+.comment ul.links li {
+  padding: 0 0 0 .25em;
+}
+
+.comment ul.links li a {
+  background: url(images/grad-1.gif) repeat-x top #cdcdcd;
+  border: 1px solid #cdcdcd;
+  color: #666;
+  display: inline-block;
+  font-weight: bold;
+  padding: 2px 10px;
+  text-decoration: none;
+  text-transform: capitalize;
+  vertical-align: middle;
+}
+
+.comment ul.links li a:hover,
+.comment ul.links li a:focus,
+.comment ul.links li a:active {
+  background: url(images/grad-d1.gif) repeat-x top #08c;
+  border: 1px solid #08c;
+  color: #fff;
+}
+
+/* Core comment link classes. */
+ul.links li.comment_reply a {
+}
+
+ul.links li.comment_edit a {
+}
+
+ul.links li.comment_delete a {
+}
+
+/* UL link first and last classes. */
+.comment ul.links li.first {
+}
+
+.comment ul.links li.last {
+}
+
+/* Author */
+.comment-by-anonymous {
+}
+
+.comment-by-article-author {
+}
+
+.comment-by-viewer {
+}
+
+/* New */
+.comment-new {
+}
+
+/* Zebra */
+.comment-odd {
+}
+
+.comment-even {
+}
+
+/* Status */
+.comment-unpublished {
+}
+
+/* Themes the "Unpublished" text. */
+.comment-unpublished .unpublished {
+}
+
+/* Sytle comments by article type. */
+.book-comments {
+}
+
+.blog-comments {
+}
+
+.forum-comments {
+}
+
+.page-comments {
+}
+
+.poll-comments {
+}
+
+.article-comments {
+}
+
+#autocomplete {
+  background: #fff;
+  padding: 2px 5px;
+}
+
+#edit-email {
+  padding-left: 0;
+}

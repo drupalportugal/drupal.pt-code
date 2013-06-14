@@ -1,5 +1,4 @@
 <?php
-// $Id: views_handler_argument_null.test,v 1.1.2.1 2010/11/07 11:32:25 dereine Exp $
 
 class ViewsHandlerArgumentNullTest extends ViewsSqlTest {
   public static function getInfo() {
@@ -33,7 +32,7 @@ class ViewsHandlerArgumentNullTest extends ViewsSqlTest {
 
     $this->executeView($view);
 
-    // Take sure that the argument is not validated yet.
+    // Make sure that the argument is not validated yet.
     unset($view->argument['null']->argument_validated);
     $this->assertTrue($view->argument['null']->validate_arg(26));
     // test must_not_be option.

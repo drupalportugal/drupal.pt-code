@@ -1,5 +1,4 @@
 <?php
-// $Id: views_handler_argument_string.inc,v 1.5.4.5 2010/11/05 07:20:54 dereine Exp $
 
 /**
  * Basic argument handler to implement string arguments that may have length
@@ -27,6 +26,7 @@ class views_handler_argument_string extends views_handler_argument {
     $options['case'] = array('default' => 'none');
     $options['path_case'] = array('default' => 'none');
     $options['transform_dash'] = array('default' => FALSE);
+    $options['break_phrase'] = array('default' => FALSE);
 
     if (!empty($this->definition['many to one'])) {
       $options['add_table'] = array('default' => FALSE);
@@ -42,23 +42,24 @@ class views_handler_argument_string extends views_handler_argument {
     $form['glossary'] = array(
       '#type' => 'checkbox',
       '#title' => t('Glossary mode'),
-      '#description' => t('Glossary mode applies a limit to the number of characters used in the argument, which allows the summary view to act as a glossary.'),
+      '#description' => t('Glossary mode applies a limit to the number of characters used in the filter value, which allows the summary view to act as a glossary.'),
       '#default_value' => $this->options['glossary'],
+      '#fieldset' => 'more',
     );
 
     $form['limit'] = array(
       '#type' => 'textfield',
       '#title' => t('Character limit'),
-      '#description' => t('How many characters of the argument to filter against. If set to 1, all fields starting with the letter in the argument would be matched.'),
+      '#description' => t('How many characters of the filter value to filter against. If set to 1, all fields starting with the first letter in the filter value would be matched.'),
       '#default_value' => $this->options['limit'],
-      '#process' => array('ctools_dependent_process'),
       '#dependency' => array('edit-options-glossary' => array(TRUE)),
+      '#fieldset' => 'more',
     );
 
     $form['case'] = array(
       '#type' => 'select',
       '#title' => t('Case'),
-      '#description' => t('When printing the argument result, how to transform the case.'),
+      '#description' => t('When printing the title and summary, how to transform the case of the filter value.'),
       '#options' => array(
         'none' => t('No transform'),
         'upper' => t('Upper case'),
@@ -67,12 +68,13 @@ class views_handler_argument_string extends views_handler_argument {
         'ucwords' => t('Capitalize each word'),
       ),
       '#default_value' => $this->options['case'],
+      '#fieldset' => 'more',
     );
 
     $form['path_case'] = array(
       '#type' => 'select',
       '#title' => t('Case in path'),
-      '#description' => t('When printing url paths, how to transform the case of the argument. Do not use this unless with Postgres as it uses case sensitive comparisons.'),
+      '#description' => t('When printing url paths, how to transform the case of the filter value. Do not use this unless with Postgres as it uses case sensitive comparisons.'),
       '#options' => array(
         'none' => t('No transform'),
         'upper' => t('Upper case'),
@@ -81,34 +83,48 @@ class views_handler_argument_string extends views_handler_argument {
         'ucwords' => t('Capitalize each word'),
       ),
       '#default_value' => $this->options['path_case'],
+      '#fieldset' => 'more',
     );
 
     $form['transform_dash'] = array(
       '#type' => 'checkbox',
       '#title' => t('Transform spaces to dashes in URL'),
       '#default_value' => $this->options['transform_dash'],
+      '#fieldset' => 'more',
     );
 
     if (!empty($this->definition['many to one'])) {
       $form['add_table'] = array(
         '#type' => 'checkbox',
-        '#title' => t('Allow multiple arguments to work together.'),
-        '#description' => t('If selected, multiple instances of this argument can work together, as though multiple terms were supplied to the same argument. This setting is not compatible with the "Reduce duplicates" setting.'),
+        '#title' => t('Allow multiple filter values to work together'),
+        '#description' => t('If selected, multiple instances of this filter can work together, as though multiple values were supplied to the same filter. This setting is not compatible with the "Reduce duplicates" setting.'),
         '#default_value' => !empty($this->options['add_table']),
+        '#fieldset' => 'more',
       );
 
       $form['require_value'] = array(
         '#type' => 'checkbox',
         '#title' => t('Do not display items with no value in summary'),
         '#default_value' => !empty($this->options['require_value']),
+        '#fieldset' => 'more',
       );
     }
+
+    // allow + for or, , for and
+    $form['break_phrase'] = array(
+      '#type' => 'checkbox',
+      '#title' => t('Allow multiple values'),
+      '#description' => t('If selected, users can enter multiple values in the form of 1+2+3 (for OR) or 1,2,3 (for AND).'),
+      '#default_value' => !empty($this->options['break_phrase']),
+      '#fieldset' => 'more',
+    );
   }
 
   /**
    * Build the summary query based on a string
    */
   function summary_query() {
+    $this->placeholder_length = $this->placeholder();
     if (empty($this->definition['many to one'])) {
       $this->ensure_my_table();
     }
@@ -118,7 +134,7 @@ class views_handler_argument_string extends views_handler_argument {
 
     if (empty($this->options['glossary'])) {
       // Add the field.
-      $this->base_alias = $this->name_alias = $this->query->add_field($this->table_alias, $this->real_field);
+      $this->base_alias = $this->query->add_field($this->table_alias, $this->real_field);
       $this->query->set_count_field($this->table_alias, $this->real_field);
     }
     else {
@@ -126,14 +142,15 @@ class views_handler_argument_string extends views_handler_argument {
       $formula = $this->get_formula();
       $params = array(
         'placeholders' => array(
-          ':length' => intval($this->options['limit']),
+          $this->placeholder_length => intval($this->options['limit']),
         ),
       );
 
-      $this->base_alias = $this->name_alias = $this->query->add_field(NULL, $formula, $this->field . '_truncated', $params);
+      $this->base_alias = $this->query->add_field(NULL, $formula, $this->field . '_truncated', $params);
       $this->query->set_count_field(NULL, $formula, $this->field, $this->field . '_truncated');
     }
 
+    $this->summary_name_field();
     return $this->summary_basics(FALSE);
   }
 
@@ -143,24 +160,34 @@ class views_handler_argument_string extends views_handler_argument {
    * $this->ensure_my_table() MUST have been called prior to this.
    */
   function get_formula() {
-    return "SUBSTRING($this->table_alias.$this->real_field, 1, :length)";
+    return "SUBSTRING($this->table_alias.$this->real_field, 1, $this->placeholder_length)";
   }
 
   /**
    * Build the query based upon the formula
    */
-  function query() {
+  function query($group_by = FALSE) {
     $argument = $this->argument;
     if (!empty($this->options['transform_dash'])) {
       $argument = strtr($argument, '-', ' ');
+    }
+    $this->placeholder_length = $this->placeholder();
+
+    if (!empty($this->options['break_phrase'])) {
+      views_break_phrase_string($argument, $this);
+    }
+    else {
+      $this->value = array($argument);
+      $this->operator = 'or';
     }
 
     if (!empty($this->definition['many to one'])) {
       if (!empty($this->options['glossary'])) {
         $this->helper->formula = TRUE;
       }
-      $this->value = array($argument);
       $this->helper->ensure_my_table();
+
+      $this->helper->placeholders = array($this->placeholder_length => intval($this->options['limit']));
       $this->helper->add_filter();
       return;
     }
@@ -175,16 +202,31 @@ class views_handler_argument_string extends views_handler_argument {
       $field = $this->get_formula();
     }
 
-    if ($formula) {
-      $field .= ' = :views_handler_argument_string';
-      $placeholders = array(
-        ':length' => intval($this->options['limit']),
-        ':views_handler_argument_string' => $argument,
-      );
-      $this->query->add_where(0, $field, $placeholders, 'formula');
+    if (count($this->value) > 1) {
+      $operator = 'IN';
+      $argument = $this->value;
     }
     else {
-      $this->query->add_where(0, $field, $argument);
+      $operator = '=';
+    }
+
+    if ($formula) {
+      $placeholder = $this->placeholder();
+      $placeholder_length = $this->placeholder_length;
+      if ($operator == 'IN') {
+        $field .= " IN($placeholder)";
+      }
+      else {
+        $field .= ' = ' . $placeholder;
+      }
+      $placeholders = array(
+        $placeholder_length => intval($this->options['limit']),
+        $placeholder => $argument,
+      );
+      $this->query->add_where_expression(0, $field, $placeholders);
+    }
+    else {
+      $this->query->add_where(0, $field, $argument, $operator);
     }
   }
 
@@ -196,39 +238,44 @@ class views_handler_argument_string extends views_handler_argument {
     return $value;
   }
 
-  function case_transform($string, $option) {
-    global $multibyte;
-
-    switch ($this->options[$option]) {
-      default:
-        return $string;
-      case 'upper':
-        return drupal_strtoupper($string);
-      case 'lower':
-        return drupal_strtolower($string);
-      case 'ucfirst':
-        return drupal_strtoupper(drupal_substr($string, 0, 1)) . drupal_substr($string, 1);
-      case 'ucwords':
-        if ($multibyte == UNICODE_MULTIBYTE) {
-          return mb_convert_case($string, MB_CASE_TITLE);
-        } else {
-          return ucwords($string);
-        }
-    }
+  function get_sort_name() {
+    return t('Alphabetical', array(), array('context' => 'Sort order'));
   }
 
   function title() {
-    $title = $this->case_transform($this->argument, 'case');
+    $this->argument = $this->case_transform($this->argument, $this->options['case']);
     if (!empty($this->options['transform_dash'])) {
-      $title = strtr($title, '-', ' ');
+      $this->argument = strtr($this->argument, '-', ' ');
     }
 
-    return check_plain($title);
+    if (!empty($this->options['break_phrase'])) {
+      views_break_phrase_string($this->argument, $this);
+    }
+    else {
+      $this->value = array($this->argument);
+      $this->operator = 'or';
+    }
+
+    if (empty($this->value)) {
+      return !empty($this->definition['empty field name']) ? $this->definition['empty field name'] : t('Uncategorized');
+    }
+
+    if ($this->value === array(-1)) {
+      return !empty($this->definition['invalid input']) ? $this->definition['invalid input'] : t('Invalid input');
+    }
+
+    return implode($this->operator == 'or' ? ' + ' : ', ', $this->title_query());
+  }
+
+  /**
+   * Override for specific title lookups.
+   */
+  function title_query() {
+    return drupal_map_assoc($this->value, 'check_plain');
   }
 
   function summary_name($data) {
-    return $this->case_transform(parent::summary_name($data), 'case');
+    return $this->case_transform(parent::summary_name($data), $this->options['case']);
   }
 
 }
-

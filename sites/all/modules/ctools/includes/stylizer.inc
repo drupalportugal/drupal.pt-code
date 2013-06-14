@@ -1,5 +1,4 @@
 <?php
-// $Id: stylizer.inc,v 1.2 2010/10/11 22:18:22 sdboyer Exp $
 /**
  * @file
  * Create customized CSS and images from palettes created by user input.
@@ -533,7 +532,7 @@ class ctools_stylizer_image_processor {
     }
 
     // The step size for each component
-    for($i = ($luminosity_input + 1); $i <= 255; $i++) {
+    for ($i = ($luminosity_input + 1); $i <= 255; $i++) {
       $palette[$i]['red'] = $red + round($step_size_red * ($i - $luminosity_input));
       $palette[$i]['green'] = $green + round($step_size_green * ($i - $luminosity_input));
       $palette[$i]['blue']= $blue + round($step_size_blue * ($i - $luminosity_input));
@@ -766,7 +765,7 @@ function ctools_stylizer_edit_style(&$info, $js, $step = NULL) {
     'module' => $info['module'],
     'type' => $info['type'],
     'owner info' => &$info,
-    'plugin' => $plugin,
+    'base_style_plugin' => $plugin,
     'name' => $name,
     'step' => $step,
     'settings' => $settings,
@@ -961,10 +960,9 @@ function ctools_stylizer_edit_style_form_choose_submit($form, &$form_state) {
 function ctools_stylizer_edit_style_form_default($form, &$form_state) {
   ctools_add_js('stylizer');
   ctools_add_css('stylizer');
-  drupal_add_js('misc/farbtastic/farbtastic.js');
-  drupal_add_css('misc/farbtastic/farbtastic.css');
+  drupal_add_library('system', 'farbtastic');
 
-  $plugin = &$form_state['plugin'];
+  $plugin = &$form_state['base_style_plugin'];
   $settings = &$form_state['settings'];
 
   $form['top box'] = array(
@@ -995,7 +993,7 @@ function ctools_stylizer_edit_style_form_default($form, &$form_state) {
       '#theme' => 'ctools_stylizer_color_scheme_form',
     );
 
-    $form['top box']['color']['palette']['#tree'] = true;
+    $form['top box']['color']['palette']['#tree'] = TRUE;
 
     foreach ($plugin['palette'] as $key => $color) {
       if (empty($settings['palette'][$key])) {
@@ -1053,7 +1051,7 @@ function theme_ctools_stylizer_color_scheme_form($vars) {
 function theme_ctools_stylizer_preview_form($vars) {
   $form = &$vars['form'];
 
-  $plugin = $form['#form_state']['plugin'];
+  $plugin = $form['#form_state']['base_style_plugin'];
   $settings = $form['#form_state']['settings'];
 
   if (!empty($form['#form_state']['settings']['old_settings'])) {
@@ -1085,8 +1083,8 @@ function ctools_stylizer_edit_style_form_default_validate($form, &$form_state) {
     $form_state['owner info']['owner form validate']($form, $form_state);
   }
 
-  if (!empty($form_state['plugin']['settings form validate']) && function_exists($form_state['plugin']['settings form validate'])) {
-    $form_state['plugin']['settings form validate']($form, $form_state);
+  if (!empty($form_state['base_style_plugin']['settings form validate']) && function_exists($form_state['base_style_plugin']['settings form validate'])) {
+    $form_state['base_style_plugin']['settings form validate']($form, $form_state);
   }
 }
 
@@ -1099,8 +1097,8 @@ function ctools_stylizer_edit_style_form_default_submit($form, &$form_state) {
     $form_state['owner info']['owner form submit']($form, $form_state);
   }
 
-  if (!empty($form_state['plugin']['settings form submit']) && function_exists($form_state['plugin']['settings form submit'])) {
-    $form_state['plugin']['settings form submit']($form, $form_state);
+  if (!empty($form_state['base_style_plugin']['settings form submit']) && function_exists($form_state['base_style_plugin']['settings form submit'])) {
+    $form_state['base_style_plugin']['settings form submit']($form, $form_state);
   }
 
   if ($form_state['clicked_button']['#value'] == t('Preview')) {

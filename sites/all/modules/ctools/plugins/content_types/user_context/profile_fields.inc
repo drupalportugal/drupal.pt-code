@@ -1,7 +1,6 @@
 <?php
-// $Id: profile_fields.inc,v 1.8 2010/10/11 22:18:22 sdboyer Exp $
 
-if (module_exists('profile') && !is_null(profile_categories())) {
+if (module_exists('profile') && !is_null(profile_user_categories())) {
   /**
    * Plugins are described by creating a $plugin array which will be used
    * by the system that includes this file.

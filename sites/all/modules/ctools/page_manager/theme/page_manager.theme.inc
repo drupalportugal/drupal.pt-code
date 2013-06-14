@@ -1,5 +1,4 @@
 <?php
-// $Id: page_manager.theme.inc,v 1.8 2010/10/11 22:18:23 sdboyer Exp $
 
 /**
  * @file
@@ -48,7 +47,8 @@ function template_preprocess_page_manager_edit_page(&$vars) {
 /**
  * Turn the rearrange form into a table with tablesorting on.
  */
-function theme_page_manager_handler_rearrange($form) {
+function theme_page_manager_handler_rearrange($vars) {
+  $form = &$vars['form'];
   // Assemble the data for a table from everything in $form['handlers']
   foreach (element_children($form['handlers']) as $id) {
     // provide a reference shortcut.
@@ -57,12 +57,12 @@ function theme_page_manager_handler_rearrange($form) {
       $row = array();
 
       $row[] = array(
-        'data' => drupal_render($element['title']),
+        'data' => render($element['title']),
         'class' => array('page-manager-handler'),
       );
 
       $element['weight']['#attributes']['class'][] = 'weight';
-      $row[] = drupal_render($element['weight']);
+      $row[] = render($element['weight']);
 
       $rows[] = array('data' => $row, 'class' => array('draggable'), 'id' => 'page-manager-row-' . $id);
     }
@@ -80,7 +80,7 @@ function theme_page_manager_handler_rearrange($form) {
   drupal_add_tabledrag('page-manager-arrange-handlers', 'order', 'sibling', 'weight');
 
   $output = theme('table', array('header' => $header, 'rows' => $rows, 'attributes' => array('id' => 'page-manager-arrange-handlers')));
-  $output .= drupal_render($form);
+  $output .= drupal_render_children($form);
   return $output;
 }
 

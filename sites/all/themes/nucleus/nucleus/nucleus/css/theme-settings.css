@@ -1,0 +1,339 @@
+/**
+ * Common Styles
+ */
+
+div.vertical-tabs {
+  z-index: 2; /* Ensure popup windows on this area is on top of other fieldsets */
+}
+
+div.vertical-tabs .vertical-tabs-panes {
+  min-height: 300px;
+  position: relative;
+}
+
+div.vertical-tabs .vertical-tabs-panes legend {
+  display: block;
+  height: 0;
+  width: 0; /* Need for IE 7 */
+  visibility: hidden; /* Fix IE8 Fieldset border bug when hide Legend */
+}
+
+.vertical-tabs-panes .form-item {
+  clear: both;
+}
+
+.vertical-tabs-panes label {
+  float: left;
+  width: 14em;
+}
+
+.vertical-tabs-panes select {
+  width: 16em;
+}
+
+#edit-breadcrumb select#edit-breadcrumb-display,
+#edit-breadcrumb input#edit-breadcrumb-separator {
+  width: auto;
+}
+
+.vertical-tabs-panes .form-type-checkbox label,
+.vertical-tabs-panes .form-type-radios label {
+  float: none;
+  width: auto;
+}
+
+.vertical-tabs-panes fieldset fieldset {
+  background: #f2f2f2;
+  border: 1px solid #ccc;
+  overflow: auto;
+}
+
+/* description */
+.vertical-tabs-panes .description {
+  margin-bottom: 12px;
+}
+
+/* Reset Button */
+.form-actions .form-reset {
+  float: right;
+}
+
+/* --- Form Headings --- */
+.form-header {
+  background: #f2f2f2;
+  border: 1px solid #ccc;
+}
+
+/* --- Popup --- */
+.tb-form-popup-wrap {
+  background: #fff;
+  border: 1px solid #aaa;
+  box-shadow: 2px 2px 5px rgba(0,0,0,.5);
+  min-width: 180px;
+  -moz-box-shadow: 2px 2px 5px rgba(0,0,0,.5);
+  position: absolute;
+  top: auto;
+  -webkit-box-shadow: 2px 2px 5px rgba(0,0,0,.5);
+}
+
+.tb-form-popup-ct,
+.tb-form-popup-actions {
+  clear: both;
+  display: block;
+  padding: 10px;
+}
+
+.tb-form-popup .popup-title {
+  clear: both;
+  display: block;
+  font-size: 1em;
+  margin: 0;
+}
+
+.tb-form-popup-actions {
+  background: #f2f2f2;
+  border-top: 1px solid #ccc;
+  padding: 5px;
+}
+
+/* --- Form Button --- */
+.tb-form-btn {
+  background: #ccc;
+  border: 1px solid #aaa;
+  color: #333;
+  cursor: pointer;
+  display: inline-block;
+  font-size: 1em;
+  margin: 0 0 0 5px;
+  padding: 1px 8px;
+}
+
+.tb-form-btn:hover,
+.tb-form-btn:active,
+.tb-form-btn:focus,
+.tb-form-btn.active {
+  background: #666;
+  border: 1px solid #444;
+  color: #fff;
+  text-decoration: none;
+}
+
+.save-btn {
+  background: #060;
+  border-color: #030;
+  color: #fff;
+}
+
+/**
+ * Specfic Settings Styles
+ */
+
+/* --- Layout Settings --- */
+#edit-layout .fieldset-wrapper {
+  padding: 5px 12px;
+}
+
+#edit-layout .fieldset-wrapper .form-item {
+  margin-bottom: 0;
+}
+
+#edit-layout .form-item-grid label,
+#edit-layout .form-item-layout-width label {
+  width: 8em;
+}
+
+#edit-layout .form-item-layout-width input {
+  width: 8em;
+}
+
+#edit-layout .panel-settings-wrapper {
+  margin-bottom: 12px;
+}
+
+/* --- Navigation Settings --- */
+#edit-navigation .form-text {
+  width: auto;
+}
+
+#edit-navigation .form-header {
+  padding: 5px 15px;
+  background: #666;
+  color: #fff;
+  font-weight: bold;
+  border: 0;
+}
+
+#edit-navigation fieldset .fieldset-wrapper {
+  padding: 15px 13px 0;
+}
+
+/* --- Typo Settings --- */
+#edit-typography .fieldset-wrapper {
+  padding: 0 0 15px;
+}
+
+#edit-typography label {
+  width: 25%;
+}
+
+#edit-typography select,
+#edit-typography .form-text {
+  width: 73%;
+}
+
+#edit-typography select {
+  padding: 2px 1px;
+}
+
+#edit-typography .typo-element-wrapper {
+  clear: both;
+  overflow: hidden;
+  margin-bottom: 3px;
+  border: 1px solid #fff;
+}
+
+#edit-typography .typo-element-wrapper:hover,
+#edit-typography .typo-element-wrapper:focus,
+#edit-typography .typo-element-wrapper:target {
+  background: #f7f7f7;
+  border: 1px solid #ccc;
+}
+
+#edit-typography .form-item {
+  clear: none;
+  margin: 0 10px;
+}
+
+#edit-typography .typo-fonts {
+  float: left;
+  width: 70%;
+}
+
+#edit-typography .typo-type {
+  float: right;
+  width: 30%;
+}
+
+#edit-typography .typo-type select {
+  width: 98%;
+}
+
+#edit-typography .typo-type .form-item {
+  margin-left: 0;
+}
+
+#edit-typography .typo-type label {
+  display: none;
+}
+
+#edit-typography #edit-font-size-wrapper {
+  border-top: 1px dotted #ccc;
+  margin-top: 15px;
+  padding-top: 15px;
+}
+
+#edit-typography #edit-font-size-wrapper .form-item,
+#edit-typography #edit-load-extra-typo-wrapper .form-item {
+  width: auto;
+}
+
+#edit-typography #edit-font-size-wrapper label,
+#edit-typography #edit-load-extra-typo-wrapper label {
+  display: inline-block;
+  width: auto;
+}
+
+#edit-typography #edit-font-size-wrapper select {
+  margin-left: 10px;
+  width: auto;
+}
+
+#edit-typography #edit-load-extra-typo-wrapper label {
+  font-weight: bold;
+}
+
+#edit-typography #edit-base-font-wrapper {
+  background: #ffc;
+  border: 1px solid #ccc;
+}
+
+/* --- Blocks Settings --- */
+#edit-block-styles .fieldset-wrapper {
+  padding: 0 0 15px;
+}
+
+#edit-block-styles .form-wrapper {
+  clear: both;
+  overflow: hidden;
+  padding: 0;
+}
+
+#edit-block-styles .form-item {
+  clear: none;
+  float: left;
+  margin: 0 0 0 10px;
+}
+
+#edit-block-styles .form-header {
+  border-width: 1px 0 1px 0;
+}
+
+#edit-block-styles label {
+  margin-right: 10px;
+  width: 200px;
+}
+
+#edit-block-styles .form-subheader label {
+  font-size: 0.92em;
+  font-weight: normal;
+}
+
+#edit-block-styles #edit-default-subform-wrapper {
+  border: 1px solid #ccc;
+  margin-top: 0;
+  padding: 0;
+}
+
+#edit-block-styles .layout-element-wrapper {
+  background: #666;
+  color: #fff;
+}
+
+#edit-block-styles .global-block-styles-wrapper {
+  background: #ffc;
+  border: 0;
+}
+
+/* --- Extend Classes --- */
+#edit-block-styles .tb-form-popup-wrap {
+  margin-left: 6em;
+  margin-top: -2em;
+}
+
+* + html #edit-block-styles .tb-form-popup-wrap { /* IE7 Fix */
+  margin-left: 0;
+}
+
+#edit-block-styles .tb-form-popup-ct {
+  padding-top: 0;
+}
+
+#edit-block-styles .extend-class-group {
+  margin-top: 1em;
+}
+
+#edit-block-styles .extend-class-group label {
+  float: none;
+  font-size: 0.92em;
+  font-weight: normal;
+  width: auto;
+}
+
+#edit-block-styles .tb-extend-class-shower {
+  font-size: 0.92em;
+}
+
+/* --- About Nucleus --- */
+#edit-about-nucleus iframe {
+  margin-left: -20px;
+}

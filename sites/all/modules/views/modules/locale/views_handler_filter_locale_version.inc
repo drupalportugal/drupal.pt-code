@@ -1,8 +1,9 @@
 <?php
-// $Id: views_handler_filter_locale_version.inc,v 1.1.6.2 2009/11/13 12:36:05 dereine Exp $
 
 /**
  * Filter by version.
+ *
+ * @ingroup views_filter_handlers
  */
 class views_handler_filter_locale_version extends views_handler_filter_in_operator {
   function get_value_options() {

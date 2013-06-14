@@ -1,5 +1,4 @@
 <?php
-// $Id: user.inc,v 1.10 2010/10/11 22:18:23 sdboyer Exp $
 
 /**
  * @file
@@ -22,7 +21,10 @@ $plugin = array(
   'convert list' => 'ctools_context_user_convert_list',
   'convert' => 'ctools_context_user_convert',
   'convert default' => 'name',
-  'js' => array('misc/autocomplete.js'),
+
+  // This context is deprecated and should not be usable in the UI.
+  'no ui' => TRUE,
+  'no required context ui' => TRUE,
 );
 
 /**
@@ -30,7 +32,7 @@ $plugin = array(
  * are not always created from the UI.
  */
 function ctools_context_create_user($empty, $data = NULL, $conf = FALSE) {
-  $context = new ctools_context('user');
+  $context = new ctools_context(array('entity:user', 'entity', 'user'));
   $context->plugin = 'user';
 
   if ($empty) {
@@ -40,12 +42,17 @@ function ctools_context_create_user($empty, $data = NULL, $conf = FALSE) {
   if ($conf) {
     if ($data['type'] == 'current') {
       global $user;
-      $data = $user;
+      $data = user_load($user->uid);
       $data->logged_in_user = TRUE;
     }
     else {
-      $data = user_load(array('uid' => $data['uid']));
+      $data = user_load($data['uid']);
     }
+  }
+  // Load entity if the data provided is a numeric value. This kind of data is
+  // passed by some relationships.
+  if (is_numeric($data)) {
+    $data = user_load($data);
   }
 
   if (!empty($data)) {
@@ -75,7 +82,6 @@ function ctools_context_user_settings_form($form, &$form_state) {
     '#type' => 'textfield',
     '#maxlength' => 512,
     '#autocomplete_path' => 'user/autocomplete',
-    '#process' => array('ctools_dependent_process'),
     '#dependency' => array('radio:type' => array('select')),
   );
 
@@ -96,7 +102,6 @@ function ctools_context_user_settings_form($form, &$form_state) {
     '#default_value' => FALSE,
     '#title' => t('Reset identifier to username'),
     '#description' => t('If checked, the identifier will be reset to the user name of the selected user.'),
-    '#process' => array('ctools_dependent_process'),
     '#dependency' => array('radio:context[context_settings][type]' => array('select')),
   );
 
@@ -121,7 +126,7 @@ function ctools_context_user_settings_form_validate($form, &$form_state) {
     return;
   }
 
-  $account = user_load(array('name' => $form_state['values']['user']));
+  $account = user_load_by_name($form_state['values']['user']);
 
   if (!$account) {
     form_error($form['user'], t('Invalid user selected.'));
@@ -145,13 +150,13 @@ function ctools_context_user_settings_form_submit($form, &$form_state) {
  * Provide a list of replacements.
  */
 function ctools_context_user_convert_list() {
-  $list = array(
-    'uid' => t('User ID'),
-    'name' => t('User name'),
-  );
-  if (module_exists('token')) {
-    $list += reset(token_get_list(array('user')));
+  $tokens = token_info();
+  foreach ($tokens['tokens']['user'] as $id => $info) {
+    if (!isset($list[$id])) {
+      $list[$id] = $info['name'];
+    }
   }
+
   return $list;
 }
 
@@ -159,16 +164,11 @@ function ctools_context_user_convert_list() {
  * Convert a context into a string.
  */
 function ctools_context_user_convert($context, $type) {
-  switch ($type) {
-    case 'uid':
-      return $context->data->uid;
-    case 'name':
-      return $context->data->name;
-  }
-  if (module_exists('token')) {
-    $values = token_get_values('user', $context->data);
-    if ($key = array_search($type, $values->tokens)) {
-      return $values->values[$key];
+  $tokens = token_info();
+  if (isset($tokens['tokens']['user'][$type])) {
+    $values = token_generate('user', array($type => $type), array('user' => $context->data));
+    if (isset($values[$type])) {
+      return $values[$type];
     }
   }
 }

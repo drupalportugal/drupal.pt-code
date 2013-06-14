@@ -1,5 +1,4 @@
 <?php
-// $Id: pathauto.admin.inc,v 1.41 2010/07/31 18:53:57 davereid Exp $
 
 /**
  * @file
@@ -22,8 +21,6 @@ function pathauto_patterns_form($form, $form_state) {
     $patterndescr = $settings->patterndescr;
     $patterndefault = $settings->patterndefault;
     $groupheader = $settings->groupheader;
-    $supportsfeeds = isset($settings->supportsfeeds) ? $settings->supportsfeeds : NULL;
-    variable_set('pathauto_' . $module . '_supportsfeeds', $supportsfeeds);
 
     $form[$module] = array(
       '#type' => 'fieldset',
@@ -40,9 +37,10 @@ function pathauto_patterns_form($form, $form_state) {
       '#default_value' => variable_get($variable, $patterndefault),
       '#size' => 65,
       '#maxlength' => 1280,
-      '#element_validate' => array('_pathauto_validate_pattern_element'),
-      '#after_build' => array('_pathauto_validate_pattern_element'),
+      '#element_validate' => array('token_element_validate'),
+      '#after_build' => array('token_element_validate'),
       '#token_types' => array($settings->token_type),
+      '#min_tokens' => 1,
       '#parents' => array($variable),
     );
 
@@ -57,9 +55,10 @@ function pathauto_patterns_form($form, $form_state) {
           '#default_value' => variable_get($variable, ''),
           '#size' => 65,
           '#maxlength' => 1280,
-          '#element_validate' => array('_pathauto_validate_pattern_element'),
-          '#after_build' => array('_pathauto_validate_pattern_element'),
+          '#element_validate' => array('token_element_validate'),
+          '#after_build' => array('token_element_validate'),
           '#token_types' => array($settings->token_type),
+          '#min_tokens' => 1,
           '#parents' => array($variable),
         );
       }
@@ -76,21 +75,7 @@ function pathauto_patterns_form($form, $form_state) {
     $form[$module]['token_help']['help'] = array(
       '#theme' => 'token_tree',
       '#token_types' => array($settings->token_type),
-      '#global_types' => FALSE,
     );
-
-    // If the module supports feeds, offer to generate aliases for them
-    if ($supportsfeeds) {
-      $variable = 'pathauto_' . $module . '_applytofeeds';
-      $form[$module][$variable] = array(
-        '#type' => 'textfield',
-        '#title' => t('Internal feed alias text (leave blank to disable)'),
-        '#size' => 65,
-        '#maxlength' => 1280,
-        '#default_value' => variable_get($variable, $supportsfeeds),
-        '#description' => t('The text to use for aliases for RSS feeds. Examples are "0/feed" (used throughout Drupal core) and "feed" (used by some contributed Drupal modules, like Views).'),
-      );
-    }
   }
 
   return system_settings_form($form);
@@ -156,6 +141,14 @@ function pathauto_settings_form($form) {
     '#element_validate' => array('_pathauto_validate_numeric_element'),
   );
 
+
+  $description = t('What should Pathauto do when updating an existing content item which already has an alias?');
+  if (module_exists('redirect')) {
+    $description .= ' ' . t('The <a href="!url">Redirect module settings</a> affect whether a redirect is created when an alias is deleted.', array('!url' => url('admin/config/search/redirect')));
+  }
+  else {
+    $description .= ' ' . t('Considering installing the <a href="!url">Redirect module</a> to get redirects when your aliases change.', array('!url' => 'http://drupal.org/project/redirect'));
+  }
   $form['pathauto_update_action'] = array(
     '#type' => 'radios',
     '#title' => t('Update action'),
@@ -164,30 +157,17 @@ function pathauto_settings_form($form) {
       PATHAUTO_UPDATE_ACTION_NO_NEW => t('Do nothing. Leave the old alias intact.'),
       PATHAUTO_UPDATE_ACTION_LEAVE => t('Create a new alias. Leave the existing alias functioning.'),
       PATHAUTO_UPDATE_ACTION_DELETE => t('Create a new alias. Delete the old alias.'),
-      PATHAUTO_UPDATE_ACTION_REDIRECT => t('Create a new alias. Redirect from old alias.'),
     ),
-    '#description' => t('What should Pathauto do when updating an existing content item which already has an alias?'),
+    '#description' => $description,
   );
-  if (!module_exists('path_redirect')) {
-    // Remove the redirection option if Path redirect is not enabled.
-    unset($form['pathauto_update_action']['#options'][PATHAUTO_UPDATE_ACTION_REDIRECT]);
-    if (variable_get('pathauto_update_action', NULL) == PATHAUTO_UPDATE_ACTION_REDIRECT) {
-      // Fix the current update action variable as well.
-      variable_set('pathauto_update_action', PATHAUTO_UPDATE_ACTION_DELETE);
-    }
-  }
 
   $form['pathauto_transliterate'] = array(
     '#type' => 'checkbox',
     '#title' => t('Transliterate prior to creating alias'),
-    '#default_value' => variable_get('pathauto_transliterate', FALSE),
+    '#default_value' => variable_get('pathauto_transliterate', FALSE) && module_exists('transliteration'),
     '#description' => t('When a pattern includes certain characters (such as those with accents) should Pathauto attempt to transliterate them into the ASCII-96 alphabet? Transliteration is handled by the Transliteration module.'),
+    '#access' => module_exists('transliteration'),
   );
-  if (!module_exists('transliteration')) {
-    // Remove the redirection option if Transliteration is not enabled.
-    $form['pathauto_transliterate']['#access'] = FALSE;
-    variable_set('pathauto_transliterate', FALSE);
-  }
 
   $form['pathauto_reduce_ascii'] = array(
     '#type' => 'checkbox',
@@ -219,7 +199,7 @@ function pathauto_settings_form($form) {
     }
     $form['punctuation']['pathauto_punctuation_' . $name] = array(
       '#type' => 'select',
-      '#title' => $details['name'],
+      '#title' => $details['name'] . ' (<code>' . check_plain($details['value']) . '</code>)',
       '#default_value' => variable_get('pathauto_punctuation_' . $name, $details['default']),
       '#options' => array(
         PATHAUTO_PUNCTUATION_REMOVE => t('Remove'),
@@ -230,34 +210,6 @@ function pathauto_settings_form($form) {
   }
 
   return system_settings_form($form);
-}
-
-/**
- * Element validation callback for URL alias patterns.
- *
- * This function performs the following validations:
- * - Checks if the pattern has at least one token.
- */
-function _pathauto_validate_pattern_element(&$element, &$form_state) {
-  // Get the current value of the element (since this can be used during both
-  // form display and validation).
-  $value = isset($element['#value']) ? $element['#value'] : $element['#default_value'];
-
-  // Empty patterns need no further validation.
-  if (!drupal_strlen($value)) {
-    return $element;
-  }
-
-  // Check for at least one token.
-  $tokens = token_scan($value);
-  if (empty($tokens)) {
-    form_error($element, t('The %name should contain at least one token to ensure unique URL aliases are created.', array('%name' => $element['#title'])));
-  }
-  else {
-    token_element_validate_token_context($element, $form_state);
-  }
-
-  return $element;
 }
 
 /**
@@ -398,7 +350,7 @@ function pathauto_bulk_update_batch_finished($success, $results, $operations) {
       drupal_set_message(format_plural($results['count_changed'], 'Generated 1 URL alias.', 'Generated @count URL aliases.'));
     }
     else {
-      drupal_set_message('No new URL aliases to generate.');
+      drupal_set_message(t('No new URL aliases to generate.'));
     }
   }
   else {
@@ -468,12 +420,15 @@ function pathauto_admin_delete_submit($form, &$form_state) {
   foreach ($form_state['values'] as $key => $value) {
     if ($value) {
       if ($key === 'all_aliases') {
-        db_query('DELETE FROM {url_alias}');
+        db_delete('url_alias')
+          ->execute();
         drupal_set_message(t('All of your path aliases have been deleted.'));
       }
       $objects = module_invoke_all('path_alias_types');
       if (array_key_exists($key, $objects)) {
-        db_query("DELETE FROM {url_alias} WHERE source LIKE :src", array(':src' => "$key%"));
+        db_delete('url_alias')
+          ->condition('source', db_like($key) . '%', 'LIKE')
+          ->execute();
         drupal_set_message(t('All of your %type path aliases have been deleted.', array('%type' => $objects[$key])));
       }
     }

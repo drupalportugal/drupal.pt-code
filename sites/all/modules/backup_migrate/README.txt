@@ -1,7 +1,6 @@
-// $Id: README.txt,v 1.3.2.2 2010/05/10 03:53:41 ronan Exp $
 
 -------------------------------------------------------------------------------
-Backup and Migrate 2 for Drupal 6.x
+Backup and Migrate 2 for Drupal 7.x
   by Ronan Dowling, Gorton Studios - ronan (at) gortonstudios (dot) com
 -------------------------------------------------------------------------------
 
@@ -23,19 +22,32 @@ such as phpMyAdmin or the command-line mysql client.
 
 INSTALLATION:
 * Put the module in your drupal modules directory and enable it in 
-  admin/build/modules. 
-* Go to admin/user/permissions and grant permission to any roles that need to be 
+  admin/modules. 
+* Go to admin/people/permissions and grant permission to any roles that need to be 
   able to backup or restore the databse.
-* Configure and use the module at admin/structure/backup_migrate
+* Configure and use the module at admin/config/system/backup_migrate
 
 OPTIONAL:
 * Enable token.module to allow token replacement in backup file names.
+* To Backup to Amazon S3:
+    - Download the S3 library from http://undesigned.org.za/2007/10/22/amazon-s3-php-class
+      and place the file 'S3.php' in the includes directory in this module.
+      The stable version (0.4.0 – 20th Jul 2009) works best with Backup and Migrate.
 
 LIGHTTPD USERS:
 Add the following code to your lighttp.conf to secure your backup directories:
   $HTTP["url"] =~ "^/sites/default/files/backup_migrate/" {
        url.access-deny = ( "" )
   }
+You may need to adjust the path to reflect the actual path to the files.
+
+IIS 7 USERS:
+Add the following code to your web.config code to secire your backup directories:
+<rule name="postinst-redirect" stopProcessing="true">
+   <match url="sites/default/files/backup_migrate" />
+   <action type="Rewrite" url=""/>
+</rule>
+You may need to adjust the path to reflect the actual path to the files.
 
 -------------------------------------------------------------------------------
 
