@@ -1,5 +1,4 @@
 <?php
-// $Id: file.devel_generate.inc,v 1.3 2010/02/08 15:48:15 weitzman Exp $
 
 function file_devel_generate($object, $field, $instance, $bundle) {
   if (field_behaviors_widget('multiple values', $instance) == FIELD_BEHAVIOR_CUSTOM) {
@@ -15,21 +14,31 @@ function _file_devel_generate($object, $field, $instance, $bundle) {
 
   if (empty($file)) {
     if ($path = devel_generate_textfile()) {
+      $source = new stdClass();
       $source->uri = $path;
       $source->uid = 1; // TODO: randomize? use case specific.
       $source->filemime = 'text/plain';
-      $destination = $field['settings']['uri_scheme'] . '://' . $instance['settings']['file_directory'] . '/' . basename($path);
-      $file = file_move($source, $destination);
+      $source->filename = array_pop(explode("//", $path));
+      $destination_dir = $field['settings']['uri_scheme'] . '://' . $instance['settings']['file_directory'];
+      file_prepare_directory($destination_dir, FILE_CREATE_DIRECTORY);
+      $destination = $destination_dir . '/' . basename($path);
+      $file = file_move($source, $destination, FILE_CREATE_DIRECTORY);
     }
     else {
       return FALSE;
     }
   }
-  $object_field['fid'] = $file->fid;
-  $object_field['display'] = $field['settings']['display_default'];
-  $object_field['description'] = devel_create_greeking(10);
+  if (!$file) {
+    // In case a previous file operation failed or no file is set, return FALSE
+    return FALSE;
+  }
+  else {
+    $object_field['fid'] = $file->fid;
+    $object_field['display'] = $field['settings']['display_default'];
+    $object_field['description'] = devel_create_greeking(10);
 
-  return $object_field;
+    return $object_field;
+  }
 }
 
 /**

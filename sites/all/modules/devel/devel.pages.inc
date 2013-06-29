@@ -1,63 +1,4 @@
 <?php
-//$Id: devel.pages.inc,v 1.3 2010/01/28 21:27:09 weitzman Exp $
-
-/**
- * Page callback to display syntax hilighted source code
- *
- * note: the path for this function is received via $_GET['path']
- *  example http://www.example.com/devel/source?file=modules/node/node.module
- *
- * @param $standalone
- *   Set to FALSE to place the code inside a Drupal page. Otherwise code displays on its own.
- */
-function devel_display_source($standalone = TRUE) {
-  $path = $_GET['file'];
-  // take out the nasties
-  $path = str_replace('../', '', $path);
-  $output = devel_highlight_file($path, $standalone);
-  if ($output) {
-    if ($standalone) {
-      print $output;
-      drupal_exit();
-    }
-    return $output;
-  }
-  else {
-    drupal_set_message(t('Invalid file path'), 'error');
-    drupal_not_found();
-  }
-}
-
-/**
- * Return PHP highlighted file
- *
- * @param $path
- *   path to the file
- *    *warning* there is NO VALIDATION in this function
- *    Beware of paths such as '../../../../../etc/apache/httpd.conf'
- *
- * @param $standalone
- *   should the returned HTML be wrapped in a full <html> page or will it be output by Drupal?
- */
-function devel_highlight_file($path = NULL, $standalone = FALSE) {
-  if (file_exists($path)) {
-    $source = highlight_file($path, TRUE);
-    // add anchor links before all functions
-    // with doxygen
-    // $source = preg_replace('!(\/\*\*.*?\*\/.*?)<br.*?function.*?#0000BB">(.*?)<\/span>!', '<a id="$2"></a> $0', $source);
-    //$source = preg_replace('!(\/\*\*.*?\*\/).*?function.*?#0000BB">(.*?)<\/span>!', '<a id="$2"></a> $0', $source);
-    if ($standalone) {
-      $source = <<<EOT
-<head><title>$path</title></head>
-<body>$source</body>
-EOT;
-    }
-    return $source;
-  }
-  else {
-    return FALSE;
-  }
-}
 
 // Menu callback that shows menu item.
 function devel_menu_item() {
@@ -100,9 +41,9 @@ function devel_querylog_explain($request_id, $qid) {
 
   $path = "temporary://devel_querylog/$request_id.txt";
   $path = file_stream_wrapper_uri_normalize($path);
-  $queries = unserialize(file_get_contents($path));
+  $queries = json_decode(file_get_contents($path));
   $query = $queries[$qid];
-  $result = db_query('EXPLAIN ' . $query['query'], $query['args'])->fetchAllAssoc('table');
+  $result = db_query('EXPLAIN ' . $query->query, (array)$query->args)->fetchAllAssoc('table');
   $i = 1;
   foreach ($result as $row) {
     $row = (array)$row;
@@ -126,14 +67,14 @@ function devel_querylog_arguments($request_id, $qid) {
 
   $path = "temporary://devel_querylog/$request_id.txt";
   $path = file_stream_wrapper_uri_normalize($path);
-  $queries = unserialize(file_get_contents($path));
+  $queries = json_decode(file_get_contents($path));
   $query = $queries[$qid];
   $conn = Database::getConnection();
   $quoted = array();
-  foreach ((array)$query['args'] as $key => $val) {
+  foreach ((array)$query->args as $key => $val) {
     $quoted[$key] = $conn->quote($val);
   }
-  $output = strtr($query['query'], $quoted);
+  $output = strtr($query->query, $quoted);
 
   // print and return nothing thus avoiding page wrapper.
   print $output;
@@ -176,7 +117,7 @@ function devel_reinstall_submit($form, &$form_state) {
   // require_once './includes/install.inc';
   $modules = array_filter($form_state['values']['list']);
   module_disable($modules, FALSE);
-  drupal_uninstall_modules($modules);
+  drupal_uninstall_modules($modules, FALSE);
   module_enable($modules, FALSE);
   drupal_set_message(t('Uninstalled and installed: %names.', array('%names' => implode(', ', $modules))));
 }
@@ -189,10 +130,22 @@ function devel_theme_registry() {
   return kprint_r($hooks, TRUE);
 }
 
+// Menu callback. $entity_type argument not currently used in the UI.
+function devel_entity_info_page($entity_type = NULL) {
+  $info = entity_get_info($entity_type);
+  ksort($info);
+  return kprint_r($info, TRUE);
+}
+
 // Menu callback.
 function devel_field_info_page() {
   $info = field_info_fields();
-  return kprint_r($info, TRUE);
+  $output = kprint_r($info, TRUE, t('Fields'));
+  $info = field_info_instances();
+  $output .= kprint_r($info, TRUE, t('Instances'));
+  $info = field_info_bundles();
+  $output .= kprint_r($info, TRUE, t('Bundles'));
+  return $output;
 }
 
 /**
@@ -218,10 +171,10 @@ function devel_variable_form() {
   $query->fields('v', array('name', 'value'));
   switch (db_driver()) {
     case 'mssql':
-      $query->addExpression("COL_LENGTH('{variable}', 'value')", 'length');
+      $query->addExpression("LEN(v.value)", 'length');
       break;
     default:
-      $query->addExpression("CONVERT(LENGTH(v.value), UNSIGNED INTEGER)", 'length');
+      $query->addExpression("LENGTH(v.value)", 'length');
       break;
   }
   $result = $query
@@ -264,7 +217,9 @@ function devel_variable_form() {
 function devel_variable_form_submit($form, &$form_state) {
   $deletes = array_filter($form_state['values']['variables']);
   array_walk($deletes, 'variable_del');
-  drupal_set_message(format_plural(count($deletes), 'One variable deleted.', '@count variables deleted.'));
+  if (count($deletes)) {
+    drupal_set_message(format_plural(count($deletes), 'One variable deleted.', '@count variables deleted.'));
+  }
 }
 
 function devel_variable_edit($form, &$form_state, $name) {
@@ -294,7 +249,7 @@ function devel_variable_edit($form, &$form_state, $name) {
     $form['new'] = array(
       '#type' => 'item',
       '#title' => t('New value'),
-      '#value' => t('Sorry, complex variable types may not be edited yet. Use the <em>Execute PHP</em> block and the <a href="@variable-set-doc">variable_set()</a> function.', array('@variable-set-doc' => "http://$api/api/HEAD/function/variable_set"))
+      '#markup' => t('Sorry, complex variable types may not be edited yet. Use the <em>Execute PHP</em> block and the <a href="@variable-set-doc">variable_set()</a> function.', array('@variable-set-doc' => "http://$api/api/HEAD/function/variable_set"))
     );
   }
   drupal_set_title($name);
@@ -319,42 +274,21 @@ function devel_session() {
 }
 
 /**
- * Menu callback; prints the render structure of a term.
- */
-function devel_render_term($term) {
-  $build = array();
-  $build += field_attach_view('taxonomy_term', $term);
-  if (!empty($term->description)) {
-    $build['term_description'] = array(
-      '#markup' => filter_xss_admin($term->description),
-      '#weight' => -1,
-      '#prefix' => '<div class="taxonomy-term-description">',
-      '#suffix' => '</div>',
-    );
-  }
-  return kdevel_print_object($build, '$term->');
-}
-
-/**
  * Menu callback; prints the loaded structure of the current node/user.
  */
-function devel_load_object($object, $name = NULL) {
-  $title = isset($object->title) ? $object->title : $object->name;
-  drupal_set_title($title);
+function devel_load_object($type, $object, $name = NULL) {
+  $name = isset($name) ? $name : $type;
   return kdevel_print_object($object, '$'. $name .'->');
 }
 
 /**
  * Menu callback; prints the render structure of the current object (currently node or user).
  */
-function devel_render_object($type, $object) {
-  $output = '';
-  $title = isset($object->title) ? $object->title : $object->name;
-  // not sure why menu system doesn't give us a reasonable title here.
-  drupal_set_title($title);
-  $function = $type .'_build_content';
-  $function($object);
-  return kdevel_print_object($object->content, '$'. $type .'->');
+function devel_render_object($type, $object, $name = NULL) {
+  $name = isset($name) ? $name : $type;
+  $function = $type . '_view';
+  $build = $function($object);
+  return kdevel_print_object($build, '$'. $name .'->');
 }
 
 function devel_elements_page() {

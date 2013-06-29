@@ -1,5 +1,4 @@
 <?php
-// $Id: devel.admin.inc,v 1.2 2010/03/17 12:42:46 weitzman Exp $
 
 function devel_admin_settings() {
   $form['queries'] = array('#type' => 'fieldset', '#title' => t('Query log'));
@@ -45,7 +44,7 @@ function devel_admin_settings() {
   $description = extension_loaded('xhprof') ? t('Profile requests with the xhprof php extension.') : '<span class="warning">' . t('You must enable the <a href="!url">xhprof php extension</a> to use this feature.', array('!url' => url('http://techportal.ibuildings.com/2009/12/01/profiling-with-xhprof/'))) . '</span>';
   $form['xhprof']['devel_xhprof_enabled'] = array(
     '#type' => 'checkbox',
-    '#title' => 'Enable profiling of all page views',
+    '#title' => t('Enable profiling of all page views and <a href="!drush">drush</a> requests.', array('!drush' => url('http://drush.ws'))),
     '#default_value' => variable_get('devel_xhprof_enabled', FALSE),
     '#description' => $description,
     '#disabled' => !extension_loaded('xhprof'),
@@ -106,17 +105,37 @@ function devel_admin_settings() {
     '#default_value' => variable_get('devel_page_alter', FALSE),
     '#description' => t('Display $page array from <a href="http://api.drupal.org/api/function/hook_page_alter/7">hook_page_alter()</a> in the messages area of each page.'),
   );
-  $form['devel_error_handler'] = array('#type' => 'radios',
-    '#title' => t('Error handler'),
-    '#default_value' => variable_get('devel_error_handler', DEVEL_ERROR_HANDLER_STANDARD),
-    '#options' => array(DEVEL_ERROR_HANDLER_NONE => t('None'), DEVEL_ERROR_HANDLER_STANDARD => t('Standard drupal')),
-    '#description' => t('Choose an error handler for your site. <em>Backtrace</em> prints nice debug information when an error is noticed, and you <a href="@choose">choose to show errors on screen</a>. <strong>Backtrace requires the <a href="@krumo">krumo library</a></strong>. <em>None</em> is a good option when stepping through the site in your debugger.', array('@krumo' => url('http://krumo.sourceforge.net'), '@choose' => url('admin/settings/error-reporting'))),
+  $form['devel_raw_names'] = array('#type' => 'checkbox',
+    '#title' => t('Display machine names of permissions and modules'),
+    '#default_value' => variable_get('devel_raw_names', FALSE),
+    '#description' => t('Display the language-independent machine names of the permissions in mouse-over hints on the !Permissions page and the module base file names on the @Permissions and !Modules pages.', array('!Permissions' => l(t('Permissions'), 'admin/people/permissions'), '@Permissions' => t('Permissions'), '!Modules' => l(t('Modules'), 'admin/modules'))),
   );
-  if (has_krumo()) {
-    $form['devel_error_handler']['#options'][DEVEL_ERROR_HANDLER_BACKTRACE] = t('Backtrace');
+
+  $error_handlers = devel_get_handlers();
+  $form['devel_error_handlers'] = array(
+    '#type' => 'select',
+    '#title' => t('Error handlers'),
+    '#options' => array(
+      DEVEL_ERROR_HANDLER_NONE => t('None'),
+      DEVEL_ERROR_HANDLER_STANDARD => t('Standard Drupal'),
+      DEVEL_ERROR_HANDLER_BACKTRACE_DPM => t('Krumo backtrace in the message area'),
+      DEVEL_ERROR_HANDLER_BACKTRACE_KRUMO => t('Krumo backtrace above the rendered page'),
+    ),
+    '#multiple' => TRUE,
+    '#default_value' => empty($error_handlers) ? DEVEL_ERROR_HANDLER_NONE : $error_handlers,
+    '#description' => t('Select the error handler(s) to use, in case you <a href="@choose">choose to show errors on screen</a>.', array('@choose' => url('admin/config/development/logging'))) . '<ul>' .
+                      '<li>' . t('<em>None</em> is a good option when stepping through the site in your debugger.') . '</li>' .
+                      '<li>' . t('<em>Standard Drupal</em> does not display all the information that is often needed to resolve an issue.') . '</li>' .
+                      '<li>' . t('<em>Krumo backtrace</em> displays nice debug information when any type of error is noticed, but only to users with the %perm permission.', array('%perm' => t('Access developer information'))) . '</li></ul>' .
+                      t('Depending on the situation, the theme, the size of the call stack and the arguments, etc., some handlers may not display their messages, or display them on the subsequent page. Select <em>Standard Drupal</em> <strong>and</strong> <em>Krumo backtrace above the rendered page</em> to maximize your chances of not missing any messages.') . '<br />' .
+                      t('Demonstrate the current error handler(s):') . ' ' . l('notice+warning', $_GET['q'], array('query' => array('demo' => 'warning'))) . ', ' . l('notice+warning+error', $_GET['q'], array('query' => array('demo' => 'error'))) . ' ' . t('(The presentation of the @error is determined by PHP.)', array('@error' => 'error')),
+  );
+  $form['devel_error_handlers']['#size'] = count($form['devel_error_handlers']['#options']);
+  if (empty($_POST) && !empty($_GET['demo'])) {
+    devel_demonstrate_error_handlers($_GET['demo']);
   }
 
-  $options = drupal_map_assoc(array('default', 'blue', 'green', 'orange', 'schablon.com', 'disabled'));
+  $options = drupal_map_assoc(array('default', 'blue', 'green', 'orange', 'white', 'disabled'));
   $form['devel_krumo_skin'] = array(
     '#type' => 'radios',
     '#title' => t('Krumo display'),
@@ -132,5 +151,26 @@ function devel_admin_settings() {
    '#default_value' => variable_get('devel_rebuild_theme_registry', FALSE),
   );
 
+  $form['devel_use_uncompressed_jquery'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Use uncompressed jQuery'),
+    '#default_value' => variable_get('devel_use_uncompressed_jquery', FALSE),
+    '#description' => t("Use a human-readable version of jQuery instead of the minified version that ships with Drupal, to make JavaScript debugging easier."),
+  );
+
   return system_settings_form($form);
+}
+
+function devel_demonstrate_error_handlers($severity) {
+  switch ($severity) {
+    case 'warning':
+      $undefined = $undefined;
+      1/0;
+      break;
+    case 'error':
+      $undefined = $undefined;
+      1/0;
+      devel_undefined_function();
+      break;
+  }
 }
