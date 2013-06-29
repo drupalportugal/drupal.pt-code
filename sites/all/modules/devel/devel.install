@@ -1,8 +1,7 @@
 <?php
-// $Id: devel.install,v 1.42 2010/01/26 18:37:05 weitzman Exp $
 
 /**
- * Implementation of hook_enable()
+ * Implements hook_enable().
  */
 function devel_enable() {
   $t = get_t();
@@ -16,16 +15,20 @@ function devel_enable() {
     ->condition('name', 'devel')
     ->execute();
 
-  $menu = array(
-    'menu_name' => 'devel',
-    'title' => $t('Development'),
-    'description' => $t('Development link'),
-  );
-  menu_save($menu);
+  // Create a custom menu, if Menu module is enabled.
+  // @see devel_modules_installed()
+  if (module_exists('menu')) {
+    $menu = array(
+      'menu_name' => 'devel',
+      'title' => $t('Development'),
+      'description' => $t('Development link'),
+    );
+    menu_save($menu);
+  }
 }
 
- /**
- * Implementation of hook_uninstall().
+/**
+ * Implements hook_uninstall().
  */
 function devel_uninstall() {
   variable_del('devel_form_weights');
@@ -35,11 +38,18 @@ function devel_uninstall() {
   variable_del('devel_redirect_page');
   variable_del('devel_api_url');
   variable_del('dev_mem');
-  variable_del('devel_error_handler');
+  variable_del('devel_error_handlers');
+  variable_del('devel_raw_names');
+  variable_del('devel_switch_user_list_size');
+  variable_del('devel_switch_user_include_anon');
+  variable_del('devel_switch_user_show_form');
 
   // Delete the development menu.
-  $devel_menu = menu_load('devel');
-  menu_delete($devel_menu);
+  if (module_exists('menu')) {
+    if ($devel_menu = menu_load('devel')) {
+      menu_delete($devel_menu);
+    }
+  }
 }
 
 /**
@@ -67,4 +77,32 @@ function devel_update_7001() {
 function devel_update_7002() {
   variable_del('dev_query'); // Sad trombone. http://drupalcode.org/viewvc/drupal/drupal/includes/database.mysql.inc?revision=1.2&view=markup
   variable_del('devel_code_coverage');
+}
+
+/**
+ * As per issue #813132: change schablon.com to white for krumo.
+ */
+function devel_update_7003() {
+  if (variable_get('devel_krumo_skin', 'white') == 'schablon.com') {
+    variable_set('devel_krumo_skin', 'white');
+  }
+}
+
+/**
+ * Convert devel_error_handler variable to devel_error_handlers array.
+ */
+function devel_update_7004() {
+  define('DEVEL_ERROR_HANDLER_BACKTRACE_AND_MESSAGE', 3);
+
+  $error_handler = variable_get('devel_error_handler', NULL);
+  if (isset($error_handler)) {
+    if ($error_handler == DEVEL_ERROR_HANDLER_BACKTRACE_AND_MESSAGE) {
+      $error_handlers = array(DEVEL_ERROR_HANDLER_STANDARD, DEVEL_ERROR_HANDLER_BACKTRACE_KRUMO);
+    }
+    else {
+      $error_handlers = array($error_handler);
+    }
+    variable_del('devel_error_handler');
+    variable_set('devel_error_handlers', drupal_map_assoc($error_handlers));
+  }
 }

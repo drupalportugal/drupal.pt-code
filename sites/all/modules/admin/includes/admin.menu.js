@@ -1,4 +1,4 @@
-// $Id: admin.menu.js,v 1.1.2.9.2.1 2010/09/16 16:47:55 yhahn Exp $
+// $Id: admin.menu.js,v 1.1.2.9.2.2 2010/12/16 21:43:54 yhahn Exp $
 (function($) {
 
 Drupal.behaviors.adminToolbarMenu = {};
@@ -18,6 +18,7 @@ Drupal.behaviors.adminToolbarMenu.attach = function(context) {
               $('<a></a>')
                 .attr('class', $(this).attr('class'))
                 .addClass('menu-hover')
+                .addClass('overlay-exclude')
                 .append($('span.menu-description', this).clone())
                 .appendTo(menu)
                 .show();

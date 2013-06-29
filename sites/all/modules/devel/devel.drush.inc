@@ -1,5 +1,4 @@
 <?php
-// $Id: devel.drush.inc,v 1.5 2010/03/21 06:35:07 weitzman Exp $
 
 /**
  * @file
@@ -19,7 +18,7 @@ function devel_drush_command() {
   $items['devel-reinstall'] = array(
     'description' => dt('Disable, Uninstall, and Install a list of projects.'),
     'arguments' => array(
-      'path' => dt('A space separated list of project names.'),
+      'projects' => dt('A space-separated list of project names.'),
     ),
     'aliases' => array('dre'),
   );
@@ -36,30 +35,23 @@ function devel_drush_command() {
       'function' => 'The name of the function or method to view.',
     ),
     'options' => array(
-      '--pipe' => 'Output just the filename of the function',
+      'pipe' => 'Output just the filename of the function',
+      'format' => 'Specify how the filename should be printed. Available placeholders are !startline, !endline and !file',
     ),
     'examples' => array(
       'fn-view drupal_set_breadcrumb' => 'View the source code for function "drupal_set_breadcrumb"',
-      'vi `drush --pipe fn-view user_access`' => 'Edit the file that contains the function "user_access"',
+      'vi `drush --pipe fn-view user_access --format=\'+!startline !file\'`' => 'Edit the file that contains the function "user_access"',
       'fn-view NodeController::load' => 'View the source code for method load in the class NodeController'
     ),
     'aliases' => array('fnv'),
   );
+  $items['devel-token'] = array(
+    'description' => dt('List available tokens'),
+    'aliases' => array('token'),
+    'core' => array(7), // Remove once 3.0 is released.
+  );
   return $items;
 }
-
-/**
- * Implementation of hook_drush_help().
- */
-function devel_drush_help($section) {
-  switch ($section) {
-    case 'drush:devel-reinstall':
-      return dt('Disable, Uninstall, and Install a list of projects.');
-    case 'drush:devel-download':
-      return dt("Downloads the FirePHP library from http://firephp.org/. Places it in the devel module directory. Skips download if library already present. This all happens automatically if you enable devel using drush.");
-  }
-}
-
 
 /**
  * A command callback. This is faster than 3 separate bootstraps.
@@ -88,38 +80,47 @@ function drush_devel_download() {
   else {
     $path = drush_get_context('DRUSH_DRUPAL_ROOT');
     if (module_exists('libraries')) {
-      $path .= libraries_get_path('FirePHPCore') . '/FirePHPCore';
+      $path .= '/' . libraries_get_path('FirePHPCore') . '/FirePHPCore';
     }
     else {
-      $path .= '/'. drupal_get_path('module', 'devel') . '/FirePHPCore';
+      $path .= '/' . drupal_get_path('module', 'devel') . '/FirePHPCore';
     }
   }
 
   if (is_dir($path)) {
     drush_log('FirePHP already present. No download required.', 'ok');
   }
-  elseif (drush_shell_exec('svn checkout http://firephp.googlecode.com/svn/branches/Library-FirePHPCore-0.3 ' . $path)) {
-    drush_log(dt('FirePHP has been downloaded to @path.', array('@path' => $path)), 'success');
+  elseif (drush_shell_exec('svn export http://firephp.googlecode.com/svn/branches/Library-FirePHPCore-0.3 ' . $path)) {
+    drush_log(dt('FirePHP has been exported via svn to @path.', array('@path' => $path)), 'success');
   }
   else {
-    drush_log(dt('Drush was unable to download FirePHP to @path.', array('@path' => $path)), 'error');
+    drush_log(dt('Drush was unable to export FirePHP to @path.', array('@path' => $path)), 'warning');
   }
 }
 
 /**
  * Implements drush_MODULE_post_COMMAND().
  */
-function drush_devel_post_enable() {
-  $modules = func_get_args();
-  if (in_array('devel', $modules)) {
+function drush_devel_post_pm_enable() {
+  $extensions = func_get_args();
+  // Deal with comma delimited extension list.
+  if (strpos($extensions[0], ',') !== FALSE) {
+    $extensions = explode(',', $extensions[0]);
+  }
+
+  if (in_array('devel', $extensions) && !drush_get_option('skip')) {
     drush_devel_download();
   }
 }
 
 /**
- * Command handler. Show hook implementations
+ * Command handler. Show hook implementations.
  */
 function drush_devel_fn_hook($hook) {
+  // Get implementations in the .install files as well.
+  include_once './includes/install.inc';
+  drupal_load_updates();
+
   if ($hook_implementations = module_implements($hook)) {
     if ($choice = drush_choice(array_combine($hook_implementations, $hook_implementations), 'Enter the number of the hook implementation you wish to view.')) {
       return drush_devel_fn_view($choice . "_$hook");
@@ -134,6 +135,10 @@ function drush_devel_fn_hook($hook) {
  * Command handler.  Show source code of specified function or method.
  */
 function drush_devel_fn_view($function_name) {
+  // Get implementations in the .install files as well.
+  include_once './includes/install.inc';
+  drupal_load_updates();
+
   if (strpos($function_name, '::') === FALSE) {
     if (!function_exists($function_name)) {
       return drush_set_error(dt('Function not found'));
@@ -148,12 +153,27 @@ function drush_devel_fn_view($function_name) {
     $reflect = new ReflectionMethod($class, $method);
   }
   $func_info = array('!file' => $reflect->getFileName(), '!startline' => $reflect->getStartLine(), '!endline' => $reflect->getEndLine());
-  //drush_print_pipe(dt("!file -line !startline", $func_info));
-  drush_print_pipe($reflect->getFileName());
+  $format = drush_get_option('format', '!file');
+  drush_print_pipe(dt($format, $func_info));
   drush_print(dt("// file: !file, lines !startline-!endline", $func_info));
 
   _drush_devel_print_function($reflect->getFileName(), $reflect->getStartLine(), $reflect->getEndLine());
 }
+
+/**
+ * Command callback. List available tokens.
+ */
+function drush_devel_token() {
+  $rows[] = array(dt('Group'), dt('Token'), dt('Name'));
+  $all = token_info();
+  foreach ($all['tokens'] as $group => $tokens) {
+    foreach ($tokens as $key => $token) {
+      $rows[] = array($group, $key, $token['name']);
+    }
+  }
+  drush_print_table($rows, TRUE);
+}
+
 
 /**
  * Print the specified function, including any

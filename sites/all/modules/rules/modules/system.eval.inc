@@ -87,7 +87,7 @@ function rules_action_mail($to, $subject, $message, $from = NULL, $langcode, $se
   $name = isset($element->root()->name) ? $element->root()->name : 'unnamed';
   $key = 'rules_action_mail_' . $name . '_' . $element->elementId();
   $languages = language_list();
-  $language = $langcode == LANGUAGE_NONE ? language_default() : $languages[$langcode];
+  $language = isset($languages[$langcode]) ? $languages[$langcode] : language_default();
 
   $message = drupal_mail('rules', $key, $to, $language, $params, $from);
   if ($message['result']) {
@@ -180,6 +180,9 @@ class RulesTokenEvaluator extends RulesDataInputEvaluator {
       else {
         $replacements += token_generate($var_name, $tokens, array(), $options);
       }
+      // Remove tokens if no replacement value is found. As token_replace() does
+      // if 'clear' is set.
+      $replacements += array_fill_keys($tokens, '');
     }
 
     // Optionally clean the list of replacement values.
@@ -200,6 +203,15 @@ class RulesTokenEvaluator extends RulesDataInputEvaluator {
     return str_replace($tokens, $values, $text);
   }
 
+  /**
+   * Create documentation about the available replacement patterns.
+   *
+   * @param array $var_info
+   *   Array with the available variables.
+   *
+   * @return array
+   *   Renderable array with the replacement pattern documentation.
+   */
   public static function help($var_info) {
     $render = array(
       '#type' => 'fieldset',
@@ -223,7 +235,11 @@ class RulesTokenEvaluator extends RulesDataInputEvaluator {
         );
         foreach ($token_info['tokens'][$token_type] as $token => $info) {
           $token = '[' . str_replace('_', '-', $name) . ':' . $token . ']';
-          $render[$name]['#rows'][$token] = array(check_plain($token), check_plain($info['name']), check_plain($info['description']));
+          $render[$name]['#rows'][$token] = array(
+            check_plain($token),
+            check_plain($info['name']),
+            check_plain($info['description']),
+          );
         }
       }
     }

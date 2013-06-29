@@ -1,5 +1,4 @@
 <?php
-// $Id: devel_generate.fields.inc,v 1.9 2010/04/03 23:43:07 weitzman Exp $
 
 /**
  * @file
@@ -40,7 +39,7 @@ function devel_generate_fields(&$object, $obj_type, $bundle) {
       $module = $field_types[$field['type']]['module'];
 
       // Include any support file that might exist for this field.
-      if (in_array($module, array('file', 'image', 'taxonomy', 'number', 'text', 'userreference', 'nodereference', 'comment', 'list'))) {
+      if (in_array($module, array('file', 'image', 'taxonomy', 'number', 'text', 'comment', 'list'))) {
         // devel_generate implements on behalf of core and special friends.
         module_load_include('inc', 'devel_generate', "$module.devel_generate");
       }
@@ -66,7 +65,7 @@ function devel_generate_fields(&$object, $obj_type, $bundle) {
     // initializes the property with incorrect data.
     // @see http://drupal.org/node/652176
     $object->{$field['field_name']} = array(
-      $object->language => $object_field,
+      $field['translatable'] ?  $object->language : LANGUAGE_NONE => $object_field,
     );
   }
 }
@@ -89,7 +88,10 @@ function devel_generate_multiple($function, $object, $field, $instance, $bundle)
         break;
     }
     for ($i = 0; $i <= $max; $i++) {
-      $object_field[$i] = $function($object, $field, $instance, $bundle);
+      $result = $function($object, $field, $instance, $bundle);
+      if (!empty($result)) {
+        $object_field[$i] = $result;
+      }
     }
   }
   return $object_field;

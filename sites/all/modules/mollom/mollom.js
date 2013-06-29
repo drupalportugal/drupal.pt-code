@@ -1,13 +1,13 @@
 (function ($) {
 
 /**
- * Open Mollom privacy policy link in a new window.
+ * Open links to Mollom.com in a new window.
  *
  * Required for valid XHTML Strict markup.
  */
-Drupal.behaviors.mollomPrivacy = {
+Drupal.behaviors.mollomTarget = {
   attach: function (context) {
-    $('.mollom-privacy a', context).click(function () {
+    $(context).find('.mollom-target').click(function () {
       this.target = '_blank';
     });
   }
@@ -43,9 +43,12 @@ function getMollomCaptcha() {
     path += '/' + mollomContentId;
   }
 
-  // Retrieve a CAPTCHA:
-  $.getJSON(Drupal.settings.basePath + path,
-    function (data) {
+  // Retrieve a new CAPTCHA.
+  $.ajax({
+    url: Drupal.settings.basePath + path,
+    type: 'POST',
+    dataType: 'json',
+    success: function (data) {
       if (!(data && data.content)) {
         return;
       }
@@ -58,7 +61,7 @@ function getMollomCaptcha() {
       // Focus on the CAPTCHA input.
       $('input[name="mollom[captcha]"]', context).focus();
     }
-  );
+  });
   return false;
 }
 

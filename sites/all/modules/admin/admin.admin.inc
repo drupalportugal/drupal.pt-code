@@ -1,5 +1,5 @@
 <?php
-// $Id: admin.admin.inc,v 1.1.2.3.2.7.2.2 2010/09/16 16:48:45 yhahn Exp $
+// $Id: admin.admin.inc,v 1.1.2.3.2.7.2.3 2010/12/16 21:40:53 yhahn Exp $
 
 /**
  * System settings form for admin toolbar.
@@ -79,7 +79,8 @@ function admin_settings_form($form, &$form_state) {
   }
   $custom_options = array();
   foreach (array_diff_key($block_info, $options) as $bid => $info) {
-    $module = array_shift(explode('-', $bid));
+    $block_parts = (explode('-', $bid));
+    $module = array_shift($block_parts);
     $module = isset($modules[$module]) ? $modules[$module] : $module;
     $custom_options[$module][$bid] = $info['info'];
   }

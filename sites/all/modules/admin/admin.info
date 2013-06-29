@@ -13,9 +13,9 @@ files[] = theme/admin-panes.tpl.php
 files[] = theme/admin-toolbar.tpl.php
 files[] = theme/theme.inc
 
-; Information added by drupal.org packaging script on 2010-09-27
-version = "7.x-2.0-beta2"
+; Information added by drupal.org packaging script on 2010-12-16
+version = "7.x-2.0-beta3"
 core = "7.x"
 project = "admin"
-datestamp = "1285614658"
+datestamp = "1292541646"
 
