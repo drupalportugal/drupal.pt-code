@@ -1,0 +1,15 @@
+name = Custom Permissions
+description = Allows additional permissions to be created and managed through a administration form.
+core = 7.x
+
+
+files[] = config_perms.admin.inc
+files[] = config_perms.install
+files[] = config_perms.module
+
+; Information added by drupal.org packaging script on 2011-06-01
+version = "7.x-2.0"
+core = "7.x"
+project = "config_perms"
+datestamp = "1306919823"
+

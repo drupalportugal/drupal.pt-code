@@ -1,0 +1,249 @@
+<?php
+
+/**
+ * @file
+ * Allows additional permissions to be created and managed through a administration form
+ *
+ * Development by Doc (Sjoerd Arendsen) sjoerd@optixdesigns.com
+ * www.optixdesigns.com
+ *
+ * Initial development by mrthumpz (Todd Humphrey) todd@iplanitglobal.com
+ * www.iplanitglobal.com
+ */
+
+/**
+ * Load all permissions
+ */
+function config_perms_perms($machine_name = NULL, $rebuild = FALSE) {
+  // Load current perms
+  $perms = cache_get('config_perms');
+
+  // Rebuild if not there
+  if (!$perms || $rebuild) {
+    config_perms_cache_rebuild();
+    $perms = cache_get('config_perms');
+  }
+
+  return ($machine_name) ? $perms->data[$machine_name] : $perms->data;
+}
+
+/**
+ * Configure permission names for urls:
+ */
+function config_perms_cache_rebuild() {
+  $perms = config_perms_loadperms();
+  cache_set('config_perms', $perms);
+}
+
+/*******************************************************************************
+ * Hook Functions
+ ******************************************************************************/
+/*
+
+ /**
+ * Implementation of hook_perm
+ * Administer -> User management -> Permissions
+ */
+function config_perms_permission() {
+  $permissions = array();
+  $permissions['administer custom permissions'] = array('title' => 'administer custom permissions', 'description' => '');
+
+  $perms = config_perms_perms();
+
+  foreach ($perms as $perm) {
+    if ($perm->status) {
+      $permissions[check_plain($perm->name)] = array('title' => check_plain($perm->name), 'description' => '');
+    }
+  }
+
+  return $permissions;
+}
+
+/**
+ * Implements hook_flush_caches().
+ */
+function config_perms_flush_caches() {
+  cache_clear_all('config_perms', 'cache');
+}
+
+/**
+ * Implements hook_theme();().
+ */
+function config_perms_theme() {
+  return array(
+    'config_perms_form' => array(
+      'render element' => 'form',
+      'file' => 'config_perms.admin.inc',
+    ),
+  );
+}
+
+/**
+ * Implements hook_menu().
+ */
+function config_perms_menu() {
+  $items = array();
+
+  $items['admin/people/custom_permissions'] = array(
+    'title' => 'Custom Permissions',
+    'description' => 'Allows additional permissions to be created and managed through a administration form',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('config_perms_admin_form'),
+    'access arguments' => array('administer custom permissions'),
+    'file' => 'config_perms.admin.inc',
+    'weight' => 1,
+    'type' => MENU_LOCAL_TASK,
+  );
+
+  return $items;
+}
+
+/**
+ * Implements hook_menu_alter().
+ */
+function config_perms_menu_alter(&$items) {
+  /*
+  foreach (config_perms_perms() as $perm) {
+    foreach ($perm->path as $path) {
+      if (isset($items[$path]) && $perm->status) {
+        $items[$path]['access callback'] = 'config_perms_access_callback';
+        $items[$path]['access arguments'] = array($perm);
+      }
+    }
+  }
+  */
+  
+  // Run through all menu items and leter them accordingly
+  foreach($items as $key => $item) {
+    foreach (config_perms_perms() as $perm) {
+      foreach ($perm->path as $path) { 
+        if (drupal_match_path($key, $path) && $perm->status) {
+          $items[$key]['access callback'] = 'config_perms_access_callback';
+          $items[$key]['access arguments'] = array($perm);
+        }
+      }
+    }
+  }
+}
+
+/**
+ * Access callback
+ */
+function config_perms_access_callback($perm) {
+  return user_access(check_plain($perm->name));
+}
+
+/*******************************************************************************
+ * Ctools
+ ******************************************************************************/
+/*
+
+ /**
+ * Load all permissions
+ */
+function config_perms_loadperms() {
+  $perms = array();
+
+  if (module_exists('ctools')) {
+    ctools_include('export');
+    $perms = ctools_export_load_object('config_perms');
+  }
+  else {
+    $result = db_select('config_perms')
+      ->fields('config_perms')
+      ->execute();
+
+    foreach ($result as $perm) {
+      $perm->path = unserialize($perm->path);
+      $perms[$perm->machine_name] = $perm;
+    }
+  }
+
+  return $perms;
+}
+
+/**
+ * Inserts or updates a perm into the database.
+ *
+ * @param $preset
+ *   The perm object to be inserted.
+ */
+function config_perms_save($perm) {
+  $perm = (object) $perm;
+
+  // Generate machine name
+  $perm->machine_name = config_perms_generate_machine_name($perm->name);
+
+  if (isset($perm->pid)) {
+    drupal_write_record('config_perms', $perm, 'pid');
+  }
+  else {
+    drupal_write_record('config_perms', $perm);
+  }
+  
+  return $perm;
+}
+
+/**
+ * Peristant permissions
+ */
+function config_perms_persistant() {
+  $persistant = array(
+    array(
+      'name' => 'administer themes',
+      'status' => 1,
+      'paths' => array(),
+    ),
+    array(
+      'name' => 'administer enabled themes',
+      'status' => 1,
+      'paths' => array(),
+    ),
+  );
+
+  foreach ($persistant as $p) {
+    $perms[config_perms_generate_machine_name($p['name'])] = (object) $p;
+  }
+
+  return $perms;
+}
+
+/**
+ * Delete a perm.
+ *
+ * @param $name
+ *   A perm object, or a perms name
+ */
+function config_perms_delete($perm) {
+  $pid = is_object($perm) ? $perm->pid : $perm;
+
+  db_delete('config_perms')
+  ->condition('pid', $pid)
+  ->execute();
+
+  if (module_exists('ctools')) {
+    // Clear the Ctools export API cache.
+    ctools_include('export');
+    ctools_export_load_object_reset('config_perms');
+  }
+}
+
+/**
+ * Generate a machine name given a string
+ *
+ */
+function config_perms_generate_machine_name($string) {
+  return strtolower(preg_replace('/[^a-zA-Z0-9_]+/', '_', $string));
+}
+
+function config_perms_parse_path($path) {
+  if (is_array($path)) {
+    $string = implode("\n", $path);
+    return $string;
+  }
+  else {
+    $path = str_replace(array("\r\n", "\n\r", "\n", "\r"), "\n", $path);
+    $parts = explode("\n", $path);
+    return $parts;
+  }
+}

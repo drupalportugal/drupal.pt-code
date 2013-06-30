@@ -1,0 +1,221 @@
+<?php
+
+/**
+ * @file
+ * Provides permissions to edit the menu link on node edit forms, while not having permissions to administer whole menus.
+ */
+
+/**
+ * Implements hook_permission().
+ */
+function node_menu_permissions_permission() {
+  $perms = array(
+    'create node menu any content any menu' => array(
+      'title' => t('Create menu link in any menu for any content'),
+    ),
+    'edit node menu any content any menu' => array(
+      'title' => t('Edit menu link in any menu for any content'),
+    ),
+    'edit attributes node menu any content any menu' => array(
+      'title' => t('Edit menu link attributes (title, description, etc) for any content'),
+    ),
+    'override node menu any content any menu' => array(
+      'title' => t('Override menu link for any content'),
+    ),
+  );
+
+  // Generate standard node permissions for all applicable node types.
+  $types = node_type_get_types();
+  $menus = menu_get_menus();
+  foreach (node_permissions_get_configured_types() as $type) {
+    $type_menus = variable_get('menu_options_' . $type, array('main-menu' => 'main-menu'));
+
+    if (!empty($type_menus)) {
+      $type = check_plain($type);
+      $type_name = $types[$type]->name;
+
+      $content_perms["create node menu $type content any menu"] = array(
+        'title' => t('%type_name: Create menu link in any menu', array('%type_name' => $type_name)),
+      );
+      $content_perms["edit node menu $type content any menu"] = array(
+        'title' => t('%type_name: Edit menu link in any menu', array('%type_name' => $type_name)),
+      );
+      $content_perms["edit attributes node menu $type content any menu"] = array(
+        'title' => t('%type_name: Edit menu link attributes (title, description, etc)', array('%type_name' => $type_name)),
+      );
+      $content_perms["override node menu $type content any menu"] = array(
+        'title' => t('%type_name: Override menu link', array('%type_name' => $type_name)),
+      );
+
+      foreach ($type_menus as $menu) {
+        $menu_name = $menus[$menu];
+
+        if (!isset($perms["create node menu any content $menu menu"])) {
+          $perms["create node menu any content $menu menu"] = array(
+            'title' => t('Create menu link in %menu_name menu for any content', array('%menu_name' => $menu_name)),
+          );
+          $perms["edit node menu any content $menu menu"] = array(
+            'title' => t('Edit menu link in %menu_name menu for any content', array('%menu_name' => $menu_name)),
+          );
+        }
+
+        $content_perms["create node menu $type content $menu menu"] = array(
+          'title' => t('%type_name: Create menu link in %menu menu', array('%type_name' => $type_name, '%menu' => $menu_name)),
+        );
+        $content_perms["edit node menu $type content $menu menu"] = array(
+          'title' => t('%type_name: Edit menu link in %menu menu', array('%type_name' => $type_name, '%menu' => $menu_name)),
+        );
+      }
+    }
+  }
+  return $perms + $content_perms;
+}
+
+/**
+ * Implements hook_form_BASE_FORM_ID_alter().
+ *
+ * @see menu_form_node_form_alter()
+ */
+function node_menu_permissions_form_node_form_alter(&$form, $form_state) {
+  // There is no menu form or user has already access to it.
+  if (empty($form['menu']) || $form['menu']['#access']) {
+    return;
+  }
+
+  $node = $form_state['node'];
+  $type = $node->type;
+  $op = empty($node->nid) ? 'create' : 'edit';
+
+  // Expose menu form if user has access to create/edit a menu link to any menu.
+  if (node_menu_permissions_access($op, $node)) {
+    $form['menu']['#access'] = TRUE;
+    return;
+  }
+
+  // Find out in which menus the user may create/edit a menu link.
+  $type_menus = variable_get('menu_options_' . $type, array('main-menu' => 'main-menu'));
+  $menus = array();
+  foreach ($type_menus as $menu) {
+    if (node_menu_permissions_access($op, $node, $menu)) {
+      $menus[$menu] = $menu;
+    }
+  }
+
+  // Filter out menus the user has no access to.
+  if (!empty($menus)) {
+    $parent = &$form['menu']['link']['parent'];
+    $default = $parent['#default_value'];
+
+    // Disable menu link parent if the existing link is in a menu the current
+    // user has no access to.
+    list($menu, $mlid) = explode(':', $default);
+    if ($op == 'edit' && !(isset($menus[$menu]) || node_menu_permissions_access('override', $node))) {
+      $parent['#disabled'] = TRUE;
+      $parent['#value'] = $parent['#default_value'];
+
+      $weight = &$form['menu']['link']['weight'];
+      $weight['#disabled'] = TRUE;
+      $weight['#value'] = $weight['#default_value'];
+    }
+
+    $access = TRUE;
+    foreach ($parent['#options'] as $key => $value) {
+      list($menu, $mlid) = explode(':', $key);
+
+      if ($mlid === '0') {
+        if (isset($menus[$menu])) {
+          $access = TRUE;
+        }
+        else {
+          $access = FALSE;
+        }
+      }
+
+      // Always keep the default option.
+      if ($key == $default) {
+        continue;
+      }
+      elseif (!$access) {
+        unset($parent['#options'][$key]);
+      }
+    }
+
+    // Expose menu form if user has access to create/edit a menu link in at
+    // least one menu.
+    if (!empty($parent['#options'])) {
+      $form['menu']['#access'] = TRUE;
+      return;
+    }
+  }
+
+  // Expose menu form, but disable menu link parent, if the current user may
+  // edit attributes from the menu link.
+  $enabled = &$form['menu']['enabled'];
+  if ($op == 'edit' && $enabled['#default_value'] && node_menu_permissions_access('edit attributes', $node)) {
+    $form['menu']['#access'] = TRUE;
+
+    $enabled['#disabled'] = TRUE;
+    $enabled['#value'] = $enabled['#default_value'];
+
+    $parent = &$form['menu']['link']['parent'];
+    $parent['#disabled'] = TRUE;
+    $parent['#value'] = $parent['#default_value'];
+
+    $weight = &$form['menu']['link']['weight'];
+    $weight['#disabled'] = TRUE;
+    $weight['#value'] = $weight['#default_value'];
+  }
+}
+
+/**
+ * Determine whether the user has a given node menu privilege.
+ *
+ * @param $op
+ *   The operation to be performed. Possible values:
+ *   - 'create'
+ *   - 'edit'
+ *   - 'edit attributes'
+ *   - 'override'
+ * @param $node
+ *   The node object on which the operation is to be performed, or node type
+ *   (e.g. 'forum') for "create" operation.
+ * @param $menu
+ *   (optional) Name of the menu on which the operation is to be performed.
+ * @param $account
+ *   (optional) The account to check, if not given use currently logged in user.
+ *
+ * @return
+ *   Boolean TRUE if the current user has the requested permission.
+ */
+function node_menu_permissions_access($op, $node, $menu = NULL, $account = NULL) {
+  if (user_access("$op node menu any content any menu", $account)) {
+    return TRUE;
+  }
+
+  $type = $node->type;
+  if (user_access("$op node menu $type content any menu", $account)) {
+    return TRUE;
+  }
+
+  if ($menu) {
+    if (user_access("$op node menu any content $menu menu", $account)) {
+      return TRUE;
+    }
+    if (user_access("$op node menu $type content $menu menu", $account)) {
+      return TRUE;
+    }
+  }
+  return FALSE;
+}
+
+/**
+ * Implements hook_module_implements_alter().
+ *
+ * Prevent Menu module from adding a menu link form to node forms.
+ */
+function node_menu_permissions_module_implements_alter(&$implementations, $hook) {
+  // Prevent the Menu Admin per Menu module altering the menu form on node edit forms.
+  if (in_array($hook, array('form_alter'))) {
+    unset($implementations['menu_admin_per_menu']);
+  }
+}

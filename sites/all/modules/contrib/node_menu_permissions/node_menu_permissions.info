@@ -1,0 +1,9 @@
+name = Node menu permissions
+description = Provides permissions to edit the menu link on node edit forms, while not having permissions to administer whole menus.
+core = 7.x
+; Information added by drupal.org packaging script on 2012-02-06
+version = "7.x-1.0"
+core = "7.x"
+project = "node_menu_permissions"
+datestamp = "1328562346"
+

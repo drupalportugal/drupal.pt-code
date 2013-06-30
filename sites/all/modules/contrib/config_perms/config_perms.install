@@ -1,0 +1,139 @@
+<?php
+
+/**
+ * @file
+ * Installation file
+ */
+
+/**
+ * Implements hook_install().
+ */
+function config_perms_install() {
+  // Install defaults
+  _config_perms_install_data();
+  
+  // Rebuild menu and cache
+  config_perms_cache_rebuild();
+  menu_rebuild();
+}
+
+/**
+ * Implements hook_uninstall().
+ */
+function config_perms_uninstall() {
+  // Clear cache and rebuild menu
+  cache_clear_all('config_perms', 'cache');
+  menu_rebuild();
+}
+
+/**
+ * Implements hook_schema().
+ */
+function config_perms_schema() {
+  $schema['config_perms'] = array(
+    'description' => 'The config perms table.',
+    // Optional CTools export.inc integration
+    'export' => array(
+      'key' => 'machine_name',
+      'identifier' => 'config_perms',
+      'default hook' => 'config_perms',
+      'api' => array(
+        'owner' => 'config_perms',
+        'api' => 'config_perms',
+        'minimum_version' => 1,
+        'current_version' => 1,
+      ),
+    ),
+    'fields' => array(
+      'machine_name' => array(
+        'description' => 'The primary identifier for a permission',
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+      ),
+      'pid' => array(
+        'type' => 'serial',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'description' => 'Primary ID field for the table. Not used for anything except internal lookups.',
+        'no export' => TRUE, // Do not export database-only keys.
+      ),
+      'status' => array(
+        'description' => 'Whether this field is enabled or not.',
+        'type' => 'int',
+        'size' => 'tiny',
+        'not null' => TRUE,
+        'default' => 1,
+      ),
+      'name' => array(
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+        'default' => '',
+      ),
+      'path' => array(
+        'type' => 'text',
+        'size' => 'medium',
+        'not null' => TRUE,
+        'serialize' => TRUE,
+      ),
+    ),
+    'primary key' => array('pid'),
+    'unique keys' => array(
+      'name' => array('machine_name'),
+    ),
+  );
+
+  return $schema;
+}
+
+function _config_perms_install_data() {
+  $perms = array(
+    //'administer administration theme' => array('admin/config/admin'),
+    'administer clean-urls' => array('admin/config/search/clean-urls'),
+    'administer date-time' => array('admin/config/regional/date-time', 'admin/config/regional/date-time/*'),
+    'administer error reporting' => array('admin/config/error-reporting'),
+    'administer file system' => array('admin/config/file-system'),
+    'administer performance' => array('admin/config/development/performance'),
+    'administer site information' => array('admin/config/system/site-information'),
+    'administer site maintenance' => array('admin/config/development/maintenance'),
+    'administer modules' => array('admin/modules', 'admin/modules/list/confirm', 'admin/modules/uninstall', 'admin/modules/uninstall/confirm'),
+    'administer user profile fields' => array('admin/user/profile'),
+    'administer content node settings' => array('admin/content/node-settings'),
+    'display site building menu' => array('admin/structure'),
+    'display site configuration menu' => array('admin/config'),
+  );
+
+  foreach ($perms as $name => $paths) {
+    // TODO Please review the conversion of this statement to the D7 database API syntax.
+    /* db_query("INSERT INTO {config_perms} (machine_name, status, name, path) VALUES ('%s', %d, '%s', %b)", strtolower(preg_replace('/[^a-zA-Z0-9_]+/', '_', $name)), 1, $name, serialize($paths)) */
+    $id = db_insert('config_perms')
+  ->fields(array(
+      'machine_name' => strtolower(preg_replace('/[^a-zA-Z0-9_]+/', '_', $name)),
+      'status' => 1,
+      'name' => $name,
+      'path' => serialize($paths),
+    ))
+  ->execute();
+  }
+}
+
+/**
+ * Update
+ * Should we still have this function in 7.x?
+ */
+function config_perms_update_6200() {
+  $ret = array();
+
+  $schema = config_perms_schema();
+  db_create_table('config_perms', $schema['config_perms']);
+  
+  // Instal default data
+  _config_perms_install_data();
+  
+    // Rebuild menu and cache
+  config_perms_cache_rebuild();
+  menu_rebuild();
+
+  return t('Update succesfull.');
+}
