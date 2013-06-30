@@ -1,0 +1,321 @@
+<?php
+
+define('USE_ADMIN_TOOLS', 'use admin tools');
+
+/**
+ * Implements hook_permission().
+ */
+function admin_tools_permission() {
+  $perms = array(
+    USE_ADMIN_TOOLS => array(
+      'title'       => t('Use admin tools'),
+      'description' => t('This must be enabled for any of the permissions below to function.'),
+    ),
+  );
+  
+  $links = module_invoke_all('admin_tools_links');
+  // Retrieve custom menu links set in admin/config/user-interface/admin/tools
+  $custom_links = admin_tools_custom_menu_links();
+  if ($custom_links) {
+    $links = array_merge($links, $custom_links);
+  }
+  
+  uasort($links, 'drupal_sort_weight');
+  foreach ($links as $key => $link) {
+    // Modules can omit permission element or set it to FALSE which will no set
+    // role-specific permissions on that link.
+    if (!empty($link['permission'])) {
+      $perms += array(
+        'admin tools ' . $link['permission'] => array(
+          'title'       => "Execute '" . $link['title'] . "' link",
+          'description' => t('This will allow the role to execute ') . $link['href'],
+        ),
+      );
+    }
+  }
+  
+  return $perms;
+}
+
+/**
+ * Implements hook_menu().
+ */
+function admin_tools_menu() {
+  $items['admin/flush-cache/%'] = array(
+    'title'            => t('Clear Cache'),
+    'description'      => t('Clear system caches...'),
+    'page callback'    => 'admin_tools_flush_cache',
+    'page arguments'   => array(2),
+    'access arguments' => array(USE_ADMIN_TOOLS),
+    'type'             => MENU_CALLBACK,
+  );
+  $items['admin/admin-tools/function/%'] = array(
+    'title'            => t('Execute function'),
+    'page callback'    => 'admin_tools_execute_function',
+    'page arguments'   => array(3),
+    'access arguments' => array(USE_ADMIN_TOOLS),
+    'type'             => MENU_CALLBACK,
+  );
+  $items['admin/config/user-interface/admin/tools'] = array(
+    'title'            => t('Admin Tools'),
+    'page callback'    => 'drupal_get_form',
+    'page arguments'   => array('admin_tools_settings'),
+    'access arguments' => array(USE_ADMIN_TOOLS),
+    'type'             => MENU_LOCAL_TASK,
+    'file'             => 'includes/admin_tools.admin.inc',
+    'weight'           => 100,
+  );
+  
+  return $items;
+}
+
+/**
+ * Callback for admin/flush-cache/%
+ * 
+ * Flush all caches or a specific one.
+ *
+ * @param $name
+ *   (optional) Name of cache to flush.
+ */
+function admin_tools_flush_cache($name = NULL) {
+  switch ($name) {
+    case 'menu':
+    	if(module_exists('views')) {
+        views_invalidate_cache();
+    	}
+      menu_rebuild();
+      drupal_set_message('Menu Cache Cleared');
+      break;
+    case 'cache':
+      // Don't clear cache_form - in-progress form submissions may break.
+      // Ordered so clearing the page cache will always be the last action.
+      $core = array('cache', 'cache_block', 'cache_filter', 'cache_page');
+      $cache_tables = array_merge(module_invoke_all('flush_caches'), $core);
+      foreach ($cache_tables as $table) {
+        cache_clear_all('*', $table, TRUE);
+      }
+      drupal_set_message('Cache Tables Cleared');
+      break;
+    case 'requisites':
+      // Change query-strings on css/js files to enforce reload for all users.
+      _drupal_flush_css_js();
+      drupal_clear_css_cache();
+      drupal_clear_js_cache();
+      drupal_set_message('CSS/JS Cache Cleared');
+      break;
+    case 'theme':
+      module_invoke('system', 'theme_data');
+      drupal_theme_rebuild();
+      drupal_set_message('Theme Registry Rebuilt');
+      break;
+    case 'views':
+    	views_flush_caches();
+    	drupal_set_message('Views Cache Cleared');
+    	break;
+    default:
+      // Flush all caches; no need to re-implement this.
+      module_load_include('inc', 'system', 'system.admin');
+      $form = $form_state = array();
+      system_clear_cache_submit($form, $form_state);
+      break;
+  }
+  drupal_goto();
+}
+
+/**
+ * Callback for admin/admin-tools/function/%
+ * 
+ * Executes a function given by the administrator.
+ *
+ * @param $function
+ *   The name of the function to execute.
+ */
+function admin_tools_execute_function($function) {
+  if (function_exists($function)) {
+    call_user_func($function);
+    drupal_set_message(t('Successfully ran %function', array('%function' => $function)));
+  }
+  else {
+    drupal_set_message(t('Admin Tools: Could not find function %function', array('%function' => $function)), 'error');
+  }
+  drupal_goto();
+}
+
+/**
+ * Implements hook_block_info().
+ */
+function admin_tools_block_info() {
+  $blocks['clearcache'] = array(
+    'info' => t('Admin Tools'),
+    'cache' => DRUPAL_CACHE_PER_ROLE,
+    'admin' => TRUE,
+  );
+  return $blocks;
+}
+
+/**
+ * Implements hook_block_view().
+ */
+function admin_tools_block_view($delta = '') {
+  switch($delta) {
+    case 'clearcache':
+      if (user_access(USE_ADMIN_TOOLS)) {
+        $links = module_invoke_all('admin_tools_links');
+        // Retrieve custom menu links set in admin/config/user-interface/admin/tools
+        $custom_links = admin_tools_custom_menu_links();
+        if ($custom_links) {
+          $links = array_merge($links, $custom_links);
+        }
+        
+        // Add a default weight if not provided
+        foreach ($links as $key => $link) {
+          if (!isset($link['weight'])) {
+            $links[$key]['weight'] = 100;
+          }
+        }
+        uasort($links, 'drupal_sort_weight');
+        foreach ($links as $key => $link) {
+          if (!empty($link['permission'])) {
+            if (!user_access('admin tools ' . $link['permission'])) {
+              unset($links[$key]);
+            }
+            
+            // Remove the permission and weight elements to keep the array clean
+            // going into the theme function.
+            unset($links[$key]['permission'], $links[$key]['weight']);
+          }
+        }
+        
+        $content = theme('links', array(
+          'links' => $links, 
+          'attributes' => array('class' => array('menu'))
+        ));
+        $block = array(
+          'subject' => t('Admin Tools'),
+          'content' => $content,
+        );
+      }
+      break;
+  }
+  
+  if (isset($block)) {
+    return $block;
+  }
+}
+
+/**
+ * Implements hook_theme().
+ */
+function admin_tools_theme() {
+  return array(
+    'admin_tools_rows' => array(
+      'render element' => 'form',
+      'file'           => 'admin_tools.admin.inc',
+      'path'           => drupal_get_path('module', 'admin_tools') . '/includes',
+    ),
+  );
+}
+
+/**
+ * Implements hook_admin_tools_links().
+ * 
+ * Function to build out content for the block that will be used
+ * in the administrative toolbar area.
+ */
+function admin_tools_admin_tools_links() {
+  $destination = drupal_get_destination();
+  $links = array(
+    'clear_all_caches' => array( 
+      'title'      => 'Clear All Caches',
+      'href'       => 'admin/flush-cache/all',
+      'permission' => 'clear all caches',
+      'query'      => $destination,
+      'weight'     => 0,
+    ),
+    'views_cache' => array(
+      'title'      => 'Views Cache',
+      'href'       => 'admin/flush-cache/views',
+      'permission' => 'views cache',
+      'query'      => $destination,
+      'weight'     => 10,
+    ),
+    'menu_cache' => array(
+      'title'      => 'Menu Cache',
+      'href'       => 'admin/flush-cache/menu',
+      'permission' => 'menu cache',
+      'query'      => $destination,
+      'weight'     => 20,
+    ),
+    'theme_registry' => array(
+      'title'      => 'Theme Registry',
+      'href'       => 'admin/flush-cache/theme',
+      'permission' => 'theme registry',
+      'query'      => $destination,
+      'weight'     => 30,
+    ),
+    'css_js_cache' => array(
+      'title'      => 'CSS/JS Cache',
+      'href'       => 'admin/flush-cache/requisites',
+      'permission' => 'requisites',
+      'query'      => $destination,
+      'weight'     => 40,
+    ),
+    'cache_tables' => array(
+      'title'      => 'Cache Tables',
+      'href'       => 'admin/flush-cache/cache',
+      'permission' => 'cache tables',
+      'query'      => $destination,
+      'weight'     => 50,
+    ),
+    'run_cron' => array(
+      'title'      => 'Run Cron',
+      'href'       => 'admin/reports/status/run-cron',
+      'permission' => 'run cron',
+      'query'      => $destination,
+      'weight'     => 60,
+    ),
+    'run_updates' => array(
+      'title'      => 'Run Updates',
+      'href'       => 'update.php',
+      'permission' => 'run updates',
+      'weight'     => 70,
+    ),
+  );
+  return $links;
+}
+
+function admin_tools_custom_menu_links() {
+  $custom_links = variable_get('admin_tools_custom_links', array());
+
+  if (!empty($custom_links)) {
+    $links = array();
+    foreach ($custom_links as $index => $custom_link) {
+      $machine_name = admin_tools_create_machine_name($custom_link['title']);
+      
+      $links[$machine_name] = array(
+        'title'  => $custom_link['title'],
+        'href'   => $custom_link['href'],
+        'weight' => $custom_link['weight'],
+      );
+      // Create the permission string if one should be set.
+      if ($custom_link['permission']) {
+        $links[$machine_name]['permission'] = $title_lower;
+      }
+      // Create the redirection option if set.
+      if ($custom_link['redirect']) {
+        $links[$machine_name]['query'] = drupal_get_destination();
+      }
+    }
+    
+    return $links;
+  }
+  
+  return FALSE;
+}
+
+/**
+ * Generate a machine name for the menu link from the given value.
+ */
+function admin_tools_create_machine_name($value) {
+  return str_replace(array(' & ', ' ', '/'), '_', strtolower($value));
+}

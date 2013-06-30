@@ -1,0 +1,28 @@
+Administration Menu select 7.x-1.x, xxxx-xx-xx (Development release)
+--------------------------------------------------------------------------------
+
+- Fixed issue with defaults logic.
+
+
+Administration Menu select 7.x-1.2, 2011-10-12
+--------------------------------------------------------------------------------
+
+- #1301744 by tnanek: Fixed bad namespace issue.
+- #1284818 by phillipz, deciphered: Added Administration Menu select permissions.
+- #1140818: Added ability to set default by role.
+- Added Admin optimized block.
+- Added Admin Menu optimized menu.
+
+
+Administration Menu select 7.x-1.1 (2011-04-13)
+--------------------------------------------------------------------------------
+
+- #1125012 by Dave Reid, deciphered: Added support for Toolbar module.
+- #1125012 by Dave Reid, deciphered: Rewrote core functionality and API.
+- Added API documentation.
+
+
+Administration Menu select 7.x-1.0 (2011-04-12)
+--------------------------------------------------------------------------------
+
+- Initial release.

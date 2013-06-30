@@ -1,0 +1,20 @@
+core = 7.x
+description = "Allows users to choose which Administration menu module to use."
+name = "Administration Menu select"
+package = "Administration"
+configure = admin/config/administration/admin_select
+
+; Files
+files[] = admin_select.module
+files[] = includes/admin.inc
+files[] = includes/admin_menu.inc
+files[] = includes/block.inc
+files[] = includes/system.inc
+files[] = includes/toolbar.inc
+
+; Information added by drupal.org packaging script on 2012-06-30
+version = "7.x-1.3"
+core = "7.x"
+project = "admin_select"
+datestamp = "1341068177"
+
