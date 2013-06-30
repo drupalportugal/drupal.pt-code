@@ -1,0 +1,45 @@
+<?php
+/**
+ * Implements hook_menu().
+ */
+function fp_menu() {
+	$items = array();
+	
+  // Permissions and role forms.
+  $items['admin/people/fp'] = array(
+    'title' => 'Faster Permissions',
+    'description' => 'Determine access to features by selecting permissions for roles.',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('fp_admin_permissions_overview'),
+    'access arguments' => array('administer permissions'),
+    'file' => 'fp.admin.inc',
+    'type' => MENU_LOCAL_TASK,
+  );
+  $items['admin/people/fp/%'] = array(
+    'title' => 'Permissions',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('fp_admin_permissions', 3),
+    'access arguments' => array('administer permissions'),
+    'type' => MENU_CALLBACK,
+    'file' => 'fp.admin.inc',
+  );
+	
+	return $items;
+}
+
+/**
+ * Implements hook_theme().
+ */
+function fp_theme() {
+	return array(
+    'fp_admin_permissions' => array(
+      'render element' => 'form',
+      'file' => 'fp.admin.inc',
+    ),
+    'fp_admin_permissions_overview' => array(
+      'render element' => 'form',
+      'file' => 'fp.admin.inc',
+    ),
+	);
+}
+

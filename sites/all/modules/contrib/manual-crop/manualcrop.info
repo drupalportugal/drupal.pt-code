@@ -1,0 +1,13 @@
+name = Manual Crop
+description = Lets you manually crop an image based upon the image style effects.
+package = Image
+core = 7.x
+
+dependencies[] = image (>=7.8)
+
+; Information added by drupal.org packaging script on 2012-10-19
+version = "7.x-1.4"
+core = "7.x"
+project = "manual-crop"
+datestamp = "1350655625"
+
