@@ -138,6 +138,11 @@ function memcache_storage_init() {
 
     // Avoid caching of pages with debug info in external cache.
     drupal_add_http_header('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
+
+    // Set the correct HTTP status code for "maintenance of the server"
+    // with 10 minutes as retry period.
+    drupal_add_http_header('Status', '503 Service unavailable');
+    drupal_add_http_header('Retry-After', 600);
   }
 }
 
@@ -155,16 +160,8 @@ function memcache_storage_debug_shutdown() {
   }
 
   // Try not to break non-HTML pages.
-  if (function_exists('drupal_get_http_header')) {
-    $header = drupal_get_http_header('content-type');
-    if ($header) {
-      $formats = array('xml', 'javascript', 'json', 'plain', 'image', 'application', 'csv', 'x-comma-separated-values');
-      foreach ($formats as $format) {
-        if (strstr($header, $format)) {
-          return;
-        }
-      }
-    }
+  if (function_exists('drupal_get_http_header') && !strstr(drupal_get_http_header('Content-Type'), 'html')) {
+    return;
   }
 
   $debug_output = drupal_static('memcache_storage_debug_output');

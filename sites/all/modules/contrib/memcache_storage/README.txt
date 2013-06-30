@@ -323,6 +323,47 @@ $conf['memcache_storage_persistent_connection'] = TRUE;
 Default: FALSE
 
 
+2.12. SESSIONS SUPPORT
+
+Memcache Storage allows you to store all session data in memory.
+It helps database to reduce amount of queries.
+
+..
+$conf['session_inc'] = 'sites/all/modules/memcache_storage/includes/session.inc';
+..
+
+Read more about sessions here http://api.drupal.org/api/drupal/includes!session.inc/7
+
+====================================
+## DRUSH SUPPORT ##
+====================================
+
+1. To flush ALL DATA stored in memcached print one of the following drush command:
+
+..
+drush memcache-storage-flush
+drush ms-flush
+..
+
+2. To remove cache object from bin use next commands:
+
+drush memcache-storage-clear-cache CACHE_ID CACHE_BIN
+
+Examples:
+
+drush memcache-storage-clear-cache panels:223  // Removes cache with ID 'panels:223' from bin 'cache'.
+drush ms-cc module_implements cache_bootstrap  // Removes cache with ID 'module_implements' from bin 'cache_bootstrap'.
+
+3. To invalidate all cache objects in some cache bin, use this command:
+
+drush memcache-storage-flush-bin CACHE_BIN
+
+Examples:
+
+drush memcache-storage-flush-bin  // Flushes cache bin 'cache'.
+drush ms-fb cache_bootstrap  // Flushes cache bin 'cache_bootstrap'.
+
+
 ====================================
 ## ADVANCED CONFIGARATION EXAMPLE ##
 ====================================
@@ -374,8 +415,11 @@ $conf['memcache_options'] = array(
   Memcached::OPT_BINARY_PROTOCOL => TRUE,
 );
 
-# Move storage for locking mechanism into memcache.
+# Move storage for locking mechanism into memcached.
 $conf['lock_inc'] = 'sites/all/modules/memcache_storage/includes/lock.inc';
+
+# Move storage for sessions into memcached.
+$conf['session_inc'] = 'sites/all/modules/memcache_storage/includes/session.inc';
 
 =============
 ## CREDITS ##

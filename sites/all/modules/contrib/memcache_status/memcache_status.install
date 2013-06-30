@@ -1,0 +1,24 @@
+<?php
+
+/**
+ * @file
+ * Memcache Status install-time module hooks.
+ */
+
+
+/**
+ * Implements hook_requirements().
+ */
+function memcache_status_requirements($phase) {
+  $requirements = array();
+  $t = get_t();
+
+  if ($phase == 'runtime') {
+    $requirements['memcache_status'] = array(
+      'title' => $t('Memcache status'),
+      'value' => l(function_exists('memcache_debug') ? 'Enabled' : 'Disabled', 'admin/reports/status/memcache'),
+    );
+  }
+
+  return $requirements;
+}

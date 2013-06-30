@@ -7,7 +7,7 @@ function fpa_menu() {
       'title' => 'Permissions',
       'page callback' => '_fpa_ctools',
       'page arguments' => array(1),
-      'access callback' => TRUE,
+      'access arguments' => array('administer permissions'),
       'type' => MENU_CALLBACK,
   );
   

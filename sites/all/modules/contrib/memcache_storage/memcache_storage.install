@@ -114,10 +114,10 @@ function memcache_storage_requirements($phase) {
         // Adding new server for memcache connection.
         $connected = FALSE;
         if ($extension == 'Memcache') {
-          $connected = $memcache->connect($host, $port);
+          $connected = @$memcache->connect($host, $port);
         }
         elseif ($extension == 'Memcached') {
-          $connected = $memcache->addServer($host, $port);
+          $connected = @$memcache->addServer($host, $port);
         }
 
         $requirements['memcache_storage_cluster_' . $cluster_name]['title'] =
@@ -126,14 +126,6 @@ function memcache_storage_requirements($phase) {
         if ($connected) {
           $requirements['memcache_storage_cluster_' . $cluster_name]['severity'] = REQUIREMENT_OK;
           $requirements['memcache_storage_cluster_' . $cluster_name]['value'] = $t('Connected');
-
-          // Do not forget to close connection.
-          if ($extension == 'Memcache') {
-            $memcache->close();
-          }
-          else {
-            $memcache->quit();
-          }
         }
         else {
           $requirements['memcache_storage_cluster_' . $cluster_name]['severity'] = REQUIREMENT_ERROR;

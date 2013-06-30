@@ -1,0 +1,35 @@
+<?php
+
+/**
+ * @file
+ * Memcache Status module hooks.
+ */
+
+
+/**
+ * Implements hook_menu().
+ */
+function memcache_status_menu() {
+  $items['admin/reports/status/memcache'] = array(
+    'title' => 'Memcache',
+    'page callback' => 'memcache_status_memcache',
+    'access arguments' => array('access memcache status'),
+    'type' => MENU_CALLBACK,
+    'file' => 'memcache_status.admin.inc',
+  );
+  return $items;
+}
+
+
+/**
+ * Implements hook_permission().
+ */
+function memcache_status_permission() {
+  return array(
+    'access memcache status' => array(
+      'title' => t('Access Memcache status'),
+      'description' => t('View cache reports and flush memcache servers.'),
+      'restrict access' => TRUE,
+    ),
+  );
+}

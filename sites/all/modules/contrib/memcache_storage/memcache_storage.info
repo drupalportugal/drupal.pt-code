@@ -7,9 +7,9 @@ configure = admin/config/development/memcache_storage
 
 files[] = memcache_storage.api.inc
 
-; Information added by drupal.org packaging script on 2013-05-09
-version = "7.x-1.0-rc10"
+; Information added by drupal.org packaging script on 2013-06-15
+version = "7.x-1.0"
 core = "7.x"
 project = "memcache_storage"
-datestamp = "1368123312"
+datestamp = "1371320751"
 
