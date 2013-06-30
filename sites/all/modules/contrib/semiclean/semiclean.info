@@ -1,0 +1,12 @@
+name = Semiclean
+description = Cleans the cron semaphore from the Drupal variables table when it gets left behind from a failed cron.
+core = 7.x
+
+files[] = semiclean.test
+
+; Information added by drupal.org packaging script on 2012-07-01
+version = "7.x-1.0"
+core = "7.x"
+project = "semiclean"
+datestamp = "1341142937"
+

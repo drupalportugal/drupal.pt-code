@@ -1,0 +1,48 @@
+<?php
+
+/**
+ * @file
+ * Utility module for cleaning up after failed cron jobs.
+ */
+
+/**
+ * Implementation of hook_menu().
+ */
+function semiclean_menu() {
+  return array('admin/reports/status/semiclean' => array(
+    'title' => 'Semiclean',
+    'access arguments' => array('administer site configuration'),
+    'page callback' => '_semiclean_do_your_magic',
+    'type' => MENU_CALLBACK,
+  ));
+}
+
+/**
+ * Implementation of hook_requirements().
+ */
+function semiclean_requirements($phase) {
+  if ($phase == 'runtime') {
+    $requirements = array();
+    $requirements['semiclean']['title'] = t('Cron semaphore');
+    $cron_semaphore = variable_get('cron_semaphore', FALSE);
+    if ($cron_semaphore) {
+      $requirements['semiclean']['value'] = t('Cron started at @time', array('@time' => format_date($cron_semaphore, 'large')));
+      $requirements['semiclean']['severity'] = REQUIREMENT_WARNING;
+      $requirements['semiclean']['description'] = t("If it seems like cron has been running for too long, or is otherwise stuck, you might need to reset the semaphore. !clean_now", array('!clean_now' => l(t('Clean now!'), 'admin/reports/status/semiclean')));
+    }
+    else {
+      $requirements['semiclean']['value'] = t('Cron is not running');
+      $requirements['semiclean']['severity'] = REQUIREMENT_OK;
+    }
+    return $requirements;
+  }
+}
+
+/**
+ * Menu callback to delete the cron semaphore.
+ */
+function _semiclean_do_your_magic() {
+  drupal_cron_cleanup();
+  drupal_set_message(t('Cron semaphore cleaned.'), 'status');
+  drupal_goto('admin/reports/status');
+}

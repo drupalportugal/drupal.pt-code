@@ -1,0 +1,127 @@
+<?php
+/**
+ * @file
+ *   Installation tasks for cache actions.
+ */
+
+/**
+ * Implements hook_uninstall().
+ */
+function cache_actions_uninstall() {
+  // Ensure the module specific variables are deleted.
+  variable_del('cache_actions_get_cache_bins');
+  variable_del('cache_actions_updated_panes');
+}
+
+/**
+ * Upgrade all old panels rules to the new format.
+ */
+function cache_actions_update_7201() {
+  $rules = entity_load('rules_config');
+  $displays = array();
+  foreach ($rules as $rule) {
+    if (in_array('cache_actions', $rule->dependencies())) {
+      foreach ($rule->actions() as $action) {
+        if ($action instanceof RulesAction && $action->getElementName() == 'cache_actions_action_clear_panels_pane_cache') {
+          foreach ($action->settings['panes'] as $key) {
+            $display = _cache_actions_get_display_from_key($key);
+            if (empty($display)) {
+              continue;
+            }
+            // Collect all display that we are manipulating here.
+            if (!in_array($display, $displays)) {
+              $displays[] = $display;
+            }
+            $pane = _cache_actions_get_pane_from_key($key);
+            $i = 1;
+            foreach ($display->content as $pane_id => $panel_pane) {
+              if (is_numeric($panel_pane->pid)) {
+                $pid = 'new-' . $i;
+              }
+              else {
+                $pid = $panel_pane->pid;
+              }
+              if ($pid == $pane && !empty($panel_pane->cache['method'])
+                && $panel_pane->cache['method'] == 'rules' && empty($panel_pane->cache['settings']['new'])) {
+                $cache_key = uniqid();
+                $display->content[$pane_id]->cache['settings']['cache_key'] = $cache_key;
+                $display->content[$pane_id]->cache['settings']['new'] = TRUE;
+                $action->settings['panes'][$cache_key] = $cache_key;
+                unset($action->settings['panes'][$key]);
+                $action->save();
+              }
+              $i++;
+            }
+          }
+        }
+      }
+    }
+  }
+  foreach ($displays as $display) {
+    panels_save_display($display);
+    // Manually call this hook - we can't be sure that the hook is registered
+    // at the time this update runs.
+    cache_actions_panels_display_save($display);
+  }
+}
+
+/**
+ * Get a display out of a key specified in the UI.
+ *
+ * @param string $key
+ *   The key.
+ *
+ * @return panels_display
+ *   The related display.
+ */
+function _cache_actions_get_display_from_key($key) {
+  static $displays = array();
+  $info = explode(':', $key);
+  if (count($info) == 1) {
+    return FALSE;
+  }
+  if ($info[0] == 'task') {
+    list(, $handler, $task) = $info;
+    $subtask = $task;
+  }
+  else {
+    list(, $handler, $task, $subtask) = $info;
+  }
+  $key = $task . ':' . $handler . ':' . $subtask;
+  if (isset($displays[$key])) {
+    return $displays[$key];
+  }
+  $task = page_manager_get_task($task);
+  $handler = page_manager_load_task_handler($task, $subtask, $handler);
+  // Save the task handler to be sure we have this handler in the database.
+  page_manager_save_task_handler($handler);
+  // In-code handlers have the displays attached to them.
+  if (isset($handler->conf['display'])) {
+    $display = $handler->conf['display'];
+  }
+  elseif (isset($handler->conf['did'])) {
+    // Otherwise we're dealing with a database display.
+    $display = panels_load_display($handler->conf['did']);
+  }
+  $displays[$key] = $display;
+  return $display;
+}
+
+/**
+ * Return the pane pid from a cache key.
+ *
+ * @param string $key
+ *   The cache key to parse.
+ *
+ * @return string
+ *   The pane pid.
+ */
+function _cache_actions_get_pane_from_key($key) {
+  $info = explode(':', $key);
+  if ($info[0] == 'task') {
+    return $info[3];
+  }
+  else {
+    return $info[4];
+  }
+}

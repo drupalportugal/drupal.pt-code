@@ -1,0 +1,39 @@
+<?php
+
+/**
+ * @file
+ * Unit tests for Semiclean.
+ */
+
+class SemicleanUnitTest extends DrupalWebTestCase {
+  public static function getInfo() {
+    return array(
+      'name' => 'Semiclean functionality',
+      'description' => 'Verifies the basic check and cleaning functions on the status page.',
+      'group' => 'Semiclean'
+    );
+  }
+
+  function setUp() {
+    parent::setUp('semiclean');
+  }
+
+  /**
+   * Test clean state.
+   */
+  function testCleanState() {
+    $this->drupalGet('admin/reports/status/semiclean');
+    $this->assertResponse(403, 'Cannot access Semiclean cleaner as anonymous.');
+    $admin_user = $this->drupalCreateUser(array('administer site configuration'));
+    $this->drupalLogin($admin_user);
+    $this->drupalGet('admin/reports/status');
+    $this->assertText('Cron is not running', 'Cron is not running.');
+    variable_set('cron_semaphore', time());
+    $this->drupalGet('admin/reports/status');
+    $this->assertText('Cron started at', 'Cron is running.');
+    $this->assertText('If it seems like cron has been running for too long, or is otherwise stuck, you might need to reset the semaphore.', 'Description exists.');
+    $this->clickLink('Clean now!');
+    $this->assertText('Cron semaphore cleaned.', 'Status message appeared.');
+    $this->assertText('Cron is not running', 'Cron is not running.');
+  }
+}

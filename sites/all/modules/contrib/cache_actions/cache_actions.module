@@ -1,0 +1,122 @@
+<?php
+
+/**
+ * @file
+ * This is the module file. It contains hooks for panels and views.
+ */
+
+/**
+ * Implements hook_views_api().
+ */
+function cache_actions_views_api() {
+  return array(
+    'api' => 2,
+    'path' => drupal_get_path('module', 'cache_actions') . '/plugins/views',
+  );
+}
+
+/**
+ * Implements hook_ctools_plugin_directory().
+ */
+function cache_actions_ctools_plugin_directory($module, $plugin) {
+  if (($module == 'page_manager' || $module == 'panels' || $module == 'ctools') && !empty($plugin)) {
+    return "plugins/$plugin";
+  }
+}
+
+/**
+ * Implements hook_modules_enabled().
+ */
+function cache_actions_modules_enabled($modules) {
+  _cache_actions_check_module_cache_bins($modules);
+}
+
+/**
+ * Implements hook_modules_enabled().
+ */
+function cache_actions_modules_disabled($modules) {
+  _cache_actions_check_module_cache_bins($modules);
+}
+
+/**
+ * Implements hook_updater_info_alter().
+ */
+function cache_actions_updater_info_alter($updaters) {
+  cache_actions_cache_bins_reset();
+}
+
+/**
+ * We are storing all cache bins in a variable for performance reasons.
+ * If any of the modules that we just enabled defines a cache bin,
+ * we need to resave that variable so that all cache keys are available.
+ */
+function _cache_actions_check_module_cache_bins($modules) {
+  foreach ($modules as $module) {
+    if (module_hook($module, 'flush_caches')) {
+      cache_actions_cache_bins_reset();
+      break;
+    }
+  }
+}
+
+/**
+ * Reset the variable that stores the current available cache bins.
+ */
+function cache_actions_cache_bins_reset() {
+  $stored_cache_bins = variable_del('cache_actions_get_cache_bins');
+  cache_actions_get_cache_bins();
+}
+
+/**
+ * Get all cache bins available.
+ */
+function cache_actions_get_cache_bins() {
+  $cache_bins = variable_get('cache_actions_get_cache_bins', FALSE);
+  // Check if the cache bins were already detected and stored.
+  if (empty($cache_bins)) {
+    $cache_bins = array(
+      'cache' => 'cache',
+      'cache_block' =>
+      'cache_block',
+      'cache_filter' => 'cache_filter',
+      'cache_page' => 'cache_page',
+    );
+    foreach (module_invoke_all('flush_caches') as $cache_bin) {
+      $cache_bins[$cache_bin] = $cache_bin;
+    }
+    // Store the found cache bins.
+    variable_set('cache_actions_get_cache_bins', $cache_bins);
+  }
+  return $cache_bins;
+}
+
+/**
+ * Implements hook_panels_display_save().
+ * Updates any rules where we might have updated our cache keys.
+ */
+function cache_actions_panels_display_save($display) {
+  if (isset($display->cache_key)) {
+    $cache_actions_updated_panes = variable_get('cache_actions_updated_panes', array());
+    if (isset($cache_actions_updated_panes[$display->cache_key])) {
+      $rules = entity_load('rules_config');
+      foreach ($cache_actions_updated_panes[$display->cache_key] as $new_key => $old_key) {
+        foreach ($rules as $rule) {
+          if (in_array('cache_actions', $rule->dependencies())) {
+            foreach ($rule->actions() as $action) {
+              if (isset($action->settings['panes'][$old_key])) {
+                unset($action->settings['panes'][$old_key]);
+                $action->settings['panes'][$new_key] = $new_key;
+                $action->save();
+                $rule_changed = TRUE;
+              }
+            }
+          }
+        }
+      }
+      unset($cache_actions_updated_panes[$display->cache_key]);
+      variable_set('cache_actions_updated_panes', $cache_actions_updated_panes);
+    }
+  }
+}
+
+
