@@ -4,3 +4,55 @@ sites/*/settings*.php
 # Ignore paths that contain user-generated content.
 sites/*/files
 sites/*/private
+sites/*/tmp
+
+# ** Only works in OSs that support newer versions of fnmatch (Bash 4+)
+/sites/default/**/files
+/sites/default/**/private
+
+# SASS #
+##########
+.sass-cache
+
+# Ignore symlinks
+sites/all/libraries/ckeditor
+sites/all/libraries/colorbox
+sites/all/libraries/flexslider
+sites/all/libraries/jquery.cycle
+sites/all/libraries/memcache
+sites/all/libraries/superfish
+
+# Packages #
+############
+*.7z
+*.dmg
+*.gz
+*.bz2
+*.iso
+*.jar
+*.rar
+*.tar
+*.zip
+*.tgz
+
+# Logs and databases #
+######################
+*.log
+*.sql
+
+# OS generated files #
+######################
+.DS_Store*
+ehthumbs.db
+Icon?
+Thumbs.db
+._*
+
+# Vim generated files #
+######################
+*.un~
+
+# Ignore virtualmin files
+awstats-icon
+awstatsicons
+icon
