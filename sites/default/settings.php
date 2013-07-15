@@ -570,11 +570,11 @@ $conf['404_fast_html'] = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML+RDFa 1.0//EN"
 /**
  * Cache: Constants
  */
-define('CACHE_DRUPAL_FAST', 			FALSE);
-define('CACHE_DRUPAL_CONF', 			FALSE);
+define('CACHE_DRUPAL_FAST', 			TRUE);
+define('CACHE_DRUPAL_CONF', 			TRUE);
 define('CACHE_BACKEND_DEFAULTS', 		TRUE);
-define('CACHE_BACKEND_DATABASE', 		TRUE);
-define('CACHE_BACKEND_MEMCACHE', 		FALSE);
+define('CACHE_BACKEND_DATABASE', 		FALSE);
+define('CACHE_BACKEND_MEMCACHE', 		TRUE);
 define('CACHE_BACKEND_REDIS', 			FALSE);
 
 /**
