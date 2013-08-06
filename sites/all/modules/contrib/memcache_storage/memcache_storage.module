@@ -72,10 +72,9 @@ function memcache_storage_admin_menu_cache_info() {
  */
 function memcache_storage_cron() {
 
-  // Invalidates wildcards.
   $new_wildcards = array();
 
-  // Wildcards will be deleted since 30 day after creation (to avoid storing big amount of invalidated data).
+  // Wildcards will be deleted since 30 day after creation (to avoid storing big amount of invalidated wildcards).
   $wildcards_expire = variable_get('memcache_storage_wildcard_invalidate', 60 * 60 * 24 * 30);
   $wildcards = variable_get('memcache_storage_wildcards', array());
 
@@ -92,16 +91,11 @@ function memcache_storage_cron() {
 }
 
 /**
- * Flushes all cached data in memcache storage.
+ * Flushes all cached data in memcached pool.
  */
 function memcache_storage_flush_all_cache() {
-  $flushed = MemcacheStorageAPI::flushClusters();
-  if ($flushed) {
-    drupal_set_message(t('Memcache data was successfully flushed.'));
-  }
-  else {
-    drupal_set_message(t('Could not flush memcache data. Something wrong happen.'), 'warning');
-  }
+  MemcacheStorageAPI::flushClusters();
+  drupal_set_message(t('Memcached data was successfully flushed.'));
 }
 
 /**
@@ -131,6 +125,7 @@ function memcache_storage_init() {
   }
   else {
     drupal_add_library('system', 'drupal.ajax');
+    drupal_add_css(drupal_get_path('module', 'memcache_storage') . '/css/memcache_storage.css');
     drupal_register_shutdown_function('memcache_storage_debug_shutdown');
 
     // Avoid caching of pages with debug info in Drupal cache.
@@ -138,11 +133,6 @@ function memcache_storage_init() {
 
     // Avoid caching of pages with debug info in external cache.
     drupal_add_http_header('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
-
-    // Set the correct HTTP status code for "maintenance of the server"
-    // with 10 minutes as retry period.
-    drupal_add_http_header('Status', '503 Service unavailable');
-    drupal_add_http_header('Retry-After', 600);
   }
 }
 
@@ -185,6 +175,7 @@ function memcache_storage_debug_shutdown() {
 
     $common_stats[$action][$row['result']]++;
 
+    $row['clear_link']['#text'] = t('Delete');
     $debug_output[$key]['clear_link'] = render($row['clear_link']);
 
     // Do not collect statistics if previos row is same as current (for getMultiple).
@@ -198,7 +189,7 @@ function memcache_storage_debug_shutdown() {
     $common_stats[$action]['mem'] += $row['memory'];
   }
 
-  foreach ($common_stats as $action => &$stats) {
+  foreach ($common_stats as &$stats) {
     $stats['mem']  = number_format($stats['mem'] / 1024, 2);
     $stats['HIT']  = $stats['HIT']  . ' / ' . number_format($stats['HIT']  / ($stats['HIT'] + $stats['MISS']) * 100, 1) . '%';
     $stats['MISS'] = $stats['MISS'] . ' / ' . number_format($stats['MISS'] / ($stats['HIT'] + $stats['MISS']) * 100, 1) . '%';
@@ -209,7 +200,7 @@ function memcache_storage_debug_shutdown() {
   foreach ($debug_output as $row) {
     $detailed_debug[] = array(
       'data' => $row,
-      'style' => $row['result'] == 'MISS' ? 'color:red;' : 'color:black;',
+      'class' => array($row['result'] == 'MISS' ? 'miss' : 'hit'),
     );
   }
 
@@ -224,12 +215,14 @@ function memcache_storage_debug_shutdown() {
 
   $debug_table = array(
     '#theme' => 'table',
-    '#header' => array(t('Action'), t('Time, ms'), t('Used memory, KB'), t('Result'), t('Cache bin'), t('Cache key'), t('Cache action'), t('Memcache key')),
+    '#header' => array(t('Action'), t('Time, ms'), t('Used memory, KB'), t('Result'), t('Cache bin'), t('Cache ID'), t('Memcache key'), t('Cache action')),
     '#rows' => $detailed_debug,
     '#attributes' => array(
       'class' => array('memcache-storage-detailed-debug')
     ),
   );
 
+  print '<h2>' . t('Memcache Storage debug output') . '</h2>';
+  print t('Request URL: !url', array('!url' => '<strong>' . url($_GET['q'], array('absolute' => TRUE))  . '</strong>'));
   print render($stats_table) . render($debug_table);
 }

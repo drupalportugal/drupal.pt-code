@@ -11,25 +11,24 @@
 ## INSTALLATION ##
 ==================
 
-These are the broad steps you need to take in order to use this software. Order
-is important.
+These are the broad steps you need to take in order to use this software. ORDER IS IMPORTANT!
 
  1. Install the memcached binaries on your server and start the memcached
     service. See for instance: http://www.lullabot.com/articles/how_install_memcache_debian_etch
 
  2. Install your chosen PECL memcache extension -- this is the memcache client
     library which will be used by the Drupal memcache module to interact with
-    the memcached server(s). Generally PECL memcache (3.0.6+) is recommended,
-    but PECL memcached (2.0.1+) also works well for some people. Use of older
+    the memcached server(s). Generally PECL memcached (2.0.1+) is recommended,
+    but PECL memcache (2.2.1+) also works well for some people. Use of older
     versions may cause problems.
 
  3. Start at least one instance of memcached on your server.
 
- 4. Put your site into offline mode.
+ 4. Download and extract Memcache Storage module into sites/all/modules directory.
 
- 5. Download and extract Memcache Storage module into sites/all/modules directory.
+ 5. Install the Memcache Storage module as usual.
 
- 6. Install the memcache_storage module as usual.
+ 6. Put your site into offline mode.
 
  7. Edit settings.php to configure Memcache Storage module (see ## CONFIGURATIONS ## section).
 
@@ -47,7 +46,7 @@ Note: all module settings should be changed only in settings.php.
 
 1. QUICK CONFIGURATION
 
-To add memcache support for your site you should simply add following settings at the bottom of settings.php:
+To add memcached support for your site you should simply add following settings at the bottom of settings.php:
 
 ..
 $conf['cache_backends'][] = 'sites/all/modules/memcache_storage/memcache_storage.inc';
@@ -71,12 +70,13 @@ $conf['memcache_storage_debug'] = TRUE;
 
 Default: FALSE
 
-At the bottom of each page will be displayed all stats about memcache operations.
+At the bottom of each page will be displayed all stats about memcached operations.
 
 
 2.2. KEY PREFIX.
 
-You may add custom prefix to every memcache key.
+Add custom prefix to every memcache key.
+You may need this if you are using one memcached instance for different sites.
 
 ..
 $conf['memcache_storage_key_prefix'] = 'some_key';
@@ -334,6 +334,51 @@ $conf['session_inc'] = 'sites/all/modules/memcache_storage/includes/session.inc'
 
 Read more about sessions here http://api.drupal.org/api/drupal/includes!session.inc/7
 
+2.13. INTEGRATION WITH NGINX
+
+Since 7.x-1.1 Memcache Storage supports integration with servers that may read cached pages
+directly from memcached pool. It stores a plain HTML text instead of object. This allows
+server to read this HTML and serve it to user, without passing request to the backend.
+It is very cool performance improvement because it may handle a REALLY LOT of anonymous
+reqests per second.
+
+To enable this feature you have to add this lines to your settings.php file:
+
+..
+# Advanced usage of Drupal page cache.
+$conf['cache_backends'][] = 'sites/all/modules/memcache_storage/memcache_storage.page_cache.inc';
+$conf['cache_class_cache_page'] = 'MemcacheStoragePageCache';
+
+# Enable storing of plain HTML text instead of Drupal usual cache object.
+$conf['memcache_storage_external_page_cache'] = TRUE;
+..
+
+Part of Nginx config that you will need to implement:
+
+..
+  # Set content type for the rest requests.
+  default_type text/html;
+
+  # Trying to find page cache in memcached pool.
+  add_header X-Nginx-Page-Cache HIT;
+  set $memcached_key "[PREFIX]-cache_page-$scheme://$server_name$uri$is_args$args";
+  memcached_pass unix:/var/run/memcached/memcached.socket0;
+
+  proxy_intercept_errors on;
+  error_page 404 502 = @drupal;
+..
+
+If you didn't define $conf['memcache_storage_key_prefix'] $memcache_key will look like that:
+
+..
+  set $memcached_key "cache_page-$scheme://$server_name$uri$is_args$args";
+..
+
+I promise that later I will create an article with full example of Nginx configuration.
+But now I can show you only main part of it. All the rest you have to do yourself.
+You may find useful this article: http://nginx.org/en/docs/http/ngx_http_memcached_module.html
+
+
 ====================================
 ## DRUSH SUPPORT ##
 ====================================
@@ -373,6 +418,10 @@ $conf['cache_backends'][] = 'sites/all/modules/memcache_storage/memcache_storage
 $conf['cache_default_class'] = 'MemcacheStorage';
 $conf['cache_class_cache_form'] = 'DrupalDatabaseCache';
 
+# Advanced usage of Drupal page cache.
+$conf['cache_backends'][] = 'sites/all/modules/memcache_storage/memcache_storage.page_cache.inc';
+$conf['cache_class_cache_page'] = 'MemcacheStoragePageCache';
+
 # Do not connect to the database when serving cached page for anonymous users.
 $conf['page_cache_invoke_hooks'] = FALSE;
 $conf['page_cache_without_database'] = TRUE;
@@ -394,9 +443,8 @@ $conf['memcache_servers'] = array(
 );
 
 # Set reference between cache bins and memcache server names.
+# All other bins will be refered to the 'default' server.
 $conf['memcache_bins'] = array(
-  'cache'            => 'default',
-  'cache_field'      => 'default',
   'cache_bootstrap'  => 'bootstrap',
   'cache_field'      => 'field',
   'cache_page'       => 'page',
@@ -415,7 +463,7 @@ $conf['memcache_options'] = array(
   Memcached::OPT_BINARY_PROTOCOL => TRUE,
 );
 
-# Move storage for locking mechanism into memcached.
+# Move storage for lock system into memcached.
 $conf['lock_inc'] = 'sites/all/modules/memcache_storage/includes/lock.inc';
 
 # Move storage for sessions into memcached.

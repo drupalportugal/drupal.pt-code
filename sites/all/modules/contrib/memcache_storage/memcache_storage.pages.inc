@@ -28,11 +28,11 @@ function memcache_storage_clear_cache_ajax_callback($js, $cache_bin, $cache_id) 
   if ($js == 'ajax') {
 
     // Output a message depends on action result.
-    $message = $deleted ? t('Success') : t('Failed');
+    $message = $deleted ? '<span style="color:green;">' . t('Success') . '<span>' : '<span style="color:red;">' . t('Failed') . '</span>';
 
     // Replace ajax link with an output message.
     $selector = str_replace(array(' ','_', '/', '[', ']', ':'), '-', $cache_bin . '-' . $cache_id);
-    $commands[] = ajax_command_replace('.' . $selector, $message);
+    $commands[] = ajax_command_invoke('.' . $selector, 'replaceWith', array($message));
     return array('#type' => 'ajax', '#commands' => $commands);
   }
   else {
