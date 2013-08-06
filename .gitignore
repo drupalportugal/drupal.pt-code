@@ -52,7 +52,7 @@ Thumbs.db
 ######################
 *.un~
 
-# Ignore virtualmin files
+# Virtualmin files
 awstats-icon
 awstatsicons
 icon
