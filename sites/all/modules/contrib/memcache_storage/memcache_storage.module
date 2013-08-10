@@ -29,7 +29,6 @@ function memcache_storage_menu() {
     'page callback' => 'memcache_storage_clear_cache_ajax_callback',
     'page arguments' => array(2, 3, 4, 5),
     'access arguments' => array('view memcache storage debug'),
-    'delivery callback' => 'ajax_deliver',
     'theme callback' => 'ajax_base_page_theme',
     'type' => MENU_CALLBACK,
     'file' => 'memcache_storage.pages.inc',
@@ -162,7 +161,7 @@ function memcache_storage_debug_shutdown() {
   }
 
   $common_stats = array();
-  foreach ($debug_output as $key => $row) {
+  foreach ($debug_output as $key => &$row) {
     $action = $row['action'];
 
     if (empty($common_stats[$action])) {
@@ -175,7 +174,17 @@ function memcache_storage_debug_shutdown() {
 
     $common_stats[$action][$row['result']]++;
 
-    $row['clear_link']['#text'] = t('Delete');
+    // Add to the link attributes that was unable to add during
+    // statistics collection, because some functions may be not loaded.
+    if (!empty($row['clear_link'])) {
+      $row['clear_link']['#text'] = t('Delete');
+      $row['clear_link']['#options']['query'] = array('token' => drupal_get_token($row['token']));
+    }
+
+    // Remove token because we don't want to show it in the debug output.
+    unset($row['token']);
+
+    // Render link for clearing cache item.
     $debug_output[$key]['clear_link'] = render($row['clear_link']);
 
     // Do not collect statistics if previos row is same as current (for getMultiple).

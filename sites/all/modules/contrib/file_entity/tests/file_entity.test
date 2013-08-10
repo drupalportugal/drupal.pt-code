@@ -171,6 +171,83 @@ class FileEntityTestHelper extends DrupalWebTestCase {
 
     return $file;
   }
+
+  /**
+   * Overrides DrupalWebTestCase::drupalGetToken() to support the hash salt.
+   *
+   * @todo Remove when http://drupal.org/node/1555862 is fixed in core.
+   */
+  protected function drupalGetToken($value = '') {
+    $private_key = drupal_get_private_key();
+    return drupal_hmac_base64($value, $this->session_id . $private_key . drupal_get_hash_salt());
+  }
+}
+
+class FileEntityFileTypeClassificationTestCase extends DrupalWebTestCase {
+  public static function getInfo() {
+    return array(
+      'name' => 'File entity classification',
+      'description' => 'Test existing file entity classification functionality.',
+      'group' => 'File entity',
+    );
+  }
+
+  function setUp() {
+    parent::setUp();
+  }
+
+  /**
+   * Get the file type of a given file.
+   *
+   * @param $file
+   *   A file object.
+   *
+   * @return
+   *   The file's file type as a string.
+   */
+  function getFileType($file) {
+    $type = db_select('file_managed', 'fm')
+      ->fields('fm', array('type'))
+      ->condition('fid', $file->fid, '=')
+      ->execute()
+      ->fetchAssoc();
+
+    return $type;
+  }
+
+  /**
+   * Test that existing files are properly classified by file type.
+   */
+  function testFileTypeClassification() {
+    // Get test text and image files.
+    $file = current($this->drupalGetTestFiles('text'));
+    $text_file = file_save($file);
+    $file = current($this->drupalGetTestFiles('image'));
+    $image_file = file_save($file);
+
+    // Enable file entity which adds adds a file type property to files and
+    // queues up existing files for classification.
+    module_enable(array('file_entity'));
+
+    // Existing files have yet to be classified and should have an undefined
+    // file type.
+    $file_type = $this->getFileType($text_file);
+    $this->assertEqual($file_type['type'], 'undefined', t('The text file has an undefined file type.'));
+    $file_type = $this->getFileType($image_file);
+    $this->assertEqual($file_type['type'], 'undefined', t('The image file has an undefined file type.'));
+
+    // The classification queue is processed during cron runs. Run cron to
+    // trigger the classification process.
+    $this->cronRun();
+
+    // The classification process should assign a file type to any file whose
+    // MIME type is assigned to a file type. Check to see if each file was
+    // assigned a proper file type.
+    $file_type = $this->getFileType($text_file);
+    $this->assertEqual($file_type['type'], 'document', t('The text file was properly assigned the Document file type.'));
+    $file_type = $this->getFileType($image_file);
+    $this->assertEqual($file_type['type'], 'image', t('The image file was properly assigned the Image file type.'));
+  }
 }
 
 class FileEntityUnitTestCase extends FileEntityTestHelper {
@@ -221,24 +298,28 @@ class FileEntityUnitTestCase extends FileEntityTestHelper {
     // Test hook_file_insert().
     // Files have been saved as part of setup (in FileEntityTestHelper::setUpFiles).
     foreach ($this->files['image'] as $file) {
-      $files[$file->fid] = $file->image_dimensions;
-      $this->assertTrue(isset($file->image_dimensions), 'Image dimensions retrieved on file_save() for an image file.');
+      $files[$file->fid] = $file->metadata;
+      $this->assertTrue(isset($file->metadata['height']), 'Image height retrieved on file_save() for an image file.');
+      $this->assertTrue(isset($file->metadata['width']), 'Image width retrieved on file_save() for an image file.');
     }
     foreach ($this->files['text'] as $file) {
       $text_fids[] = $file->fid;
-      $this->assertFalse(isset($file->image_dimensions), 'No image dimensions retrieved on file_save() for an text file.');
+      $this->assertFalse(isset($file->metadata['height']), 'No image height retrieved on file_save() for an text file.');
+      $this->assertFalse(isset($file->metadata['width']), 'No image width retrieved on file_save() for an text file.');
     }
 
     // Test hook_file_load().
     // Clear the cache and load fresh files objects to test file_load behavior.
     entity_get_controller('file')->resetCache();
     foreach (file_load_multiple(array_keys($files)) as $file) {
-      $this->assertTrue(isset($file->image_dimensions), 'Image dimensions retrieved on file_load() for an image file.');
-      $this->assertEqual($file->image_dimensions['height'], $files[$file->fid]['height'], 'Loaded image height is equal to saved image height.');
-      $this->assertEqual($file->image_dimensions['width'], $files[$file->fid]['width'], 'Loaded image width is equal to saved image width.');
+      $this->assertTrue(isset($file->metadata['height']), 'Image dimensions retrieved on file_load() for an image file.');
+      $this->assertTrue(isset($file->metadata['width']), 'Image dimensions retrieved on file_load() for an image file.');
+      $this->assertEqual($file->metadata['height'], $files[$file->fid]['height'], 'Loaded image height is equal to saved image height.');
+      $this->assertEqual($file->metadata['width'], $files[$file->fid]['width'], 'Loaded image width is equal to saved image width.');
     }
     foreach (file_load_multiple($text_fids) as $file) {
-      $this->assertFalse(isset($file->image_dimensions), 'No image dimensions retrieved on file_load() for an text file.');
+      $this->assertFalse(isset($file->metadata['height']), 'No image height retrieved on file_load() for an text file.');
+      $this->assertFalse(isset($file->metadata['width']), 'No image width retrieved on file_load() for an text file.');
     }
 
     // Test hook_file_update().
@@ -246,20 +327,20 @@ class FileEntityUnitTestCase extends FileEntityTestHelper {
     $image_files = array_keys($files);
     $file = file_load(reset($image_files));
     $image = image_load($file->uri);
-    image_resize($image, $file->image_dimensions['width'] / 2, $file->image_dimensions['height'] / 2);
+    image_resize($image, $file->metadata['width'] / 2, $file->metadata['height'] / 2);
     image_save($image);
     file_save($file);
-    $this->assertEqual($file->image_dimensions['height'], $files[$file->fid]['height'] / 2, 'Image file height updated by file_save().');
-    $this->assertEqual($file->image_dimensions['width'], $files[$file->fid]['width'] / 2, 'Image file width updated by file_save().');
+    $this->assertEqual($file->metadata['height'], $files[$file->fid]['height'] / 2, 'Image file height updated by file_save().');
+    $this->assertEqual($file->metadata['width'], $files[$file->fid]['width'] / 2, 'Image file width updated by file_save().');
     // Clear the cache and reload the file.
     entity_get_controller('file')->resetCache();
     $file = file_load($file->fid);
-    $this->assertEqual($file->image_dimensions['height'], $files[$file->fid]['height'] / 2, 'Updated image height retrieved by file_load().');
-    $this->assertEqual($file->image_dimensions['width'], $files[$file->fid]['width'] / 2, 'Updated image width retrieved by file_load().');
+    $this->assertEqual($file->metadata['height'], $files[$file->fid]['height'] / 2, 'Updated image height retrieved by file_load().');
+    $this->assertEqual($file->metadata['width'], $files[$file->fid]['width'] / 2, 'Updated image width retrieved by file_load().');
 
     //Test hook_file_delete().
     file_delete($file, TRUE);
-    $this->assertFalse(db_query('SELECT COUNT(*) FROM {image_dimensions} WHERE fid = :fid', array(':fid' => 'fid'))->fetchField(), 'Row deleted in {file_dimensions} on file_delete().');
+    $this->assertFalse(db_query('SELECT COUNT(*) FROM {file_metadata} WHERE fid = :fid', array(':fid' => 'fid'))->fetchField(), 'Row deleted in {file_dimensions} on file_delete().');
   }
 }
 
@@ -1104,14 +1185,19 @@ class FileEntityAccessTestCase extends FileEntityTestHelper {
     $this->drupalGet("file/{$file->fid}/view");
     $this->assertResponse(200, 'Users with access can access the file view page');
 
+    $url = "file/{$file->fid}/download";
     $web_user = $this->drupalCreateUser(array());
     $this->drupalLogin($web_user);
-    $this->drupalGet("file/{$file->fid}/download");
+    $this->drupalGet($url, array('query' => array('token' => $this->drupalGetToken($url))));
     $this->assertResponse(403, 'Users without access can not download the file');
     $web_user = $this->drupalCreateUser(array('download any document files'));
     $this->drupalLogin($web_user);
-    $this->drupalGet("file/{$file->fid}/download");
+    $this->drupalGet($url, array('query' => array('token' => $this->drupalGetToken($url))));
     $this->assertResponse(200, 'Users with access can download the file');
+    $this->drupalGet($url, array('query' => array('token' => 'invalid-token')));
+    $this->assertResponse(403, 'Cannot download file with in invalid token.');
+    $this->drupalGet($url);
+    $this->assertResponse(403, 'Cannot download file without a token.');
 
     $web_user = $this->drupalCreateUser(array());
     $this->drupalLogin($web_user);

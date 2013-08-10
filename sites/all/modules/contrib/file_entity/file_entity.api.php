@@ -170,6 +170,7 @@ function hook_file_operations() {
  *   - "delete"
  *   - "update"
  *   - "view"
+ *   - "download"
  * @param $file
  *   The file on which the operation is to be performed, or, if it does
  *   not yet exist, the type of file to be created.
@@ -366,4 +367,12 @@ function hook_file_type($file) {
 function hook_file_type_alter(&$types, $file) {
   // Choose a specific, non-first, file type.
   $types = array($types[4]);
+}
+
+function hook_file_metadata_info() {
+
+}
+
+function hook_file_metadata_info_alter() {
+
 }

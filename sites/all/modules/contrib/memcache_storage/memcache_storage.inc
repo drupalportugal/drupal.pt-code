@@ -135,7 +135,7 @@ class MemcacheStorage implements DrupalCacheInterface {
           // Simple changing index for bin storage will flushes the whole cache bin,
           // because it is used for building memcache key.
           // @see $this::preprocessCacheID();
-          $this::increaseBinIndex();
+          $this->increaseBinIndex();
         }
         else {
 

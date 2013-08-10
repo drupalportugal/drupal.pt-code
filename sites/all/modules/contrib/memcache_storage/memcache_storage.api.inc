@@ -382,7 +382,7 @@ class MemcacheStorageAPI {
     $servers = variable_get('memcache_servers', array('127.0.0.1:11211' => 'default'));
     $clusters = array();
     foreach ($servers as $cluster_name) {
-      if (!in_array($clusters, $cluster_name)) {
+      if (!in_array($cluster_name, $clusters)) {
         $clusters[] = $cluster_name;
       }
     }
@@ -561,6 +561,7 @@ class MemcacheStorageAPI {
         'cid' => $cid,
         'mem_key' => is_array($memcache_id) ? array_search($cid, $memcache_id) : $memcache_id,
         'clear_link' => $cid != 'memcache_storage_bin_indexes' ? $clear_link : '',
+        'token' => $cache_bin . '-' . $cid,
       );
     }
 
