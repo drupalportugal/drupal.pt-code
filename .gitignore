@@ -14,14 +14,6 @@ sites/*/tmp
 ##########
 .sass-cache
 
-# Ignore symlinks
-sites/all/libraries/ckeditor
-sites/all/libraries/colorbox
-sites/all/libraries/flexslider
-sites/all/libraries/jquery.cycle
-sites/all/libraries/memcache
-sites/all/libraries/superfish
-
 # Packages #
 ############
 *.7z
