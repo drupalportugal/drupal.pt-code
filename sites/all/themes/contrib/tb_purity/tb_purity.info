@@ -21,6 +21,7 @@ stylesheets[all][] = 'css/forum.css'
 stylesheets[all][] = 'css/fonts.css'
 stylesheets[all][] = 'css/css3.css'
 stylesheets[all][] = 'css/ie7.css'
+stylesheets[all][] = 'css/custom.css'
 stylesheets[print][] = 'css/print.css'
 
 ; Scripts in this theme
