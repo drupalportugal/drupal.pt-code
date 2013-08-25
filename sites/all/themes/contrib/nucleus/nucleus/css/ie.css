@@ -9,7 +9,7 @@
 
 /* Fix link elements break table */
 .block-node table .title-author {
-  width: 120px;
   overflow: hidden;
+  width: 120px;
   word-wrap: break-word; /* Validator. http://drupal.org/node/291384 */
 }

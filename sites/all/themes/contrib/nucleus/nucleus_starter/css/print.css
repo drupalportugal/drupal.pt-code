@@ -73,7 +73,13 @@ ul.links a,
 }
 
 /* HTML elements */
-h1,h2,h3,h4,h5,h6,#site-name {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+#site-name {
   font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
 }
 
@@ -89,11 +95,19 @@ h3 {
   font-size: 12pt;
 }
 
-h4,h5,h6 {
+h4,
+h5,
+h6 {
   font-size: 11pt;
 }
 
-h1 a,h2 a,h3 a,h4 a,h5 a,h6 a,#site-name a {
+h1 a,
+h2 a,
+h3 a,
+h4 a,
+h5 a,
+h6 a,
+#site-name a {
   text-decoration: none !important;
 }
 
@@ -183,7 +197,8 @@ td {
   border-bottom: 1px solid #333;
 }
 
-th,td {
+th,
+td {
   padding: 4px 10px 4px 0;
 }
 

@@ -132,9 +132,9 @@ settings[logo_path] = ''
 settings[default_favicon] = 1
 settings[favicon_path] = ''
 
-; Information added by drupal.org packaging script on 2012-03-30
-version = "7.x-1.0-alpha1"
+; Information added by drupal.org packaging script on 2012-06-26
+version = "7.x-1.0-beta1"
 core = "7.x"
 project = "tb_purity"
-datestamp = "1333101060"
+datestamp = "1340684285"
 

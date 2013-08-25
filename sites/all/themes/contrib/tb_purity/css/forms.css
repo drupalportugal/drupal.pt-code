@@ -116,6 +116,7 @@ a.button:focus {
 }
 
 span.button {
+  margin-right: 5px;
 }
 
 span.button input.form-submit {

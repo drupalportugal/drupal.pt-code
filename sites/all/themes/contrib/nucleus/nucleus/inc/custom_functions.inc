@@ -8,14 +8,14 @@
  * Get class name for selected font setting.
  *
  * @param string $prefix
- *   Briefing name of font setting.
+ *   briefing name of font setting.
  * @param string $font_type
- *   Type of setting default/google web font/custom/...
+ *   type of setting default/google web font/custom/...
  * @param string $font_value
- *   Selected font family.
+ *   selected font family.
  *
  * @return string
- *   A string is used to class name.
+ *   a string is used to class name.
  */
 function nucleus_get_class_font($prefix, $font_type, $font_value) {
   $font_value = trim($font_value);
@@ -28,10 +28,10 @@ function nucleus_get_class_font($prefix, $font_type, $font_value) {
  * Format font family to be able to show as inline CSS.
  *
  * @param string $font_value
- *   Font-family.
+ *   font-family.
  *
  * @return string
- *   String is formated for css define.
+ *   string is formated for css define.
  */
 function nucleus_format_font_family($font_value) {
   $parts = explode(',', $font_value);
@@ -53,12 +53,12 @@ function nucleus_format_font_family($font_value) {
  * @param array $fonts_list
  *   A predefine fonts list is gotten from .info.
  * @param string $prefix
- *   Briefing of font setting, such as font-base is fb-.
- * @param bool $use_base_font
- *   Flag if it's base-font.
+ *   briefing of font setting, such as font-base is fb-.
+ * @param bool $is_base_font
+ *   flag if it's base-font.
  *
  * @return array
- *   List of font-settings options.
+ *   list of font-settings options.
  */
 function nucleus_get_font_settings_options($fonts_list, $prefix, $use_base_font) {
   $results = array();
@@ -72,392 +72,130 @@ function nucleus_get_font_settings_options($fonts_list, $prefix, $use_base_font)
 }
 
 /**
- * Generate the part of theme setting form about the block styles.
+ * Get all active block in a theme
  *
  * @param string $theme
- *   Name of theme to get the blocks list.
+ *   theme key
  *
  * @return array
- *   List of blocks.
+ *   list of actived blocks
  */
-function nucleus_get_active_blocks_by_theme($theme) {
-  $query = db_select('block', 'b')
-    ->fields('b')
-    ->condition('theme', $theme)
-    ->condition('status', 1);
-  return $query->execute()->fetchAll();
-}
-
-/**
- * Generate the part of theme setting form about the block styles.
- *
- * @param array &$form
- *   System_theme_settings form.
- *
- * @return array
- *   Sub-form about the block styles.
- */
-function nucleus_block_styles_form(&$form) {
-  $classes_info = nucleus_extend_classes_info();
-  $style_support_counter = $classes_info['style_support_counter'];
-  global $theme_key;
-
-  // Retrieve all active blocks in active theme.
-  $blocks = nucleus_get_active_blocks_by_theme($theme_key);
-
-  // Retrieve the theme data to list all available regions.
-  $theme_data = list_themes();
-  $regions = $theme_data[$theme_key]->info['regions'];
-  $pages = isset($theme_data[$theme_key]->info['pages']) ? $theme_data[$theme_key]->info['pages'] : array('default' => 'Default page');
-  $block_styles = isset($theme_data[$theme_key]->info['block_styles']) ? $theme_data[$theme_key]->info['block_styles'] : array();
-  $block_extend_classes = isset($theme_data[$theme_key]->info['block_extend_classes']) ? $theme_data[$theme_key]->info['block_extend_classes'] : array();
-
-  $block_styles = array("default" => t("-- Select style --")) + $block_styles;
-
-  if (isset($regions[BLOCK_REGION_NONE])) {
-    $regions[BLOCK_REGION_NONE] = t('Disabled');
+function nucleus_all_blocks_by_theme($theme) {
+  static $_nucleus_all_blocks_by_theme = 0;
+  if ($_nucleus_all_blocks_by_theme) {
+    return $_nucleus_all_blocks_by_theme;
   }
-
-  // Retrieve the list of using regions and their blocks inside.
-  $regions_list = nucleus_get_regions_blocks_list($regions, $blocks);
-
-  // Create sub_form for blocks styling.
-  $sub_form = array(
-    '#type' => 'fieldset',
-    '#title' => t('Block styles'),
-    '#weight' => 30,
-  );
-
-  $sub_form['block_style_description'] = array(
-    '#markup' => '<div class="description">' . t('You need to have a flexible mark-up and style for every blocks. With Nucleus block style feature you get these requirements done easily. You can use any defined mark-up, any defined styles for any block you need in the theme settings. In this scope: style means mark-up, classes mean html class. Read <a href="http://www.themebrain.com/guide" target="_blank">Nucleus Quick Guide</a> for more information.') . '</div>',
-  );
-
-  $sub_form['layout_block_style_wrapper'] = array(
-    '#type' => 'container',
-    '#attributes' => array('class' => array('layout-element-wrapper')),
-  );
-  $sub_form['layout_block_style_wrapper']['page_block_style'] = array(
-    '#type' => 'select',
-    '#title' => t('Settings for layout'),
-    '#default_value' => theme_get_setting('page_layout'),
-    '#options' => $pages,
-  );
-
-  foreach ($pages as $page => $page_description) {
-    // Create page_form to settings block style for each page.
-    $page_form = array(
-      '#type' => 'container',
-      '#states' => array(
-        'visible' => array(
-          'select[name="page_block_style"]' => array(
-            'value' => $page,
-          ),
-        ),
-      ),
-    );
-    $page_key = empty($page) ? "default_" : ($page . "_");
-    $page_key = str_replace("-", "_", $page_key);
-
-    // Each page will have a global setting for all blocks with lowest priority.
-    $global_form = array(
-      '#type' => 'container',
-      '#attributes' => array('class' => array('global-block-styles-wrapper', 'form-header')),
-    );
-
-    $key = $page_key . 'global_block';
-    $type = 'global';
-    $style_name = $page_key . 'global_block_style';
-    $hidden_name = $page_key . "global_block_extend_class";
-    $class_name = str_replace("_", "-", $hidden_name);
-
-    $global_style = theme_get_setting($style_name);
-    $global_style = empty($global_style) ? 'default' : $global_style;
-    $global_form[$style_name] = array(
-      '#type' => 'select',
-      '#title' => t('Global block style'),
-      '#default_value' => $global_style,
-      '#options' => $block_styles,
-      '#attributes' => array('onchange' => "Drupal.Nucleus.nucleusOnChangeBlockStyle('" . $key . "', '" . $type . "')"),
-    );
-
-    $global_form[$page_key . 'global_block_extend_class_form'] = array(
-      '#markup' => nucleus_create_popup_extend_classes($key, $type, $global_style),
-    );
-
-    $global_form[$hidden_name] = array(
-      '#type' => 'hidden',
-      '#default_value' => theme_get_setting($hidden_name),
-    );
-
-    $page_form[$page_key . 'global_block_style_wrapper'] = $global_form;
-
-    foreach ($regions_list as $region_key => $region) {
-      if ($region_key != BLOCK_REGION_NONE) {
-        $subwrapper = array(
-          '#type' => 'container',
-        );
-
-        // Each page will have some regions setting for all blocks inside with
-        // higher priority than global.
-        $region_form = array(
-          '#type' => 'container',
-          '#attributes' => array('class' => array('region-block-styles-wrapper', 'form-header')),
-        );
-
-        $key = $page_key . 'region_' . $region_key;
-        $type = 'region';
-        $style_name = $page_key . 'region_' . $region_key . "_style";
-        $hidden_name = $page_key . 'region_' . $region_key . "_extend_class";
-        $class_name = str_replace("_", "-", $hidden_name);
-        $region_style = theme_get_setting($style_name);
-        $region_style = empty($region_style) ? 'default' : $region_style;
-        $region_form[$style_name] = array(
-          '#type' => 'select',
-          '#title' => t('Region: @region_title', array('@region_title' => $region['region_title'])),
-          '#default_value' => $region_style,
-          '#options' => $block_styles,
-          '#attributes' => array('onchange' => "Drupal.Nucleus.nucleusOnChangeBlockStyle('" . $key . "', '" . $type . "')"),
-        );
-        $apply_style = ($region_style == 'default') ? $global_style : $region_style;
-
-        $region_form[$page_key . 'region_' . $region_key . '_extend_class_form'] = array(
-          '#markup' => nucleus_create_popup_extend_classes($key, $type, $apply_style),
-        );
-
-        $region_form[$hidden_name] = array(
-          '#type' => 'hidden',
-          '#default_value' => theme_get_setting($hidden_name),
-        );
-
-        $subwrapper[$page_key . 'region_' . $region_key . '_style_wrapper'] = $region_form;
-
-        $blocks = $region['blocks'];
-        foreach ($blocks as $block) {
-          $block_key = $block->module . "_" . $block->delta;
-          // Each page will have some regions setting for all blocks inside
-          // with higher priority than global.
-          $block_form = array(
-            '#type' => 'container',
-            '#attributes' => array('class' => array('block-styles-wrapper', 'form-subheader')),
-          );
-
-          $key = $page_key . 'block_' . $block_key;
-          $type = 'block';
-          $style_name = $page_key . 'block_' . $block_key . "_style";
-          $hidden_name = $page_key . 'block_' . $block_key . "_extend_class";
-          $class_name = str_replace("_", "-", $hidden_name);
-          $block_style = theme_get_setting($style_name);
-          $block_style = empty($block_style) ? 'default' : $block_style;
-
-          $block_form[$style_name] = array(
-            '#type' => 'select',
-            '#title' => t('Block: @module--@delta', array('@module' => $block->module, '@delta' => $block->delta)),
-            '#default_value' => $block_style,
-            '#options' => $block_styles,
-            '#attributes' => array('onchange' => "Drupal.Nucleus.nucleusOnChangeBlockStyle('" . $key . "', '" . $type . "')"),
-          );
-
-          $apply_style = ($block_style == 'default') ? (($region_style == 'default') ? $global_style : $region_style) : $block_style;
-          $block_form[$page_key . 'block_' . $block_key . '_extend_class_form'] = array(
-            '#markup' => nucleus_create_popup_extend_classes($key, $type, $apply_style),
-          );
-
-          $block_form[$hidden_name] = array(
-            '#type' => 'hidden',
-            '#default_value' => theme_get_setting($hidden_name),
-          );
-
-          $subwrapper[$page_key . 'block_' . $block_key . '_style_wrapper'] = $block_form;
-        }
-        $page_form[$page_key . 'region_' . $region_key . '_style_wrapper'] = $subwrapper;
-      }
+  $blocks = db_select('block', 'b')->fields('b')->condition('theme', $theme)->orderBy('weight', 'ASC')->execute()->fetchAll();
+  $_nucleus_all_blocks_by_theme = array();
+  foreach($blocks as $block) {
+    $b = array();
+    foreach($block as $key => $value) {
+      $b[$key] = $value;
     }
-    $sub_form[$page_key . "subform_wrapper"] = $page_form;
+    $_nucleus_all_blocks_by_theme[] = $b;
   }
-
-  $js_regions_blocks_list = nucleus_get_js_regions_blocks_list($regions_list);
-
-  $form['#attached']['css'][] = array(
-    'data' => drupal_get_path('theme', 'nucleus') . "/css/popup_extend_class.css",
-    'type' => 'file',
-  );
-  $form['#attached']['js'][] = array(
-    'data' => drupal_get_path('theme', 'nucleus') . "/js/popup_extend_class.js",
-    'type' => 'file',
-  );
-  $form['#attached']['js'][] = array(
-    'data' => 'Drupal.Nucleus.nucleusStyleSupportCounter = ' . json_encode($style_support_counter) . ';',
-    'type' => 'inline',
-  );
-  $form['#attached']['js'][] = array(
-    'data' => 'Drupal.Nucleus.nucleusRegionsBlocksList = ' . json_encode($js_regions_blocks_list) . ';',
-    'type' => 'inline',
-  );
-  $form['#attached']['js'][] = array(
-    'data' => 'Drupal.Nucleus.nucleusExtendClassSupportGroups = ' . json_encode($classes_info['support_groups']) . ';',
-    'type' => 'inline',
-  );
-  $form['#attached']['js'][] = array(
-    'data' => 'Drupal.Nucleus.nucleusExtendClassGroupsNameList = ' . json_encode($classes_info['groups_name_list']) . ';',
-    'type' => 'inline',
-  );
-  $form['#attached']['js'][] = array(
-    'data' => 'Drupal.Nucleus.nucleusExtendClassesList = ' . json_encode($classes_info['classes_list']) . ';',
-    'type' => 'inline',
-  );
-  return $sub_form;
+  return $_nucleus_all_blocks_by_theme;
 }
 
 /**
  * Get list of regions and their blocks.
  *
- * @param array $regions
- *   An array containing all regions in selected theme.
- * @param array $blocks
- *   An array containing all active blocks in selected theme.
- *
  * @return array
- *   An array containing all regions and their blocks.
+ *   An array containing all regions and their blocks inside.
  */
-function nucleus_get_regions_blocks_list($regions, $blocks) {
-  $regions_list = array();
-  foreach ($blocks as $block) {
-    $region_key = isset($block->region) ? $block->region : BLOCK_REGION_NONE;
-    $region_title = isset($regions[$region_key]) ? $regions[$region_key] : "";
-    if (!isset($regions_list[$region_key])) {
-      $regions_list[$region_key] = array();
-    }
-    $regions_list[$region_key]['region_title'] = $region_title;
-    if (!isset($regions_list[$region_key]['blocks'])) {
-      $regions_list[$region_key]['blocks'] = array();
-    }
-    $regions_list[$region_key]['blocks'][] = $block;
+function nucleus_get_regions_blocks_list() {
+  static $_nucleus_regions_blocks_list = 0;
+  if ($_nucleus_regions_blocks_list) {
+    return $_nucleus_regions_blocks_list;
   }
-  return $regions_list;
+  global $theme_key;
+  // Retrieve all active blocks in active theme.
+  $blocks = block_admin_display_prepare_blocks($theme_key);
+  // Retrieve the theme data to list all available regions.
+  $theme_data = list_themes();
+  $regions = $theme_data[$theme_key]->info['regions'];
+  if (!isset($regions[BLOCK_REGION_NONE])) {
+    $regions[BLOCK_REGION_NONE] = t('Disabled');
+  }
+  $_nucleus_regions_blocks_list = array();
+  foreach ($regions as $region => $region_title) {
+    $_nucleus_regions_blocks_list[$region] = array('region_title' => $region_title, 'blocks' => array());
+  }
+  foreach ($blocks as $i => $block) {
+    $_nucleus_regions_blocks_list[$block['region']]['blocks'][] = $block;
+  }
+  return $_nucleus_regions_blocks_list;
 }
 
 /**
  * Get list to show the relationship of the regions and blocks so that help
  * js code run faster.
  *
- * @param array $regions_list
- *   An array containing all regions and their blocks.
- *
  * @return array
  *   List show the relationship of the regions and blocks.
  */
-function nucleus_get_js_regions_blocks_list($regions_list) {
-  $js_regions_blocks_list = array('regions' => array(), 'blocks' => array());
-  foreach ($regions_list as $region_key => $region) {
+function nucleus_get_js_regions_blocks_list() {
+  static $_nucleus_js_regions_blocks_list = 0;
+  if ($_nucleus_js_regions_blocks_list) {
+    return $_nucleus_js_regions_blocks_list;
+  }
+
+  $regions_blocks_list = nucleus_get_regions_blocks_list();
+
+  $_nucleus_js_regions_blocks_list = array('regions' => array(), 'blocks' => array());
+  foreach ($regions_blocks_list as $region_key => $region) {
     $region_key = str_replace('_', '-', $region_key);
-    $js_regions_blocks_list['regions'][$region_key] = array();
-    foreach ($region['blocks'] as $block) {
-      $block_key = $block->module . '-' . $block->delta;
-      $block_key = str_replace('_', '-', $block_key);
-      $js_regions_blocks_list['regions'][$region_key][$block_key] = 1;
-      if (!isset($js_regions_blocks_list['blocks'][$block_key])) {
-        $js_regions_blocks_list['blocks'][$block_key] = $region_key;
+    $_nucleus_js_regions_blocks_list['regions'][$region_key] = array();
+    $blocks = isset($region['blocks']) ? $region['blocks'] : array();
+    foreach ($blocks as $block) {
+      $block_key = nucleus_get_block_key($block);
+      $_nucleus_js_regions_blocks_list['regions'][$region_key][$block_key] = 1;
+      if (!isset($_nucleus_js_regions_blocks_list['blocks'][$block_key])) {
+        $_nucleus_js_regions_blocks_list['blocks'][$block_key] = $region_key;
       }
     }
   }
-  return $js_regions_blocks_list;
+  return $_nucleus_js_regions_blocks_list;
 }
 
+function nucleus_get_region($block_key) {
+  $regions_blocks_list = nucleus_get_js_regions_blocks_list();
+  return $regions_blocks_list['blocks'][$block_key];
+}
 /**
- * Generate extend class popup.
+ * Get array setting from info by name.
  *
- * @param string $key
- *   Specific key for each block style element setting.
- * @param string $type
- *   Type block style element setting.
- * @param string $applying_style
- *   Style is applied for this block setting.
+ * @param string $param
+ *   Name of setting in infor file.
+ * @param array $pre_array
+ *   The sub array will be added to before the first.
+ * @param array $suf_array
+ *   The sub array will be added to after the last.
  *
- * @return string
- *   Return markup for each popup.
+ * @return array
+ *   Presetting.
  */
-function nucleus_create_popup_extend_classes($key, $type, $applying_style) {
-  $classes_info = nucleus_extend_classes_info();
-  if (!is_array($classes_info) || !isset($classes_info['groups'])) {
-    return "";
-  }
-
-  $style_name = $key . '_style';
-  $hidden_name = $key . "_extend_class";
-
-  $group_class = array();
-  $selected_classes = array();
-
-  $style_value = theme_get_setting($style_name);
-  $setting_value = theme_get_setting($hidden_name);
-
-  $parts = explode(' ', $setting_value);
-  $parts_count = count($parts);
-  for ($i = 0; $i < $parts_count; $i += 2) {
-    $group = trim($parts[$i]);
-    $class = ($parts_count > $i + 1) ? trim($parts[$i + 1]) : "";
-    $group_class[$group] = $class;
-    if (isset($classes_info['classes_list'][$class])) {
-      $selected_classes[] = $classes_info['classes_list'][$class];
-    }
-  }
-
-  $name = str_replace('_', '-', $hidden_name);
-  $groups_vars = array('name' => $name, 'hidden_name' => $hidden_name, 'groups' => array());
-  foreach ($classes_info['groups'] as $group_key => $group) {
-    $extend_classes = $group['extend_classes'];
-    $classes_vars = array(
-      'name' => $name,
-      'hidden_name' => $hidden_name,
-      'classes' => $extend_classes,
-      'group' => $group_key,
-      'default_value' => isset($group_class[$group_key]) ? $group_class[$group_key] : "",
-    );
-    $template_file = drupal_get_path('theme', 'nucleus') . "/tpl/admin/nucleus-extend-class-form-classes.tpl.php";
-    $groups_vars['groups'][$group_key] = array();
-    $groups_vars['groups'][$group_key]['group_title'] = $group['group_title'];
-    $groups_vars['groups'][$group_key]['classes_content'] = theme_render_template($template_file, $classes_vars);
-    $groups_vars['groups'][$group_key]['show'] = isset($classes_info['support_groups'][$applying_style][$group_key]);
-  }
-
-  $template_file = drupal_get_path('theme', 'nucleus') . "/tpl/admin/nucleus-extend-class-form-groups.tpl.php";
-
-  $default_value = implode(', ', $selected_classes);
-  if ($default_value == "") {
-    $default_value = "&nbsp;";
-  }
-  $variables = array(
-    'key' => $key,
-    'type' => $type,
-    'name' => $name,
-    'default_value' => $default_value,
-    'nucleus_extend_class_form_groups' => theme_render_template($template_file, $groups_vars),
-    'show_extend_class_popup' => count($classes_info['support_groups'][$applying_style]),
-  );
-  $template_file = drupal_get_path('theme', 'nucleus') . "/tpl/admin/nucleus-extend-class.tpl.php";
-  return theme_render_template($template_file, $variables);
+function nucleus_get_predefined_param($param, $pre_array = array(), $suf_array = array()) {
+  global $theme_key;
+  $theme_data = list_themes();
+  $result = isset($theme_data[$theme_key]->info[$param]) ? $theme_data[$theme_key]->info[$param] : array();
+  return $pre_array + $result + $suf_array;
 }
 
 /**
  * Get all info related to extend class is defined in .info.
- *
- * @return array
- *   The information about block styles after strutured.
  */
 function nucleus_extend_classes_info() {
   static $_nucleus_extend_classes_info = 0;
   if ($_nucleus_extend_classes_info) {
-    // Don't need regenerate if this info had been generated.
+    // if this info had been generated, don't need regenerate.
     return $_nucleus_extend_classes_info;
   }
 
   // Get settings related to block styles.
-  global $theme_key;
-  $theme_data = list_themes();
-  $block_styles = isset($theme_data[$theme_key]->info['block_styles']) ? $theme_data[$theme_key]->info['block_styles'] : array();
-  $block_styles = array('default' => 'Default') + $block_styles;
-  $block_extend_classes = isset($theme_data[$theme_key]->info['block_extend_classes']) ? $theme_data[$theme_key]->info['block_extend_classes'] : array();
-  $block_extended_class_groups = isset($theme_data[$theme_key]->info['block_extended_class_groups']) ? $theme_data[$theme_key]->info['block_extended_class_groups'] : array();
+  $block_styles = nucleus_get_predefined_param('block_styles', array('default' => 'Default'));
+  $block_extend_classes = nucleus_get_predefined_param('block_extend_classes');
+  $block_extended_class_groups = nucleus_get_predefined_param('block_extended_class_groups');
 
   $visited = array();
   $block_styles_list = array();
@@ -465,7 +203,7 @@ function nucleus_extend_classes_info() {
     $block_styles_list[] = $style_key;
   }
 
-  // Initial result.
+  // initial result
   $_nucleus_extend_classes_info = array();
   $_nucleus_extend_classes_info['support_groups'] = array();
   $_nucleus_extend_classes_info['groups'] = array();
@@ -473,18 +211,20 @@ function nucleus_extend_classes_info() {
   $_nucleus_extend_classes_info['classes_list'] = $block_extend_classes;
   $_nucleus_extend_classes_info['style_support_counter'] = array();
 
-  // Update result.
+  // update result
   foreach ($block_styles_list as $block_style_key) {
     $_nucleus_extend_classes_info['support_groups'][$block_style_key] = array();
   }
 
-  // Update result.
+  // update result
   foreach ($block_extended_class_groups as $group_key => $group) {
     $_nucleus_extend_classes_info['groups_name_list'][] = $group_key;
     $group_title = isset($group['group_title']) ? $group['group_title'] : "";
     $supported_styles = isset($group['supported_styles']) ? $group['supported_styles'] : FALSE;
     $classes = isset($group['classes']) ? $group['classes'] : "";
-
+    if (is_array($classes)) {
+      $classes = implode(', ', $classes);
+    }
     $supported_styles_arr = $supported_styles ? explode(',', $supported_styles) : $block_styles_list;
     $classes_arr = explode(',', $classes);
 
@@ -549,35 +289,30 @@ function nucleus_extend_classes_info() {
     $style_support_counter[$style_key] = count($groups_list);
   }
   $_nucleus_extend_classes_info['style_support_counter'] = $style_support_counter;
-  return $_nucleus_extend_classes_info;
-}
 
-/**
- * Get all supported layout of current theme.
- *
- * @return array
- *   The list of the layouts that current theme supports.
- */
-function nucleus_pages() {
-  global $theme_key;
-  $theme_data = list_themes();
-  $pages = isset($theme_data[$theme_key]->info['pages']) ? $theme_data[$theme_key]->info['pages'] : array();
-  if (isset($pages['default'])) {
-    return $pages;
+  $groups_name_list = &$_nucleus_extend_classes_info['groups_name_list'];
+  $groups = &$_nucleus_extend_classes_info['groups'];
+  $n = count($groups_name_list);
+  for ($i = 0; $i < $n; $i ++) {
+    for ($j = $i + 1; $j < $n; $j ++) {
+      if (count($groups[$groups_name_list[$i]]['extend_classes']) < count($groups[$groups_name_list[$j]]['extend_classes'])) {
+        $tmp = $groups_name_list[$i];
+        $groups_name_list[$i] = $groups_name_list[$j];
+        $groups_name_list[$j] = $tmp;
+      }
+    }
   }
-  else {
-    return array('default' => t('Normal page')) + $pages;
-  }
+  return $_nucleus_extend_classes_info;
 }
 
 /**
  * Generate class name for the group sidebar in page.tpl.php.
  *
- * @param array $regions_list
- *   List of the regions in this group, is a string seperated by comma.
+ * @param $regions_list
+ *   list of the regions in this group, is a string seperated by comma.
  *
- * @return string
- *   Class name for the group.
+ * @return
+ *   class name for the group.
  */
 function nucleus_group_class($regions_list) {
   $grid = theme_get_setting('grid');
@@ -587,20 +322,21 @@ function nucleus_group_class($regions_list) {
   $sidebar_regions_width = nucleus_get_sidebar_regions_width();
 
   $ggrid = 0;
+  $columns_count = 0;
   foreach ($regions as $region) {
     $region = trim($region);
     if (isset($sidebar_regions_width[$region])) {
       $ggrid += $sidebar_regions_width[$region];
+      if ($sidebar_regions_width[$region]) {
+        $columns_count ++;
+      }
     }
   }
-  return 'group-' . $ggrid . " grid grid-" . $ggrid;
+  return 'group-cols-' . $columns_count . ' group-' . $ggrid . " grid grid-" . $ggrid;
 }
 
 /**
  * Get all sidebar regions.
- *
- * @return array
- *   List of sidebar regions.
  */
 function nucleus_get_sidebar_regions() {
   static $_nucleus_sidebar_regions = 0;
@@ -618,37 +354,75 @@ function nucleus_get_sidebar_regions() {
   return $_nucleus_sidebar_regions;
 }
 
+function nucleus_get_current_page_key($page_key = NULL) {
+  static $_current_page_key = 'default';
+  if (!$page_key) {
+    $page_key = $_current_page_key;
+  }
+  else {
+    $_current_page_key = $page_key;
+  }
+  return $page_key;
+}
+
 /**
  * Calculate width of all sidebar regions.
  *
- * @param string|null $page
+ * @param $page
  *   $vars['page'] in theme_preprocess_page.
  *
- * @return array
- *   Width of all sidebar and content regions by grid.
+ * @return
+ *   width of all sidebar and content regions by grid.
  */
-function nucleus_get_sidebar_regions_width($page = NULL) {
-  static $_nucleus_sidebar_regions_width = 0;
-  if (!$_nucleus_sidebar_regions_width && $page) {
+function nucleus_get_sidebar_regions_width($page = NULL, $page_key = NULL, $backend_render = FALSE) {
+  static $_nucleus_sidebar_regions_width = array();
+  $page_key = nucleus_get_current_page_key($page_key);
+
+  if (!isset($_nucleus_sidebar_regions_width[$backend_render][$page_key])) {
+    $page_prefix = ($page_key == 'default' || empty($page_key)) ? "" : ($page_key . "_");
     $grid = theme_get_setting('grid');
     $grid_int = drupal_substr($grid, -2);
     $sidebar_regions = nucleus_get_sidebar_regions();
-    $_nucleus_sidebar_regions_width = array();
-    $_nucleus_sidebar_regions_width['content'] = $grid_int;
+    $_nucleus_sidebar_regions_width[$backend_render] = array();
+    $_nucleus_sidebar_regions_width[$backend_render][$page_key] = array();
+    $_nucleus_sidebar_regions_width[$backend_render][$page_key]['content'] = $grid_int;
     foreach ($sidebar_regions as $key => $value) {
       $content = render($page[$key]);
-      $_nucleus_sidebar_regions_width[$key] = !empty($content) ? theme_get_setting($key . "_width") : 0;
-      $_nucleus_sidebar_regions_width['content'] -= $_nucleus_sidebar_regions_width[$key];
+      $width = theme_get_setting($page_prefix . $key . "_width");
+      $width = empty($width) ? 0 : $width;
+      $_nucleus_sidebar_regions_width[$backend_render][$page_key][$key] = $backend_render ? $width : (!empty($content) ? $width : 0);
+      $_nucleus_sidebar_regions_width[$backend_render][$page_key]['content'] -= $_nucleus_sidebar_regions_width[$backend_render][$page_key][$key];
     }
   }
-  return $_nucleus_sidebar_regions_width;
+  if ($backend_render) {
+    $_nucleus_sidebar_regions_width[$backend_render][$page_key] = regenerate_panel_sidebar_regions_width($_nucleus_sidebar_regions_width[$backend_render][$page_key], FALSE);
+  }
+  return $_nucleus_sidebar_regions_width[$backend_render][$page_key];
+}
+
+/**
+ * Get all regions.
+ */
+function nucleus_get_all_regions() {
+  static $_nucleus_all_regions = 0;
+  if (!$_nucleus_all_regions) {
+    global $theme_key;
+    $_nucleus_all_regions = array();
+    $theme_data = list_themes();
+    $regions = $theme_data[$theme_key]->info['regions'];
+    $_nucleus_all_regions[BLOCK_REGION_NONE] = t('Disabled');
+    $hidden_regions = array('dashboard_main', 'dashboard_sidebar', 'dashboard_inactive', 'page_top', 'page_bottom');
+    foreach ($regions as $key => $title) {
+      if (!in_array($key, $hidden_regions)) {
+        $_nucleus_all_regions[$key] = $title;
+      }
+    }
+  }
+  return $_nucleus_all_regions;
 }
 
 /**
  * Get all panel regions.
- *
- * @return array
- *   List of panel regions are used by current theme.
  */
 function nucleus_panel_regions() {
   static $_nucleus_panel_regions = 0;
@@ -678,37 +452,44 @@ function nucleus_panel_regions() {
 
 /**
  * Calculate width of all panel regions.
- *
- * @return array
- *   Width of all panel regions are used by current theme.
  */
-function nucleus_panel_regions_width() {
-  static $_nucleus_panel_regions_width = 0;
-  if (!$_nucleus_panel_regions_width) {
+function nucleus_panel_regions_width($page_key = NULL, $backend_render = FALSE) {
+  static $_nucleus_panel_regions_width = array();
+  static $_current_page_key = 'default';
+  if (!$page_key) {
+    $page_key = $_current_page_key;
+  }
+  else {
+    $_current_page_key = $page_key;
+  }
+  if (!isset($_nucleus_panel_regions_width[$backend_render][$page_key])) {
+    $page_prefix = ($page_key == 'default' || empty($page_key)) ? "" : ($page_key . "_");
     $grid = theme_get_setting('grid');
     $grid_int = drupal_substr($grid, -2);
     $_nucleus_panel_regions = nucleus_panel_regions();
-    $_nucleus_panel_regions_width = array();
+    $_nucleus_panel_regions_width[$backend_render] = array();
+    $_nucleus_panel_regions_width[$backend_render][$page_key] = array();
     foreach ($_nucleus_panel_regions as $key => $panels_list) {
       $sum = 0;
       foreach ($panels_list as $panel => $panel_title) {
-        $width = theme_get_setting($panel . "_width");
+        $width = theme_get_setting($page_prefix . $panel . "_width");
+        $width = empty($width) ? 0 : $width;
         if ($sum + $width > $grid_int) {
           $width = $grid_int - $sum;
         }
         $sum += $width;
-        $_nucleus_panel_regions_width[$panel] = $width;
+        $_nucleus_panel_regions_width[$backend_render][$page_key][$panel] = $width;
       }
     }
   }
-  return $_nucleus_panel_regions_width;
+  if ($backend_render) {
+    $_nucleus_panel_regions_width[$backend_render][$page_key] = regenerate_panel_sidebar_regions_width($_nucleus_panel_regions_width[$backend_render][$page_key]);
+  }
+  return $_nucleus_panel_regions_width[$backend_render][$page_key];
 }
 
 /**
  * Generate briefing list of font settings.
- *
- * @return array
- *   List related to the default list fonts.
  */
 function nucleus_default_fonts_arr() {
   return array(
@@ -720,23 +501,6 @@ function nucleus_default_fonts_arr() {
     'ctf' => array('key' => 'comment_title_font', 'title' => 'Comment title'),
     'btf' => array('key' => 'block_title_font', 'title' => 'Block title'),
   );
-}
-
-/**
- * Generate grid options list.
- *
- * @param int $grid
- *   Is a number shows the grid (example 12, 16, 24).
- *
- * @return array
- *   Array will be the options in a select box.
- */
-function nucleus_grid_options($grid) {
-  $options = array(0 => t('Hidden'));
-  for ($i = 1; $i <= $grid; $i++) {
-    $options[$i] = ($i == 1) ? t('@i grid', array('@i' => $i)) : t('@i grids', array('@i' => $i));
-  }
-  return $options;
 }
 
 /**
@@ -752,9 +516,6 @@ function nucleus_reset_settings() {
 
 /**
  * Get template for panels.
- *
- * @return string
- *   Full path to the panel template is used.
  */
 function nucleus_get_panel_template() {
   global $theme_key;
@@ -767,7 +528,7 @@ function nucleus_get_panel_template() {
   $theme_keys = nucleus_get_theme_keys();
 
   $template_file = FALSE;
-  for ($i = count($theme_keys) - 1; $i >= 0; $i--) {
+  for ($i = count($theme_keys) - 1; $i >= 0; $i --) {
     $theme_name = $theme_keys[$i];
     if (file_exists(drupal_get_path('theme', $theme_name) . "/tpl/panel.tpl.php")) {
       $template_file = drupal_get_path('theme', $theme_name) . "/tpl/panel.tpl.php";
@@ -780,36 +541,34 @@ function nucleus_get_panel_template() {
 
 /**
  * Get array of themes to get settings.
- *
- * @return string
- *   List of themes key.
  */
 function nucleus_get_theme_keys() {
-  global $theme_key;
-  $themes = list_themes();
-  $theme_object = $themes[$theme_key];
-  $theme_keys = array();
-  if (isset($theme_object->base_themes)) {
-    $theme_keys = array_keys($theme_object->base_themes);
-    $theme_keys[] = $theme_key;
+  static $_nucleus_theme_keys = NULL;
+  if (!$_nucleus_theme_keys) {
+    global $theme_key;
+    $themes = list_themes();
+    $theme_object = $themes[$theme_key];
+    $theme_keys = array();
+    if (isset($theme_object->base_themes)) {
+      $theme_keys = array_keys($theme_object->base_themes);
+      $theme_keys[] = $theme_key;
+    }
+    elseif (isset($theme_object->base_theme)) {
+      $theme_keys = array($theme_object->base_theme, $theme_key);
+    }
+    else {
+      $theme_keys = array($theme_key);
+    }
+    $_nucleus_theme_keys = $theme_keys;
   }
-  elseif (isset($theme_object->base_theme)) {
-    $theme_keys = array($theme_object->base_theme, $theme_key);
-  }
-  else {
-    $theme_keys = array($theme_key);
-  }
-  return $theme_keys;
+  return $_nucleus_theme_keys;
 }
 
 /**
  * Add css with rule of Conditional Stylesheets modules.
  *
- * Source code reference from conditional_styles module
+ * source code reference from conditional_styles module
  * http://drupal.org/project/conditional_styles.
- *
- * @param array &$css
- *   Drupal css array.
  */
 function nucleus_add_conditional_styles(&$css) {
   $themes = list_themes();
@@ -845,9 +604,6 @@ function nucleus_add_conditional_styles(&$css) {
 
 /**
  * Get array of typo_keys_map to help source code in html_preprocess is shorter.
- *
- * @return array
- *   List of typo keys match with page elements.
  */
 function nucleus_typo_key_map() {
   return array(
@@ -861,21 +617,140 @@ function nucleus_typo_key_map() {
 }
 
 /**
- * Get array setting from info by name.
+ * Check if a region is a panel
  *
- * @param string $param
- *   Name of setting in infor file.
- * @param array $pre_array
- *   The sub array will be added to before the first.
- * @param array $suf_array
- *   The sub array will be added to after the last.
+ * @param $region_key
+ *   region name
  *
- * @return array
- *   Presetting.
+ * @return
+ *   boolean value
  */
-function nucleus_get_predefined_param($param, $pre_array = array(), $suf_array = array()) {
-  global $theme_key;
-  $theme_data = list_themes();
-  $result = isset($theme_data[$theme_key]->info[$param]) ? $theme_data[$theme_key]->info[$param] : array();
-  return $pre_array + $result + $suf_array;
+function nucleus_is_panel_region($region_key) {
+  return strpos($region_key, "panel_") !== FALSE;
+}
+
+/**
+ * Check if a region is a panel
+ *
+ * @param $region_key
+ *   region name
+ *
+ * @return
+ *   boolean value
+ */
+function nucleus_is_sidebar_region($region_key) {
+  return strpos($region_key, "sidebar_") !== FALSE;
+}
+
+function regenerate_panel_sidebar_regions_width($regions_width) {
+  $grid_info = nucleus_get_grid_setting();
+  $grid_int = $grid_info['grid_int'];
+  foreach ($regions_width as $key => $value) {
+    if ($value == 0) {
+      $regions_width[$key] = $grid_int;
+    }
+  }
+  return $regions_width;
+}
+
+function nucleus_get_key_from_name($name) {
+  return str_replace("-", "_", $name);
+}
+
+function nucleus_get_prefix_from_key($key) {
+  return $key == 'default' ? "" : $key . "_";
+}
+
+function nucleus_get_block_key($block) {
+  $block_name = is_array($block) ? ($block['module'] . "_" . $block['delta']) : ($block->module . "_" . $block->delta);
+  return nucleus_get_key_from_name($block_name);
+}
+
+function nucleus_parse_css_add(&$css, $key, $codestr) {
+  $key = drupal_strtolower($key);
+  $codestr = drupal_strtolower($codestr);
+  if (!isset($css[$key])) {
+    $css[$key] = array();
+  }
+  $codes = explode(";", $codestr);
+  if (count($codes) > 0) {
+    foreach ($codes as $code) {
+      $code = trim($code);
+      $style = explode(":", $code);
+      if (count($style) > 1) {
+        $codekey = trim($style[0]);
+        $codevalue = trim($style[1]);
+        if ($codekey == 'float') {
+          $css[$key][$codekey] = $codevalue;
+        }
+      }
+    }
+  }
+}
+
+function nucleus_get_css($css) {
+  $result = "";
+  foreach ($css as $key => $values) {
+    if (!empty($values)) {
+      $result .= $key . " {\n";
+      foreach ($values as $key => $value) {
+        $result .= "  $key: $value;\n";
+      }
+      $result .= "}\n\n";
+    }
+  }
+  return $result;
+}
+
+function nucleus_parse_css_str($str) {
+  $css = array();
+  $str = preg_replace("/\/\*(.*)?\*\//Usi", "", $str);
+  $parts = explode("}", $str);
+  if (count($parts) > 0) {
+    foreach ($parts as $part) {
+      $sub_parts = explode("{", $part);
+      if (count($sub_parts) > 1) {
+        list($keystr, $codestr) = $sub_parts;
+        $keys = explode(",", trim($keystr));
+        if (count($keys) > 0) {
+          foreach ($keys as $key) {
+            if (drupal_strlen($key) > 0) {
+              $key = str_replace("\n", "", $key);
+              $key = str_replace("\\", "", $key);
+              nucleus_parse_css_add($css, $key, trim($codestr));
+            }
+          }
+        }
+      }
+    }
+  }
+  return $css;
+}
+
+function nucleus_parse_css_file($filename) {
+  if (file_exists($filename)) {
+    return nucleus_parse_css_str(file_get_contents($filename));
+  }
+  else {
+    return FALSE;
+  }
+}
+
+function nucleus_get_layout_style($css_file) {
+  $cache = cache_get(__FUNCTION__ . ':' . $css_file);
+  if ($cache && !empty($cache->data)) {
+    return $cache->data;
+  }
+  $css = nucleus_parse_css_file($css_file);
+  $filtered_css = nucleus_get_css($css);
+  cache_set(__FUNCTION__ . ':' . $css_file, $filtered_css);
+  return $filtered_css;
+}
+
+function nucleus_block_style_setting($name, $page_prefix = "") {
+  $value = theme_get_setting($name);
+  if (empty($value) && empty($page_prefix)) {
+    $value = theme_get_setting('default_' . $name);
+  }
+  return $value;
 }

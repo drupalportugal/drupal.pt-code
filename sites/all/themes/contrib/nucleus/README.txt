@@ -3,10 +3,10 @@ Theme Information
 -------------------------------------------------------------------------------
 TB Nucleus is a flexible base theme for Drupal 7.
 
-- Theme Version 1.0
-- Released on: 2011-10-03
+- Theme Version 1.1
+- Released on: 2012-09-14
 - Compatible with Drupal 7.x
-- Copyright (C) 2011-2011 ThemeBrain.com. All Rights Reserved.
+- Copyright (C) 2011-2012 ThemeBrain.com. All Rights Reserved.
 - @license - GNU/GPL, http://www.gnu.org/licenses/gpl.html
 - Author: ThemeBrain
 - Website: http://www.themebrain.com

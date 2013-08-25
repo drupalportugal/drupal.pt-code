@@ -1,9 +1,8 @@
 <?php
 
 /**
- * @file
- * Override template implementation to display the value of a
- * field__taxonomy_term_reference.
+ * @file field--taxonomy-term-reference.tpl.php
+ * Override template implementation to display the value of a field__taxonomy_term_reference.
  *
  * This file is not used and is here as a starting point for customization only.
  * @see theme_field()
@@ -42,7 +41,7 @@
  * @see template_preprocess_field()
  * @see theme_field()
  */
-?> 
+?>
 
 <div class="<?php print $classes; ?> clearfix"<?php print $attributes; ?>>
   <?php if (!$label_hidden) : ?>

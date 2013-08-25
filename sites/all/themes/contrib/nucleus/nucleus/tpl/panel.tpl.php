@@ -1,7 +1,7 @@
 <?php
 
 /**
- * @file
+ * @file panel.tpl.php
  * Default theme implementation to display a panel.
  *
  * Available variables:
@@ -12,18 +12,18 @@
  *
  * @see nucleus_render_panel()
  */
-?><?php if($used_panel):?>
+?><?php if($not_empty_panel):?>
   <?php foreach ($panels_list as $panel => $panel_title): ?>
     <?php if ($panel_width[$panel]) :?>
-      <div class="<?php print $panel_classes[$panel]; ?> <?php print $panel_grid[$panel]; ?>">
+      <div class="<?php print $panel_classes[$panel];?> <?php print $panel_grid[$panel];?>">
         <div class="grid-inner clearfix">
           <?php if ($panel_content = render($page[$panel])): ?>
             <?php print $panel_content; ?>
           <?php else:?>
             &nbsp;
-          <?php endif; ?>
+          <?php endif;?>
         </div>
       </div>
-    <?php endif; ?>
-  <?php endforeach; ?>
-<?php endif; ?>
+    <?php endif;?>
+  <?php endforeach;?>
+<?php endif;?>

@@ -8,10 +8,16 @@ screenshot = 'screenshot.png'
 
 ;Stylesheets
 stylesheets[all][] = 'css/messages.css'
+;Scripts
+scripts[] = 'js/jquery.cookie.js'
 
 ; Conditional Stylesheets for IE
 stylesheets-conditional[IE 7][all][] = css/ie7.css
 stylesheets-conditional[IE][all][] = css/ie.css
+
+; Responsive
+stylesheets[only screen][] = 'css/responsive/responsive.css'
+
 
 ;Core regions
 regions[content] = 'Main content'
@@ -33,11 +39,6 @@ regions[panel_first_1] = 'Panel first column 1'
 regions[panel_first_2] = 'Panel first column 2'
 regions[panel_first_3] = 'Panel first column 3'
 regions[panel_first_4] = 'Panel first column 4'
-
-regions[panel_second_1] = 'Panel second column 1'
-regions[panel_second_2] = 'Panel second column 2'
-regions[panel_second_3] = 'Panel second column 3'
-regions[panel_second_4] = 'Panel second column 4'
 
 ;Features (core settings)
 features[] = 'logo'
@@ -88,9 +89,18 @@ settings[comment_title_font] = 'ctf-sl'
 settings[block_title_font] = 'btf-sl'
 settings[font_size] = 'fs-medium'
 
-; Information added by drupal.org packaging script on 2012-03-12
-version = "7.x-1.0-alpha2"
+supported_grids[12] = 12 columns
+supported_grids[16] = 16 columns
+supported_grids[24] = 24 columns
+supported_grids[min] = 2
+supported_grids[max] = 100
+supported_grids[delta] = 2
+
+settings[show_skins_menu] = 1
+
+; Information added by drupal.org packaging script on 2013-07-29
+version = "7.x-1.4"
 core = "7.x"
 project = "nucleus"
-datestamp = "1331527242"
+datestamp = "1375072568"
 

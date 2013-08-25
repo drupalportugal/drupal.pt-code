@@ -67,7 +67,6 @@ a:focus {
   margin: 0;
   overflow: hidden;
   padding: 0;
-  width: 100%;
 }
 
 .block ul.menu li.expanded,
@@ -82,7 +81,6 @@ a:focus {
   padding: 6px 0;
   text-decoration: none;
   text-indent: 15px;
-  width: 100%;
 }
 
 .block ul.menu li li a {
