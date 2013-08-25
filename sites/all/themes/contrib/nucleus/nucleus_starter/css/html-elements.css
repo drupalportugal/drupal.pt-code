@@ -64,7 +64,8 @@ var {
   font-size: 1em;
 }
 
-blockquote, q {
+blockquote,
+q {
   font-style: italic;
   quotes: "" "";
 }

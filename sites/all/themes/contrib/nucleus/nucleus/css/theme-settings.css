@@ -2,6 +2,18 @@
  * Common Styles
  */
 
+.grid-inner {
+  padding: 0 10px;
+}
+
+.grid .right {
+  float: right;
+}
+
+.grid .left {
+  float: left;
+}
+
 div.vertical-tabs {
   z-index: 2; /* Ensure popup windows on this area is on top of other fieldsets */
 }
@@ -14,8 +26,17 @@ div.vertical-tabs .vertical-tabs-panes {
 div.vertical-tabs .vertical-tabs-panes legend {
   display: block;
   height: 0;
-  width: 0; /* Need for IE 7 */
   visibility: hidden; /* Fix IE8 Fieldset border bug when hide Legend */
+  width: 0; /* Need for IE 7 */
+}
+
+div.vertical-tabs .vertical-tabs-panes .fieldset-wrapper fieldset {
+  margin: 1em 0;
+  padding-top: 2.5em;
+}
+
+div.vertical-tabs .vertical-tabs-panes .fieldset-wrapper legend {
+  visibility: visible;
 }
 
 .vertical-tabs-panes .form-item {
@@ -64,33 +85,49 @@ div.vertical-tabs .vertical-tabs-panes legend {
   border: 1px solid #ccc;
 }
 
+.form-subheader {
+}
+
 /* --- Popup --- */
-.tb-form-popup-wrap {
+.tb-popup-wrap {
+  -moz-box-shadow: 2px 2px 5px rgba(0,0,0,.5);
+  -webkit-box-shadow: 2px 2px 5px rgba(0,0,0,.5);
   background: #fff;
   border: 1px solid #aaa;
   box-shadow: 2px 2px 5px rgba(0,0,0,.5);
   min-width: 180px;
-  -moz-box-shadow: 2px 2px 5px rgba(0,0,0,.5);
   position: absolute;
   top: auto;
-  -webkit-box-shadow: 2px 2px 5px rgba(0,0,0,.5);
+  z-index: 999;
+  display: none;
 }
 
-.tb-form-popup-ct,
-.tb-form-popup-actions {
-  clear: both;
-  display: block;
-  padding: 10px;
+.tb-popup {
 }
 
-.tb-form-popup .popup-title {
+.tb-popup-ct,
+.tb-popup-actions {
   clear: both;
   display: block;
-  font-size: 1em;
+}
+
+.tb-popup .popup-title {
+  clear: both;
+  display: block;
+  font-size: .9em;
   margin: 0;
 }
 
-.tb-form-popup-actions {
+.tb-popup .block-styles-wrapper,
+.tb-popup .rb-styles-wrapper {
+  padding: 10px;
+}
+
+.goto-block {
+  padding: 10px 10px 0;
+}
+
+.tb-popup-actions {
   background: #f2f2f2;
   border-top: 1px solid #ccc;
   padding: 5px;
@@ -118,10 +155,18 @@ div.vertical-tabs .vertical-tabs-panes legend {
   text-decoration: none;
 }
 
+.hidden-region .tb-form-btn {
+  filter: alpha(opacity = 50);
+  opacity: 0.5;
+}
+
 .save-btn {
   background: #060;
   border-color: #030;
   color: #fff;
+}
+
+.edit-btn {
 }
 
 /**
@@ -134,11 +179,15 @@ div.vertical-tabs .vertical-tabs-panes legend {
 }
 
 #edit-layout .fieldset-wrapper .form-item {
-  margin-bottom: 0;
+  margin-bottom: 10px;
+  padding: 0;
 }
 
 #edit-layout .form-item-grid label,
-#edit-layout .form-item-layout-width label {
+#edit-layout .form-item-layout-width label,
+#edit-layout .form-item-layout-width-selector label,
+#edit-layout .form-item-skin label,
+#edit-layout .form-item-layout-width-custom label {
   width: 8em;
 }
 
@@ -146,8 +195,83 @@ div.vertical-tabs .vertical-tabs-panes legend {
   width: 8em;
 }
 
+#edit-layout .form-text {
+  width: auto;
+}
+
 #edit-layout .panel-settings-wrapper {
   margin-bottom: 12px;
+}
+
+#edit-layout .fieldset-wrapper {
+  padding: 0 0 15px;
+}
+
+#edit-layout .form-wrapper {
+  clear: both;
+  padding: 0;
+}
+
+#edit-layout .form-item {
+  clear: none;
+  margin: 0;
+}
+
+#edit-layout .form-header {
+  border-width: 1px 0 1px 0;
+}
+
+#edit-layout label {
+  margin-right: 10px;
+  width: 200px;
+}
+
+#edit-layout .form-subheader label {
+  font-size: 0.92em;
+  font-weight: normal;
+}
+
+#edit-layout #edit-default-subform-wrapper {
+  border: 1px solid #ccc;
+  margin-top: 0;
+  padding: 0;
+}
+
+#edit-layout .layout-element-wrapper {
+  background: #666;
+  color: #fff;
+}
+
+#edit-layout .global-block-styles-wrapper {
+  background: #ffc;
+  border: 0;
+}
+
+/* --- Extend Classes --- */
+#edit-layout .tb-popup label {
+  margin-bottom: 5px;
+}
+
+#edit-layout .tb-popup-ct {
+  border: 1px dotted #ccc;
+  padding: 10px;
+}
+
+#edit-layout .extend-class-group {
+  float: left;
+  margin-top: 0;
+  width: 50%;
+}
+
+#edit-layout .extend-class-group label {
+  float: none;
+  font-size: 0.92em;
+  font-weight: normal;
+  width: auto;
+}
+
+#edit-layout .tb-extend-class-shower {
+  font-size: 0.92em;
 }
 
 /* --- Navigation Settings --- */
@@ -155,15 +279,15 @@ div.vertical-tabs .vertical-tabs-panes legend {
   width: auto;
 }
 
-#edit-navigation .form-header {
-  padding: 5px 15px;
+#edit-third-parties .form-header {
   background: #666;
+  border: 0;
   color: #fff;
   font-weight: bold;
-  border: 0;
+  padding: 5px 15px;
 }
 
-#edit-navigation fieldset .fieldset-wrapper {
+#edit-third-parties fieldset .fieldset-wrapper {
   padding: 15px 13px 0;
 }
 
@@ -186,10 +310,10 @@ div.vertical-tabs .vertical-tabs-panes legend {
 }
 
 #edit-typography .typo-element-wrapper {
-  clear: both;
-  overflow: hidden;
-  margin-bottom: 3px;
   border: 1px solid #fff;
+  clear: both;
+  margin-bottom: 3px;
+  overflow: hidden;
 }
 
 #edit-typography .typo-element-wrapper:hover,
@@ -258,82 +382,146 @@ div.vertical-tabs .vertical-tabs-panes legend {
 }
 
 /* --- Blocks Settings --- */
-#edit-block-styles .fieldset-wrapper {
-  padding: 0 0 15px;
+.block-region,
+.dragable-blocks {
+  border: 2px dashed #ccc;
+  margin: 10px 0;
+  padding: 5px;
+  position: relative;
 }
 
-#edit-block-styles .form-wrapper {
-  clear: both;
+.dragable-blocks-list {
+  border: 1px dotted #ccc;
+  margin: 5px;
+  min-height: 50px;
   overflow: hidden;
-  padding: 0;
 }
 
-#edit-block-styles .form-item {
-  clear: none;
+.dragable-blocks-list .block {
+  background: #f7f7f7;
+  border: solid 1px #ccc;
+  margin: 5px;
+}
+
+.rb-setting-sub-form {
+  margin: 5px 0;
+  overflow: hidden;
+}
+
+.rb-setting-sub-form .tb-form-btn {
   float: left;
-  margin: 0 0 0 10px;
 }
 
-#edit-block-styles .form-header {
-  border-width: 1px 0 1px 0;
+.rb-setting-title {
+  border: dotted 1px #ccc;
+  margin: 5px;
+  padding: 0 5px;
 }
 
-#edit-block-styles label {
-  margin-right: 10px;
-  width: 200px;
+.hidden-region .rb-setting-title {
+  filter: alpha(opacity = 50);
+  opacity: .5;
 }
 
-#edit-block-styles .form-subheader label {
-  font-size: 0.92em;
-  font-weight: normal;
+.current-setting {
+  border: dotted 1px #ccc;
+  display: none;
+  margin: 5px;
 }
 
-#edit-block-styles #edit-default-subform-wrapper {
-  border: 1px solid #ccc;
-  margin-top: 0;
-  padding: 0;
-}
-
-#edit-block-styles .layout-element-wrapper {
-  background: #666;
-  color: #fff;
-}
-
-#edit-block-styles .global-block-styles-wrapper {
-  background: #ffc;
-  border: 0;
-}
-
-/* --- Extend Classes --- */
-#edit-block-styles .tb-form-popup-wrap {
-  margin-left: 6em;
-  margin-top: -2em;
-}
-
-* + html #edit-block-styles .tb-form-popup-wrap { /* IE7 Fix */
-  margin-left: 0;
-}
-
-#edit-block-styles .tb-form-popup-ct {
-  padding-top: 0;
-}
-
-#edit-block-styles .extend-class-group {
-  margin-top: 1em;
-}
-
-#edit-block-styles .extend-class-group label {
-  float: none;
-  font-size: 0.92em;
-  font-weight: normal;
-  width: auto;
-}
-
-#edit-block-styles .tb-extend-class-shower {
-  font-size: 0.92em;
+.hidden-region .region-title {
+  filter: alpha(opacity = 50);
+  opacity: .5;
 }
 
 /* --- About Nucleus --- */
 #edit-about-nucleus iframe {
   margin-left: -20px;
+}
+
+.nucleus-group-wrapper {
+}
+
+.disabled-region-preview .dragable-blocks-list {
+}
+
+.disabled-region-preview .block {
+  background: none;
+  border: none;
+  display: inline;
+  float: left;
+  margin: 0;
+  width: 33%;
+}
+
+.disabled-region-preview .block .rb-setting-sub-form {
+  background: #f7f7f7;
+  border: 1px solid #ccc;
+  margin: 5px;
+  padding-bottom: 5px;
+}
+
+.overlay #footer {
+  display: block;
+}
+
+.nucleus-page-preview-container {
+  border: 4px dotted #cccccc;
+  position: relative;
+}
+
+.rb-setting-btn {
+  z-index: 2;
+}
+
+.block.nucleus-updated-z-index {
+  z-index: 900;
+}
+
+.panel-column.nucleus-updated-z-index {
+  z-index: 920;
+}
+
+.wrapper.nucleus-updated-z-index {
+  z-index: 940;
+}
+
+.tb-popup-wrap {
+  position: absolute;
+  width: 450px;
+}
+
+.nucleus-page-draggable .block-preview-wrapper {
+  cursor: move;
+}
+
+.rb-setting-btn.changed-settings {
+  background-color: #0074bd;
+}
+
+.region-preview-wrapper {
+  display: block;
+  outline: 1px dashed #cccccc;
+  padding-bottom: 2px;
+}
+
+/* Clearfix */
+.clearfix:after {
+  content: "";
+}
+
+div.vertical-tabs .vertical-tabs-panes legend {
+  height: auto;
+  width: auto;
+}
+
+div.hidden-zone-title {
+  font-size: 14px;
+  font-weight: bold;
+}
+
+#page_preview_container #page {
+  margin: 5px !important;
+  padding: 5px !important;
+  position: static;
 }

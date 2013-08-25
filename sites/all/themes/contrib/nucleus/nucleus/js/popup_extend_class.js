@@ -1,7 +1,95 @@
 (function ($) {
-Drupal.Nucleus.currentPopupExtendClassName = false;
 
-Drupal.Nucleus.nucleusEventStopPropagation = function(event) {
+Drupal.Nucleus.tempSaved = Drupal.Nucleus.tempSaved || [];
+Drupal.Nucleus.currentOpenedButton = false;
+Drupal.Nucleus.tempHiddenPopup = false;
+
+Drupal.behaviors.nucleusGridAction = {
+  attach: function (context) {
+    $('.rb-setting-sub-form .rb-setting-btn').click(function(event) {
+      var this_id = $(this).attr('id');
+      Drupal.Nucleus.eventStopPropagation(event);
+      if (Drupal.Nucleus.currentOpenedButton) {
+      	current_id = Drupal.Nucleus.currentOpenedButton; 
+        Drupal.Nucleus.hidePopup();
+        if (current_id == this_id) {
+          Drupal.Nucleus.currentOpenedButton = false;
+          return;
+        }
+      }
+      params = Drupal.Nucleus.parseButtonInfo($(this));
+      Drupal.Nucleus.showPopup(params);
+    });
+
+    $(document).bind('click', function() {
+      Drupal.Nucleus.hidePopup();
+    });
+    $('.tb-popup-wrap').click(function(event) {
+      Drupal.Nucleus.eventStopPropagation(event);
+    });
+    $('#nucleus_popup_save').click(function(event) {
+      Drupal.Nucleus.savePopup(event);
+      return false;
+    });
+    $('#nucleus_popup_close').click(function(event) {
+      Drupal.Nucleus.cancelPopup(event);
+      return false;
+    });
+    $('select[name="popup_block_style_selector"]').change(function(event) {
+     Drupal.Nucleus.changeBlockStyle();
+    });
+    $('select[name="popup_region_selector"]').change(function(event) {
+      Drupal.Nucleus.changeBlockRegion();
+    });
+  }
+};
+
+Drupal.Nucleus.changeBlockRegion = function(event) {
+  var popup = $('#nucleus_form_popup_wrapper');
+  var type = popup.find('#nucleus_popup_type').val();
+  var page_prefix = popup.find('#nucleus_popup_page').val();
+  var key = popup.find('#nucleus_popup_key').val();
+
+  var hidden_name = page_prefix + "region_block_hidden_" + key;
+  var current_region_key = $('input[name="' + hidden_name + '"]').val();
+  var new_region_key = popup.find('select[name="popup_region_selector"]').val();
+  
+  var current_blocks_container = $('#draggable_region_' + current_region_key);
+  var new_blocks_container = $('#draggable_region_' + new_region_key);
+  var block_preview_wrapper = $('#block_preview_wrapper_' + key);
+  block_preview_wrapper.appendTo('#draggable_region_' + new_region_key);
+  Drupal.Nucleus.smoothScroll('#block_preview_wrapper_' + key, 50, -50);
+//  Drupal.Nucleus.moveBlockAction(page_prefix, key, hidden_name, current_region_key, new_region_key);
+  Drupal.Nucleus.hidePopup();
+  params = Drupal.Nucleus.parseButtonInfo(block_preview_wrapper.find('.rb-setting-sub-form .rb-setting-btn'));
+  Drupal.Nucleus.showPopup(params);
+}
+
+Drupal.Nucleus.parseButtonInfo = function(button) {
+  params = {};
+  button_id = button.attr('id');
+  page_prefix = Drupal.Nucleus.currentPagePrefix();
+  constant_key = "_setting_btn_" + page_prefix;
+  constant_key_pos = button_id.indexOf(constant_key);
+  constant_key_len = constant_key.length;
+  var page_review_container = $("#" + page_prefix + "page_preview_container");
+
+  params.button_id = button_id;
+  params.button_top = button.position().top;
+  params.button_left = button.position().left;
+  params.button_height = button.height();
+  params.type = button_id.substr(0, constant_key_pos);
+  params.key = button_id.substr(constant_key_pos + constant_key_len);
+  params.page_prefix = page_prefix;
+  params.preview_left = page_review_container.offset().left;
+  params.preview_width = page_review_container.width();
+  return params;
+}
+
+Drupal.Nucleus.clearPopup = function(button) {
+}
+
+Drupal.Nucleus.eventStopPropagation = function(event) {
   if (event.stopPropagation) {
     event.stopPropagation();
   }
@@ -10,257 +98,268 @@ Drupal.Nucleus.nucleusEventStopPropagation = function(event) {
   }
 }
 
-Drupal.Nucleus.nucleusShowExtendClassPopup = function(event, name) {
-  Drupal.Nucleus.nucleusEventStopPropagation(event);
-  if (Drupal.Nucleus.currentPopupExtendClassName) {
-    Drupal.Nucleus.nucleusHideExtendClassPopup(Drupal.Nucleus.currentPopupExtendClassName);
-  }
+Drupal.Nucleus.showPopup = function(params) {
+  Drupal.Nucleus.currentOpenedButton = params.button_id;
+  var popup = $('#nucleus_form_popup_wrapper');
+  var popup_width = popup.width();
+  var popup_height = popup.height();
 
-  if (Drupal.Nucleus.currentPopupExtendClassName != name) {
-    Drupal.Nucleus.currentPopupExtendClassName = name;
-    $('#' + name + '-tb-form-popup').show();
-    $('#' + name + '-dialog').show();
-    $('#' + name + '-edit-btn').addClass('active');
+  var popup_left = params.button_left;
+  var popup_top = params.button_top + params.button_height + 4;
+  if (params.button_left + popup_width > params.preview_width) {
+    popup_left -= params.button_left + popup_width - params.preview_width;
+  }
+  popup.css({top: popup_top + "px", left: popup_left + "px"});
+  popup.find('#nucleus_popup_type').val(params.type);
+  popup.find('#nucleus_popup_page').val(params.page_prefix);
+  popup.find('#nucleus_popup_key').val(params.key);
+
+  var temp_name = params.page_prefix + params.type + "_" + params.key;
+  if(Drupal.Nucleus.tempSaved[temp_name] != undefined) {
+	this.loadTempForm(popup, params, temp_name);
   }
   else {
-    Drupal.Nucleus.nucleusHideExtendClassPopup(name);
-    Drupal.Nucleus.currentPopupExtendClassName = false;
+    this.loadRegionWidth(popup, params);
+    this.loadBlockRegion(popup, params);
+    this.loadBlockStyle(popup, params);  
   }
+  popup.show();
 }
 
-Drupal.Nucleus.nucleusHideExtendClassPopup = function(name) {
-  $('#' + name + '-tb-form-popup').hide();
-  $('#' + name + '-dialog').hide();
-  $('#' + name + '-edit-btn').removeClass('active');
-}
-
-Drupal.Nucleus.nucleusCancelExtendClassPopup = function(event, name, key) {
-  Drupal.Nucleus.nucleusEventStopPropagation(event);
-  Drupal.Nucleus.nucleusHideExtendClassPopup(name);
-  Drupal.Nucleus.currentPopupExtendClassName = false;
-  Drupal.Nucleus.nucleusResetCurrentExtendClassForm(name, key);
-}
-
-Drupal.Nucleus.nucleusResetCurrentExtendClassForm = function(name, key) {
-  var selector_name = key + "_style";
-  var hidden_name = key + '_extend_class';
-  var name = hidden_name.replace(/_/gi, '-');
-  var current_extend_class = $('input:hidden[name=' + hidden_name + ']').attr('value');
-  var selector = $('select[name=' + selector_name + ']');
-  if(selector && current_extend_class && current_extend_class != undefined) {
-    var style = selector.attr('value');
-    if (Drupal.Nucleus.nucleusExtendClassSupportGroups !== undefined && Drupal.Nucleus.nucleusExtendClassSupportGroups[style]) {
-      var group_name_list = Drupal.Nucleus.nucleusExtendClassSupportGroups[style];
-      for (var x in group_name_list) {
-        var group = group_name_list[x];
-        $('#' + name + '-' + group).attr('checked', 'checked');
-      }
-    }
-
-    var parts = current_extend_class.split(' ');
-    for(var i = 0; i < parts.length; i += 2) {
-      var group = parts[i];
-      var extend_class = parts[i + 1];
-      $('#' + name + '-' + group + '-' + extend_class).attr('checked', 'checked');
-    }
-  }
-}
-
-Drupal.Nucleus.nucleusGetApplyingRegionStyle = function(current_page) {
-  return $('#edit-' + current_page + "-global-block-style").val();
-}
-
-Drupal.Nucleus.nucleusGetApplyingBlockStyle = function(key, current_page) {
-  var length = current_page.length + 7;
-  var block_key = key.substr(length, key.length - length);
-  block_key = block_key.replace(/_/gi, '-');
-  var region_key = Drupal.Nucleus.nucleusRegionsBlocksList['blocks'][block_key];
-  var region_id = 'edit-' + current_page + "-region-" + region_key + "-style";
-  var region_style = $('#' + region_id).val();
-  if (region_style == 'default') {
-    return Drupal.Nucleus.nucleusGetApplyingRegionStyle(current_page);
-  }
-  return region_style;
-}
-
-Drupal.Nucleus.nucleusHandleShowHideGroupExtendClass = function(name, hidden_name, style) {
-  if (Drupal.Nucleus.nucleusExtendClassSupportGroups !== undefined && Drupal.Nucleus.nucleusExtendClassSupportGroups[style]) {
-    var values = [];
-    var texts = [];
-    var group_name_list = Drupal.Nucleus.nucleusExtendClassSupportGroups[style];
-    var visited = {};
-    for (var x in group_name_list) {
-      var group = group_name_list[x];
-      visited[group] = true;
-      var radio = $('input:radio[name=' + name + '-' + group + ']:checked');
-      if (radio) {
-        var value = radio.val();
-        if (value != undefined && value != '') {
-          var text = Drupal.Nucleus.nucleusExtendClassesList[value];
-          values.push(group);
-          values.push(value);
-          texts.push(text);
-        }
-      }
-    }
-
-    if (Drupal.Nucleus.nucleusStyleSupportCounter[style]) {
-      for (x in Drupal.Nucleus.nucleusExtendClassGroupsNameList) {
-        var group = Drupal.Nucleus.nucleusExtendClassGroupsNameList[x];
-        var element = $('#' + name + "-" + group + "-group");
-        if (element) {
-          if (visited[group]) {
-            element.show();
-          }
-          else {
-            element.hide();
-          }
-        }
-      }
-
-      var shower_text = texts.join(', ');
-      if (shower_text == "") shower_text = "&nbsp;";
-      $('#' + name + '-shower').html(shower_text);
-      $('input:hidden[name=' + hidden_name + ']').attr("value", values.join(' '));
-      $('#' + name + '-tb-extend-class').show();
+Drupal.Nucleus.loadTempForm = function(popup, params, temp_name) {
+  for(x in Drupal.Nucleus.tempSaved[temp_name]) {
+	if(popup.find('input[type="radio"][name="' + x + '"]').length) {
+      popup.find('input[type="radio"][name="' + x + '"][value="' + Drupal.Nucleus.tempSaved[temp_name][x] + '"]').attr('checked', 'checked');
     }
     else {
-      $('#' + name + '-shower').html('');
-      $('input:hidden[name=' + hidden_name + ']').attr("value", '');
-      $('#' + name + '-tb-extend-class').hide();
+	  popup.find('[name="' + x + '"]').val(Drupal.Nucleus.tempSaved[temp_name][x]);
     }
   }
+  if(params.type == 'block') {
+    popup.find('.form-item-popup-region-selector').show();
+  }
+  else {
+    popup.find('.form-item-popup-region-selector').hide();
+  }
+
+  if($('input[name="' + params.page_prefix + params.key + '_width"]').length) {
+    popup.find('.form-item-popup-region-width-selector').show();
+  }
+  else {
+    popup.find('.form-item-popup-region-width-selector').hide();
+  }
+
+  var style = popup.find('select[name="popup_block_style_selector"]').val();
+  style = style == '' ? 'default' : style;
+  style = Drupal.Nucleus.getApplyingBlockStyle(params.page_prefix, params.type, params.key, style);
+  Drupal.Nucleus.handleShowHideGroupExtendClass(style);
 }
 
-Drupal.Nucleus.nucleusOnChangeBlockStyle = function(key, type) {
-  if (!Drupal.Nucleus.nucleusExtendClassSupportGroups) {
-    window.setTimeout(function() {Drupal.Nucleus.nucleusOnChangeBlockStyle(selector_name, name, hidden_name)}, 50);
-    return;
-  }
-
-  var selector_name = key + "_style";
-  var hidden_name = key + '_extend_class';
-  var name = hidden_name.replace(/_/gi, '-');
-  var current_page = $('#edit-page-block-style').val();
-  var selector = $('select[name=' + selector_name + ']');
-  if (selector) {
-    var style = selector.attr('value');
-    if (style == 'default') {
-      if(type == 'block') {
-        style = Drupal.Nucleus.nucleusGetApplyingBlockStyle(key, current_page);
-      }
-      else if(type == 'region') {
-        style = Drupal.Nucleus.nucleusGetApplyingRegionStyle(current_page);
-      }
-    }
-
-    Drupal.Nucleus.nucleusHandleShowHideGroupExtendClass(name, hidden_name, style);
-
-    if (type == 'global') {
-      Drupal.Nucleus.nucleusShowHideGlobalExtendClass(Drupal.Nucleus.nucleusRegionsBlocksList['regions'], current_page, style);
-    }
-    else if (type == 'region') {
-      var length = current_page.length + 8;
-      var region_key = key.substr(length, key.length - length);
-      region_key = region_key.replace(/_/gi, '-');
-      var global_style = $('#edit-' + current_page + "-global-block-style").val();
-      var apply_style = (style != 'default') ? style : global_style;
-      Drupal.Nucleus.nucleusShowHideRegionExtendClass(Drupal.Nucleus.nucleusRegionsBlocksList['regions'][region_key], region_key, current_page, apply_style);
-    }
-  }
-}
-
-Drupal.Nucleus.nucleusShowHideGlobalExtendClass = function(regions_list, page, style) {
-  for (var region_key in regions_list) {
-    var hidden_name = page + '_region_' + region_key + '_extend_class';
-    var name = hidden_name.replace(/_/gi, '-');
-    var region_id = 'edit-' + page + "-region-" + region_key + "-style";
-    var region_style = $('#' + region_id).val();
-    if (region_style == 'default') {
-      Drupal.Nucleus.nucleusHandleShowHideGroupExtendClass(name, hidden_name, style);
-      Drupal.Nucleus.nucleusShowHideRegionExtendClass(Drupal.Nucleus.nucleusRegionsBlocksList['regions'][region_key], region_key, page, style);
-    }
-  }
-}
-
-Drupal.Nucleus.nucleusShowHideRegionExtendClass = function(blocks_list, region_key, page, style) {
-  for (var block_key in blocks_list) {
-    var hidden_name = page + '_block_' + block_key + '_extend_class';
-    var name = hidden_name.replace(/_/gi, '-');
-    var block_id = 'edit-' + page + "-block-" + block_key + "-style";
-    var block_style = $('#' + block_id).val();
-    if (block_style == 'default') {
-      Drupal.Nucleus.nucleusHandleShowHideGroupExtendClass(name, hidden_name, style);
-    }
-  }
-}
-
-Drupal.Nucleus.nucleusSaveExtendClassPopup = function(event, key, type) {
-  Drupal.Nucleus.nucleusEventStopPropagation(event);
-  if (!Drupal.Nucleus.nucleusExtendClassGroupsNameList || !Drupal.Nucleus.nucleusExtendClassesList) {
-    window.setTimeout(function() {Drupal.Nucleus.nucleusSaveExtendClassPopup(event, key)}, 50);
-    return;
-  }
-
-  selector_name = key + "_style";
-  hidden_name = key + '_extend_class';
-  name = hidden_name.replace(/_/gi, '-');
-
-  var values = [];
-  var texts = [];
-  var current_page = $('#edit-page-block-style').val();
-  var selector = $('select[name=' + selector_name + ']');
-  if (selector) {
-    var style = selector.attr('value');
-    if (style == 'default') {
-      if(type == 'block') {
-        style = Drupal.Nucleus.nucleusGetApplyingBlockStyle(key, current_page);
-      }
-      else if(type == 'region') {
-        style = Drupal.Nucleus.nucleusGetApplyingRegionStyle(current_page);
-      }
-    }
-
-    if (Drupal.Nucleus.nucleusExtendClassSupportGroups !== undefined && Drupal.Nucleus.nucleusExtendClassSupportGroups[style]) {
-      var group_name_list = Drupal.Nucleus.nucleusExtendClassSupportGroups[style];
-      var support_some_group = false;
-      for (var x in group_name_list) {
-        var group = group_name_list[x];
-        var radio = $('input:radio[name=' + name + '-' + group + ']:checked');
-        if (radio) {
-          var value = radio.val();
-          if (value != undefined && value != '') {
-            var text = Drupal.Nucleus.nucleusExtendClassesList[value];
-            values.push(group);
-            values.push(value);
-            texts.push(text);
-          }
-        }
-      }
-      var shower_text = texts.join(', ');
-      if (shower_text == "") shower_text = "&nbsp;";
-      $('#' + name + '-shower').html(shower_text);
-      $('input:hidden[name=' + hidden_name + ']').attr("value", values.join(' '));
-      $('#' + name + '-tb-extend-class').show();
-    }
-  }
-  Drupal.Nucleus.nucleusHideExtendClassPopup(name);
-  Drupal.Nucleus.currentPopupExtendClassName = false;
-};
-
-Drupal.Nucleus.nucleusOnClickGroupExtendClass = function(event) {
-  Drupal.Nucleus.nucleusEventStopPropagation(event);
-}
-
-Drupal.behaviors.nucleusBlockStyleAction = {
-  attach: function (context) {
-    $(document).bind('click', function() {
-      if (Drupal.Nucleus.currentPopupExtendClassName) {
-        Drupal.Nucleus.nucleusHideExtendClassPopup(Drupal.Nucleus.currentPopupExtendClassName);
-        Drupal.Nucleus.currentPopupExtendClassName = false;
+Drupal.Nucleus.hidePopup = function() {
+  if(Drupal.Nucleus.currentOpenedButton) {
+    var popup = $('#nucleus_form_popup_wrapper');
+    var type = popup.find('#nucleus_popup_type').val();
+    var page_prefix = popup.find('#nucleus_popup_page').val();
+    var key = popup.find('#nucleus_popup_key').val();
+    var temp_name = page_prefix + type + "_" + key;
+    var temp = [];
+    popup.find('input:radio:checked, select').each(function() {
+      if($(this).val() != '') {
+        temp[$(this).attr('name')] = $(this).val();
       }
     });
+    Drupal.Nucleus.tempSaved[temp_name] = temp;
+    popup.hide();
+    Drupal.Nucleus.currentOpenedButton = false;
   }
-};
+}
 
+Drupal.Nucleus.loadBlockRegion = function(popup, params) {
+  if(params.type == 'block') {
+    var wrapper = popup.find('.form-item-popup-region-selector');
+    wrapper.find('select[name="popup_region_selector"]').val($('input[name="' + params.page_prefix + "region_block_hidden_" + params.key + '"]').val());
+    wrapper.show();
+  }
+  else {
+    popup.find('.form-item-popup-region-selector').hide();
+  }
+}
+
+Drupal.Nucleus.loadRegionWidth = function(popup, params) {
+  if($('input[name="' + params.page_prefix + params.key + '_width"]').length) {
+    var wrapper = popup.find('.form-item-popup-region-width-selector');
+    wrapper.find('select[name="popup_region_width_selector"]').val($('input[name="' + params.page_prefix + params.key + '_width"]').val());
+    wrapper.show();
+  }
+  else {
+    popup.find('.form-item-popup-region-width-selector').hide();
+  }
+}
+
+Drupal.Nucleus.loadBlockStyle = function(popup, params) {
+  var style = $('input[name="' + params.page_prefix + params.type + "_" + params.key + '_style"]').val();
+  var extend_class = $('input[name="' + params.page_prefix + params.type + "_" + params.key + '_extend_class"]').val();
+  var parts = extend_class.split(" ");
+  popup.find('input[type="radio"]').attr("checked", false);
+  for(var i = 0; i < parts.length - 1; i += 2) {
+    popup.find('#group-' + parts[i] + '-' + parts[i + 1] + '-radio').attr('checked', 'checked');
+  }
+  style = style == '' ? 'default' : style;
+  popup.find('select[name="popup_block_style_selector"]').val(style);
+  style = Drupal.Nucleus.getApplyingBlockStyle(params.page_prefix, params.type, params.key, style);
+  Drupal.Nucleus.handleShowHideGroupExtendClass(style);
+}
+
+Drupal.Nucleus.savePopup = function(event) {
+  var popup = $('#nucleus_form_popup_wrapper');
+  var type = popup.find('#nucleus_popup_type').val();
+  var page_prefix = popup.find('#nucleus_popup_page').val();
+  var key = popup.find('#nucleus_popup_key').val();
+  
+  var style_name = page_prefix + type + "_" + key + "_style";
+  var width_name = page_prefix + key + "_width";
+  var extend_class_name = page_prefix + type + "_" + key + '_extend_class';
+
+  var selector_width = $('select[name="popup_region_width_selector"]');
+  if (selector_width.length) {
+    $('input[name="' + width_name + '"]').val(selector_width.val());
+  }
+
+  var style = Drupal.Nucleus.getApplyingBlockStyle(page_prefix, type, key, popup.find('select[name="popup_block_style_selector"]').val());
+  $('input[name="' + style_name + '"]').val(style);
+  var group_name_list = Drupal.Nucleus.extendClassSupportGroups[style];
+  var support_some_group = false;
+  var values = [];
+  for (var x in group_name_list) {
+    var group = group_name_list[x];
+    var radio = $('input:radio[name="' + group + '-radio"]:checked');
+    if (radio.length) {
+      var value = radio.val();
+      if (value != undefined && value != '') {
+        var text = Drupal.Nucleus.extendClassesList[value];
+        values.push(group);
+        values.push(value);
+      }
+    }
+  }
+  $('input:hidden[name="' + extend_class_name + '"]').attr("value", values.join(' '));
+
+  Drupal.Nucleus.hidePopup();
+  Drupal.Nucleus.eventStopPropagation(event);
+  $('#' + type + '_setting_btn_' + page_prefix + key).addClass('changed-settings');
+  return false;
+}
+
+Drupal.Nucleus.cancelPopup = function(event) {
+  Drupal.Nucleus.hidePopup();
+}
+
+Drupal.Nucleus.changeBlockStyle = function() {
+  var popup = $('#nucleus_form_popup_wrapper');
+  var type = popup.find('#nucleus_popup_type').val();
+  var page_prefix = popup.find('#nucleus_popup_page').val();
+  var key = popup.find('#nucleus_popup_key').val();
+  var style = Drupal.Nucleus.getApplyingBlockStyle(page_prefix, type, key, popup.find('select[name="popup_block_style_selector"]').val());
+  Drupal.Nucleus.handleShowHideGroupExtendClass(style);
+}
+
+Drupal.Nucleus.handleShowHideGroupExtendClass = function(style) {
+  var popup = $('#nucleus_form_popup_wrapper');
+  var groups_list = Drupal.Nucleus.extendClassSupportGroups[style];
+  var all_groups_list = Drupal.Nucleus.extendClassGroupsNameList;
+  for (var x in all_groups_list) {
+    popup.find('#' + all_groups_list[x] + "-group").hide();
+  }
+  var empty = true;
+  for (var x in groups_list) { 
+    popup.find('#' + groups_list[x] + "-group").show();
+    empty = false;
+  }
+  if(empty) {
+    popup.find('#tb-extend-class').hide();
+  }
+  else {
+    popup.find('#tb-extend-class').show();
+  }
+}
+
+Drupal.Nucleus.getApplyingBlockStyle = function(page_prefix, type, key, style) {
+  if(type == 'block' && (style == 'default' || style == '')) {
+    var region_key = Drupal.Nucleus.regionsBlocksList['blocks'][key];
+    region_key = region_key.replace(/-/gi, '_');
+    var temp_name = page_prefix + "region_" + region_key;
+    if(Drupal.Nucleus.tempSaved[temp_name] != undefined) {
+      return Drupal.Nucleus.tempSaved[temp_name]['popup_block_style_selector'];
+    }
+    style = $('input[name="' + page_prefix + "region_" + region_key + '_style"]').val();
+  };
+  return style == '' ? "default" : style;
+}
+
+Drupal.Nucleus.currentPagePrefix = function() {
+  return "";
+}
+
+Drupal.Nucleus.getCurrentYPos = function() {
+  if (self.pageYOffset) {
+    return self.pageYOffset;
+  }
+  if (document.documentElement && document.documentElement.scrollTop) {
+    return document.documentElement.scrollTop;
+  }
+  if (document.body.scrollTop) {
+    return document.body.scrollTop;
+  }
+  return 0;
+}
+
+Drupal.Nucleus.getElementYPos = function(eID) {
+  return $(eID).offset().top;
+}
+
+Drupal.Nucleus.smoothScroll = function(eID, duration, delta) {
+  if (!duration) {
+    duration = 500;
+  }
+  if (!delta) {
+    delta = 0;
+  }
+  var startY = Drupal.Nucleus.getCurrentYPos();
+  var stopY = Drupal.Nucleus.getElementYPos(eID) + delta;
+  var distance = stopY - startY;
+  var speed = Math.round(duration / 33);
+  var step  = Math.round(distance / speed);
+  if (!step) {
+    scrollTo(0, stopY); return;
+  }
+  var leapY = startY;
+  var timer = 0;
+  while (leapY != stopY) {
+    leapY += step;
+    if ((stopY > startY && leapY > stopY) || (stopY < startY && leapY < stopY)) {
+      leapY = stopY;
+    }
+    setTimeout("window.scrollTo(0, "+leapY+")", timer * speed);
+    timer++;
+  }
+  return;
+}
+Drupal.Nucleus.moveBlockAction = function(page_prefix, block_key, hidden_name, current_region_key, new_region_key) {
+  var current_region_name = current_region_key.replace(/_/gi, '-');
+  var new_region_name = new_region_key.replace(/_/gi, '-');
+  $('input[name="' + hidden_name + '"]').val(new_region_key);
+  var style_name = page_prefix + "region_" + new_region_key + "_style";
+  var region_style = $('input[name="' + style_name + '"]').val();
+  region_style = (region_style == '') ? 'default' : region_style;
+
+  Drupal.Nucleus.regionsBlocksList['blocks'][block_key] = new_region_name;
+  Drupal.Nucleus.regionsBlocksList['regions'][current_region_name][block_key] = 0;
+  Drupal.Nucleus.regionsBlocksList['regions'][new_region_name][block_key] = 1;
+  var popup = $('#nucleus_form_popup_wrapper');
+  var type = popup.find('#nucleus_popup_type').val();
+  var page_prefix = popup.find('#nucleus_popup_page').val();
+  var key = popup.find('#nucleus_popup_key').val();
+  var style = Drupal.Nucleus.getApplyingBlockStyle(page_prefix, type, key, popup.find('select[name="popup_block_style_selector"]').val());
+  Drupal.Nucleus.handleShowHideGroupExtendClass(style);  
+}
 })(jQuery);

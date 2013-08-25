@@ -1,7 +1,7 @@
 <?php
 
 /**
- * @file
+ * @file html.tpl.php
  * Default theme implementation to display the basic html structure of a single
  * Drupal page.
  *
@@ -9,8 +9,7 @@
  * - $css: An array of CSS files for the current page.
  * - $language: (object) The language the site is being displayed in.
  *   $language->language contains its textual representation.
- *   $language->dir contains the language direction. It will either be 'ltr' or
- *   'rtl'.
+ *   $language->dir contains the language direction. It will either be 'ltr' or 'rtl'.
  * - $rdf_namespaces: All the RDF namespace prefixes used in the HTML document.
  * - $grddl_profile: A GRDDL profile allowing agents to extract the RDF data.
  * - $head_title: A modified version of the page title, for use in the TITLE
@@ -52,7 +51,7 @@
     <?php print $scripts; ?>
   </head>
 
-  <body class="<?php print $classes; ?>"<?php print $attributes; ?>>
+  <body class="<?php print $classes; ?>"<?php print $attributes;?>>
     <div id="skip-link"><a href="#main-content" class="element-invisible element-focusable"><?php print t('Skip to main content'); ?></a></div>
     <?php print $page_top; ?>
     <?php print $page; ?>

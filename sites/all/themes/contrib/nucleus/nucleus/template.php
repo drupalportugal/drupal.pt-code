@@ -4,10 +4,10 @@
  * controls load theme.
  */
 
-require_once drupal_get_path('theme', 'nucleus') . '/inc/theme_function_overrides.inc';
-require_once drupal_get_path('theme', 'nucleus') . '/inc/custom_functions.inc';
-require_once drupal_get_path('theme', 'nucleus') . '/inc/preprocess_functions.inc';
-require_once drupal_get_path('theme', 'nucleus') . '/inc/alters.inc';
+// Split funtions and stuff into seperate files for eaiser house keeping.
+include_once(drupal_get_path('theme', 'nucleus') . '/inc/override_functions.inc');
+include_once(drupal_get_path('theme', 'nucleus') . '/inc/custom_functions.inc');
+include_once(drupal_get_path('theme', 'nucleus') . '/inc/grid_functions.inc');
 
 /**
  * Implements hook_theme().
@@ -16,7 +16,7 @@ function nucleus_theme() {
   $items = array();
   $items ['fieldset'] = array(
     'arguments' => array(
-      'element' => array(),
+      'element' => array()
     ),
     'template' => 'fieldset',
     'path' => drupal_get_path('theme', 'nucleus') . '/tpl',
@@ -39,7 +39,7 @@ function nucleus_theme() {
       'panel_regions_width' => array(),
     ),
     'preprocess functions' => array(
-      'nucleus_preprocess_render_panel',
+      'nucleus_preprocess_render_panel'
     ),
     'template' => 'panel',
     'path' => drupal_get_path('theme', 'nucleus') . '/tpl',

@@ -33,6 +33,7 @@
 }
 
 .sf-menu.sf-style-purity li.first {
+  border-left: none;
 }
 
 /* "Have child" Item */

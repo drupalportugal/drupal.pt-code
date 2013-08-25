@@ -1,7 +1,7 @@
 <?php
 
 /**
- * @file
+ * @file node.tpl.php
  * Default theme implementation to display a node.
  *
  * Available variables:
