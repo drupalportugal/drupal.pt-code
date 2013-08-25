@@ -1,0 +1,24 @@
+
+/* Superfish menu fixes */
+div.block-superfish {
+}
+div.block-superfish ul {
+}
+div.block-superfish ul li {
+}
+div.block-superfish ul li a {
+	padding: 15px !important;
+	color: #cdcdcd !important;
+	text-indent: 0 !important;
+}
+div.block-superfish ul li a:active {
+	background: #007fc8 !important;
+	color: #cdcdcd !important;
+}
+div.block-superfish ul li a:hover {
+	background: #4f4f4f !important;
+	color: #ffffff !important;
+}
+div.block-superfish ul li.last {
+	border-right: 1px solid #666;
+}
