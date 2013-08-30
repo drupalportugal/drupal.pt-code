@@ -310,10 +310,14 @@ function file_entity_admin_files() {
     'size' => array('data' => t('Size'), 'field' => 'fm.filesize'),
     'author' => t('Author'),
     'timestamp' => array('data' => t('Updated'), 'field' => 'fm.timestamp', 'sort' => 'desc'),
+    'usage' => array('data' => t('Usage'), 'field' => 'total_count'),
     'operations' => array('data' => t('Operations')),
   );
 
   $query = db_select('file_managed', 'fm')->extend('PagerDefault')->extend('TableSort');
+  $query->leftJoin('file_usage', 'fu', 'fm.fid = fu.fid');
+  $query->groupBy('fm.fid');
+  $query->addExpression('SUM(fu.count)', 'total_count');
   file_entity_build_filter_query($query);
 
   $result = $query
@@ -322,14 +326,15 @@ function file_entity_admin_files() {
     ->orderByHeader($header)
     ->addTag('file_access')
     ->execute()
-    ->fetchAllKeyed();
+    ->fetchAllAssoc('fid');
   $files = file_load_multiple(array_keys($result));
-  $accounts = user_load_multiple(array_unique($result));
 
   // Prepare the list of files.
   $destination = drupal_get_destination();
   $options = array();
+  $accounts = array();
   foreach ($files as $file) {
+    $accounts[$file->uid] = isset($accounts[$file->uid]) ? $accounts[$file->uid] : user_load($file->uid);
     $file_type = file_type_load($file->type);
     $options[$file->fid] = array(
       'title' => array(
@@ -343,6 +348,7 @@ function file_entity_admin_files() {
       'size' => format_size($file->filesize),
       'author' => theme('username', array('account' => $accounts[$file->uid])),
       'timestamp' => format_date($file->timestamp, 'short'),
+      'usage' => $result[$file->fid]->total_count == NULL ? 0 : $result[$file->fid]->total_count,
     );
 
     // Show a warning for files that do not exist.
@@ -611,7 +617,7 @@ function file_entity_file_display_form($form, &$form_state, $file_type, $view_mo
   // filters for existing text formats.
   $formatters = file_info_formatter_types();
   foreach ($formatters as $name => $formatter) {
-    if (isset($formatter['file types']) && !in_array($file_type, $formatter['file types'])) {
+    if (!empty($formatter['hidden']) || isset($formatter['file types']) && !in_array($file_type, $formatter['file types'])) {
       unset($formatters[$name]);
     }
   }
@@ -998,4 +1004,72 @@ function file_entity_type_delete_confirm_submit($form, &$form_state) {
 
   $form_state['redirect'] = 'admin/structure/file-types';
   return;
+}
+
+/**
+ * Form callback for file_entity settings.
+ */
+function file_entity_settings_form($form, &$form_state) {
+  $form['file_entity_default_allowed_extensions'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Default allowed file extensions'),
+    '#default_value' => variable_get('file_entity_default_allowed_extensions', 'jpg jpeg gif png txt doc docx xls xlsx pdf ppt pptx pps ppsx odt ods odp mp3 mov mp4 m4a m4v mpeg avi ogg oga ogv weba webp webm'),
+    '#weight' => -10,
+    '#description' => t('Separate extensions with a space or comma and do not include the leading dot.'),
+  );
+
+  $form['file_entity_alt'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Alt attribute'),
+    '#description' => t('The text to use as value for the <em>img</em> tag <em>alt</em> attribute.'),
+    '#default_value' => variable_get('file_entity_alt', '[file:field_file_image_alt_text]'),
+    '#weight' => -9,
+  );
+  $form['file_entity_title'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Title attribute'),
+    '#description' => t('The text to use as value for the <em>img</em> tag <em>title</em> attribute.'),
+    '#default_value' => variable_get('file_entity_title', '[file:field_file_image_title_text]'),
+    '#weight' => -8,
+  );
+
+  // Provide default token values.
+  if (module_exists('token')) {
+    $form['token_help'] = array(
+      '#theme' => 'token_tree',
+      '#token_types' => array('file'),
+      '#dialog' => TRUE,
+      '#weight' => -7,
+    );
+    $form['file_entity_alt']['#description'] .= t('This field supports tokens.');
+    $form['file_entity_title']['#description'] .= t('This field supports tokens.');
+  }
+  $form['file_upload_wizard'] = array(
+    '#type' => 'fieldset',
+    '#title' => t('File upload wizard'),
+    '#weight' => -6,
+    '#collapsible' => TRUE,
+    '#collapsed' => FALSE,
+    '#description' => t('Configure the steps available when uploading a new file.'),
+  );
+  $form['file_upload_wizard']['file_entity_file_upload_wizard_skip_file_type'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Skip filetype selection.'),
+    '#default_value' => variable_get('file_entity_file_upload_wizard_skip_file_type', FALSE),
+    '#description' => t('The file type selection step is only available if the uploaded file falls into two or more file types. If this step is skipped, files with no available file type or two or more file types will not be assigned a file type.'),
+  );
+  $form['file_upload_wizard']['file_entity_file_upload_wizard_skip_scheme'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Skip scheme selection.'),
+    '#default_value' => variable_get('file_entity_file_upload_wizard_skip_scheme', FALSE),
+    '#description' => t('The scheme selection step is only available if two or more file destinations, such as public local files served by the webserver and private local files served by Drupal, are available. If this step is skipped, files will automatically be saved using the default download method.'),
+  );
+  $form['file_upload_wizard']['file_entity_file_upload_wizard_skip_fields'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Skip available fields.'),
+    '#default_value' => variable_get('file_entity_file_upload_wizard_skip_fields', FALSE),
+    '#description' => t('The field selection step is only available if the file type the file belongs to has any available fields. If this step is skipped, any fields on the file will be left blank.'),
+  );
+
+  return system_settings_form($form);
 }

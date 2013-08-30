@@ -9,35 +9,6 @@
  * Implements hook_schema().
  */
 function media_schema() {
-  $schema['media_filter_usage'] = array(
-    'description' => 'Stores fids that have been included in the media tag in formatted textareas.',
-    'fields' => array(
-      'fid' => array(
-        'description' => 'The media {file_managed}.fid.',
-        'type' => 'int',
-        'unsigned' => TRUE,
-        'not null' => TRUE,
-        'default' => 0,
-      ),
-      'timestamp' => array(
-        'description' => 'The timestamp the fid was last recorded by media_filter()',
-        'type' => 'int',
-        'not null' => TRUE,
-        'default' => 0,
-      ),
-    ),
-    'primary key' => array('fid'),
-    'indexes' => array(
-      'timestamp' => array('timestamp'),
-    ),
-    'foreign keys' => array(
-      'file_managed' => array(
-        'table' => 'file_managed',
-        'columns' => array('fid' => 'fid'),
-      ),
-    ),
-  );
-
   $schema['cache_media_xml'] = drupal_get_schema_unprocessed('system', 'cache');
   $schema['cache_media_xml']['description'] = 'Cache table for the the results of retreived XML documents for remote streams.';
 
@@ -293,38 +264,9 @@ function media_update_7011() {
 }
 
 /**
- * Create the media_filter_usage table.
+ * Empty update function.
  */
 function media_update_7012() {
-  $schema['media_filter_usage'] = array(
-    'description' => 'Stores fids that have been included in the media tag in formatted textareas.',
-    'fields' => array(
-      'fid' => array(
-        'description' => 'The media {file_managed}.fid.',
-        'type' => 'int',
-        'unsigned' => TRUE,
-        'not null' => TRUE,
-        'default' => 0,
-      ),
-      'timestamp' => array(
-        'description' => 'The timestamp the fid was last recorded by media_filter()',
-        'type' => 'int',
-        'not null' => TRUE,
-        'default' => 0,
-      ),
-    ),
-    'foreign keys' => array(
-      'file_managed' => array(
-        'table' => 'file_managed',
-        'columns' => array('fid' => 'fid'),
-      ),
-    ),
-    'primary key' => array('fid'),
-    'indexes' => array(
-      'timestamp' => array('timestamp'),
-    ),
-  );
-  db_create_table('media_filter_usage', $schema['media_filter_usage']);
 }
 
 /**
@@ -569,6 +511,13 @@ function media_update_7200() {
       'edit media' => FALSE,
       'edit any files' => TRUE,
     );
+    if (function_exists('file_entity_list_permissions')) {
+      unset($permissions['edit any files']);
+
+      foreach (file_entity_permissions_get_configured_types() as $type) {
+        $permissions += file_entity_list_permissions($type);
+      }
+    }
     foreach ($roles as $rid => $role) {
       user_role_change_permissions($rid, $permissions);
     }
@@ -617,6 +566,9 @@ function media_update_7201() {
  */
 function media_update_7202() {
   module_enable(array('views'));
+  if (module_exists('views')) {
+    throw new DrupalUpdateException('The <a href="https://drupal.org/project/views">Views module</a> must be downloaded and available for Media updates to proceed.');
+  }
 }
 
 /**
@@ -1011,5 +963,30 @@ function media_update_7212() {
     file_type_save($application);
     $application = file_type_load('application');
     file_type_disable($application);
+  }
+}
+
+/**
+ * Remove the obsolete file_extensions variable.
+ */
+function media_update_7213() {
+  $media_file_extensions = explode(' ', variable_get('media__file_extensions'));
+  $file_entity_file_extensions = explode(' ', variable_get('file_entity_default_allowed_extensions', 'jpg jpeg gif png txt doc docx xls xlsx pdf ppt pptx pps ppsx odt ods odp mp3 mov mp4 m4a m4v mpeg avi ogg oga ogv weba webp webm'));
+
+  // Preserve any custom file extensions.
+  if (array_diff($media_file_extensions, $file_entity_file_extensions)) {
+    $combined_file_extensions = array_unique(array_merge($file_entity_file_extensions, $media_file_extensions));
+    variable_set('file_entity_default_allowed_extensions', implode(' ' , $combined_file_extensions));
+  }
+
+  variable_del('media__file_extensions');
+}
+
+/**
+ * Drop the legacy {media_filter_usage} table.
+ */
+function media_update_7214() {
+  if (db_table_exists('media_filter_usage')) {
+    db_drop_table('media_filter_usage');
   }
 }

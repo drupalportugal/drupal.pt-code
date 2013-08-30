@@ -180,18 +180,6 @@ function media_admin_config_browser($form, &$form_state) {
     '#default_value' => media_variable_get('dialog_theme'),
   );
 
-  $form[media_variable_name('file_extensions')] = array(
-    '#type' => 'textfield',
-    '#title' => t('Allowed file extensions'),
-    '#default_value' => media_variable_get('file_extensions'),
-    '#description' => t('File extensions which are accepted in the media
-      browser. Use spaces to separate (for example: "jpg gif pdf doc").
-      <br/><em>Note that this can be overriden on a per-field basis when
-      creating multimedia asset fields and files of certain extensions cannot be
-      embedded at this time.</em>'),
-    '#maxlength' => 255,
-  );
-
   // Additional configuration if the WYSIWYG module is enabled.
   $form['wysiwyg'] = array(
     '#type' => 'fieldset',

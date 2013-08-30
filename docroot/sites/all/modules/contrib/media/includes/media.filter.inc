@@ -309,9 +309,6 @@ function media_token_to_markup($match, $wysiwyg = FALSE) {
       $tag_info['attributes']['class'] = explode(" ", $tag_info['attributes']['class']);
     }
 
-    // Track the fid of this file in the {media_filter_usage} table.
-    media_filter_track_usage($file->fid);
-
     // Grab the potentially overrided fields from the file.
     $fields = media_filter_field_parser($tag_info);
 
@@ -358,7 +355,7 @@ function media_token_to_markup($match, $wysiwyg = FALSE) {
     // The link text will have characters such as "&" encoded for HTML, but the
     // filename itself needs the raw value when it is used to build the link,
     // in order to avoid double encoding.
-    $file->filename = htmlspecialchars_decode($tag_info['link_text'], ENT_NOQUOTES);
+    $file->filename = decode_entities($tag_info['link_text']);
   }
 
   if ($wysiwyg) {
@@ -690,65 +687,96 @@ function media_get_file_without_label($file, $view_mode, $settings = array()) {
 }
 
 /**
- * Clears caches that may be affected by the media filter.
- *
- * The media filter calls file_load(). This means that if a file object
- * is updated, the check_markup() and field caches could return stale content.
- * There are several possible approaches to deal with this:
- *  - Disable filter caching in media_filter_info(), this was found to cause a
- *    30% performance hit from profiling four node teasers, due to both the
- *    media filter itself, and other filters that can't be cached.
- *  - Clear the filter and field caches whenever any media node is updated, this
- *    would ensure cache coherency but would reduce the effectiveness of those
- *    caches on high traffic sites with lots of media content updates.
- *  - The approach taken here: Record the fid of all media objects that are
- *    referenced by the media filter. Only clear the filter and field caches
- *    when one of these is updated, as opposed to all media objects.
- *  - @todo: consider an EntityFieldQuery to limit cache clearing to only those
- *    entities that use a text format with the media filter, possibly checking
- *    the contents of those fields to further limit this to fields referencing
- *    the media object being updated. This would need to be implemented
- *    carefully to avoid scalability issues with large result sets, and may
- *    not be worth the effort.
- *
- * @param int $fid
- *   Optional media fid being updated. If not given, the cache will be cleared
- *   as long as any file is referenced.
+ * Implements hook_entity_dependencies().
  */
-function media_filter_invalidate_caches($fid = FALSE) {
-  // If fid is passed, confirm that it has previously been referenced by the
-  // media filter. If not, clear the cache if the {media_filter_usage} has any
-  // valid records.
-  if (($fid && db_query('SELECT fid FROM {media_filter_usage} WHERE fid = :fid', array(':fid' => $fid))->fetchField()) || (!$fid && media_filter_usage_has_records())) {
-    // @todo: support entity cache, either via a hook, or using module_exists().
-    cache_clear_all('*', 'cache_filter', TRUE);
-    cache_clear_all('*', 'cache_field', TRUE);
+function media_entity_dependencies($entity, $entity_type) {
+  // Go through all the entity's text fields and add a dependency on any files
+  // that are referenced there.
+  $dependencies = array();
+  foreach (media_filter_parse_from_fields($entity_type, $entity) as $file_reference) {
+    $dependencies[] = array('type' => 'file', 'id' => $file_reference['fid']);
+  }
+  return $dependencies;
+}
+
+/**
+ * Implements hook_entity_uuid_load().
+ */
+function media_entity_uuid_load(&$entities, $entity_type) {
+  // Go through all the entity's text fields and replace file IDs in media
+  // tokens with the corresponding UUID.
+  foreach ($entities as $entity) {
+    media_filter_replace_tokens_in_all_text_fields($entity_type, $entity, 'media_token_fid_to_uuid');
   }
 }
 
 /**
- * Determines if the {media_filter_usage} table has any entries.
+ * Implements hook_entity_uuid_presave().
  */
-function media_filter_usage_has_records() {
-  return (bool) db_query_range('SELECT 1 FROM {media_filter_usage} WHERE fid > :fid', 0, 1, array(':fid' => 0))->fetchField();
+function media_entity_uuid_presave(&$entity, $entity_type) {
+  // Go through all the entity's text fields and replace UUIDs in media tokens
+  // with the corresponding file ID.
+  media_filter_replace_tokens_in_all_text_fields($entity_type, $entity, 'media_token_uuid_to_fid');
 }
 
 /**
- * Tracks usage of media fids by the media filter.
- *
- * @param int $fid
- *   The media fid.
+ * Replaces media tokens in an entity's text fields, using the specified callback function.
  */
-function media_filter_track_usage($fid) {
-  // This function only tracks when fids are found by the media filter.
-  // It would be impractical to check when formatted text is edited to remove
-  // references to fids, however by keeping a timestamp, we can implement
-  // rudimentary garbage collection in hook_flush_caches().
-  // However we only need to track that an fid has ever been referenced,
-  // not every time, so avoid updating this table more than once per month,
-  // per fid.
-  $timestamp = db_query('SELECT timestamp FROM {media_filter_usage} WHERE fid = :fid', array(':fid' => $fid))->fetchField();
-  if (!$timestamp || $timestamp <= REQUEST_TIME - 86400 * 30) {
-    db_merge('media_filter_usage')->key(array('fid' => $fid))->fields(array('fid' => $fid, 'timestamp' => REQUEST_TIME))->execute();
+function media_filter_replace_tokens_in_all_text_fields($entity_type, $entity, $callback) {
+  $text_field_names = _media_filter_fields_with_text_filtering($entity_type, $entity);
+  foreach ($text_field_names as $field_name) {
+    if (!empty($entity->{$field_name})) {
+      $field = field_info_field($field_name);
+      $all_languages = field_available_languages($entity_type, $field);
+      $field_languages = array_intersect($all_languages, array_keys($entity->{$field_name}));
+      foreach ($field_languages as $language) {
+        if (!empty($entity->{$field_name}[$language])) {
+          foreach ($entity->{$field_name}[$language] as &$item) {
+            $item['value'] = preg_replace_callback(MEDIA_TOKEN_REGEX, $callback, $item['value']);
+          }
+        }
+      }
+    }
   }
+}
+
+/**
+ * Callback to replace file IDs with UUIDs in a media token.
+ */
+function media_token_fid_to_uuid($matches) {
+  return _media_token_uuid_replace($matches, 'entity_get_uuid_by_id');
+}
+
+/**
+ * Callback to replace UUIDs with file IDs in a media token.
+ */
+function media_token_uuid_to_fid($matches) {
+  return _media_token_uuid_replace($matches, 'entity_get_id_by_uuid');
+}
+
+/**
+ * Helper function to replace UUIDs with file IDs or vice versa.
+ *
+ * @param array $matches
+ *   An array of matches for media tokens, from a preg_replace_callback()
+ *   callback function.
+ * @param string $entity_uuid_function
+ *   Either 'entity_get_uuid_by_id' (to replace file IDs with UUIDs in the
+ *   token) or 'entity_get_id_by_uuid' (to replace UUIDs with file IDs).
+ *
+ * @return string
+ *   A string representing the JSON-encoded token, with the appropriate
+ *   replacement between file IDs and UUIDs.
+ */
+function _media_token_uuid_replace($matches, $entity_uuid_function) {
+  $tag = $matches[0];
+  $tag = str_replace(array('[[', ']]'), '', $tag);
+  $tag_info = drupal_json_decode($tag);
+  if (isset($tag_info['fid'])) {
+    if ($new_ids = $entity_uuid_function('file', array($tag_info['fid']))) {
+      $new_id = reset($new_ids);
+      $tag_info['fid'] = $new_id;
+    }
+  }
+  return '[[' . drupal_json_encode($tag_info) . ']]';
 }

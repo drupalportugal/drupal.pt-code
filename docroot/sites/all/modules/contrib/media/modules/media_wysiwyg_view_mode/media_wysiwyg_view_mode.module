@@ -104,7 +104,9 @@ function media_wysiwyg_view_mode_form_alter(&$form, $form_state, $form_id)  {
       $form['preview']['#prefix'] = '<div id="preview">';
       $form['preview']['#suffix'] = '</div>';
 
-      $form['options']['format']['#default_value'] = $default_view_mode;
+      if (!isset($form['options']['format']['#default_value'])) {
+        $form['options']['format']['#default_value'] = $view_mode;
+      }
       $form['options']['format']['#ajax'] = array(
         'callback' => 'media_format_form_preview',
         'wrapper' => 'preview',

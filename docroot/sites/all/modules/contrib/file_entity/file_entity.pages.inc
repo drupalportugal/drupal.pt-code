@@ -37,7 +37,7 @@ function file_entity_view_page($file) {
 function file_entity_download_page($file) {
   // Ensure there is a valid token to download this file.
   if (!variable_get('file_entity_allow_insecure_download', FALSE)) {
-    if (!isset($_GET['token']) || !drupal_valid_token($_GET['token'], "file/$file->fid/download")) {
+    if (!isset($_GET['token']) || $_GET['token'] !== file_entity_get_download_token($file)) {
       return MENU_ACCESS_DENIED;
     }
   }
@@ -658,10 +658,18 @@ function file_entity_edit($form, &$form_state, $file) {
     '#submit' => array('file_entity_edit_delete_submit'),
     '#access' => file_entity_access('delete', $file),
   );
+
+  // Build the URL for the cancel button taking into account that there might be
+  // a "destination" that includes query string variables.
+  $parameters = drupal_get_query_parameters();
+  $destination = isset($parameters['destination']) ? $parameters['destination'] : 'file/' . $file->fid;
+  $url = drupal_parse_url($destination);
+
   $form['actions']['cancel'] = array(
     '#type' => 'link',
     '#title' => t('Cancel'),
-    '#href' => isset($_GET['destination']) ? $_GET['destination'] : 'file/' . $file->fid,
+    '#href' => $url['path'],
+    '#options' => array('query' => $url['query']),
     '#weight' => 15,
   );
 
@@ -937,7 +945,7 @@ function file_entity_get_upload_validators(array $options = array()) {
     $validators['file_validate_extensions'] = array($options['file_extensions']);
   }
   else {
-    $validators['file_validate_extensions'] = array(variable_get('file_entity_default_allowed_extensions', 'jpg jpeg gif png txt doc docx xls xlsx pdf ppt pptx pps ppsx odt ods odp'));
+    $validators['file_validate_extensions'] = array(variable_get('file_entity_default_allowed_extensions', 'jpg jpeg gif png txt doc docx xls xlsx pdf ppt pptx pps ppsx odt ods odp mp3 mov mp4 m4a m4v mpeg avi ogg oga ogv weba webp webm'));
   }
 
   // Validate file size but do not allow anything higher than file_upload_max_size().
