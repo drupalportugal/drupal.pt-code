@@ -26,42 +26,43 @@ Installation
   Download, unpack the module the usual way.
   Enable this module and the Locale module (core).
 
-  You need at least one language other than English.
-  On Administration > Configuration > Regional and language:
-    Click "Add language"
-    Pull-down menu: Choose your new language
-    Then click "Add language"
+  You need at least one language (besides the default English).
+  On Administration > Configuration > Regional and language > Languages:
+    Click "Add language".
+    Select a language from the select list "Language name".
+    Then click the "Add language" button.
 
   Drupal is now importing interface translations. This can take a few minutes.
-  When it's finished, you'll get a confirmation with a summary of all
-  translation files that have been pulled in.
+  When it's finished, you'll get a confirmation with a summary of the
+  translations that have been imported.
 
   If required, enable the new language as default language.
-  Home > Administration > Configuration > Regional and language:
-    Select your new language as default
+  Administration > Configuration > Regional and language > Languages:
+    Select your new default language.
 
 Update interface translations
 -----------------------------
-  On Home > Administration > Configuration > Regional and language:
-    Choose the "Translation updates" tab
-    Change "Check for updates" to Daily or Weekly instead of the default "Never".
+  You want to import translations regularly using cron. You can enable this
+  on Administration > Configuration > Regional and language > Languages:
+    Choose the "Translation updates" tab.
+    Change "Check for updates" to "Daily" or "Weekly" instead of the default "Never".
+  From now on cron will check for updated translations, and import them is required.
 
-  Cron will from now on check for updated translations, and will report the
-  update status on the status page (Home > Administration > Reports).
+  The status of the translations is reported on the "Status report" page at
+  Administration > Reports.
 
   To check the translation status and execute updates manually, go to
-     Administration > Configuration > Regional and language > Translate inteface
-  Here you see English and your new language.
-    Choose the "Update" tab
+    Administration > Configuration > Regional and language > Translate inteface
+    Choose the "Update" tab.
   You see a list of all modules and their translation status.
   On the bottom of the page, you can manually update using "Update translations".
 
 Use Drush
 ---------
   You can also use drush to update your translations:
-  drush l10n-update           # Update translations.
-  drush l10n-update-refresh   # Refresh available information.
-  drush l10n-update-status    # Show translation status of available project
+    drush l10n-update           # Update translations.
+    drush l10n-update-refresh   # Refresh available information.
+    drush l10n-update-status    # Show translation status of available project
 
 
 Summary of administrative pages
@@ -114,27 +115,37 @@ po files, multi site and distributions
 
   Po files included in distributions should match this syntax too.
 
-Alternative sources of translation
-----------------------------------
-
-  Each project i.e. modules, themes, etc. can define alternative translation
-  servers to retrieve the translation updates from.
-  Include the following definition in the projects .info file:
-
-    l10n server = example.com
-    l10n url = http://example.com/files/translations/l10n_server.xml
+Alternative source of translation
+---------------------------------
 
   The download path pattern is normally defined in the above defined xml file.
-  You may override this path by adding a third definition in the .info file:
+  You may override the download path of the po file on a project by project
+  basis by adding this definition in the .info file:
 
     l10n path = http://example.com/files/translations/%core/%project/%project-%release.%language.po
 
+  Modules can force Locale to load the translation of an other project by
+  defining 'interface translation project' in their .info file. This can be
+  usefull for custom modules to use for example a common translation file
+
+    interface translation project = my_project
+
+  This can be used in combination with an alternative path to the translation
+  file. For example:
+
+    l10n path = sites/all/modules/custom/%project/%project.%language.po
+
+Exclude a project from translation checks and updates
+-----------------------------------------------------
+
+  Individual modules can be excluded from translation checks and updates. For
+  example custom modules or features. Add the following line to the .info file
+  to exclude a module from translation checks and updates:
+
+  interface translation project = FALSE
+
 API
 ---
-  Using hook_l10n_servers the l10n update module can be extended to use other
-  translation repositories. Which is usefull for organisations who maintain
-  their own translation.
-
   Using hook_l10n_update_projects_alter modules can alter or specify the
   translation repositories on a per module basis.
 
@@ -142,6 +153,6 @@ API
 
 Maintainers
 -----------
-  Jose Reyero
-  Gábor Hojtsy
   Erik Stielstra
+  Gábor Hojtsy
+  Jose Reyero
