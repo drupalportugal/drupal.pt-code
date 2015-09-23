@@ -5,6 +5,17 @@
  * Support for migration into Date fields.
  */
 
+/**
+ * Implements hook_migrate_api().
+ */
+function date_migrate_api() {
+  $api = array(
+    'api' => 2,
+    'field handlers' => array('DateMigrateFieldHandler'),
+  );
+  return $api;
+}
+
 class DateMigrateFieldHandler extends MigrateFieldHandler {
 
   /**
@@ -29,7 +40,7 @@ class DateMigrateFieldHandler extends MigrateFieldHandler {
    * @return array
    *   An array of the defined variables in this scope.
    */
-  static function arguments($timezone = 'UTC', $timezone_db = 'UTC', $rrule = NULL, $language = NULL) {
+  public static function arguments($timezone = 'UTC', $timezone_db = 'UTC', $rrule = NULL, $language = NULL) {
     return get_defined_vars();
   }
 
@@ -57,37 +68,47 @@ class DateMigrateFieldHandler extends MigrateFieldHandler {
       $arguments = array();
     }
 
-    if (isset($arguments['timezone'])) {
-      $default_timezone = $arguments['timezone'];
-    }
-    else {
-      $default_timezone = 'UTC';
-    }
-    if (isset($arguments['timezone_db'])) {
-      $default_timezone_db = $arguments['timezone_db'];
-    }
-    else {
-      $default_timezone_db = NULL;
-    }
-    if (isset($arguments['rrule'])) {
-      $default_rrule = $arguments['rrule'];
-    }
-    else {
-      $default_rrule = NULL;
-    }
     $language = $this->getFieldLanguage($entity, $field_info, $arguments);
 
-    // Setup the standard Field API array for saving.
-    $delta = 0;
-    foreach ($values as $from) {
-      // Set defaults.
-      $to = NULL;
-      $timezone = $default_timezone;
-      $timezone_db = $default_timezone_db;
-      $rrule = $default_rrule;
+    foreach ($values as $delta => $from) {
+      if (!empty($arguments['timezone'])) {
+        if (is_array($arguments['timezone'])) {
+          $timezone = $arguments['timezone'][$delta];
+        }
+        else {
+          $timezone = $arguments['timezone'];
+        }
+      }
+      else {
+        $timezone = 'UTC';
+      }
 
-      // Is the value a straight datetime value, or JSON containing a set of
-      // properties?
+      if (!empty($arguments['rrule'])) {
+        if (is_array($arguments['rrule'])) {
+          $rrule = $arguments['rrule'][$delta];
+        }
+        else {
+          $rrule = $arguments['rrule'];
+        }
+      }
+      else {
+        $rrule = NULL;
+      }
+
+      if (!empty($arguments['to'])) {
+        if (is_array($arguments['to'])) {
+          $to = $arguments['to'][$delta];
+        }
+        else {
+          $to = $arguments['to'];
+        }
+      }
+      else {
+        $to = NULL;
+      }
+
+      // Legacy support for JSON containing a set of properties - deprecated
+      // now that we have subfields.
       if (!empty($from) && $from{0} == '{') {
         $properties = drupal_json_decode($from);
         $from = $properties['from'];
@@ -97,9 +118,6 @@ class DateMigrateFieldHandler extends MigrateFieldHandler {
         }
         if (!empty($properties['timezone'])) {
           $timezone = $properties['timezone'];
-        }
-        if (!empty($properties['timezone_db'])) {
-          $timezone_db = $properties['timezone_db'];
         }
         if (!empty($properties['rrule'])) {
           $rrule = $properties['rrule'];
@@ -111,6 +129,7 @@ class DateMigrateFieldHandler extends MigrateFieldHandler {
       // timestamp for 'now'.
       if (empty($from)) {
         $return[$language][$delta]['value'] = NULL;
+        $return[$language][$delta]['timezone'] = NULL;
         if (!empty($field_info['settings']['todate'])) {
           $return[$language][$delta]['value2'] = NULL;
         }
@@ -133,6 +152,7 @@ class DateMigrateFieldHandler extends MigrateFieldHandler {
         case 'datestamp':
           // Already done.
           break;
+
         case 'datetime':
           // YYYY-MM-DD HH:MM:SS.
           $from = format_date($from, 'custom', 'Y-m-d H:i:s', $timezone);
@@ -140,6 +160,7 @@ class DateMigrateFieldHandler extends MigrateFieldHandler {
             $to = format_date($to, 'custom', 'Y-m-d H:i:s', $timezone);
           }
           break;
+
         case 'date':
           // ISO date: YYYY-MM-DDTHH:MM:SS.
           $from = format_date($from, 'custom', 'Y-m-d\TH:i:s', $timezone);
@@ -147,6 +168,7 @@ class DateMigrateFieldHandler extends MigrateFieldHandler {
             $to = format_date($to, 'custom', 'Y-m-d\TH:i:s', $timezone);
           }
           break;
+
         default:
           break;
       }
@@ -155,21 +177,36 @@ class DateMigrateFieldHandler extends MigrateFieldHandler {
       // created.
       if (function_exists('date_repeat_build_dates') && !empty($field_info['settings']['repeat']) && $rrule) {
         include_once DRUPAL_ROOT . '/' . drupal_get_path('module', 'date_api') . '/date_api_ical.inc';
-        $item = array('value' => $from, 'value2' => $to, 'timezone' => $timezone);
+        $item = array(
+          'value' => $from,
+          'value2' => $to,
+          'timezone' => $timezone,
+        );
         // Can be de-uglified when http://drupal.org/node/1159404 is committed.
         $return[$language] = date_repeat_build_dates(NULL, date_ical_parse_rrule($field_info, $rrule), $field_info, $item);
       }
       else {
         $return[$language][$delta]['value'] = $from;
+        $return[$language][$delta]['timezone'] = $timezone;
         if (!empty($to)) {
           $return[$language][$delta]['value2'] = $to;
         }
       }
-      $delta++;
     }
     if (!isset($return)) {
       $return = NULL;
     }
     return $return;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function fields($migration = NULL) {
+    return array(
+      'timezone' => t('Timezone'),
+      'rrule' => t('Recurring event rule'),
+      'to' => t('End date date'),
+    );
   }
 }
