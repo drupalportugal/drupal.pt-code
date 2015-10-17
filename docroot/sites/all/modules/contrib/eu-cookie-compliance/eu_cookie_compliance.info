@@ -3,9 +3,9 @@ description = This module aims at making the website compliant with the new EU c
 core = 7.x
 configure = admin/config/system/eu-cookie-compliance
 
-; Information added by  packaging script on 2013-11-20
-version = "7.x-1.12"
+; Information added by Drupal.org packaging script on 2014-05-19
+version = "7.x-1.13"
 core = "7.x"
 project = "eu-cookie-compliance"
-datestamp = "1384944505"
+datestamp = "1400502528"
 

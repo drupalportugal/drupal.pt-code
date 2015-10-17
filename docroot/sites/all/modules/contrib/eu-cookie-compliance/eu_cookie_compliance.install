@@ -12,11 +12,11 @@ function eu_cookie_compliance_install() {
   $popup_settings = array(
     'popup_info' => array(
       'value' => '<h2>We use cookies on this site to enhance your user experience</h2><p>By clicking any link on this page you are giving your consent for us to set cookies.</p>',
-      'format' => "plain_text",
+      'format' => filter_default_format(),
     ),
     'popup_agreed' => array(
       'value' => '<h2>Thank you for accepting cookies</h2><p>You can now hide this message or find out more about cookies.</p>',
-      'format' => "plain_text",
+      'format' => filter_default_format(),
     ),
   );
   global $language;

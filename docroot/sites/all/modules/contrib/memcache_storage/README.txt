@@ -52,6 +52,7 @@ To add memcached support for your site you should simply add following settings 
 $conf['cache_backends'][] = 'sites/all/modules/memcache_storage/memcache_storage.inc';
 $conf['cache_default_class'] = 'MemcacheStorage';
 $conf['cache_class_cache_form'] = 'DrupalDatabaseCache';
+$conf['cache_class_cache_update'] = 'DrupalDatabaseCache';
 ..
 
 
@@ -92,14 +93,14 @@ Note that after changing this setting all cache stored in memcached pool will be
 You may set compress mode for all data stored in memcached pool.
 
 ..
-$conf['memcache_storage_compress_data'] = 0;
+$conf['memcache_storage_compress_data'] = TRUE;
 ..
 
-Default: 0
-Available values: 0 or 2 (MEMCACHE_COMPRESSED)
+Default: FALSE
 See: http://www.php.net/manual/en/memcache.set.php
 
-Enabling compress might slightly decrease performance but reduce amount of used by memcache memory.
+Enabling or disabling compression mode may lead to the minor performance changes.
+This is depends on your server configuration.
 
 
 2.4. COMPRESSION FOR BIG VALUES (ONLY FOR MEMCACHE EXTENSION)
@@ -312,7 +313,39 @@ $conf['memcache_options'] = array(
 ..
 
 
-2.11. PERSISTENT CONNECTION
+2.11. SASL SUPPORT (ONLY FOR PECL MEMCACHED)
+
+Memcached daemon supports authentication via SASL protocol.
+
+This can be used to effectively limit which users on a system can access memcached,
+as well as to strengthen it's security (not cool if user A can read data from user B...)
+-- particularly useful on a shared hosting environment or on a open system.
+
+Note that:
+
+- SASL works only when binary protocol is enabled, so you need to configure your memcached daemon to work with binary protocol (-B binary).
+- This method is only available when the Memcached PECL extension is build with SASL support.
+
+How to enable SASL in Memcached daemon (http://code.google.com/p/memcached/wiki/SASLHowto):
+
+- Add the flag "-S" in /etc/memcached.conf (Debian).
+- Create an user for the login being used for memcached under php: "sudo saslpasswd2 -a memcached -c someuser" and type a password.
+
+Enable SASL in Memcached PECL extension (http://php.net/manual/en/book.memcached.php):
+
+- Add the option "memcached.use_sasl = 1" in /etc/php5/mods-available/memcached.ini or on your site's php.ini;
+
+Configure Memcache Storage:
+
+..
+$conf['memcache_sasl_auth'] = array(
+  'user' => 'someuser',
+  'password' => 'somepassword',
+);
+..
+
+
+2.12. PERSISTENT CONNECTION
 
 PHP may open persistent connection to memcached daemon.
 
@@ -323,7 +356,7 @@ $conf['memcache_storage_persistent_connection'] = TRUE;
 Default: FALSE
 
 
-2.12. SESSIONS SUPPORT
+2.13. SESSIONS SUPPORT
 
 Memcache Storage allows you to store all session data in memory.
 It helps database to reduce amount of queries.
@@ -334,7 +367,31 @@ $conf['session_inc'] = 'sites/all/modules/memcache_storage/includes/session.inc'
 
 Read more about sessions here http://api.drupal.org/api/drupal/includes!session.inc/7
 
-2.13. INTEGRATION WITH NGINX
+2.14 STORING SESSIONS IN A CUSTOM MEMCACHED INSTANCE
+
+By default all sessions are stored in 'default' memcached instance.
+If you want to change this, you need to set up a proper configuration
+for memcache_servers (add a new one), and point sessions bin to the
+new server:
+
+..
+
+# Configure at least two memcached servers.
+$conf['memcache_servers'] = array(
+  '127.0.0.1:11211' => 'default',
+  '127.0.0.1:11212' => 'sessions_instance',
+);
+
+# Note that you need to set up this for 'sessions' AND for 'users' bins.
+$conf['memcache_bins'] = array(
+  'sessions'  => 'sessions_instance',
+  'users'     => 'sessions_instance',
+);
+
+Please, do not forget, that you need to create a separate memcached instance
+on you web server first.
+
+2.15. INTEGRATION WITH NGINX
 
 Since 7.x-1.1 Memcache Storage supports integration with servers that may read cached pages
 directly from memcached pool. It stores a plain HTML text instead of object. This allows
@@ -417,6 +474,7 @@ drush ms-fb cache_bootstrap  // Flushes cache bin 'cache_bootstrap'.
 $conf['cache_backends'][] = 'sites/all/modules/memcache_storage/memcache_storage.inc';
 $conf['cache_default_class'] = 'MemcacheStorage';
 $conf['cache_class_cache_form'] = 'DrupalDatabaseCache';
+$conf['cache_class_cache_update'] = 'DrupalDatabaseCache';
 
 # Advanced usage of Drupal page cache.
 $conf['cache_backends'][] = 'sites/all/modules/memcache_storage/memcache_storage.page_cache.inc';

@@ -63,10 +63,10 @@ function lock_acquire($name, $timeout = 30.0) {
   else {
 
     // Add new lock.
-    MemcacheStorageAPI::set($name, _lock_id(), $expire, 'semaphore');
-
-    // We track all acquired locks in the global variable.
-    $locks[$name] = TRUE;
+    if(MemcacheStorageAPI::add($name, _lock_id(), $expire, 'semaphore')) {
+      // We track all acquired locks in the global variable.
+      $locks[$name] = TRUE;
+    }
   }
 
   return isset($locks[$name]);

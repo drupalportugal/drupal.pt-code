@@ -43,7 +43,8 @@ function memcache_storage_requirements($phase) {
 
     return $requirements;
   }
-  elseif (($memcache && !$memcached) || ($memcache && $memcached)) {
+
+  if ($memcache) {
 
     // Check memcache extension version.
     $memcache_version = phpversion('memcache');
@@ -60,7 +61,8 @@ function memcache_storage_requirements($phase) {
       $requirements['memcache_storage_memcache_extension']['severity'] = REQUIREMENT_OK;
     }
   }
-  elseif (($memcached && !$memcache)  || ($memcache && $memcached)) {
+
+  if ($memcached) {
 
     // Check memcached version.
     $memcached_version = phpversion('memcached');

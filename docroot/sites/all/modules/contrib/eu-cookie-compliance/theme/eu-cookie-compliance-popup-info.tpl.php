@@ -12,17 +12,18 @@
  *
  * Variables available:
  * - $message:  Contains the text that will be display whithin the pop-up
+ * - $agree_button: Contains agree button title
+ * - $disagree_button: Contains disagree button title
  */
 ?>
-
 <div>
   <div class ="popup-content info">
     <div id="popup-text">
       <?php print $message ?>
     </div>
     <div id="popup-buttons">
-      <button type="button" class="agree-button"><?php print t("Yes, I agree"); ?></button>
-      <button type="button" class="find-more-button"><?php print t("No, I want to find out more"); ?></button>
+      <button type="button" class="agree-button"><?php print $agree_button; ?></button>
+      <button type="button" class="find-more-button"><?php print $disagree_button; ?></button>
     </div>
   </div>
 </div>
