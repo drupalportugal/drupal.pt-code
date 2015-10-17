@@ -1,4 +1,10 @@
 /**
+ * @file
+ *
+ * Fivestar JavaScript behaviors integration.
+ */
+
+/**
  * Create a degradeable star rating interface out of a simple form structure.
  *
  * Originally based on the Star Rating jQuery plugin by Wil Stuckey:
@@ -8,7 +14,7 @@
 
 Drupal.behaviors.fivestar = {
   attach: function (context) {
-    $('div.fivestar-form-item').once('fivestar', function() {
+    $(context).find('div.fivestar-form-item').once('fivestar', function() {
       var $this = $(this);
       var $container = $('<div class="fivestar-widget clearfix"></div>');
       var $select = $('select', $this);
@@ -36,7 +42,9 @@ Drupal.behaviors.fivestar = {
         }
       });
 
-      $container.find('.star:lt(' + index + ')').addClass('on');
+      if (index != -1) {
+        $container.find('.star').slice(0, index).addClass('on');
+      }
       $container.addClass('fivestar-widget-' + ($options.length));
       $container.find('a')
         .bind('click', $this, Drupal.behaviors.fivestar.rate)
@@ -46,6 +54,9 @@ Drupal.behaviors.fivestar = {
 
       // Attach the new widget and hide the existing widget.
       $select.after($container).css('display', 'none');
+
+      // Allow other modules to modify the widget.
+      Drupal.attachBehaviors($this);
     });
   },
   rate: function(event) {
@@ -53,9 +64,13 @@ Drupal.behaviors.fivestar = {
     var $widget = event.data;
     var value = this.hash.replace('#', '');
     $('select', $widget).val(value).change();
-    var $this_star = $this.closest('.star');
+    var $this_star = (value == 0) ? $this.parent().parent().find('.star') : $this.closest('.star');
     $this_star.prevAll('.star').andSelf().addClass('on');
     $this_star.nextAll('.star').removeClass('on');
+    if(value==0){
+      $this_star.removeClass('on');
+    }
+
     event.preventDefault();
   },
   hover: function(event) {

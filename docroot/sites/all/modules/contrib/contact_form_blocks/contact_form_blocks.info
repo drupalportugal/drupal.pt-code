@@ -3,9 +3,9 @@ description = Makes your site-wide contact forms available as Drupal Blocks.
 core = 7.x
 dependencies[] = contact
 
-; Information added by drupal.org packaging script on 2012-04-14
+; Information added by drupal.org packaging script on 2013-09-30
 version = "7.x-1.x-dev"
 core = "7.x"
 project = "contact_form_blocks"
-datestamp = "1334362149"
+datestamp = "1380566806"
 

@@ -1,22 +1,30 @@
 <?php
-// $Id: site_verify.module,v 1.17 2011/02/20 22:37:54 davereid Exp $
+
+/**
+ * @file
+ * Site Verify provides a tool for verification codes (meta tags or custom
+ * pages) to be added to the site, for verification with external search
+ * engines.
+ */
 
 /**
  * Implements hook_menu().
  */
 function site_verify_menu() {
+  // List all verification records.
   $items['admin/config/search/verifications'] = array(
     'title' => 'Verifications',
     'description' => 'Add, change or remove verifications for your site.',
     'page callback' => 'site_verify_list',
-    'access arguments' => array('administer site configuration'),
+    'access arguments' => array('administer site verify'),
     'file' => 'site_verify.admin.inc',
   );
+  // Add a verification record.
   $items['admin/config/search/verifications/add'] = array(
     'title' => 'Add verification',
     'page callback' => 'drupal_get_form',
     'page arguments' => array('site_verify_edit_form'),
-    'access arguments' => array('administer site configuration'),
+    'access arguments' => array('administer site verify'),
     'file' => 'site_verify.admin.inc',
     'type' => MENU_LOCAL_ACTION,
   );
@@ -24,19 +32,19 @@ function site_verify_menu() {
     'title' => 'Add',
     'page callback' => 'drupal_get_form',
     'page arguments' => array('site_verify_edit_form', array(), 5),
-    'access arguments' => array('administer site configuration'),
+    'access arguments' => array('administer site verify'),
     'file' => 'site_verify.admin.inc',
   );
   $items['admin/config/search/verifications/%site_verify/edit'] = array(
     'page callback' => 'drupal_get_form',
     'page arguments' => array('site_verify_edit_form', 4),
-    'access arguments' => array('administer site configuration'),
+    'access arguments' => array('administer site verify'),
     'file' => 'site_verify.admin.inc',
   );
   $items['admin/config/search/verifications/%site_verify/delete'] = array(
     'page callback' => 'drupal_get_form',
     'page arguments' => array('site_verify_delete_form', 4),
-    'access arguments' => array('administer site configuration'),
+    'access arguments' => array('administer site verify'),
     'file' => 'site_verify.admin.inc',
   );
 
@@ -52,6 +60,20 @@ function site_verify_menu() {
   }
 
   return $items;
+}
+
+/**
+ *
+ * Implements hook_permission().
+ *
+*/
+function site_verify_permission() {
+  return array(
+    'administer site verify' => array(
+      'title' => t('Administer site verification'),
+      'description' => t('Administer search engine site ownership verification metadata.'),
+    ),
+  );
 }
 
 /**
@@ -176,6 +198,9 @@ function site_verify_get_engines() {
   return $engines;
 }
 
+/**
+ * Output the page contents for a file-based custom verification page.
+ */
 function site_verify_output($svid) {
   $verification = site_verify_load($svid);
   if ($verification['file_contents'] && $verification['engine']['file_contents']) {

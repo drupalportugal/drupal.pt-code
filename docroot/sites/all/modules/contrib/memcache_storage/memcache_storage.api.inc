@@ -10,20 +10,20 @@
  */
 class MemcacheStorageAPI {
 
-  // List of available memcache connections.
+  // List of available memcached connections.
   private static $connections;
 
   // Unique debug key.
   private static $debug_key = 0;
 
   /**
-   * Connect to memcache clustes and returns memcache object on success.
+   * Connect to memcached clustes and returns memcached object on success.
    *
    * @param $bin
    *   Cache bin name. i.e. 'cache' or 'cache_bootstrap'.
    *
    * @return bool|object
-   *   Memcache or memcached object is connection was successfull. Otherwise FALSE.
+   *   Memcache or memcached object is connection was successful. Otherwise FALSE.
    */
   public static function openConnection($bin = '') {
 
@@ -34,7 +34,7 @@ class MemcacheStorageAPI {
     if (!isset(self::$connections[$cluster_name])) {
 
       // Store memcached object as a static object, to avoid duplicate connections to the same
-      // memcached cluster but for differens cache bins.
+      // memcached cluster but for different cache bins.
       self::$connections[$cluster_name] = self::connectToCluster($cluster_name);
     }
 
@@ -138,13 +138,13 @@ class MemcacheStorageAPI {
       }
     }
 
-    // If memcache is unable to connect to all servers it means that
+    // If memcached is unable to connect to all servers it means that
     // we have no connections at all, and could not start memcached connection.
     if (sizeof($failed_connections) == sizeof($cluster_servers)) {
       return FALSE;
     }
 
-    // Provided compressThreshold support for PECL Memcached library.
+    // Provide compressThreshold support for PECL Memcached library.
     if ($extension == 'Memcache') {
 
       // For more information see http://www.php.net/manual/en/memcache.setcompressthreshold.php.
@@ -160,9 +160,18 @@ class MemcacheStorageAPI {
         Memcached::OPT_DISTRIBUTION => Memcached::DISTRIBUTION_CONSISTENT,
       );
 
-      // For more info about memcached contants see http://www.php.net/manual/en/memcached.constants.php.
+      // For more info about memcached constants see http://www.php.net/manual/en/memcached.constants.php.
       $memcached_options = variable_get('memcache_options', array());
       $memcached_options += $default_options;
+
+      // Add SASL support.
+      $sasl_auth = variable_get('memcache_sasl_auth', array());
+      if (!empty($sasl_auth['user']) && !empty($sasl_auth['password'])) {
+        $memcache->setSaslAuthData($sasl_auth['user'], $sasl_auth['password']);
+
+        // SASL auth works only with binary protocol.
+        $memcached_options[Memcached::OPT_BINARY_PROTOCOL] = TRUE;
+      }
 
       // Set memcached options.
       // See http://www.php.net/manual/en/memcached.setoption.php.
@@ -198,7 +207,7 @@ class MemcacheStorageAPI {
       return FALSE;
     }
 
-    // Preprocess cache keys.
+    // Process cache keys.
     $cids = array();
     foreach ($cache_ids as $cache_id) {
       $safe_key = self::preprocessCacheKey($cache_id, $cache_bin);
@@ -264,7 +273,7 @@ class MemcacheStorageAPI {
     $result = FALSE;
     if ($memcache instanceof Memcache) {
       // Get compression mode.
-      $compressed = variable_get('memcache_storage_compress_data', 0);
+      $compressed = variable_get('memcache_storage_compress_data') ? MEMCACHE_COMPRESSED : 0;
       $result = @$memcache->set($cid, $data, $compressed, $expire);
     }
     elseif ($memcache instanceof Memcached) {
@@ -274,6 +283,50 @@ class MemcacheStorageAPI {
     // Run final debug actions.
     if (variable_get('memcache_storage_debug', FALSE)) {
       self::finalDebugActions('set', $cache_bin, $cache_id, $cid, $result);
+    }
+
+    return $result;
+  }
+
+  /**
+   * Save data into memcached pool if key doesn't exist.
+   * Provide debug logging.
+   *
+   * @see http://www.php.net/manual/en/memcache.set.php
+   */
+  public static function add($cache_id, $data, $expire, $cache_bin = '') {
+
+    // Get memcache object.
+    $memcache = self::openConnection($cache_bin);
+
+    // No memcache connection.
+    if (empty($memcache)) {
+      return FALSE;
+    }
+
+    // Build unique cache id.
+    $cid = self::preprocessCacheKey($cache_id, $cache_bin);
+
+    // Run initial debug actions.
+    if (variable_get('memcache_storage_debug', FALSE)) {
+      self::initialDebugActions();
+    }
+
+    // Set data to memcached pool.
+    $result = FALSE;
+    if ($memcache instanceof Memcache) {
+      // Get compression mode.
+      $compressed = variable_get('memcache_storage_compress_data', 0);
+      $result = @$memcache->add($cid, $data, $compressed, $expire);
+    }
+    elseif ($memcache instanceof Memcached) {
+      @$memcache->add($cid, $data, $expire);
+      $result = $memcache->getResultCode() != Memcached::RES_SUCCESS ? FALSE : TRUE;
+    }
+
+    // Run final debug actions.
+    if (variable_get('memcache_storage_debug', FALSE)) {
+      self::finalDebugActions('add', $cache_bin, $cache_id, $cid, $result);
     }
 
     return $result;
@@ -307,7 +360,7 @@ class MemcacheStorageAPI {
     $result = FALSE;
     if ($memcache instanceof Memcache) {
       // Get compression mode.
-      $compressed = variable_get('memcache_storage_compress_data', 0);
+      $compressed =  variable_get('memcache_storage_compress_data') ? MEMCACHE_COMPRESSED : 0;
       $result = @$memcache->replace($cid, $data, $compressed, $expire);
     }
     elseif ($memcache instanceof Memcached) {
@@ -443,21 +496,30 @@ class MemcacheStorageAPI {
    */
   static protected function getCacheBinCluster($bin) {
 
-    // Example:
-    // $conf['memcache_bins'] = array(
-    //   'cache' => 'default',
-    //   'cache_bootstrap' => 'default',
-    //   'cache_page' => 'pages',
-    // );
-    $cluster_bins = variable_get('memcache_bins', array());
+    // Static variable that stores cache bin
+    // names and mapped clusters.
+    static $bin_clusters = array();
 
-    // Get server name for current cache bin.
-    $cluster = 'default';
-    if (!empty($cluster_bins[$bin])) {
-      $cluster = $cluster_bins[$bin];
+    // If static cache doesn't contain info about
+    // mapping then we should load it.
+    if (empty($bin_clusters[$bin])) {
+
+      // Example:
+      // $conf['memcache_bins'] = array(
+      //   'cache' => 'default',
+      //   'cache_bootstrap' => 'default',
+      //   'cache_page' => 'pages',
+      // );
+      $cluster_bins = variable_get('memcache_bins', array());
+
+      // Remove suffix from cache bin name.
+      $cache_bin = self::normalizeCacheBin($bin);
+
+      // Get mapped cluster.
+      $bin_clusters[$bin] = !empty($cluster_bins[$cache_bin]) ? $cluster_bins[$cache_bin] : 'default';
     }
 
-    return $cluster;
+    return $bin_clusters[$bin];
   }
 
   /**
@@ -515,13 +577,8 @@ class MemcacheStorageAPI {
     $mem_usage = &drupal_static('memcache_storage_debug_mem_usage', array());
     $used_memory = memory_get_usage() - $mem_usage[self::$debug_key];
 
-    // Preprocess cache bin name (remove suffix _[INDEX] if exists).
-    // A little bit creepy, but this is a debug output, and we can do it here.
-    $cache_bin_suffix = substr($cache_bin, strrpos($cache_bin, '_') + 1);
-    $cache_bin_original = $cache_bin;
-    if (ctype_digit($cache_bin_suffix)) {
-      $cache_bin_original = substr($cache_bin, 0, strrpos($cache_bin, '_'));
-    }
+    // Processes cache bin name (remove suffix _[INDEX] if exists).
+    $cache_bin_original = self::normalizeCacheBin($cache_bin);
 
     // Get array with debug data.
     $memcache_storage_debug_output = &drupal_static('memcache_storage_debug_output');
@@ -567,6 +624,23 @@ class MemcacheStorageAPI {
 
     // Increase timer to get new time results.
     self::$debug_key++;
+  }
+
+  /**
+   * Removes suffix from cache bin name.
+   *
+   * @param $cache_bin
+   *   Name of cache bin.
+   *
+   * @return string
+   *   Return cache bin name without suffix.
+   */
+  private static function normalizeCacheBin($cache_bin) {
+    $cache_bin_suffix = substr($cache_bin, strrpos($cache_bin, '_') + 1);
+    if (ctype_digit($cache_bin_suffix)) {
+      $cache_bin = substr($cache_bin, 0, strrpos($cache_bin, '_'));
+    }
+    return $cache_bin;
   }
 
 }

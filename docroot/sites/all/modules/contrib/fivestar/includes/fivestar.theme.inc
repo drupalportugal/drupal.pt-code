@@ -30,16 +30,18 @@ function theme_fivestar_preview_widget($variables) {
     '#stars' => 5,
     '#auto_submit' => FALSE,
     '#allow_clear' => TRUE,
+    '#allow_revote' => TRUE,
+    '#allow_ownvote' => TRUE,
     '#widget' => array(
       'name' => isset($variables['name']) ? $variables['name'] : 'default',
       'css' => isset($variables['css']) && $variables['css'] != 'default' ? $variables['css'] : FALSE,
     ),
   );
-  
+
   // Attach necessary JS settings
   $settings = array(
-    'titleUser' => t('Your rating') .': ',
-    'titleAverage' => t('Average') .': ',
+    'titleUser' => t('Your rating') . ': ',
+    'titleAverage' => t('Average') . ': ',
     'feedbackSavingVote' => t('Saving your vote...'),
     'feedbackVoteSaved' => t('Your vote has been saved.'),
     'feedbackDeletingVote' => t('Deleting your vote...'),
@@ -67,6 +69,8 @@ function theme_fivestar_preview($variables) {
   $settings = array(
     'stars' => $stars,
     'allow_clear' => $unvote,
+    'allow_revote' => $revote,
+    'allow_ownvote' => $ownvote,
     'style' => $style,
     'text' => $text,
     'title' => $title,
@@ -85,11 +89,16 @@ function theme_fivestar_preview($variables) {
 }
 
 function theme_fivestar_preview_wrapper($variables) {
-  return '<div class="fivestar-preview fivestar-preview-'. $variables['type'] .'">'. $variables['content'] .'</div>';
+  return '<div class="fivestar-preview fivestar-preview-' . $variables['type'] . '">' . $variables['content'] . '</div>';
 }
 
 /**
  * Theme function for 'default' fivestar field formatter.
+ *
+ * This themes static stars. That is, pairs of stars where neither set
+ * of stars is "exposed". Exposed stars are clickable and displayed in a
+ * form. Theming of exposed stars is handled by the form array (and calls
+ * the same theme functions called at the end of this function).
  */
 function theme_fivestar_formatter_default($variables) {
   $element = $variables['element'];
@@ -108,7 +117,7 @@ function theme_fivestar_formatter_default($variables) {
     'widget' => $element['#widget'],
   );
   $star_display = theme('fivestar_static', $variables);
-  return theme('fivestar_static_element', array('description' => $element['#description'], 'star_display' => $star_display));
+  return theme('fivestar_static_element', array('description' => $element['#description'], 'star_display' => $star_display, 'is_form' => FALSE));
 }
 
 /**
@@ -124,7 +133,7 @@ function theme_fivestar_formatter_rating($variables) {
   $stars = (empty($element['#instance_settings']['stars'])) ? 5 : $element['#instance_settings']['stars'];
   $average = $element['#item']['average'];
   // Rating is X out of Y stars.
-  $rating = round(($average/100) * $stars, 1); 
+  $rating = round(($average/100) * $stars, 1);
   $output = $rating . '/' . $stars;
 
   return $output;
@@ -179,12 +188,14 @@ function theme_fivestar_static($variables) {
   $stars = $variables['stars'];
   $tag = $variables['tag'];
   $widget = $variables['widget'];
-  if($widget['name'] != 'default') {
+  if ($widget['name'] != 'default') {
+    $path = drupal_get_path('module', 'fivestar');
+    drupal_add_css($path . '/css/fivestar.css');
     drupal_add_css($widget['css']);
   }
-  
+
   $output = '<div class="fivestar-' . $widget['name'] . '">';
-  $output .= '<div class="fivestar-widget-static fivestar-widget-static-'. $tag .' fivestar-widget-static-'. $stars . ' clearfix">';
+  $output .= '<div class="fivestar-widget-static fivestar-widget-static-' . $tag . ' fivestar-widget-static-' . $stars . ' clearfix">';
   if (empty($stars)) {
     $stars = 5;
   }
@@ -195,10 +206,10 @@ function theme_fivestar_static($variables) {
     $zebra = ($n % 2 == 0) ? 'even' : 'odd';
     $first = $n == 1 ? ' star-first' : '';
     $last = $n == $stars ? ' star-last' : '';
-    $output .= '<div class="star star-'. $n .' star-'. $zebra . $first . $last .'">';
+    $output .= '<div class="star star-' . $n . ' star-' . $zebra . $first . $last . '">';
     if ($rating < $star_value && $rating > $prev_star_value) {
       $percent = (($rating - $prev_star_value) / ($star_value - $prev_star_value)) * 100;
-      $output .= '<span class="on" style="width: '. $percent .'%">';
+      $output .= '<span class="on" style="width: ' . $percent . '%">';
     }
     elseif ($rating >= $star_value) {
       $output .= '<span class="on">';
@@ -240,39 +251,57 @@ function theme_fivestar_summary($variables) {
   $output = '';
   $div_class = '';
   $average_rating_microdata = '';
+  $rating_count_microdata = '';
   if (isset($user_rating)) {
     $div_class = isset($votes) ? 'user-count' : 'user';
     $user_stars = round(($user_rating * $stars) / 100, 1);
-    $output .= '<span class="user-rating">'. t('Your rating: <span>!stars</span>', array('!stars' => $user_rating ? $user_stars : t('None'))) .'</span>';
+    $output .= '<span class="user-rating">' . t('Your rating: <span>!stars</span>', array('!stars' => $user_rating ? $user_stars : t('None'))) . '</span>';
   }
   if (isset($user_rating) && isset($average_rating)) {
     $output .= ' ';
   }
   if (isset($average_rating)) {
-    $div_class = isset($votes) ? 'average-count' : 'average';
+    if (isset($user_rating)) {
+      $div_class = 'combo';
+    }
+    else {
+      $div_class = isset($votes) ? 'average-count' : 'average';
+    }
+
     $average_stars = round(($average_rating * $stars) / 100, 1);
     if (!empty($microdata['average_rating']['#attributes'])) {
       $average_rating_microdata = drupal_attributes($microdata['average_rating']['#attributes']);
     }
-    $output .= '<span class="average-rating">'. t('Average: <span !microdata>!stars</span>', array('!stars' => $average_stars, '!microdata' => $average_rating_microdata)) .'</span>';
-  }
-  if (isset($user_rating) && isset($average_rating)) {
-    $div_class = 'combo';
+    $output .= '<span class="average-rating">' . t('Average: !stars',
+      array('!stars' => "<span $average_rating_microdata>$average_stars</span>")) . '</span>';
   }
 
-  if (isset($votes) && !(isset($user_rating) || isset($average_rating))) {
-    $output .= ' <span class="total-votes">'. format_plural($votes, '<span>@count</span> vote', '<span>@count</span> votes') .'</span>';
-    $div_class = 'count';
-  }
-  elseif (isset($votes)) {
-    $output .= ' <span class="total-votes">('. format_plural($votes, '<span>@count</span> vote', '<span>@count</span> votes') .')</span>';
+  if (isset($votes)) {
+    if (!isset($user_rating) && !isset($average_rating)) {
+      $div_class = 'count';
+    }
+    if ($votes === 0) {
+      $output = '<span class="empty">'. t('No votes yet') .'</span>';
+    }
+    else {
+      if (!empty($microdata['rating_count']['#attributes'])) {
+        $rating_count_microdata = drupal_attributes($microdata['rating_count']['#attributes']);
+      }
+      // We don't directly substitute $votes (i.e. use '@count') in format_plural,
+      // because it has a span around it which is not translatable.
+      $votes_str = format_plural($votes, '!cnt vote', '!cnt votes', array(
+        '!cnt' => '<span ' . $rating_count_microdata . '>' . intval($votes) . '</span>'));
+      if (isset($user_rating) || isset($average_rating)) {
+        $output .= ' <span class="total-votes">(' . $votes_str . ')</span>';
+      }
+      else {
+        $output .= ' <span class="total-votes">' . $votes_str . '</span>';
+      }
+    }
   }
 
-  if ($votes === 0) {
-    $output = '<span class="empty">'. t('No votes yet') .'</span>';
-  }
 
-  $output = '<div class="fivestar-summary fivestar-summary-'. $div_class . '">'. $output .'</div>';
+  $output = '<div class="fivestar-summary fivestar-summary-' . $div_class . '">' . $output . '</div>';
   return $output;
 }
 
@@ -281,7 +310,12 @@ function theme_fivestar_summary($variables) {
  */
 function theme_fivestar_static_element($variables) {
   $output = '';
-  $output .= '<div class="fivestar-static-form-item">';
+  if (isset($variables['is_form']) && !$variables['is_form']) {
+    $output .= '<div class="fivestar-static-item">';
+  }
+  else {
+    $output .= '<div class="fivestar-static-form-item">';
+  }
   $element = array(
     '#type' => 'item',
     '#title' => $variables['title'],
