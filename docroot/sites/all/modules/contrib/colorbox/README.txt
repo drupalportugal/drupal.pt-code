@@ -32,15 +32,13 @@ The Colorbox module:
 
 The Colorbox plugin:
 
-* Supports images, image groups, slideshow, ajax, inline, and
-  iframed content.
-* Appearance is controlled through CSS so users can restyle the box.
-* Preloads background images and can preload upcoming images in a
-  photo group.
-* Generates W3C valid XHTML and adds no JS global variables and
-  passes JSLint.
-* Tested in Firefox 2 & 3, Safari 3 & 4, Opera 9, Chrome,
-  Internet Explorer 6, 7, 8.
+* Supports photos, grouping, slideshow, ajax, inline, and iframed content.
+* Appearance is controlled through CSS so it can be restyled.
+* Preloads upcoming images in a photo group.
+* Completely unobtrusive, options are set in the JS and require no
+  changes to existing HTML.
+* Compatible with: jQuery 1.3.2+ in Firefox, Safari, Chrome, Opera,
+  Internet Explorer 7+.
 * Released under the MIT License.
 
 
@@ -91,7 +89,7 @@ Make any CSS adjustments to your "colorbox_mycolorbox.css" file.
 Load images from custom links in a Colorbox:
 --------------------------------------------
 
-Add the class "colorbox" to the link and point the src to the image
+Add the class "colorbox" to the link and point its href attribute to the image
 you want to display in the Colorbox.
 
 
