@@ -1,0 +1,12 @@
+name = Language Switch
+description = Language switching functionality for the Mobile Friendly Navigation Toolbar.
+core = 7.x
+dependencies[] = navbar
+
+
+; Information added by Drupal.org packaging script on 2014-03-13
+version = "7.x-1.0-alpha2"
+core = "7.x"
+project = "language_switch"
+datestamp = "1394739507"
+

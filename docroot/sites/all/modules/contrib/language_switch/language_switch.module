@@ -1,0 +1,94 @@
+<?php
+
+/**
+ * @file
+ * Language Switch for Navbar
+ */
+
+/**
+ * Implements hook_library().
+ */
+function language_switch_library() {
+  $path = drupal_get_path('module', 'language_switch');
+  $options = array(
+    'scope' => 'footer',
+    'defer' => TRUE,
+  );
+  $libraries['language-switch'] = array(
+    'title' => 'Switch languages',
+    'version' => VERSION,
+    'css' => array(
+      $path . '/css/language-switch.base.css',
+      $path . '/css/language-switch.icons.css',
+      $path . '/css/language-switch.theme.css',
+    ),
+    'js' => array(
+      $path . '/js/language-switch.js' => $options,
+    ),
+    'dependencies' => array(
+      array('system', 'jquery'),
+      array('navbar', 'underscore'),
+      array('navbar', 'backbone'),
+    ),
+  );
+  return $libraries;
+}
+
+/**
+ * Implements hook_navbar().
+ */
+function language_switch_navbar() {
+
+  // Check for multiple languages present.
+  if (variable_get('language_count') > 1) {
+
+    // Create language switch links.
+    $path = drupal_is_front_page() ? '<front>' : $_GET['q'];
+    $links = language_negotiation_get_switch_links('language', $path);
+
+    // Check for available links.
+    if (!empty($links->links)) {
+      // Create toolbar buttons from the links object.
+      $buttons = array();
+      foreach ($links->links as $key => $link) {
+        $buttons[$key] = l($link['title'], $link['href'], $link);
+      }
+      // Set up the navbar icon and dropdown.
+      $items['language_switch'] = array(
+        '#type' => 'navbar_item',
+        'tab' => array(
+          'trigger' => array(
+            '#theme' => 'html_tag',
+            '#tag' => 'button',
+            '#value' => t('language-switch'),
+            '#value_prefix' => '<span class="element-invisible">',
+            '#value_suffix' => '</span>',
+            '#attributes' => array(
+              'title' => t('Language Switch'),
+              'class' => array('language-switch-icon', 'language-switch-icon-language-switch', 'language-switch-trigger'),
+            ),
+          ),
+          'language_options' => array(
+            '#theme' => 'item_list',
+            '#items' => $buttons,
+            '#attributes' => array(
+              'class' => array('language-switch-options', 'item-list'),
+            ),
+          ),
+        ),
+        '#wrapper_attributes' => array(
+          'id' => 'language-switch-navbar-tab',
+          'class' => array('navbar-tab-language-switch'),
+        ),
+        '#attached' => array(
+          'library' => array(
+            array('language_switch', 'language-switch'),
+          ),
+        ),
+        '#weight' => 260,
+      );
+      return $items;
+    }
+  }
+}
+

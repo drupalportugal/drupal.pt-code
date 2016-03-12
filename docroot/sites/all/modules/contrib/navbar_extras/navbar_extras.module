@@ -1,0 +1,178 @@
+<?php
+
+/**
+ * @file
+ * Main file for NavBar extras module.
+ */
+
+/**
+ * Implements hook_menu().
+ */
+function navbar_extras_menu() {
+  $items = array();
+
+  $items['admin/config/user-interface/navbar'] = array(
+    'title'            => 'Navbar',
+    'description'      => 'Configuration options for navbar',
+    'access arguments' => array('administer navbar'),
+    'page callback'    => 'drupal_get_form',
+    'page arguments'   => array('navbar_extras_settings_form'),
+  );
+
+  return $items;
+}
+
+/**
+ * Implements hook_permission().
+ */
+function navbar_extras_permission() {
+  $return = array();
+
+  $return['administer navbar'] = array(
+    'title'       => t('Administer navbar'),
+    'description' => t('Administer configuration for navbar module'),
+  );
+
+  return $return;
+}
+
+/**
+ * Implements hook_navbar().
+ */
+function navbar_extras_navbar() {
+  $items = array();
+
+  // Devel menu.
+  if (module_exists('devel') && user_access('access devel information')) {
+    $tree = menu_tree_all_data('devel');
+    $items['devel'] = array(
+      '#type' => 'navbar_item',
+      'tab' => array(
+        '#type' => 'link',
+        '#title' => t('Devel'),
+        '#href' => 'devel/settings',
+        '#options' => array(
+          'attributes' => array(
+            'title' => t('Development'),
+            'class' => array('navbar-icon', 'navbar-icon-devel', 'navbar-tab'),
+          ),
+        ),
+      ),
+      'tray' => array(
+        '#heading' => t('Development'),
+        'development_menu' => menu_tree_output($tree),
+      ),
+      '#weight' => 50,
+    );
+  }
+
+  // Content creation menu.
+  $node_add_link = menu_get_item('node/add');
+  if ($node_add_link['access']) {
+    // Use system_admin_menu_block() instead of fetching all content types to
+    // get all sub-paths, because some modules can add own links under node/add,
+    // which are not node creation pages in fact, for example, panopoly_pages.
+    $content = system_admin_menu_block($node_add_link);
+    $menu_tree = array();
+    foreach ($content as $key => $item) {
+      $item['in_active_trail'] = FALSE;
+      $menu_tree[$key] = array('link' => $item, 'below' => array());
+    }
+    navbar_menu_navigation_links($menu_tree);
+
+    $items['create-content'] = array(
+      '#type' => 'navbar_item',
+      'tab' => array(
+        '#type' => 'link',
+        '#title' => t('New'),
+        '#href' => 'admin',
+        '#options' => array(
+          'attributes' => array(
+            'title' => t('Content creation menu'),
+            'class' => array('navbar-icon', 'navbar-icon-new', 'navbar-tab'),
+          ),
+        ),
+      ),
+      'tray' => array(
+        '#heading' => t('Content creation menu'),
+        'content_creation_menu' => menu_tree_output($menu_tree),
+      ),
+      '#weight' => -10,
+    );
+
+    return $items;
+  }
+
+  return $items;
+}
+
+/**
+ * Implements hook_navbar_alter().
+ */
+function navbar_extras_navbar_alter(&$items) {
+  if (empty($items['administration'])) {
+    return;
+  }
+
+  // Add navbar JS settings.
+  $js_settings = array();
+  if (variable_get('navbar_extras_open_menu')) {
+    $js_settings['navbar_extras_open_menu'] = TRUE;
+  }
+  if (variable_get('navbar_extras_lock_vertically')) {
+    $js_settings['navbar_extras_lock_vertically'] = TRUE;
+  }
+  $items['administration']['#attached']['js'][] = array(
+    'data' => drupal_get_path('module', 'navbar_extras') . '/js/navbar_extras.js',
+    'weight' => -10000,
+  );
+  $items['administration']['#attached']['js'][] = array(
+    'data' => array('navbar_extras' => $js_settings),
+    'type' => 'setting',
+  );
+}
+
+/**
+ * Implements hook_page_build().
+ */
+function navbar_extras_page_build(&$page) {
+  if (empty($page['page_top']['navbar'])) {
+    return;
+  }
+
+  // Show/hide navbar for admin user.
+  if (!variable_get('navbar_extras_admin_display', 0)) {
+    global $user;
+    $page['page_top']['navbar']['#access'] = ($user->uid != 1);
+  }
+}
+
+/**
+ * Callback for 'admin/config/user-interface/navbar'.
+ */
+function navbar_extras_settings_form($form, &$form_state) {
+  $form = array();
+
+  $form['navbar_extras_admin_display'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Show navbar for admin'),
+    '#description' => t('Allows to show/hide navbar for admin user (uid=1).'),
+    '#default_value' => variable_get('navbar_extras_admin_display', 1),
+  );
+
+  $form['navbar_extras_open_menu'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Open Menu item by default'),
+    '#description' => t('Show Menu item opened by default'),
+    '#default_value' => variable_get('navbar_extras_open_menu'),
+  );
+
+  $form['navbar_extras_lock_vertically'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Lock navbar vertically'),
+    '#description' => t('Fix position of navbar at right side (vertically) by default at page load.'),
+    '#default_value' => variable_get('navbar_extras_lock_vertically'),
+  );
+
+  return system_settings_form($form);
+}

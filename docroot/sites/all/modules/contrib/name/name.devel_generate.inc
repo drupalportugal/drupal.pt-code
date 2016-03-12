@@ -28,8 +28,16 @@ function _name_devel_generate($object, $field, $instance, $bundle) {
 
   $func = variable_get('name_devel_generate_names', '_name_devel_generate_name');
   $names = $func($field);
-
-  $components = array_filter($field['settings']['components']);
+  if (!isset($instance['setting'])) {
+    $instance['setting'] = array();
+  }
+  $instance['setting'] += array(
+    'components' => array(),
+  );
+  $components = array_filter($instance['setting']['components']);
+  if (!$components) {
+    $components = array_filter($field['settings']['components']);
+  }
   return array_intersect_key($names[array_rand($names)], $components);
 }
 

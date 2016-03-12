@@ -1,0 +1,118 @@
+/**
+ * @file
+ * Styling for Language Switch.
+ */
+
+#navbar-administration .navbar-tab-language-switch .language-switch-options {
+  background-color: white;
+  margin: 0;
+  padding: 0.5em 0;
+}
+#navbar-administration .navbar-tab-language-switch .language-switch-options {
+  box-shadow: 0 0.8em 2.5em -0.8em rgba(0, 0, 0, 0.75);
+}
+[dir] #navbar-administration .navbar-tab-language-switch .language-switch-options li {
+  margin: 0;
+  padding: 0;
+}
+#navbar-administration .navbar-tab-language-switch .language-switch-trigger {
+  cursor: pointer;
+  line-height: 1;
+  height: 3em;
+  margin: 0;
+}
+#navbar-administration .navbar-tab-language-switch .language-switch-trigger:hover {
+  background-image: -webkit-linear-gradient(rgba(255, 255, 255, 0.125) 20%, transparent 200%);
+  background-image: -moz-linear-gradient(rgba(255, 255, 255, 0.125) 20%, transparent 200%);
+  background-image: linear-gradient(rgba(255, 255, 255, 0.125) 20%, transparent 200%);
+}
+#navbar-administration .navbar-tab-language-switch .language-switch-trigger.active,
+#navbar-administration .navbar-tab-language-switch .language-switch-trigger.active:hover {
+  background-image: -webkit-linear-gradient(top, rgb(78,159,234) 0%, rgb(69,132,221) 100%);
+  background-image: -moz-linear-gradient(rgb(78,159,234) 0%,rgb(69,132,221) 100%);
+  background-image: linear-gradient(rgb(78,159,234) 0%,rgb(69,132,221) 100%);
+}
+#navbar-administration .navbar-tab-language-switch .language-switch-trigger,
+#navbar-administration .navbar-tab-language-switch .language-switch-options .language-link {
+  padding-bottom: 1em;
+  padding-top: 1em;
+}
+#navbar-administration .navbar-tab-language-switch .language-switch-options .language-link {
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: block;
+  font-family: inherit;
+  font-size: 1em;
+  padding: 0.5em 1.3333em
+}
+#navbar-administration .navbar-tab-language-switch.navbar-tab .language-switch-options .language-link {
+  color: #0074BD;
+  text-align: left;
+  width: 100%;
+}
+#navbar-administration .navbar-tab-language-switch.navbar-tab .language-switch-options .language-link:hover,
+#navbar-administration .navbar-tab-language-switch.navbar-tab .language-switch-options .language-link.active {
+  color: black;
+}
+#navbar-administration .navbar-tab-language-switch.navbar-tab .language-switch-options .language-link[disabled] {
+  color: #ccc;
+  cursor: default;
+}
+#navbar-administration .navbar-tab-language-switch .language-switch-trigger:after {
+  border-bottom-color: transparent;
+  border-left-color: transparent;
+  border-right-color: transparent;
+  border-style: solid;
+  border-width: 0.4545em 0.4em 0;
+  color: #a0a0a0;
+  content: ' ';
+  display: block;
+  height: 0;
+  line-height: 0;
+  overflow: hidden;
+  position: absolute;
+  right: 1.6667em; /* LTR */
+  top: 50%;
+  margin-top: -0.1666em;
+  width: 0;
+  z-index: 1
+}
+[dir="rtl"] #navbar-administration .navbar-tab-language-switch .language-switch-trigger:after {
+  left: 1em;
+  right: auto;
+}
+#navbar-administration .navbar-tab-language-switch.open:before {
+  background-color: white;
+  bottom: 0;
+  content: ' ';
+  display: block;
+  position: absolute;
+  right: 0; /* LTR */
+  top: 0;
+  width: 2em;
+  z-index: 1;
+}
+[dir="rtl"] #navbar-administration .navbar-tab-language-switch.open:before {
+  left: 0;
+  right: auto;
+}
+#navbar-administration .navbar-tab-language-switch.open .language-switch-trigger:after {
+  border-bottom: 0.4545em solid;
+  border-top-color: transparent;
+  color: black;
+  right: 0.7em; /* LTR */
+  top: 1.25em;
+}
+[dir="rtl"] #navbar-administration .navbar-tab-language-switch.open .language-switch-trigger:after {
+  left: 0.7em;
+  right: auto;
+}
+#navbar-administration .navbar-tab-language-switch:hover .language-switch-trigger:after,
+#navbar-administration .navbar-tab-language-switch .language-switch-trigger.active:after,
+#navbar-administration .navbar-tab-language-switch:hover .language-switch-trigger.active:after {
+  color: white;
+}
+#navbar-administration .navbar-tab-language-switch.open:hover .language-switch-trigger:after {
+  color: black;
+}

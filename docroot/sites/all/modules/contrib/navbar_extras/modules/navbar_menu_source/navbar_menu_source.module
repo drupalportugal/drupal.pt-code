@@ -1,0 +1,98 @@
+<?php
+
+/**
+ * @file
+ * Main file for Navbar Menu Sources module.
+ */
+
+/**
+ * Implements hook_menu().
+ */
+function navbar_menu_source_menu() {
+  $items = array();
+
+  $items['admin/config/user-interface/navbar_menu_source'] = array(
+    'title'            => 'NavBar menu source',
+    'description'      => 'Configure menu source for Navbar Menu entry',
+    'access arguments' => array('administer navbar menu source'),
+    'page callback'    => 'drupal_get_form',
+    'page arguments'   => array('navbar_menu_source_config_form'),
+  );
+
+  return $items;
+}
+
+/**
+ * Implements hook_permission().
+ */
+function navbar_menu_source_permission() {
+  $return = array();
+
+  $return['administer navbar menu source'] = array(
+    'title'       => t('Administer NavBar menu source'),
+    'description' => t('Allow user to configure menu source for navbar Menu item'),
+  );
+
+  return $return;
+}
+
+/**
+ * Page callback: Form constructor for module's settings form.
+ */
+function navbar_menu_source_config_form($form, &$form_state) {
+  $form = array();
+
+  $form['per_role'] = array(
+    '#type' => 'fieldset',
+    '#title' => t('Per Role'),
+    '#description' => t('Below you can choose which menu should be displayed for each role. Note: below are listed only roles for which "access navbar" permission checked.'),
+    '#collapsible' => FALSE,
+    '#collapsed' => FALSE,
+  );
+
+  // Get user roles which has access to navbar.
+  $roles = user_roles(TRUE, 'access navbar');
+  $menus = menu_get_menus();
+
+  // Generate menu selection field per role.
+  foreach ($roles as $rid => $role) {
+    $variable_name = 'navbar_menu_' . $rid;
+    $form['per_role'][$variable_name] = array(
+      '#type' => 'select',
+      '#title' => t('Menu for @role', array('@role' => $role)),
+      '#options' => $menus,
+      '#default_value' => variable_get($variable_name, 'management'),
+    );
+  }
+
+  return system_settings_form($form);
+}
+
+/**
+ * Implements hook_navbar_alter().
+ */
+function navbar_menu_source_navbar_alter(&$items) {
+  global $user;
+
+  // Find the user role rid.
+  $roles_ids = array_keys(user_roles(TRUE, 'access navbar'));
+  $user_roles_ids = array_keys($user->roles);
+  $user_roles = array_reverse(array_intersect($roles_ids, $user_roles_ids));
+  if (empty($user_roles)) {
+    return;
+  }
+  // Get the first user's role.
+  $rid = $user_roles[0];
+
+  // Get menu source setting for user's role id.
+  $menu_name = variable_get('navbar_menu_' . $rid, '');
+
+  if (!empty($menu_name) && $menu_name != 'management') {
+    // Get items for menu to render.
+    $tree = menu_tree_all_data($menu_name);
+    navbar_menu_navigation_links($tree);
+
+    // Replace the tree of management menu links with new menu entries.
+    $items['administration']['tray']['navbar_administration']['administration_menu'] = menu_tree_output($tree);
+  }
+}

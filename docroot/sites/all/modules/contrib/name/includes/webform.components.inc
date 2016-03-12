@@ -18,8 +18,7 @@ function _webform_defaults_name() {
     'pid' => 0,
     'weight' => 0,
     'value' => $element['#default_value'],
-    'mandatory' => 0,
-    'private' => 0,
+    'required' => 0,
     'extra' => array(
       'display_format' => 'default',
       'csv_format' => 'default',
@@ -29,6 +28,7 @@ function _webform_defaults_name() {
       'components' => $element['#components'],
       'description' => '',
       'use_real_name' => 0,
+      'private' => 0,
     ),
   );
   foreach (_name_translations() as $key => $label) {
@@ -259,7 +259,7 @@ function _webform_render_name($name, $value = NULL, $filter = TRUE) {
   $form_item = array(
     '#type' => 'name_element',
     '#title' => $filter ? _webform_filter_xss($name['name']) : $name['name'],
-    '#required' => $name['mandatory'],
+    '#required' => $name['required'],
     '#weight' => $name['weight'],
     '#description'   => $filter ? _webform_filter_descriptions($name['extra']['description']) : $name['extra']['description'],
     '#default_value' => $filter ? _webform_filter_values($name['value']) : $name['value'],
@@ -268,6 +268,7 @@ function _webform_render_name($name, $value = NULL, $filter = TRUE) {
     '#minimum_components' => $name['extra']['minimum_components'],
     '#components' => $name['extra']['components'],
     '#default_value' => empty($value) ? $default_value : $value,
+    '#theme_wrappers' => array('webform_element'),
   );
 
   return $form_item;

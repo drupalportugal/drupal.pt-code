@@ -216,7 +216,7 @@ class Name_AdminTestCase extends NameTestHelper {
     $this->drupalLogin($this->admin_user);
 
     // The default installed formats.
-    $this->drupalGet('admin/config/regional/name');
+    $this->drupalGet('admin/config/content/name');
 
     $row_template = array(
       'title href'  => '//tr[@id="name-id"]/td[1]/a/@href',
@@ -231,60 +231,60 @@ class Name_AdminTestCase extends NameTestHelper {
     );
     $all_values = array(
       0 => array(
-        'title href' => $base_path . '?q=admin/config/regional/name/settings',
+        'title href' => $base_path . '?q=admin/config/content/name/settings',
         'title' => t('Default'),
         'machine' => 'default',
         'code' => '((((t+ig)+im)+if)+is)+jc',
         'formatted' => 'Mr Joe John Peter Mark Doe Jnr., B.Sc., Ph.D. JOAN SUE DOE Prince ',
       ),
       1 => array(
-        'title href' => $base_path . '?q=admin/config/regional/name/1',
+        'title href' => $base_path . '?q=admin/config/content/name/1',
         'title' => t('Full'),
         'machine' => 'full',
         'code' => '((((t+ig)+im)+if)+is)+jc',
         'formatted' => 'Mr Joe John Peter Mark Doe Jnr., B.Sc., Ph.D. JOAN SUE DOE Prince ',
         'edit' => t('Edit'),
-        'edit link' => $base_path . '?q=admin/config/regional/name/1',
+        'edit link' => $base_path . '?q=admin/config/content/name/1',
         'delete' => t('Delete'),
-        'delete link' => $base_path . '?q=admin/config/regional/name/1/delete',
+        'delete link' => $base_path . '?q=admin/config/content/name/1/delete',
       ),
       2 => array(
-        'title href' => $base_path . '?q=admin/config/regional/name/2',
+        'title href' => $base_path . '?q=admin/config/content/name/2',
         'title' => t('Given'),
         'machine' => 'given',
         'code' => 'g',
         'formatted' => 'Joe JOAN Prince ',
         'edit' => t('Edit'),
-        'edit link' => $base_path . '?q=admin/config/regional/name/2',
+        'edit link' => $base_path . '?q=admin/config/content/name/2',
         'delete' => t('Delete'),
-        'delete link' => $base_path . '?q=admin/config/regional/name/2/delete',
+        'delete link' => $base_path . '?q=admin/config/content/name/2/delete',
       ),
       3 => array(
-        'title href' => $base_path . '?q=admin/config/regional/name/3',
+        'title href' => $base_path . '?q=admin/config/content/name/3',
         'title' => t('Family'),
         'machine' => 'family',
         'code' => 'f',
         'formatted' => 'Doe DOE  ',
-        'edit link' => $base_path . '?q=admin/config/regional/name/3',
-        'delete link' => $base_path . '?q=admin/config/regional/name/3/delete',
+        'edit link' => $base_path . '?q=admin/config/content/name/3',
+        'delete link' => $base_path . '?q=admin/config/content/name/3/delete',
       ),
       4 => array(
-        'title href' => $base_path . '?q=admin/config/regional/name/4',
+        'title href' => $base_path . '?q=admin/config/content/name/4',
         'title' => t('Title Family'),
         'machine' => 'formal',
         'code' => 't+if',
         'formatted' => 'Mr Doe DOE  ',
-        'edit link' => $base_path . '?q=admin/config/regional/name/4',
-        'delete link' => $base_path . '?q=admin/config/regional/name/4/delete',
+        'edit link' => $base_path . '?q=admin/config/content/name/4',
+        'delete link' => $base_path . '?q=admin/config/content/name/4/delete',
       ),
       5 => array(
-        'title href' => $base_path . '?q=admin/config/regional/name/5',
+        'title href' => $base_path . '?q=admin/config/content/name/5',
         'title' => t('Given Family'),
         'machine' => 'short_full',
         'code' => 'g+if',
         'formatted' => 'Joe Doe JOAN DOE Prince ',
-        'edit link' => $base_path . '?q=admin/config/regional/name/5',
-        'delete link' => $base_path . '?q=admin/config/regional/name/5/delete',
+        'edit link' => $base_path . '?q=admin/config/content/name/5',
+        'delete link' => $base_path . '?q=admin/config/content/name/5/delete',
       ),
     );
 
@@ -311,10 +311,10 @@ class Name_AdminTestCase extends NameTestHelper {
     $raw_xpath = $this->xpath('//tr[@id="name-0"]/td[5]/a/@href');
     $results = $raw_xpath ? current($raw_xpath) : '__MISSING__';
 
-    $this->assertEqual($results, $base_path . '?q=admin/config/regional/name/settings', "Testing edit link on row 0 using '//tr[@id=\"name-id\"]/td[1]/a/@href' and expecting $base_path . '?q=admin/config/regional/name/settings', got '{$results}'.");
+    $this->assertEqual($results, $base_path . '?q=admin/config/content/name/settings', "Testing edit link on row 0 using '//tr[@id=\"name-id\"]/td[1]/a/@href' and expecting $base_path . '?q=admin/config/content/name/settings', got '{$results}'.");
 
 
-    $this->drupalGet('admin/config/regional/name/settings');
+    $this->drupalGet('admin/config/content/name/settings');
 
     // Fieldset rendering check
     $this->assertRaw('<legend><span class="fieldset-legend">Format string help</span></legend><div class="fieldset-wrapper">', 'Testing the help fieldgroup');
@@ -333,10 +333,10 @@ class Name_AdminTestCase extends NameTestHelper {
     $post_values = $default_values;
     $post_values['name_settings[default_format]'] = '';
 
-    $this->drupalPost('admin/config/regional/name/settings', $post_values, t('Save configuration'));
+    $this->drupalPost('admin/config/content/name/settings', $post_values, t('Save configuration'));
     $this->assertText(t('Default format field is required.'));
     $post_values['name_settings[default_format]'] = '     ';
-    $this->drupalPost('admin/config/regional/name/settings', $post_values, t('Save configuration'));
+    $this->drupalPost('admin/config/content/name/settings', $post_values, t('Save configuration'));
     $this->assertText(t('Default format field is required.'));
 
     $test_values = array(
@@ -345,7 +345,7 @@ class Name_AdminTestCase extends NameTestHelper {
       'name_settings[sep2]' => '^',
       'name_settings[sep3]' => '-',
     );
-    $this->drupalPost('admin/config/regional/name/settings', $test_values, t('Save configuration'));
+    $this->drupalPost('admin/config/content/name/settings', $test_values, t('Save configuration'));
     $this->assertText(t('The configuration options have been saved.'));
 
     foreach ($test_values as $name => $value) {
@@ -353,49 +353,49 @@ class Name_AdminTestCase extends NameTestHelper {
     }
 
     // The default installed formats and the updated default format.
-    $this->drupalGet('admin/config/regional/name');
+    $this->drupalGet('admin/config/content/name');
 
     $xpath = '//tr[@id="name-0"]/td[3]';
     $this->assertEqual(current($this->xpath($xpath)), 'c+ks+if+im+ig+t', 'Default is equal to set default.');
 
-    $this->drupalGet('admin/config/regional/name/add');
+    $this->drupalGet('admin/config/content/name/add');
     $this->assertRaw('<legend><span class="fieldset-legend">Format string help</span></legend><div class="fieldset-wrapper">', 'Testing the help fieldgroup');
     $values = array('name' => '', 'machine_name' => '', 'format' => '');
-    $this->drupalPost('admin/config/regional/name/add', $values, t('Save'));
+    $this->drupalPost('admin/config/content/name/add', $values, t('Save'));
     foreach (array(t('Name'), t('Machine-readable name'), t('Format')) as $title) {
       $this->assertText(t('!field field is required', array('!field' => $title)));
     }
     $values = array('name' => 'given', 'machine_name' => '1234567890abcdefghijklmnopqrstuvwxyz_', 'format' => 'a');
-    $this->drupalPost('admin/config/regional/name/add', $values, t('Save'));
+    $this->drupalPost('admin/config/content/name/add', $values, t('Save'));
     $this->assertText(t('The name you have chosen is already in use.'));
     $this->assertNoText(t('!field field is required', array('!field' => t('Format'))));
     $this->assertNoText(t('!field field is required', array('!field' => t('Machine-readable name'))));
 
     $values = array('name' => 'given', 'machine_name' => '%&*(', 'format' => 'a');
-    $this->drupalPost('admin/config/regional/name/add', $values, t('Save'));
+    $this->drupalPost('admin/config/content/name/add', $values, t('Save'));
     $this->assertText(t('The machine-readable name must contain only lowercase letters, numbers, and underscores.'));
 
     $values = array('name' => 'given', 'machine_name' => 'given', 'format' => 'a');
-    $this->drupalPost('admin/config/regional/name/add', $values, t('Save'));
+    $this->drupalPost('admin/config/content/name/add', $values, t('Save'));
     $this->assertText(t('The machine-readable name you have chosen is already in use.'));
 
     $values = array('name' => 'given', 'machine_name' => 'default', 'format' => 'a');
-    $this->drupalPost('admin/config/regional/name/add', $values, t('Save'));
+    $this->drupalPost('admin/config/content/name/add', $values, t('Save'));
     $this->assertText(t('The machine-readable name you have chosen is reserved.'));
 
     $values = array('name' => 'Test', 'machine_name' => 'test', 'format' => 'abc');
-    $this->drupalPost('admin/config/regional/name/add', $values, t('Save'));
+    $this->drupalPost('admin/config/content/name/add', $values, t('Save'));
     $this->assertText(t('Custom format Test has been created.'));
 
     $new_rows = array(
       6 => array(
-        'title href' => $base_path . '?q=admin/config/regional/name/6',
+        'title href' => $base_path . '?q=admin/config/content/name/6',
         'title' => 'Test',
         'machine' => 'test',
         'code' => 'abc',
         'formatted' => 'abB.Sc., Ph.D. ab ab ',
-        'edit link' => $base_path . '?q=admin/config/regional/name/6',
-        'delete link' => $base_path . '?q=admin/config/regional/name/6/delete',
+        'edit link' => $base_path . '?q=admin/config/content/name/6',
+        'delete link' => $base_path . '?q=admin/config/content/name/6/delete',
       ),
     );
 
@@ -416,7 +416,7 @@ class Name_AdminTestCase extends NameTestHelper {
       }
     }
     $values = array('name' => 'new name', 'machine_name' => 'bob', 'format' => 'f+g');
-    $this->drupalPost('admin/config/regional/name/6', $values, t('Save'));
+    $this->drupalPost('admin/config/content/name/6', $values, t('Save'));
     $this->assertText(t('Custom format new name has been updated.'));
     $new_rows = array(
       6 => array(
@@ -442,12 +442,12 @@ class Name_AdminTestCase extends NameTestHelper {
       }
     }
 
-    $this->drupalGet('admin/config/regional/name/60');
+    $this->drupalGet('admin/config/content/name/60');
     $this->assertText(t('The custom format could not be found.'));
-    $this->drupalGet('admin/config/regional/name/60/delete');
+    $this->drupalGet('admin/config/content/name/60/delete');
     $this->assertText(t('The custom format could not be found.'));
 
-    $this->drupalPost('admin/config/regional/name/4', array(), t('Delete'));
+    $this->drupalPost('admin/config/content/name/4', array(), t('Delete'));
     $this->assertText(t('Are you sure you want to delete the custom format !title ("t+if")?', array('!title' => check_plain(t('Title Family')))));
 
     $this->drupalPost(NULL, array('confirm' => 1), t('Delete'));
@@ -514,10 +514,12 @@ class Name_FieldTestCase extends NameTestHelper {
       t('!field options field is required.', array('!field' => $n['title'])),
       t('!field options field is required.', array('!field' => $n['generational'])),
 
+      // There is now empty tests on both of these fields, so the second
+      // message will not show if the required message is shown.
       t('!field field is required.', array('!field' => t('Components'))),
-      t('!field must have one of the following components: !components', array('!field' => t('Components'), '!components' => check_plain(implode(', ', array($n['given'], $n['family']))))),
       t('!field field is required.', array('!field' => t('Minimum components'))),
-      t('!field must have one of the following components: !components', array('!field' => t('Minimum components'), '!components' => check_plain(implode(', ', array($n['given'], $n['family']))))),
+      // t('!field must have one of the following components: !components', array('!field' => t('Components'), '!components' => check_plain(implode(', ', array($n['given'], $n['family']))))),
+      // t('!field must have one of the following components: !components', array('!field' => t('Minimum components'), '!components' => check_plain(implode(', ', array($n['given'], $n['family']))))),
     );
     foreach ($required_messages as $message) {
       $this->assertText($message);

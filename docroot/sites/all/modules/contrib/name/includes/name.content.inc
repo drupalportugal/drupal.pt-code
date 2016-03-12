@@ -8,6 +8,8 @@
  * instance and formatter.
  */
 
+define('NAME_FIELD_TAXONOMY_OPTION_REGEX', '/^\[vocabulary:([0-9a-z\_]{1,})\]/');
+
 /* ----------------------------- Field Code --------------------------------- */
 
 /**
@@ -172,9 +174,28 @@ function _name_field_settings_form_validate($elements, &$form_state, $form) {
   _name_options_validate($values['generational_options'], $values['max_length']['generational'],
       t('Generational options'), 'field][settings][generational_options');
 
-  // Validates that a minimum component is checked when that component is not used.
+  // Validates that a minimum component is not selected when that component is
+  // not selected.
   _name_field_components_validate($values['components'],
       $values['minimum_components'], 'field][settings][minimum_components');
+
+  if (!empty($form_state['values']['instance'])) {
+    $instance_settings = $form_state['values']['instance']['settings'];
+    $instance_components = array_filter($instance_settings['components']);
+    $instance_minimum_components = array_filter($instance_settings['minimum_components']);
+    if ($instance_components && $instance_minimum_components) {
+      _name_field_components_validate($instance_components,
+          $instance_minimum_components, 'instance[settings][minimum_components');
+    }
+    elseif ($instance_minimum_components) {
+      _name_field_components_validate($values['components'],
+          $instance_minimum_components, 'instance[settings][minimum_components');
+    }
+    elseif ($instance_components) {
+      _name_field_components_validate($instance_components,
+          $values['minimum_components'], 'instance[settings][components');
+    }
+  }
 }
 
 // TODO - hook_field_views_data() if required
@@ -195,7 +216,7 @@ function _name_options_validate($options, $max, $label, $error_element) {
       $default_options[] = $value;
     }
     // Simple checks on the taxonomy includes.
-    elseif (preg_match('/^\[vocabulary:([0-9a-z\_]{1,})\]/', $value, $matches)) {
+    elseif (preg_match(NAME_FIELD_TAXONOMY_OPTION_REGEX, $value, $matches)) {
       if (!module_exists('taxonomy')) {
         form_set_error($error_element, t("The taxonomy module must be enabled before using the '%tag' tag in %label.",
             array('%tag' => $matches[0], '%label' => $label)));
@@ -204,8 +225,11 @@ function _name_options_validate($options, $max, $label, $error_element) {
         form_set_error($error_element, t("The '%tag' tag in %label should be on a line by itself.",
             array('%tag' => $matches[0], '%label' => $label)));
       }
-      else{
-        if (!_name_get_vocabulary_id_by_code_or_number($matches[1])) {
+      else {
+        if (_name_get_vocabulary_id_by_code_or_number($matches[1])) {
+          $valid_options[] = $value;
+        }
+        else {
           form_set_error($error_element, t("The vocabulary '%tag' in %label could not be found.",
             array('%tag' => $matches[1], '%label' => $label)));
         }
@@ -304,8 +328,28 @@ function _name_field_instance_settings_form($field, $instance = NULL) {
       '#default_value' => isset($settings['inline_css']) ? $settings['inline_css'][$key] : '',
       '#size' => 8,
     );
+    $form['labels'][$key] = array(
+      '#type' => 'textfield',
+      '#title' => t('Label for !title', array('!title' => $title)),
+      '#default_value' => isset($settings['labels']) ? $settings['labels'][$key] : '',
+      '#size' => 12,
+    );
   }
+  $form['components'] = array(
+    '#type' => 'checkboxes',
+    '#title' => t('Components overrides'),
+    '#default_value' => $settings['components'],
+    '#options' => $components,
+    '#element_validate' => array('_name_field_minimal_component_requirements'),
+  );
 
+  $form['minimum_components'] = array(
+    '#type' => 'checkboxes',
+    '#title' => t('Minimum components overrides'),
+    '#default_value' => $settings['minimum_components'],
+    '#element_validate' => array('_name_field_minimal_component_requirements'),
+    '#options' => $components,
+  );
   $form['component_css'] = array(
     '#type' => 'textfield',
     '#title' => t('Component separator CSS'),
@@ -376,12 +420,25 @@ function _name_field_instance_settings_form($field, $instance = NULL) {
  * Implements hook_field_widget_form().
  */
 function _name_field_widget_form(&$form, &$form_state, $field, $instance, $langcode, $items, $delta, $element) {
+  form_load_include($form_state, 'inc', 'name', 'includes/name.content');
+
   $widget = $instance['widget'];
   _name_defaults($instance['settings'], 'instance_settings');
   _name_defaults($field['settings'], 'settings');
   $fs = $field['settings'];
   $ws = $instance['settings'];
+  $ws += array(
+    'components' => array(),
+    'minimum_components' => array(),
+  );
 
+  // Use populated overrides if present.
+  if (array_filter($ws['components'])) {
+    $fs['components'] = $ws['components'];
+  }
+  if (array_filter($ws['minimum_components'])) {
+    $fs['minimum_components'] = $ws['minimum_components'];
+  }
   $element += array(
     '#type' => 'name_element',
     '#title' => check_plain($instance['label']),
@@ -405,7 +462,8 @@ function _name_field_widget_form(&$form, &$form_state, $field, $instance, $langc
       $size = !empty($ws['size'][$key]) ? $ws['size'][$key] : 60;
       $title_display = isset($ws['title_display'][$key]) ? $ws['title_display'][$key] : 'description';
 
-      $element['#components'][$key]['title'] = check_plain($fs['labels'][$key]);
+      $component_label = empty($ws['labels'][$key]) ? $fs['labels'][$key] : $ws['labels'][$key];
+      $element['#components'][$key]['title'] = check_plain($component_label);
       $element['#components'][$key]['title_display'] = $title_display;
 
       $element['#components'][$key]['size'] = $size;
@@ -456,7 +514,7 @@ function _name_field_get_options($field, $key) {
 
   $options = array_filter(explode("\n", $fs[$key . '_options']));
   foreach ($options as $index => $opt) {
-    if (preg_match('/^\[vocabulary:([0-9a_z\_]{1,})\]/', trim($opt), $matches)) {
+    if (preg_match(NAME_FIELD_TAXONOMY_OPTION_REGEX, trim($opt), $matches)) {
       unset($options[$index]);
       if (module_exists('taxonomy')) {
         if ($vid = _name_get_vocabulary_id_by_code_or_number($matches[1])) {

@@ -5,15 +5,15 @@ package = Fields
 version = VERSION
 core = 7.x
 recommends[] = namedb
-configure = admin/config/regional/name
+configure = admin/config/content/name
 
 files[] = tests/name.test
 files[] = includes/name_handler_filter_name_fulltext.inc
 files[] = name.migrate.inc
 
-; Information added by drupal.org packaging script on 2013-05-10
-version = "7.x-1.9"
+; Information added by Drupal.org packaging script on 2015-11-25
+version = "7.x-1.10"
 core = "7.x"
 project = "name"
-datestamp = "1368191420"
+datestamp = "1448492189"
 

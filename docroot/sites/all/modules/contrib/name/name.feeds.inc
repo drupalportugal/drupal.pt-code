@@ -48,7 +48,7 @@ function name_feeds_set_target($source, $entity, $target, $value) {
 
   foreach ($value as $v) {
     if (!is_array($v) && !is_object($v)) {
-      $field['und'][$i][$sub_field] = $v;
+      $field[LANGUAGE_NONE][$i][$sub_field] = $v;
     }
     if ($info['cardinality'] == 1) {
       break;

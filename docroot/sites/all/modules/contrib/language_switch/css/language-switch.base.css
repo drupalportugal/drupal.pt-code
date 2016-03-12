@@ -1,0 +1,41 @@
+/**
+ * @file
+ * Styling for the Language Switch tab.
+ */
+
+.language-switch-active {
+  height: 100%;
+  overflow: hidden;
+}
+#navbar-administration .navbar-tab-language-switch {
+  display: none;
+}
+#navbar-administration.navbar-oriented .navbar-bar .navbar-tab-language-switch.navbar-tab {
+  display: block;
+  float: right; /* LTR */
+  position: relative;
+}
+[dir="rtl"] #navbar-administration.navbar-oriented .navbar-bar .navbar-tab-language-switch.navbar-tab {
+  float: left;
+}
+#navbar-administration .navbar-tab-language-switch .language-switch-trigger {
+  display: block;
+}
+#navbar-administration .navbar-tab-language-switch .item-list {
+  display: none;
+  width: 10em;
+  padding: 0;
+  position: absolute;
+  white-space: nowrap;
+  z-index: 1;
+  right: 0;
+}
+#navbar-administration .navbar-tab-language-switch.open .item-list {
+  display: block;
+}
+#navbar-administration .navbar-tab-language-switch.navbar-tab .language-switch-options li {
+  display: block;
+  float: none;
+  position: relative;
+}
+

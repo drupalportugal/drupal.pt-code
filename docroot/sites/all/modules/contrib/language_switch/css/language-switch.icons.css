@@ -1,0 +1,128 @@
+/**
+ * @file
+ * Language Switch icon styling.
+ */
+.navbar-tab-language-switch .language-switch-icon:before,
+.language-switch .language-switch-icon:before {
+  background-attachment: scroll;
+  background-color: transparent;
+  background-image: url("../images/language-switch-icons.png");
+  background-repeat: no-repeat;
+  content: '';
+  display: block;
+  position: absolute;
+  z-index: 1;
+}
+.navbar-bar .navbar-tab-language-switch .language-switch-icon:before {
+  width: 29px;
+}
+#navbar-administration .navbar-tab-language-switch button.language-switch-icon,
+.language-switch button.language-switch-icon {
+  background-color: transparent;
+  border: 0;
+  font-size: 1em;
+}
+
+/* navbar icon. */
+#navbar-administration .navbar-bar .language-switch-icon.language-switch-icon-language-switch {
+  margin-left: 0;
+  margin-right: 0;
+  padding-left: 0;
+  padding-right: 0;
+  width: 5em;
+}
+.navbar-tab-language-switch .language-switch-icon.language-switch-icon-language-switch:before {
+  background-position: center top;
+}
+.navbar-tab-language-switch.open .language-switch-icon-language-switch:before,
+.navbar-tab-language-switch .language-switch-icon-language-switch.active:before,
+.navbar-tab-language-switch .language-switch-icon-language-switch:hover:before {
+  background-position: center -22px;
+}
+.drupal-navbar .navbar-bar .navbar-tab-language-switch .language-switch-icon-language-switch:before {
+  left: 0em; /* LTR */
+  height: 22px;
+  top: 0.6667em;
+}
+[dir="rtl"] .drupal-navbar .navbar-bar .navbar-tab-language-switch .language-switch-icon-language-switch:before {
+  left: auto;
+  right: 6px;
+}
+#navbar-administration .navbar-tab-language-switch.navbar-tab .language-switch-options .language-link.language-switch-icon-active {
+  padding: 0.5em 1.3333em;
+  text-indent: 0;
+  -moz-transition: padding 0.25s;
+  -webkit-transition: padding 0.25s;
+  transition: padding 0.25s;
+}
+#navbar-administration .navbar-tab-language-switch.navbar-tab .language-switch-options .language-link.language-switch-icon-active.active {
+  padding-left: 2.25em; /* LTR */
+}
+[dir="rtl"] #navbar-administration .navbar-tab-language-switch.navbar-tab .language-switch-options .language-link.language-switch-icon-active.active {
+  padding-left: 1.333em;
+  padding-right: 2.25em;
+}
+.drupal-navbar .navbar-tab-language-switch.navbar-tab .language-switch-options .language-link.language-switch-icon-active:before {
+  background-position: -999px -999px;
+  height: 14px;
+  left: 0.667em; /* LTR */
+  top: 0.5em;
+  width: 29px;
+}
+[dir="rtl"] .drupal-navbar .navbar-tab-language-switch.navbar-tab .language-switch-options .language-link.language-switch-icon-active:before {
+  left: auto;
+  right: 0.667em;
+}
+.drupal-navbar .navbar-tab-language-switch.navbar-tab .language-switch-options .language-link.language-switch-icon-active.active:before {
+  background-position: center -116px;
+}
+
+
+/**
+ * Language Switch controls icons.
+ */
+.language-switch-control.language-switch-icon:before {
+  height: 12px;
+  width: 12px;
+  top: 12px;
+}
+.language-switch-icon-close:before {
+  background-position: left -44px;
+  right: 9px; /* LTR */
+}
+[dir="rtl"] .language-switch-icon-close:before {
+  left: 9px;
+  right: auto;
+}
+.language-switch-icon-close:active:before,
+.language-switch-icon-close.active:before,
+.language-switch-icon-close:hover:before {
+  background-position: left -56px;
+}
+.language-switch-icon-orientation:before {
+  background-position: left -92px; /* LTR */
+  left: 9px; /* LTR */
+}
+[dir="rtl"] .language-switch-icon-orientation:before {
+  background-position: left -155px;
+  left: auto;
+  right: 9px;
+}
+.language-switch-icon-orientation:hover:before {
+  background-position: left -104px; /* LTR */
+}
+[dir="rtl"] .language-switch-icon-orientation:hover:before {
+  background-position: left -167px;
+}
+.language-switch-icon-orientation.rotated:before {
+  background-position: left -68px; /* LTR */
+}
+[dir="rtl"] .language-switch-icon-orientation.rotated:before {
+  background-position: left -131px;
+}
+.language-switch-icon-orientation.rotated:hover:before {
+  background-position: left -80px; /* LTR */
+}
+[dir="rtl"] .language-switch-icon-orientation.rotated:hover:before {
+  background-position: left -143px;
+}

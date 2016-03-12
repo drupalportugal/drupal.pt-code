@@ -1,10 +1,10 @@
 name = "Fast Permissions Administration"
-description = "Provides quick access to a content type's or field's permissions."
+description = "Fast filtering on permissions administration form."
 core = 7.x
 package = Administration
-; Information added by drupal.org packaging script on 2013-06-26
-version = "7.x-2.3"
+; Information added by Drupal.org packaging script on 2014-08-22
+version = "7.x-2.6"
 core = "7.x"
 project = "fpa"
-datestamp = "1372239057"
+datestamp = "1408744435"
 

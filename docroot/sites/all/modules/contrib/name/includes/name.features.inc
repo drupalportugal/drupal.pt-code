@@ -3,7 +3,7 @@
 /**
  * Implements hook_features_export_options().
  */
-function name_features_export_options() {
+function namefield_features_export_options() {
   $name_formats = array('default' => t('Default')) + name_get_custom_format_options();
   return $name_formats;
 }
@@ -11,12 +11,12 @@ function name_features_export_options() {
 /**
  * Implements hook_features_export().
  */
-function name_features_export($data, &$export, $module_name) {
+function namefield_features_export($data, &$export, $module_name) {
   // Needed?
-  $export['dependencies']['name'] = 'name';
+  $export['dependencies']['namefield'] = 'name';
 
   foreach ($data as $name) {
-    $export['features']['name'][$name] = $name;
+    $export['features']['namefield'][$name] = $name;
   }
 
   $pipe = array();
@@ -26,7 +26,7 @@ function name_features_export($data, &$export, $module_name) {
 /**
  * Implements hook_features_export_render().
  */
-function name_features_export_render($module_name, $data, $export = NULL) {
+function namefield_features_export_render($module_name, $data, $export = NULL) {
   $code = array();
   $code[] = '  $formats = array();';
   $code[] = '';
@@ -43,6 +43,7 @@ function name_features_export_render($module_name, $data, $export = NULL) {
           ->fields('ncf')
           ->condition('machine_name', $name)
           ->execute()->fetch();
+      unset($format->ncfid);
     }
     if ($format) {
       $format_export = features_var_export($format, '  ');
@@ -61,8 +62,8 @@ function name_features_export_render($module_name, $data, $export = NULL) {
 /**
  * Implements hook_features_export_rebuild().
  */
-function name_features_rebuild($module) {
-  if ($defaults = features_get_default('name', $module)) {
+function namefield_features_rebuild($module) {
+  if ($defaults = features_get_default('namefield', $module)) {
     foreach ($defaults as $format) {
       $format = (object) $format;
       if ($format->machine_name == 'default') {
@@ -78,6 +79,9 @@ function name_features_rebuild($module) {
         variable_set('name_settings', $settings);
       }
       else {
+        if (isset($format->ncfid)) {
+          unset($format->ncfid);
+        }
         db_merge('name_custom_format')
           ->key(array(
             'machine_name' => $format->machine_name,
@@ -95,6 +99,6 @@ function name_features_rebuild($module) {
 /**
  * Implements hook_features_revert().
  */
-function name_features_revert($module) {
-  return name_features_rebuild($module);
+function namefield_features_revert($module) {
+  return namefield_features_rebuild($module);
 }

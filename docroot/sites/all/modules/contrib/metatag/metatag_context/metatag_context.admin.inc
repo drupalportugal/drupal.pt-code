@@ -19,8 +19,8 @@ function metatag_context_context_overview() {
     // metatag admin page".
     if (isset($context->reactions['metatag_context_reaction']['metatag_admin']) &&  $context->reactions['metatag_context_reaction']['metatag_admin']) {
       $ops = array(
-        l('Edit', 'admin/config/search/metatags/context/' . $context->name, array('query' => array('destination' => 'admin/config/search/metatags/context'))),
-        l('Delete', 'admin/config/search/metatags/context/' . $context->name . '/delete', array('query' => array('destination' => 'admin/config/search/metatags/context'))),
+        l(t('Edit'), 'admin/config/search/metatags/context/' . $context->name, array('query' => array('destination' => 'admin/config/search/metatags/context'))),
+        l(t('Delete'), 'admin/config/search/metatags/context/' . $context->name . '/delete', array('query' => array('destination' => 'admin/config/search/metatags/context'))),
       );
       $rows[] = array(
         $context->name,
@@ -85,6 +85,12 @@ function metatag_context_config_add_form_submit($form, &$form_state) {
   $context = metatag_context_load_default_context();
   $context->name = $form_state['values']['name'];
   context_save($context);
+
+  // Update the i18n strings.
+  if (!empty($context->reactions['metatag_context_reaction']['metatags'][LANGUAGE_NONE])) {
+    metatag_translations_update($context->reactions['metatag_context_reaction']['metatags'][LANGUAGE_NONE], 'metatag_context:' . $context->name);
+  }
+
   $form_state['redirect'] = 'admin/config/search/metatags/context/' . $context->name;
 }
 
@@ -99,10 +105,19 @@ function metatag_context_config_edit_form($form, &$form_state, $context) {
   // Don't care about the instance name, the data is being managed by Context
   // and not Metatag.
   $instance = "";
-  $options = array();
+  $options = array(
+    'token types' => array('node', 'term', 'user'),
+  );
+
+  $metatags = $context->reactions['metatag_context_reaction']['metatags'];
+  if (!isset($metatags[LANGUAGE_NONE])) {
+    $metatags = array(
+      LANGUAGE_NONE => $metatags,
+    );
+  }
 
   // Load the METATAG form.
-  metatag_metatags_form($form, $instance, $context->reactions['metatag_context_reaction']['metatags'], $options);
+  metatag_metatags_form($form, $instance, $metatags[LANGUAGE_NONE], $options);
 
   $form['paths'] = array(
     '#title' => 'Path',
@@ -136,9 +151,6 @@ function metatag_context_config_edit_form($form, &$form_state, $context) {
     '#weight' => -99,
   );
 
-  // Show all tokens.
-  $form['metatags']['tokens']['#token_types'] = 'all';
-
   $form['metatags']['#type'] = 'container';
   unset($form['metatags']['#collapsed']);
   unset($form['metatags']['#collapsible']);
@@ -168,6 +180,12 @@ function metatag_context_config_edit_form_submit($form, &$form_state) {
   $paths = array_combine($paths, $paths);
   $context->conditions['path']['values'] = $paths;
   context_save($context);
+
+  // Update the i18n strings.
+  if (!empty($context->reactions['metatag_context_reaction']['metatags'][LANGUAGE_NONE])) {
+    metatag_translations_update($context->reactions['metatag_context_reaction']['metatags'][LANGUAGE_NONE], 'metatag_context:' . $context->name);
+  }
+
   $form_state['redirect'] = 'admin/config/search/metatags/context';
 }
 

@@ -1,0 +1,15 @@
+<?php
+
+/**
+ * @file
+ * Main file for Navbar Shiny module.
+ */
+
+/**
+ * Implements hook_page_build().
+ */
+function navbar_shiny_page_build(&$page) {
+  if (!empty($page['page_top']['navbar'])) {
+    $page['page_top']['#attached']['css'][] = drupal_get_path('module', 'navbar_shiny') . '/css/navbar_shiny.css';
+  }
+}

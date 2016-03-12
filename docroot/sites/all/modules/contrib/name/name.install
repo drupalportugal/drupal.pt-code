@@ -144,7 +144,7 @@ function name_update_6000() {
 
   return t('Created name formats table {name_custom_format}.') . '<br/>'
       . $t('The default set of custom name format strings was generated and saved. These are listed !here.',
-      array('!here' => l($t('here', 'admin/config/regional/name'))));
+      array('!here' => l($t('here', 'admin/config/content/name'))));
 }
 
 /**

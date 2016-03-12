@@ -1,0 +1,204 @@
+#navbar-administration ul.navbar-menu li a,
+#navbar-administration .navbar-tab a {
+  color: #eee;
+  font-family: "Open Sans", sans-serif;
+  font-size: 14px;
+  line-height: 1.2em;
+  padding-top: 1em;
+  padding-bottom: 1em;
+}
+
+#navbar-administration .navbar-tab a:focus {
+  border: none;
+}
+
+#navbar-administration .navbar-tab a.active,
+#navbar-administration .navbar-tab a.active:before {
+  color: #2ea2cc;
+}
+
+body.navbar-fixed #navbar-administration .navbar-tray-vertical {
+  overflow: hidden;
+}
+
+#navbar-administration .navbar-tray .navbar-menu li.open ul a {
+  padding-top: 0.7em;
+  font-size: 12px;
+}
+
+#navbar-administration .navbar-icon.navbar-handle:focus {
+  background-color: transparent;
+}
+
+#navbar-administration .navbar-tray,
+#navbar-administration .navbar-toggle-orientation,
+#navbar-administration .navbar-menu {
+  background-color: #222;
+}
+
+#navbar-administration .navbar-tray-horizontal .navbar-toggle-orientation {
+  border: none;
+}
+
+#navbar-administration .navbar-tray-vertical .navbar-menu li.open,
+#navbar-administration .navbar-level-2 > ul {
+  background-color: #333;
+}
+
+#navbar-administration .navbar-menu li.navbar-level-1 > div.navbar-box a.active {
+  background-color: #0074a2;
+}
+
+#navbar-administration .navbar-menu .navbar-menu a {
+  color: #bbb;
+}
+
+#navbar-administration .navbar-tray a:hover,
+#navbar-administration .navbar-tab a:hover {
+  color: #2ea2cc;
+  text-decoration: none;
+}
+
+#navbar-administration .navbar-tray a.active:hover,
+#navbar-administration .navbar-tray a.active > .navbar-box a,
+/*#navbar-administration .navbar-tray .navbar-level-1 a.active > ul a.active:hover,*/
+#navbar-administration .navbar-tray a.active {
+  color: #eee;
+  text-decoration: none;
+}
+
+#navbar-administration .navbar-tray-vertical .navbar-menu ul ul,
+#navbar-administration .navbar-tray-horizontal .navbar-menu ul ul,
+#navbar-administration .navbar-tray .navbar-menu li + li,
+#navbar-administration .navbar-menu li + li,
+#navbar-administration .navbar-tray-vertical .navbar-menu li:last-child,
+#navbar-administration .navbar-tray-horizontal .navbar-menu .navbar-level-1:last-child {
+  border: none;
+}
+
+#navbar-administration .navbar-tray-vertical .navbar-menu li.open.navbar-level-1 > .navbar-box a,
+#navbar-administration .navbar-tray .navbar-level-1.navbar-active-trail > .navbar-box a {
+  font-weight: normal;
+}
+
+#navbar-administration li.open.navbar-level-2 > .navbar-box a {
+  font-weight: bold;
+}
+
+
+/**
+  ICON STYLES
+*/
+
+@font-face {
+  font-family: 'libricons';
+  src: url('../fonts/libricons.eot');
+  src: url('../fonts/libricons.eot?#iefix') format('embedded-opentype'), url('../fonts/libricons.woff') format('woff'), url('../fonts/libricons.ttf') format('truetype'), url('../fonts/libricons.svg#libricons') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+#navbar-administration .navbar-icon {
+  padding-left: 3em;
+}
+
+#navbar-administration .navbar-icon:before {
+  background-image: none !important;
+  font-family: libricons, sans-serif;
+  font-size: 18px;
+  content: "\e039";
+  top: 0.8em;
+  color: #999;
+}
+
+#navbar-administration .navbar-icon:hover:before,
+#navbar-administration .navbar-bar .navbar-icon.active:hover:before {
+  color: #2ea2cc;
+}
+
+#navbar-administration .navbar-icon.active:before,
+#navbar-administration .navbar-active-trail .navbar-icon:before,
+#navbar-administration .navbar-icon.active:hover:before {
+  color: #eee;
+}
+
+#navbar-administration .navbar-icon-home:before {
+  content: "\e000";
+}
+
+#navbar-administration .navbar-icon-menu:before {
+  content: "\e001";
+}
+
+#navbar-administration .navbar-icon-new:before {
+  content: "\e00c";
+}
+
+#navbar-administration .navbar-icon-shortcut:before {
+  content: "\e003";
+}
+
+#navbar-administration .navbar-icon-devel:before,
+#navbar-administration .navbar-icon-development:before {
+  content: "\e011";
+}
+
+#navbar-administration .navbar-icon-user:before {
+  content: "\e005";
+}
+
+#navbar-administration .navbar-icon-content:before {
+  content: "\e024";
+}
+
+#navbar-administration .navbar-icon-structure:before {
+  content: "\e015";
+}
+
+#navbar-administration .navbar-icon-appearance:before {
+  content: "\e016";
+}
+
+#navbar-administration .navbar-icon-users:before,
+#navbar-administration .navbar-icon-people:before {
+  content: "\e006";
+}
+
+#navbar-administration .navbar-icon-modules:before {
+  content: "\e017";
+}
+
+#navbar-administration .navbar-icon-configuration:before {
+  content: "\e018";
+}
+
+#navbar-administration .navbar-icon-reports:before {
+  content: "\e019";
+}
+
+#navbar-administration .navbar-icon-help:before {
+  content: "\e01b";
+}
+
+#navbar-administration .navbar-icon.navbar-handle:before {
+  content: "\e03d";
+  text-indent: 0;
+  margin-left: -5px;
+}
+
+#navbar-administration .navbar-icon.navbar-handle.open:before {
+  content: "\e03b";
+}
+
+#navbar-administration .navbar-toggle-orientation :before {
+  text-indent: 0;
+  top: 0;
+}
+
+#navbar-administration .navbar-toggle-orientation [value="horizontal"]:before {
+  content: "\e01c";
+}
+
+#navbar-administration .navbar-toggle-orientation [value="vertical"]:before {
+  content: "\e01f";
+}

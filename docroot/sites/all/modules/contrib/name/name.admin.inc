@@ -287,7 +287,7 @@ function name_list_custom_formats() {
 
   foreach ($custom_formats as $ncfid => $tag) {
     $row = array();
-    $row[] = l($tag->name, 'admin/config/regional/name/' . ($ncfid ? $ncfid : 'settings'));
+    $row[] = l($tag->name, 'admin/config/content/name/' . ($ncfid ? $ncfid : 'settings'));
     $row[] = $tag->machine_name;
     $row[] = check_plain($tag->format);
 
@@ -303,12 +303,12 @@ function name_list_custom_formats() {
 
     if ($ncfid) {
       $links = array();
-      $links[] = l(t('Edit'), 'admin/config/regional/name/' . $ncfid);
-      $links[] = l(t('Delete'), 'admin/config/regional/name/' . $ncfid . '/delete');
+      $links[] = l(t('Edit'), 'admin/config/content/name/' . $ncfid);
+      $links[] = l(t('Delete'), 'admin/config/content/name/' . $ncfid . '/delete');
       $row[] = implode('&nbsp;&nbsp;&nbsp;&nbsp;', $links);
     }
     else {
-      $row[] = l(t('Edit'), 'admin/config/regional/name/settings');
+      $row[] = l(t('Edit'), 'admin/config/content/name/settings');
     }
     $rows[] = array('data' => $row, 'id' => 'name-' . $ncfid);
   }
@@ -459,7 +459,7 @@ function name_custom_formats_form_submit($form, &$form_state) {
   }
   drupal_set_message(t($message, array('%name' => $values['name'])));
 
-  $form_state['redirect'] = 'admin/config/regional/name';
+  $form_state['redirect'] = 'admin/config/content/name';
 }
 
 /**
@@ -474,7 +474,7 @@ function name_custom_format_edit($ncfid) {
     return drupal_get_form('name_custom_formats_form', $name);
   }
   drupal_set_message(t('The custom format could not be found.'), 'error');
-  drupal_goto('admin/config/regional/name');
+  drupal_goto('admin/config/content/name');
 }
 
 /**
@@ -485,7 +485,7 @@ function name_custom_format_delete_form($form, $form_state, $ncfid) {
 
   if (!$name) {
     drupal_set_message(t('The custom format could not be found.'), 'error');
-    drupal_goto('admin/config/regional/name');
+    drupal_goto('admin/config/content/name');
   }
   $form = array();
   $form['ncfid'] = array(
@@ -498,7 +498,7 @@ function name_custom_format_delete_form($form, $form_state, $ncfid) {
     t('Are you sure you want to delete the custom format %name ("%format")?',
       array('%name' => $name['name'], '%format' => $name['format'])
     ),
-    'admin/config/regional/name',
+    'admin/config/content/name',
     t('This action cannot be undone.'),
     t('Delete'),   t('Cancel')
   );
@@ -513,7 +513,7 @@ function name_custom_format_delete_form_submit($form, &$form_state) {
       ->execute();
   drupal_set_message(t('The custom name format %name was deleted.',
       array('%name' => $form['#name']['name'])));
-  $form_state['redirect'] = 'admin/config/regional/name';
+  $form_state['redirect'] = 'admin/config/content/name';
 }
 
 /**
@@ -555,6 +555,25 @@ function _name_field_instance_settings_pre_render($form) {
         '#suffix' => '</tr>',
         '#weight' => 4,
       ),
+      'field_override_label' => array(
+        '#markup' => '<tr><td colspan="7"><strong><em>' . t('Field setting overrides') . '</em></strong></td>',
+        '#weight' => 5,
+      ),
+      'components' => array(
+        '#prefix' => '<tr><td><strong>' . t('Components') . '<sup>5</sup></strong></td>',
+        '#suffix' => '</tr>',
+        '#weight' => 6,
+      ),
+      'minimum_components' => array(
+        '#prefix' => '<tr><td><strong>' . t('Minimum components') . '<sup>6</sup></strong></td>',
+        '#suffix' => '</tr>',
+        '#weight' => 7,
+      ),
+      'labels' => array(
+        '#prefix' => '<tr><td><strong>' . t('Labels') . '<sup>7</sup></strong></td>',
+        '#suffix' => '</tr>',
+        '#weight' => 8,
+      ),
     ),
     'tfoot' => array(
       '#markup' => '<tfoot><tr><td colspan="7"><ol>'
@@ -563,6 +582,9 @@ function _name_field_instance_settings_pre_render($form) {
         . '<li>' . t('The Field type controls how the field is rendered. Autocomplete is a text field with autocomplete, and the behaviour of this is controlled by the field settings.') . '</li>'
         . '<li>' . t('The HTML size property tells the browser what the width of the field should be when it is rendered. This gets overriden by the themes CSS properties. This must be between 1 and 255.') . '</li>'
         . '<li>' . t('Additional inline styles for the input element. For example, "width: 45px; background-color: #f3f3f3"') . '</li>'
+        . '<li>' . t('Optional overrides for <em>Components</em> used. Leave all unchecked to use the field settings.') . '</li>'
+        . '<li>' . t('Optional overrides for <em>Minimum components</em> used. Leave all unchecked to use the field settings.') . '</li>'
+        . '<li>' . t('Optional overrides for field labels.') . '</li>'
         . '</ol></td></tr></tfoot>',
       '#weight' => 2,
     ),
@@ -591,6 +613,9 @@ function _name_field_instance_settings_pre_render($form) {
     unset($form['instance_inline_css'][$key]['#description']);
     unset($form['instance_inline_css'][$key]['#title']);
 
+    unset($form['instance_labels'][$key]['#description']);
+    unset($form['instance_labels'][$key]['#title']);
+
     // Moves the size element into the table.
     $form['styled_settings']['tbody']['size'][$key] = $form['instance_size'][$key];
     $form['styled_settings']['tbody']['size'][$key]['#prefix'] = '<td>';
@@ -612,6 +637,21 @@ function _name_field_instance_settings_pre_render($form) {
     $form['styled_settings']['tbody']['inline_css'][$key]['#suffix'] = '</td>';
     $form['styled_settings']['tbody']['inline_css'][$key]['#weight'] = $i;
 
+    $form['styled_settings']['tbody']['labels'][$key] = $form['instance_labels'][$key];
+    $form['styled_settings']['tbody']['labels'][$key]['#prefix'] = '<td>';
+    $form['styled_settings']['tbody']['labels'][$key]['#suffix'] = '</td>';
+    $form['styled_settings']['tbody']['labels'][$key]['#weight'] = $i;
+
+    $form['styled_settings']['tbody']['components'][$key] = $form['instance_components'][$key];
+    $form['styled_settings']['tbody']['components'][$key]['#prefix'] = '<td>';
+    $form['styled_settings']['tbody']['components'][$key]['#suffix'] = '</td>';
+    $form['styled_settings']['tbody']['components'][$key]['#weight'] = $i;
+
+    $form['styled_settings']['tbody']['minimum_components'][$key] = $form['instance_minimum_components'][$key];
+    $form['styled_settings']['tbody']['minimum_components'][$key]['#prefix'] = '<td>';
+    $form['styled_settings']['tbody']['minimum_components'][$key]['#suffix'] = '</td>';
+    $form['styled_settings']['tbody']['minimum_components'][$key]['#weight'] = $i;
+
     // Clean up the leftovers.
     unset($form['instance_size'][$key]);
     $form['instance_size']['#access'] = FALSE;
@@ -625,6 +665,14 @@ function _name_field_instance_settings_pre_render($form) {
     unset($form['instance_inline_css'][$key]);
     $form['instance_inline_css']['#access'] = FALSE;
 
+    unset($form['instance_labels'][$key]);
+    $form['instance_labels']['#access'] = FALSE;
+
+    unset($form['instance_components'][$key]);
+    $form['instance_components']['#access'] = FALSE;
+
+    unset($form['instance_minimum_components'][$key]);
+    $form['instance_minimum_components']['#access'] = FALSE;
   }
 
   return $form;
