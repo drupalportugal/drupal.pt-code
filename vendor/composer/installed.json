@@ -1,0 +1,939 @@
+[
+    {
+        "name": "cweagans/composer-patches",
+        "version": "1.4.0",
+        "version_normalized": "1.4.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/cweagans/composer-patches.git",
+            "reference": "0d75c63b6de66144517a1da9084422b78c2ff251"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/cweagans/composer-patches/zipball/0d75c63b6de66144517a1da9084422b78c2ff251",
+            "reference": "0d75c63b6de66144517a1da9084422b78c2ff251",
+            "shasum": ""
+        },
+        "require": {
+            "composer-plugin-api": "~1.0",
+            "php": ">=5.3.0"
+        },
+        "require-dev": {
+            "composer/composer": "~1.0",
+            "phpunit/phpunit": "~4.6"
+        },
+        "time": "2016-02-29 03:45:02",
+        "type": "composer-plugin",
+        "extra": {
+            "class": "cweagans\\Composer\\Patches"
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "cweagans\\Composer\\": "src"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "BSD"
+        ],
+        "authors": [
+            {
+                "name": "Cameron Eagans",
+                "email": "me@cweagans.net"
+            }
+        ],
+        "description": "Provides a way to patch Composer packages."
+    },
+    {
+        "name": "wikimedia/composer-merge-plugin",
+        "version": "v1.3.1",
+        "version_normalized": "1.3.1.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/wikimedia/composer-merge-plugin.git",
+            "reference": "0bdf8543d445ee067c9ba7d5d4a5dde70b9785f4"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/wikimedia/composer-merge-plugin/zipball/0bdf8543d445ee067c9ba7d5d4a5dde70b9785f4",
+            "reference": "0bdf8543d445ee067c9ba7d5d4a5dde70b9785f4",
+            "shasum": ""
+        },
+        "require": {
+            "composer-plugin-api": "^1.0",
+            "php": ">=5.3.2"
+        },
+        "require-dev": {
+            "composer/composer": "1.0.*@dev",
+            "jakub-onderka/php-parallel-lint": "~0.8",
+            "phpunit/phpunit": "~4.8|~5.0",
+            "squizlabs/php_codesniffer": "~2.1.0"
+        },
+        "time": "2016-03-08 17:11:37",
+        "type": "composer-plugin",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "1.3.x-dev"
+            },
+            "class": "Wikimedia\\Composer\\MergePlugin"
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Wikimedia\\Composer\\": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Bryan Davis",
+                "email": "bd808@wikimedia.org"
+            }
+        ],
+        "description": "Composer plugin to merge multiple composer.json files"
+    },
+    {
+        "name": "composer/installers",
+        "version": "v1.0.23",
+        "version_normalized": "1.0.23.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/composer/installers.git",
+            "reference": "6213d900e92647831f7a406d5c530ea1f3d4360e"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/composer/installers/zipball/6213d900e92647831f7a406d5c530ea1f3d4360e",
+            "reference": "6213d900e92647831f7a406d5c530ea1f3d4360e",
+            "shasum": ""
+        },
+        "require": {
+            "composer-plugin-api": "^1.0"
+        },
+        "replace": {
+            "roundcube/plugin-installer": "*",
+            "shama/baton": "*"
+        },
+        "require-dev": {
+            "composer/composer": "1.0.*@dev",
+            "phpunit/phpunit": "4.1.*"
+        },
+        "time": "2016-01-27 12:54:22",
+        "type": "composer-plugin",
+        "extra": {
+            "class": "Composer\\Installers\\Plugin",
+            "branch-alias": {
+                "dev-master": "1.0-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-0": {
+                "Composer\\Installers\\": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Kyle Robinson Young",
+                "email": "kyle@dontkry.com",
+                "homepage": "https://github.com/shama"
+            }
+        ],
+        "description": "A multi-framework Composer library installer",
+        "homepage": "http://composer.github.com/installers/",
+        "keywords": [
+            "Craft",
+            "Dolibarr",
+            "Hurad",
+            "MODX Evo",
+            "OXID",
+            "SMF",
+            "Thelia",
+            "WolfCMS",
+            "agl",
+            "aimeos",
+            "annotatecms",
+            "bitrix",
+            "cakephp",
+            "chef",
+            "codeigniter",
+            "concrete5",
+            "croogo",
+            "dokuwiki",
+            "drupal",
+            "elgg",
+            "fuelphp",
+            "grav",
+            "installer",
+            "joomla",
+            "kohana",
+            "laravel",
+            "lithium",
+            "magento",
+            "mako",
+            "mediawiki",
+            "modulework",
+            "moodle",
+            "phpbb",
+            "piwik",
+            "ppi",
+            "puppet",
+            "roundcube",
+            "shopware",
+            "silverstripe",
+            "symfony",
+            "typo3",
+            "wordpress",
+            "zend",
+            "zikula"
+        ]
+    },
+    {
+        "name": "derhasi/composer-preserve-paths",
+        "version": "0.1.2",
+        "version_normalized": "0.1.2.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/derhasi/composer-preserve-paths.git",
+            "reference": "13309cebd530c3f5e9bfa238aa496076a644540b"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/derhasi/composer-preserve-paths/zipball/13309cebd530c3f5e9bfa238aa496076a644540b",
+            "reference": "13309cebd530c3f5e9bfa238aa496076a644540b",
+            "shasum": ""
+        },
+        "require": {
+            "composer-plugin-api": "^1.0"
+        },
+        "require-dev": {
+            "composer/composer": "1.0.*@dev",
+            "derhasi/tempdirectory": "0.1.*",
+            "phpunit/phpunit": "4.4.*"
+        },
+        "time": "2015-06-17 18:21:27",
+        "type": "composer-plugin",
+        "extra": {
+            "class": "derhasi\\Composer\\Plugin"
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "derhasi\\Composer\\": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "authors": [
+            {
+                "name": "Johannes Haseitl",
+                "email": "johannes@undpaul.de",
+                "homepage": "http://www.undpaul.de"
+            }
+        ],
+        "description": "Composer plugin for preserving custom paths and supporting nested packages",
+        "homepage": "https://github.com/derhasi/composer-preserve-paths",
+        "keywords": [
+            "composer-plugin",
+            "custom path",
+            "installer",
+            "nested package"
+        ]
+    },
+    {
+        "name": "symfony/process",
+        "version": "v3.0.4",
+        "version_normalized": "3.0.4.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/symfony/process.git",
+            "reference": "e6f1f98bbd355d209a992bfff45e7edfbd4a0776"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/symfony/process/zipball/e6f1f98bbd355d209a992bfff45e7edfbd4a0776",
+            "reference": "e6f1f98bbd355d209a992bfff45e7edfbd4a0776",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.5.9"
+        },
+        "time": "2016-03-30 10:41:14",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "3.0-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Symfony\\Component\\Process\\": ""
+            },
+            "exclude-from-classmap": [
+                "/Tests/"
+            ]
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Fabien Potencier",
+                "email": "fabien@symfony.com"
+            },
+            {
+                "name": "Symfony Community",
+                "homepage": "https://symfony.com/contributors"
+            }
+        ],
+        "description": "Symfony Process Component",
+        "homepage": "https://symfony.com"
+    },
+    {
+        "name": "kriswallsmith/assetic",
+        "version": "v1.3.2",
+        "version_normalized": "1.3.2.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/kriswallsmith/assetic.git",
+            "reference": "9928f7c4ad98b234e3559d1049abd13387f86db5"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/kriswallsmith/assetic/zipball/9928f7c4ad98b234e3559d1049abd13387f86db5",
+            "reference": "9928f7c4ad98b234e3559d1049abd13387f86db5",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.3.1",
+            "symfony/process": "~2.1|~3.0"
+        },
+        "conflict": {
+            "twig/twig": "<1.23"
+        },
+        "require-dev": {
+            "cssmin/cssmin": "3.0.1",
+            "joliclic/javascript-packer": "1.1",
+            "kamicane/packager": "1.0",
+            "leafo/lessphp": "^0.3.7",
+            "leafo/scssphp": "~0.1",
+            "mrclay/minify": "~2.2",
+            "patchwork/jsqueeze": "~1.0|~2.0",
+            "phpunit/phpunit": "~4.8",
+            "psr/log": "~1.0",
+            "ptachoire/cssembed": "~1.0",
+            "symfony/phpunit-bridge": "~2.7|~3.0",
+            "twig/twig": "~1.8|~2.0"
+        },
+        "suggest": {
+            "leafo/lessphp": "Assetic provides the integration with the lessphp LESS compiler",
+            "leafo/scssphp": "Assetic provides the integration with the scssphp SCSS compiler",
+            "leafo/scssphp-compass": "Assetic provides the integration with the SCSS compass plugin",
+            "patchwork/jsqueeze": "Assetic provides the integration with the JSqueeze JavaScript compressor",
+            "ptachoire/cssembed": "Assetic provides the integration with phpcssembed to embed data uris",
+            "twig/twig": "Assetic provides the integration with the Twig templating engine"
+        },
+        "time": "2015-11-12 13:51:40",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "1.4-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-0": {
+                "Assetic": "src/"
+            },
+            "files": [
+                "src/functions.php"
+            ]
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Kris Wallsmith",
+                "email": "kris.wallsmith@gmail.com",
+                "homepage": "http://kriswallsmith.net/"
+            }
+        ],
+        "description": "Asset Management for PHP",
+        "homepage": "https://github.com/kriswallsmith/assetic",
+        "keywords": [
+            "assets",
+            "compression",
+            "minification"
+        ]
+    },
+    {
+        "name": "robloach/component-installer",
+        "version": "0.2.3",
+        "version_normalized": "0.2.3.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/RobLoach/component-installer.git",
+            "reference": "908a859aa7c4949ba9ad67091e67bac10b66d3d7"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/RobLoach/component-installer/zipball/908a859aa7c4949ba9ad67091e67bac10b66d3d7",
+            "reference": "908a859aa7c4949ba9ad67091e67bac10b66d3d7",
+            "shasum": ""
+        },
+        "require": {
+            "composer-plugin-api": "^1.0",
+            "kriswallsmith/assetic": "1.*",
+            "php": ">=5.3.2"
+        },
+        "require-dev": {
+            "composer/composer": "1.*@alpha",
+            "phpunit/phpunit": "4.*"
+        },
+        "time": "2015-08-10 12:35:38",
+        "type": "composer-plugin",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "1.0.x-dev"
+            },
+            "class": "ComponentInstaller\\ComponentInstallerPlugin"
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-0": {
+                "ComponentInstaller": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Rob Loach",
+                "homepage": "http://robloach.net"
+            }
+        ],
+        "description": "Allows installation of Components via Composer."
+    },
+    {
+        "name": "drupal/drupal",
+        "version": "7.43.0",
+        "version_normalized": "7.43.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://git.drupal.org/project/drupal",
+            "reference": "c136d1347b9b92145590cb1f84cc02a695d721fe"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://ftp.drupal.org/files/projects/drupal-7.43.zip",
+            "reference": null,
+            "shasum": null
+        },
+        "replace": {
+            "drupal/aggregator": "self.version",
+            "drupal/bartik": "self.version",
+            "drupal/block": "self.version",
+            "drupal/blog": "self.version",
+            "drupal/book": "self.version",
+            "drupal/color": "self.version",
+            "drupal/comment": "self.version",
+            "drupal/contact": "self.version",
+            "drupal/contextual": "self.version",
+            "drupal/dashboard": "self.version",
+            "drupal/dblog": "self.version",
+            "drupal/field": "self.version",
+            "drupal/field_sql_storage": "self.version",
+            "drupal/field_ui": "self.version",
+            "drupal/file": "self.version",
+            "drupal/filter": "self.version",
+            "drupal/forum": "self.version",
+            "drupal/garland": "self.version",
+            "drupal/help": "self.version",
+            "drupal/image": "self.version",
+            "drupal/list": "self.version",
+            "drupal/locale": "self.version",
+            "drupal/menu": "self.version",
+            "drupal/minimal": "self.version",
+            "drupal/node": "self.version",
+            "drupal/number": "self.version",
+            "drupal/openid": "self.version",
+            "drupal/options": "self.version",
+            "drupal/overlay": "self.version",
+            "drupal/path": "self.version",
+            "drupal/php": "self.version",
+            "drupal/poll": "self.version",
+            "drupal/profile": "self.version",
+            "drupal/rdf": "self.version",
+            "drupal/search": "self.version",
+            "drupal/seven": "self.version",
+            "drupal/shortcut": "self.version",
+            "drupal/standard": "self.version",
+            "drupal/stark": "self.version",
+            "drupal/statistics": "self.version",
+            "drupal/syslog": "self.version",
+            "drupal/system": "self.version",
+            "drupal/taxonomy": "self.version",
+            "drupal/text": "self.version",
+            "drupal/toolbar": "self.version",
+            "drupal/tracker": "self.version",
+            "drupal/translation": "self.version",
+            "drupal/trigger": "self.version",
+            "drupal/update": "self.version",
+            "drupal/user": "self.version"
+        },
+        "suggest": {
+            "drupal/block": "Required by drupal/dashboard, drupal/minimal, drupal/standard",
+            "drupal/color": "Required by drupal/standard",
+            "drupal/comment": "Required by drupal/forum, drupal/tracker, drupal/standard",
+            "drupal/contextual": "Required by drupal/standard",
+            "drupal/dashboard": "Required by drupal/standard",
+            "drupal/dblog": "Required by drupal/minimal, drupal/standard",
+            "drupal/field": "Required by drupal/field_sql_storage, drupal/list, drupal/number, drupal/options, drupal/text, drupal/field_ui, drupal/file",
+            "drupal/field_sql_storage": "Required by drupal/field",
+            "drupal/field_ui": "Required by drupal/standard",
+            "drupal/file": "Required by drupal/image, drupal/standard",
+            "drupal/help": "Required by drupal/standard",
+            "drupal/image": "Required by drupal/standard",
+            "drupal/list": "Required by drupal/standard",
+            "drupal/locale": "Required by drupal/translation",
+            "drupal/menu": "Required by drupal/standard",
+            "drupal/number": "Required by drupal/standard",
+            "drupal/options": "Required by drupal/list, drupal/taxonomy, drupal/standard",
+            "drupal/overlay": "Required by drupal/standard",
+            "drupal/path": "Required by drupal/standard",
+            "drupal/rdf": "Required by drupal/standard",
+            "drupal/search": "Required by drupal/standard",
+            "drupal/shortcut": "Required by drupal/standard",
+            "drupal/taxonomy": "Required by drupal/forum, drupal/standard",
+            "drupal/text": "Required by drupal/comment",
+            "drupal/toolbar": "Required by drupal/standard"
+        },
+        "time": "2016-02-24 19:26:52",
+        "type": "drupal-core",
+        "extra": {
+            "branch-alias": {
+                "dev-7.x-": "7.x-dev"
+            }
+        },
+        "installation-source": "dist",
+        "notification-url": "https://packagist.drupal-composer.org/downloads/",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "description": "Handles general site configuration for administrators.",
+        "homepage": "https://www.drupal.org/project/drupal"
+    },
+    {
+        "name": "pear/console_table",
+        "version": "v1.2.1",
+        "version_normalized": "1.2.1.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/pear/Console_Table.git",
+            "reference": "a129a91d8bf19317d81e68d1d3a2e18932f684e4"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/pear/Console_Table/zipball/a129a91d8bf19317d81e68d1d3a2e18932f684e4",
+            "reference": "a129a91d8bf19317d81e68d1d3a2e18932f684e4",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=4.3.10"
+        },
+        "suggest": {
+            "pear/Console_Color2": ">=0.1.2"
+        },
+        "time": "2014-10-27 09:53:49",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "classmap": [
+                "Table.php"
+            ]
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "BSD-2-Clause"
+        ],
+        "authors": [
+            {
+                "name": "Jan Schneider",
+                "homepage": "http://pear.php.net/user/yunosh"
+            },
+            {
+                "name": "Tal Peer",
+                "homepage": "http://pear.php.net/user/tal"
+            },
+            {
+                "name": "Xavier Noguer",
+                "homepage": "http://pear.php.net/user/xnoguer"
+            },
+            {
+                "name": "Richard Heyes",
+                "homepage": "http://pear.php.net/user/richard"
+            }
+        ],
+        "description": "Library that makes it easy to build console style tables.",
+        "homepage": "http://pear.php.net/package/Console_Table/",
+        "keywords": [
+            "console"
+        ]
+    },
+    {
+        "name": "symfony/polyfill-mbstring",
+        "version": "v1.1.1",
+        "version_normalized": "1.1.1.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/symfony/polyfill-mbstring.git",
+            "reference": "1289d16209491b584839022f29257ad859b8532d"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/symfony/polyfill-mbstring/zipball/1289d16209491b584839022f29257ad859b8532d",
+            "reference": "1289d16209491b584839022f29257ad859b8532d",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.3.3"
+        },
+        "suggest": {
+            "ext-mbstring": "For best performance"
+        },
+        "time": "2016-01-20 09:13:37",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "1.1-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Symfony\\Polyfill\\Mbstring\\": ""
+            },
+            "files": [
+                "bootstrap.php"
+            ]
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Nicolas Grekas",
+                "email": "p@tchwork.com"
+            },
+            {
+                "name": "Symfony Community",
+                "homepage": "https://symfony.com/contributors"
+            }
+        ],
+        "description": "Symfony polyfill for the Mbstring extension",
+        "homepage": "https://symfony.com",
+        "keywords": [
+            "compatibility",
+            "mbstring",
+            "polyfill",
+            "portable",
+            "shim"
+        ]
+    },
+    {
+        "name": "symfony/var-dumper",
+        "version": "v2.8.4",
+        "version_normalized": "2.8.4.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/symfony/var-dumper.git",
+            "reference": "1f840df081f59cbe25140742bbe94a0dfac0222a"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/symfony/var-dumper/zipball/1f840df081f59cbe25140742bbe94a0dfac0222a",
+            "reference": "1f840df081f59cbe25140742bbe94a0dfac0222a",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.3.9",
+            "symfony/polyfill-mbstring": "~1.0"
+        },
+        "require-dev": {
+            "twig/twig": "~1.20|~2.0"
+        },
+        "suggest": {
+            "ext-symfony_debug": ""
+        },
+        "time": "2016-03-07 14:04:32",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "2.8-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "files": [
+                "Resources/functions/dump.php"
+            ],
+            "psr-4": {
+                "Symfony\\Component\\VarDumper\\": ""
+            },
+            "exclude-from-classmap": [
+                "/Tests/"
+            ]
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Nicolas Grekas",
+                "email": "p@tchwork.com"
+            },
+            {
+                "name": "Symfony Community",
+                "homepage": "https://symfony.com/contributors"
+            }
+        ],
+        "description": "Symfony mechanism for exploring and dumping PHP variables",
+        "homepage": "https://symfony.com",
+        "keywords": [
+            "debug",
+            "dump"
+        ]
+    },
+    {
+        "name": "symfony/yaml",
+        "version": "v2.8.4",
+        "version_normalized": "2.8.4.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/symfony/yaml.git",
+            "reference": "584e52cb8f788a887553ba82db6caacb1d6260bb"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/symfony/yaml/zipball/584e52cb8f788a887553ba82db6caacb1d6260bb",
+            "reference": "584e52cb8f788a887553ba82db6caacb1d6260bb",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.3.9"
+        },
+        "time": "2016-03-04 07:54:35",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "2.8-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Symfony\\Component\\Yaml\\": ""
+            },
+            "exclude-from-classmap": [
+                "/Tests/"
+            ]
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Fabien Potencier",
+                "email": "fabien@symfony.com"
+            },
+            {
+                "name": "Symfony Community",
+                "homepage": "https://symfony.com/contributors"
+            }
+        ],
+        "description": "Symfony Yaml Component",
+        "homepage": "https://symfony.com"
+    },
+    {
+        "name": "d11wtq/boris",
+        "version": "v1.0.8",
+        "version_normalized": "1.0.8.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/borisrepl/boris.git",
+            "reference": "125dd4e5752639af7678a22ea597115646d89c6e"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/borisrepl/boris/zipball/125dd4e5752639af7678a22ea597115646d89c6e",
+            "reference": "125dd4e5752639af7678a22ea597115646d89c6e",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.3.0"
+        },
+        "suggest": {
+            "ext-pcntl": "*",
+            "ext-posix": "*",
+            "ext-readline": "*"
+        },
+        "time": "2014-01-17 12:21:18",
+        "bin": [
+            "bin/boris"
+        ],
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-0": {
+                "Boris": "lib"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/"
+    },
+    {
+        "name": "psr/log",
+        "version": "1.0.0",
+        "version_normalized": "1.0.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/php-fig/log.git",
+            "reference": "fe0936ee26643249e916849d48e3a51d5f5e278b"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/php-fig/log/zipball/fe0936ee26643249e916849d48e3a51d5f5e278b",
+            "reference": "fe0936ee26643249e916849d48e3a51d5f5e278b",
+            "shasum": ""
+        },
+        "time": "2012-12-21 11:40:51",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-0": {
+                "Psr\\Log\\": ""
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "PHP-FIG",
+                "homepage": "http://www.php-fig.org/"
+            }
+        ],
+        "description": "Common interface for logging libraries",
+        "keywords": [
+            "log",
+            "psr",
+            "psr-3"
+        ]
+    },
+    {
+        "name": "drush/drush",
+        "version": "7.2.0",
+        "version_normalized": "7.2.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/drush-ops/drush.git",
+            "reference": "8cc6781d8e01c8ed4717a5ad1c58094cf1c3bd8e"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/drush-ops/drush/zipball/8cc6781d8e01c8ed4717a5ad1c58094cf1c3bd8e",
+            "reference": "8cc6781d8e01c8ed4717a5ad1c58094cf1c3bd8e",
+            "shasum": ""
+        },
+        "require": {
+            "d11wtq/boris": "~1.0",
+            "pear/console_table": "~1.2.0",
+            "php": ">=5.3.0",
+            "psr/log": "~1.0",
+            "symfony/var-dumper": "^2.6.3",
+            "symfony/yaml": "~2.2"
+        },
+        "require-dev": {
+            "phpunit/phpunit": "4.*",
+            "symfony/process": "2.4.5"
+        },
+        "time": "2016-03-09 21:08:05",
+        "bin": [
+            "drush",
+            "drush.php",
+            "drush.bat",
+            "drush.complete.sh"
+        ],
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "7.0.x-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-0": {
+                "Drush": "lib/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "authors": [
+            {
+                "name": "Moshe Weitzman",
+                "email": "weitzman@tejasa.com"
+            },
+            {
+                "name": "Owen Barton",
+                "email": "drupal@owenbarton.com"
+            },
+            {
+                "name": "Mark Sonnabaum",
+                "email": "marksonnabaum@gmail.com"
+            },
+            {
+                "name": "Antoine Beaupré",
+                "email": "anarcat@koumbit.org"
+            },
+            {
+                "name": "Greg Anderson",
+                "email": "greg.1.anderson@greenknowe.org"
+            },
+            {
+                "name": "Jonathan Araña Cruz",
+                "email": "jonhattan@faita.net"
+            },
+            {
+                "name": "Jonathan Hedstrom",
+                "email": "jhedstrom@gmail.com"
+            },
+            {
+                "name": "Christopher Gervais",
+                "email": "chris@ergonlogic.com"
+            }
+        ],
+        "description": "Drush is a command line shell and scripting interface for Drupal, a veritable Swiss Army knife designed to make life easier for those of us who spend some of our working hours hacking away at the command prompt.",
+        "homepage": "http://www.drush.org"
+    }
+]
