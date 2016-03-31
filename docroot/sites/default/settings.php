@@ -714,10 +714,9 @@ $settings['container_yamls'][] = __DIR__ . '/services.yml';
  *
  * Keep this code block at the end of this file to take full effect.
  */
-# if (file_exists(__DIR__ . '/settings.local.php')) {
-#   include __DIR__ . '/settings.local.php';
-# }
-
+ if (file_exists(__DIR__ . DIRECTORY_SEPARATOR . 'settings.local.php')) {
+   include(__DIR__ . DIRECTORY_SEPARATOR . 'settings.local.php');
+ }
 
 // On Acquia Cloud, this include file configures Drupal to use the correct
 // database in each site environment (Dev, Stage, or Prod). To use this
@@ -726,3 +725,4 @@ $settings['container_yamls'][] = __DIR__ . '/services.yml';
 if (file_exists('/var/www/site-php')) {
   require('/var/www/site-php/druportugal/druportugal-settings.inc');
 }
+
