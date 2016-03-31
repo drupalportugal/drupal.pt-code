@@ -1,20 +1,20 @@
 # Ignore configuration files that may contain sensitive information.
-docroot/sites/*/settings*.php
+web/sites/*/settings*.php
 sites/*/settings*.php
 
 # Ignore paths that contain user-generated content.
-docroot/files
-docroot/sites/*/files
-docroot/sites/*/private
-docroot/sites/*/tmp
+web/files
+web/sites/*/files
+web/sites/*/private
+web/sites/*/tmp
 sites/*/files
 sites/*/private
 sites/*/tmp
 
 # ** Only works in OSs that support newer versions of fnmatch (Bash 4+)
-/docroot/sites/default/**/files
-/docroot/sites/default/**/private
-/docroot/sites/default/**/tmp
+/web/sites/default/**/files
+/web/sites/default/**/private
+/web/sites/default/**/tmp
 /sites/default/**/files
 /sites/default/**/private
 /sites/default/**/tmp

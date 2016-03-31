@@ -587,14 +587,18 @@ $conf['404_fast_html'] = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML+RDFa 1.0//EN"
 
 
 /**
- * Settings: Constants
+ * Custom Constants:
+ *
+ * These affect custom settings and/or modules in the site.
+ *
  */
 define('SETTINGS_CACHE_INC', TRUE); // Enable settings for cache (TRUE, FALSE)
 
-// Settings: Cache
+
+// Load custom settings for cache
 if (SETTINGS_CACHE_INC) {
-  if (file_exists(dirname(__FILE__) . DIRECTORY_SEPARATOR . 'settings-cache.php')) {
-    require(dirname(__FILE__) . DIRECTORY_SEPARATOR . 'settings-cache.php');
+  if (file_exists(__DIR__ . DIRECTORY_SEPARATOR . 'settings-cache.php')) {
+    require(__DIR__ . DIRECTORY_SEPARATOR . 'settings-cache.php');
   }
 }
 
@@ -604,4 +608,9 @@ if (SETTINGS_CACHE_INC) {
 // (Drupal 5 or 6) or $databases (Drupal 7 or 8) as described in comments above.
 if (file_exists('/var/www/site-php')) {
   require('/var/www/site-php/druportugal/druportugal-settings.inc');
+}
+
+// Load custom settings for local environment
+if (file_exists((__DIR__ . DIRECTORY_SEPARATOR . 'settings.local.php'))) {
+  require(__DIR__ . DIRECTORY_SEPARATOR . 'settings.local.php');
 }
