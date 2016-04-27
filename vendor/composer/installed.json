@@ -97,160 +97,6 @@
         "description": "Composer plugin to merge multiple composer.json files"
     },
     {
-        "name": "composer/installers",
-        "version": "v1.0.23",
-        "version_normalized": "1.0.23.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/composer/installers.git",
-            "reference": "6213d900e92647831f7a406d5c530ea1f3d4360e"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/composer/installers/zipball/6213d900e92647831f7a406d5c530ea1f3d4360e",
-            "reference": "6213d900e92647831f7a406d5c530ea1f3d4360e",
-            "shasum": ""
-        },
-        "require": {
-            "composer-plugin-api": "^1.0"
-        },
-        "replace": {
-            "roundcube/plugin-installer": "*",
-            "shama/baton": "*"
-        },
-        "require-dev": {
-            "composer/composer": "1.0.*@dev",
-            "phpunit/phpunit": "4.1.*"
-        },
-        "time": "2016-01-27 12:54:22",
-        "type": "composer-plugin",
-        "extra": {
-            "class": "Composer\\Installers\\Plugin",
-            "branch-alias": {
-                "dev-master": "1.0-dev"
-            }
-        },
-        "installation-source": "dist",
-        "autoload": {
-            "psr-0": {
-                "Composer\\Installers\\": "src/"
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "name": "Kyle Robinson Young",
-                "email": "kyle@dontkry.com",
-                "homepage": "https://github.com/shama"
-            }
-        ],
-        "description": "A multi-framework Composer library installer",
-        "homepage": "http://composer.github.com/installers/",
-        "keywords": [
-            "Craft",
-            "Dolibarr",
-            "Hurad",
-            "MODX Evo",
-            "OXID",
-            "SMF",
-            "Thelia",
-            "WolfCMS",
-            "agl",
-            "aimeos",
-            "annotatecms",
-            "bitrix",
-            "cakephp",
-            "chef",
-            "codeigniter",
-            "concrete5",
-            "croogo",
-            "dokuwiki",
-            "drupal",
-            "elgg",
-            "fuelphp",
-            "grav",
-            "installer",
-            "joomla",
-            "kohana",
-            "laravel",
-            "lithium",
-            "magento",
-            "mako",
-            "mediawiki",
-            "modulework",
-            "moodle",
-            "phpbb",
-            "piwik",
-            "ppi",
-            "puppet",
-            "roundcube",
-            "shopware",
-            "silverstripe",
-            "symfony",
-            "typo3",
-            "wordpress",
-            "zend",
-            "zikula"
-        ]
-    },
-    {
-        "name": "derhasi/composer-preserve-paths",
-        "version": "0.1.2",
-        "version_normalized": "0.1.2.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/derhasi/composer-preserve-paths.git",
-            "reference": "13309cebd530c3f5e9bfa238aa496076a644540b"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/derhasi/composer-preserve-paths/zipball/13309cebd530c3f5e9bfa238aa496076a644540b",
-            "reference": "13309cebd530c3f5e9bfa238aa496076a644540b",
-            "shasum": ""
-        },
-        "require": {
-            "composer-plugin-api": "^1.0"
-        },
-        "require-dev": {
-            "composer/composer": "1.0.*@dev",
-            "derhasi/tempdirectory": "0.1.*",
-            "phpunit/phpunit": "4.4.*"
-        },
-        "time": "2015-06-17 18:21:27",
-        "type": "composer-plugin",
-        "extra": {
-            "class": "derhasi\\Composer\\Plugin"
-        },
-        "installation-source": "dist",
-        "autoload": {
-            "psr-4": {
-                "derhasi\\Composer\\": "src/"
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "GPL-2.0+"
-        ],
-        "authors": [
-            {
-                "name": "Johannes Haseitl",
-                "email": "johannes@undpaul.de",
-                "homepage": "http://www.undpaul.de"
-            }
-        ],
-        "description": "Composer plugin for preserving custom paths and supporting nested packages",
-        "homepage": "https://github.com/derhasi/composer-preserve-paths",
-        "keywords": [
-            "composer-plugin",
-            "custom path",
-            "installer",
-            "nested package"
-        ]
-    },
-    {
         "name": "symfony/process",
         "version": "v3.0.4",
         "version_normalized": "3.0.4.0",
@@ -850,18 +696,174 @@
         ]
     },
     {
-        "name": "drush/drush",
-        "version": "7.2.0",
-        "version_normalized": "7.2.0.0",
+        "name": "derhasi/composer-preserve-paths",
+        "version": "0.1.3",
+        "version_normalized": "0.1.3.0",
         "source": {
             "type": "git",
-            "url": "https://github.com/drush-ops/drush.git",
-            "reference": "8cc6781d8e01c8ed4717a5ad1c58094cf1c3bd8e"
+            "url": "https://github.com/derhasi/composer-preserve-paths.git",
+            "reference": "e10d7acbc84df0d58faf2470049f53c97a4a1503"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/drush-ops/drush/zipball/8cc6781d8e01c8ed4717a5ad1c58094cf1c3bd8e",
-            "reference": "8cc6781d8e01c8ed4717a5ad1c58094cf1c3bd8e",
+            "url": "https://api.github.com/repos/derhasi/composer-preserve-paths/zipball/e10d7acbc84df0d58faf2470049f53c97a4a1503",
+            "reference": "e10d7acbc84df0d58faf2470049f53c97a4a1503",
+            "shasum": ""
+        },
+        "require": {
+            "composer-plugin-api": "^1.0"
+        },
+        "require-dev": {
+            "composer/composer": "1.0.*@dev",
+            "derhasi/tempdirectory": "0.1.*",
+            "phpunit/phpunit": "4.4.*"
+        },
+        "time": "2015-10-20 13:44:48",
+        "type": "composer-plugin",
+        "extra": {
+            "class": "derhasi\\Composer\\Plugin"
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "derhasi\\Composer\\": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "authors": [
+            {
+                "name": "Johannes Haseitl",
+                "email": "johannes@undpaul.de",
+                "homepage": "http://www.undpaul.de"
+            }
+        ],
+        "description": "Composer plugin for preserving custom paths and supporting nested packages",
+        "homepage": "https://github.com/derhasi/composer-preserve-paths",
+        "keywords": [
+            "composer-plugin",
+            "custom path",
+            "installer",
+            "nested package"
+        ]
+    },
+    {
+        "name": "composer/installers",
+        "version": "v1.0.25",
+        "version_normalized": "1.0.25.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/composer/installers.git",
+            "reference": "36e5b5843203d7f1cf6ffb0305a97e014387bd8e"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/composer/installers/zipball/36e5b5843203d7f1cf6ffb0305a97e014387bd8e",
+            "reference": "36e5b5843203d7f1cf6ffb0305a97e014387bd8e",
+            "shasum": ""
+        },
+        "require": {
+            "composer-plugin-api": "^1.0"
+        },
+        "replace": {
+            "roundcube/plugin-installer": "*",
+            "shama/baton": "*"
+        },
+        "require-dev": {
+            "composer/composer": "1.0.*@dev",
+            "phpunit/phpunit": "4.1.*"
+        },
+        "time": "2016-04-13 19:46:30",
+        "type": "composer-plugin",
+        "extra": {
+            "class": "Composer\\Installers\\Plugin",
+            "branch-alias": {
+                "dev-master": "1.0-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Composer\\Installers\\": "src/Composer/Installers"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Kyle Robinson Young",
+                "email": "kyle@dontkry.com",
+                "homepage": "https://github.com/shama"
+            }
+        ],
+        "description": "A multi-framework Composer library installer",
+        "homepage": "https://composer.github.io/installers/",
+        "keywords": [
+            "Craft",
+            "Dolibarr",
+            "Hurad",
+            "ImageCMS",
+            "MODX Evo",
+            "Mautic",
+            "OXID",
+            "SMF",
+            "Thelia",
+            "WolfCMS",
+            "agl",
+            "aimeos",
+            "annotatecms",
+            "bitrix",
+            "cakephp",
+            "chef",
+            "codeigniter",
+            "concrete5",
+            "croogo",
+            "dokuwiki",
+            "drupal",
+            "elgg",
+            "fuelphp",
+            "grav",
+            "installer",
+            "joomla",
+            "kohana",
+            "laravel",
+            "lithium",
+            "magento",
+            "mako",
+            "mediawiki",
+            "modulework",
+            "moodle",
+            "phpbb",
+            "piwik",
+            "ppi",
+            "puppet",
+            "roundcube",
+            "shopware",
+            "silverstripe",
+            "symfony",
+            "typo3",
+            "wordpress",
+            "zend",
+            "zikula"
+        ]
+    },
+    {
+        "name": "drush/drush",
+        "version": "7.3.0",
+        "version_normalized": "7.3.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/drush-ops/drush.git",
+            "reference": "dd7c5111fddce3cbc41d242d7d8fdf493249d3f7"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/drush-ops/drush/zipball/dd7c5111fddce3cbc41d242d7d8fdf493249d3f7",
+            "reference": "dd7c5111fddce3cbc41d242d7d8fdf493249d3f7",
             "shasum": ""
         },
         "require": {
@@ -876,7 +878,7 @@
             "phpunit/phpunit": "4.*",
             "symfony/process": "2.4.5"
         },
-        "time": "2016-03-09 21:08:05",
+        "time": "2016-04-24 14:35:41",
         "bin": [
             "drush",
             "drush.php",

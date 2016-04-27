@@ -4,21 +4,21 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "d4daa46e5857b0fd9377f5b0c8775d02",
-    "content-hash": "890d1d6cff8a3be3eac2e7b403a8f478",
+    "hash": "be3e4c048faa69ff34a958fa054254c6",
+    "content-hash": "9d4cedd2a20a3cacaaaba11137fd2306",
     "packages": [
         {
             "name": "composer/installers",
-            "version": "v1.0.23",
+            "version": "v1.0.25",
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/installers.git",
-                "reference": "6213d900e92647831f7a406d5c530ea1f3d4360e"
+                "reference": "36e5b5843203d7f1cf6ffb0305a97e014387bd8e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/installers/zipball/6213d900e92647831f7a406d5c530ea1f3d4360e",
-                "reference": "6213d900e92647831f7a406d5c530ea1f3d4360e",
+                "url": "https://api.github.com/repos/composer/installers/zipball/36e5b5843203d7f1cf6ffb0305a97e014387bd8e",
+                "reference": "36e5b5843203d7f1cf6ffb0305a97e014387bd8e",
                 "shasum": ""
             },
             "require": {
@@ -40,8 +40,8 @@
                 }
             },
             "autoload": {
-                "psr-0": {
-                    "Composer\\Installers\\": "src/"
+                "psr-4": {
+                    "Composer\\Installers\\": "src/Composer/Installers"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -56,12 +56,14 @@
                 }
             ],
             "description": "A multi-framework Composer library installer",
-            "homepage": "http://composer.github.com/installers/",
+            "homepage": "https://composer.github.io/installers/",
             "keywords": [
                 "Craft",
                 "Dolibarr",
                 "Hurad",
+                "ImageCMS",
                 "MODX Evo",
+                "Mautic",
                 "OXID",
                 "SMF",
                 "Thelia",
@@ -103,7 +105,7 @@
                 "zend",
                 "zikula"
             ],
-            "time": "2016-01-27 12:54:22"
+            "time": "2016-04-13 19:46:30"
         },
         {
             "name": "cweagans/composer-patches",
@@ -185,16 +187,16 @@
         },
         {
             "name": "derhasi/composer-preserve-paths",
-            "version": "0.1.2",
+            "version": "0.1.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/derhasi/composer-preserve-paths.git",
-                "reference": "13309cebd530c3f5e9bfa238aa496076a644540b"
+                "reference": "e10d7acbc84df0d58faf2470049f53c97a4a1503"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/derhasi/composer-preserve-paths/zipball/13309cebd530c3f5e9bfa238aa496076a644540b",
-                "reference": "13309cebd530c3f5e9bfa238aa496076a644540b",
+                "url": "https://api.github.com/repos/derhasi/composer-preserve-paths/zipball/e10d7acbc84df0d58faf2470049f53c97a4a1503",
+                "reference": "e10d7acbc84df0d58faf2470049f53c97a4a1503",
                 "shasum": ""
             },
             "require": {
@@ -233,7 +235,7 @@
                 "installer",
                 "nested package"
             ],
-            "time": "2015-06-17 18:21:27"
+            "time": "2015-10-20 13:44:48"
         },
         {
             "name": "drupal/drupal",
@@ -344,16 +346,16 @@
         },
         {
             "name": "drush/drush",
-            "version": "7.2.0",
+            "version": "7.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/drush-ops/drush.git",
-                "reference": "8cc6781d8e01c8ed4717a5ad1c58094cf1c3bd8e"
+                "reference": "dd7c5111fddce3cbc41d242d7d8fdf493249d3f7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/drush-ops/drush/zipball/8cc6781d8e01c8ed4717a5ad1c58094cf1c3bd8e",
-                "reference": "8cc6781d8e01c8ed4717a5ad1c58094cf1c3bd8e",
+                "url": "https://api.github.com/repos/drush-ops/drush/zipball/dd7c5111fddce3cbc41d242d7d8fdf493249d3f7",
+                "reference": "dd7c5111fddce3cbc41d242d7d8fdf493249d3f7",
                 "shasum": ""
             },
             "require": {
@@ -425,7 +427,7 @@
             ],
             "description": "Drush is a command line shell and scripting interface for Drupal, a veritable Swiss Army knife designed to make life easier for those of us who spend some of our working hours hacking away at the command prompt.",
             "homepage": "http://www.drush.org",
-            "time": "2016-03-09 21:08:05"
+            "time": "2016-04-24 14:35:41"
         },
         {
             "name": "kriswallsmith/assetic",

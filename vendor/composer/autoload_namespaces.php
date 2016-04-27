@@ -8,7 +8,6 @@ $baseDir = dirname($vendorDir);
 return array(
     'Psr\\Log\\' => array($vendorDir . '/psr/log'),
     'Drush' => array($vendorDir . '/drush/drush/lib'),
-    'Composer\\Installers\\' => array($vendorDir . '/composer/installers/src'),
     'ComponentInstaller' => array($vendorDir . '/robloach/component-installer/src'),
     'Boris' => array($vendorDir . '/d11wtq/boris/lib'),
     'Assetic' => array($vendorDir . '/kriswallsmith/assetic/src'),
