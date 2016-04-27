@@ -47,12 +47,12 @@
         "composer.local.json"
       ],
       "include": [
-        "web/profiles/custom/*/composer.json",
-        "web/modules/custom/*/composer.json",
-        "web/modules/exports/composer.json",
-        "web/modules/exports/*/composer.json",
-        "web/modules/exports/*/*/composer.json",
-        "web/themes/custom/*/composer.json"
+        "web/sites/all/profiles/custom/*/composer.json",
+        "web/sites/all/modules/custom/*/composer.json",
+        "web/sites/all/modules/exports/composer.json",
+        "web/sites/all/modules/exports/*/composer.json",
+        "web/sites/all/modules/exports/*/*/composer.json",
+        "web/sites/all/themes/custom/*/composer.json"
       ],
       "recurse": false,
       "replace": false,
@@ -76,10 +76,12 @@
       "web/sites/all/themes/contrib",
       "web/sites/all/themes/custom",
       "web/sites/all/libraries",
-      "web/sites/default/settings*",
-      "web/sites/default/files",
-      "web/sites/default/public",
-      "web/sites/default/private",
+      "web/sites/*/*settings*.php",
+      "web/sites/*/files",
+      "web/sites/*/public",
+      "web/sites/*/private",
+      "web/sites/*/files-public",
+      "web/sites/*/files-private",
       "drush/contrib"
     ]
   },

@@ -1,45 +1,56 @@
 # Ignore configuration files that may contain sensitive information.
-web/sites/*/settings*.php
-sites/*/settings*.php
+docroot/sites/*/*settings*.php
+web/sites/*/*settings*.php
+sites/*/*settings*.php
 
 # Ignore paths that contain user-generated content.
-web/files
+docroot/files/
+docroot/sites/*/files
+docroot/sites/*/public
+docroot/sites/*/private
+docroot/sites/*/files-public
+docroot/sites/*/files-private
+web/files/
 web/sites/*/files
+web/sites/*/public
 web/sites/*/private
-web/sites/*/tmp
+web/sites/*/files-public
+web/sites/*/files-private
+files/
 sites/*/files
+sites/*/public
 sites/*/private
+sites/*/files-public
+sites/*/files-private
+
+# Ignore paths that contain temporary files.
+docroot/cache/
+docroot/sites/*/translations
+docroot/sites/*/tmp
+web/cache/
+web/sites/*/translations
+web/sites/*/tmp
+cache/
+sites/*/translations
 sites/*/tmp
 
-# ** Only works in OSs that support newer versions of fnmatch (Bash 4+)
-/web/sites/default/**/files
-/web/sites/default/**/private
-/web/sites/default/**/tmp
-/sites/default/**/files
-/sites/default/**/private
-/sites/default/**/tmp
+# Ignore other projects git repositories.
+/docroot/**/.git
+/web/**/.git
+/vendor/**/.git
 
-# SASS #
-##########
+# Build caches #
+################
 .sass-cache
 
-# Packages #
-############
-*.7z
-*.dmg
-*.gz
-*.bz2
-*.iso
-*.jar
-*.rar
-*.tar
-*.zip
-*.tgz
-
-# Logs and databases #
-######################
-*.log
-*.sql
+# Editor and IDE files #
+########################
+*.un~
+*.kate-swp
+.project
+.buildpath
+.settings*
+.idea
 
 # OS generated files #
 ######################
@@ -49,11 +60,25 @@ Icon?
 Thumbs.db
 ._*
 
-# Vim generated files #
-######################
-*.un~
+# Archives and binaries #
+#########################
+*.tar
+*.gz
+*.bz2
+*.7z
+*.xz
+*.zip
+*.rar
+*.tgz
+*.iso
+*.jar
+*.dmg
+*.exe
+*.so
+*.dll
 
-# Virtualmin files
-awstats-icon
-awstatsicons
-icon
+# Logs and databases #
+######################
+*.log
+*.sql
+
