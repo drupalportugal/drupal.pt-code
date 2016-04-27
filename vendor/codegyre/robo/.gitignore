@@ -1,0 +1,8 @@
+vendor/
+.idea/
+site/
+robotheme/
+tests/_log/*
+tests/_helpers/_generated/*
+composer.phar
+robo.phar
