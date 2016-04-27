@@ -1,0 +1,8 @@
+name: Diff
+type: module
+description: Shows differences between content revisions.
+core: 8.x
+version: VERSION
+configure: diff.general_settings
+dependencies:
+  - entity
