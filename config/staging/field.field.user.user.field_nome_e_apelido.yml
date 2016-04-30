@@ -1,0 +1,21 @@
+uuid: e0478a29-3e3e-4491-8a45-200e3a31efdb
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.user.field_nome_e_apelido
+  module:
+    - text
+    - user
+id: user.user.field_nome_e_apelido
+field_name: field_nome_e_apelido
+entity_type: user
+bundle: user
+label: 'Nome e apelido'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: text

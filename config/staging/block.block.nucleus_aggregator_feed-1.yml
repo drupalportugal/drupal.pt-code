@@ -1,0 +1,22 @@
+uuid: 058b147c-b3b9-48d5-ba80-4178c3f5f76c
+langcode: en
+status: true
+dependencies:
+  module:
+    - aggregator
+  theme:
+    - nucleus
+id: nucleus_aggregator_feed-1
+theme: nucleus
+region: content
+weight: -22
+provider: null
+plugin: aggregator_feed_block
+settings:
+  id: aggregator_feed_block
+  label: ''
+  provider: aggregator
+  label_display: '0'
+  block_count: 5
+  feed: '1'
+visibility: {  }

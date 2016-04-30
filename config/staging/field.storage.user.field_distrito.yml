@@ -1,0 +1,81 @@
+uuid: 4d36dcc3-5005-4cea-8df2-6e715e881c33
+langcode: und
+status: true
+dependencies:
+  module:
+    - options
+    - user
+id: user.field_distrito
+field_name: field_distrito
+entity_type: user
+type: list_string
+settings:
+  allowed_values:
+    -
+      value: '0'
+      label: Aveiro
+    -
+      value: '1'
+      label: Beja
+    -
+      value: '2'
+      label: Braga
+    -
+      value: '3'
+      label: Bragança
+    -
+      value: '4'
+      label: 'Castelo Branco'
+    -
+      value: '5'
+      label: Coimbra
+    -
+      value: '6'
+      label: Évora
+    -
+      value: '7'
+      label: Faro
+    -
+      value: '8'
+      label: Guarda
+    -
+      value: '9'
+      label: Leiria
+    -
+      value: '10'
+      label: Lisboa
+    -
+      value: '11'
+      label: Portalegre
+    -
+      value: '12'
+      label: Porto
+    -
+      value: '13'
+      label: Santarém
+    -
+      value: '14'
+      label: Setúbal
+    -
+      value: '15'
+      label: 'Viana do Castelo'
+    -
+      value: '16'
+      label: 'Vila Real'
+    -
+      value: '17'
+      label: Viseu
+    -
+      value: '18'
+      label: 'R. A. Açores'
+    -
+      value: '19'
+      label: 'R. A. Madeira'
+  allowed_values_function: ''
+module: options
+locked: false
+cardinality: 1
+translatable: false
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

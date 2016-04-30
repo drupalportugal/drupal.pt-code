@@ -1,0 +1,24 @@
+uuid: 48ec211e-d204-4e39-bb16-e41c11026c23
+langcode: en
+status: true
+dependencies:
+  config:
+    - comment.type.comment_node_slideshow
+    - field.field.comment.comment_node_slideshow.comment_body
+  module:
+    - text
+id: comment.comment_node_slideshow.default
+targetEntityType: comment
+bundle: comment_node_slideshow
+mode: default
+content:
+  comment_body:
+    label: hidden
+    weight: 0
+    type: text_default
+    settings: {  }
+    third_party_settings: {  }
+  links:
+    weight: 100
+hidden:
+  langcode: true

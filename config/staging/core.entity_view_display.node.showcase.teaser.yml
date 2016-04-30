@@ -1,0 +1,50 @@
+uuid: 5b592a45-138e-4678-96fb-3e13eca37110
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - field.field.node.showcase.comment_node_showcase
+    - field.field.node.showcase.field_categoria
+    - field.field.node.showcase.field_empresas
+    - field.field.node.showcase.field_image
+    - image.style.large
+    - node.type.showcase
+  module:
+    - image
+    - text
+    - user
+id: node.showcase.teaser
+targetEntityType: node
+bundle: showcase
+mode: teaser
+content:
+  field_categoria:
+    type: entity_reference_label
+    weight: 2
+    label: inline
+    settings:
+      link: true
+    third_party_settings: {  }
+  field_empresas:
+    type: text_trimmed
+    weight: 1
+    label: inline
+    settings:
+      trim_length: 600
+    third_party_settings: {  }
+  field_image:
+    label: hidden
+    weight: 0
+    type: image
+    settings:
+      image_style: large
+      image_link: content
+    third_party_settings: {  }
+  links:
+    weight: 3
+    settings: {  }
+    third_party_settings: {  }
+hidden:
+  comment_node_showcase: true
+  langcode: true

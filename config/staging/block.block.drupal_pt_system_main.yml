@@ -1,0 +1,20 @@
+uuid: 558e07ce-6415-4349-b3b0-851226c92061
+langcode: en
+status: true
+dependencies:
+  module:
+    - system
+  theme:
+    - drupal_pt
+id: drupal_pt_system_main
+theme: drupal_pt
+region: content
+weight: -13
+provider: null
+plugin: system_main_block
+settings:
+  id: system_main_block
+  label: '<none>'
+  provider: system
+  label_display: visible
+visibility: {  }

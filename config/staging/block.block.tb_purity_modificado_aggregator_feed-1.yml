@@ -1,0 +1,22 @@
+uuid: 435cfbc2-38bc-4692-b892-70aa2fb2060a
+langcode: en
+status: true
+dependencies:
+  module:
+    - aggregator
+  theme:
+    - tb_purity_modificado
+id: tb_purity_modificado_aggregator_feed-1
+theme: tb_purity_modificado
+region: sidebar_first
+weight: -22
+provider: null
+plugin: aggregator_feed_block
+settings:
+  id: aggregator_feed_block
+  label: ''
+  provider: aggregator
+  label_display: '0'
+  block_count: 5
+  feed: '1'
+visibility: {  }

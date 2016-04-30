@@ -1,0 +1,20 @@
+uuid: fa0e56cd-a8e2-4bdd-8177-b667bf44d74b
+langcode: und
+status: true
+dependencies:
+  module:
+    - node
+    - taxonomy
+id: node.taxonomy_forums
+field_name: taxonomy_forums
+entity_type: node
+type: entity_reference
+settings:
+  target_type: taxonomy_term
+module: core
+locked: false
+cardinality: 1
+translatable: false
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

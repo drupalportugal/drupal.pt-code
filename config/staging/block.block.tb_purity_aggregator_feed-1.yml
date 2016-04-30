@@ -1,0 +1,22 @@
+uuid: 2345cac2-1c06-4a53-9083-77a412423271
+langcode: en
+status: true
+dependencies:
+  module:
+    - aggregator
+  theme:
+    - bartik
+id: tb_purity_aggregator_feed-1
+theme: bartik
+region: content
+weight: -22
+provider: null
+plugin: aggregator_feed_block
+settings:
+  id: aggregator_feed_block
+  label: ''
+  provider: aggregator
+  label_display: '0'
+  block_count: 5
+  feed: '1'
+visibility: {  }

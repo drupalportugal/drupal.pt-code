@@ -1,0 +1,20 @@
+uuid: 46523442-48cd-4adf-853c-a8c6af68f996
+langcode: en
+status: true
+dependencies:
+  module:
+    - system
+  theme:
+    - nucleus
+id: nucleus_system_powered-by
+theme: nucleus
+region: footer
+weight: -14
+provider: null
+plugin: system_powered_by_block
+settings:
+  id: system_powered_by_block
+  label: ''
+  provider: system
+  label_display: '0'
+visibility: {  }

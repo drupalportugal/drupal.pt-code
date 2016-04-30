@@ -1,0 +1,26 @@
+uuid: 95299f01-0e14-433f-a235-f53309f0f28b
+langcode: en
+status: false
+dependencies:
+  config:
+    - system.menu.tools
+  module:
+    - system
+  theme:
+    - drupalportugal_bartik
+_core:
+  default_config_hash: NeHSoqm4XFqA7_0bDmR429ZZQt3LRbZMNRJTMsFyOfI
+id: drupalportugal_bartik_tools
+theme: drupalportugal_bartik
+region: '-1'
+weight: -8
+provider: null
+plugin: 'system_menu_block:tools'
+settings:
+  id: 'system_menu_block:tools'
+  label: Tools
+  provider: system
+  label_display: visible
+  level: 1
+  depth: 0
+visibility: {  }

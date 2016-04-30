@@ -1,0 +1,20 @@
+uuid: 2bf912d5-95a9-4d2b-b3a2-4f8d904ecd60
+langcode: en
+status: true
+dependencies:
+  module:
+    - user
+  theme:
+    - drupal_pt
+id: drupal_pt_user_login
+theme: drupal_pt
+region: sidebar_second
+weight: -12
+provider: null
+plugin: user_login_block
+settings:
+  id: user_login_block
+  label: ''
+  provider: user
+  label_display: '0'
+visibility: {  }

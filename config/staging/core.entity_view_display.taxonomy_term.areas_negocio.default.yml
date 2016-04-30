@@ -1,0 +1,21 @@
+uuid: 3ad31ae2-eda6-46d7-9ce2-22368d14e925
+langcode: en
+status: true
+dependencies:
+  config:
+    - taxonomy.vocabulary.areas_negocio
+  module:
+    - text
+id: taxonomy_term.areas_negocio.default
+targetEntityType: taxonomy_term
+bundle: areas_negocio
+mode: default
+content:
+  description:
+    label: hidden
+    type: text_default
+    weight: 0
+    settings: {  }
+    third_party_settings: {  }
+hidden:
+  langcode: true

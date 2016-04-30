@@ -1,0 +1,11 @@
+uuid: 8529d9c7-3373-4212-950f-7e0122e917bb
+langcode: en
+status: true
+dependencies: {  }
+name: Evento
+type: evento
+description: 'Eventos organizados e promovidos pela comunidade Drupal-pt'
+help: ''
+new_revision: false
+preview_mode: 1
+display_submitted: false

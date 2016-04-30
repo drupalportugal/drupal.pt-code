@@ -1,0 +1,27 @@
+uuid: 418e2633-ed9d-409b-8e8c-977d18c8bd82
+langcode: en
+status: true
+dependencies: {  }
+name: 'Full HTML'
+format: '3'
+weight: 0
+filters:
+  filter_autop:
+    id: filter_autop
+    provider: filter
+    status: true
+    weight: 0
+    settings: {  }
+  filter_htmlcorrector:
+    id: filter_htmlcorrector
+    provider: filter
+    status: true
+    weight: 10
+    settings: {  }
+  filter_url:
+    id: filter_url
+    provider: filter
+    status: true
+    weight: 0
+    settings:
+      filter_url_length: 72

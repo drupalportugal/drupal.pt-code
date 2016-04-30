@@ -6,6 +6,9 @@ web/sites/*/*settings*.yml
 sites/*/*settings*.php
 sites/*/*settings*.yml
 
+# Ignore specific configuration files
+config/*/mollom.settings.yml
+
 # Ignore paths that contain user-generated content.
 docroot/files/
 docroot/sites/*/files

@@ -1,0 +1,22 @@
+uuid: 14ab3af7-5a4b-4487-bad9-b5188171ec7a
+langcode: en
+status: true
+dependencies:
+  module:
+    - system
+  theme:
+    - drupalportugal_theme
+_core:
+  default_config_hash: jQQUUWN2Uxr5qZtc9zcJKBCxpKY8orN1u2HPqYYRQDI
+id: drupalportugal_theme_tb_purity_system_powered-by
+theme: drupalportugal_theme
+region: header
+weight: -12
+provider: null
+plugin: system_powered_by_block
+settings:
+  id: system_powered_by_block
+  label: ''
+  provider: system
+  label_display: '0'
+visibility: {  }

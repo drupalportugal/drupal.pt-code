@@ -1,0 +1,25 @@
+uuid: 2c8201db-a37b-46f5-a525-d914684f6640
+langcode: en
+status: true
+dependencies:
+  content:
+    - 'block_content:basic:7d0b431e-3cad-462f-945e-033b9ee05392'
+  module:
+    - block_content
+  theme:
+    - drupalportugal_bartik
+id: drupalportugal_bartik_tb_purity_block_26
+theme: drupalportugal_bartik
+region: footer_third
+weight: -10
+provider: null
+plugin: 'block_content:7d0b431e-3cad-462f-945e-033b9ee05392'
+settings:
+  id: 'block_content:7d0b431e-3cad-462f-945e-033b9ee05392'
+  label: Encontra-nos!
+  provider: block_content
+  label_display: visible
+  status: true
+  info: ''
+  view_mode: full
+visibility: {  }

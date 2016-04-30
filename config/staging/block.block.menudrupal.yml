@@ -1,0 +1,29 @@
+uuid: e47f0168-682d-4de7-b568-6df5d763b09d
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - system.menu.menu-menu-drupal
+  module:
+    - system
+  theme:
+    - drupalportugal_bartik
+id: menudrupal
+theme: drupalportugal_bartik
+region: sidebar_second
+weight: -11
+provider: null
+plugin: 'system_menu_block:menu-menu-drupal'
+settings:
+  id: 'system_menu_block:menu-menu-drupal'
+  label: 'Menu Drupal'
+  provider: system
+  label_display: '0'
+  level: 1
+  depth: 0
+visibility:
+  request_path:
+    id: request_path
+    pages: /drupal
+    negate: false
+    context_mapping: {  }

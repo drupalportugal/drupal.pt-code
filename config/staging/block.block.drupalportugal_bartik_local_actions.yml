@@ -1,0 +1,20 @@
+uuid: e800faf0-9ddd-4ab4-a4b0-984b69aa55fc
+langcode: en
+status: true
+dependencies:
+  theme:
+    - drupalportugal_bartik
+_core:
+  default_config_hash: 13GQpeITIJsp1kyPniXtWZfyFH87vb1xxJCHifL4UeE
+id: drupalportugal_bartik_local_actions
+theme: drupalportugal_bartik
+region: content
+weight: -8
+provider: null
+plugin: local_actions_block
+settings:
+  id: local_actions_block
+  label: 'Primary admin actions'
+  provider: core
+  label_display: '0'
+visibility: {  }

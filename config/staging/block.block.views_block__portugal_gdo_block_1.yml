@@ -1,0 +1,24 @@
+uuid: 6feb4634-7cab-41ae-b3b0-63feefb2324a
+langcode: en
+status: true
+dependencies:
+  config:
+    - views.view.portugal_gdo
+  module:
+    - views
+  theme:
+    - drupalportugal_bartik
+id: views_block__portugal_gdo_block_1
+theme: drupalportugal_bartik
+region: footer_first
+weight: -11
+provider: null
+plugin: 'views_block:portugal_gdo-block_1'
+settings:
+  id: 'views_block:portugal_gdo-block_1'
+  label: ''
+  provider: views
+  label_display: visible
+  views_label: ''
+  items_per_page: none
+visibility: {  }

@@ -1,0 +1,26 @@
+uuid: 076e2515-7296-4fd8-bf05-461380204d7f
+langcode: en
+status: false
+dependencies:
+  config:
+    - system.menu.account
+  module:
+    - system
+  theme:
+    - drupalportugal_bartik
+_core:
+  default_config_hash: DweBpscQZdG0-fHkSpUzdYucrNH45G_KF7Z82V-oyQM
+id: drupalportugal_bartik_account_menu
+theme: drupalportugal_bartik
+region: '-1'
+weight: -7
+provider: null
+plugin: 'system_menu_block:account'
+settings:
+  id: 'system_menu_block:account'
+  label: 'User account menu'
+  provider: system
+  label_display: '0'
+  level: 1
+  depth: 1
+visibility: {  }

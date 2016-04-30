@@ -1,0 +1,8 @@
+uuid: 574663dd-a8be-40c7-8d61-bcc39b60aff2
+langcode: en
+status: true
+dependencies: {  }
+id: menu-menu-acerca
+label: 'Menu Acerca'
+description: 'Menu navegação na secção Acerca'
+locked: false

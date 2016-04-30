@@ -1,0 +1,14 @@
+uuid: 8226ec4f-e05c-440b-b93f-454ee20e2fe5
+langcode: pt-pt
+status: true
+dependencies: {  }
+name: mini_thumbna
+label: Mini-thumbnail
+effects:
+  d71839d1-1a11-46a1-9432-dc3156d83cc5:
+    uuid: d71839d1-1a11-46a1-9432-dc3156d83cc5
+    id: image_resize
+    weight: 1
+    data:
+      width: 20
+      height: 20

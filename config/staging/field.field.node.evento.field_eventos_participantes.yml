@@ -1,0 +1,23 @@
+uuid: aa22f87d-ff18-430f-af7f-6a8a0a7c0031
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_eventos_participantes
+    - node.type.evento
+id: node.evento.field_eventos_participantes
+field_name: field_eventos_participantes
+entity_type: node
+bundle: evento
+label: Participantes
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: integer

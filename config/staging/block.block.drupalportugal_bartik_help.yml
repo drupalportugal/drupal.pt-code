@@ -1,0 +1,22 @@
+uuid: f00bacdf-715c-4a95-81a7-1169a079928a
+langcode: en
+status: true
+dependencies:
+  module:
+    - help
+  theme:
+    - drupalportugal_bartik
+_core:
+  default_config_hash: 8I8iACSa0sKO3k3jlvUG1ge52rfcKX7USJAQYnzuBgg
+id: drupalportugal_bartik_help
+theme: drupalportugal_bartik
+region: content
+weight: -9
+provider: null
+plugin: help_block
+settings:
+  id: help_block
+  label: Help
+  provider: help
+  label_display: '0'
+visibility: {  }

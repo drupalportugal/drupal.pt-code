@@ -1,0 +1,24 @@
+uuid: 54f72b9b-10d8-492c-a631-f6aec3a7413d
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - system.menu.main-menu
+  module:
+    - system
+  theme:
+    - drupalportugal_theme
+id: mainmenu
+theme: drupalportugal_theme
+region: primary_menu
+weight: -12
+provider: null
+plugin: 'system_menu_block:main-menu'
+settings:
+  id: 'system_menu_block:main-menu'
+  label: 'Main menu'
+  provider: system
+  label_display: '0'
+  level: 1
+  depth: 0
+visibility: {  }

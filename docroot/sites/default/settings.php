@@ -245,6 +245,8 @@
  * @endcode
  */
 $config_directories = array();
+$config_directories['active'] = '../config/active';
+$config_directories['staging'] = '../config/staging';
 
 /**
  * Settings:
@@ -266,7 +268,7 @@ $config_directories = array();
  *
  * @see install_select_profile()
  */
-# $settings['install_profile'] = '';
+$settings['install_profile'] = 'standard';
 
 /**
  * Salt for one-time login links, cancel links, form tokens, etc.
@@ -285,7 +287,7 @@ $config_directories = array();
  *   $settings['hash_salt'] = file_get_contents('/home/example/salt.txt');
  * @endcode
  */
-$settings['hash_salt'] = '';
+$settings['hash_salt'] = 'vdEeBpl5q1V0T0jxoAKNa8b0Lr6X8sgv6z6-1GmW4BtMbL1nlLyjyeLfahcQq_or6A7qIq6vHQ';
 
 /**
  * Deployment identifier.

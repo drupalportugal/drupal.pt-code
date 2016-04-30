@@ -1,0 +1,20 @@
+uuid: aa8f4089-4b1b-49b6-a1bd-8b77f223898f
+langcode: pt-pt
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: j5zLMOdJBqC0bMvSdth5UebkprJB8g_2FXHqhfpJzow
+id: anonymous
+label: 'utilizador anónimo'
+weight: 0
+is_admin: false
+permissions:
+  - 'access comments'
+  - 'access content'
+  - 'access news feeds'
+  - 'access site-wide contact form'
+  - 'access user profiles'
+  - 'rate content'
+  - 'search content'
+  - 'use text format 2'
+  - 'vote on polls'

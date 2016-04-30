@@ -1,0 +1,64 @@
+uuid: ee16ad0e-040b-4534-9026-d61a406c1584
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - field.field.node.evento.body
+    - field.field.node.evento.comment_node_evento
+    - field.field.node.evento.field_date
+    - field.field.node.evento.field_eventos_participantes
+    - field.field.node.evento.field_image
+    - field.field.node.evento.field_local
+    - field.field.node.evento.field_tags
+    - image.style.medium
+    - node.type.evento
+  module:
+    - datetime
+    - image
+    - text
+    - user
+id: node.evento.teaser
+targetEntityType: node
+bundle: evento
+mode: teaser
+content:
+  body:
+    label: hidden
+    weight: 1
+    type: text_summary_or_trimmed
+    settings:
+      trim_length: 600
+    third_party_settings: {  }
+  field_date:
+    type: datetime_default
+    weight: 0
+    label: inline
+    settings:
+      timezone_override: ''
+      format_type: medium_pt
+    third_party_settings: {  }
+  field_image:
+    label: hidden
+    weight: 0
+    type: image
+    settings:
+      image_style: medium
+      image_link: content
+    third_party_settings: {  }
+  field_tags:
+    label: inline
+    weight: 2
+    type: entity_reference_label
+    settings:
+      link: true
+    third_party_settings: {  }
+  links:
+    weight: 100
+    settings: {  }
+    third_party_settings: {  }
+hidden:
+  comment_node_evento: true
+  field_eventos_participantes: true
+  field_local: true
+  langcode: true

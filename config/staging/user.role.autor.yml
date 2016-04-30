@@ -1,0 +1,29 @@
+uuid: f1525d02-6d08-4e14-ab58-b5112556fca7
+langcode: en
+status: true
+dependencies: {  }
+id: autor
+label: autor
+weight: 2
+is_admin: null
+permissions:
+  - 'access administration pages'
+  - 'access content overview'
+  - 'access contextual links'
+  - 'access navbar'
+  - 'access toolbar'
+  - 'access user contact forms'
+  - 'add terms in tags'
+  - 'create article content'
+  - 'create evento content'
+  - 'create funcionalidade content'
+  - 'create page content'
+  - 'create poll content'
+  - 'create slideshow content'
+  - 'create url aliases'
+  - 'create webform content'
+  - 'edit terms in 1'
+  - 'select administration menu'
+  - 'use text format 2'
+  - 'use text format markdown'
+  - 'view revisions'

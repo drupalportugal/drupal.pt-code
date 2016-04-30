@@ -1,0 +1,20 @@
+uuid: 0b92a8ec-50d3-457c-963a-5d175cd79ca8
+langcode: und
+status: true
+dependencies:
+  module:
+    - node
+    - text
+id: node.field_empresas
+field_name: field_empresas
+entity_type: node
+type: text
+settings:
+  max_length: 255
+module: text
+locked: false
+cardinality: -1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

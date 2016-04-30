@@ -1,0 +1,67 @@
+field_types:
+  datetime:
+    type: core_field_diff_builder
+  file:
+    type: file_field_diff_builder
+    settings:
+      property_separator: nl
+  image:
+    type: image_field_diff_builder
+    settings:
+      property_separator: nl
+  list_string:
+    type: list_field_diff_builder
+    settings:
+      compare: key
+  list_float:
+    type: list_field_diff_builder
+    settings:
+      compare: key
+  list_integer:
+    type: list_field_diff_builder
+    settings:
+      compare: key
+  path:
+    type: core_field_diff_builder
+  taxonomy_term_reference:
+    type: term_reference_field_diff_builder
+  text:
+    type: text_field_diff_builder
+  text_long:
+    type: text_field_diff_builder
+  text_with_summary:
+    type: text_summary_field_diff_builder
+  email:
+    type: core_field_diff_builder
+  string_long:
+    type: core_field_diff_builder
+  integer:
+    type: core_field_diff_builder
+  created:
+    type: core_field_diff_builder
+  string:
+    type: core_field_diff_builder
+  changed:
+    type: core_field_diff_builder
+  uuid:
+    type: core_field_diff_builder
+  entity_reference:
+    type: entity_reference_field_diff_builder
+  language:
+    type: core_field_diff_builder
+  float:
+    type: core_field_diff_builder
+  map:
+    type: core_field_diff_builder
+  timestamp:
+    type: core_field_diff_builder
+  boolean:
+    type: core_field_diff_builder
+  uri:
+    type: core_field_diff_builder
+  decimal:
+    type: core_field_diff_builder
+  link:
+    type: link_field_diff_builder
+  comment:
+    type: comment_field_diff_builder

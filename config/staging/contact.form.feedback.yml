@@ -1,0 +1,12 @@
+uuid: 7f86894b-9c2f-4576-94c4-ad0a1a255301
+langcode: pt-pt
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: c4zaT5cyPxuTXI6JOWt3qRtMvICT9tHB6d9a5VG-CmQ
+id: feedback
+label: 'Website feedback'
+recipients:
+  - info@drupal.pt
+reply: ''
+weight: 0

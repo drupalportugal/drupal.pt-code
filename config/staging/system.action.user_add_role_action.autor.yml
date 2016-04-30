@@ -1,0 +1,14 @@
+uuid: bca22a03-198d-4076-981d-9f690e0fe811
+langcode: en
+status: true
+dependencies:
+  config:
+    - user.role.autor
+  module:
+    - user
+id: user_add_role_action.autor
+label: 'Add the autor role to the selected users'
+type: user
+plugin: user_add_role_action
+configuration:
+  rid: autor

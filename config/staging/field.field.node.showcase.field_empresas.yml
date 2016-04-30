@@ -1,0 +1,21 @@
+uuid: 9c590770-4de6-41a2-b2c8-6580baaaf16d
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_empresas
+    - node.type.showcase
+  module:
+    - text
+id: node.showcase.field_empresas
+field_name: field_empresas
+entity_type: node
+bundle: showcase
+label: Autoria
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: text

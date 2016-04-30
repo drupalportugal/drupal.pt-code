@@ -1,0 +1,26 @@
+uuid: 32322705-98c3-4e2e-9161-e48e85fce4b6
+langcode: und
+status: true
+dependencies:
+  module:
+    - file
+    - image
+    - node
+id: node.field_pageimage
+field_name: field_pageimage
+entity_type: node
+type: image
+settings:
+  uri_scheme: public
+  default_image:
+    uuid: ''
+  target_type: file
+  display_field: false
+  display_default: false
+module: image
+locked: false
+cardinality: 1
+translatable: false
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

@@ -1,0 +1,45 @@
+uuid: f69b3e26-c2d8-4431-9abc-8b3984ce87aa
+langcode: pt-pt
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: dJ0L2DNSj5q6XVZAGsuVDpJTh5UeYkIPwKrUOOpr8YI
+id: authenticated
+label: 'utilizador autenticado'
+weight: 1
+is_admin: false
+permissions:
+  - 'access comments'
+  - 'access content'
+  - 'access news feeds'
+  - 'access own webform results'
+  - 'access own webform submissions'
+  - 'access site-wide contact form'
+  - 'access user profiles'
+  - 'cancel account'
+  - 'cancel own vote'
+  - 'change own username'
+  - 'create forum content'
+  - 'create showcase content'
+  - 'delete own webform submissions'
+  - 'edit own article content'
+  - 'edit own comments'
+  - 'edit own evento content'
+  - 'edit own forum content'
+  - 'edit own funcionalidade content'
+  - 'edit own page content'
+  - 'edit own poll content'
+  - 'edit own showcase content'
+  - 'edit own slideshow content'
+  - 'edit own webform content'
+  - 'edit own webform submissions'
+  - 'edit webform components'
+  - 'post comments'
+  - 'rate content'
+  - 'search content'
+  - 'use advanced search'
+  - 'use text format 2'
+  - 'use text format markdown'
+  - 'view own unpublished content'
+  - 'view the administration theme'
+  - 'vote on polls'
