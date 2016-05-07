@@ -8,6 +8,7 @@ $baseDir = dirname($vendorDir);
 return array(
     'CallbackFilterIterator' => $vendorDir . '/symfony/polyfill-php54/Resources/stubs/CallbackFilterIterator.php',
     'Console_Table' => $vendorDir . '/pear/console_table/Table.php',
+    'Drupal' => $baseDir . '/docroot/core/lib/Drupal.php',
     'DrupalProject\\composer\\ScriptHandler' => $baseDir . '/scripts/composer/ScriptHandler.php',
     'Drupal\\Component\\Utility\\Timer' => $baseDir . '/docroot/core/lib/Drupal/Component/Utility/Timer.php',
     'Drupal\\Component\\Utility\\Unicode' => $baseDir . '/docroot/core/lib/Drupal/Component/Utility/Unicode.php',
@@ -137,7 +138,6 @@ return array(
     'PHPUnit_Framework_TestCase' => $vendorDir . '/phpunit/phpunit/src/Framework/TestCase.php',
     'PHPUnit_Framework_TestFailure' => $vendorDir . '/phpunit/phpunit/src/Framework/TestFailure.php',
     'PHPUnit_Framework_TestListener' => $vendorDir . '/phpunit/phpunit/src/Framework/TestListener.php',
-    'PHPUnit_Framework_TestResult' => $vendorDir . '/phpunit/phpunit/src/Framework/TestResult.php',
     'PHPUnit_Framework_TestSuite' => $vendorDir . '/phpunit/phpunit/src/Framework/TestSuite.php',
     'PHPUnit_Framework_TestSuite_DataProvider' => $vendorDir . '/phpunit/phpunit/src/Framework/TestSuite/DataProvider.php',
     'PHPUnit_Framework_UnintentionallyCoveredCodeError' => $vendorDir . '/phpunit/phpunit/src/Framework/UnintentionallyCoveredCodeError.php',

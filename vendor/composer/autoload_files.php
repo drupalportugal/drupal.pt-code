@@ -17,7 +17,6 @@ return array(
     '667aeda72477189d0494fecd327c3641' => $vendorDir . '/symfony/var-dumper/Resources/functions/dump.php',
     '5255c38a0faeba867671b61dfda6d864' => $vendorDir . '/paragonie/random_compat/lib/random.php',
     'def43f6c87e4f8dfd0c9e1b1bab14fe8' => $vendorDir . '/symfony/polyfill-iconv/bootstrap.php',
-    'ce982467d98e75622aa76a12f61dc041' => $baseDir . '/web/core/lib/Drupal.php',
     'd9d39f82a605ebe5918f683dd402334c' => $vendorDir . '/padraic/humbug_get_contents/src/function.php',
     'e7223560d890eab89cda23685e711e2c' => $vendorDir . '/psy/psysh/src/Psy/functions.php',
     'ce89ac35a6c330c55f4710717db9ff78' => $vendorDir . '/kriswallsmith/assetic/src/functions.php',

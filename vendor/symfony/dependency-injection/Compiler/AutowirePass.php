@@ -34,12 +34,21 @@ class AutowirePass implements CompilerPassInterface
      */
     public function process(ContainerBuilder $container)
     {
-        $this->container = $container;
-        foreach ($container->getDefinitions() as $id => $definition) {
-            if ($definition->isAutowired()) {
-                $this->completeDefinition($id, $definition);
+        $throwingAutoloader = function ($class) { throw new \ReflectionException(sprintf('Class %s does not exist', $class)); };
+        spl_autoload_register($throwingAutoloader);
+
+        try {
+            $this->container = $container;
+            foreach ($container->getDefinitions() as $id => $definition) {
+                if ($definition->isAutowired()) {
+                    $this->completeDefinition($id, $definition);
+                }
             }
+        } catch (\Error $e) {
+        } catch (\Exception $e) {
         }
+
+        spl_autoload_unregister($throwingAutoloader);
 
         // Free memory and remove circular reference to container
         $this->container = null;
@@ -47,6 +56,10 @@ class AutowirePass implements CompilerPassInterface
         $this->definedTypes = array();
         $this->types = null;
         $this->notGuessableTypes = array();
+
+        if (isset($e)) {
+            throw $e;
+        }
     }
 
     /**
@@ -107,11 +120,11 @@ class AutowirePass implements CompilerPassInterface
                         }
                     }
                 }
-            } catch (\ReflectionException $reflectionException) {
+            } catch (\ReflectionException $e) {
                 // Typehint against a non-existing class
 
                 if (!$parameter->isDefaultValueAvailable()) {
-                    throw new RuntimeException(sprintf('Cannot autowire argument %s for %s because the type-hinted class does not exist (%s).', $index + 1, $definition->getClass(), $reflectionException->getMessage()), 0, $reflectionException);
+                    throw new RuntimeException(sprintf('Cannot autowire argument %s for %s because the type-hinted class does not exist (%s).', $index + 1, $definition->getClass(), $e->getMessage()), 0, $e);
                 }
 
                 $value = $parameter->getDefaultValue();
@@ -228,7 +241,7 @@ class AutowirePass implements CompilerPassInterface
      * @param string     $id
      * @param Definition $definition
      *
-     * @return \ReflectionClass|null
+     * @return \ReflectionClass|false
      */
     private function getReflectionClass($id, Definition $definition)
     {
@@ -238,15 +251,17 @@ class AutowirePass implements CompilerPassInterface
 
         // Cannot use reflection if the class isn't set
         if (!$class = $definition->getClass()) {
-            return;
+            return false;
         }
 
         $class = $this->container->getParameterBag()->resolveValue($class);
 
         try {
-            return $this->reflectionClasses[$id] = new \ReflectionClass($class);
-        } catch (\ReflectionException $reflectionException) {
-            // return null
+            $reflector = new \ReflectionClass($class);
+        } catch (\ReflectionException $e) {
+            $reflector = false;
         }
+
+        return $this->reflectionClasses[$id] = $reflector;
     }
 }
