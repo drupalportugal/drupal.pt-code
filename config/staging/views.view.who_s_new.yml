@@ -1,6 +1,6 @@
 uuid: 02670756-39c0-4704-b379-6e337afa5723
 langcode: pt-pt
-status: true
+status: false
 dependencies:
   module:
     - user

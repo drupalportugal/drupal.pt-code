@@ -1,8 +1,0 @@
-uuid: aad721e6-3ad1-4526-b408-e497efccc796
-langcode: pt-pt
-status: true
-dependencies: {  }
-id: medium_pt
-label: 'Medium PT'
-locked: false
-pattern: 'D, d F Y'

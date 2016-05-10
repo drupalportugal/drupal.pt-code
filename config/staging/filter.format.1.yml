@@ -2,9 +2,9 @@ uuid: 9add91a6-d71d-411b-b340-c5456f3038a3
 langcode: en
 status: true
 dependencies: {  }
-name: 'Plain text'
+name: 'old Plain text'
 format: '1'
-weight: 0
+weight: -4
 filters:
   filter_autop:
     id: filter_autop

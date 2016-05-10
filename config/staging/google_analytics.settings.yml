@@ -1,12 +1,12 @@
-account: ''
-domain_mode: 0
-cross_domains: ''
+account: UA-274126-38
+domain_mode: 2
+cross_domains: "dev.drupal.pt\r\nstg.drupal.pt\r\nwww.drupal.pt\r\ndrupal.pt\r\ndev.drupal-pt.org\r\nstg.drupal-pt.org\r\nwww.drupal-pt.org\r\ndrupal-pt.org\r\ndruportugaldev.prod.acquia-sites.com\r\ndruportugalstg.prod.acquia-sites.com\r\ndruportugal.prod.acquia-sites.com"
 visibility:
   request_path_mode: 0
-  request_path_pages: "/admin\n/admin/*\n/batch\n/node/add*\n/node/*/*\n/user/*/*"
+  request_path_pages: "/admin\r\n/admin/*\r\n/batch\r\n/node/add*\r\n/node/*/*\r\n/user/*/*"
   user_role_mode: 0
   user_role_roles: {  }
-  user_account_mode: 0
+  user_account_mode: 1
 track:
   outbound: true
   mailto: true

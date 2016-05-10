@@ -4,10 +4,14 @@ all:
   - language_url
 configurable:
   - language_interface
+  - language_content
 negotiation:
   language_content:
     enabled:
-      language-interface: 9
+      language-content-entity: -9
+      language-url: -8
+      language-session: -6
+      language-selected: 12
     method_weights:
       language-content-entity: -9
       language-url: -8
@@ -23,7 +27,6 @@ negotiation:
   language_interface:
     enabled:
       language-user-admin: -10
-      language-url: -8
       language-selected: 12
     method_weights:
       language-user-admin: -10

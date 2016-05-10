@@ -2,9 +2,9 @@ uuid: d709dc53-7e02-460c-a5d8-08f27d8b5aec
 langcode: en
 status: true
 dependencies: {  }
-name: 'Filtered HTML'
+name: 'old Filtered HTML'
 format: '2'
-weight: 0
+weight: -6
 filters:
   filter_autop:
     id: filter_autop

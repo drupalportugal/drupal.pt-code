@@ -4,17 +4,28 @@ unprotected_forms:
   - search_block_form
   - views_exposed_form
   - honeypot_settings_form
-protect_all_forms: false
-log: false
+protect_all_forms: true
+log: true
 element_name: url
 time_limit: 5
 expire: 300
 form_settings:
   user_register_form: false
   user_pass: false
-  webforms: false
-  feedback_contact_message_form: false
-  _contact_message_form: false
+  contact_message_feedback_form: false
+  contact_message_informacao_form: false
+  contact_message_personal_form: false
+  node_type_node_form: false
+  comment_comment_form: false
+  comment_comment_node_article_form: false
+  comment_comment_node_evento_form: false
+  comment_comment_node_forum_form: false
+  comment_comment_node_funcionalidade_form: false
+  comment_comment_node_page_form: false
+  comment_comment_node_poll_form: false
+  comment_comment_node_showcase_form: false
+  comment_comment_node_slideshow_form: false
+  comment_comment_node_webform_form: false
 _core:
   default_config_hash: jEhrePho9bAz_8-E-zPMXvlx4knpphzUdaiQJX-xc8Q
 langcode: pt-pt

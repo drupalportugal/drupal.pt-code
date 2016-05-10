@@ -5,16 +5,16 @@ dependencies: {  }
 _core:
   default_config_hash: j5zLMOdJBqC0bMvSdth5UebkprJB8g_2FXHqhfpJzow
 id: anonymous
-label: 'utilizador anónimo'
-weight: 0
+label: 'Anonymous user'
+weight: -10
 is_admin: false
 permissions:
-  - 'access comments'
-  - 'access content'
-  - 'access news feeds'
-  - 'access site-wide contact form'
-  - 'access user profiles'
-  - 'rate content'
-  - 'search content'
-  - 'use text format 2'
-  - 'vote on polls'
+  0: 'access comments'
+  1: 'access content'
+  2: 'access news feeds'
+  3: 'access site-wide contact form'
+  4: 'access user profiles'
+  5: 'rate content'
+  6: 'search content'
+  8: 'vote on polls'
+  9: 'use text format 1'

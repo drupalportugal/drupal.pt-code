@@ -2,9 +2,9 @@ uuid: 418e2633-ed9d-409b-8e8c-977d18c8bd82
 langcode: en
 status: true
 dependencies: {  }
-name: 'Full HTML'
+name: 'old Full HTML'
 format: '3'
-weight: 0
+weight: -5
 filters:
   filter_autop:
     id: filter_autop
