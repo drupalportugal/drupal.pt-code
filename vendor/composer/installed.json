@@ -97,57 +97,6 @@
         "description": "Composer plugin to merge multiple composer.json files"
     },
     {
-        "name": "symfony/process",
-        "version": "v3.0.4",
-        "version_normalized": "3.0.4.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/symfony/process.git",
-            "reference": "e6f1f98bbd355d209a992bfff45e7edfbd4a0776"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/symfony/process/zipball/e6f1f98bbd355d209a992bfff45e7edfbd4a0776",
-            "reference": "e6f1f98bbd355d209a992bfff45e7edfbd4a0776",
-            "shasum": ""
-        },
-        "require": {
-            "php": ">=5.5.9"
-        },
-        "time": "2016-03-30 10:41:14",
-        "type": "library",
-        "extra": {
-            "branch-alias": {
-                "dev-master": "3.0-dev"
-            }
-        },
-        "installation-source": "dist",
-        "autoload": {
-            "psr-4": {
-                "Symfony\\Component\\Process\\": ""
-            },
-            "exclude-from-classmap": [
-                "/Tests/"
-            ]
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "name": "Fabien Potencier",
-                "email": "fabien@symfony.com"
-            },
-            {
-                "name": "Symfony Community",
-                "homepage": "https://symfony.com/contributors"
-            }
-        ],
-        "description": "Symfony Process Component",
-        "homepage": "https://symfony.com"
-    },
-    {
         "name": "kriswallsmith/assetic",
         "version": "v1.3.2",
         "version_normalized": "1.3.2.0",
@@ -504,122 +453,6 @@
         ]
     },
     {
-        "name": "symfony/var-dumper",
-        "version": "v2.8.4",
-        "version_normalized": "2.8.4.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/symfony/var-dumper.git",
-            "reference": "1f840df081f59cbe25140742bbe94a0dfac0222a"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/symfony/var-dumper/zipball/1f840df081f59cbe25140742bbe94a0dfac0222a",
-            "reference": "1f840df081f59cbe25140742bbe94a0dfac0222a",
-            "shasum": ""
-        },
-        "require": {
-            "php": ">=5.3.9",
-            "symfony/polyfill-mbstring": "~1.0"
-        },
-        "require-dev": {
-            "twig/twig": "~1.20|~2.0"
-        },
-        "suggest": {
-            "ext-symfony_debug": ""
-        },
-        "time": "2016-03-07 14:04:32",
-        "type": "library",
-        "extra": {
-            "branch-alias": {
-                "dev-master": "2.8-dev"
-            }
-        },
-        "installation-source": "dist",
-        "autoload": {
-            "files": [
-                "Resources/functions/dump.php"
-            ],
-            "psr-4": {
-                "Symfony\\Component\\VarDumper\\": ""
-            },
-            "exclude-from-classmap": [
-                "/Tests/"
-            ]
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "name": "Nicolas Grekas",
-                "email": "p@tchwork.com"
-            },
-            {
-                "name": "Symfony Community",
-                "homepage": "https://symfony.com/contributors"
-            }
-        ],
-        "description": "Symfony mechanism for exploring and dumping PHP variables",
-        "homepage": "https://symfony.com",
-        "keywords": [
-            "debug",
-            "dump"
-        ]
-    },
-    {
-        "name": "symfony/yaml",
-        "version": "v2.8.4",
-        "version_normalized": "2.8.4.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/symfony/yaml.git",
-            "reference": "584e52cb8f788a887553ba82db6caacb1d6260bb"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/symfony/yaml/zipball/584e52cb8f788a887553ba82db6caacb1d6260bb",
-            "reference": "584e52cb8f788a887553ba82db6caacb1d6260bb",
-            "shasum": ""
-        },
-        "require": {
-            "php": ">=5.3.9"
-        },
-        "time": "2016-03-04 07:54:35",
-        "type": "library",
-        "extra": {
-            "branch-alias": {
-                "dev-master": "2.8-dev"
-            }
-        },
-        "installation-source": "dist",
-        "autoload": {
-            "psr-4": {
-                "Symfony\\Component\\Yaml\\": ""
-            },
-            "exclude-from-classmap": [
-                "/Tests/"
-            ]
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "name": "Fabien Potencier",
-                "email": "fabien@symfony.com"
-            },
-            {
-                "name": "Symfony Community",
-                "homepage": "https://symfony.com/contributors"
-            }
-        ],
-        "description": "Symfony Yaml Component",
-        "homepage": "https://symfony.com"
-    },
-    {
         "name": "d11wtq/boris",
         "version": "v1.0.8",
         "version_normalized": "1.0.8.0",
@@ -937,5 +770,3294 @@
         ],
         "description": "Drush is a command line shell and scripting interface for Drupal, a veritable Swiss Army knife designed to make life easier for those of us who spend some of our working hours hacking away at the command prompt.",
         "homepage": "http://www.drush.org"
+    },
+    {
+        "name": "symfony/var-dumper",
+        "version": "v2.8.6",
+        "version_normalized": "2.8.6.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/symfony/var-dumper.git",
+            "reference": "7528e78e0d7c78650a41fc011ac9f152bdf4c2b3"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/symfony/var-dumper/zipball/7528e78e0d7c78650a41fc011ac9f152bdf4c2b3",
+            "reference": "7528e78e0d7c78650a41fc011ac9f152bdf4c2b3",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.3.9",
+            "symfony/polyfill-mbstring": "~1.0"
+        },
+        "require-dev": {
+            "twig/twig": "~1.20|~2.0"
+        },
+        "suggest": {
+            "ext-symfony_debug": ""
+        },
+        "time": "2016-04-25 11:17:03",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "2.8-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "files": [
+                "Resources/functions/dump.php"
+            ],
+            "psr-4": {
+                "Symfony\\Component\\VarDumper\\": ""
+            },
+            "exclude-from-classmap": [
+                "/Tests/"
+            ]
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Nicolas Grekas",
+                "email": "p@tchwork.com"
+            },
+            {
+                "name": "Symfony Community",
+                "homepage": "https://symfony.com/contributors"
+            }
+        ],
+        "description": "Symfony mechanism for exploring and dumping PHP variables",
+        "homepage": "https://symfony.com",
+        "keywords": [
+            "debug",
+            "dump"
+        ]
+    },
+    {
+        "name": "symfony/yaml",
+        "version": "v2.8.6",
+        "version_normalized": "2.8.6.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/symfony/yaml.git",
+            "reference": "e4fbcc65f90909c999ac3b4dfa699ee6563a9940"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/symfony/yaml/zipball/e4fbcc65f90909c999ac3b4dfa699ee6563a9940",
+            "reference": "e4fbcc65f90909c999ac3b4dfa699ee6563a9940",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.3.9"
+        },
+        "time": "2016-03-29 19:00:15",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "2.8-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Symfony\\Component\\Yaml\\": ""
+            },
+            "exclude-from-classmap": [
+                "/Tests/"
+            ]
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Fabien Potencier",
+                "email": "fabien@symfony.com"
+            },
+            {
+                "name": "Symfony Community",
+                "homepage": "https://symfony.com/contributors"
+            }
+        ],
+        "description": "Symfony Yaml Component",
+        "homepage": "https://symfony.com"
+    },
+    {
+        "name": "symfony/process",
+        "version": "v3.0.6",
+        "version_normalized": "3.0.6.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/symfony/process.git",
+            "reference": "53f9407c0bb1c5a79127db8f7bfe12f0f6f3dcdb"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/symfony/process/zipball/53f9407c0bb1c5a79127db8f7bfe12f0f6f3dcdb",
+            "reference": "53f9407c0bb1c5a79127db8f7bfe12f0f6f3dcdb",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.5.9"
+        },
+        "time": "2016-04-14 15:30:28",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "3.0-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Symfony\\Component\\Process\\": ""
+            },
+            "exclude-from-classmap": [
+                "/Tests/"
+            ]
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Fabien Potencier",
+                "email": "fabien@symfony.com"
+            },
+            {
+                "name": "Symfony Community",
+                "homepage": "https://symfony.com/contributors"
+            }
+        ],
+        "description": "Symfony Process Component",
+        "homepage": "https://symfony.com"
+    },
+    {
+        "name": "drupal/contact_form_blocks",
+        "version": "dev-7.x-1.x",
+        "version_normalized": "dev-7.x-1.x",
+        "source": {
+            "type": "git",
+            "url": "https://git.drupal.org/project/contact_form_blocks.git",
+            "reference": "661ed2e779197a484794665e7be9d66314cfa813"
+        },
+        "require": {
+            "drupal/contact": "7.*",
+            "drupal/drupal": "7.*"
+        },
+        "time": "2012-04-13 13:14:47",
+        "type": "drupal-module",
+        "extra": {
+            "branch-alias": {
+                "dev-7.x-1.x": "7.1.x-dev"
+            }
+        },
+        "installation-source": "source",
+        "notification-url": "https://packagist.drupal-composer.org/downloads/",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "description": "Makes your site-wide contact forms available as Drupal Blocks.",
+        "homepage": "https://www.drupal.org/project/contact_form_blocks"
+    },
+    {
+        "name": "drupal/node_menu_permissions",
+        "version": "7.1.0",
+        "version_normalized": "7.1.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://git.drupal.org/project/node_menu_permissions",
+            "reference": "e0813dbed5da452b2a42393e781e98204a48ac0f"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://ftp.drupal.org/files/projects/node_menu_permissions-7.x-1.0.zip",
+            "reference": null,
+            "shasum": null
+        },
+        "require": {
+            "drupal/drupal": "7.*"
+        },
+        "time": "2012-02-06 20:59:24",
+        "type": "drupal-module",
+        "extra": {
+            "branch-alias": {
+                "dev-7.x-1.x": "7.1.x-dev"
+            }
+        },
+        "installation-source": "dist",
+        "notification-url": "https://packagist.drupal-composer.org/downloads/",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "description": "Provides permissions to edit the menu link on node edit forms, while not having permissions to administer whole menus.",
+        "homepage": "https://www.drupal.org/project/node_menu_permissions"
+    },
+    {
+        "name": "drupal/telephone",
+        "version": "7.1.0-alpha1",
+        "version_normalized": "7.1.0.0-alpha1",
+        "source": {
+            "type": "git",
+            "url": "https://git.drupal.org/project/telephone",
+            "reference": "393f5c2148b7433f5ba81e00253d1027e258f93e"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://ftp.drupal.org/files/projects/telephone-7.x-1.0-alpha1.zip",
+            "reference": null,
+            "shasum": null
+        },
+        "require": {
+            "drupal/drupal": "7.*",
+            "drupal/field": "7.*"
+        },
+        "time": "2013-11-05 01:41:52",
+        "type": "drupal-module",
+        "extra": {
+            "branch-alias": {
+                "dev-7.x-1.x": "7.1.x-dev"
+            }
+        },
+        "installation-source": "dist",
+        "notification-url": "https://packagist.drupal-composer.org/downloads/",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "description": "Defines a field type for telephone numbers.",
+        "homepage": "https://www.drupal.org/project/telephone"
+    },
+    {
+        "name": "drupal/ctools",
+        "version": "7.1.9",
+        "version_normalized": "7.1.9.0",
+        "source": {
+            "type": "git",
+            "url": "https://git.drupal.org/project/ctools",
+            "reference": "1bf2f388cd7371ae16639349ae3b344732faafae"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://ftp.drupal.org/files/projects/ctools-7.x-1.9.zip",
+            "reference": null,
+            "shasum": null
+        },
+        "require": {
+            "drupal/drupal": "7.*"
+        },
+        "replace": {
+            "drupal/bulk_export": "self.version",
+            "drupal/ctools_access_ruleset": "self.version",
+            "drupal/ctools_ajax_sample": "self.version",
+            "drupal/ctools_custom_content": "self.version",
+            "drupal/ctools_plugin_example": "self.version",
+            "drupal/page_manager": "self.version",
+            "drupal/stylizer": "self.version",
+            "drupal/term_depth": "self.version",
+            "drupal/views_content": "self.version"
+        },
+        "suggest": {
+            "drupal/advanced_help": "Required by drupal/ctools_plugin_example",
+            "drupal/color": "Required by drupal/stylizer",
+            "drupal/page_manager": "Required by drupal/ctools_plugin_example",
+            "drupal/panels": "Required by drupal/ctools_plugin_example",
+            "drupal/views": "Required by drupal/views_content"
+        },
+        "time": "2015-08-19 21:14:56",
+        "type": "drupal-module",
+        "extra": {
+            "branch-alias": {
+                "dev-7.x-1.x": "7.1.x-dev"
+            }
+        },
+        "installation-source": "dist",
+        "notification-url": "https://packagist.drupal-composer.org/downloads/",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "description": "A library of helpful tools by Merlin of Chaos.",
+        "homepage": "https://www.drupal.org/project/ctools"
+    },
+    {
+        "name": "drupal/addressfield",
+        "version": "7.1.2",
+        "version_normalized": "7.1.2.0",
+        "source": {
+            "type": "git",
+            "url": "https://git.drupal.org/project/addressfield",
+            "reference": "c8a4d1f2244caf580a9c209435886149ad2e162c"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://ftp.drupal.org/files/projects/addressfield-7.x-1.2.zip",
+            "reference": null,
+            "shasum": null
+        },
+        "require": {
+            "drupal/ctools": "7.*",
+            "drupal/drupal": "7.*"
+        },
+        "replace": {
+            "drupal/addressfield_example": "self.version"
+        },
+        "suggest": {
+            "drupal/ctools": "Required by drupal/addressfield_example"
+        },
+        "time": "2015-10-07 19:30:44",
+        "type": "drupal-module",
+        "extra": {
+            "branch-alias": {
+                "dev-7.x-1.x": "7.1.x-dev"
+            }
+        },
+        "installation-source": "dist",
+        "notification-url": "https://packagist.drupal-composer.org/downloads/",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "description": "Manage a flexible address field, implementing the xNAL standard.",
+        "homepage": "https://www.drupal.org/project/addressfield"
+    },
+    {
+        "name": "drupal/admin_select",
+        "version": "7.1.5",
+        "version_normalized": "7.1.5.0",
+        "source": {
+            "type": "git",
+            "url": "https://git.drupal.org/project/admin_select",
+            "reference": "60d057e38249b1529e8dbc6b4ea7dab3534a2f70"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://ftp.drupal.org/files/projects/admin_select-7.x-1.5.zip",
+            "reference": null,
+            "shasum": null
+        },
+        "require": {
+            "drupal/drupal": "7.*"
+        },
+        "time": "2014-03-04 20:14:50",
+        "type": "drupal-module",
+        "extra": {
+            "branch-alias": {
+                "dev-7.x-1.x": "7.1.x-dev"
+            }
+        },
+        "installation-source": "dist",
+        "notification-url": "https://packagist.drupal-composer.org/downloads/",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "description": "Allows users to choose which Administration menu module to use.",
+        "homepage": "https://www.drupal.org/project/admin_select"
+    },
+    {
+        "name": "drupal/views",
+        "version": "7.3.13",
+        "version_normalized": "7.3.13.0",
+        "source": {
+            "type": "git",
+            "url": "https://git.drupal.org/project/views",
+            "reference": "5c2bfc9638e3e78023d1efb754b79d4ac994d0c6"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://ftp.drupal.org/files/projects/views-7.x-3.13.zip",
+            "reference": null,
+            "shasum": null
+        },
+        "require": {
+            "drupal/ctools": "7.*",
+            "drupal/drupal": "7.*"
+        },
+        "replace": {
+            "drupal/views_ui": "self.version"
+        },
+        "time": "2015-11-06 10:12:01",
+        "type": "drupal-module",
+        "extra": {
+            "branch-alias": {
+                "dev-7.x-3.x": "7.3.x-dev"
+            }
+        },
+        "installation-source": "dist",
+        "notification-url": "https://packagist.drupal-composer.org/downloads/",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "description": "Create customized lists and queries from your database.",
+        "homepage": "https://www.drupal.org/project/views"
+    },
+    {
+        "name": "drupal/entity",
+        "version": "7.1.7",
+        "version_normalized": "7.1.7.0",
+        "source": {
+            "type": "git",
+            "url": "https://git.drupal.org/project/entity",
+            "reference": "4d76c5c2302e225fea2db7aba08d48f3558bf275"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://ftp.drupal.org/files/projects/entity-7.x-1.7.zip",
+            "reference": null,
+            "shasum": null
+        },
+        "require": {
+            "drupal/drupal": "7.*"
+        },
+        "replace": {
+            "drupal/entity_token": "self.version"
+        },
+        "time": "2015-02-27 17:08:22",
+        "type": "drupal-module",
+        "extra": {
+            "branch-alias": {
+                "dev-7.x-1.x": "7.1.x-dev"
+            }
+        },
+        "installation-source": "dist",
+        "notification-url": "https://packagist.drupal-composer.org/downloads/",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "description": "Enables modules to work with any entity type and to provide entities.",
+        "homepage": "https://www.drupal.org/project/entity"
+    },
+    {
+        "name": "drupal/views_bulk_operations",
+        "version": "7.3.3",
+        "version_normalized": "7.3.3.0",
+        "source": {
+            "type": "git",
+            "url": "https://git.drupal.org/project/views_bulk_operations",
+            "reference": "57eea91d94c33e4991484a19cd0ccfafde85b405"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://ftp.drupal.org/files/projects/views_bulk_operations-7.x-3.3.zip",
+            "reference": null,
+            "shasum": null
+        },
+        "require": {
+            "drupal/drupal": "7.*",
+            "drupal/entity": "7.*",
+            "drupal/views": "7.*"
+        },
+        "replace": {
+            "drupal/actions_permissions": "self.version"
+        },
+        "time": "2015-07-01 15:14:34",
+        "type": "drupal-module",
+        "extra": {
+            "branch-alias": {
+                "dev-7.x-3.x": "7.3.x-dev"
+            }
+        },
+        "installation-source": "dist",
+        "notification-url": "https://packagist.drupal-composer.org/downloads/",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "description": "Provides a way of selecting multiple rows and applying operations to them.",
+        "homepage": "https://www.drupal.org/project/views_bulk_operations"
+    },
+    {
+        "name": "drupal/admin_views",
+        "version": "7.1.5",
+        "version_normalized": "7.1.5.0",
+        "source": {
+            "type": "git",
+            "url": "https://git.drupal.org/project/admin_views",
+            "reference": "44098bb9da5447765da02bd7b3bc974661acc5e4"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://ftp.drupal.org/files/projects/admin_views-7.x-1.5.zip",
+            "reference": null,
+            "shasum": null
+        },
+        "require": {
+            "drupal/drupal": "7.*",
+            "drupal/views": "7.*",
+            "drupal/views_bulk_operations": ">=7.3.2"
+        },
+        "time": "2015-07-08 17:29:12",
+        "type": "drupal-module",
+        "extra": {
+            "branch-alias": {
+                "dev-7.x-1.x": "7.1.x-dev"
+            }
+        },
+        "installation-source": "dist",
+        "notification-url": "https://packagist.drupal-composer.org/downloads/",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "description": "Replaces all system object management pages in Drupal core with real views.",
+        "homepage": "https://www.drupal.org/project/admin_views"
+    },
+    {
+        "name": "drupal/chain_menu_access",
+        "version": "7.2.0",
+        "version_normalized": "7.2.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://git.drupal.org/project/chain_menu_access",
+            "reference": "21c1daa8e3d7c3724af6ed8301f049aae0a52d75"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://ftp.drupal.org/files/projects/chain_menu_access-7.x-2.0.zip",
+            "reference": null,
+            "shasum": null
+        },
+        "require": {
+            "drupal/drupal": "7.*"
+        },
+        "time": "2012-08-30 14:46:39",
+        "type": "drupal-module",
+        "extra": {
+            "branch-alias": {
+                "dev-7.x-2.x": "7.2.x-dev"
+            }
+        },
+        "installation-source": "dist",
+        "notification-url": "https://packagist.drupal-composer.org/downloads/",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "description": "Helps client modules to chain their access callbacks into other modules' menu items.",
+        "homepage": "https://www.drupal.org/project/chain_menu_access"
+    },
+    {
+        "name": "drupal/administerusersbyrole",
+        "version": "7.2.0",
+        "version_normalized": "7.2.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://git.drupal.org/project/administerusersbyrole",
+            "reference": "74f4884d2987ab03ca83db880032259e62f5a108"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://ftp.drupal.org/files/projects/administerusersbyrole-7.x-2.0.zip",
+            "reference": null,
+            "shasum": null
+        },
+        "require": {
+            "drupal/chain_menu_access": "7.*",
+            "drupal/drupal": "7.*"
+        },
+        "time": "2016-04-30 12:49:40",
+        "type": "drupal-module",
+        "extra": {
+            "branch-alias": {
+                "dev-7.x-2.x": "7.2.x-dev"
+            }
+        },
+        "installation-source": "dist",
+        "notification-url": "https://packagist.drupal-composer.org/downloads/",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "description": "Allows users with 'administer users' permission and a role (specified in 'Permissions') to edit/delete other users with a specified role.  Also provides control over user creation.",
+        "homepage": "https://www.drupal.org/project/administerusersbyrole"
+    },
+    {
+        "name": "drupal/anonymous_login",
+        "version": "7.1.3",
+        "version_normalized": "7.1.3.0",
+        "source": {
+            "type": "git",
+            "url": "https://git.drupal.org/project/anonymous_login",
+            "reference": "e1bf07781e19ff75304349b89a65405e6c0ae4a2"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://ftp.drupal.org/files/projects/anonymous_login-7.x-1.3.zip",
+            "reference": null,
+            "shasum": null
+        },
+        "require": {
+            "drupal/drupal": "7.*"
+        },
+        "time": "2015-04-06 18:06:29",
+        "type": "drupal-module",
+        "extra": {
+            "branch-alias": {
+                "dev-7.x-1.x": "7.1.x-dev"
+            }
+        },
+        "installation-source": "dist",
+        "notification-url": "https://packagist.drupal-composer.org/downloads/",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "description": "Specify pages that when visited by anonymous users will be forced to login",
+        "homepage": "https://www.drupal.org/project/anonymous_login"
+    },
+    {
+        "name": "drupal/backup_migrate",
+        "version": "7.3.1",
+        "version_normalized": "7.3.1.0",
+        "source": {
+            "type": "git",
+            "url": "https://git.drupal.org/project/backup_migrate",
+            "reference": "174bb364b71887a23140efea626d2843b57bd4cf"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://ftp.drupal.org/files/projects/backup_migrate-7.x-3.1.zip",
+            "reference": null,
+            "shasum": null
+        },
+        "require": {
+            "drupal/drupal": "7.*"
+        },
+        "time": "2015-05-11 13:05:29",
+        "type": "drupal-module",
+        "extra": {
+            "branch-alias": {
+                "dev-7.x-3.x": "7.3.x-dev"
+            }
+        },
+        "installation-source": "dist",
+        "notification-url": "https://packagist.drupal-composer.org/downloads/",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "description": "Backup the Drupal database and files or migrate them to another environment.",
+        "homepage": "https://www.drupal.org/project/backup_migrate"
+    },
+    {
+        "name": "drupal/captcha",
+        "version": "7.1.3",
+        "version_normalized": "7.1.3.0",
+        "source": {
+            "type": "git",
+            "url": "https://git.drupal.org/project/captcha",
+            "reference": "e099a7e0916233bb45d22547ff4dd2ba36ecf34c"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://ftp.drupal.org/files/projects/captcha-7.x-1.3.zip",
+            "reference": null,
+            "shasum": null
+        },
+        "require": {
+            "drupal/drupal": "7.*"
+        },
+        "replace": {
+            "drupal/image_captcha": "self.version"
+        },
+        "time": "2015-03-27 13:44:10",
+        "type": "drupal-module",
+        "extra": {
+            "branch-alias": {
+                "dev-7.x-1.x": "7.1.x-dev"
+            }
+        },
+        "installation-source": "dist",
+        "notification-url": "https://packagist.drupal-composer.org/downloads/",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "description": "Base CAPTCHA module for adding challenges to arbitrary forms.",
+        "homepage": "https://www.drupal.org/project/captcha"
+    },
+    {
+        "name": "drupal/ckeditor",
+        "version": "7.1.17",
+        "version_normalized": "7.1.17.0",
+        "source": {
+            "type": "git",
+            "url": "https://git.drupal.org/project/ckeditor",
+            "reference": "2c5caca8a0188f93eae437faa70c57a735820482"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://ftp.drupal.org/files/projects/ckeditor-7.x-1.17.zip",
+            "reference": null,
+            "shasum": null
+        },
+        "require": {
+            "drupal/drupal": "7.*"
+        },
+        "time": "2015-11-30 15:46:08",
+        "type": "drupal-module",
+        "extra": {
+            "branch-alias": {
+                "dev-7.x-1.x": "7.1.x-dev"
+            }
+        },
+        "installation-source": "dist",
+        "notification-url": "https://packagist.drupal-composer.org/downloads/",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "description": "Enables CKEditor (WYSIWYG HTML editor) for use instead of plain text fields.",
+        "homepage": "https://www.drupal.org/project/ckeditor"
+    },
+    {
+        "name": "drupal/libraries",
+        "version": "7.2.2",
+        "version_normalized": "7.2.2.0",
+        "source": {
+            "type": "git",
+            "url": "https://git.drupal.org/project/libraries",
+            "reference": "744cd04d1c78a08d10b511f67904f0839baf94ec"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://ftp.drupal.org/files/projects/libraries-7.x-2.2.zip",
+            "reference": null,
+            "shasum": null
+        },
+        "require": {
+            "drupal/drupal": "7.*",
+            "drupal/system": ">=7.11.0"
+        },
+        "time": "2014-02-09 16:56:24",
+        "type": "drupal-module",
+        "extra": {
+            "branch-alias": {
+                "dev-7.x-2.x": "7.2.x-dev"
+            }
+        },
+        "installation-source": "dist",
+        "notification-url": "https://packagist.drupal-composer.org/downloads/",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "description": "Allows version-dependent and shared usage of external libraries.",
+        "homepage": "https://www.drupal.org/project/libraries"
+    },
+    {
+        "name": "drupal/colorbox",
+        "version": "7.2.10",
+        "version_normalized": "7.2.10.0",
+        "source": {
+            "type": "git",
+            "url": "https://git.drupal.org/project/colorbox",
+            "reference": "3f6b26401aeb7786e4028603e0f76d88f82a54e2"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://ftp.drupal.org/files/projects/colorbox-7.x-2.10.zip",
+            "reference": null,
+            "shasum": null
+        },
+        "require": {
+            "drupal/drupal": "7.*",
+            "drupal/libraries": ">=7.2.0"
+        },
+        "time": "2015-10-01 09:02:30",
+        "type": "drupal-module",
+        "extra": {
+            "branch-alias": {
+                "dev-7.x-2.x": "7.2.x-dev"
+            }
+        },
+        "installation-source": "dist",
+        "notification-url": "https://packagist.drupal-composer.org/downloads/",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "description": "A light-weight, customizable lightbox plugin for jQuery 1.4.3+.",
+        "homepage": "https://www.drupal.org/project/colorbox"
+    },
+    {
+        "name": "drupal/config_perms",
+        "version": "7.2.1",
+        "version_normalized": "7.2.1.0",
+        "source": {
+            "type": "git",
+            "url": "https://git.drupal.org/project/config_perms",
+            "reference": "9ae4f808ea361938a9cc36e04e85c52190851603"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://ftp.drupal.org/files/projects/config_perms-7.x-2.1-beta.zip",
+            "reference": null,
+            "shasum": null
+        },
+        "require": {
+            "drupal/drupal": "7.*"
+        },
+        "time": "2014-09-30 17:34:04",
+        "type": "drupal-module",
+        "extra": {
+            "branch-alias": {
+                "dev-7.x-2.x": "7.2.x-dev"
+            }
+        },
+        "installation-source": "source",
+        "notification-url": "https://packagist.drupal-composer.org/downloads/",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "description": "Allows additional permissions to be created and managed through an administration form.<br /><small>Machine name: config_perms</small>",
+        "homepage": "https://www.drupal.org/project/config_perms"
+    },
+    {
+        "name": "drupal/countries",
+        "version": "7.2.3",
+        "version_normalized": "7.2.3.0",
+        "source": {
+            "type": "git",
+            "url": "https://git.drupal.org/project/countries",
+            "reference": "fff90b6c2d9c182325db535bb2155ed95af1ae2d"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://ftp.drupal.org/files/projects/countries-7.x-2.3.zip",
+            "reference": null,
+            "shasum": null
+        },
+        "require": {
+            "drupal/drupal": "7.*",
+            "drupal/entity": "7.*"
+        },
+        "replace": {
+            "drupal/countries_configuration": "self.version",
+            "drupal/countries_example": "self.version",
+            "drupal/countries_i18n": "self.version"
+        },
+        "suggest": {
+            "drupal/i18n_string": "Required by drupal/countries_i18n"
+        },
+        "time": "2014-08-31 02:02:46",
+        "type": "drupal-module",
+        "extra": {
+            "branch-alias": {
+                "dev-7.x-2.x": "7.2.x-dev"
+            }
+        },
+        "installation-source": "dist",
+        "notification-url": "https://packagist.drupal-composer.org/downloads/",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "description": "A module that provides a FAPI / Field country element and a simple wrapper module to store / update country data.",
+        "homepage": "https://www.drupal.org/project/countries"
+    },
+    {
+        "name": "drupal/date",
+        "version": "7.2.9",
+        "version_normalized": "7.2.9.0",
+        "source": {
+            "type": "git",
+            "url": "https://git.drupal.org/project/date",
+            "reference": "e37620a69f76354a7f87dff47ed4010da891d105"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://ftp.drupal.org/files/projects/date-7.x-2.9.zip",
+            "reference": null,
+            "shasum": null
+        },
+        "require": {
+            "drupal/drupal": "7.*"
+        },
+        "replace": {
+            "drupal/date_all_day": "self.version",
+            "drupal/date_api": "self.version",
+            "drupal/date_context": "self.version",
+            "drupal/date_migrate": "self.version",
+            "drupal/date_migrate_example": "self.version",
+            "drupal/date_popup": "self.version",
+            "drupal/date_repeat": "self.version",
+            "drupal/date_repeat_field": "self.version",
+            "drupal/date_tools": "self.version",
+            "drupal/date_views": "self.version"
+        },
+        "suggest": {
+            "drupal/context": "Required by drupal/date_context",
+            "drupal/date_api": "Required by drupal/date_all_day, drupal/date_popup, drupal/date_repeat, drupal/date_repeat_field, drupal/date_views",
+            "drupal/date_repeat": "Required by drupal/date_migrate_example, drupal/date_repeat_field",
+            "drupal/date_repeat_field": "Required by drupal/date_migrate_example",
+            "drupal/features": "Required by drupal/date_migrate_example",
+            "drupal/migrate": "Required by drupal/date_migrate_example",
+            "drupal/views": "Required by drupal/date_views"
+        },
+        "time": "2015-09-07 10:33:19",
+        "type": "drupal-module",
+        "extra": {
+            "branch-alias": {
+                "dev-7.x-2.x": "7.2.x-dev"
+            }
+        },
+        "installation-source": "dist",
+        "notification-url": "https://packagist.drupal-composer.org/downloads/",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "description": "Makes date/time fields available.",
+        "homepage": "https://www.drupal.org/project/date"
+    },
+    {
+        "name": "drupal/devel",
+        "version": "7.1.5",
+        "version_normalized": "7.1.5.0",
+        "source": {
+            "type": "git",
+            "url": "https://git.drupal.org/project/devel",
+            "reference": "becb6ca3ced27872b941b30ca308da03a209425a"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://ftp.drupal.org/files/projects/devel-7.x-1.5.zip",
+            "reference": null,
+            "shasum": null
+        },
+        "require": {
+            "drupal/drupal": "7.*"
+        },
+        "replace": {
+            "drupal/devel_generate": "self.version",
+            "drupal/devel_node_access": "self.version"
+        },
+        "suggest": {
+            "drupal/menu": "Required by drupal/devel_node_access"
+        },
+        "time": "2014-03-02 16:03:08",
+        "type": "drupal-module",
+        "extra": {
+            "branch-alias": {
+                "dev-7.x-1.x": "7.1.x-dev"
+            }
+        },
+        "installation-source": "dist",
+        "notification-url": "https://packagist.drupal-composer.org/downloads/",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "description": "Various blocks, pages, and functions for developers.",
+        "homepage": "https://www.drupal.org/project/devel"
+    },
+    {
+        "name": "drupal/devel_shortcuts",
+        "version": "7.1.1",
+        "version_normalized": "7.1.1.0",
+        "source": {
+            "type": "git",
+            "url": "https://git.drupal.org/project/devel_shortcuts",
+            "reference": "125cf57251a818ebd1529239b8f16977db4aa410"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://ftp.drupal.org/files/projects/devel_shortcuts-7.x-1.1.zip",
+            "reference": null,
+            "shasum": null
+        },
+        "require": {
+            "drupal/drupal": "7.*"
+        },
+        "time": "2014-05-05 22:55:32",
+        "type": "drupal-module",
+        "extra": {
+            "branch-alias": {
+                "dev-7.x-1.x": "7.1.x-dev"
+            }
+        },
+        "installation-source": "dist",
+        "notification-url": "https://packagist.drupal-composer.org/downloads/",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "description": "Shortcut Links for developers.",
+        "homepage": "https://www.drupal.org/project/devel_shortcuts"
+    },
+    {
+        "name": "drupal/diff",
+        "version": "7.3.2",
+        "version_normalized": "7.3.2.0",
+        "source": {
+            "type": "git",
+            "url": "https://git.drupal.org/project/diff",
+            "reference": "adb43040a4e8f950ae604b7d3698f493075cb04f"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://ftp.drupal.org/files/projects/diff-7.x-3.2.zip",
+            "reference": null,
+            "shasum": null
+        },
+        "require": {
+            "drupal/drupal": "7.*"
+        },
+        "time": "2012-11-13 05:23:00",
+        "type": "drupal-module",
+        "extra": {
+            "branch-alias": {
+                "dev-7.x-3.x": "7.3.x-dev"
+            }
+        },
+        "installation-source": "dist",
+        "notification-url": "https://packagist.drupal-composer.org/downloads/",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "description": "Show differences between content revisions.",
+        "homepage": "https://www.drupal.org/project/diff"
+    },
+    {
+        "name": "drupal/elements",
+        "version": "7.1.4",
+        "version_normalized": "7.1.4.0",
+        "source": {
+            "type": "git",
+            "url": "https://git.drupal.org/project/elements",
+            "reference": "69df29662fd4d61bcd06bc5924a793740d8aff06"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://ftp.drupal.org/files/projects/elements-7.x-1.4.zip",
+            "reference": null,
+            "shasum": null
+        },
+        "require": {
+            "drupal/drupal": "7.*"
+        },
+        "time": "2013-06-08 04:53:47",
+        "type": "drupal-module",
+        "extra": {
+            "branch-alias": {
+                "dev-7.x-1.x": "7.1.x-dev"
+            }
+        },
+        "installation-source": "dist",
+        "notification-url": "https://packagist.drupal-composer.org/downloads/",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "description": "Provides a library of Form API elements.",
+        "homepage": "https://www.drupal.org/project/elements"
+    },
+    {
+        "name": "drupal/email",
+        "version": "7.1.3",
+        "version_normalized": "7.1.3.0",
+        "source": {
+            "type": "git",
+            "url": "https://git.drupal.org/project/email",
+            "reference": "25dd1a4e3cf1efd2606874909b42c79d4fffcc84"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://ftp.drupal.org/files/projects/email-7.x-1.3.zip",
+            "reference": null,
+            "shasum": null
+        },
+        "require": {
+            "drupal/drupal": "7.*"
+        },
+        "time": "2014-04-10 12:41:03",
+        "type": "drupal-module",
+        "extra": {
+            "branch-alias": {
+                "dev-7.x-1.x": "7.1.x-dev"
+            }
+        },
+        "installation-source": "dist",
+        "notification-url": "https://packagist.drupal-composer.org/downloads/",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "description": "Defines an email field type.",
+        "homepage": "https://www.drupal.org/project/email"
+    },
+    {
+        "name": "drupal/entity_translation",
+        "version": "7.1.0-beta5",
+        "version_normalized": "7.1.0.0-beta5",
+        "source": {
+            "type": "git",
+            "url": "https://git.drupal.org/project/entity_translation",
+            "reference": "9fc9e4a2f505a4e4ecc41703b7597b8dcc7afba8"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://ftp.drupal.org/files/projects/entity_translation-7.x-1.0-beta5.zip",
+            "reference": null,
+            "shasum": null
+        },
+        "require": {
+            "drupal/drupal": "7.*",
+            "drupal/locale": ">7.14.0"
+        },
+        "replace": {
+            "drupal/entity_translation_i18n_menu": "self.version",
+            "drupal/entity_translation_upgrade": "self.version"
+        },
+        "suggest": {
+            "drupal/i18n": "Required by drupal/entity_translation_i18n_menu",
+            "drupal/i18n_menu": "Required by drupal/entity_translation_i18n_menu"
+        },
+        "time": "2016-05-07 22:31:26",
+        "type": "drupal-module",
+        "extra": {
+            "branch-alias": {
+                "dev-7.x-1.x": "7.1.x-dev"
+            }
+        },
+        "installation-source": "dist",
+        "notification-url": "https://packagist.drupal-composer.org/downloads/",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "description": "Allows entities to be translated into different languages.",
+        "homepage": "https://www.drupal.org/project/entity_translation"
+    },
+    {
+        "name": "drupal/entity_view_mode",
+        "version": "7.1.0-rc1",
+        "version_normalized": "7.1.0.0-RC1",
+        "source": {
+            "type": "git",
+            "url": "https://git.drupal.org/project/entity_view_mode",
+            "reference": "a5184846491e8f3d1b383c6b22e9cbd73a943454"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://ftp.drupal.org/files/projects/entity_view_mode-7.x-1.0-rc1.zip",
+            "reference": null,
+            "shasum": null
+        },
+        "require": {
+            "drupal/drupal": "7.*"
+        },
+        "time": "2013-05-11 02:49:13",
+        "type": "drupal-module",
+        "extra": {
+            "branch-alias": {
+                "dev-7.x-1.x": "7.1.x-dev"
+            }
+        },
+        "installation-source": "dist",
+        "notification-url": "https://packagist.drupal-composer.org/downloads/",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "description": "Allows administrators to define custom view modes for entities via the administration user interface.",
+        "homepage": "https://www.drupal.org/project/entity_view_mode"
+    },
+    {
+        "name": "drupal/entitycache",
+        "version": "7.1.5",
+        "version_normalized": "7.1.5.0",
+        "source": {
+            "type": "git",
+            "url": "https://git.drupal.org/project/entitycache",
+            "reference": "4b6494307851a6bc3096b7b3174ae4a1e78cc261"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://ftp.drupal.org/files/projects/entitycache-7.x-1.5.zip",
+            "reference": null,
+            "shasum": null
+        },
+        "require": {
+            "drupal/drupal": "7.*",
+            "drupal/system": ">=7.36.0"
+        },
+        "time": "2015-10-27 10:28:53",
+        "type": "drupal-module",
+        "extra": {
+            "branch-alias": {
+                "dev-7.x-1.x": "7.1.x-dev"
+            }
+        },
+        "installation-source": "dist",
+        "notification-url": "https://packagist.drupal-composer.org/downloads/",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "description": "Provides caching for core entities including nodes and taxonomy terms.",
+        "homepage": "https://www.drupal.org/project/entitycache"
+    },
+    {
+        "name": "drupal/entityreference",
+        "version": "7.1.1",
+        "version_normalized": "7.1.1.0",
+        "source": {
+            "type": "git",
+            "url": "https://git.drupal.org/project/entityreference",
+            "reference": "92747d9391443fb653a0044d9926e04402293f9a"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://ftp.drupal.org/files/projects/entityreference-7.x-1.1.zip",
+            "reference": null,
+            "shasum": null
+        },
+        "require": {
+            "drupal/ctools": "7.*",
+            "drupal/drupal": "7.*",
+            "drupal/entity": "7.*"
+        },
+        "replace": {
+            "drupal/entityreference_behavior_example": "self.version"
+        },
+        "time": "2013-11-20 18:38:42",
+        "type": "drupal-module",
+        "extra": {
+            "branch-alias": {
+                "dev-7.x-1.x": "7.1.x-dev"
+            }
+        },
+        "installation-source": "dist",
+        "notification-url": "https://packagist.drupal-composer.org/downloads/",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "description": "Provides a field that can reference other entities.",
+        "homepage": "https://www.drupal.org/project/entityreference"
+    },
+    {
+        "name": "drupal/eu_cookie_compliance",
+        "version": "7.1.14",
+        "version_normalized": "7.1.14.0",
+        "source": {
+            "type": "git",
+            "url": "https://git.drupal.org/project/eu-cookie-compliance.git",
+            "reference": "6e723e3bd72eb4a553d50ecb2ef937129986d8fe"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://ftp.drupal.org/files/projects/eu-cookie-compliance-7.x-1.14.zip",
+            "reference": null,
+            "shasum": null
+        },
+        "require": {
+            "drupal/drupal": "7.*"
+        },
+        "replace": {
+            "drupal/eu_cookie_compliance": "self.version"
+        },
+        "time": "2014-05-20 13:18:53",
+        "type": "drupal-module",
+        "extra": {
+            "branch-alias": {
+                "dev-7.x-1.x": "7.1.x-dev"
+            }
+        },
+        "installation-source": "source",
+        "notification-url": "https://packagist.drupal-composer.org/downloads/",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "description": "This module aims at making the website compliant with the new EU cookie regulation",
+        "homepage": "https://www.drupal.org/project/eu-cookie-compliance"
+    },
+    {
+        "name": "drupal/eva",
+        "version": "7.1.2",
+        "version_normalized": "7.1.2.0",
+        "source": {
+            "type": "git",
+            "url": "https://git.drupal.org/project/eva",
+            "reference": "587161521da5de342d5576b6ca8e964bd08ac91e"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://ftp.drupal.org/files/projects/eva-7.x-1.2.zip",
+            "reference": null,
+            "shasum": null
+        },
+        "require": {
+            "drupal/drupal": "7.*",
+            "drupal/views": "7.*"
+        },
+        "time": "2012-07-31 01:36:32",
+        "type": "drupal-module",
+        "extra": {
+            "branch-alias": {
+                "dev-7.x-1.x": "7.1.x-dev"
+            }
+        },
+        "installation-source": "dist",
+        "notification-url": "https://packagist.drupal-composer.org/downloads/",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "description": "Provides a Views display type that can be attached to entities.",
+        "homepage": "https://www.drupal.org/project/eva"
+    },
+    {
+        "name": "drupal/features",
+        "version": "7.2.10",
+        "version_normalized": "7.2.10.0",
+        "source": {
+            "type": "git",
+            "url": "https://git.drupal.org/project/features",
+            "reference": "41fd9b821b03cbdc6476428f375f16c9f8dc4185"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://ftp.drupal.org/files/projects/features-7.x-2.10.zip",
+            "reference": null,
+            "shasum": null
+        },
+        "require": {
+            "drupal/drupal": "7.*"
+        },
+        "time": "2016-04-18 19:27:42",
+        "type": "drupal-module",
+        "extra": {
+            "branch-alias": {
+                "dev-7.x-2.x": "7.2.x-dev"
+            }
+        },
+        "installation-source": "dist",
+        "notification-url": "https://packagist.drupal-composer.org/downloads/",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "description": "Provides feature management for Drupal.",
+        "homepage": "https://www.drupal.org/project/features"
+    },
+    {
+        "name": "drupal/fences",
+        "version": "7.1.2",
+        "version_normalized": "7.1.2.0",
+        "source": {
+            "type": "git",
+            "url": "https://git.drupal.org/project/fences",
+            "reference": "ea7e9e7040bc20b671d9a0c9f9b457a930ffb7b2"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://ftp.drupal.org/files/projects/fences-7.x-1.2.zip",
+            "reference": null,
+            "shasum": null
+        },
+        "require": {
+            "drupal/drupal": "7.*",
+            "drupal/field": "7.*"
+        },
+        "time": "2015-09-24 04:56:06",
+        "type": "drupal-module",
+        "extra": {
+            "branch-alias": {
+                "dev-7.x-1.x": "7.1.x-dev"
+            }
+        },
+        "installation-source": "dist",
+        "notification-url": "https://packagist.drupal-composer.org/downloads/",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "description": "Configurable field wrappers",
+        "homepage": "https://www.drupal.org/project/fences"
+    },
+    {
+        "name": "drupal/field_group",
+        "version": "7.1.5",
+        "version_normalized": "7.1.5.0",
+        "source": {
+            "type": "git",
+            "url": "https://git.drupal.org/project/field_group",
+            "reference": "1726c5191a7a7aef173e3a67ba46c3be9e470953"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://ftp.drupal.org/files/projects/field_group-7.x-1.5.zip",
+            "reference": null,
+            "shasum": null
+        },
+        "require": {
+            "drupal/ctools": "7.*",
+            "drupal/drupal": "7.*",
+            "drupal/field": "7.*"
+        },
+        "time": "2016-01-05 22:32:38",
+        "type": "drupal-module",
+        "extra": {
+            "branch-alias": {
+                "dev-7.x-1.x": "7.1.x-dev"
+            }
+        },
+        "installation-source": "dist",
+        "notification-url": "https://packagist.drupal-composer.org/downloads/",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "description": "Provides the ability to group your fields on both form and display.",
+        "homepage": "https://www.drupal.org/project/field_group"
+    },
+    {
+        "name": "drupal/votingapi",
+        "version": "7.2.12",
+        "version_normalized": "7.2.12.0",
+        "source": {
+            "type": "git",
+            "url": "https://git.drupal.org/project/votingapi",
+            "reference": "4ec7ba8bbd64611be1f8e9f395b68adae813d40d"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://ftp.drupal.org/files/projects/votingapi-7.x-2.12.zip",
+            "reference": null,
+            "shasum": null
+        },
+        "require": {
+            "drupal/drupal": "7.*"
+        },
+        "time": "2014-08-14 05:48:07",
+        "type": "drupal-module",
+        "extra": {
+            "branch-alias": {
+                "dev-7.x-2.x": "7.2.x-dev"
+            }
+        },
+        "installation-source": "dist",
+        "notification-url": "https://packagist.drupal-composer.org/downloads/",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "description": "Provides a shared voting API for other modules.",
+        "homepage": "https://www.drupal.org/project/votingapi"
+    },
+    {
+        "name": "drupal/fivestar",
+        "version": "7.2.2",
+        "version_normalized": "7.2.2.0",
+        "source": {
+            "type": "git",
+            "url": "https://git.drupal.org/project/fivestar",
+            "reference": "c1c12ec6c82c541ad7d1f71eb7de968c5e652802"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://ftp.drupal.org/files/projects/fivestar-7.x-2.2.zip",
+            "reference": null,
+            "shasum": null
+        },
+        "require": {
+            "drupal/drupal": "7.*",
+            "drupal/votingapi": "7.*"
+        },
+        "time": "2016-04-22 11:04:24",
+        "type": "drupal-module",
+        "extra": {
+            "branch-alias": {
+                "dev-7.x-2.x": "7.2.x-dev"
+            }
+        },
+        "installation-source": "dist",
+        "notification-url": "https://packagist.drupal-composer.org/downloads/",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "description": "Enables fivestar ratings on content, users, etc.",
+        "homepage": "https://www.drupal.org/project/fivestar"
+    },
+    {
+        "name": "drupal/fp",
+        "version": "7.7.2",
+        "version_normalized": "7.7.2.0",
+        "source": {
+            "type": "git",
+            "url": "https://git.drupal.org/project/fp",
+            "reference": "c81ae32f31aa09a0474747d3100b72f0b83b6883"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://ftp.drupal.org/files/projects/fp-7.x-7.2.zip",
+            "reference": null,
+            "shasum": null
+        },
+        "require": {
+            "drupal/drupal": "7.*",
+            "drupal/system": "7.*",
+            "drupal/user": "7.*"
+        },
+        "time": "2012-02-15 17:08:05",
+        "type": "drupal-module",
+        "extra": {
+            "branch-alias": {
+                "dev-7.x-7.x": "7.7.x-dev"
+            }
+        },
+        "installation-source": "dist",
+        "notification-url": "https://packagist.drupal-composer.org/downloads/",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "description": "Override the core permissions form for better UX",
+        "homepage": "https://www.drupal.org/project/fp"
+    },
+    {
+        "name": "drupal/fpa",
+        "version": "7.2.6",
+        "version_normalized": "7.2.6.0",
+        "source": {
+            "type": "git",
+            "url": "https://git.drupal.org/project/fpa",
+            "reference": "0ba7fc061afd665017a29d3fe87e5e93846abb87"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://ftp.drupal.org/files/projects/fpa-7.x-2.6.zip",
+            "reference": null,
+            "shasum": null
+        },
+        "require": {
+            "drupal/drupal": "7.*"
+        },
+        "time": "2014-08-22 21:39:09",
+        "type": "drupal-module",
+        "extra": {
+            "branch-alias": {
+                "dev-7.x-2.x": "7.2.x-dev"
+            }
+        },
+        "installation-source": "dist",
+        "notification-url": "https://packagist.drupal-composer.org/downloads/",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "description": "Fast filtering on permissions administration form.",
+        "homepage": "https://www.drupal.org/project/fpa"
+    },
+    {
+        "name": "drupal/globalredirect",
+        "version": "7.1.5",
+        "version_normalized": "7.1.5.0",
+        "source": {
+            "type": "git",
+            "url": "https://git.drupal.org/project/globalredirect",
+            "reference": "bddb3929766eaa2280fb50370a1849c78380f19a"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://ftp.drupal.org/files/projects/globalredirect-7.x-1.5.zip",
+            "reference": null,
+            "shasum": null
+        },
+        "require": {
+            "drupal/drupal": "7.*"
+        },
+        "time": "2012-06-11 11:15:44",
+        "type": "drupal-module",
+        "extra": {
+            "branch-alias": {
+                "dev-7.x-1.x": "7.1.x-dev"
+            }
+        },
+        "installation-source": "dist",
+        "notification-url": "https://packagist.drupal-composer.org/downloads/",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "description": "Searches for an alias of the current URL and 301 redirects if found. Stops duplicate content arising when path module is enabled.",
+        "homepage": "https://www.drupal.org/project/globalredirect"
+    },
+    {
+        "name": "drupal/google_analytics",
+        "version": "7.2.2",
+        "version_normalized": "7.2.2.0",
+        "source": {
+            "type": "git",
+            "url": "https://git.drupal.org/project/google_analytics",
+            "reference": "14543818d1c41838f962c5e1ed441fa167e8b51a"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://ftp.drupal.org/files/projects/google_analytics-7.x-2.2.zip",
+            "reference": null,
+            "shasum": null
+        },
+        "require": {
+            "drupal/drupal": "7.*"
+        },
+        "replace": {
+            "drupal/googleanalytics": "self.version"
+        },
+        "time": "2016-04-16 11:58:24",
+        "type": "drupal-module",
+        "extra": {
+            "branch-alias": {
+                "dev-7.x-2.x": "7.2.x-dev"
+            }
+        },
+        "installation-source": "dist",
+        "notification-url": "https://packagist.drupal-composer.org/downloads/",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "description": "Allows your site to be tracked by Google Analytics by adding a Javascript tracking code to every page.",
+        "homepage": "https://www.drupal.org/project/google_analytics"
+    },
+    {
+        "name": "drupal/honeypot",
+        "version": "7.1.22",
+        "version_normalized": "7.1.22.0",
+        "source": {
+            "type": "git",
+            "url": "https://git.drupal.org/project/honeypot",
+            "reference": "2cb39868ba8037718992017bb3b5e16a2165c8a8"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://ftp.drupal.org/files/projects/honeypot-7.x-1.22.zip",
+            "reference": null,
+            "shasum": null
+        },
+        "require": {
+            "drupal/drupal": "7.*"
+        },
+        "time": "2016-03-11 04:27:12",
+        "type": "drupal-module",
+        "extra": {
+            "branch-alias": {
+                "dev-7.x-1.x": "7.1.x-dev"
+            }
+        },
+        "installation-source": "dist",
+        "notification-url": "https://packagist.drupal-composer.org/downloads/",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "description": "Mitigates spam form submissions using the honeypot method.",
+        "homepage": "https://www.drupal.org/project/honeypot"
+    },
+    {
+        "name": "drupal/l10n_update",
+        "version": "7.2.0",
+        "version_normalized": "7.2.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://git.drupal.org/project/l10n_update",
+            "reference": "910eff9ebac040a5b00ab0062baabb6250f4a272"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://ftp.drupal.org/files/projects/l10n_update-7.x-2.0.zip",
+            "reference": null,
+            "shasum": null
+        },
+        "require": {
+            "drupal/drupal": "7.*",
+            "drupal/locale": "7.*"
+        },
+        "time": "2014-11-07 21:25:07",
+        "type": "drupal-module",
+        "extra": {
+            "branch-alias": {
+                "dev-7.x-2.x": "7.2.x-dev"
+            }
+        },
+        "installation-source": "dist",
+        "notification-url": "https://packagist.drupal-composer.org/downloads/",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "description": "Provides automatic downloads and updates for translations.",
+        "homepage": "https://www.drupal.org/project/l10n_update"
+    },
+    {
+        "name": "drupal/navbar",
+        "version": "7.1.7",
+        "version_normalized": "7.1.7.0",
+        "source": {
+            "type": "git",
+            "url": "https://git.drupal.org/project/navbar",
+            "reference": "090a522df5a5005689976e5f61011fad5b16dcd5"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://ftp.drupal.org/files/projects/navbar-7.x-1.7.zip",
+            "reference": null,
+            "shasum": null
+        },
+        "require": {
+            "drupal/drupal": "7.*",
+            "drupal/libraries": ">=7.2.0"
+        },
+        "time": "2015-12-01 13:13:42",
+        "type": "drupal-module",
+        "extra": {
+            "branch-alias": {
+                "dev-7.x-1.x": "7.1.x-dev"
+            }
+        },
+        "installation-source": "dist",
+        "notification-url": "https://packagist.drupal-composer.org/downloads/",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "description": "A very simple mobile friendly navigation toolbar that lets you switch between frontend and backend.",
+        "homepage": "https://www.drupal.org/project/navbar"
+    },
+    {
+        "name": "drupal/language_switch",
+        "version": "7.1.0-alpha2",
+        "version_normalized": "7.1.0.0-alpha2",
+        "source": {
+            "type": "git",
+            "url": "https://git.drupal.org/project/language_switch",
+            "reference": "90a45387da44885830c79c3a4f10ba02cdc4b754"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://ftp.drupal.org/files/projects/language_switch-7.x-1.0-alpha2.zip",
+            "reference": null,
+            "shasum": null
+        },
+        "require": {
+            "drupal/drupal": "7.*",
+            "drupal/navbar": "7.*"
+        },
+        "time": "2014-03-13 19:31:33",
+        "type": "drupal-module",
+        "extra": {
+            "branch-alias": {
+                "dev-7.x-1.x": "7.1.x-dev"
+            }
+        },
+        "installation-source": "dist",
+        "notification-url": "https://packagist.drupal-composer.org/downloads/",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "description": "Language switching functionality for the Mobile Friendly Navigation Toolbar.",
+        "homepage": "https://www.drupal.org/project/language_switch"
+    },
+    {
+        "name": "drupal/languagefield",
+        "version": "7.1.3",
+        "version_normalized": "7.1.3.0",
+        "source": {
+            "type": "git",
+            "url": "https://git.drupal.org/project/languagefield",
+            "reference": "e67134c280450691b5c6c0e8cbb1119fec5e8545"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://ftp.drupal.org/files/projects/languagefield-7.x-1.3.zip",
+            "reference": null,
+            "shasum": null
+        },
+        "require": {
+            "drupal/drupal": "7.*",
+            "drupal/options": "7.*"
+        },
+        "time": "2014-11-23 19:30:40",
+        "type": "drupal-module",
+        "extra": {
+            "branch-alias": {
+                "dev-7.x-1.x": "7.1.x-dev"
+            }
+        },
+        "installation-source": "dist",
+        "notification-url": "https://packagist.drupal-composer.org/downloads/",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "description": "Defines a simple language field.",
+        "homepage": "https://www.drupal.org/project/languagefield"
+    },
+    {
+        "name": "drupal/manualcrop",
+        "version": "7.1.5",
+        "version_normalized": "7.1.5.0",
+        "source": {
+            "type": "git",
+            "url": "https://git.drupal.org/project/manualcrop",
+            "reference": "4c551739a55682c0a951fcb5f64c2082b496f541"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://ftp.drupal.org/files/projects/manualcrop-7.x-1.5.zip",
+            "reference": null,
+            "shasum": null
+        },
+        "require": {
+            "drupal/drupal": "7.*",
+            "drupal/image": ">=7.8.0",
+            "drupal/libraries": ">=7.2.1"
+        },
+        "time": "2015-04-11 12:28:29",
+        "type": "drupal-module",
+        "extra": {
+            "branch-alias": {
+                "dev-7.x-1.x": "7.1.x-dev"
+            }
+        },
+        "installation-source": "dist",
+        "notification-url": "https://packagist.drupal-composer.org/downloads/",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "description": "Lets you manually crop an image based upon the image style effects.",
+        "homepage": "https://www.drupal.org/project/manualcrop"
+    },
+    {
+        "name": "drupal/markdown",
+        "version": "7.1.2",
+        "version_normalized": "7.1.2.0",
+        "source": {
+            "type": "git",
+            "url": "https://git.drupal.org/project/markdown",
+            "reference": "cc2f2afde825b1ec802d035ed05d8fc7bab3a632"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://ftp.drupal.org/files/projects/markdown-7.x-1.2.zip",
+            "reference": null,
+            "shasum": null
+        },
+        "require": {
+            "drupal/drupal": "7.*"
+        },
+        "time": "2013-05-16 06:41:09",
+        "type": "drupal-module",
+        "extra": {
+            "branch-alias": {
+                "dev-7.x-1.x": "7.1.x-dev"
+            }
+        },
+        "installation-source": "dist",
+        "notification-url": "https://packagist.drupal-composer.org/downloads/",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "description": "Allows content to be submitted using Markdown, a simple plain-text syntax that is transformed into valid XHTML.",
+        "homepage": "https://www.drupal.org/project/markdown"
+    },
+    {
+        "name": "drupal/masquerade",
+        "version": "7.1.0-rc7",
+        "version_normalized": "7.1.0.0-RC7",
+        "source": {
+            "type": "git",
+            "url": "https://git.drupal.org/project/masquerade",
+            "reference": "84688478d091dbdb55576881961d79fc07254a81"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://ftp.drupal.org/files/projects/masquerade-7.x-1.0-rc7.zip",
+            "reference": null,
+            "shasum": null
+        },
+        "require": {
+            "drupal/drupal": "7.*"
+        },
+        "time": "2014-03-07 14:01:45",
+        "type": "drupal-module",
+        "extra": {
+            "branch-alias": {
+                "dev-7.x-1.x": "7.1.x-dev"
+            }
+        },
+        "installation-source": "dist",
+        "notification-url": "https://packagist.drupal-composer.org/downloads/",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "description": "This module allows permitted users to masquerade as other users.",
+        "homepage": "https://www.drupal.org/project/masquerade"
+    },
+    {
+        "name": "drupal/maxlength",
+        "version": "7.3.2",
+        "version_normalized": "7.3.2.0",
+        "source": {
+            "type": "git",
+            "url": "https://git.drupal.org/project/maxlength",
+            "reference": "b84c0f2b799ff9d77ed11aa4223103c2247348bf"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://ftp.drupal.org/files/projects/maxlength-7.x-3.2.zip",
+            "reference": null,
+            "shasum": null
+        },
+        "require": {
+            "drupal/drupal": "7.*"
+        },
+        "time": "2015-03-11 19:54:46",
+        "type": "drupal-module",
+        "extra": {
+            "branch-alias": {
+                "dev-7.x-3.x": "7.3.x-dev"
+            }
+        },
+        "installation-source": "dist",
+        "notification-url": "https://packagist.drupal-composer.org/downloads/",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "description": "Limit the number of characters in textfields and textareas and shows the amount of characters left.",
+        "homepage": "https://www.drupal.org/project/maxlength"
+    },
+    {
+        "name": "drupal/file_entity",
+        "version": "7.2.0-beta2",
+        "version_normalized": "7.2.0.0-beta2",
+        "source": {
+            "type": "git",
+            "url": "https://git.drupal.org/project/file_entity",
+            "reference": "812dc896a258837017166fdd8d2fb381c0433001"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://ftp.drupal.org/files/projects/file_entity-7.x-2.0-beta2.zip",
+            "reference": null,
+            "shasum": null
+        },
+        "require": {
+            "drupal/ctools": "7.*",
+            "drupal/drupal": "7.*",
+            "drupal/field": "7.*",
+            "drupal/file": "7.*",
+            "drupal/system": ">=7.9.0"
+        },
+        "time": "2015-07-14 17:00:36",
+        "type": "drupal-module",
+        "extra": {
+            "branch-alias": {
+                "dev-7.x-2.x": "7.2.x-dev"
+            }
+        },
+        "installation-source": "dist",
+        "notification-url": "https://packagist.drupal-composer.org/downloads/",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "description": "Extends Drupal file entities to be fieldable and viewable.",
+        "homepage": "https://www.drupal.org/project/file_entity"
+    },
+    {
+        "name": "drupal/media",
+        "version": "7.2.0-beta1",
+        "version_normalized": "7.2.0.0-beta1",
+        "source": {
+            "type": "git",
+            "url": "https://git.drupal.org/project/media",
+            "reference": "19a155b1a78f18355dc9a2a614524178816be2cc"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://ftp.drupal.org/files/projects/media-7.x-2.0-beta1.zip",
+            "reference": null,
+            "shasum": null
+        },
+        "require": {
+            "drupal/drupal": "7.*",
+            "drupal/file_entity": "7.*",
+            "drupal/image": "7.*",
+            "drupal/views": "7.*"
+        },
+        "replace": {
+            "drupal/media_bulk_upload": "self.version",
+            "drupal/media_internet": "self.version",
+            "drupal/media_migrate_file_types": "self.version",
+            "drupal/media_wysiwyg": "self.version",
+            "drupal/media_wysiwyg_view_mode": "self.version",
+            "drupal/mediafield": "self.version"
+        },
+        "suggest": {
+            "drupal/media_wysiwyg": "Required by drupal/media_wysiwyg_view_mode",
+            "drupal/multiform": "Required by drupal/media_bulk_upload",
+            "drupal/plupload": "Required by drupal/media_bulk_upload"
+        },
+        "time": "2015-07-14 17:20:45",
+        "type": "drupal-module",
+        "extra": {
+            "branch-alias": {
+                "dev-7.x-2.x": "7.2.x-dev"
+            }
+        },
+        "installation-source": "dist",
+        "notification-url": "https://packagist.drupal-composer.org/downloads/",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "description": "Provides the core Media API",
+        "homepage": "https://www.drupal.org/project/media"
+    },
+    {
+        "name": "drupal/memcache_status",
+        "version": "7.1.2",
+        "version_normalized": "7.1.2.0",
+        "source": {
+            "type": "git",
+            "url": "https://git.drupal.org/project/memcache_status",
+            "reference": "c9126cd8eb975c7f9926b109831c5145ca42b6d7"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://ftp.drupal.org/files/projects/memcache_status-7.x-1.2.zip",
+            "reference": null,
+            "shasum": null
+        },
+        "require": {
+            "drupal/drupal": "7.*"
+        },
+        "time": "2013-10-17 00:28:29",
+        "type": "drupal-module",
+        "extra": {
+            "branch-alias": {
+                "dev-7.x-1.x": "7.1.x-dev"
+            }
+        },
+        "installation-source": "dist",
+        "notification-url": "https://packagist.drupal-composer.org/downloads/",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "description": "Adds Memcache status to the administrative reports.",
+        "homepage": "https://www.drupal.org/project/memcache_status"
+    },
+    {
+        "name": "drupal/memcache_storage",
+        "version": "7.1.4",
+        "version_normalized": "7.1.4.0",
+        "source": {
+            "type": "git",
+            "url": "https://git.drupal.org/project/memcache_storage",
+            "reference": "02a3273fa4efb727a16263e6377de53d57b96510"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://ftp.drupal.org/files/projects/memcache_storage-7.x-1.4.zip",
+            "reference": null,
+            "shasum": null
+        },
+        "require": {
+            "drupal/drupal": "7.*"
+        },
+        "time": "2013-11-26 08:47:07",
+        "type": "drupal-module",
+        "extra": {
+            "branch-alias": {
+                "dev-7.x-1.x": "7.1.x-dev"
+            }
+        },
+        "installation-source": "dist",
+        "notification-url": "https://packagist.drupal-composer.org/downloads/",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "description": "Provides integration with memcached backend for storing cached data.",
+        "homepage": "https://www.drupal.org/project/memcache_storage"
+    },
+    {
+        "name": "drupal/menu_admin_per_menu",
+        "version": "7.1.1",
+        "version_normalized": "7.1.1.0",
+        "source": {
+            "type": "git",
+            "url": "https://git.drupal.org/project/menu_admin_per_menu",
+            "reference": "162caf398eca18e2c40a6afc3934a1a2cd878da2"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://ftp.drupal.org/files/projects/menu_admin_per_menu-7.x-1.1.zip",
+            "reference": null,
+            "shasum": null
+        },
+        "require": {
+            "drupal/drupal": "7.*",
+            "drupal/menu": "7.*"
+        },
+        "time": "2015-08-13 13:18:29",
+        "type": "drupal-module",
+        "extra": {
+            "branch-alias": {
+                "dev-7.x-1.x": "7.1.x-dev"
+            }
+        },
+        "installation-source": "dist",
+        "notification-url": "https://packagist.drupal-composer.org/downloads/",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "description": "Allows to give roles per menu admin permissions without giving them full administer menu permission.",
+        "homepage": "https://www.drupal.org/project/menu_admin_per_menu"
+    },
+    {
+        "name": "drupal/token",
+        "version": "7.1.6",
+        "version_normalized": "7.1.6.0",
+        "source": {
+            "type": "git",
+            "url": "https://git.drupal.org/project/token",
+            "reference": "6019b9e657cfe6a919e8e717c52e4e07bd94dab0"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://ftp.drupal.org/files/projects/token-7.x-1.6.zip",
+            "reference": null,
+            "shasum": null
+        },
+        "require": {
+            "drupal/drupal": "7.*"
+        },
+        "time": "2015-02-28 15:55:47",
+        "type": "drupal-module",
+        "extra": {
+            "branch-alias": {
+                "dev-7.x-1.x": "7.1.x-dev"
+            }
+        },
+        "installation-source": "dist",
+        "notification-url": "https://packagist.drupal-composer.org/downloads/",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "description": "Provides a user interface for the Token API and some missing core tokens.",
+        "homepage": "https://www.drupal.org/project/token"
+    },
+    {
+        "name": "drupal/metatag",
+        "version": "7.1.14",
+        "version_normalized": "7.1.14.0",
+        "source": {
+            "type": "git",
+            "url": "https://git.drupal.org/project/metatag",
+            "reference": "f105cdd29c4224205018645dbeaf52d4272a8c1f"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://ftp.drupal.org/files/projects/metatag-7.x-1.14.zip",
+            "reference": null,
+            "shasum": null
+        },
+        "require": {
+            "drupal/ctools": "7.*",
+            "drupal/drupal": "7.*",
+            "drupal/system": ">=7.28.0",
+            "drupal/token": "7.*"
+        },
+        "replace": {
+            "drupal/metatag_app_links": "self.version",
+            "drupal/metatag_context": "self.version",
+            "drupal/metatag_dc": "self.version",
+            "drupal/metatag_dc_advanced": "self.version",
+            "drupal/metatag_devel": "self.version",
+            "drupal/metatag_facebook": "self.version",
+            "drupal/metatag_favicons": "self.version",
+            "drupal/metatag_google_plus": "self.version",
+            "drupal/metatag_hreflang": "self.version",
+            "drupal/metatag_importer": "self.version",
+            "drupal/metatag_mobile": "self.version",
+            "drupal/metatag_opengraph": "self.version",
+            "drupal/metatag_opengraph_products": "self.version",
+            "drupal/metatag_panels": "self.version",
+            "drupal/metatag_twitter_cards": "self.version",
+            "drupal/metatag_verification": "self.version",
+            "drupal/metatag_views": "self.version"
+        },
+        "suggest": {
+            "drupal/context": "Required by drupal/metatag_context",
+            "drupal/locale": "Required by drupal/metatag_hreflang",
+            "drupal/metatag_dc": "Required by drupal/metatag_dc_advanced",
+            "drupal/metatag_opengraph": "Required by drupal/metatag_opengraph_products",
+            "drupal/panels": "Required by drupal/metatag_panels",
+            "drupal/views": "Required by drupal/metatag_views"
+        },
+        "time": "2016-04-02 14:23:17",
+        "type": "drupal-module",
+        "extra": {
+            "branch-alias": {
+                "dev-7.x-1.x": "7.1.x-dev"
+            }
+        },
+        "installation-source": "dist",
+        "notification-url": "https://packagist.drupal-composer.org/downloads/",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "description": "Adds support and an API to implement meta tags.",
+        "homepage": "https://www.drupal.org/project/metatag"
+    },
+    {
+        "name": "drupal/module_filter",
+        "version": "7.2.0",
+        "version_normalized": "7.2.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://git.drupal.org/project/module_filter",
+            "reference": "667c3ad945080427a91137dbc9a9666cffbc2415"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://ftp.drupal.org/files/projects/module_filter-7.x-2.0.zip",
+            "reference": null,
+            "shasum": null
+        },
+        "require": {
+            "drupal/drupal": "7.*"
+        },
+        "time": "2015-02-21 00:56:04",
+        "type": "drupal-module",
+        "extra": {
+            "branch-alias": {
+                "dev-7.x-2.x": "7.2.x-dev"
+            }
+        },
+        "installation-source": "dist",
+        "notification-url": "https://packagist.drupal-composer.org/downloads/",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "description": "Filter the modules list.",
+        "homepage": "https://www.drupal.org/project/module_filter"
+    },
+    {
+        "name": "drupal/mollom",
+        "version": "7.2.15",
+        "version_normalized": "7.2.15.0",
+        "source": {
+            "type": "git",
+            "url": "https://git.drupal.org/project/mollom",
+            "reference": "e68291e16778f84e8b26f20836ffb4ba7a153e13"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://ftp.drupal.org/files/projects/mollom-7.x-2.15.zip",
+            "reference": null,
+            "shasum": null
+        },
+        "require": {
+            "drupal/drupal": "7.*"
+        },
+        "time": "2015-10-23 13:37:38",
+        "type": "drupal-module",
+        "extra": {
+            "branch-alias": {
+                "dev-7.x-2.x": "7.2.x-dev"
+            }
+        },
+        "installation-source": "dist",
+        "notification-url": "https://packagist.drupal-composer.org/downloads/",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "description": "Automatically moderates user-submitted content and protects your site from spam and profanity.",
+        "homepage": "https://www.drupal.org/project/mollom"
+    },
+    {
+        "name": "drupal/mpac",
+        "version": "7.1.2",
+        "version_normalized": "7.1.2.0",
+        "source": {
+            "type": "git",
+            "url": "https://git.drupal.org/project/mpac",
+            "reference": "d3c224d204110394bd4624b1b850eb9fdd216784"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://ftp.drupal.org/files/projects/mpac-7.x-1.2.zip",
+            "reference": null,
+            "shasum": null
+        },
+        "require": {
+            "drupal/drupal": "7.*"
+        },
+        "time": "2013-01-30 17:31:34",
+        "type": "drupal-module",
+        "extra": {
+            "branch-alias": {
+                "dev-7.x-1.x": "7.1.x-dev"
+            }
+        },
+        "installation-source": "dist",
+        "notification-url": "https://packagist.drupal-composer.org/downloads/",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "description": "Find paths on menu item creation, shortcut creation or url alias creation via autocomplete.",
+        "homepage": "https://www.drupal.org/project/mpac"
+    },
+    {
+        "name": "drupal/name",
+        "version": "7.1.10",
+        "version_normalized": "7.1.10.0",
+        "source": {
+            "type": "git",
+            "url": "https://git.drupal.org/project/name",
+            "reference": "b8fbd6b8c0cbc79614e944216e7deb0fc2679304"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://ftp.drupal.org/files/projects/name-7.x-1.10.zip",
+            "reference": null,
+            "shasum": null
+        },
+        "require": {
+            "drupal/drupal": "7.*",
+            "drupal/field": "7.*"
+        },
+        "time": "2015-09-02 12:35:20",
+        "type": "drupal-module",
+        "extra": {
+            "branch-alias": {
+                "dev-7.x-1.x": "7.1.x-dev"
+            }
+        },
+        "installation-source": "dist",
+        "notification-url": "https://packagist.drupal-composer.org/downloads/",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "description": "Defines a persons name field type.",
+        "homepage": "https://www.drupal.org/project/name"
+    },
+    {
+        "name": "drupal/navbar_extras",
+        "version": "7.1.0-beta1",
+        "version_normalized": "7.1.0.0-beta1",
+        "source": {
+            "type": "git",
+            "url": "https://git.drupal.org/project/navbar_extras.git",
+            "reference": "c8a43c79fdb687b0eecaf0a894b5ea2341e53f67"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://ftp.drupal.org/files/projects/navbar_extras-7.x-1.0-beta1.zip",
+            "reference": null,
+            "shasum": null
+        },
+        "require": {
+            "drupal/drupal": "7.*",
+            "drupal/navbar": "7.*"
+        },
+        "replace": {
+            "drupal/navbar_menu_source": "self.version",
+            "drupal/navbar_shiny": "self.version"
+        },
+        "suggest": {
+            "drupal/navbar": "Required by drupal/navbar_menu_source, drupal/navbar_shiny"
+        },
+        "time": "2015-08-24 11:11:52",
+        "type": "drupal-module",
+        "extra": {
+            "branch-alias": {
+                "dev-7.x-1.x": "7.1.x-dev"
+            }
+        },
+        "installation-source": "dist",
+        "notification-url": "https://packagist.drupal-composer.org/downloads/",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "description": "Adds some useful items to main navbar menu.",
+        "homepage": "https://www.drupal.org/project/navbar_extras"
+    },
+    {
+        "name": "drupal/node_clone",
+        "version": "7.1.0",
+        "version_normalized": "7.1.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://git.drupal.org/project/node_clone",
+            "reference": "429cbc12cdf8800206a5cea217a5382b3b51e3ca"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://ftp.drupal.org/files/projects/node_clone-7.x-1.0.zip",
+            "reference": null,
+            "shasum": null
+        },
+        "require": {
+            "drupal/drupal": "7.*"
+        },
+        "replace": {
+            "drupal/clone": "self.version"
+        },
+        "time": "2015-11-19 02:28:11",
+        "type": "drupal-module",
+        "extra": {
+            "branch-alias": {
+                "dev-7.x-1.x": "7.1.x-dev"
+            }
+        },
+        "installation-source": "dist",
+        "notification-url": "https://packagist.drupal-composer.org/downloads/",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "description": "Allows users to clone (copy then edit) an existing node.",
+        "homepage": "https://www.drupal.org/project/node_clone"
+    },
+    {
+        "name": "drupal/panels",
+        "version": "7.3.5",
+        "version_normalized": "7.3.5.0",
+        "source": {
+            "type": "git",
+            "url": "https://git.drupal.org/project/panels",
+            "reference": "26c478e62e0177245aeab8d49448400d2eb688cd"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://ftp.drupal.org/files/projects/panels-7.x-3.5.zip",
+            "reference": null,
+            "shasum": null
+        },
+        "require": {
+            "drupal/ctools": ">7.1.5",
+            "drupal/drupal": "7.*"
+        },
+        "replace": {
+            "drupal/i18n_panels": "self.version",
+            "drupal/panels_ipe": "self.version",
+            "drupal/panels_mini": "self.version",
+            "drupal/panels_node": "self.version"
+        },
+        "suggest": {
+            "drupal/i18n": "Required by drupal/i18n_panels",
+            "drupal/i18n_string": "Required by drupal/i18n_panels",
+            "drupal/i18n_translation": "Required by drupal/i18n_panels"
+        },
+        "time": "2015-01-28 19:17:17",
+        "type": "drupal-module",
+        "extra": {
+            "branch-alias": {
+                "dev-7.x-3.x": "7.3.x-dev"
+            }
+        },
+        "installation-source": "dist",
+        "notification-url": "https://packagist.drupal-composer.org/downloads/",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "description": "Core Panels display functions; provides no external UI, at least one other Panels module should be enabled.",
+        "homepage": "https://www.drupal.org/project/panels"
+    },
+    {
+        "name": "drupal/panelizer",
+        "version": "7.3.1",
+        "version_normalized": "7.3.1.0",
+        "source": {
+            "type": "git",
+            "url": "https://git.drupal.org/project/panelizer",
+            "reference": "c28bd610f836f26ec5f9c96b10297a9d528fd844"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://ftp.drupal.org/files/projects/panelizer-7.x-3.1.zip",
+            "reference": null,
+            "shasum": null
+        },
+        "require": {
+            "drupal/ctools": "7.*",
+            "drupal/drupal": "7.*",
+            "drupal/page_manager": "7.*",
+            "drupal/panels": "7.*"
+        },
+        "time": "2013-02-13 19:57:19",
+        "type": "drupal-module",
+        "extra": {
+            "branch-alias": {
+                "dev-7.x-3.x": "7.3.x-dev"
+            }
+        },
+        "installation-source": "dist",
+        "notification-url": "https://packagist.drupal-composer.org/downloads/",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "description": "Allow any node type to have custom panel displays, similar to the panel node type.",
+        "homepage": "https://www.drupal.org/project/panelizer"
+    },
+    {
+        "name": "drupal/pathauto",
+        "version": "7.1.3",
+        "version_normalized": "7.1.3.0",
+        "source": {
+            "type": "git",
+            "url": "https://git.drupal.org/project/pathauto",
+            "reference": "88db3ee74ddf62eab54e12347955dd2f6dd66737"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://ftp.drupal.org/files/projects/pathauto-7.x-1.3.zip",
+            "reference": null,
+            "shasum": null
+        },
+        "require": {
+            "drupal/drupal": "7.*",
+            "drupal/path": "7.*",
+            "drupal/token": "7.*"
+        },
+        "time": "2015-10-01 18:37:04",
+        "type": "drupal-module",
+        "extra": {
+            "branch-alias": {
+                "dev-7.x-1.x": "7.1.x-dev"
+            }
+        },
+        "installation-source": "dist",
+        "notification-url": "https://packagist.drupal-composer.org/downloads/",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "description": "Provides a mechanism for modules to automatically generate aliases for the content they manage.",
+        "homepage": "https://www.drupal.org/project/pathauto"
+    },
+    {
+        "name": "drupal/performance",
+        "version": "7.2.0",
+        "version_normalized": "7.2.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://git.drupal.org/project/performance",
+            "reference": "42e6e2ba948da9f5776817da16aa0e450e0682b4"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://ftp.drupal.org/files/projects/performance-7.x-2.0.zip",
+            "reference": null,
+            "shasum": null
+        },
+        "require": {
+            "drupal/drupal": "7.*"
+        },
+        "time": "2013-11-09 19:02:22",
+        "type": "drupal-module",
+        "extra": {
+            "branch-alias": {
+                "dev-7.x-2.x": "7.2.x-dev"
+            }
+        },
+        "installation-source": "dist",
+        "notification-url": "https://packagist.drupal-composer.org/downloads/",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "description": "Logs detailed and/or summary page generation time and memory consumption for page requests.",
+        "homepage": "https://www.drupal.org/project/performance"
+    },
+    {
+        "name": "drupal/pm_existing_pages",
+        "version": "7.1.4",
+        "version_normalized": "7.1.4.0",
+        "source": {
+            "type": "git",
+            "url": "https://git.drupal.org/project/pm_existing_pages",
+            "reference": "021cd6a75c67377800ffe8a3ee4b06be5fbf0789"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://ftp.drupal.org/files/projects/pm_existing_pages-7.x-1.4.zip",
+            "reference": null,
+            "shasum": null
+        },
+        "require": {
+            "drupal/drupal": "7.*",
+            "drupal/page_manager": "7.*"
+        },
+        "time": "2012-05-19 16:03:36",
+        "type": "drupal-module",
+        "extra": {
+            "branch-alias": {
+                "dev-7.x-1.x": "7.1.x-dev"
+            }
+        },
+        "installation-source": "dist",
+        "notification-url": "https://packagist.drupal-composer.org/downloads/",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "description": "Provides the ability to override existing pages through Page manager.",
+        "homepage": "https://www.drupal.org/project/pm_existing_pages"
+    },
+    {
+        "name": "drupal/remote_stream_wrapper",
+        "version": "7.1.0-rc1",
+        "version_normalized": "7.1.0.0-RC1",
+        "source": {
+            "type": "git",
+            "url": "https://git.drupal.org/project/remote_stream_wrapper",
+            "reference": "1d0e07cf9fe7809376392ab546f695abb7722540"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://ftp.drupal.org/files/projects/remote_stream_wrapper-7.x-1.0-rc1.zip",
+            "reference": null,
+            "shasum": null
+        },
+        "require": {
+            "drupal/drupal": "7.*"
+        },
+        "time": "2014-04-22 00:29:49",
+        "type": "drupal-module",
+        "extra": {
+            "branch-alias": {
+                "dev-7.x-1.x": "7.1.x-dev"
+            }
+        },
+        "installation-source": "dist",
+        "notification-url": "https://packagist.drupal-composer.org/downloads/",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "description": "Provides the ability to use external files with filefields without saving the files to your local files directory.",
+        "homepage": "https://www.drupal.org/project/remote_stream_wrapper"
+    },
+    {
+        "name": "drupal/entity_modified",
+        "version": "7.1.2",
+        "version_normalized": "7.1.2.0",
+        "source": {
+            "type": "git",
+            "url": "https://git.drupal.org/project/entity_modified",
+            "reference": "446f7690a1192aaad5d1dcbb0d4b7c9f78836847"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://ftp.drupal.org/files/projects/entity_modified-7.x-1.2.zip",
+            "reference": null,
+            "shasum": null
+        },
+        "require": {
+            "drupal/drupal": "7.*"
+        },
+        "replace": {
+            "drupal/entity_modified_nodequeue": "self.version"
+        },
+        "time": "2014-07-12 22:38:44",
+        "type": "drupal-module",
+        "extra": {
+            "branch-alias": {
+                "dev-7.x-1.x": "7.1.x-dev"
+            }
+        },
+        "installation-source": "dist",
+        "notification-url": "https://packagist.drupal-composer.org/downloads/",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "description": "Read the last modified date from an entity, supports entities which do support a last modified natively.",
+        "homepage": "https://www.drupal.org/project/entity_modified"
+    },
+    {
+        "name": "drupal/render_cache",
+        "version": "7.1.0",
+        "version_normalized": "7.1.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://git.drupal.org/project/render_cache",
+            "reference": "83035d607fcaf057ee74df964cc2609b9a4d9df5"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://ftp.drupal.org/files/projects/render_cache-7.x-1.0.zip",
+            "reference": null,
+            "shasum": null
+        },
+        "require": {
+            "drupal/drupal": "7.*",
+            "drupal/entity_modified": "7.*"
+        },
+        "replace": {
+            "drupal/render_cache_comment": "self.version",
+            "drupal/render_cache_context": "self.version",
+            "drupal/render_cache_ds": "self.version",
+            "drupal/render_cache_node": "self.version",
+            "drupal/render_cache_views": "self.version"
+        },
+        "suggest": {
+            "drupal/context": "Required by drupal/render_cache_context",
+            "drupal/ds": "Required by drupal/render_cache_ds",
+            "drupal/entity": "Required by drupal/render_cache_comment, drupal/render_cache_ds, drupal/render_cache_node, drupal/render_cache_views",
+            "drupal/views": "Required by drupal/render_cache_ds, drupal/render_cache_views"
+        },
+        "time": "2014-07-09 21:12:54",
+        "type": "drupal-module",
+        "extra": {
+            "branch-alias": {
+                "dev-7.x-1.x": "7.1.x-dev"
+            }
+        },
+        "installation-source": "dist",
+        "notification-url": "https://packagist.drupal-composer.org/downloads/",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "description": "Cache rendered items to drastically improve performance.",
+        "homepage": "https://www.drupal.org/project/render_cache"
+    },
+    {
+        "name": "drupal/role_delegation",
+        "version": "7.1.1",
+        "version_normalized": "7.1.1.0",
+        "source": {
+            "type": "git",
+            "url": "https://git.drupal.org/project/role_delegation",
+            "reference": "e31dfbbd736cbbd74d514c94074ebaf9ed83d88a"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://ftp.drupal.org/files/projects/role_delegation-7.x-1.1.zip",
+            "reference": null,
+            "shasum": null
+        },
+        "require": {
+            "drupal/drupal": "7.*"
+        },
+        "time": "2011-06-20 10:12:04",
+        "type": "drupal-module",
+        "extra": {
+            "branch-alias": {
+                "dev-7.x-1.x": "7.1.x-dev"
+            }
+        },
+        "installation-source": "dist",
+        "notification-url": "https://packagist.drupal-composer.org/downloads/",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "description": "Allows site administrators to grant some roles the authority to assign selected roles to users.",
+        "homepage": "https://www.drupal.org/project/role_delegation"
+    },
+    {
+        "name": "drupal/rules",
+        "version": "7.2.9",
+        "version_normalized": "7.2.9.0",
+        "source": {
+            "type": "git",
+            "url": "https://git.drupal.org/project/rules",
+            "reference": "db14bda9a821db324754339771950afd70fc750d"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://ftp.drupal.org/files/projects/rules-7.x-2.9.zip",
+            "reference": null,
+            "shasum": null
+        },
+        "require": {
+            "drupal/drupal": "7.*",
+            "drupal/entity": "7.*",
+            "drupal/entity_token": "7.*"
+        },
+        "replace": {
+            "drupal/rules_admin": "self.version",
+            "drupal/rules_i18n": "self.version",
+            "drupal/rules_scheduler": "self.version"
+        },
+        "suggest": {
+            "drupal/i18n_string": "Required by drupal/rules_i18n"
+        },
+        "time": "2015-02-18 08:21:20",
+        "type": "drupal-module",
+        "extra": {
+            "branch-alias": {
+                "dev-7.x-2.x": "7.2.x-dev"
+            }
+        },
+        "installation-source": "dist",
+        "notification-url": "https://packagist.drupal-composer.org/downloads/",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "description": "React on events and conditionally evaluate actions.",
+        "homepage": "https://www.drupal.org/project/rules"
+    },
+    {
+        "name": "drupal/select_or_other",
+        "version": "7.2.22",
+        "version_normalized": "7.2.22.0",
+        "source": {
+            "type": "git",
+            "url": "https://git.drupal.org/project/select_or_other",
+            "reference": "82728955799e2b6546dd1fcaef5e7e3c569c1d33"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://ftp.drupal.org/files/projects/select_or_other-7.x-2.22.zip",
+            "reference": null,
+            "shasum": null
+        },
+        "require": {
+            "drupal/drupal": "7.*"
+        },
+        "time": "2015-05-14 16:11:28",
+        "type": "drupal-module",
+        "extra": {
+            "branch-alias": {
+                "dev-7.x-2.x": "7.2.x-dev"
+            }
+        },
+        "installation-source": "dist",
+        "notification-url": "https://packagist.drupal-composer.org/downloads/",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "description": "Provides a select box form element with additional option 'Other' to give a textfield.",
+        "homepage": "https://www.drupal.org/project/select_or_other"
+    },
+    {
+        "name": "drupal/shortcutperrole",
+        "version": "7.1.2",
+        "version_normalized": "7.1.2.0",
+        "source": {
+            "type": "git",
+            "url": "https://git.drupal.org/project/shortcutperrole",
+            "reference": "010e78a4f4ed56aec52a408fbcd5311106174549"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://ftp.drupal.org/files/projects/shortcutperrole-7.x-1.2.zip",
+            "reference": null,
+            "shasum": null
+        },
+        "require": {
+            "drupal/drupal": "7.*",
+            "drupal/shortcut": "7.*"
+        },
+        "time": "2014-12-08 10:25:57",
+        "type": "drupal-module",
+        "extra": {
+            "branch-alias": {
+                "dev-7.x-1.x": "7.1.x-dev"
+            }
+        },
+        "installation-source": "dist",
+        "notification-url": "https://packagist.drupal-composer.org/downloads/",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "description": "Allows creating default shortcut per role",
+        "homepage": "https://www.drupal.org/project/shortcutperrole"
+    },
+    {
+        "name": "drupal/site_verify",
+        "version": "7.1.1",
+        "version_normalized": "7.1.1.0",
+        "source": {
+            "type": "git",
+            "url": "https://git.drupal.org/project/site_verify",
+            "reference": "b9f12c18835398e92896b7c81c40f250b4985055"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://ftp.drupal.org/files/projects/site_verify-7.x-1.1.zip",
+            "reference": null,
+            "shasum": null
+        },
+        "require": {
+            "drupal/drupal": "7.*"
+        },
+        "time": "2014-03-24 09:55:13",
+        "type": "drupal-module",
+        "extra": {
+            "branch-alias": {
+                "dev-7.x-1.x": "7.1.x-dev"
+            }
+        },
+        "installation-source": "dist",
+        "notification-url": "https://packagist.drupal-composer.org/downloads/",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "description": "Verifies ownership of a site for use with search engines.",
+        "homepage": "https://www.drupal.org/project/site_verify"
+    },
+    {
+        "name": "drupal/spambot",
+        "version": "7.1.4",
+        "version_normalized": "7.1.4.0",
+        "source": {
+            "type": "git",
+            "url": "https://git.drupal.org/project/spambot",
+            "reference": "785e34e9d30174149f18fea35141676625dc0313"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://ftp.drupal.org/files/projects/spambot-7.x-1.4.zip",
+            "reference": null,
+            "shasum": null
+        },
+        "require": {
+            "drupal/drupal": "7.*"
+        },
+        "time": "2015-03-31 08:05:00",
+        "type": "drupal-module",
+        "extra": {
+            "branch-alias": {
+                "dev-7.x-1.x": "7.1.x-dev"
+            }
+        },
+        "installation-source": "dist",
+        "notification-url": "https://packagist.drupal-composer.org/downloads/",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "description": "Anti-spam module that uses data from www.stopforumspam.com to protect the user registration form against known spammers and spambots.",
+        "homepage": "https://www.drupal.org/project/spambot"
+    },
+    {
+        "name": "drupal/strongarm",
+        "version": "7.2.0",
+        "version_normalized": "7.2.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://git.drupal.org/project/strongarm",
+            "reference": "895016eb5b99b9dc3e704f1b56e58808eedce30a"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://ftp.drupal.org/files/projects/strongarm-7.x-2.0.zip",
+            "reference": null,
+            "shasum": null
+        },
+        "require": {
+            "drupal/ctools": "7.*",
+            "drupal/drupal": "7.*"
+        },
+        "time": "2012-06-13 15:46:08",
+        "type": "drupal-module",
+        "extra": {
+            "branch-alias": {
+                "dev-7.x-2.x": "7.2.x-dev"
+            }
+        },
+        "installation-source": "dist",
+        "notification-url": "https://packagist.drupal-composer.org/downloads/",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "description": "Enforces variable values defined by modules that need settings set to operate properly.",
+        "homepage": "https://www.drupal.org/project/strongarm"
+    },
+    {
+        "name": "drupal/subpathauto",
+        "version": "7.1.3",
+        "version_normalized": "7.1.3.0",
+        "source": {
+            "type": "git",
+            "url": "https://git.drupal.org/project/subpathauto",
+            "reference": "be7768622cfb3d5e6787e46d4e1a6977757f10f7"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://ftp.drupal.org/files/projects/subpathauto-7.x-1.3.zip",
+            "reference": null,
+            "shasum": null
+        },
+        "require": {
+            "drupal/drupal": "7.*"
+        },
+        "time": "2012-09-18 17:40:42",
+        "type": "drupal-module",
+        "extra": {
+            "branch-alias": {
+                "dev-7.x-1.x": "7.1.x-dev"
+            }
+        },
+        "installation-source": "dist",
+        "notification-url": "https://packagist.drupal-composer.org/downloads/",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "description": "Provides support for extending sub-paths of URL aliases.",
+        "homepage": "https://www.drupal.org/project/subpathauto"
+    },
+    {
+        "name": "drupal/taxonomy_access_fix",
+        "version": "7.2.3",
+        "version_normalized": "7.2.3.0",
+        "source": {
+            "type": "git",
+            "url": "https://git.drupal.org/project/taxonomy_access_fix",
+            "reference": "77f8f22c1c83ad73252f11233f72bd1fa947a70a"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://ftp.drupal.org/files/projects/taxonomy_access_fix-7.x-2.3.zip",
+            "reference": null,
+            "shasum": null
+        },
+        "require": {
+            "drupal/drupal": "7.*",
+            "drupal/taxonomy": "7.*"
+        },
+        "time": "2015-05-30 12:33:45",
+        "type": "drupal-module",
+        "extra": {
+            "branch-alias": {
+                "dev-7.x-2.x": "7.2.x-dev"
+            }
+        },
+        "installation-source": "dist",
+        "notification-url": "https://packagist.drupal-composer.org/downloads/",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "description": "Fixes the crooked access checks for Taxonomy pages",
+        "homepage": "https://www.drupal.org/project/taxonomy_access_fix"
+    },
+    {
+        "name": "drupal/title",
+        "version": "7.1.0-alpha8",
+        "version_normalized": "7.1.0.0-alpha8",
+        "source": {
+            "type": "git",
+            "url": "https://git.drupal.org/project/title",
+            "reference": "2415009632cdc4546fcd5734eb3ce53bcfd211f3"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://ftp.drupal.org/files/projects/title-7.x-1.0-alpha8.zip",
+            "reference": null,
+            "shasum": null
+        },
+        "require": {
+            "drupal/drupal": "7.*",
+            "drupal/system": ">7.14.0"
+        },
+        "time": "2016-03-28 14:58:06",
+        "type": "drupal-module",
+        "extra": {
+            "branch-alias": {
+                "dev-7.x-1.x": "7.1.x-dev"
+            }
+        },
+        "installation-source": "dist",
+        "notification-url": "https://packagist.drupal-composer.org/downloads/",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "description": "Replaces entity legacy fields with regular fields.",
+        "homepage": "https://www.drupal.org/project/title"
+    },
+    {
+        "name": "drupal/transliteration",
+        "version": "7.3.2",
+        "version_normalized": "7.3.2.0",
+        "source": {
+            "type": "git",
+            "url": "https://git.drupal.org/project/transliteration",
+            "reference": "a4438c88757ed97ea5ada4b762c2db4af19cf919"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://ftp.drupal.org/files/projects/transliteration-7.x-3.2.zip",
+            "reference": null,
+            "shasum": null
+        },
+        "require": {
+            "drupal/drupal": "7.*"
+        },
+        "time": "2014-03-17 18:01:18",
+        "type": "drupal-module",
+        "extra": {
+            "branch-alias": {
+                "dev-7.x-3.x": "7.3.x-dev"
+            }
+        },
+        "installation-source": "dist",
+        "notification-url": "https://packagist.drupal-composer.org/downloads/",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "description": "Converts non-latin text to US-ASCII and sanitizes file names.",
+        "homepage": "https://www.drupal.org/project/transliteration"
+    },
+    {
+        "name": "drupal/url",
+        "version": "7.1.0",
+        "version_normalized": "7.1.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://git.drupal.org/project/url",
+            "reference": "1a17f0c93268209681a9cd57e0a1d7af4f9da1ce"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://ftp.drupal.org/files/projects/url-7.x-1.0.zip",
+            "reference": null,
+            "shasum": null
+        },
+        "require": {
+            "drupal/drupal": "7.*",
+            "drupal/field": "7.*"
+        },
+        "time": "2013-01-26 10:25:31",
+        "type": "drupal-module",
+        "extra": {
+            "branch-alias": {
+                "dev-7.x-1.x": "7.1.x-dev"
+            }
+        },
+        "installation-source": "dist",
+        "notification-url": "https://packagist.drupal-composer.org/downloads/",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "description": "Defines a simple URL field type.",
+        "homepage": "https://www.drupal.org/project/url"
+    },
+    {
+        "name": "drupal/views_slideshow",
+        "version": "7.3.1",
+        "version_normalized": "7.3.1.0",
+        "source": {
+            "type": "git",
+            "url": "https://git.drupal.org/project/views_slideshow",
+            "reference": "d1d737104246735768d508a1010480c12a89a78d"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://ftp.drupal.org/files/projects/views_slideshow-7.x-3.1.zip",
+            "reference": null,
+            "shasum": null
+        },
+        "require": {
+            "drupal/drupal": "7.*",
+            "drupal/views": ">=7.3.0"
+        },
+        "replace": {
+            "drupal/views_slideshow_cycle": "self.version"
+        },
+        "suggest": {
+            "drupal/libraries": "Required by drupal/views_slideshow_cycle"
+        },
+        "time": "2013-09-13 04:01:05",
+        "type": "drupal-module",
+        "extra": {
+            "branch-alias": {
+                "dev-7.x-3.x": "7.3.x-dev"
+            }
+        },
+        "installation-source": "dist",
+        "notification-url": "https://packagist.drupal-composer.org/downloads/",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "description": "Provides a View style that displays rows as a jQuery slideshow.  This is an API and requires Views Slideshow Cycle or another module that supports the API.",
+        "homepage": "https://www.drupal.org/project/views_slideshow"
+    },
+    {
+        "name": "drupal/webform",
+        "version": "7.4.12",
+        "version_normalized": "7.4.12.0",
+        "source": {
+            "type": "git",
+            "url": "https://git.drupal.org/project/webform",
+            "reference": "b52f60c1eed30c358e5ba4818ee4358436a06ed0"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://ftp.drupal.org/files/projects/webform-7.x-4.12.zip",
+            "reference": null,
+            "shasum": null
+        },
+        "require": {
+            "drupal/ctools": "7.*",
+            "drupal/drupal": "7.*",
+            "drupal/views": "7.*"
+        },
+        "time": "2015-10-20 15:47:17",
+        "type": "drupal-module",
+        "extra": {
+            "branch-alias": {
+                "dev-7.x-4.x": "7.4.x-dev"
+            }
+        },
+        "installation-source": "dist",
+        "notification-url": "https://packagist.drupal-composer.org/downloads/",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "description": "Enables the creation of forms and questionnaires.",
+        "homepage": "https://www.drupal.org/project/webform"
+    },
+    {
+        "name": "drupal/xmlsitemap",
+        "version": "7.2.2",
+        "version_normalized": "7.2.2.0",
+        "source": {
+            "type": "git",
+            "url": "https://git.drupal.org/project/xmlsitemap",
+            "reference": "1219c4865daf394b622398c57264c66146c7e515"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://ftp.drupal.org/files/projects/xmlsitemap-7.x-2.2.zip",
+            "reference": null,
+            "shasum": null
+        },
+        "require": {
+            "drupal/drupal": "7.*"
+        },
+        "replace": {
+            "drupal/xmlsitemap_custom": "self.version",
+            "drupal/xmlsitemap_engines": "self.version",
+            "drupal/xmlsitemap_i18n": "self.version",
+            "drupal/xmlsitemap_menu": "self.version",
+            "drupal/xmlsitemap_modal": "self.version",
+            "drupal/xmlsitemap_node": "self.version",
+            "drupal/xmlsitemap_taxonomy": "self.version",
+            "drupal/xmlsitemap_user": "self.version"
+        },
+        "suggest": {
+            "drupal/ctools": "Required by drupal/xmlsitemap_modal",
+            "drupal/i18n": "Required by drupal/xmlsitemap_i18n",
+            "drupal/menu": "Required by drupal/xmlsitemap_menu",
+            "drupal/taxonomy": "Required by drupal/xmlsitemap_taxonomy"
+        },
+        "time": "2015-01-30 08:48:59",
+        "type": "drupal-module",
+        "extra": {
+            "branch-alias": {
+                "dev-7.x-2.x": "7.2.x-dev"
+            }
+        },
+        "installation-source": "dist",
+        "notification-url": "https://packagist.drupal-composer.org/downloads/",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "description": "Creates an XML sitemap conforming to the <a href=\"http://sitemaps.org/\">sitemaps.org protocol</a>.",
+        "homepage": "https://www.drupal.org/project/xmlsitemap"
+    },
+    {
+        "name": "drupal/superfish",
+        "version": "7.1.9",
+        "version_normalized": "7.1.9.0",
+        "source": {
+            "type": "git",
+            "url": "https://git.drupal.org/project/superfish",
+            "reference": "892dfecdcb5167308fd8a5f66f7ce049df63332f"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://ftp.drupal.org/files/projects/superfish-7.x-1.9.zip",
+            "reference": null,
+            "shasum": null
+        },
+        "require": {
+            "drupal/drupal": "7.*",
+            "drupal/menu": "7.*"
+        },
+        "time": "2013-04-27 09:03:24",
+        "type": "drupal-module",
+        "extra": {
+            "branch-alias": {
+                "dev-7.x-1.x": "7.1.x-dev"
+            }
+        },
+        "installation-source": "dist",
+        "notification-url": "https://packagist.drupal-composer.org/downloads/",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "description": "jQuery Superfish plugin for your Drupal menus.",
+        "homepage": "https://www.drupal.org/project/superfish"
     }
 ]
