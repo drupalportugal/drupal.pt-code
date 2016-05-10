@@ -24,9 +24,15 @@
       "role": "DevOps"
     },
     {
-      "name": "Hernani Freitas",
-      "email": "hernaniborgesdefreitas@gmail.com",
-      "homepage": "http://hernani.pt",
+      "name": "Ricardo Amaro",
+      "email": "mail@ricardoamaro.com",
+      "homepage": "http://blog.ricardoamaro.com",
+      "role": "DevOps"
+    },
+    {
+      "name": "António P. P. Almeida",
+      "email": "appa@perusio.net",
+      "homepage": "http://perusio.net",
       "role": "DevOps"
     }
   ],
@@ -76,13 +82,13 @@
       "web/sites/all/themes/contrib",
       "web/sites/all/themes/custom",
       "web/sites/all/libraries",
+      "drush/contrib",
       "web/sites/*/*settings*.php",
       "web/sites/*/files",
       "web/sites/*/public",
       "web/sites/*/private",
       "web/sites/*/files-public",
-      "web/sites/*/files-private",
-      "drush/contrib"
+      "web/sites/*/files-private"
     ]
   },
   "scripts": {
@@ -109,17 +115,16 @@
     "drupal/core": "*"
   },
   "require": {
-    "cweagans/composer-patches": "~1.3",
-    "wikimedia/composer-merge-plugin": "~1.3",
+    "cweagans/composer-patches": "^1.3",
+    "wikimedia/composer-merge-plugin": "^1.3",
     "composer/installers": "^1.0.21",
-    "robloach/component-installer": "~0.2",
-    "derhasi/composer-preserve-paths": "~0.1",
+    "robloach/component-installer": "^0.2",
+    "derhasi/composer-preserve-paths": "^0.1",
     "drupal/drupal": "7.*@stable",
-    "drush/drush": "~7.0"
+    "drush/drush": "^7.3"
   },
   "require-dev": {
   },
   "require-disabled": {
-    "davidbarratt/drupal-structure": "~1.0@alpha"
   }
 }

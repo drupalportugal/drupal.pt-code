@@ -39,12 +39,10 @@ sites/*/tmp
 /web/**/.git
 /vendor/**/.git
 
-# Build caches #
-################
+# Ignore build caches
 .sass-cache
 
-# Editor and IDE files #
-########################
+# Editor and IDE files
 *.un~
 *.kate-swp
 .project
@@ -52,16 +50,14 @@ sites/*/tmp
 .settings*
 .idea
 
-# OS generated files #
-######################
+# OS generated files
 .DS_Store*
 ehthumbs.db
 Icon?
 Thumbs.db
 ._*
 
-# Archives and binaries #
-#########################
+# Archives and binaries
 *.tar
 *.gz
 *.bz2
@@ -77,8 +73,7 @@ Thumbs.db
 *.so
 *.dll
 
-# Logs and databases #
-######################
+# Logs and databases
 *.log
 *.sql
 
