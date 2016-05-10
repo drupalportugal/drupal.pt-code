@@ -1125,39 +1125,6 @@
         "homepage": "https://www.drupal.org/project/addressfield"
     },
     {
-        "name": "drupal/admin_select",
-        "version": "7.1.5",
-        "version_normalized": "7.1.5.0",
-        "source": {
-            "type": "git",
-            "url": "https://git.drupal.org/project/admin_select",
-            "reference": "60d057e38249b1529e8dbc6b4ea7dab3534a2f70"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://ftp.drupal.org/files/projects/admin_select-7.x-1.5.zip",
-            "reference": null,
-            "shasum": null
-        },
-        "require": {
-            "drupal/drupal": "7.*"
-        },
-        "time": "2014-03-04 20:14:50",
-        "type": "drupal-module",
-        "extra": {
-            "branch-alias": {
-                "dev-7.x-1.x": "7.1.x-dev"
-            }
-        },
-        "installation-source": "dist",
-        "notification-url": "https://packagist.drupal-composer.org/downloads/",
-        "license": [
-            "GPL-2.0+"
-        ],
-        "description": "Allows users to choose which Administration menu module to use.",
-        "homepage": "https://www.drupal.org/project/admin_select"
-    },
-    {
         "name": "drupal/views",
         "version": "7.3.13",
         "version_normalized": "7.3.13.0",
@@ -1572,39 +1539,6 @@
         ],
         "description": "A light-weight, customizable lightbox plugin for jQuery 1.4.3+.",
         "homepage": "https://www.drupal.org/project/colorbox"
-    },
-    {
-        "name": "drupal/config_perms",
-        "version": "7.2.1",
-        "version_normalized": "7.2.1.0",
-        "source": {
-            "type": "git",
-            "url": "https://git.drupal.org/project/config_perms",
-            "reference": "9ae4f808ea361938a9cc36e04e85c52190851603"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://ftp.drupal.org/files/projects/config_perms-7.x-2.1-beta.zip",
-            "reference": null,
-            "shasum": null
-        },
-        "require": {
-            "drupal/drupal": "7.*"
-        },
-        "time": "2014-09-30 17:34:04",
-        "type": "drupal-module",
-        "extra": {
-            "branch-alias": {
-                "dev-7.x-2.x": "7.2.x-dev"
-            }
-        },
-        "installation-source": "source",
-        "notification-url": "https://packagist.drupal-composer.org/downloads/",
-        "license": [
-            "GPL-2.0+"
-        ],
-        "description": "Allows additional permissions to be created and managed through an administration form.<br /><small>Machine name: config_perms</small>",
-        "homepage": "https://www.drupal.org/project/config_perms"
     },
     {
         "name": "drupal/countries",
@@ -2056,40 +1990,6 @@
         ],
         "description": "This module aims at making the website compliant with the new EU cookie regulation",
         "homepage": "https://www.drupal.org/project/eu-cookie-compliance"
-    },
-    {
-        "name": "drupal/eva",
-        "version": "7.1.2",
-        "version_normalized": "7.1.2.0",
-        "source": {
-            "type": "git",
-            "url": "https://git.drupal.org/project/eva",
-            "reference": "587161521da5de342d5576b6ca8e964bd08ac91e"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://ftp.drupal.org/files/projects/eva-7.x-1.2.zip",
-            "reference": null,
-            "shasum": null
-        },
-        "require": {
-            "drupal/drupal": "7.*",
-            "drupal/views": "7.*"
-        },
-        "time": "2012-07-31 01:36:32",
-        "type": "drupal-module",
-        "extra": {
-            "branch-alias": {
-                "dev-7.x-1.x": "7.1.x-dev"
-            }
-        },
-        "installation-source": "dist",
-        "notification-url": "https://packagist.drupal-composer.org/downloads/",
-        "license": [
-            "GPL-2.0+"
-        ],
-        "description": "Provides a Views display type that can be attached to entities.",
-        "homepage": "https://www.drupal.org/project/eva"
     },
     {
         "name": "drupal/features",
@@ -3193,87 +3093,6 @@
         "homepage": "https://www.drupal.org/project/node_clone"
     },
     {
-        "name": "drupal/panels",
-        "version": "7.3.5",
-        "version_normalized": "7.3.5.0",
-        "source": {
-            "type": "git",
-            "url": "https://git.drupal.org/project/panels",
-            "reference": "26c478e62e0177245aeab8d49448400d2eb688cd"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://ftp.drupal.org/files/projects/panels-7.x-3.5.zip",
-            "reference": null,
-            "shasum": null
-        },
-        "require": {
-            "drupal/ctools": ">7.1.5",
-            "drupal/drupal": "7.*"
-        },
-        "replace": {
-            "drupal/i18n_panels": "self.version",
-            "drupal/panels_ipe": "self.version",
-            "drupal/panels_mini": "self.version",
-            "drupal/panels_node": "self.version"
-        },
-        "suggest": {
-            "drupal/i18n": "Required by drupal/i18n_panels",
-            "drupal/i18n_string": "Required by drupal/i18n_panels",
-            "drupal/i18n_translation": "Required by drupal/i18n_panels"
-        },
-        "time": "2015-01-28 19:17:17",
-        "type": "drupal-module",
-        "extra": {
-            "branch-alias": {
-                "dev-7.x-3.x": "7.3.x-dev"
-            }
-        },
-        "installation-source": "dist",
-        "notification-url": "https://packagist.drupal-composer.org/downloads/",
-        "license": [
-            "GPL-2.0+"
-        ],
-        "description": "Core Panels display functions; provides no external UI, at least one other Panels module should be enabled.",
-        "homepage": "https://www.drupal.org/project/panels"
-    },
-    {
-        "name": "drupal/panelizer",
-        "version": "7.3.1",
-        "version_normalized": "7.3.1.0",
-        "source": {
-            "type": "git",
-            "url": "https://git.drupal.org/project/panelizer",
-            "reference": "c28bd610f836f26ec5f9c96b10297a9d528fd844"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://ftp.drupal.org/files/projects/panelizer-7.x-3.1.zip",
-            "reference": null,
-            "shasum": null
-        },
-        "require": {
-            "drupal/ctools": "7.*",
-            "drupal/drupal": "7.*",
-            "drupal/page_manager": "7.*",
-            "drupal/panels": "7.*"
-        },
-        "time": "2013-02-13 19:57:19",
-        "type": "drupal-module",
-        "extra": {
-            "branch-alias": {
-                "dev-7.x-3.x": "7.3.x-dev"
-            }
-        },
-        "installation-source": "dist",
-        "notification-url": "https://packagist.drupal-composer.org/downloads/",
-        "license": [
-            "GPL-2.0+"
-        ],
-        "description": "Allow any node type to have custom panel displays, similar to the panel node type.",
-        "homepage": "https://www.drupal.org/project/panelizer"
-    },
-    {
         "name": "drupal/pathauto",
         "version": "7.1.3",
         "version_normalized": "7.1.3.0",
@@ -3340,40 +3159,6 @@
         ],
         "description": "Logs detailed and/or summary page generation time and memory consumption for page requests.",
         "homepage": "https://www.drupal.org/project/performance"
-    },
-    {
-        "name": "drupal/pm_existing_pages",
-        "version": "7.1.4",
-        "version_normalized": "7.1.4.0",
-        "source": {
-            "type": "git",
-            "url": "https://git.drupal.org/project/pm_existing_pages",
-            "reference": "021cd6a75c67377800ffe8a3ee4b06be5fbf0789"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://ftp.drupal.org/files/projects/pm_existing_pages-7.x-1.4.zip",
-            "reference": null,
-            "shasum": null
-        },
-        "require": {
-            "drupal/drupal": "7.*",
-            "drupal/page_manager": "7.*"
-        },
-        "time": "2012-05-19 16:03:36",
-        "type": "drupal-module",
-        "extra": {
-            "branch-alias": {
-                "dev-7.x-1.x": "7.1.x-dev"
-            }
-        },
-        "installation-source": "dist",
-        "notification-url": "https://packagist.drupal-composer.org/downloads/",
-        "license": [
-            "GPL-2.0+"
-        ],
-        "description": "Provides the ability to override existing pages through Page manager.",
-        "homepage": "https://www.drupal.org/project/pm_existing_pages"
     },
     {
         "name": "drupal/remote_stream_wrapper",
@@ -3523,49 +3308,6 @@
         ],
         "description": "Allows site administrators to grant some roles the authority to assign selected roles to users.",
         "homepage": "https://www.drupal.org/project/role_delegation"
-    },
-    {
-        "name": "drupal/rules",
-        "version": "7.2.9",
-        "version_normalized": "7.2.9.0",
-        "source": {
-            "type": "git",
-            "url": "https://git.drupal.org/project/rules",
-            "reference": "db14bda9a821db324754339771950afd70fc750d"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://ftp.drupal.org/files/projects/rules-7.x-2.9.zip",
-            "reference": null,
-            "shasum": null
-        },
-        "require": {
-            "drupal/drupal": "7.*",
-            "drupal/entity": "7.*",
-            "drupal/entity_token": "7.*"
-        },
-        "replace": {
-            "drupal/rules_admin": "self.version",
-            "drupal/rules_i18n": "self.version",
-            "drupal/rules_scheduler": "self.version"
-        },
-        "suggest": {
-            "drupal/i18n_string": "Required by drupal/rules_i18n"
-        },
-        "time": "2015-02-18 08:21:20",
-        "type": "drupal-module",
-        "extra": {
-            "branch-alias": {
-                "dev-7.x-2.x": "7.2.x-dev"
-            }
-        },
-        "installation-source": "dist",
-        "notification-url": "https://packagist.drupal-composer.org/downloads/",
-        "license": [
-            "GPL-2.0+"
-        ],
-        "description": "React on events and conditionally evaluate actions.",
-        "homepage": "https://www.drupal.org/project/rules"
     },
     {
         "name": "drupal/select_or_other",
@@ -3733,39 +3475,6 @@
         ],
         "description": "Enforces variable values defined by modules that need settings set to operate properly.",
         "homepage": "https://www.drupal.org/project/strongarm"
-    },
-    {
-        "name": "drupal/subpathauto",
-        "version": "7.1.3",
-        "version_normalized": "7.1.3.0",
-        "source": {
-            "type": "git",
-            "url": "https://git.drupal.org/project/subpathauto",
-            "reference": "be7768622cfb3d5e6787e46d4e1a6977757f10f7"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://ftp.drupal.org/files/projects/subpathauto-7.x-1.3.zip",
-            "reference": null,
-            "shasum": null
-        },
-        "require": {
-            "drupal/drupal": "7.*"
-        },
-        "time": "2012-09-18 17:40:42",
-        "type": "drupal-module",
-        "extra": {
-            "branch-alias": {
-                "dev-7.x-1.x": "7.1.x-dev"
-            }
-        },
-        "installation-source": "dist",
-        "notification-url": "https://packagist.drupal-composer.org/downloads/",
-        "license": [
-            "GPL-2.0+"
-        ],
-        "description": "Provides support for extending sub-paths of URL aliases.",
-        "homepage": "https://www.drupal.org/project/subpathauto"
     },
     {
         "name": "drupal/taxonomy_access_fix",
