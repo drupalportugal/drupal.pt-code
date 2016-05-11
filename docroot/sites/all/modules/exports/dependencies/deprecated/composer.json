@@ -6,6 +6,10 @@
   "repositories": {
   },
   "require": {
+    "drupal/contact_form_blocks": "^7.0@dev",
+    "drupal/globalredirect": "^7.1",
+    "drupal/superfish": "7.1.*",
+    "drupal/webform": "^7.4"
   },
   "require-dev": {
   },

@@ -1,0 +1,31 @@
+{
+  "extra": {
+    "installer-paths": {
+    }
+  },
+  "repositories": {
+  },
+  "require": {
+    "drupal/admin_views": "^7.1",
+    "drupal/ckeditor": "^7.1",
+    "drupal/date": "^7.2",
+    "drupal/elements": "^7.1",
+    "drupal/email": "^7.1",
+    "drupal/entity_translation": "^7.1",
+    "drupal/entity_view_mode": "^7.1",
+    "drupal/entitycache": "^7.1",
+    "drupal/entityreference": "^7.1",
+    "drupal/l10n_update": "^7.2",
+    "drupal/module_filter": "^7.2",
+    "drupal/navbar": "^7.1",
+    "drupal/strongarm": "^7.2",
+    "drupal/telephone": "^7.1",
+    "drupal/title": "^7.1",
+    "drupal/url": "^7.1",
+    "drupal/views": "^7.3"
+  },
+  "require-dev": {
+  },
+  "require-disabled": {
+  }
+}

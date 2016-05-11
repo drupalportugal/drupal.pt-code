@@ -1,0 +1,32 @@
+{
+  "extra": {
+    "installer-paths": {
+      "web/libraries/ckeditor/": ["ckeditor/ckeditor"]
+    }
+  },
+  "repositories": {
+    "ckeditor/ckeditor-releases": {
+      "type": "package",
+      "package": {
+        "name": "ckeditor/ckeditor-releases",
+        "version": "4.4.8",
+        "dist": {
+          "url": "https://github.com/ckeditor/ckeditor-releases/archive/full/4.4.8.zip",
+          "type": "zip"
+        },
+        "type": "drupal-library",
+        "extra": {
+          "installer-name": "ckeditor"
+        }
+      }
+    }
+  },
+  "require": {
+    "drupal/ckeditor": "^7.1",
+    "ckeditor/ckeditor-releases": "~4.4"
+  },
+  "require-dev": {
+  },
+  "require-disabled": {
+  }
+}

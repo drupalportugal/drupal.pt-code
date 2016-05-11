@@ -1,0 +1,27 @@
+{
+  "extra": {
+    "installer-paths": {
+    }
+  },
+  "repositories": {
+  },
+  "require": {
+    "drupal/administerusersbyrole": "^7.2",
+    "drupal/backup_migrate": "^7.3",
+    "drupal/fpa": "^7.2",
+    "drupal/language_switch": "^7.1",
+    "drupal/libraries": "^7.2",
+    "drupal/menu_admin_per_menu": "^7.1",
+    "drupal/mpac": "^7.1",
+    "drupal/navbar_extras": "^7.1",
+    "drupal/shortcutperrole": "^7.1",
+    "drupal/site_verify": "^7.1",
+    "drupal/transliteration": "^7.3",
+    "drupal/views_bulk_operations": "^7.3",
+    "drupal/xmlsitemap": "^7.2"
+  },
+  "require-dev": {
+  },
+  "require-disabled": {
+  }
+}

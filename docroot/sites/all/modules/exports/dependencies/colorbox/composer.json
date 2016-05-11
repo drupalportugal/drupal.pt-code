@@ -1,0 +1,32 @@
+{
+  "extra": {
+    "installer-paths": {
+      "web/libraries/colorbox/": ["jackmoore/colorbox"]
+    }
+  },
+  "repositories": {
+    "jackmoore/colorbox": {
+      "type": "package",
+      "package": {
+        "name": "jackmoore/colorbox",
+        "version": "1.4.37",
+        "dist": {
+          "url": "https://github.com/jackmoore/colorbox/archive/1.4.37.zip",
+          "type": "zip"
+        },
+        "type": "drupal-library",
+        "extra": {
+          "installer-name": "colorbox"
+        }
+      }
+    }
+  },
+  "require": {
+    "drupal/colorbox": "^7.2",
+    "jackmoore/colorbox": "~1.4"
+  },
+  "require-dev": {
+  },
+  "require-disabled": {
+  }
+}

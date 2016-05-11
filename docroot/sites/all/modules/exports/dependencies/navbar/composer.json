@@ -1,0 +1,21 @@
+{
+  "extra": {
+    "installer-paths": {
+      "web/libraries/backbone/": ["components/backbone"],
+      "web/libraries/underscore/": ["components/underscore"],
+      "web/libraries/modernizr/": ["components/modernizr"]
+    }
+  },
+  "repositories": {
+  },
+  "require": {
+    "drupal/navbar": "^7.1",
+    "components/backbone": "^1.0",
+    "components/underscore": "^1.5",
+    "components/modernizr": "^2.6"
+  },
+  "require-dev": {
+  },
+  "require-disabled": {
+  }
+}

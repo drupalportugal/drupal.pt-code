@@ -1,0 +1,32 @@
+{
+  "extra": {
+    "installer-paths": {
+      "web/libraries/superfish/": ["joeldbirch/superfish"]
+    }
+  },
+  "repositories": {
+    "joeldbirch/superfish": {
+      "type": "package",
+      "package": {
+        "name": "joeldbirch/superfish",
+        "version": "1.5.13",
+        "dist": {
+          "url": "https://github.com/joeldbirch/superfish/archive/1.5.13.zip",
+          "type": "zip"
+        },
+        "type": "drupal-library",
+        "extra": {
+          "installer-name": "superfish"
+        }
+      }
+    }
+  },
+  "require": {
+    "drupal/superfish": "7.1.*",
+    "joeldbirch/superfish": "~1.5"
+  },
+  "require-dev": {
+  },
+  "require-disabled": {
+  }
+}
