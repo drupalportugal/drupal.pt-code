@@ -1,6 +1,0 @@
-name = TB Purity modificado
-description = TB Purity modificado
-core = 7.x
-base theme = tb_purity
-
-stylesheets[all][] = tb_purity_modificado.css

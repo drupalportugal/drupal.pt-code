@@ -1,0 +1,62 @@
+/* FOR IE 7
+
+-----------------------------------------------------------------*/
+/* form */
+input.form-submit,
+a.button {
+  overflow: visible;
+}
+
+.pull-19 {
+  margin-left: -79%!important;
+}
+
+#block-search-form .container-inline {
+  height: 30px;
+}
+
+.sf-menu.sf-style-default li ul {
+  background: #4f4f4f;
+}
+
+.sf-menu.sf-style-default li.active-trail {
+  background: #4f4f4f;
+}
+
+.sf-menu.sf-style-default li ul li.sf-no-children {
+  padding-top: 10px;
+}
+
+#quadpanel-wrapper ul {
+  list-style-image: none;
+}
+
+#quicktabs-latest_tab .quicktabs_tabs.quicktabs-style-default {
+  padding-top: 3px;
+}
+
+.wrapper .container .inner {
+  position: relative;
+}
+/* MENU BAR
+--------------------------------------------------------------*/
+#menu-bar-wrapper .grid-inner {
+  position: relative;
+  z-index: 10;
+}
+
+/*grid*/
+.grid-14 {
+  margin-right: 0!important;
+}
+
+/* Form Comment */
+div.resizable-textarea textarea {
+  margin-top: 0;
+  padding: 5px 3px 5px 4px;
+  width: 98%;
+}
+
+#comment-form .filter-wrapper {
+  padding-top: 1em;
+}

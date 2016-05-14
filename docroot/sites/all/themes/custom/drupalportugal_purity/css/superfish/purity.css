@@ -1,0 +1,317 @@
+.sf-menu.sf-style-purity {
+  float: left;
+  margin: 0;
+  padding: 0;
+}
+
+.sf-menu.sf-style-purity ul {
+  border-bottom: 1px solid #fff;
+  padding-left: 0;
+}
+
+.sf-menu.sf-style-purity > li {
+  background: none;
+  border-left: 1px solid #666;
+  margin: 0;
+  padding: 0;
+}
+
+.sf-menu.sf-style-purity > li a {
+  color: #cdcdcd;
+  font-weight: bold;
+  padding: 15px;
+  text-decoration: none;
+}
+
+.sf-menu.sf-style-purity li li {
+  background: none;
+  border-bottom: 1px solid #666;
+}
+
+.sf-menu.sf-style-purity li li a {
+  padding: 7px 15px;
+}
+
+.sf-menu.sf-style-purity li.first {
+  border-left: none;
+}
+
+/* "Have child" Item */
+.sf-menu.sf-style-purity li.menuparent {
+}
+
+.sf-menu.sf-style-purity a.menuparent {
+}
+
+.sf-menu.sf-style-purity li li a.menuparent {
+  background: url(../images/arrow.png) no-repeat 93% 9px #4f4f4f;
+}
+
+a > .sf-sub-indicator {
+  background: url(../images/arrow-5.png) no-repeat 0 -11px !important;
+  height: 4px;
+  top: 1.7em;
+  width: 7px;
+}
+
+.sf-menu.sf-style-purity li ul .sf-sub-indicator {
+  background: none !important;
+}
+
+/* Child Menu */
+.sf-menu.sf-style-purity ul {
+  background: #4f4f4f;
+  border: 1px solid #333;
+  border-top: none;
+  margin-top: 1em;
+  padding: 0;
+}
+
+.sf-menu.sf-style-purity ul li {
+  padding: 0;
+}
+
+.sf-menu.sf-style-purity ul li.last {
+  margin-bottom: 0;
+}
+
+.sf-menu.sf-style-purity ul li a {
+  font-weight: normal;
+}
+
+/* Hover Links */
+.sf-menu.sf-style-purity li:hover > a,
+.sf-menu.sf-style-purity li.sfHover > a,
+.sf-menu.sf-style-purity li a:hover,
+.sf-menu.sf-style-purity li a:focus,
+.sf-menu.sf-style-purity li a:active {
+  background: #4f4f4f;
+  color: #fff;
+}
+
+/* Child Menu Items Hover */
+.sf-menu.sf-style-purity ul li:hover > a,
+.sf-menu.sf-style-purity ul li.sfHover > a,
+.sf-menu.sf-style-purity ul li a:focus,
+.sf-menu.sf-style-purity ul li a:hover,
+.sf-menu.sf-style-purity ul li.active-trail a.active {
+  background: #333;
+  color: #fff;
+}
+
+.sf-menu.sf-style-purity ul ul {
+  margin-left: -15px;
+  margin-top: 5px;
+}
+
+/* Active Links */
+.sf-menu.sf-style-purity a.active {
+  background: #007fc8;
+  color: #fff;
+}
+
+.sf-menu.sf-style-purity .active-trail .sf-depth-1 {
+  background: #007fc8;
+  color: #fff;
+}
+
+/* Child Menu Items Active */
+.sf-menu.sf-style-purity ul li a.active {
+  background: #7bb9e0;
+  color: #fff;
+}
+
+/* MegaMenu */
+.sf-menu.sf-style-purity span.sf-description {
+  color: #999;
+  display: block;
+  font-size: 0.8em;
+  line-height: 1.5em;
+  margin: 5px 0 0 5px;
+  padding: 0;
+}
+
+.sf-menu.sf-style-purity a.sf-with-ul {
+  padding-right: 2.25em;
+}
+
+.sf-menu.sf-style-purity.rtl a.sf-with-ul { /* RTL */
+  padding-left: 2.25em;
+  padding-right: 1em;
+}
+
+.sf-menu.sf-style-purity ul.sf-megamenu li.sf-megamenu-wrapper ol li.sf-megamenu-column {
+  display: inline;
+  float: left;
+  width: 12em;
+}
+
+.sf-menu.sf-style-purity.rtl ul.sf-megamenu li.sf-megamenu-wrapper ol li.sf-megamenu-column {
+  float: right; /* RTL */
+}
+
+.sf-menu.sf-style-purity ul.sf-megamenu li.sf-megamenu-wrapper ol,
+.sf-menu.sf-style-purity ul.sf-megamenu li.sf-megamenu-wrapper ol li {
+  margin: 0;
+  padding: 0;
+}
+
+.sf-menu.sf-style-purity li.sf-parent-children-1 ul.sf-megamenu {
+  width: 12em;
+}
+
+.sf-menu.sf-style-purity li.sf-parent-children-10 ul.sf-megamenu {
+  width: 120em;
+}
+
+.sf-menu.sf-style-purity li.sf-parent-children-2 ul.sf-megamenu {
+  width: 24em;
+}
+
+.sf-menu.sf-style-purity li.sf-parent-children-3 ul.sf-megamenu {
+  width: 36em;
+}
+
+.sf-menu.sf-style-purity li.sf-parent-children-4 ul.sf-megamenu {
+  width: 48em;
+}
+
+.sf-menu.sf-style-purity li.sf-parent-children-5 ul.sf-megamenu {
+  width: 60em;
+}
+
+.sf-menu.sf-style-purity li.sf-parent-children-6 ul.sf-megamenu {
+  width: 72em;
+}
+
+.sf-menu.sf-style-purity li.sf-parent-children-7 ul.sf-megamenu {
+  width: 84em;
+}
+
+.sf-menu.sf-style-purity li.sf-parent-children-8 ul.sf-megamenu {
+  width: 96em;
+}
+
+.sf-menu.sf-style-purity li.sf-parent-children-9 ul.sf-megamenu {
+  width: 108em;
+}
+
+/* Navbar */
+
+.sf-menu.sf-style-purity.sf-navbar {
+  background: #333;
+  border: none;
+  width: 100%;
+}
+
+.sf-menu.sf-style-purity.sf-navbar a {
+  border-top: none;
+}
+
+.sf-menu.sf-style-purity.sf-navbar li ul {
+  background: #4f4f4f;
+  border: none;
+  margin: 1em 0 0;
+  padding: 5px 0;
+}
+
+.sf-menu.sf-style-purity.sf-navbar li.sf-breadcrumb ul {
+  background: #007fc8;
+}
+
+.sf-menu.sf-style-purity.sf-navbar li:hover > a,
+.sf-menu.sf-style-purity.sf-navbar li.sfHover > a,
+.sf-menu.sf-style-purity.sf-navbar li a:focus,
+.sf-menu.sf-style-purity.sf-navbar li a:hover,
+.sf-menu.sf-style-purity.sf-navbarr li a:active,
+.sf-menu.sf-style-purity.sf-navbarr li a.active {
+  background: #4f4f4f;
+}
+
+.sf-menu.sf-style-purity.sf-navbar li.sf-breadcrumb > a {
+  background: #007fc8;
+  color: #fff;
+}
+
+.sf-menu.sf-style-purity.sf-navbar ul li {
+  border: none;
+  display: block;
+  float: left;
+  margin: 0 5px;
+}
+
+.sf-menu.sf-style-purity.sf-navbar ul li:first-child {
+  border-left: 0;
+}
+
+.sf-menu.sf-style-purity.sf-navbar ul li.last {
+}
+
+.sf-menu.sf-style-purity.sf-navbar ul li a {
+  border-top: none;
+  display: block;
+  float: left;
+  padding: 15px;
+}
+
+.sf-menu.sf-style-purity.sf-navbar ul li.last a {
+  border-right: none;
+}
+
+.sf-menu.sf-style-purity.sf-navbar li li a {
+  background: none;
+  color: #fff;
+  padding: 7px 15px;
+}
+
+.sf-menu.sf-style-purity.sf-navbar li li a:hover,
+.sf-menu.sf-style-purity.sf-navbar li li a:focus,
+.sf-menu.sf-style-purity.sf-navbar li li a:active {
+  background: #333;
+}
+
+.sf-menu.sf-style-purity.sf-navbar li.sf-breadcrumb a:hover,
+.sf-menu.sf-style-purity.sf-navbar li.sf-breadcrumb a:focus,
+.sf-menu.sf-style-purity.sf-navbar li.sf-breadcrumb a:active {
+  background: #4f4f4f;
+}
+
+.sf-menu.sf-style-purity.sf-navbar li.sf-breadcrumb a.active,
+.sf-menu.sf-style-purity.sf-navbar li li.sfHover a {
+  background: #333;
+}
+
+.sf-menu.sf-style-purity.sf-navbar a.sf-with-ul {
+  padding-right: 2.25em;
+}
+
+.sf-menu.sf-style-purity.sf-navbar li ul ul {
+  background: none;
+  border-bottom: none;
+  margin: -1em 0 0;
+  padding: 7px 0;
+}
+
+.sf-menu.sf-style-purity.sf-navbar li ul ul li {
+  border-bottom: 1px solid #666;
+  margin: 0;
+}
+
+.sf-menu.sf-style-purity.sf-navbar li ul ul li a {
+  background: #333;
+  margin: 0;
+}
+
+.sf-menu.sf-style-purity.sf-navbar li ul ul li a:hover,
+.sf-menu.sf-style-purity.sf-navbar li ul ul li a:focus {
+  background: #4f4f4f;
+}
+
+.sf-menu.sf-style-purity.sf-navbar .sf-sub-indicator {
+  top: 1.7em;
+}
+
+.tb-sf-navbar .sf-navbar li ul li a.active {
+  background: url(../../images/icon-1.gif) 15px -33px no-repeat;
+  color: #fff;
+}
