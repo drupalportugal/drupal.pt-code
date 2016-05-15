@@ -54,21 +54,13 @@
     }
   },
   "require": {
-    "drupal/ctools": "8.3.*@alpha",
-    "drupal/diff": "8.1.*@alpha",
-    "drupal/entity": "8.1.*@alpha",
-    "drupal/google_analytics": "8.2.*@stable",
-    "drupal/honeypot": "8.1.*@stable",
-    "drupal/markdown": "8.1.*@stable",
-    "drupal/metatag": "8.1.*@beta",
-    "drupal/mollom": "8.1.*@stable",
+    "commerceguys/intl": "dev-master",
+    "commerceguys/addressing": "dev-master",
+    "commerceguys/zone": "dev-master",
     "mollom/client": "dev-psr4",
-    "drupal/pathauto": "8.1.*@alpha",
-    "drupal/token": "8.1.*@alpha",
-    "drupal/views_slideshow": "8.4.*@stable",
-    "malsup/jquery-cycle": "~3.0",
-    "briancherne/jquery-hoverIntent": "~1.8",
-    "douglascrockford/JSON-js": "~1.0"
+    "malsup/jquery-cycle": "^3.0",
+    "briancherne/jquery-hoverIntent": "^1.8",
+    "douglascrockford/JSON-js": "^1.0"
   },
   "require-dev": {
   },
