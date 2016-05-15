@@ -1,0 +1,11 @@
+name = Field Rename
+description = Allows you to rename a field.
+configure = admin/reports/fields/rename
+core = 7.x
+
+; Information added by Drupal.org packaging script on 2015-08-17
+version = "7.x-1.0-beta1"
+core = "7.x"
+project = "field_rename"
+datestamp = "1439786943"
+

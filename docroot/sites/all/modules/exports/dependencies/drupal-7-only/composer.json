@@ -8,6 +8,7 @@
   "require": {
     "drupal/administerusersbyrole": "^7.2",
     "drupal/backup_migrate": "^7.3",
+    "drupal/field_rename": "^7.1",
     "drupal/fpa": "^7.2",
     "drupal/language_switch": "^7.1",
     "drupal/libraries": "^7.2",
