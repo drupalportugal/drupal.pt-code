@@ -15,7 +15,6 @@
     "drupal/mpac": "^7.1",
     "drupal/navbar_extras": "^7.1",
     "drupal/shortcutperrole": "^7.1",
-    "drupal/site_verify": "^7.1",
     "drupal/transliteration": "^7.3",
     "drupal/views_bulk_operations": "^7.3",
     "drupal/xmlsitemap": "^7.2"

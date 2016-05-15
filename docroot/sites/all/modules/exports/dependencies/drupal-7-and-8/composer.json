@@ -30,8 +30,7 @@
     "drupal/select_or_other": "^7.2",
     "drupal/taxonomy_access_fix": "^7.2",
     "drupal/token": "^7.1",
-    "drupal/views_slideshow": "^7.3",
-    "drupal/votingapi": "^7.2"
+    "drupal/views_slideshow": "^7.3"
   },
   "require-dev": {
   },
