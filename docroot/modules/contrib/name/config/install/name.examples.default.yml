@@ -1,0 +1,22 @@
+examples:
+  -
+    title: 'Mr'
+    given: 'Joe'
+    middle: 'John Peter Mark'
+    family: 'Doe'
+    generational: 'Jnr.'
+    credentials: 'B.Sc., Ph.D.'
+  -
+    title: ''
+    given: 'JOAN'
+    middle: 'SUE'
+    family: 'DOE'
+    generational: ''
+    credentials: ''
+  -
+    title: ''
+    given: 'Prince'
+    middle: ''
+    family: ''
+    generational: ''
+    credentials: ''

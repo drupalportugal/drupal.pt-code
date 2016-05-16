@@ -1,0 +1,15 @@
+
+type: module
+name: Taxonomy access fix
+description: Fixes the crooked access checks for Taxonomy pages
+# core: 8.x
+package: Taxonomy
+
+dependencies:
+  - taxonomy
+
+# Information added by Drupal.org packaging script on 2015-11-28
+version: '8.x-2.0'
+core: '8.x'
+project: 'taxonomy_access_fix'
+datestamp: 1448708946

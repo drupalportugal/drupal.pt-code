@@ -1,0 +1,166 @@
+<?php
+
+use Drupal\taxonomy\Entity\Vocabulary;
+use Symfony\Component\Routing\Route;
+use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\Core\Session\AccountProxyInterface;
+use Drupal\Core\Access\AccessResult;
+use Drupal\Core\Render\Element;
+
+/**
+ * Implements hook_entity_type_alter().
+ */
+function taxonomy_access_fix_entity_type_alter(array &$entity_types) {
+  $entity_types['taxonomy_vocabulary']->setHandlerClass('list_builder', 'Drupal\taxonomy_access_fix\VocabularyListBuilder');
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter() for taxonomy_overview_terms().
+ *
+ * @see taxonomy_overview_terms()
+ */
+function taxonomy_access_fix_form_taxonomy_overview_terms_alter(&$form, &$form_state) {
+  // Admin: don't fix anything.
+  if (Drupal::currentUser()->hasPermission('administer taxonomy')) {
+    return;
+  }
+
+  $vocabulary = $form_state->get(['taxonomy', 'vocabulary']);
+
+  $can_edit = taxonomy_access_fix_access('edit terms', $vocabulary);
+  $can_delete = taxonomy_access_fix_access('delete terms', $vocabulary);
+  $can_reorder = taxonomy_access_fix_access('reorder terms', $vocabulary);
+
+  // Remove edit/delete links.
+  foreach (Element::children($form['terms']) as $name) {
+    if (!$can_edit) {
+      unset($form['terms'][$name]['operations']['#links']['edit']);
+    }
+    if (!$can_delete) {
+      unset($form['terms'][$name]['operations']['#links']['delete']);
+    }
+    if (!$can_reorder) {
+      unset($form['terms'][$name]['weight']);
+    }
+  }
+
+  if (!$can_reorder) {
+    // Hide Save and Reset buttons.
+    $form['actions']['#access'] = FALSE;
+
+    // Remove tableDrag.
+    unset($form['terms']['#tabledrag']);
+
+    // Remove Weight column.
+    unset($form['terms']['#header'][1]);
+  }
+}
+
+/**
+ * Permission callback for TAF's MODULE.permissions.yml.
+ *
+ * @see taxonomy_access_fix.permissions.yml
+ */
+function taxonomy_access_fix_permissions() {
+  $vocabularies = Vocabulary::loadMultiple();
+
+  $permissions = array();
+  foreach ($vocabularies as $vocabulary) {
+    $permissions['add terms in ' . $vocabulary->id()] = array(
+      'title' => t('Add terms in %vocabulary', array('%vocabulary' => $vocabulary->label())),
+    );
+    $permissions['reorder terms in ' . $vocabulary->id()] = array(
+      'title' => t('Reorder terms in %vocabulary', array('%vocabulary' => $vocabulary->label())),
+    );
+  }
+
+  return $permissions;
+}
+
+/**
+ * Route access callback
+ */
+function taxonomy_access_fix_route_access(Route $route, RouteMatchInterface $match, AccountProxyInterface $proxy) {
+  $op = $route->getOption('op');
+  $vocabulary = $match->getParameter('taxonomy_vocabulary');
+
+  if (taxonomy_access_fix_access($op, $vocabulary)) {
+    return AccessResult::allowed();
+  }
+
+  return AccessResult::forbidden();
+}
+
+/**
+ * Access callback for common CUSTOM taxonomy operations.
+ */
+function taxonomy_access_fix_access($op, $vocabulary = NULL) {
+  // Admin: always.
+  if (Drupal::currentUser()->hasPermission('administer taxonomy')) {
+    return TRUE;
+  }
+
+  if ($vocabulary && is_string($vocabulary)) {
+    $vocabulary = Vocabulary::load($vocabulary);
+  }
+
+  // Others: well, that depends.
+  switch ($op) {
+    case 'index':
+      // Allow access when the user has access to at least one vocabulary.
+      foreach (Vocabulary::loadMultiple() as $vocabulary) {
+        if (taxonomy_access_fix_access('list terms', $vocabulary)) {
+          return TRUE;
+        }
+      }
+      break;
+
+    case 'list terms':
+      if ($vocabulary) {
+        $vid = $vocabulary->id();
+        $perm1 = sprintf('edit terms in %s', $vid);
+        $perm2 = sprintf('delete terms in %s', $vid);
+        $perm3 = sprintf('add terms in %s', $vid);
+        $perm4 = sprintf('reorder terms in %s', $vid);
+
+        if (Drupal::currentUser()->hasPermission($perm1) || Drupal::currentUser()->hasPermission($perm2) || Drupal::currentUser()->hasPermission($perm3) || Drupal::currentUser()->hasPermission($perm4)) {
+          return TRUE;
+        }
+      }
+      break;
+
+    case 'reorder terms':
+      if ($vocabulary) {
+        if (Drupal::currentUser()->hasPermission('reorder terms in ' . $vocabulary->id())) {
+          return TRUE;
+        }
+      }
+      break;
+
+    case 'add terms':
+      if ($vocabulary) {
+        if (Drupal::currentUser()->hasPermission('add terms in ' . $vocabulary->id())) {
+          return TRUE;
+        }
+      }
+      break;
+
+    case 'edit terms':
+      if ($vocabulary) {
+        if (Drupal::currentUser()->hasPermission('edit terms in ' . $vocabulary->id())) {
+          return TRUE;
+        }
+      }
+      break;
+
+    case 'delete terms':
+      if ($vocabulary) {
+        if (Drupal::currentUser()->hasPermission('delete terms in ' . $vocabulary->id())) {
+          return TRUE;
+        }
+      }
+      break;
+  }
+
+  return FALSE;
+}

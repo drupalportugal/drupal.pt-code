@@ -1,0 +1,118 @@
+<?php
+
+/**
+ * @file
+ * Provides requirements check for integration with memcached.
+ */
+
+use Drupal\Core\Site\Settings;
+use Drupal\Core\Cache\Cache;
+use Drupal\Component\Utility\Html;
+use Drupal\memcache_storage\DrupalMemcachedUtils;
+
+/**
+ * Implements hook_requirements().
+ */
+function memcache_storage_requirements($phase) {
+
+  // Show status messages only on status report page.
+  if ($phase != 'runtime') {
+    return [];
+  }
+
+  $requirements = [];
+
+  // Make sure that the used extension is completely valid.
+  $pecl_extension = DrupalMemcachedUtils::getPeclExtension();
+  if (empty($pecl_extension) || !class_exists($pecl_extension) || !in_array($pecl_extension, ['Memcache', 'Memcached'])) {
+    $requirements['memcache_storage_extension']['title'] = t('Memcache Storage: problems with PECL extension');
+    $requirements['memcache_storage_extension']['severity'] = REQUIREMENT_ERROR;
+    $requirements['memcache_storage_extension']['value'] = t('Can\'t load PECL extension.');
+    $requirements['memcache_storage_extension']['description'] = t('The specified PECL extension %extension can not be found on the server. Make sure that the extension name is valid and it is available on the server.',
+      ['%extension' => $pecl_extension]);
+
+    return $requirements;
+  }
+
+  // If extension is correct and exists, show info about the selected
+  // extension.
+  $pecl_extension_version = phpversion($pecl_extension);
+  $requirements['memcache_storage_extension']['title'] = t('Memcache Storage: PECL extension');
+  $requirements['memcache_storage_extension']['severity'] = REQUIREMENT_OK;
+  $requirements['memcache_storage_extension']['value'] = $pecl_extension . ' (' . $pecl_extension_version . ')';
+
+  // Check of the minimum version compliance.
+  $min_version = $pecl_extension == 'Memcached' ? MEMCACHE_STORAGE_MINIMUM_MEMCACHED_VERSION : MEMCACHE_STORAGE_MINIMUM_MEMCACHE_VERSION;
+  if ($pecl_extension_version < $min_version) {
+    $requirements['memcache_storage_extension']['severity'] = REQUIREMENT_ERROR;
+    $requirements['memcache_storage_extension']['description'] = t('The current PECL %extension version is too old. Please upgrate to %version or higher.',
+      ['%extension' => $pecl_extension, '%version' => $min_version]);
+    return $requirements;
+  }
+
+  // Collect a list of cache bins which configured to store the data in the
+  // memcached.
+  $cache_settings = Settings::get('cache');
+  $memcached_bins = [];
+  $default_cache_service = isset($cache_settings['default']) ? $cache_settings['default'] : 'cache.backend.database';
+  foreach (Cache::getBins() as $bin => $bin_settings) {
+    $service_name = isset($cache_settings['bins'][$bin]) ? $cache_settings['bins'][$bin] : $default_cache_service;
+    if ($service_name == 'cache.backend.memcache_storage') {
+      $memcached_bins[] = $bin;
+    }
+  }
+
+  // Display a list of cache bins which configured to store the data in the
+  // memcached.
+  $requirements['memcache_storage_memcached_bins']['title'] = t('Memcache Storage: cache bins');
+  $requirements['memcache_storage_memcached_bins']['value'] = t('%count cache bins use Memcache Storage as a cache backend', ['%count' => count($memcached_bins)]);
+  if (!empty($memcached_bins)) {
+    $requirements['memcache_storage_memcached_bins']['severity'] = REQUIREMENT_OK;
+    $requirements['memcache_storage_memcached_bins']['description'] = implode(', ', $memcached_bins);
+  }
+  else {
+    $requirements['memcache_storage_memcached_bins']['severity'] = REQUIREMENT_WARNING;
+    $requirements['memcache_storage_memcached_bins']['description'] = t('Currently there are no cache bins configured to use memcached. See README.txt file for more info.');
+  }
+
+  // Load available servers and its clusters from settings.
+  $settings = Settings::get('memcache_storage');
+  $server_list = !empty($settings['memcached_servers']) ? $settings['memcached_servers'] : ['127.0.0.1:11211' => 'default'];
+  foreach ($server_list as $memcached_server => $cluster_name) {
+
+    // Create a new memcached connection.
+    $memcached = new $pecl_extension();
+
+    // Get host & port information for every memcached server.
+    list($host, $port) = DrupalMemcachedUtils::parseServerInfo($memcached_server);
+
+    // Add a new server for memcached connection and check if was successfull.
+    $connected = FALSE;
+    if ($pecl_extension == 'Memcache') {
+      $connected = $memcached->connect($host, $port);
+    }
+    elseif ($pecl_extension == 'Memcached') {
+      $memcached->addServer($host, $port);
+      $servers_stats = $memcached->getStats();
+      $server_stats = array_shift($servers_stats);
+      $connected = !empty($server_stats['uptime']);
+    }
+
+    // Display information about the connection status to each memcached
+    // server.
+    $requirements['memcache_storage_cluster_' . $memcached_server]['title'] =
+      t('Memcache Storage: %cluster cluster (%server)',
+        ['%server' => Html::escape($memcached_server), '%cluster' => Html::escape($cluster_name)]);
+
+    if ($connected) {
+      $requirements['memcache_storage_cluster_' . $memcached_server]['severity'] = REQUIREMENT_OK;
+      $requirements['memcache_storage_cluster_' . $memcached_server]['value'] = t('Connected');
+    }
+    else {
+      $requirements['memcache_storage_cluster_' . $memcached_server]['severity'] = REQUIREMENT_ERROR;
+      $requirements['memcache_storage_cluster_' . $memcached_server]['value'] = t('No connection');
+    }
+  }
+
+  return $requirements;
+}

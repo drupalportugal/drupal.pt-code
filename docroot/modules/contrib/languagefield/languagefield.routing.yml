@@ -1,0 +1,6 @@
+languagefield.autocomplete:
+  path: '/languagefield/autocomplete/{field_name}'
+  defaults:
+    _controller: '\Drupal\languagefield\Controller\LanguageAutocompleteController::autocomplete'
+  requirements:
+    _permission: 'administer content types'

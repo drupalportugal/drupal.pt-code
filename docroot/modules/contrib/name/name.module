@@ -1,0 +1,634 @@
+<?php
+
+/**
+ * @file
+ * Defines an API for displaying and inputing names.
+ *
+ * TODO: Make sure that all labels are based on the _name_translations()
+ * function and use a name:: prefix. This can be parsed out here to allow
+ * string overrides to work and to integrate with i18n too.
+ * t('!name_given', array('!name_given' => t('Given')))
+ */
+
+use Drupal\Component\Utility\SafeMarkup;
+use Drupal\Component\Utility\Unicode;
+use Drupal\Core\Render\Element;
+use Drupal\Core\Session\AccountInterface;
+use Drupal\name\NameFormatParser;
+use Drupal\name\Plugin\Field\FieldType\NameItem;
+
+// Field and Field UI
+require_once __DIR__ . '/name.field.inc';
+
+// @todo: Move the code from name.content.inc to the main module.
+require_once __DIR__ . '/includes/name.parser.inc';
+
+/**
+ * Implements hook_theme().
+ */
+function name_theme() {
+  $theme = array(
+    // Themes an individual name element. This is only used by the webform
+    // integration but will be extended at some stage to theme the formatter
+    // items too.
+    'name_item' => array(
+      'variables' => array('item' => array(), 'format' => NULL, 'settings' => array()),
+      'file' => 'name.theme.inc',
+    ),
+    // This themes an element into the "name et al" format.
+    'name_item_list' => array(
+      'variables' => array('items' => array(), 'settings' => array()),
+      'file' => 'name.theme.inc',
+      'function' => 'theme_name_item_list',
+    ),
+    // Themes the FAPI element.
+    'name' => array(
+      'render element' => 'element',
+      'file' => 'name.theme.inc',
+    ),
+    // Provides the help for the recognized characters in the name_format()
+    // format parameter.
+    'name_format_parameter_help' => array(
+      'render element' => 'element',
+      'file' => 'includes/name.parser.inc',
+    ),
+  );
+
+  return $theme;
+}
+
+/**
+ * Renders a name component value.
+ *
+ * This function does not by default sanitize the output unless the markup
+ * flag is set. If this is set, it runs the component through check_plain() and
+ * wraps the component in a span with the component name set as the class.
+ */
+function name_render_component($value, $component_key, $markup, $modifier = NULL) {
+  return NameFormatParser::renderComponent($value, $component_key, $markup, $modifier);
+}
+
+/**
+ * Implements hook_user_format_name_alter().
+ */
+function name_user_format_name_alter(&$name, AccountInterface $account) {
+  // Don't alter anonymous users or objects that do not have any user ID.
+  if ($account->isAnonymous()) {
+    return;
+  }
+
+  // Try and load the realname in case this is a partial user object or
+  // another object, such as a node or comment.
+  if (!isset($account->realname)) {
+    name_user_format_name_alter_preload($account);
+  }
+
+  if (isset($account->realname) && Unicode::strlen($account->realname)) {
+    $name = $account->realname;
+  }
+}
+
+/**
+ * Internal helper function to load the user account if required.
+ *
+ * Recursion check in place after RealName module issue queue suggested that
+ * there were issues with token based recursion on load.
+ */
+function name_user_format_name_alter_preload($account) {
+  static $in_preload = FALSE;
+
+  if (!$in_preload && !isset($account->realname)) {
+    $field_name = Drupal::config('name.settings')->get('user_preferred');
+    if ($field_name && \Drupal\field\Entity\FieldConfig::loadByName('user', 'user', $field_name)) {
+      $in_preload = TRUE;
+      $account = \Drupal\user\Entity\User::load($account->id());
+      $in_preload = FALSE;
+    }
+  }
+}
+
+/**
+ * Implements hook_user_load().
+ *
+ * @param \Drupal\user\UserInterface[] $users
+ */
+function name_user_load(array $users) {
+  // In the event there are a lot of user_load() calls, cache the results.
+  $names = &drupal_static('name_user_realname_cache', array());
+  $field = &drupal_static(__FUNCTION__, NULL);
+
+  if (!isset($field)) {
+    $field_name = Drupal::config('name.settings')->get('user_preferred');
+    /**
+     * @var \Drupal\Core\Field\FieldConfigInterface $field;
+     */
+    $field = \Drupal\field\Entity\FieldConfig::loadByName('user', 'user', $field_name);
+  }
+
+  if ($field) {
+    $format = entity_load('name_format', $field->getSetting('override_format'));
+    if ($format) {
+      foreach ($users as $account) {
+        $uid = $account->id();
+        if (isset($names[$uid])) {
+          $users[$uid]->realname = $names[$uid];
+        }
+        else {
+          if ($account->hasField($field->getName()) && !$account->get($field->getName())->isEmpty()) {
+            // We still have raw user input here.
+            $names[$uid] = NameFormatParser::parse($account->get($field->getName())->get(0)->getValue(), $format->get('pattern'), array('object' => $account, 'type' => 'user'));
+            $users[$uid]->realname = $names[$uid];
+          }
+        }
+      }
+    }
+  }
+}
+
+/**
+ * Implements hook_user_save().
+ */
+function name_user_save(\Drupal\user\UserInterface $entity) {
+  $names = &drupal_static('name_user_realname_cache', array());
+  unset($names[$entity->id()]);
+}
+
+/**
+ * Helper function to generate a list of all defined custom formatting options.
+ */
+function name_get_custom_format_options() {
+  $options = array();
+  foreach (entity_load_multiple('name_format') as $format) {
+    $options[$format->id()] = $format->label();
+  }
+  natcasesort($options);
+  return $options;
+}
+
+/**
+ * Loads a format based on the machine name.
+ */
+function name_get_format_by_machine_name($machine_name) {
+  $entity = entity_load('name_format', $machine_name);
+  if ($entity) {
+    return $entity->get('pattern');
+  }
+
+  return NULL;
+}
+
+/**
+ * Static cache to reuse translated name components.
+ *
+ * These have double encoding to allow easy and targeted string overrides in the
+ * sites settings.php file.
+ */
+function _name_translations($intersect = NULL) {
+  static $nt = NULL;
+  if (!isset($nt)) {
+    $nt = array(
+      'title' => t('@name_title', array('@name_title' => t('Title'))),
+      'given' => t('@name_given', array('@name_given' => t('Given'))),
+      'middle' => t('@name_middle', array('@name_middle' => t('Middle name(s)'))),
+      'family' => t('@name_family', array('@name_family' => t('Family'))),
+      'generational' => t('@name_generational', array('@name_generational' => t('Generational'))),
+      'credentials' => t('@name_credentials', array('@name_credentials' => t('Credentials'))),
+    );
+  }
+  return empty($intersect) ? $nt : array_intersect_key($nt, $intersect);
+}
+
+/**
+ * Private helper function to define the formatter types that are available for
+ * the CCK and Token modules.
+ */
+function _name_formatter_output_types() {
+  static $ot = NULL;
+  if (!isset($ot)) {
+    return array(
+      'default' => t('Default'),
+      'plain' => t('Plain'),
+      'raw' => t('Raw'),
+    );
+  }
+  return $ot;
+}
+
+/* ------------------------- FAPI Element Code ------------------------------ */
+
+/**
+ * The #process callback to create the element.
+ */
+  function name_element_expand($element, &$form_state, $complete_form) {
+  /**
+   * @var \Drupal\Core\Language\Language $language
+   */
+  $language = Drupal::languageManager()->getCurrentLanguage();
+
+  $element['#tree'] = TRUE;
+  if (empty($element['#value'])) {
+    $element['#value'] = array();
+  }
+  $parts = _name_translations();
+  $components = $element['#components'];
+  $min_components = (array) $element['#minimum_components'];
+  if (empty($element['#field'])) {
+    $element['#field'] = isset($form_state['field']) ? $form_state['field'] : NULL;
+  }
+
+  // Provides an override on the inline CSS.
+  $inline_css = '';
+  if (!empty($element['#component_css'])) {
+    if ($element['#component_css'] == '<none>') {
+      $inline_css = '';
+    }
+    else {
+      $inline_css = ' style="' . SafeMarkup::checkPlain($element['#component_css']) . '"';
+    }
+  }
+  else {
+    // Language will be LANGUAGE_LTR (0) or LANGUAGE_RTL (1).
+    if ($language->getDirection() == $language::DIRECTION_RTL) {
+      if ($style = \Drupal::config('name.settings')->get('inline_styles_rtl')) {
+        $inline_css = ' style="' . (string) $style . '"';
+      }
+    }
+    else {
+      if ($style = \Drupal::config('name.settings')->get('inline_styles')) {
+        $inline_css = ' style="' . $style . '"';
+      }
+    }
+  }
+
+  foreach ($parts as $component => $title) {
+    if (!isset($components[$component]['exclude'])) {
+      $element[$component] = name_element_render_component($components, $component, $element, isset($min_components[$component]));
+      $class = 'name-' . $component . '-wrapper';
+      if ($component == 'credentials' && empty($element['#credentials_inline'])) {
+        $element[$component]['#prefix'] = '<div class="' . $class
+          . ' clearfix" style="float: ' . ($language->getDirection() == $language::DIRECTION_RTL ? 'right' : 'left')
+          . ';">';
+        $element[$component]['#suffix'] = '</div>';
+      }
+      else {
+        $element[$component]['#prefix'] = '<div class="' . $class . '"' . $inline_css . '>';
+        $element[$component]['#suffix'] = '</div>';
+      }
+    }
+  }
+  if (\Drupal::config('name.settings')->get('element_wrapper')) {
+    $element['#prefix'] = '<div class="clearfix">';
+    $element['#suffix'] = '</div>';
+  }
+  return $element;
+}
+
+/**
+ * Helper function to render a component within a name element.
+ *
+ * @param array $components
+ *   Core properties for all components.
+ * @param string $component_key
+ *   The component key of the component that is being rendered.
+ * @param array $base_element
+ *   Base FAPI element that makes up a name element.
+ * @param bool $core
+ *   Flag that indicates that the component is required as part of a valid
+ *   name.
+ * @return array
+ *   The constructed component FAPI structure for a name element.
+ */
+function name_element_render_component($components, $component_key, $base_element, $core) {
+  $component = $components[$component_key];
+  $element = array();
+  // Allow other modules to append additional FAPI properties to the element.
+  foreach (Element::properties($component) as $key) {
+    $element[$key] = $component[$key];
+  }
+
+  $element['#attributes']['class'][] = 'name-element';
+  $element['#attributes']['class'][] = 'name-' . $component_key;
+
+  if ($core) {
+    $element['#attributes']['class'][] = 'name-core-component';
+  }
+  if (isset($component['attributes'])) {
+    foreach ($component['attributes'] as $key => $attribute) {
+      if (isset($element['#attributes'][$key])) {
+        if (is_array($attribute)) {
+          $element['#attributes'][$key] = array_merge($element['#attributes'][$key], $attribute);
+        }
+        else {
+          $element['#attributes'][$key] .= ' ' . $attribute;
+        }
+      }
+      else {
+        $element['#attributes'][$key] = $attribute;
+      }
+    }
+  }
+
+  $base_attributes = array('type', 'title', 'size', 'maxlength');
+  foreach ($base_attributes as $key) {
+    $element['#' . $key] = $component[$key];
+  }
+
+  if (isset($base_element['#value'][$component_key])) {
+    $element['#default_value'] = $base_element['#value'][$component_key];
+  }
+  if ($component['type'] == 'select') {
+    $element['#options'] = $component['options'];
+    $element['#size'] = 1;
+  }
+  elseif (!empty($component['autocomplete'])) {
+    $element += $component['autocomplete'];
+  }
+
+  if ($core && !empty($base_element['#show_component_required_marker']) && !in_array('default_value_input', $base_element['#field_parents'])) {
+    $element['#required'] = TRUE;
+  }
+
+  // Enable the title options.
+  $title_display = isset($component['title_display']) ? $component['title_display'] : 'description';
+  switch ($title_display) {
+    case 'title':
+      break;
+    case 'none':
+      $element['#title_display'] = 'invisible';
+      break;
+    case 'description':
+    default:
+      $element['#title_display'] = 'invisible';
+      $element['#description'] = $element['#title'];
+      break;
+  }
+
+  return $element;
+}
+
+/**
+ * A custom validator to check the components of a name element.
+ */
+function name_element_validate($element, &$form_state) {
+  // Limits validation to posted values only.
+  if (empty($element['#needs_validation'])) {
+    return $element;
+  }
+
+  $minimum_components = array_filter($element['#minimum_components']);
+  $labels = array();
+  foreach ($element['#components'] as $key => $component) {
+    if (!isset($component['exclude'])) {
+      $labels[$key] = $component['title'];
+    }
+  }
+  $item = $element['#value'];
+  $empty = name_element_validate_is_empty($item);
+  $item_components = array();
+  foreach (_name_translations() as $key => $title) {
+    if (isset($labels[$key]) && !empty($item[$key])) {
+      $item_components[$key] = 1;
+    }
+  }
+  // Conditionally allow either a single given or family name.
+  if (!empty($element['#allow_family_or_given'])) {
+    // This option is only valid if there are both components.
+    if (isset($labels['given']) && isset($labels['family'])) {
+      if (!empty($item['given']) || !empty($item['family'])) {
+        $item_components['given'] = 1;
+        $item_components['family'] = 1;
+      }
+    }
+  }
+
+  if (!$empty && (count($minimum_components) != count(array_intersect_key($minimum_components, $item_components)))) {
+    $missing_components = array_diff($minimum_components, array_keys($item_components));
+    $missing_components = array_combine($missing_components, $missing_components);
+    $missing_labels = array_intersect_key($labels, $missing_components);
+    $label = empty($element['#title']) ? (empty($element['#label']) ? 'Field' : $element['#label']) : $element['#title'];
+
+    // Note that field_default_form() has already sanitized #title.
+
+    // Generate error message for the first missing element.
+    $form_state->setError($element[key($missing_labels)], t('!name also requires the following parts: <em>!components</em>.', array(
+      '!name' => $label, '!components' => implode(', ', $missing_labels)))
+    );
+
+    // Mark the other missing elements too, but hide the error message.
+    foreach ($missing_labels as $key => $label) {
+      $form_state->setError($element[$key]);
+    }
+  }
+
+  if ($empty && $element['#required']) {
+    $form_state->setError($element, t('<em>!name</em> is required.', array('!name' => $element['#title'])));
+  }
+  return $element;
+}
+
+/**
+ * This function themes the element and controls the title display.
+ */
+function name_element_pre_render($element) {
+  // Add a wrapper to fields if required.
+  if (\Drupal::config('name.settings')->get('element_wrapper')) {
+    $element['_name'] = array(
+      '#prefix' => '<div class="clearfix">',
+      '#suffix' => '</div>',
+    );
+  }
+  foreach (_name_translations() as $key => $title) {
+    if (isset($element[$key])) {
+      $element['_name'][$key] = $element[$key];
+      unset($element[$key]);
+    }
+  }
+  if (!empty($element['#component_layout'])) {
+    _name_component_layout($element['_name'], $element['#component_layout']);
+  }
+  if (!empty($element['#description']) && !isset($element['#field'])) {
+    $element['_description'] = array(
+      '#value' => '<div class="clearfix description">' . $element['#description'] . '</div>',
+    );
+    unset($element['#description']);
+  }
+  return $element;
+}
+
+/**
+ * Sorts the widgets according to the language type.
+ */
+function _name_component_layout(&$element, $layout = 'default') {
+  $weights = array(
+    'asian' => array(
+      'family' => 1,
+      'middle' => 2,
+      'given' => 3,
+      'title' => 4,
+      // 'generational' is removed from the display
+      'generational' => 5,
+      'credentials' => 6,
+    ),
+    'eastern' => array(
+      'title' => 1,
+      'family' => 2,
+      'given' => 3,
+      'middle' => 4,
+      // 'generational' is removed from the display
+      'generational' => 5,
+      'credentials' => 6,
+    ),
+  );
+  if (isset($weights[$layout])) {
+    foreach ($weights[$layout] as $component => $weight) {
+      if (isset($element[$component])) {
+        $element[$component]['#weight'] = $weight;
+      }
+    }
+  }
+
+  if ($layout == 'asian') {
+    if (isset($element['generational'])) {
+      $element['generational']['#default_value'] = '';
+      $element['generational']['#access'] = FALSE;
+    }
+  }
+}
+
+/**
+ * Check if the name element is empty or not.
+ *
+ * @param $item
+ *   The name element.
+ *
+ * @return bool
+ *   TRUE if $item not to contain any data; FALSE otherwise.
+ *
+ * @group validation
+ */
+function name_element_validate_is_empty($item) {
+  foreach (_name_translations() as $key => $title) {
+    // Title & generational have no meaning by themselves.
+    if ($key == 'title' || $key == 'generational') {
+      continue;
+    }
+    if (!empty($item[$key])) {
+      return FALSE;
+    }
+  }
+  return TRUE;
+}
+
+/**
+ * Checks that a component is not selected as a minimal component when the
+ * component is not selected.
+ */
+function _name_field_minimal_component_requirements($element, &$form_state) {
+  $required_field_set = array_flip(array('given', 'family'));
+  $value = array_intersect_key($required_field_set, array_filter((array) $element['#value']));
+  if (empty($value)) {
+    $required_fields = array_intersect_key(_name_translations(), $required_field_set);
+    form_set_error(implode('][', $element['#parents']) . '][given]',
+        t('!label must have one of the following components: %components',
+        array('!label' => $element['#title'], '%components' => implode(', ', $required_fields))));
+  }
+}
+
+
+/* ---------------------------- Formatter Code ------------------------------ */
+
+/**
+ * Helper function to define the available output formatter options.
+ */
+function _name_formatter_output_options() {
+  return array(
+    'default' => t('Default'),
+    'plain' => t('Plain text'),
+    'raw' => t('Raw value (not recommended)'),
+  );
+}
+
+/**
+ * Helper function to define the available multiple formatter options.
+ */
+function _name_formatter_multiple_options() {
+  return array(
+    'default' => t('Default'),
+    'inline_list' => t('Inline list'),
+  );
+}
+
+/**
+ * Helper function to sanitize a name component or name string.
+ *
+ * @param string $langcode
+ * @param mixed $item
+ *   If this is a string, then the processing happens on this.
+ *   If this is an array, the processing happens on the column index.
+ * @param string $column
+ * @param string $type
+ *   Tells the function how to handle the text processing:
+ *     'default' runs through check_plain()
+ *     'plain' runs through strip_tags()
+ *     'raw' has no processing applied to it
+ */
+function _name_value_sanitize($item, $column = NULL, $type = 'default') {
+  $safe_key = 'safe' . ($type == 'default' ? '' : '_' . $type);
+  if (is_array($item) && isset($item[$safe_key])) {
+    return $item[$safe_key][$column];
+  }
+
+  $value = is_array($item) ? (string) $item[$column] : $item;
+  switch ($type) {
+    case 'plain':
+      return strip_tags($value);
+    case 'raw':
+      return $value;
+    default:
+      return SafeMarkup::checkPlain($value);
+  }
+}
+
+/**
+ * A #pre_render function callback for formatting field instance settings.
+ */
+function name_field_settings_pre_render($form) {
+  module_load_include('inc', 'name', 'name.admin');
+  return _name_field_settings_pre_render($form);
+}
+
+/**
+ * A #pre_render function callback for formatting field settings.
+ */
+function name_field_storage_settings_pre_render($form) {
+  module_load_include('inc', 'name', 'name.admin');
+  return _name_field_storage_settings_pre_render($form);
+}
+
+/**
+ * Implements hook_field_config_create().
+ */
+function name_field_config_create(\Drupal\field\FieldConfigInterface $entity) {
+  if (!$entity->isSyncing() && $entity->getTargetEntityTypeId() == 'user' && $entity->getTargetBundle() == 'user' && $entity->getType() == 'name'
+    && Drupal::config('name.settings')->get('user_preferred') == ''
+  ) {
+    \Drupal::configFactory()
+      ->getEditable('name.settings')
+      ->set('user_preferred', $entity->getName())
+      ->save();
+  }
+}
+
+/**
+ * Implements hook_entity_delete().
+ */
+function name_field_config_delete(\Drupal\field\FieldConfigInterface $entity) {
+  if (!$entity->isSyncing() && $entity->getTargetEntityTypeId() == 'user' && $entity->getTargetBundle() == 'user' &&
+    Drupal::config('name.settings')->get('user_preferred') == $entity->getName()
+  ) {
+    \Drupal::configFactory()
+      ->getEditable('name.settings')
+      ->set('user_preferred', '')
+      ->save();
+  }
+}

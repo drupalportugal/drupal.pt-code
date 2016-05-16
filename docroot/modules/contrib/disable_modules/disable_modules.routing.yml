@@ -1,0 +1,7 @@
+disable_modules.modules_disable:
+  path: '/admin/modules/disable'
+  defaults:
+    _form: 'Drupal\disable_modules\Form\ModulesDisableForm'
+    _title: 'Disable'
+  requirements:
+    _permission: 'administer modules'

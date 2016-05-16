@@ -1,0 +1,30 @@
+<?php
+
+/**
+ * Constant definitions.
+ */
+define('MEMCACHE_STORAGE_MINIMUM_MEMCACHE_VERSION', '2.2.1');
+define('MEMCACHE_STORAGE_MINIMUM_MEMCACHED_VERSION', '2.0.1');
+
+use Drupal\memcache_storage\DrupalMemcachedDebug;
+
+/**
+ * Implements hook_page_bottom().
+ */
+function memcache_storage_page_bottom(array &$page_bottom) {
+
+  // Show the table only to users with the appropriate permission.
+  if (!\Drupal::currentUser()->hasPermission('access memcache storage debug')) {
+    return;
+  }
+
+  // If table is empty - there is nothing to show at all.
+  $summary_table = DrupalMemcachedDebug::getSummaryLogTable();
+  if (empty($summary_table)) {
+    return;
+  }
+
+  $defailed_table = DrupalMemcachedDebug::getDetailedLogTable();
+  $page_bottom['memcache_storage_summary'] = $summary_table;
+  $page_bottom['memcache_storage_detailed'] = $defailed_table;
+}

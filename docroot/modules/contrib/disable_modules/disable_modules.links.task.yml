@@ -1,0 +1,5 @@
+disable_modules.modules_disable:
+  route_name: disable_modules.modules_disable
+  base_route: system.modules_list
+  title: 'Disable'
+  weight: 30

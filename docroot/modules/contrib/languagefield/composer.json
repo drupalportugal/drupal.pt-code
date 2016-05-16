@@ -1,0 +1,30 @@
+{
+  "name": "drupal/languagefield",
+  "description": "Creates a language field with widgets and formatters.",
+  "type": "drupal-module",
+  "homepage": "http://drupal.org/project/languagefield",
+  "authors": [
+    {
+      "name": "Alan D.",
+      "role": "Founder"
+    },
+    {
+      "name": "John Voskuilen",
+      "role": "Maintainer"
+    },
+    {
+      "name": "Deji Akala",
+      "email": "dejiakala@gmail.com",
+      "homepage": "https://github.com/dakala",
+      "role": "Contributor"
+    }
+  ],
+  "support": {
+    "issues": "http://drupal.org/project/languagefield",
+    "irc": "irc://irc.freenode.org/drupal-contribute",
+    "source": "http://cgit.drupalcode.org/languagefield"
+  },
+  "license": "GPL-2.0+",
+  "minimum-stability": "dev",
+  "require": { }
+}

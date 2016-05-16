@@ -1,0 +1,12 @@
+name: Language field
+description: 'Defines a simple language field type.'
+package: Field types
+type: module
+# version: VERSION
+# core: 8.x
+
+# Information added by Drupal.org packaging script on 2016-01-03
+version: '8.x-1.0'
+core: '8.x'
+project: 'languagefield'
+datestamp: 1451832840

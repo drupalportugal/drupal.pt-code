@@ -1,0 +1,3 @@
+access memcache storage debug:
+  description: 'View debug information about memcached operations on each page.'
+  title: 'Access memcached debug output.'

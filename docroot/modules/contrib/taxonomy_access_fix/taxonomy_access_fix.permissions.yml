@@ -1,0 +1,2 @@
+permission_callbacks:
+  - taxonomy_access_fix_permissions

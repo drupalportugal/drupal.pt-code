@@ -1,0 +1,8 @@
+export:
+  folder: custom
+langcode: en
+exclude_paths: "/admin\n/admin/*\n/batch\n/node/add*\n/node/*/*\n/user/*/*"
+popup_info:
+  value: "<h2>We use cookies on this site to enhance your user experience</h2><p>By clicking any link on this page you are giving your consent for us to set cookies.</p>"
+popup_agreed:
+  value: "<h2>Thank you for accepting cookies</h2><p>You can now hide this message or find out more about cookies.</p>"
