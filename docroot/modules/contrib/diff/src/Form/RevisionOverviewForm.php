@@ -116,13 +116,23 @@ class RevisionOverviewForm extends FormBase {
    */
   public function buildForm(array $form, FormStateInterface $form_state, $node = NULL) {
     $account = $this->currentUser;
-    $langcode = $this->languageManager->getCurrentLanguage(LanguageInterface::TYPE_CONTENT)->getId();
-    $langname = $this->languageManager->getLanguageName($langcode);
+    $langcode = $node->language()->getId();
+    $langname = $node->language()->getName();
     $languages = $node->getTranslationLanguages();
     $has_translations = (count($languages) > 1);
     $node_storage = $this->entityManager->getStorage('node');
     $type = $node->getType();
-    $vids = array_reverse($node_storage->revisionIds($node));
+
+    $pagerLimit = $this->config->get('general_settings.revision_pager_limit');
+
+    $query = \Drupal::entityQuery('node')
+      ->condition($node->getEntityType()->getKey('id'), $node->id())
+      ->pager($pagerLimit)
+      ->allRevisions()
+      ->sort($node->getEntityType()->getKey('revision'), 'DESC')
+      ->execute();
+    $vids = array_keys($query);
+
     $revision_count = count($vids);
 
     $build['#title'] = $has_translations ? $this->t('@langname revisions for %title', ['@langname' => $langname, '%title' => $node->label()]) : $this->t('Revisions for %title', ['%title' => $node->label()]);
@@ -163,7 +173,8 @@ class RevisionOverviewForm extends FormBase {
     $build['node_revisions_table']['#attached']['library'][] = 'diff/diff.general';
     $build['node_revisions_table']['#attached']['drupalSettings']['diffRevisionRadios'] = $this->config->get('general_settings.radio_behavior');
 
-    $latest_revision = TRUE;
+    $page = \Drupal::request()->query->get('page');
+    $latest_revision = empty($page);
 
     // Add rows to the table.
     foreach ($vids as $vid) {
@@ -297,6 +308,9 @@ class RevisionOverviewForm extends FormBase {
         ),
       );
     }
+    $build['pager'] = array(
+      '#type' => 'pager',
+    );
 
     return $build;
   }

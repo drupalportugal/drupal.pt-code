@@ -56,6 +56,11 @@ class DrushMakeProject {
   protected $do_recursion = TRUE;
 
   /**
+   * Which variant of profiles to download.
+   */
+  protected $variant = 'profile-only';
+
+  /**
    * Set attributes and retrieve project information.
    */
   protected function __construct($project) {
@@ -65,6 +70,10 @@ class DrushMakeProject {
     }
     if (!empty($this->options['working-copy'])) {
       $this->download['working-copy'] = TRUE;
+    }
+    // Don't recurse when we're using a pre-built profile tarball.
+    if ($this->variant == 'projects') {
+      $this->do_recursion = FALSE;
     }
   }
 
@@ -150,6 +159,8 @@ class DrushMakeProject {
       }
       $this->download['full_version'] = $full_version;
     }
+
+    $this->download['variant'] = $this->variant;
 
     if (make_download_factory($this->name, $this->type, $this->download, $this->download_location) === FALSE) {
       $this->downloaded = FALSE;

@@ -6,24 +6,30 @@
  */
 
 use Drupal\Core\Entity\ContentEntityInterface;
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\Core\Url;
 
 /**
  * Implements hook_help().
  */
 function metatag_help($route_name, RouteMatchInterface $route_match) {
-
   switch ($route_name) {
     // Main module help for the Metatag module.
     case 'help.page.metatag':
       $output = '<h3>' . t('About') . '</h3>';
-      $output .= '<p>' . t('This module allows you to automatically provide structured metadata, aka "meta
-tags", about your website and web pages.') . '</p>';
+      $output .= '<p>' . t('This module allows you to automatically provide structured metadata, aka "metatags", about your website and web pages. In the context of search engine optimization, providing an extensive set of meta tags may help improve your site\'s & pages\' ranking, thus may aid with achieving a more prominent display of your content within search engine results.  For additional information, see the <a href=":online">online documentation for Metatag</a>.', [':online' => 'https://www.drupal.org/node/1774342']) . '</p>';
+      $output .= '<h3>' . t('Usage') . '</h3>';
+      $output .= '<dl>';
+      $output .= '<dt>' . t('Manage Metatags') . '</dt>';
+      $output .= '<dd>' . t('The <a href=":meta">"Metatag"</a> page is used to setup and manage Metatags.  Here you can view a summary of the default meta tags and the inheritance associated with them. From it you can use the <a href=":add">Add default meta tags</a> button to configure default metatags.  Tokens can be used to avoid redundant meta data and search engine penalization.', [':meta' => Url::fromRoute('entity.metatag_defaults.collection')->toString(), ':add' => Url::fromRoute('entity.metatag_defaults.add_form')->toString()]) . '</dd>';
+      $output .= '</dl>';
+
       return $output;
       break;
   }
-
 }
 
 /**
@@ -79,6 +85,43 @@ function metatag_page_attachments(array &$attachments) {
       }
       foreach ($metatag_attachments['#attached']['html_head'] as $item) {
         $attachments['#attached']['html_head'][] = $item;
+      }
+    }
+  }
+}
+
+/**
+ * Implements hook_entity_view_alter().
+ */
+function metatag_entity_view_alter(array &$build, EntityInterface $entity, EntityViewDisplayInterface $display) {
+  // Some entities are built with a link rel="canonical" tag attached.
+  // If metatag provides one, remove the one built with the entity.
+  if (isset($build['#attached']['html_head_link'])) {
+    $metatag_attachments = drupal_static('metatag_attachments');
+    if (is_null($metatag_attachments)) {
+      // Load the meta tags from the route.
+      $metatag_attachments = metatag_get_tags_from_route();
+    }
+
+    // Check to see if the page currently outputs a canonical tag.
+    $has_canonical = FALSE;
+    if (isset($metatag_attachments['#attached']['html_head'])) {
+      foreach ($metatag_attachments['#attached']['html_head'] as $metatag_item) {
+        if ($metatag_item[1] == 'canonical_url') {
+          // Metatag provides a link rel="canonical" tag.
+          $has_canonical = TRUE;
+          break;
+        }
+      }
+    }
+
+    if ($has_canonical) {
+      foreach ($build['#attached']['html_head_link'] as $key => $item) {
+        if (isset($item[0]['rel']) && $item[0]['rel'] == 'canonical') {
+          // Remove the link rel="canonical" tag from the entity's build array.
+          unset($build['#attached']['html_head_link'][$key]);
+          break;
+        }
       }
     }
   }
@@ -230,7 +273,7 @@ function metatag_get_default_tags() {
     return;
   }
 
-  // Then, we check if this is a special page.
+  // Lastly, check if this is a special page.
   if (\Drupal::service('path.matcher')->isFrontPage()) {
     $special_metatags = entity_load('metatag_defaults', 'front');
   }
@@ -244,21 +287,24 @@ function metatag_get_default_tags() {
     $metatags->set('tags', array_merge($metatags->get('tags'), $special_metatags->get('tags')));
   }
 
-  // Now check if we should apply entity overrides.
-  $entity = metatag_get_route_entity();
-  if (!empty($entity)) {
-    $entity_metatags = entity_load('metatag_defaults', $entity->getEntityTypeId());
-    if ($entity_metatags != NULL) {
-      // Merge with global defaults.
-      $metatags->set('tags', array_merge($metatags->get('tags'), $entity_metatags->get('tags')));
-    }
+  // Next check if there is this page is an entity that has meta tags.
+  else {
+    $entity = metatag_get_route_entity();
+    if (!empty($entity)) {
+      $entity_metatags = entity_load('metatag_defaults', $entity->getEntityTypeId());
+      if ($entity_metatags != NULL) {
+        // Merge with global defaults.
+        $metatags->set('tags', array_merge($metatags->get('tags'), $entity_metatags->get('tags')));
+      }
 
-    // Finally, check if we should apply bundle overrides.
-    $bundle_metatags = entity_load('metatag_defaults', $entity->getEntityTypeId() . '__' . $entity->bundle());
-    if ($bundle_metatags != NULL) {
-      // Merge with existing defaults.
-      $metatags->set('tags', array_merge($metatags->get('tags'), $bundle_metatags->get('tags')));
+      // Finally, check if we should apply bundle overrides.
+      $bundle_metatags = entity_load('metatag_defaults', $entity->getEntityTypeId() . '__' . $entity->bundle());
+      if ($bundle_metatags != NULL) {
+        // Merge with existing defaults.
+        $metatags->set('tags', array_merge($metatags->get('tags'), $bundle_metatags->get('tags')));
+      }
     }
   }
+
   return $metatags->get('tags');
 }

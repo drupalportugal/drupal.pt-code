@@ -7,11 +7,12 @@
 
 namespace Drupal\Console\Command\Chain;
 
-use Drupal\Console\Command\ChainFilesTrait;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Command\Command;
 use Drupal\Console\Style\DrupalStyle;
-use Drupal\Console\Command\Command;
+use Drupal\Console\Command\Shared\CommandTrait;
+use Drupal\Console\Command\Shared\ChainFilesTrait;
 
 /**
  * Class ChainDebugCommand
@@ -19,6 +20,7 @@ use Drupal\Console\Command\Command;
  */
 class ChainDebugCommand extends Command
 {
+    use CommandTrait;
     use ChainFilesTrait;
     /**
      * {@inheritdoc}

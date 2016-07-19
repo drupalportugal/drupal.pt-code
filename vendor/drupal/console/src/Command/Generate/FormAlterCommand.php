@@ -11,11 +11,11 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Drupal\Console\Generator\FormAlterGenerator;
-use Drupal\Console\Command\ServicesTrait;
-use Drupal\Console\Command\ModuleTrait;
-use Drupal\Console\Command\MenuTrait;
-use Drupal\Console\Command\FormTrait;
-use Drupal\Console\Command\ConfirmationTrait;
+use Drupal\Console\Command\Shared\ServicesTrait;
+use Drupal\Console\Command\Shared\ModuleTrait;
+use Drupal\Console\Command\Shared\MenuTrait;
+use Drupal\Console\Command\Shared\FormTrait;
+use Drupal\Console\Command\Shared\ConfirmationTrait;
 use Drupal\Console\Command\GeneratorCommand;
 use Drupal\Console\Style\DrupalStyle;
 
@@ -27,15 +27,27 @@ class FormAlterCommand extends GeneratorCommand
     use MenuTrait;
     use ConfirmationTrait;
 
-    protected $metadata = ['unset' => []];
+    protected $metadata = [
+      'class' => [],
+      'method'=> [],
+      'file'=> [],
+      'unset' => []
+    ];
 
     protected function configure()
     {
         $this
             ->setName('generate:form:alter')
-            ->setDescription($this->trans('commands.generate.form.alter.description'))
+            ->setDescription(
+                $this->trans('commands.generate.form.alter.description')
+            )
             ->setHelp($this->trans('commands.generate.form.alter.help'))
-            ->addOption('module', '', InputOption::VALUE_REQUIRED, $this->trans('commands.common.options.module'))
+            ->addOption(
+                'module',
+                '',
+                InputOption::VALUE_REQUIRED,
+                $this->trans('commands.common.options.module')
+            )
             ->addOption(
                 'form-id',
                 '',
@@ -57,7 +69,7 @@ class FormAlterCommand extends GeneratorCommand
     {
         $io = new DrupalStyle($input, $output);
 
-        // @see use Drupal\Console\Command\ConfirmationTrait::confirmGeneration
+        // @see use Drupal\Console\Command\Shared\ConfirmationTrait::confirmGeneration
         if (!$this->confirmGeneration($io)) {
             return;
         }
@@ -65,6 +77,17 @@ class FormAlterCommand extends GeneratorCommand
         $module = $input->getOption('module');
         $formId = $input->getOption('form-id');
         $inputs = $input->getOption('inputs');
+
+        $function = $module . '_form_' .$formId . '_alter';
+
+        if ($this->validateModuleFunctionExist($module, $function)) {
+            throw new \Exception(
+                sprintf(
+                    $this->trans('commands.generate.form.alter.messages.help-already-implemented'),
+                    $module
+                )
+            );
+        }
 
         //validate if input is an array
         if (!is_array($inputs[0])) {
@@ -88,9 +111,10 @@ class FormAlterCommand extends GeneratorCommand
         // --module option
         $module = $input->getOption('module');
         if (!$module) {
-            // @see Drupal\Console\Command\ModuleTrait::moduleQuestion
+            // @see Drupal\Console\Command\Shared\ModuleTrait::moduleQuestion
             $module = $this->moduleQuestion($io);
         }
+
         $input->setOption('module', $module);
 
         // --form-id option
@@ -116,7 +140,11 @@ class FormAlterCommand extends GeneratorCommand
         if ($moduleHandler->moduleExists('webprofiler') && isset($forms[$formId])) {
             $this->metadata['class'] = $forms[$formId]['class']['class'];
             $this->metadata['method'] = $forms[$formId]['class']['method'];
-            $this->metadata['file'] = str_replace($drupal->getRoot(), '', $forms[$formId]['class']['file']);
+            $this->metadata['file'] = str_replace(
+                $drupal->getRoot(),
+                '',
+                $forms[$formId]['class']['file']
+            );
 
             foreach ($forms[$formId]['form'] as $itemKey => $item) {
                 if ($item['#type'] == 'hidden') {
@@ -143,7 +171,7 @@ class FormAlterCommand extends GeneratorCommand
 
         $input->setOption('form-id', $formId);
 
-        // @see Drupal\Console\Command\FormTrait::formQuestion
+        // @see Drupal\Console\Command\Shared\FormTrait::formQuestion
         $inputs = $input->getOption('inputs');
 
         if (empty($inputs)) {

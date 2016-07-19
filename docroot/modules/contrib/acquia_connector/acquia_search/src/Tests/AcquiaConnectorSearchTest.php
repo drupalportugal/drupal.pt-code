@@ -1,14 +1,8 @@
 <?php
 
-/**
- * @file
- * Definition of Drupal\acquia_search\Tests\AcquiaConnectorSearchTest.
- */
-
 namespace Drupal\acquia_search\Tests;
 
 use Drupal\simpletest\WebTestBase;
-use Drupal\acquia_search\EventSubscriber;
 use Drupal\search_api\Entity\Server;
 
 /**
@@ -25,8 +19,8 @@ class AcquiaConnectorSearchTest extends WebTestBase {
   protected $url;
   protected $server;
   protected $index;
-  protected $settings_path;
-  protected $acquia_search_environment_id = 'acquia_search';
+  protected $settingsPath;
+  protected $acquiaSearchEnvironmentId = 'acquia_search';
 
 
   /**
@@ -34,7 +28,14 @@ class AcquiaConnectorSearchTest extends WebTestBase {
    *
    * @var array
    */
-  public static $modules = array('acquia_connector', 'search_api', 'search_api_solr', 'toolbar', 'acquia_connector_test', 'node');
+  public static $modules = [
+    'acquia_connector',
+    'search_api',
+    'search_api_solr',
+    'toolbar',
+    'acquia_connector_test',
+    'node',
+  ];
 
   /**
    * {@inheritdoc}
@@ -47,7 +48,7 @@ class AcquiaConnectorSearchTest extends WebTestBase {
     $this->salt = $this->randomString(32);
     $this->server = 'acquia_search_server';
     $this->index = 'acquia_search_index';
-    $this->settings_path = 'admin/config/search/search-api';
+    $this->settingsPath = 'admin/config/search/search-api';
 
     // Create a new content type.
     $content_type = $this->drupalCreateContentType();
@@ -64,7 +65,7 @@ class AcquiaConnectorSearchTest extends WebTestBase {
   /**
    * Connect.
    */
-  public function connect(){
+  public function connect() {
     \Drupal::configFactory()->getEditable('acquia_connector.settings')->set('spi.ssl_verify', FALSE)->save();
     \Drupal::configFactory()->getEditable('acquia_connector.settings')->set('spi.ssl_override', TRUE)->save();
 
@@ -108,12 +109,14 @@ class AcquiaConnectorSearchTest extends WebTestBase {
   public function testEnvironment() {
     // Connect site on key and id.
     $this->drupalGet('admin/config/search/search-api');
-    $environment =  Server::load('acquia_search_server');
+    $environment = Server::load('acquia_search_server');
     // Check if the environment is a valid variable.
     $this->assertTrue($environment, t('Acquia Search environment saved.'), 'Acquia Search');
   }
 
   /**
+   * Tests Environment UI.
+   *
    * Tests that the Acquia Search environment shows up in the interface and that
    * administrators cannot delete it.
    *
@@ -121,8 +124,8 @@ class AcquiaConnectorSearchTest extends WebTestBase {
    * - Acquia Search environment is present in the UI.
    * - Admin user receives 403 when attempting to delete the environment.
    */
-  public function testEnvironmentUI() {
-    $this->drupalGet($this->settings_path);
+  public function testEnvironmentUi() {
+    $this->drupalGet($this->settingsPath);
     // Check the Acquia Search Server is displayed.
     $this->assertLinkByHref('/admin/config/search/search-api/server/' . $this->server, 0, t('The Acquia Search Server is displayed in the UI.'));
     // Check the Acquia Search Index is displayed.
@@ -134,14 +137,14 @@ class AcquiaConnectorSearchTest extends WebTestBase {
   }
 
   /**
-   * Tests  Acquia Search Server UI
+   * Tests Acquia Search Server UI.
    *
    * Test executed:
    * - Check backend server
    * - Сheck all fields on the existence of
    * - Admin user receives 403 when attempting to delete the server.
    */
-  public function testAcquiaSearchServerUI() {
+  public function testAcquiaSearchServerUi() {
     $settings_path = 'admin/config/search/search-api';
     $this->drupalGet($settings_path);
     $this->clickLink('Edit', 0);
@@ -155,7 +158,7 @@ class AcquiaConnectorSearchTest extends WebTestBase {
     $this->assertOptionSelected('edit-backend-config-scheme', 'http', t('By default selected HTTP protocol'), 'Acquia Search');
     // Check Solr host, port, path.
     $this->assertText('Solr host', t('The Solr host  label exist'), 'Acquia Search');
-    $this->assertText('Solr port',  t('The Solr port label exist'), 'Acquia Search');
+    $this->assertText('Solr port', t('The Solr port label exist'), 'Acquia Search');
     $this->assertText('Solr path', t('The Solr path label exist'), 'Acquia Search');
     // Check Basic HTTP authentication.
     $this->assertText('Basic HTTP authentication', t('The basic HTTP authentication label exist'), 'Acquia Search');
@@ -173,7 +176,7 @@ class AcquiaConnectorSearchTest extends WebTestBase {
   }
 
   /**
-   * Tests  Acquia Search Server UI
+   * Tests Acquia Search Server UI.
    *
    * Test executed:
    * - Сheck all fields on the existence of
@@ -181,7 +184,7 @@ class AcquiaConnectorSearchTest extends WebTestBase {
    * - Check save index
    * - Admin user receives 403 when attempting to delete the index.
    */
-  public function testAcquiaSearchIndexUI() {
+  public function testAcquiaSearchIndexUi() {
     $settings_path = 'admin/config/search/search-api';
     $this->drupalGet($settings_path);
     $this->clickLink('Edit', 1);
@@ -191,12 +194,13 @@ class AcquiaConnectorSearchTest extends WebTestBase {
     $this->assertFieldChecked('edit-server-acquia-search-server', t('By default selected Acquia Search Server'), 'Acquia Search');
     // Check fields used for indexing.
     $this->drupalGet('/admin/config/search/search-api/index/' . $this->index . '/fields');
-    $this->assertFieldChecked('edit-fields-entitynodebody-indexed', t('Body used for searching'), 'Acquia Search');
-    $this->assertFieldChecked('edit-fields-entitynodetitle-indexed', t('Title used for searching'), 'Acquia Search');
+    $this->assertOptionSelected('edit-fields-body-type', 'text', t('Body used for searching'), t('Acquia Search'));
+    $this->assertOptionSelected('edit-fields-title-type', 'text', t('Title used for searching'), 'Acquia Search');
     // Save index.
     $this->drupalPostForm('/admin/config/search/search-api/index/' . $this->index . '/edit', array(), 'Save');
     // Delete index.
     $this->drupalGet('/admin/config/search/search-api/index/' . $this->index . '/delete');
     $this->assertResponse(403, t('The Acquia Search Server cannot be deleted via the UI.'));
   }
+
 }

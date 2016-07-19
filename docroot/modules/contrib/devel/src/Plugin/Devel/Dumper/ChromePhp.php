@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\devel\Plugin\Devel\Dumper\ChromePhp.
- */
-
 namespace Drupal\devel\Plugin\Devel\Dumper;
 
 use Drupal\devel\DevelDumperBase;
@@ -39,7 +34,7 @@ class ChromePhp extends DevelDumperBase {
    * {@inheritdoc}
    */
   public static function checkRequirements() {
-    return class_exists('ChromePhp', FALSE);
+    return class_exists('ChromePhp', TRUE);
   }
 
 }

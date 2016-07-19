@@ -81,6 +81,9 @@ class Debug extends RDefault implements Logger
 	 * this method will either log and output to STDIN or
 	 * just log.
 	 *
+	 * Depending on the value of constant PHP_SAPI this function
+	 * will format output for console or HTML.
+	 *
 	 * @param string $str string to log or output and log
 	 *
 	 * @return void
@@ -88,7 +91,27 @@ class Debug extends RDefault implements Logger
 	protected function output( $str )
 	{
 		$this->logs[] = $str;
-		if ( !$this->mode ) echo $str ,'<br />';
+		if ( !$this->mode ) {
+			$highlight = FALSE;
+			/* just a quick heuritsic to highlight schema changes */
+			if ( strpos( $str, 'CREATE' ) === 0
+			|| strpos( $str, 'ALTER' ) === 0
+			|| strpos( $str, 'DROP' ) === 0) {
+				$highlight = TRUE;
+			}
+			if (PHP_SAPI === 'cli') {
+				if ($highlight) echo "\e[91m";
+				echo $str, PHP_EOL;
+				echo "\e[39m";
+			} else {
+				if ($highlight) {
+					echo "<b style=\"color:red\">{$str}</b>";
+				} else {
+					echo $str;
+				}
+				echo '<br />';
+			}
+		}
 	}
 
 	/**
@@ -108,7 +131,11 @@ class Debug extends RDefault implements Logger
 			$slot  = ':slot'.$i;
 			$begin = substr( $newSql, 0, $pos );
 			$end   = substr( $newSql, $pos+1 );
-			$newSql = $begin . $slot . $end;
+			if (PHP_SAPI === 'cli') {
+				$newSql = "{$begin}\e[32m{$slot}\e[39m{$end}";
+			} else {
+				$newSql = "{$begin}<b style=\"color:green\">$slot</b>{$end}";
+			}
 			$i++;
 		}
 		return $newSql;

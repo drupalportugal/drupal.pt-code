@@ -2,7 +2,7 @@
 
 /**
  * @file
- *   Integration between Acquia Drupal and Acquia's hosted solr search service.
+ * Integration between Acquia Drupal and Acquia's hosted solr search service.
  */
 
 use Drupal\search_api\Entity\Server;
@@ -11,9 +11,7 @@ use Drupal\Core\Entity\EntityInterface;
 use Drupal\acquia_connector\Subscription;
 
 /**
- * Implementation of hook_acquia_subscription_status().
- *
- * @param array|bool $subscription
+ * Implements hook_acquia_subscription_status().
  */
 function acquia_search_acquia_subscription_status($subscription = FALSE) {
   if (!empty($subscription['active'])) {
@@ -57,8 +55,10 @@ function acquia_search_acquia_subscription_status($subscription = FALSE) {
  * Acquia Search helper function. Returns search host.
  *
  * @param array $subscription
+ *   Acquia Subscription.
  *
- * @return string search server url.
+ * @return string
+ *   Search server url.
  */
 function acquia_search_get_search_host($subscription = array()) {
   if (empty($subscription)) {
@@ -70,7 +70,7 @@ function acquia_search_get_search_host($subscription = array()) {
   if (!empty($subscription['heartbeat_data']['search_service_colony'])) {
     $search_host = $subscription['heartbeat_data']['search_service_colony'];
   }
-  // Check if we are on Acquia Cloud hosting. @see NN-2503
+  // Check if we are on Acquia Cloud hosting. @see NN-2503.
   if (!empty($_ENV['AH_SITE_ENVIRONMENT']) && !empty($_ENV['AH_CURRENT_REGION'])) {
     if ($_ENV['AH_CURRENT_REGION'] == 'us-east-1' && $search_host == 'search.acquia.com') {
       $search_host = 'internal-search.acquia.com';
@@ -84,10 +84,8 @@ function acquia_search_get_search_host($subscription = array()) {
 
 /**
  * Implements hook_entity_operation_alter().
- * Don't allow delete default server and index.
  *
- * @param array $operations
- * @param \EntityInterface $entity
+ * Don't allow delete default server and index.
  */
 function acquia_search_entity_operation_alter(array &$operations, EntityInterface $entity) {
   if (empty($operations['delete'])) {

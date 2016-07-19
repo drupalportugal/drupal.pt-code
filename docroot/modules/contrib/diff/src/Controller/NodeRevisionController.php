@@ -11,6 +11,7 @@ use Drupal\Core\Url;
 use Drupal\node\NodeInterface;
 use Drupal\diff\EntityComparisonBase;
 use Drupal\Component\Utility\Xss;
+use Drupal\Core\Language\LanguageInterface;
 
 /**
  * Returns responses for Node Revision routes.
@@ -64,7 +65,16 @@ class NodeRevisionController extends EntityComparisonBase {
     $storage = $this->entityManager()->getStorage('node');
     $left_revision = $storage->loadRevision($left_vid);
     $right_revision = $storage->loadRevision($right_vid);
-    $vids = $storage->revisionIds($node);
+    $langcode = $node->language()->getId();
+    $vids = [];
+    // Filter revisions of current translation and where the translation is
+    // affected.
+    foreach ($storage->revisionIds($node) as $vid) {
+      $revision = $storage->loadRevision($vid);
+      if ($revision->hasTranslation($langcode) && $revision->getTranslation($langcode)->isRevisionTranslationAffected()) {
+        $vids[] = $vid;
+      }
+    }
     $diff_rows[] = $this->buildRevisionsNavigation($node->id(), $vids, $left_vid, $right_vid);
     $diff_rows[] = $this->buildMarkdownNavigation($node->id(), $left_vid, $right_vid, $filter);
     $diff_header = $this->buildTableHeader($left_revision, $right_revision);
@@ -83,7 +93,8 @@ class NodeRevisionController extends EntityComparisonBase {
         if ($view_mode == NULL) {
           $view_mode = 'default';
         }
-        $visible = entity_get_display('node', $node->getType(), $view_mode)->getComponent($field_name);
+        list(, $field_machine_name) = explode('.', $field_name);
+        $visible = entity_get_display('node', $node->getType(), $view_mode)->getComponent($field_machine_name);
         if ($visible == NULL && !array_key_exists($field_name, $node_base_fields)) {
           unset($fields[$field_name]);
         }

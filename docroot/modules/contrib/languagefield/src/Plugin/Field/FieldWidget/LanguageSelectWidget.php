@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\languagefield\Plugin\Field\FieldWidget\LanguageSelectWidget.
- */
-
 namespace Drupal\languagefield\Plugin\Field\FieldWidget;
 
 use Drupal\Core\Field\FieldItemListInterface;

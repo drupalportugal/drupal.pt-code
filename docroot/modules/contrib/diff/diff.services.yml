@@ -11,10 +11,11 @@ services:
   plugin.manager.diff.builder:
     class: Drupal\diff\DiffBuilderManager
     parent: default_plugin_manager
+    arguments: ['@entity_type.manager']
 
   diff.entity_parser:
     class: Drupal\diff\DiffEntityParser
-    arguments: ['@plugin.manager.diff.builder', '@entity.manager', '@config.factory']
+    arguments: ['@plugin.manager.diff.builder', '@config.factory']
 
   diff.breadcrumb:
     class: Drupal\diff\DiffBreadcrumbBuilder

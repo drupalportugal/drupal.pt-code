@@ -56,29 +56,16 @@ class AdminFormsTest extends WebTestBase {
    */
   public function testConfigurableFieldsTab() {
     $this->drupalGet('admin/config/content/diff/fields');
-    $this->drupalPostAjaxForm(NULL, [], 'text_settings_edit');
-    $this->assertText('Plugin settings: Text Field Diff');
+    $this->drupalPostAjaxForm(NULL, [], 'node.body_settings_edit');
+    $this->assertText('Plugin settings: Text');
     $edit = [
-      'fields[text][settings_edit_form][settings][show_header]' => TRUE,
-      'fields[text][settings_edit_form][settings][compare_format]' => TRUE,
-      'fields[text][settings_edit_form][settings][markdown]' => 'filter_xss_all',
+      'fields[node.body][settings_edit_form][settings][show_header]' => TRUE,
+      'fields[node.body][settings_edit_form][settings][compare_format]' => TRUE,
+      'fields[node.body][settings_edit_form][settings][markdown]' => 'filter_xss_all',
     ];
     $this->drupalPostForm(NULL, $edit, t('Update'));
-    $this->assertText('You have unsaved changes.');
     $this->drupalPostForm(NULL, [], t('Save'));
     $this->assertText('Your settings have been saved.');
-  }
-
-  /**
-   * Tests the Base fields tab.
-   */
-  public function testBaseFieldsTab() {
-    $edit = [
-      'nid' => TRUE,
-      'status' => TRUE,
-    ];
-    $this->drupalPostForm('admin/config/content/diff/entities/node', $edit, t('Save configuration'));
-    $this->assertText('The configuration options have been saved.');
   }
 
   /**

@@ -153,4 +153,39 @@ class DiffRevisionTest extends WebTestBase {
     $this->assertNoFieldByXPath('//input[@type="submit"]');
   }
 
+  public function testOverviewPager() {
+    $config = \Drupal::configFactory()->getEditable('diff.settings');
+    $config->set('general_settings.revision_pager_limit', 10)->save();
+    $this->drupalPlaceBlock('local_tasks_block');
+    $this->drupalPlaceBlock('local_actions_block');
+    $this->drupalCreateContentType(['type' => 'article', 'name' => 'Article']);
+    $admin_user = $this->drupalCreateUser([
+      'view article revisions',
+    ]);
+    $this->drupalLogin($admin_user);
+    $node = $this->drupalCreateNode([
+      'type' => 'article',
+    ]);
+    // Create 50 more revisions in order to trigger paging on the revisions
+    // overview screen.
+    for ($i = 0; $i < 15; $i++) {
+      $node->setNewRevision(TRUE);
+      $node->save();
+    }
+
+    // Check the number of elements on the first page.
+    $this->drupalGet('node/' . $node->id() . '/revisions');
+    $element = $this->xpath('//*[@id="edit-node-revisions-table"]/tbody/tr');
+    $this->assertEqual(count($element), 10);
+    // Check that the pager exists.
+    $this->assertRaw('page=1');
+
+    $this->clickLinkPartialName('Next page');
+    // Check the number of elements on the second page.
+    $element = $this->xpath('//*[@id="edit-node-revisions-table"]/tbody/tr');
+    $this->assertEqual(count($element), 6);
+    $this->assertRaw('page=0');
+    $this->clickLinkPartialName('Previous page');
+  }
+
 }

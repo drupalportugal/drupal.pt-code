@@ -13,6 +13,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Drupal\language\Entity\ConfigurableLanguage;
 use Drupal\Console\Command\ContainerAwareCommand;
+use Drupal\Console\Command\Shared\LocaleTrait;
 
 class LanguageDeleteCommand extends ContainerAwareCommand
 {
@@ -60,7 +61,7 @@ class LanguageDeleteCommand extends ContainerAwareCommand
         }
 
         try {
-            $configurable_language_storage = $this->getEntityManager()->getStorage('configurable_language');
+            $configurable_language_storage = $this->getService('entity_type.manager')->getStorage('configurable_language');
             $configurable_language_storage->load($languageEntity->getId())->delete();
 
             $io->info(

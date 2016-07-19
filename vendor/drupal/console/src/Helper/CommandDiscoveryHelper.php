@@ -6,8 +6,8 @@
 
 namespace Drupal\Console\Helper;
 
+use Drupal\Console\Command\CommandDependencies;
 use Symfony\Component\Finder\Finder;
-use Drupal\Console\Helper\Helper;
 
 /**
  * Class CommandDiscovery
@@ -31,12 +31,23 @@ class CommandDiscoveryHelper extends Helper
     protected $develop = false;
 
     /**
+     * @var CommandDependencies
+     */
+    protected $commandDependencies;
+
+    /**
+     * @var array
+     */
+    protected $missingDependencies = [];
+
+    /**
      * CommandDiscoveryHelper constructor.
      * @param bool $develop
      */
-    public function __construct($develop)
+    public function __construct($develop, CommandDependencies $commandDependencyResolver)
     {
         $this->develop = $develop;
+        $this->commandDependencies = $commandDependencyResolver;
     }
 
     /**
@@ -256,22 +267,44 @@ class CommandDiscoveryHelper extends Helper
     private function validateCommand($className, $source, $type)
     {
         if (!class_exists($className)) {
-            return;
+            return false;
         }
 
         $reflectionClass = new \ReflectionClass($className);
 
         if ($reflectionClass->isAbstract()) {
-            return;
+            return false;
         }
 
         if (!$reflectionClass->isSubclassOf('Drupal\\Console\\Command\\Command')) {
-            return;
+            /* TODO remove once Compiler pass is completed */
+            if ($type === 'module' && $reflectionClass->isSubclassOf('Symfony\\Component\\Console\\Command\\Command')) {
+                $command = $reflectionClass->newInstance();
+                if (!$this->getDrupalHelper()->isInstalled()) {
+                    $traits = class_uses($command);
+                    if (in_array('Drupal\\Console\\Command\\Shared\\ContainerAwareCommandTrait', $traits)) {
+                        return false;
+                    }
+                }
+
+                if (method_exists($command, 'setTranslator')) {
+                    $command->setTranslator($this->getTranslator());
+                }
+
+                return $command;
+            }
+            /* TODO remove once Compiler pass is completed */
+
+            return false;
         }
 
-        if (!$this->getDrupalHelper()->isInstalled() && $reflectionClass->isSubclassOf('Drupal\\Console\\Command\\ContainerAwareCommand')) {
-            return;
+        if (!$this->getDrupalHelper()->isInstalled()
+            && $reflectionClass->isSubclassOf('Drupal\\Console\\Command\\ContainerAwareCommand')
+        ) {
+            return false;
         }
+
+        $dependencies = $this->commandDependencies->read($reflectionClass);
 
         if ($reflectionClass->getConstructor()->getNumberOfRequiredParameters() > 0) {
             if ($source != 'Console') {
@@ -286,6 +319,8 @@ class CommandDiscoveryHelper extends Helper
             $command = $reflectionClass->newInstance();
         }
 
+        $this->missingDependencies[$command->getName()] = $dependencies;
+
         if ($type === 'module') {
             $command->setModule($source);
         } elseif ($type === 'theme') {
@@ -293,6 +328,14 @@ class CommandDiscoveryHelper extends Helper
         }
 
         return $command;
+    }
+
+    /**
+     * @return array
+     */
+    public function getMissingDependencies()
+    {
+        return $this->missingDependencies;
     }
 
     /**

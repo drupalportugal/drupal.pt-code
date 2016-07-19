@@ -282,7 +282,7 @@ class Facade
 	public static function addDatabase( $key, $dsn, $user = NULL, $pass = NULL, $frozen = FALSE )
 	{
 		if ( isset( self::$toolboxes[$key] ) ) {
-			throw new RedException( 'A database has already be specified for this key.' );
+			throw new RedException( 'A database has already been specified for this key.' );
 		}
 
 		if ( is_object($dsn) ) {
@@ -313,6 +313,20 @@ class Facade
 		$redbean     = new OODB( $writer, $frozen );
 
 		self::$toolboxes[$key] = new ToolBox( $redbean, $adapter, $writer );
+	}
+
+	/**
+	 * Determines whether a database identified with the specified key has
+	 * already been added to the facade. This function will return TRUE
+	 * if the database indicated by the key is available and FALSE otherwise.
+	 *
+	 * @param string $key the key/name of the database to check for
+	 *
+	 * @return boolean
+	 */
+	public static function hasDatabase( $key )
+	{
+		return ( isset( self::$toolboxes[$key] ) );
 	}
 
 	/**
@@ -348,13 +362,30 @@ class Facade
 	/**
 	 * Toggles DEBUG mode.
 	 * In Debug mode all SQL that happens under the hood will
-	 * be printed to the screen or logged by provided logger.
+	 * be printed to the screen and/or logged.
 	 * If no database connection has been configured using R::setup() or
 	 * R::selectDatabase() this method will throw an exception.
-	 * Returns the attached logger instance.
 	 *
-	 * @param boolean $tf   debug mode (true or false)
-	 * @param integer $mode (0 = to STDOUT, 1 = to ARRAY)
+	 * There are 2 debug styles:
+	 *
+	 * Classic: separate parameter bindings, explicit and complete but less readable
+	 * Fancy:   interpersed bindings, truncates large strings, highlighted schema changes
+	 *
+	 * Fancy style is more readable but sometimes incomplete.
+	 *
+	 * The first parameter turns debugging ON or OFF.
+	 * The second parameter indicates the mode of operation:
+	 *
+	 * 0 Log and write to STDOUT classic style (default)
+	 * 1 Log only, class style
+	 * 2 Log and write to STDOUT fancy style
+	 * 3 Log only, fancy style
+	 *
+	 * This function always returns the logger instance created to generate the
+	 * debug messages.
+	 *
+	 * @param boolean $tf   debug mode (TRUE or FALSE)
+	 * @param integer $mode mode of operation
 	 *
 	 * @return RDefault
 	 * @throws RedException
@@ -388,7 +419,7 @@ class Facade
 	 *
 	 * @return void
 	 */
-	public static function fancyDebug( $toggle )
+	public static function fancyDebug( $toggle = TRUE )
 	{
 		self::debug( $toggle, 2 );
 	}
@@ -519,7 +550,7 @@ class Facade
 	 *
 	 * @param string|array $typeOrBeanArray   type or bean array to import
 	 * @param integer      $number            number of beans to dispense
-	 * @param boolean	   $alwaysReturnArray if TRUE always returns the result as an array
+	 * @param boolean      $alwaysReturnArray if TRUE always returns the result as an array
 	 *
 	 * @return array|OODBBean
 	 */
@@ -868,7 +899,7 @@ class Facade
 	 * @param OODBBean $bean  bean to be copied
 	 * @param array    $trail for internal usage, pass array()
 	 * @param boolean  $pid   for internal usage
-	 * @param array	 $white white list filter with bean types to duplicate
+	 * @param array    $white white list filter with bean types to duplicate
 	 *
 	 * @return array
 	 */
@@ -898,7 +929,7 @@ class Facade
 	 * This is a simplified version of the deprecated R::dup() function.
 	 *
 	 * @param OODBBean $bean  bean to be copied
-	 * @param array	 $white white list filter with bean types to duplicate
+	 * @param array    $white white list filter with bean types to duplicate
 	 *
 	 * @return array
 	 */
@@ -958,14 +989,49 @@ class Facade
 	 * first parameter. The second parameter is meant for the database
 	 * result rows.
 	 *
+	 * Usage:
+	 *
+	 * <code>
+	 * $rows = R::getAll( 'SELECT * FROM ...' )
+	 * $beans = R::convertToBeans( $rows );
+	 * </code>
+	 *
+	 * As of version 4.3.2 you can specify a meta-mask.
+	 * Data from columns with names starting with the value specified in the mask
+	 * will be transferred to the meta section of a bean (under data.bundle).
+	 *
+	 * <code>
+	 * $rows = R::getAll( 'SELECT FROM... COUNT(*) AS extra_count ...' );
+	 * $beans = R::convertToBeans( $rows );
+	 * $bean = reset( $beans );
+	 * $data = $bean->getMeta( 'data.bundle' );
+	 * $extra_count = $data['extra_count'];
+	 * </code>
+	 *
 	 * @param string $type type of beans to produce
 	 * @param array  $rows must contain an array of array
 	 *
 	 * @return array
 	 */
-	public static function convertToBeans( $type, $rows )
+	public static function convertToBeans( $type, $rows, $metamask = NULL )
 	{
-		return self::$redbean->convertToBeans( $type, $rows );
+		return self::$redbean->convertToBeans( $type, $rows, $metamask );
+	}
+
+	/**
+	 * Just like converToBeans, but for one bean.
+	 * @see convertToBeans for more details.
+	 *
+	 * @param string $type type of beans to produce
+	 * @param array  $row  one row from the database
+	 *
+	 * @return array
+	 */
+	public static function convertToBean( $type, $row, $metamask = NULL )
+	{
+		$beans = self::$redbean->convertToBeans( $type, array( $row ), $metamask );
+		$bean  = reset( $beans );
+		return $bean;
 	}
 
 	/**
@@ -1437,6 +1503,30 @@ class Facade
 	}
 
 	/**
+	 * In case you use PDO (which is recommended and the default but not mandatory, hence
+	 * the database adapter), you can use this method to obtain the PDO object directly.
+	 * This is a convenience method, it will do the same as:
+	 *
+	 * <code>
+	 * R::getDatabaseAdapter()->getDatabase()->getPDO();
+	 * </code>
+	 *
+	 * If the PDO object could not be found, for whatever reason, this method
+	 * will return NULL instead.
+	 *
+	 * @return NULL|PDO
+	 */
+	public static function getPDO()
+	{
+		$databaseAdapter = self::getDatabaseAdapter();
+		if ( is_null( $databaseAdapter ) ) return NULL;
+		$database = $databaseAdapter->getDatabase();
+		if ( is_null( $database ) ) return NULL;
+		if ( !method_exists( $database, 'getPDO' ) ) return NULL;
+		return $database->getPDO();
+	}
+
+	/**
 	 * Returns the current duplication manager instance.
 	 *
 	 * @return DuplicationManager
@@ -1610,8 +1700,37 @@ class Facade
 
 	/**
 	 * Sets global aliases.
+	 * Registers a batch of aliases in one go. This works the same as
+	 * fetchAs and setAutoResolve but explicitly. For instance if you register
+	 * the alias 'cover' for 'page' a property containing a reference to a
+	 * page bean called 'cover' will correctly return the page bean and not
+	 * a (non-existant) cover bean.
 	 *
-	 * @param array $list list of global aliases
+	 * <code>
+	 * R::aliases( array( 'cover' => 'page' ) );
+	 * $book = R::dispense( 'book' );
+	 * $page = R::dispense( 'page' );
+	 * $book->cover = $page;
+	 * R::store( $book );
+	 * $book = $book->fresh();
+	 * $cover = $book->cover;
+	 * echo $cover->getMeta( 'type' ); //page
+	 * </code>
+	 *
+	 * The format of the aliases registration array is:
+	 *
+	 * {alias} => {actual type}
+	 *
+	 * In the example above we use:
+	 *
+	 * cover => page
+	 *
+	 * From that point on, every bean reference to a cover
+	 * will return a 'page' bean. Note that with autoResolve this
+	 * feature along with fetchAs() is no longer very important, although
+	 * relying on explicit aliases can be a bit faster.
+	 *
+	 * @param array $list list of global aliases to use
 	 *
 	 * @return void
 	 */

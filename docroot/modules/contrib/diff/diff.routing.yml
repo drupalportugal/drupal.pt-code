@@ -17,18 +17,10 @@ diff.general_settings:
   requirements:
     _permission: 'administer site configuration'
 
-diff.node_settings:
-  path: '/admin/config/content/diff/entities/node'
-  defaults:
-    _form: '\Drupal\diff\Form\NodeEntitySettingsForm'
-    _title: Diff Entities Settings
-  requirements:
-    _permission: 'administer site configuration'
-
-diff.field_types_list:
+diff.fields_list:
   path: '/admin/config/content/diff/fields'
   defaults:
-    _form: '\Drupal\diff\Form\FieldTypesSettingsForm'
-    _title: Field Type Settings
+    _form: '\Drupal\diff\Form\FieldsSettingsForm'
+    _title: Fields Settings
   requirements:
     _permission: 'administer site configuration'

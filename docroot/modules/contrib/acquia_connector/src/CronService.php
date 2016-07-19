@@ -1,15 +1,15 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\acquia_connector\CronService.
- */
-
 namespace Drupal\acquia_connector;
 
 use Drupal\Core\Logger\RfcLoggerTrait;
 use Psr\Log\LoggerInterface;
 
+/**
+ * Class CronService.
+ *
+ * @package Drupal\acquia_connector
+ */
 class CronService implements LoggerInterface {
   use RfcLoggerTrait;
 

@@ -9,7 +9,7 @@ namespace Drupal\diff;
 
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Entity\ContentEntityInterface;
-use Drupal\Core\Entity\EntityManagerInterface;
+use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Language\LanguageInterface;
 
 class DiffEntityParser {
@@ -32,24 +32,14 @@ class DiffEntityParser {
   protected $pluginsConfig;
 
   /**
-   * The entity manager.
-   *
-   * @var \Drupal\Core\Entity\EntityManagerInterface
-   */
-  protected $entityManager;
-
-  /**
    * Constructs an EntityComparisonBase object.
    *
    * @param DiffBuilderManager $diffBuilderManager
    *   The diff field builder plugin manager.
-   * @param EntityManagerInterface $entityManager
-   *   Entity Manager service.
    * @param ConfigFactoryInterface $configFactory
    *   The configuration factory.
    */
-  public function __construct(DiffBuilderManager $diffBuilderManager, EntityManagerInterface $entityManager, ConfigFactoryInterface $configFactory) {
-    $this->entityManager = $entityManager;
+  public function __construct(DiffBuilderManager $diffBuilderManager, ConfigFactoryInterface $configFactory) {
     $this->config = $configFactory->get('diff.settings');
     $this->pluginsConfig =  $configFactory->get('diff.plugins');
     $this->diffBuilderManager = $diffBuilderManager;
@@ -77,14 +67,47 @@ class DiffEntityParser {
       $entity = $entity->getTranslation($langcode);
     }
     $entity_type_id = $entity->getEntityTypeId();
-    // Load all entity base fields.
-    $entity_base_fields = $this->entityManager->getBaseFieldDefinitions($entity_type_id);
+
+    // Load the diff plugin definitions.
+    $diff_plugin_definitions = $this->diffBuilderManager->getDefinitions();
+    $plugins = [];
+    foreach ($diff_plugin_definitions as $plugin_definition) {
+      if (isset($plugin_definition['field_types'])) {
+        // Add the plugin's ID to each field type this plugin supports.
+        foreach ($plugin_definition['field_types'] as $id) {
+          $plugins[$id][] = $plugin_definition['id'];
+        }
+      }
+    }
+
     // Loop through entity fields and transform every FieldItemList object
     // into an array of strings according to field type specific settings.
     foreach ($entity as $field_items) {
-      $field_type = $field_items->getFieldDefinition()->getType();
-      $plugin_config = $this->pluginsConfig->get('field_types.' . $field_type);
+      $field_name = $field_items->getFieldDefinition()->getName();
+
+      // Define if the current field should be displayed as a diff change.
+      $show_diff = $this->diffBuilderManager->showDiff($field_items->getFieldDefinition()->getFieldStorageDefinition());
+      if (!$show_diff) {
+        continue;
+      }
+
+      // Get the field plugin configuration.
+      $plugin_config = $this->pluginsConfig->get('fields.' . $entity_type_id . '.' . $field_name);
+
       $plugin = NULL;
+      // If there is no plugin defined, take the first available.
+      if (!$plugin_config) {
+        // Load the plugins that can be applied to this field.
+        $plugin_options = [];
+        if (isset($plugins[$field_items->getFieldDefinition()->getType()])) {
+          foreach ($plugins[$field_items->getFieldDefinition()->getType()] as $id) {
+            $plugin_options[$id] = $diff_plugin_definitions[$id]['label'];
+          }
+        }
+        $default_plugin['type'] = array_keys($plugin_options)[0];
+        $plugin = $this->diffBuilderManager->createInstance($default_plugin['type'], []);
+      }
+      // If there is a plugin defined create an instance of it.
       if ($plugin_config && $plugin_config['type'] != 'hidden') {
         $plugin = $this->diffBuilderManager->createInstance($plugin_config['type'], $plugin_config['settings']);
       }
@@ -92,25 +115,9 @@ class DiffEntityParser {
         // Configurable field. It is the responsibility of the class extending
         // this class to hide some configurable fields from comparison. This
         // class compares all configurable fields.
-        if (!array_key_exists($field_items->getName(), $entity_base_fields)) {
-          $build = $plugin->build($field_items);
-          if (!empty($build)) {
-            $result[$field_items->getName()] = $build;
-          }
-        }
-        // If field is one of the entity base fields take visibility settings from
-        // diff admin config page. This means that the visibility of these fields
-        // is controlled per entity type.
-        else {
-          // Check if this field needs to be compared.
-          $config_key = 'entity.' . $entity_type_id . '.' . $field_items->getName();
-          $enabled = $this->config->get($config_key);
-          if ($enabled) {
-            $build = $plugin->build($field_items);
-            if (!empty($build)) {
-              $result[$field_items->getName()] = $build;
-            }
-          }
+        $build = $plugin->build($field_items);
+        if (!empty($build)) {
+          $result[$field_items->getName()] = $build;
         }
       }
     }

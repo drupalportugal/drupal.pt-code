@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\acquia_connector\Controller\MigrateController.
- */
-
 namespace Drupal\acquia_connector\Controller;
 
 use Drupal\acquia_connector\Migration;
@@ -18,7 +13,7 @@ use Drupal\acquia_connector\ConnectorException;
 class MigrateController extends ControllerBase {
 
   /**
-   * acquia_connector.migrate route callback.
+   * Acquia_connector.migrate route callback.
    */
   public function migratePage() {
     $config = $this->config('acquia_connector.settings');
@@ -50,7 +45,7 @@ class MigrateController extends ControllerBase {
   }
 
   /**
-   * acquia_connector.migrate_check route callback for checking client upload.
+   * Acquia_connector.migrate_check route callback for checking client upload.
    */
   public function migrateCheck() {
     $return = array('compatible' => TRUE);

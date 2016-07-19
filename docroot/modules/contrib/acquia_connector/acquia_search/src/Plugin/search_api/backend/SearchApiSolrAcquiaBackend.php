@@ -11,8 +11,11 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\acquia_search\EventSubscriber\SearchSubscriber;
 use Drupal\Core\Language\LanguageManagerInterface;
 
-
 /**
+ * Class SearchApiSolrAcquiaBackend.
+ *
+ * @package Drupal\acquia_search\Plugin\search_api\backend
+ *
  * @SearchApiBackend(
  *   id = "search_api_solr_acquia",
  *   label = @Translation("Acquia Solr"),
@@ -22,6 +25,7 @@ use Drupal\Core\Language\LanguageManagerInterface;
 class SearchApiSolrAcquiaBackend extends SearchApiSolrBackend {
 
   protected $eventDispatcher = FALSE;
+
   /**
    * {@inheritdoc}
    */
@@ -61,7 +65,10 @@ class SearchApiSolrAcquiaBackend extends SearchApiSolrBackend {
   }
 
   /**
-   * Creates a connection to the Solr server as configured in $this->configuration.
+   * Creates a connection to the Solr server.
+   *
+   * Creates a connection to the Solr server as configured in
+   * $this->configuration.
    */
   protected function connect() {
     parent::connect();

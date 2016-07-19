@@ -1,13 +1,7 @@
 <?php
 
 /**
- * @language
- * Contains \Drupal\languagefield\Plugin\Field\FieldType\LanguageItem.
- */
-
-namespace Drupal\languagefield\Plugin\Field\FieldType;
-
-/**
+ * @file
  * Adds widget and formatter for a LanguageItem.
  *
  * For now, LanguageItem is not a subclass of
@@ -15,6 +9,8 @@ namespace Drupal\languagefield\Plugin\Field\FieldType;
  *
  * @see Drupal\language\DefaultLanguageItem.
  */
+
+namespace Drupal\languagefield\Plugin\Field\FieldType;
 
 use Drupal\Component\Utility\Unicode;
 use Drupal\Core\Form\FormStateInterface;

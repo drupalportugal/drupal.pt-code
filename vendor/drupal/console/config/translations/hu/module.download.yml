@@ -3,7 +3,11 @@ arguments:
     module: 'Az engedélyezendő modulokat szóközzel kell elválasztani'
 options:
     latest: 'Az alapértelmezés a legfrissebb verzió letöltése'
+    path: 'The path of the contrib project'
+    composer: 'Option to point out that the module will be downloaded, managed & installed by Composer'
     version: 'Modul verziója, pl. 1.x-dev'
+questions:
+    path: 'Enter the contrib project Path'
 messages:
     no-releases: '%s modulnak nincs semmilyen kiadása'
     getting-releases: ' %s modul kiadásainak beolvasása'

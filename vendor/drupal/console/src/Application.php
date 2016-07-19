@@ -10,8 +10,8 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Debug\Debug;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Drupal\Console\Helper\HelperTrait;
-use Drupal\Console\Helper\DrupalHelper;
 use Drupal\Console\Style\DrupalStyle;
 
 /**
@@ -30,12 +30,7 @@ class Application extends BaseApplication
     /**
      * @var string
      */
-    const VERSION = '1.0.0-alpha2';
-
-    /**
-     * @var string
-     */
-    const DRUPAL_SUPPORTED_VERSION = '8.1.x';
+    const VERSION = '1.0.0-beta4';
 
     /**
      * @var string
@@ -64,14 +59,19 @@ class Application extends BaseApplication
     protected $errorMessage;
 
     /**
+     * @var ContainerBuilder
+     */
+    protected $container;
+
+    /**
      * Create a new application.
      *
-     * @param $helpers
+     * @param $container
      */
-    public function __construct($helpers)
+    public function __construct($container)
     {
+        $this->container = $container;
         parent::__construct($this::NAME, $this::VERSION);
-        $this->addHelpers($helpers);
 
         $this->env = $this->getConfig()->get('application.environment');
         $this->getDefinition()->addOption(
@@ -105,10 +105,15 @@ class Application extends BaseApplication
             new InputOption('--yes', '-y', InputOption::VALUE_NONE, $this->trans('application.options.yes'))
         );
 
-        $options = $this->getConfig()->get('application.default.global.options')?:[];
+        $options = $this->getConfig()->get('application.options')?:[];
         foreach ($options as $key => $option) {
             if ($this->getDefinition()->hasOption($key)) {
-                $_SERVER['argv'][] = sprintf('--%s', $key);
+                if (is_bool($option) && $option === true) {
+                    $_SERVER['argv'][] = sprintf('--%s', $key);
+                }
+                if (!is_bool($option) && $option) {
+                    $_SERVER['argv'][] = sprintf('--%s=%s', $key, $option);
+                }
             }
         }
 
@@ -121,9 +126,7 @@ class Application extends BaseApplication
     }
 
     /**
-     * Gets the default input definition.
-     *
-     * @return InputDefinition An InputDefinition instance
+     * {@inheritdoc}
      */
     protected function getDefaultInputDefinition()
     {
@@ -142,11 +145,7 @@ class Application extends BaseApplication
     }
 
     /**
-     * Returns the long version of the application.
-     *
-     * @return string The long application version
-     *
-     * @api
+     * {@inheritdoc}
      */
     public function getLongVersion()
     {
@@ -156,6 +155,7 @@ class Application extends BaseApplication
 
         return '<info>Drupal Console</info>';
     }
+
     /**
      * {@inheritdoc}
      */
@@ -197,6 +197,15 @@ class Application extends BaseApplication
         }
 
         $uri = $input->getParameterOption(['--uri', '-l']);
+
+        /*Checking if the URI has http of not in begenning*/
+        if ($uri && !preg_match('/^(http|https):\/\//', $uri)) {
+            $uri = sprintf(
+                'http://%s',
+                $uri
+            );
+        }
+
         $env = $input->getParameterOption(['--env', '-e'], getenv('DRUPAL_ENV') ?: 'prod');
 
         if ($env) {
@@ -218,6 +227,9 @@ class Application extends BaseApplication
             $root = getcwd();
             $recursive = true;
         }
+
+        /* validate drupal site */
+        $this->container->get('site')->isValidRoot($root, $recursive);
 
         if (!$drupal->isValidRoot($root, $recursive)) {
             $commands = $this->getCommandDiscoveryHelper()->getConsoleCommands();
@@ -283,10 +295,10 @@ class Application extends BaseApplication
     /**
      * Prepare drupal.
      *
-     * @param DrupalHelper $drupal
-     * @param string       $commandName
+     * @param $drupal
+     * @param $commandName
      */
-    public function prepare(DrupalHelper $drupal, $commandName = null)
+    public function prepare($drupal, $commandName = null)
     {
         if ($drupal->isValidInstance()) {
             chdir($drupal->getRoot());
@@ -320,11 +332,7 @@ class Application extends BaseApplication
         }
 
         foreach ($commands as $command) {
-            $aliases = $this->getCommandAliases($command);
-            if ($aliases) {
-                $command->setAliases($aliases);
-            }
-
+            $command->setAliases($this->getCommandAliases($command));
             $this->add($command);
         }
 
@@ -335,9 +343,7 @@ class Application extends BaseApplication
         );
 
         foreach ($autoWireForcedCommands as $autoWireForcedCommand) {
-            $command = new $autoWireForcedCommand['class'](
-                $autoWireForcedCommand['helperset']?$this->getHelperSet():null
-            );
+            $command = new $autoWireForcedCommand['class'];
             $this->add($command);
         }
 
@@ -349,9 +355,35 @@ class Application extends BaseApplication
         );
 
         if ($autoWireNameCommand) {
-            $command = new $autoWireNameCommand['class'](
-                $autoWireNameCommand['helperset']?$this->getHelperSet():null
-            );
+            $command = new $autoWireNameCommand['class'];
+
+            if (method_exists($command, 'setTranslator')) {
+                $command->setTranslator($this->container->get('translator'));
+            }
+
+            $this->add($command);
+        }
+
+        $tags = $this->container->findTaggedServiceIds('console.command');
+        foreach ($tags as $name => $tags) {
+            /* Add interface(s) for commands:
+             * DrupalConsoleCommandInterface &
+             * DrupalConsoleContainerAwareCommandInterface
+             * and use implements for validation
+             */
+            $command = $this->getContainerHelper()->get($name);
+            if (!$this->getDrupalHelper()->isInstalled()) {
+                $traits = class_uses($command);
+                if (in_array('Drupal\\Console\\Command\\Shared\\ContainerAwareCommandTrait', $traits)) {
+                    continue;
+                }
+            }
+
+            if (method_exists($command, 'setTranslator')) {
+                $command->setTranslator($this->container->get('translator'));
+            }
+
+            $command->setAliases($this->getCommandAliases($command));
             $this->add($command);
         }
     }
@@ -507,25 +539,24 @@ class Application extends BaseApplication
 
     /**
      * @param $command
-     * @return array|null
+     * @return array
      */
     private function getCommandAliases($command)
     {
-        $aliasKey = sprintf(
-            'application.default.commands.%s.aliases',
-            str_replace(':', '.', $command->getName())
-        );
+        $aliases = $this->getConfig()
+            ->get('commands.aliases.'. $command->getName());
 
-        return $this->getConfig()->get($aliasKey);
+        return $aliases?[$aliases]:[];
     }
 
     /**
-     * @param DrupalHelper $drupal
+     * @param $drupal
      */
-    public function bootDrupal(DrupalHelper $drupal)
+    public function bootDrupal($drupal)
     {
         $this->getKernelHelper()->setClassLoader($drupal->getAutoLoadClass());
         $drupal->setInstalled($this->getKernelHelper()->bootKernel());
+        $this->container->get('site')->setInstalled($this->getKernelHelper()->bootKernel());
     }
 
     /**
@@ -533,8 +564,8 @@ class Application extends BaseApplication
      */
     public function getConfig()
     {
-        if ($this->getContainerHelper()) {
-            return $this->getContainerHelper()->get('config');
+        if ($this->container) {
+            return $this->container->get('config');
         }
 
         return null;
@@ -583,8 +614,8 @@ class Application extends BaseApplication
      */
     public function trans($key)
     {
-        if ($translator = $this->getTranslator()) {
-            return $translator->trans($key);
+        if ($this->container && $this->container->has('translator')) {
+            return $this->container->get('translator')->trans($key);
         }
 
         return null;
@@ -596,5 +627,13 @@ class Application extends BaseApplication
     public function getErrorMessage()
     {
         return $this->errorMessage;
+    }
+
+    /**
+     * @return ContainerBuilder
+     */
+    public function getContainer()
+    {
+        return $this->container;
     }
 }

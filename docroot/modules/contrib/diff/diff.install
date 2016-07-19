@@ -1,0 +1,27 @@
+<?php
+/**
+ * @file
+ * Installation hooks for diff module.
+ */
+
+/**
+ * Delete stale field diff configuration. Please reconfigure diff plugins.
+ */
+function diff_update_8001() {
+  $config = \Drupal::configFactory()->getEditable('diff.settings');
+  $config->clear('entity');
+  $config->save();
+  $config = \Drupal::configFactory()->getEditable('diff.plugins');
+  $config->clear('field_types');
+  $config->save();
+}
+
+/**
+ * Update diff.settings to include general_settings.revision_pager_limit
+ */
+function diff_update_8002() {
+  $config_factory = \Drupal::configFactory();
+  $config = $config_factory->getEditable('diff.settings');
+  $config->set('general_settings.revision_pager_limit', 50);
+  $config->save(TRUE);
+}

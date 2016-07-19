@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\acquia_connector\Form\CredentialForm.
- */
-
 namespace Drupal\acquia_connector\Form;
 
 use Drupal\Core\Config\ConfigFactoryInterface;
@@ -34,6 +29,7 @@ class CredentialForm extends ConfigFormBase {
    * @param \Drupal\Core\Config\ConfigFactoryInterface $config_factory
    *   The factory for configuration objects.
    * @param Client $client
+   *   The Acquia client.
    */
   public function __construct(ConfigFactoryInterface $config_factory, Client $client) {
     $this->configFactory = $config_factory;
@@ -57,9 +53,9 @@ class CredentialForm extends ConfigFormBase {
     return ['acquia_connector.settings', 'acquia_search.settings'];
   }
 
- /**
-  * {@inheritdoc}
-  */
+  /**
+   * {@inheritdoc}
+   */
   public function getFormId() {
     return 'acquia_connector_settings_credentials';
   }
@@ -108,7 +104,7 @@ class CredentialForm extends ConfigFormBase {
     catch (ConnectorException $e) {
       // Set form error to prevent switching to the next page.
       if ($e->isCustomized()) {
-        // Allow to connect with expired subscription
+        // Allow to connect with expired subscription.
         if ($e->getCustomMessage('code') == Subscription::EXPIRED) {
           $form_state->setValue('subscription', 'Expired subscription.');
           return;

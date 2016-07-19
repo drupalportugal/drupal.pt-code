@@ -5,52 +5,23 @@
  * Install, update and uninstall functions for the colorbox module.
  */
 
-use Drupal\Component\Utility\Unicode;
-
 /**
  * Implements hook_requirements().
  */
 function colorbox_requirements($phase) {
-  $requirements = array();
-
-  if (\Drupal::moduleHandler()->moduleExists('libraries')) {
-    if ($phase == 'runtime') {
-      $library = libraries_detect('colorbox');
-      $error_type = isset($library['error']) ? Unicode::ucfirst($library['error']) : '';
-      $error_message = isset($library['error message']) ? $library['error message'] : '';
-
-      if (empty($library['installed'])) {
-        $requirements['colorbox_plugin'] = array(
-          'title' => t('Colorbox plugin'),
-          'value' => t('@e: At least @a', array('@e' => $error_type, '@a' => COLORBOX_MIN_PLUGIN_VERSION)),
-          'severity' => REQUIREMENT_ERROR,
-          'description' => t('@error You need to download the <a href=":colorbox_link">Colorbox plugin</a>, extract the archive and place the colorbox directory in the %path directory on your server.', array(
-            '@error' => $error_message,
-            ':colorbox_link' => $library['download url'],
-            '%path' => 'libraries',
-          )),
-        );
-      }
-      elseif (version_compare($library['version'], COLORBOX_MIN_PLUGIN_VERSION, '>=')) {
-        $requirements['colorbox_plugin'] = array(
-          'title' => t('Colorbox plugin'),
-          'severity' => REQUIREMENT_OK,
-          'value' => $library['version'],
-        );
-      }
-      else {
-        $requirements['colorbox_plugin'] = array(
-          'title' => t('Colorbox plugin'),
-          'value' => t('At least @a', array('@a' => COLORBOX_MIN_PLUGIN_VERSION)),
-          'severity' => REQUIREMENT_ERROR,
-          'description' => t('You need to download a later version of the <a href=":colorbox_link">Colorbox plugin</a> and replace the old version located in the %path directory on your server.', array(
-            ':colorbox_link' => $library['download url'],
-            '%path' => $library['library path']
-          )),
-        );
-      }
-    }
+  if ($phase != 'runtime') {
+    return array();
   }
 
-  return $requirements;
+  $library = \Drupal::service('library.discovery')->getLibraryByName('colorbox', 'colorbox');
+  $library_exists = file_exists(DRUPAL_ROOT . '/' . $library['js'][0]['data']);
+
+  return [
+    'colorbox_library_downloaded' => [
+      'title' => t('Colorbox library'),
+      'value' => $library_exists ? t('Installed') : t('Not installed'),
+      'description' => $library_exists ? '' : t('The Colorbox library needs to be <a href="@url">downloaded</a> and extracted into the /libraries/colorbox folder in your Drupal installation directory.', ['@url' => 'https://github.com/jackmoore/colorbox/archive/master.zip']),
+      'severity' => $library_exists ? REQUIREMENT_OK : REQUIREMENT_ERROR,
+    ],
+  ];
 }

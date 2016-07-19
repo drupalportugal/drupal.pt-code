@@ -5,8 +5,11 @@ package: Media
 # core: 8.x
 configure: colorbox.admin_settings
 
-# Information added by Drupal.org packaging script on 2016-02-08
-version: '8.x-1.0'
+dependencies:
+  - image
+
+# Information added by Drupal.org packaging script on 2016-07-05
+version: '8.x-1.1'
 core: '8.x'
 project: 'colorbox'
-datestamp: 1454898847
+datestamp: 1467761941

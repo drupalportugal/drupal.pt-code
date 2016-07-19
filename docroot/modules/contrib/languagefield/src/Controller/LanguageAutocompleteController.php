@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\languagefield\Controller\LanguageAutocompleteController.
- */
-
 namespace Drupal\languagefield\Controller;
 
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -32,7 +27,6 @@ class LanguageAutocompleteController {
    * @see getMatches()
    */
   public function autocomplete(Request $request, $field_name) {
-    dpm($field_name);
     $matches = $this->getMatches($request->query->get('q'), $field_name);
     return new JsonResponse($matches);
   }

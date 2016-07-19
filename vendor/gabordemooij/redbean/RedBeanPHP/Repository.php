@@ -476,19 +476,43 @@ abstract class Repository
 	 * will return an array of beans of the specified type loaded with
 	 * the data fields provided by the result set from the database.
 	 *
+	 * New in 4.3.2: meta mask. The meta mask is a special mask to send
+	 * data from raw result rows to the meta store of the bean. This is
+	 * useful for bundling additional information with custom queries.
+	 * Values of every column whos name starts with $mask will be
+	 * transferred to the meta section of the bean under key 'data.bundle'.
+	 *
 	 * @param string $type type of beans you would like to have
 	 * @param array  $rows rows from the database result
+	 * @param string $mask meta mask to apply (optional)
 	 *
 	 * @return array
 	 */
-	public function convertToBeans( $type, $rows )
+	public function convertToBeans( $type, $rows, $mask = NULL )
 	{
+		$masklen = 0;
+		if ( $mask !== NULL ) $masklen = mb_strlen( $mask );
+
 		$collection                  = array();
 		$this->stash[$this->nesting] = array();
 		foreach ( $rows as $row ) {
+			$meta = array();
+			if ( !is_null( $mask ) ) {
+				foreach( $row as $key => $value ) {
+					if ( strpos( $key, $mask ) === 0 ) {
+						unset( $row[$key] );
+						$meta[$key] = $value;
+					}
+				}
+			}
+
 			$id                               = $row['id'];
 			$this->stash[$this->nesting][$id] = $row;
 			$collection[$id]                  = $this->load( $type, $id );
+
+			if ( $mask !== NULL ) {
+				$collection[$id]->setMeta( 'data.bundle', $meta );
+			}
 		}
 		$this->stash[$this->nesting] = NULL;
 

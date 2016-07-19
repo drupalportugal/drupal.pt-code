@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\acquia_connector\Form\SetupForm.
- */
-
 namespace Drupal\acquia_connector\Form;
 
 use Drupal\Core\Config\ConfigFactoryInterface;
@@ -18,6 +13,8 @@ use Drupal\acquia_connector\ConnectorException;
 
 /**
  * Class SetupForm.
+ *
+ * @package Drupal\acquia_connector\Form
  */
 class SetupForm extends ConfigFormBase {
 
@@ -69,19 +66,23 @@ class SetupForm extends ConfigFormBase {
   public function buildForm(array $form, FormStateInterface $form_state) {
     $storage = $form_state->getStorage();
     if (empty($storage['choose'])) {
-      return $this->setupForm($form_state);
+      return $this->buildSetupForm($form_state);
     }
     else {
-      return $this->chooseForm($form_state);
+      return $this->buildChooseForm($form_state);
     }
   }
 
   /**
-   * @param $form_state
+   * Build setup form.
+   *
+   * @param \Drupal\Core\Form\FormStateInterface $form_state
+   *   Form state.
    *
    * @return array
+   *   Form.
    */
-  protected function setupForm(FormStateInterface &$form_state) {
+  protected function buildSetupForm(FormStateInterface &$form_state) {
     $form = array(
       '#prefix' => $this->t('Log in or <a href=":url">configure manually</a> to connect your site to the Acquia Subscription.', array(':url' => \Drupal::url('acquia_connector.credentials'))),
       'email' => array(
@@ -111,11 +112,15 @@ class SetupForm extends ConfigFormBase {
   }
 
   /**
-   * @param $form_state
+   * Build choose form.
+   *
+   * @param \Drupal\Core\Form\FormStateInterface $form_state
+   *   Form state.
    *
    * @return array
+   *   Form.
    */
-  protected function chooseForm(FormStateInterface &$form_state) {
+  protected function buildChooseForm(FormStateInterface &$form_state) {
     $options = array();
     $storage = $form_state->getStorage();
     foreach ($storage['response']['subscription'] as $credentials) {
@@ -157,7 +162,7 @@ class SetupForm extends ConfigFormBase {
         }
         else {
           \Drupal::logger('acquia connector')->error($e->getMessage());
-          $form_state->setErrorByName('', $this->t('Can\'t connect to the Acquia Subscription.'));
+          $form_state->setErrorByName('', $this->t("Can't connect to the Acquia Subscription."));
         }
       }
       if (!empty($response)) {
@@ -189,7 +194,6 @@ class SetupForm extends ConfigFormBase {
     if (!$form_state->getErrors($form_state) && empty($storage['rebuild'])) {
       // Check subscription and send a heartbeat to Acquia Network via XML-RPC.
       // Our status gets updated locally via the return data.
-
       $subscription = Subscription::update();
 
       // Redirect to the path without the suffix.
@@ -199,13 +203,17 @@ class SetupForm extends ConfigFormBase {
 
       if ($subscription['active']) {
         drupal_set_message($this->t('<h3>Connection successful!</h3>You are now connected to Acquia Cloud. Please enter a name for your site to begin sending profile data.'));
-        drupal_flush_all_caches(); //@todo https://www.drupal.org/node/2560867
+        // @todo https://www.drupal.org/node/2560867
+        drupal_flush_all_caches();
       }
     }
   }
 
   /**
-   * @param $form_state
+   * Submit automatically if one subscription found.
+   *
+   * @param \Drupal\Core\Form\FormStateInterface $form_state
+   *   Form state.
    */
   protected function automaticStartSubmit(FormStateInterface &$form_state) {
     $config = $this->config('acquia_connector.settings');

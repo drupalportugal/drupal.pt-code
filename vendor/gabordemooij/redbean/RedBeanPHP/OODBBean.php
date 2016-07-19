@@ -6,6 +6,15 @@ use RedBeanPHP\QueryWriter\AQueryWriter as AQueryWriter;
 use RedBeanPHP\BeanHelper as BeanHelper;
 use RedBeanPHP\RedException as RedException;
 
+/* PHP 5.3 compatibility */
+if (interface_exists('\JsonSerializable')) {
+		/* We extend JsonSerializable to avoid namespace conflicts,
+		can't define interface with special namespace in PHP */
+		interface Jsonable extends \JsonSerializable {};
+} else {
+	interface Jsonable {};
+}
+
 /**
  * OODBBean (Object Oriented DataBase Bean).
  *
@@ -23,7 +32,7 @@ use RedBeanPHP\RedException as RedException;
  * This source file is subject to the BSD/GPLv2 License that is bundled
  * with this source code in the file license.txt.
  */
-class OODBBean implements\IteratorAggregate,\ArrayAccess,\Countable
+class OODBBean implements\IteratorAggregate,\ArrayAccess,\Countable,Jsonable
 {
 	/**
 	 * FUSE error modes.
@@ -170,6 +179,35 @@ class OODBBean implements\IteratorAggregate,\ArrayAccess,\Countable
 
 	/**
 	 * Sets global aliases.
+	 * Registers a batch of aliases in one go. This works the same as
+	 * fetchAs and setAutoResolve but explicitly. For instance if you register
+	 * the alias 'cover' for 'page' a property containing a reference to a
+	 * page bean called 'cover' will correctly return the page bean and not
+	 * a (non-existant) cover bean.
+	 *
+	 * <code>
+	 * R::aliases( array( 'cover' => 'page' ) );
+	 * $book = R::dispense( 'book' );
+	 * $page = R::dispense( 'page' );
+	 * $book->cover = $page;
+	 * R::store( $book );
+	 * $book = $book->fresh();
+	 * $cover = $book->cover;
+	 * echo $cover->getMeta( 'type' ); //page
+	 * </code>
+	 *
+	 * The format of the aliases registration array is:
+	 *
+	 * {alias} => {actual type}
+	 *
+	 * In the example above we use:
+	 *
+	 * cover => page
+	 *
+	 * From that point on, every bean reference to a cover
+	 * will return a 'page' bean. Note that with autoResolve this
+	 * feature along with fetchAs() is no longer very important, although
+	 * relying on explicit aliases can be a bit faster.
 	 *
 	 * @param array $list list of global aliases to use
 	 *
@@ -220,9 +258,11 @@ class OODBBean implements\IteratorAggregate,\ArrayAccess,\Countable
 	 * Parses the join in the with-snippet.
 	 * For instance:
 	 *
+	 * <code>
 	 * $author
 	 * 	->withCondition(' @joined.detail.title LIKE ? ')
 	 *  ->ownBookList;
+	 * </code>
 	 *
 	 * will automatically join 'detail' on book to
 	 * access the title field.
@@ -1254,7 +1294,13 @@ class OODBBean implements\IteratorAggregate,\ArrayAccess,\Countable
 		$string = $this->__call( '__toString', array() );
 
 		if ( $string === NULL ) {
-			return json_encode( $this->properties );
+			$list = array();
+			foreach($this->properties as $property => $value) {
+				if (is_scalar($value)) {
+					$list[$property] = $value;
+				}
+			}
+			return json_encode( $list );
 		} else {
 			return $string;
 		}
@@ -1816,5 +1862,19 @@ class OODBBean implements\IteratorAggregate,\ArrayAccess,\Countable
 			   ( (string) $this->properties['id'] === (string) $bean->properties['id'] )
 			&& ( (string) $this->__info['type']   === (string) $bean->__info['type']   )
 		);
+	}
+
+	/**
+	 * Magic method jsonSerialize, implementation for the \JsonSerializable interface,
+	 * this method gets called by json_encode and facilitates a better JSON representation
+	 * of the bean. Exports the bean on JSON serialization, for the JSON fans.
+	 *
+	 * @see  http://php.net/manual/en/class.jsonserializable.php
+	 *
+	 * @return array
+	 */
+	public function jsonSerialize()
+	{
+		return $this->export();
 	}
 }

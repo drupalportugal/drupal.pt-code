@@ -18,6 +18,9 @@ diff.settings:
         context_lines_trailing:
           type: integer
           label: 'Number of trailing context lines'
+        revision_pager_limit:
+          type: integer
+          label: 'Revisions per page to be displayed in diff pager'
     entity:
       type: sequence
       label: 'Entities'
@@ -40,12 +43,15 @@ diff.settings:
 
 diff.plugins:
   type: config_object
-  label: 'Field Type'
+  label: 'Entity Type'
   mapping:
-    field_types:
+    fields:
       type: sequence
+      label: 'Field'
       sequence:
-        - type: mapping
+        type: sequence
+        sequence:
+          type: mapping
           label: 'Diff configuration for a field type'
           mapping:
             type:

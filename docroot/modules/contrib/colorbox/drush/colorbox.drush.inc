@@ -8,7 +8,7 @@
 /**
  * The Colorbox plugin URI.
  */
-define('COLORBOX_DOWNLOAD_URI', 'https://github.com/jackmoore/colorbox/archive/1.x.zip');
+define('COLORBOX_DOWNLOAD_URI', 'https://github.com/jackmoore/colorbox/archive/master.zip');
 define('COLORBOX_DOWNLOAD_PREFIX', 'colorbox-');
 
 /**

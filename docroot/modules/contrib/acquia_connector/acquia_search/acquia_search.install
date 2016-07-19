@@ -14,9 +14,8 @@ function acquia_search_install() {
   // Send a heartbeat so the Acquia Network knows the module is enabled.
   // This causes an invocation of hook_acquia_subscription_status() which is
   // implemented in this module to set up the environment.
-
   // Rebuild data about all currently available modules.
-   system_rebuild_module_data();
+  system_rebuild_module_data();
 
   _acquia_search_set_version();
   Subscription::update();
@@ -29,7 +28,8 @@ function acquia_search_requirements($phase) {
   $requirements = array();
   // Ensure translations don't break at install time
   // Skip install checks if install.php is running. The weak install profile
-  // API means install.php calls hook_requirements for every module in a profile.
+  // API means install.php calls hook_requirements for every module in
+  // a profile.
   if ($phase == 'install' && (!defined('MAINTENANCE_MODE') || MAINTENANCE_MODE != 'install')) {
     if (class_exists('Drupal\acquia_connector\Subscription')) {
       if (Subscription::hasCredentials()) {

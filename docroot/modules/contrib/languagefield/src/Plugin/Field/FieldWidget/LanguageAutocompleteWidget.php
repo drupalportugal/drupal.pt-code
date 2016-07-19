@@ -1,15 +1,10 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\languagefield\Plugin\FieldWidget\LanguageAutocompleteWidget.
- */
-
 namespace Drupal\languagefield\Plugin\Field\FieldWidget;
 
-use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Field\WidgetBase;
+use Drupal\Core\Form\FormStateInterface;
 use Drupal\languagefield\Plugin\Field\FieldType\LanguageItem;
 
 
@@ -35,6 +30,22 @@ class LanguageAutocompleteWidget extends WidgetBase {
       'autocomplete_route_name' => 'languagefield.autocomplete',
       'placeholder' => '',
     ) + parent::defaultSettings();
+  }
+
+  /**
+   * Form element validate handler for language autocomplete element.
+   */
+  public static function validateElement($element, FormStateInterface $form_state) {
+    if ($value = $element['#value']) {
+      $languages = $element['#languagefield_options'];
+      $langcode = array_search($value, $languages);
+      if (!empty($langcode)) {
+        $form_state->setValueForElement($element, $langcode);
+      }
+      else {
+        $form_state->setError($element, t('An unexpected language is entered.'));
+      }
+    }
   }
 
   /**
@@ -65,22 +76,6 @@ class LanguageAutocompleteWidget extends WidgetBase {
       );
 
     return $element;
-  }
-
-  /**
-   * Form element validate handler for language autocomplete element.
-   */
-  public static function validateElement($element, FormStateInterface $form_state) {
-    if ($value = $element['#value']) {
-      $languages = $element['#languagefield_options'];
-      $langcode = array_search($value, $languages);
-      if (!empty($langcode)) {
-        $form_state->setValueForElement($element, $langcode);
-      }
-      else {
-        $form_state->setError($element, t('An unexpected language is entered.'));
-      }
-    }
   }
 
 }

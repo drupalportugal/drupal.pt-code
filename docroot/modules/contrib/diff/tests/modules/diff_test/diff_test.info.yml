@@ -4,6 +4,7 @@ dependencies:
   - diff
   - filter
   - editor
+  - entity_test
 hidden: true
 name: Diff tests
 package: diff

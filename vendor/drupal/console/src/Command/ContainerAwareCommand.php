@@ -36,41 +36,6 @@ abstract class ContainerAwareCommand extends Command
         return $this->getKernelHelper()->getKernel()->getContainer();
     }
 
-    /**
-     * @param bool $tag
-     * @param bool $flatList
-     *
-     * @return array list of modules
-     */
-    public function getMigrations($tag = false, $flatList = false)
-    {
-        $entity_manager = $this->getEntityManager();
-        $migration_storage = $entity_manager->getStorage('migration');
-
-        $entity_query_service = $this->getEntityQuery();
-        $query = $entity_query_service->get('migration');
-
-        if ($tag) {
-            $query->condition('migration_tags.*', $tag);
-        }
-
-        $results = $query->execute();
-
-        $migration_entities = $migration_storage->loadMultiple($results);
-
-        $migrations = array();
-        foreach ($migration_entities as $migration) {
-            if ($flatList) {
-                $migrations[$migration->id()] = ucwords($migration->label());
-            } else {
-                $migrations[$migration->id()]['tags'] = implode(', ', $migration->migration_tags);
-                $migrations[$migration->id()]['description'] = ucwords($migration->label());
-            }
-        }
-
-        return $migrations;
-    }
-
     public function getRestDrupalConfig()
     {
         $configFactory = $this->getConfigFactory();
@@ -227,15 +192,7 @@ abstract class ContainerAwareCommand extends Command
     {
         return $this->getService('event_dispatcher');
     }
-
-    /**
-     * @return \Drupal\Core\Entity\EntityManager
-     */
-    public function getEntityManager()
-    {
-        return $this->getService('entity.manager');
-    }
-
+    
     /**
      * @return \Drupal\Core\Entity\EntityTypeManagerInterface;
      */
@@ -260,6 +217,11 @@ abstract class ContainerAwareCommand extends Command
     public function getViewDisplayManager()
     {
         return $this->getService('plugin.manager.views.display');
+    }
+
+    public function getPluginTypeManager()
+    {
+        return $this->getService('plugin.plugin_type_manager');
     }
 
     public function getWebprofilerForms()
@@ -410,6 +372,15 @@ abstract class ContainerAwareCommand extends Command
     }
 
     /**
+     * @param $id
+     * @return mixed
+     */
+    public function hasService($id)
+    {
+        return $this->getContainer()->has($id);
+    }
+
+    /**
      * @param $serviceId
      * @return mixed
      */
@@ -449,6 +420,15 @@ abstract class ContainerAwareCommand extends Command
         return $this->getValidator()->validateServiceExist($service_name, $services);
     }
 
+    public function validatePluginManagerServiceExist($service_name, $services = null)
+    {
+        if (!$services) {
+            $services = $this->getServices();
+        }
+
+        return $this->getValidator()->validatePluginManagerServiceExist($service_name, $services);
+    }
+
     public function validateModule($machine_name)
     {
         $machine_name = $this->validateMachineName($machine_name);
@@ -479,7 +459,7 @@ abstract class ContainerAwareCommand extends Command
     {
         $machine_name = $this->getValidator()->validateMachineName($machine_name);
 
-        if ($this->getEntityManager()->hasDefinition($machine_name)) {
+        if ($this->getService('entity.manager')->hasDefinition($machine_name)) {
             throw new \InvalidArgumentException(sprintf('commands.common.errors.machine-name-duplicated', $machine_name));
         }
 
@@ -491,6 +471,23 @@ abstract class ContainerAwareCommand extends Command
         return $this->getValidator()->validateSpaces($name);
     }
 
+    public function validateModuleFunctionExist($module, $function, $moduleFile = null)
+    {
+        //Load module file to prevent issue of missing functions used in update
+        $modulePath = $this->getSite()->getModulePath($module, false);
+        if ($moduleFile) {
+            $this->getDrupalHelper()->loadLegacyFile($modulePath . '/'. $moduleFile);
+        } else {
+            $this->getDrupalHelper()->loadLegacyFile($modulePath . '/' . $module . '.module');
+        }
+
+        if (function_exists($function)) {
+            return true;
+        }
+
+        return false;
+    }
+
     public function removeSpaces($name)
     {
         return $this->getValidator()->removeSpaces($name);
@@ -498,8 +495,9 @@ abstract class ContainerAwareCommand extends Command
 
     public function generateEntity($entity_definition, $entity_type)
     {
-        $entity_manager = $this->getEntityManager();
-        $entity_storage = $entity_manager->getStorage($entity_type);
+        $entityTypeManager =  $this->getService('entity_type.manager');
+
+        $entity_storage = $entityTypeManager->getStorage($entity_type);
         $entity = $entity_storage->createFromStorageRecord($entity_definition);
 
         return $entity;
@@ -507,8 +505,8 @@ abstract class ContainerAwareCommand extends Command
 
     public function updateEntity($entity_id, $entity_type, $entity_definition)
     {
-        $entity_manager = $this->getEntityManager();
-        $entity_storage = $entity_manager->getStorage($entity_type);
+        $entityTypeManager = $this->entityTypeManager();
+        $entity_storage = $entityTypeManager->getStorage($entity_type);
         $entity = $entity_storage->load($entity_id);
         $entity_updated = $entity_storage->updateFromStorageRecord($entity, $entity_definition);
 

@@ -3,6 +3,10 @@ arguments:
     module: 'Модуль или модули, которые будут включены должны быть разделены пробелом'
 options:
     latest: 'По умолчанию загружать самую последнюю версию'
+    path: 'The path of the contrib project'
+    composer: 'Option to point out that the module will be downloaded, managed & installed by Composer'
+questions:
+    path: 'Enter the contrib project Path'
 messages:
     no-releases: 'Нет никаких релизов для модуля %s'
     getting-releases: 'Получение релизов для модуля %s'

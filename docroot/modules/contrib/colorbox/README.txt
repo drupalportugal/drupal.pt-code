@@ -46,7 +46,7 @@ Installation:
 2. Download and unpack the Colorbox plugin in "libraries".
     Make sure the path to the plugin file becomes:
     "libraries/colorbox/jquery.colorbox-min.js"
-   Link: https://github.com/jackmoore/colorbox/archive/1.x.zip
+   Link: https://github.com/jackmoore/colorbox/archive/master.zip
    Drush users can use the command "drush colorbox-plugin".
 3. Go to "Administer" -> "Extend" and enable the Colorbox module.
 
@@ -85,21 +85,3 @@ plugin itself.
 The command will download the plugin and unpack it in "libraries/".
 It is possible to add another path as an option to the command, but not
 recommended unless you know what you are doing.
-
-
-Image in Colorbox not displayed in Internet Explorer 8:
--------------------------------------------------------
-
-If your theme has CSS like this (popular in responsive design):
-
-img {
-  max-width: 100%;
-}
-
-Internet Explorer 8 will have problems with showing images in the Colorbox.
-The fix is to add this to the theme CSS:
-
-#cboxLoadedContent img {
-  max-width: none;
-}
-

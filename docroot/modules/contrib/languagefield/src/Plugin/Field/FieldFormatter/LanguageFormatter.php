@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\languagefield\Plugin\Field\FieldFormatter\LanguageFormatter.
- */
-
 namespace Drupal\languagefield\Plugin\Field\FieldFormatter;
 
 use Drupal\Core\Field\FieldItemInterface;

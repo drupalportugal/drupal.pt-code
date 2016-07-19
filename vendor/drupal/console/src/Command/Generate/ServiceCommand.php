@@ -10,10 +10,10 @@ namespace Drupal\Console\Command\Generate;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Drupal\Console\Command\ServicesTrait;
-use Drupal\Console\Command\ModuleTrait;
+use Drupal\Console\Command\Shared\ServicesTrait;
+use Drupal\Console\Command\Shared\ModuleTrait;
 use Drupal\Console\Generator\ServiceGenerator;
-use Drupal\Console\Command\ConfirmationTrait;
+use Drupal\Console\Command\Shared\ConfirmationTrait;
 use Drupal\Console\Command\GeneratorCommand;
 use Drupal\Console\Style\DrupalStyle;
 
@@ -61,6 +61,12 @@ class ServiceCommand extends GeneratorCommand
                 null,
                 InputOption::VALUE_OPTIONAL | InputOption::VALUE_IS_ARRAY,
                 $this->trans('commands.common.options.services')
+            )
+            ->addOption(
+                'path_service',
+                null,
+                InputOption::VALUE_OPTIONAL,
+                $this->trans('commands.generate.service.options.path')
             );
     }
 
@@ -71,7 +77,7 @@ class ServiceCommand extends GeneratorCommand
     {
         $io = new DrupalStyle($input, $output);
 
-        // @see use Drupal\Console\Command\ConfirmationTrait::confirmGeneration
+        // @see use Drupal\Console\Command\Shared\ConfirmationTrait::confirmGeneration
         if (!$this->confirmGeneration($io)) {
             return;
         }
@@ -81,13 +87,24 @@ class ServiceCommand extends GeneratorCommand
         $class = $input->getOption('class');
         $interface = $input->getOption('interface');
         $services = $input->getOption('services');
+        $path_service = $input->getOption('path_service');
+        
+        $available_services = $this->getServices();
 
-        // @see Drupal\Console\Command\ServicesTrait::buildServices
+        if (in_array($name, array_values($available_services))) {
+            throw new \Exception(
+                sprintf(
+                    $this->trans('commands.generate.service.messages.service-already-taken'),
+                    $module
+                )
+            );
+        }
+        
+        // @see Drupal\Console\Command\Shared\ServicesTrait::buildServices
         $build_services = $this->buildServices($services);
-
         $this
             ->getGenerator()
-            ->generate($module, $name, $class, $interface, $build_services);
+            ->generate($module, $name, $class, $interface, $build_services, $path_service);
 
         $this->getChain()->addCommand('cache:rebuild', ['cache' => 'all']);
     }
@@ -102,12 +119,12 @@ class ServiceCommand extends GeneratorCommand
         // --module option
         $module = $input->getOption('module');
         if (!$module) {
-            // @see Drupal\Console\Command\ModuleTrait::moduleQuestion
+            // @see Drupal\Console\Command\Shared\ModuleTrait::moduleQuestion
             $module = $this->moduleQuestion($output);
             $input->setOption('module', $module);
         }
 
-        // --name option
+        //--name option
         $name = $input->getOption('name');
         if (!$name) {
             $name = $io->ask(
@@ -140,9 +157,19 @@ class ServiceCommand extends GeneratorCommand
         // --services option
         $services = $input->getOption('services');
         if (!$services) {
-            // @see Drupal\Console\Command\ServicesTrait::servicesQuestion
+            // @see Drupal\Console\Command\Shared\ServicesTrait::servicesQuestion
             $services = $this->servicesQuestion($output);
             $input->setOption('services', $services);
+        }
+
+        // --path_service option
+        $path_service = $input->getOption('path_service');
+        if (!$path_service) {
+            $path_service = $io->ask(
+                $this->trans('commands.generate.service.questions.path'),
+                '/modules/custom/' . $module . '/src/'
+            );
+            $input->setOption('path_service', $path_service);
         }
     }
 

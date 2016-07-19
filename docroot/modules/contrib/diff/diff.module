@@ -82,7 +82,44 @@ function diff_help($route_name, RouteMatchInterface $route_match) {
     case 'diff.revision_overview':
       return '<p>' . t('Revisions allow you to track differences between multiple versions of your content, and revert to older versions.') . '</p>';
 
-    case 'diff.field_types_list':
-      return '<p>' . t('This table provides a summary of the field type support found on the system. For every field type a diff plugin can be selected and configured.') . '</p>';
+    case 'diff.fields_list':
+      return '<p>' . t('This table provides a summary of the field support found on the system. For every field a diff plugin can be selected and configured.') . '</p>';
   }
+}
+
+/**
+ * Returns the label of a certain field.
+ *
+ * Therefore it looks up in all bundles to find the most used field.
+ *
+ * @param string $entity_type
+ *   The entity type id.
+ * @param string $field_name
+ *   The field name.
+ *
+ * @return array
+ *   Array of labels used for the field sorted by the most used.
+ */
+function _diff_field_label($entity_type, $field_name) {
+  $labels = [];
+  // Count the amount of instances of each label per field storage.
+  $bundles = \Drupal::service('entity_type.bundle.info')->getBundleInfo($entity_type);
+  $field_manager = \Drupal::service('entity_field.manager');
+  foreach (array_keys($bundles) as $bundle) {
+    $bundle_instances = $field_manager->getFieldDefinitions($entity_type, $bundle);
+    if (isset($bundle_instances[$field_name])) {
+      $instance = $bundle_instances[$field_name];
+      $label = (string) $instance->getLabel();
+      $labels[$label] = isset($labels[$label]) ? ++$labels[$label] : 1;
+    }
+  }
+
+  if (empty($labels)) {
+    // Return the original field name if there is no other label found.
+    return [$field_name];
+  }
+
+  // Return the labels sorted by the most used.
+  arsort($labels);
+  return array_keys($labels);
 }
