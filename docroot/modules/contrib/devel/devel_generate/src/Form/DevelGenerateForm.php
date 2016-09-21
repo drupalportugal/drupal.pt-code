@@ -90,6 +90,15 @@ class DevelGenerateForm extends FormBase {
   /**
    * {@inheritdoc}
    */
+  public function validateForm(array &$form, FormStateInterface $form_state) {
+    $plugin_id = $this->getPluginIdFromRequest();
+    $instance = $this->getPluginInstance($plugin_id);
+    $instance->settingsFormValidate($form, $form_state);
+  }
+
+  /**
+   * {@inheritdoc}
+   */
   public function submitForm(array &$form, FormStateInterface $form_state) {
     try {
       $plugin_id = $this->getPluginIdFromRequest();

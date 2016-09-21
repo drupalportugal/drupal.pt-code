@@ -281,6 +281,15 @@ class ContentDevelGenerate extends DevelGenerateBase implements ContainerFactory
   /**
    * {@inheritdoc}
    */
+  function settingsFormValidate(array $form, FormStateInterface $form_state) {
+    if (!array_filter($form_state->getValue('node_types'))) {
+      $form_state->setErrorByName('node_types', $this->t('Please select at least one content type'));
+    }
+  }
+
+  /**
+   * {@inheritdoc}
+   */
   protected function generateElements(array $values) {
     if ($values['num'] <= 50 && $values['max_comments'] <= 10) {
       $this->generateContent($values);

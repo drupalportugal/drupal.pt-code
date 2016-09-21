@@ -50,6 +50,16 @@ interface DevelGenerateBaseInterface extends PluginInspectionInterface {
   function settingsForm(array $form, FormStateInterface $form_state);
 
   /**
+   * Form validation handler.
+   *
+   * @param array $form
+   *   An associative array containing the structure of the form.
+   * @param \Drupal\Core\Form\FormStateInterface $form_state
+   *   The current state of the form.
+   */
+  function settingsFormValidate(array $form, FormStateInterface $form_state);
+
+  /**
    * Execute the instructions in common for all DevelGenerate plugin
    *
    * @param array $values

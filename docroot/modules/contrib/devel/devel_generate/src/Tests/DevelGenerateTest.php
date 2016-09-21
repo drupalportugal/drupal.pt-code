@@ -96,6 +96,14 @@ class DevelGenerateTest extends WebTestBase {
     $this->assertText(t('4 users created.'));
     $this->assertText(t('Generate process complete.'));
 
+    // Tests that if no content types are selected an error message is shown.
+    $edit = array(
+      'num' => 4,
+      'title_length' => 4,
+    );
+    $this->drupalPostForm('admin/config/development/generate/content', $edit, t('Generate'));
+    $this->assertText(t('Please select at least one content type'));
+
     // Creating content.
     // First we create a node in order to test the Delete content checkbox.
     $this->drupalCreateNode(array('type' => 'article'));

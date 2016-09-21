@@ -63,6 +63,13 @@ abstract class DevelGenerateBase extends PluginBase implements DevelGenerateBase
   /**
    * {@inheritdoc}
    */
+  function settingsFormValidate(array $form, FormStateInterface $form_state) {
+    // Validation is optional.
+  }
+
+  /**
+   * {@inheritdoc}
+   */
   public function generate(array $values) {
     $this->generateElements($values);
     $this->setMessage('Generate process complete.');

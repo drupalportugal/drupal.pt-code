@@ -3501,7 +3501,7 @@
         "source": {
             "type": "git",
             "url": "https://git.drupal.org/project/devel",
-            "reference": "b8bcdc6f61f976c9bd50099b42bd2809266e9670"
+            "reference": "623a3b480a202a9d281c60f76ac806f3da0d4555"
         },
         "require": {
             "drupal/core": "8.*"
@@ -3514,9 +3514,10 @@
         },
         "suggest": {
             "drupal/core": "Required by drupal/devel_generate, drupal/devel_node_access, drupal/kint, drupal/webprofiler",
-            "drupal/menu_ui": "Required by drupal/devel_node_access"
+            "drupal/menu_ui": "Required by drupal/devel_node_access",
+            "symfony/var-dumper": "Pretty print complex values better with var-dumper available"
         },
-        "time": "2016-07-01 18:41:23",
+        "time": "2016-09-17 11:35:02",
         "type": "drupal-module",
         "extra": {
             "branch-alias": {
@@ -4002,12 +4003,12 @@
         "version_normalized": "1.0.0.0",
         "source": {
             "type": "git",
-            "url": "https://github.com/consolidation-org/output-formatters.git",
+            "url": "https://github.com/consolidation/output-formatters.git",
             "reference": "6428d8fb30c9ed3b96314580808b3e4415b46dd9"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/consolidation-org/output-formatters/zipball/6428d8fb30c9ed3b96314580808b3e4415b46dd9",
+            "url": "https://api.github.com/repos/consolidation/output-formatters/zipball/6428d8fb30c9ed3b96314580808b3e4415b46dd9",
             "reference": "6428d8fb30c9ed3b96314580808b3e4415b46dd9",
             "shasum": ""
         },
@@ -4051,12 +4052,12 @@
         "version_normalized": "1.0.1.0",
         "source": {
             "type": "git",
-            "url": "https://github.com/consolidation-org/annotated-command.git",
+            "url": "https://github.com/consolidation/annotated-command.git",
             "reference": "ed279df30b9386fd8e523003dc679421a87c52e0"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/consolidation-org/annotated-command/zipball/ed279df30b9386fd8e523003dc679421a87c52e0",
+            "url": "https://api.github.com/repos/consolidation/annotated-command/zipball/ed279df30b9386fd8e523003dc679421a87c52e0",
             "reference": "ed279df30b9386fd8e523003dc679421a87c52e0",
             "shasum": ""
         },
