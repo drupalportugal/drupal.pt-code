@@ -43,10 +43,6 @@ class FeaturesGenerateTest extends KernelTestBase {
 
     $this->installConfig('features');
     $this->installConfig('system');
-    \Drupal::configFactory()->getEditable('features.settings')
-      ->set('assignment.enabled', [])
-      ->set('bundle.settings', [])
-      ->save();
 
     $this->featuresManager = \Drupal::service('features.manager');
     $this->generator = \Drupal::service('features_generator');

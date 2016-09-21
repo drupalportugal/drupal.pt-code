@@ -10,6 +10,7 @@ namespace Drupal\acquia_connector\Tests;
 use Drupal\simpletest\WebTestBase;
 use Drupal\acquia_connector\Subscription;
 use Drupal\acquia_connector\Controller\StatusController;
+use Drupal\acquia_connector\Controller\SpiController;
 
 /**
  * Tests the functionality of the Acquia Connector module.
@@ -539,6 +540,60 @@ class AcquiaConnectorModuleTest extends WebTestBase {
     $submit_button = 'Save configuration';
     $this->drupalPostForm($this->environmentChangePath, $edit_fields, $submit_button);
     $this->assertText($this->acquiaConnectorStrings('first-connection'), 'First connection from this site');
+  }
+
+  /**
+   * Test that setting multisite option properly modifies a machine name
+   * for Acquia hosted sites.
+   */
+  public function testAcquiaMachineNameMultisite() {
+    // 1. Connect a site
+    $edit_fields = [
+      'acquia_identifier' => $this->acqtestId,
+      'acquia_key' => $this->acqtestKey,
+    ];
+    $this->drupalPostForm($this->credentialsPath, $edit_fields, 'Connect');
+
+    $elements = $this->xpath('//input[@name=:name]', [':name' => 'multisite_identifier']);
+    $this->assertEqual($elements, [], "Multisite setting does not display for non-Acquia hosted site");
+
+    // 2. Simulate Acquia hosted site
+    $this->writeSettings(['_SERVER' => [
+      'AH_SITE_NAME' => (object) [
+        'value' => 'acqtest_drupal',
+        'required' => TRUE,
+      ],
+      'AH_SITE_ENVIRONMENT' => (object) [
+        'value' => 'dev',
+        'required' => TRUE,
+      ],
+    ]]);
+    sleep(10);
+
+    \Drupal::configFactory()->getEditable('acquia_connector.settings')->set('subscription_data', [
+      'active' => 1,
+      'href' => "https://insight.acquia.com/node/uuid/0dee0d07_4032_44ea_a2f2_84182dc10d54/dashboard",
+    ])->save();
+
+    // 3. Verify machine name before setting the multisite option
+    $spi = new SpiController(\Drupal::service('acquia_connector.client'));
+
+    $spi_data = $spi->get();
+    $expected_machine_name = '0dee0d07_4032_44ea_a2f2_84182dc10d54' . '__' . 'acqtest_drupal';
+    $this->assertIdentical($spi_data['machine_name'], $expected_machine_name, "Machine name does contain multisite postfix");
+
+    // 4. Verify machine name after setting the multisite option
+    $edit_fields = [
+      'is_multisite' => TRUE,
+      'multisite_identifier' => 'my_site1',
+      'machine_multisite_identifier' => 'my_site1',
+    ];
+    $this->drupalGet($this->settingsPath);
+    $this->drupalPostForm($this->settingsPath, $edit_fields, 'Save configuration');
+
+    $spi_data = $spi->get();
+    $expected_machine_name = '0dee0d07_4032_44ea_a2f2_84182dc10d54' . '__' . 'acqtest_drupal' . '__' . 'my_site1';
+    $this->assertIdentical($spi_data['machine_name'], $expected_machine_name, "Machine name contains multisite postfix");
   }
 
 }

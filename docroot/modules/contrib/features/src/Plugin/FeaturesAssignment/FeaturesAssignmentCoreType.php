@@ -1,11 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains
- * \Drupal\features\Plugin\FeaturesAssignment\FeaturesAssignmentCoreType.
- */
-
 namespace Drupal\features\Plugin\FeaturesAssignment;
 
 use Drupal\features\FeaturesAssignmentMethodBase;
@@ -35,8 +29,8 @@ class FeaturesAssignmentCoreType extends FeaturesAssignmentMethodBase {
     $machine_name = 'core';
     $name = $this->t('Core');
     $description = $this->t('Provides core components required by other features.');
-    $this->featuresManager->initPackage($machine_name, $name, $description, 'module', $current_bundle);
-    $this->assignPackageByConfigTypes($machine_name, $force);
+    $package = $this->featuresManager->initPackage($machine_name, $name, $description, 'module', $current_bundle);
+    $this->assignPackageByConfigTypes($package->getMachineName(), $force);
   }
 
 

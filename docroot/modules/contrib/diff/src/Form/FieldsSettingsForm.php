@@ -114,19 +114,6 @@ class FieldsSettingsForm extends ConfigFormBase {
       ),
     );
 
-    // Get the definition of all @FieldDiffBuilder plugins.
-    $diff_plugin_definitions = $this->diffBuilderManager->getDefinitions();
-    $plugins = array();
-    foreach ($diff_plugin_definitions as $plugin_definition) {
-      if (isset($plugin_definition['field_types'])) {
-        // Iterate through all the field types this plugin supports
-        // and for every such field type add the id of the plugin.
-        foreach ($plugin_definition['field_types'] as $id) {
-          $plugins[$id][] = $plugin_definition['id'];
-        }
-      }
-    }
-
     // Build a row in the table for each field of each entity type. Get all the
     // field plugins.
     foreach ($this->entityTypeManager->getDefinitions() as $entity_type_name => $entity_type) {
@@ -144,10 +131,11 @@ class FieldsSettingsForm extends ConfigFormBase {
 
         $key = $entity_type_name . '.' . $field_name;
         // Build a row in the table for this field.
-        $form['fields'][$key] = $this->buildFieldRow($entity_type, $field_definition, $plugins, $diff_plugin_definitions, $form_state);
+        $form['fields'][$key] = $this->buildFieldRow($entity_type, $field_definition, $form_state);
       }
     }
 
+    $this->diffBuilderManager->clearCachedDefinitions();
     // Submit button for the form.
     $form['actions'] = array('#type' => 'actions');
     $form['actions']['submit'] = array(
@@ -168,30 +156,20 @@ class FieldsSettingsForm extends ConfigFormBase {
    *   The entity type.
    * @param \Drupal\Core\Field\FieldStorageDefinitionInterface $field_definition
    *   Definition the field type.
-   * @param array $plugins
-   *   An array of field types and the associated field diff builder plugins ids.
-   * @param array $diff_plugin_definitions
-   *   Definitions of all field diff builder plugins.
    * @param FormStateInterface $form_state
    *   THe form state object.
    *
    * @return array
    *   A table row for the field type listing table.
    */
-  protected function buildFieldRow($entity_type, $field_definition, $plugins, $diff_plugin_definitions, FormStateInterface $form_state) {
+  protected function buildFieldRow($entity_type, $field_definition, FormStateInterface $form_state) {
     $entity_type_label = $entity_type->getLabel();
     $field_name = $field_definition->getName();
     $field_type = $field_definition->getType();
     $field_key = $entity_type->id() . '.' . $field_name;
 
-    $display_options = $this->config->get('fields.' . $field_key);
-    // Build a list of all diff plugins supporting the field type of the field.
-    $plugin_options = [];
-    if (isset($plugins[$field_type])) {
-      foreach ($plugins[$field_type] as $id) {
-        $plugin_options[$id] = $diff_plugin_definitions[$id]['label'];
-      }
-    }
+    $display_options = $this->diffBuilderManager->getSelectedPluginForFieldStorageDefinition($field_definition);
+    $plugin_options = $this->diffBuilderManager->getApplicablePluginOptions($field_definition);
 
     // Base button element for the various plugin settings actions.
     $base_button = [
@@ -243,14 +221,6 @@ class FieldsSettingsForm extends ConfigFormBase {
       $display_options['settings'] = $plugin_settings[$field_key]['settings'];
     }
 
-    $default_plugin = NULL;
-    if ($display_options) {
-      $default_plugin = $display_options['type'];
-    }
-    elseif ($plugin_options) {
-      $default_plugin = array_keys($plugin_options)[0];
-    }
-
     $field_row['plugin'] = array(
       'type' => array(
         '#type' => 'select',
@@ -261,7 +231,7 @@ class FieldsSettingsForm extends ConfigFormBase {
         '#attributes' => array(
           'class' => array('field-plugin-type'),
         ),
-        '#default_value' => $default_plugin,
+        '#default_value' => $display_options,
         '#ajax' => array(
           'callback' => [$this, 'multiStepAjax'],
           'method' => 'replace',
@@ -313,7 +283,7 @@ class FieldsSettingsForm extends ConfigFormBase {
     else {
       $field_row['settings_edit'] = [];
       // Display the configure settings button only if a plugin is selected.
-      if ($default_plugin != 'hidden') {
+      if ($plugin) {
         $field_row['settings_edit'] = $base_button + array(
           '#type' => 'image_button',
           '#name' => $field_key . '_settings_edit',

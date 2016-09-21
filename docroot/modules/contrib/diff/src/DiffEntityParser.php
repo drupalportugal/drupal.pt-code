@@ -1,15 +1,9 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\diff\DiffEntityParser.
- */
-
 namespace Drupal\diff;
 
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Entity\ContentEntityInterface;
-use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Language\LanguageInterface;
 
 class DiffEntityParser {
@@ -67,61 +61,38 @@ class DiffEntityParser {
       $entity = $entity->getTranslation($langcode);
     }
     $entity_type_id = $entity->getEntityTypeId();
-
-    // Load the diff plugin definitions.
-    $diff_plugin_definitions = $this->diffBuilderManager->getDefinitions();
-    $plugins = [];
-    foreach ($diff_plugin_definitions as $plugin_definition) {
-      if (isset($plugin_definition['field_types'])) {
-        // Add the plugin's ID to each field type this plugin supports.
-        foreach ($plugin_definition['field_types'] as $id) {
-          $plugins[$id][] = $plugin_definition['id'];
-        }
-      }
-    }
-
     // Loop through entity fields and transform every FieldItemList object
     // into an array of strings according to field type specific settings.
     foreach ($entity as $field_items) {
-      $field_name = $field_items->getFieldDefinition()->getName();
-
       // Define if the current field should be displayed as a diff change.
       $show_diff = $this->diffBuilderManager->showDiff($field_items->getFieldDefinition()->getFieldStorageDefinition());
-      if (!$show_diff) {
+      if (!$show_diff || !$entity->get($field_items->getFieldDefinition()->getName())->access('view')) {
         continue;
       }
-
-      // Get the field plugin configuration.
-      $plugin_config = $this->pluginsConfig->get('fields.' . $entity_type_id . '.' . $field_name);
-
-      $plugin = NULL;
-      // If there is no plugin defined, take the first available.
-      if (!$plugin_config) {
-        // Load the plugins that can be applied to this field.
-        $plugin_options = [];
-        if (isset($plugins[$field_items->getFieldDefinition()->getType()])) {
-          foreach ($plugins[$field_items->getFieldDefinition()->getType()] as $id) {
-            $plugin_options[$id] = $diff_plugin_definitions[$id]['label'];
+      // Create a plugin instance for the field definition.
+      $plugin = $this->diffBuilderManager->createInstanceForFieldDefinition($field_items->getFieldDefinition());
+      if ($plugin) {
+        // Create the array with the fields of the entity. Recursive if the
+        // field contains entities.
+        if ($plugin instanceof FieldReferenceInterface) {
+          foreach ($plugin->getEntitiesToDiff($field_items) as $entity_key => $reference_entity) {
+            foreach($this->parseEntity($reference_entity) as $key => $build) {
+              $result[$key] = $build;
+              $result[$key]['label'] = $field_items->getFieldDefinition()->getLabel() . ' > ' . $result[$key]['label'];
+            };
           }
         }
-        $default_plugin['type'] = array_keys($plugin_options)[0];
-        $plugin = $this->diffBuilderManager->createInstance($default_plugin['type'], []);
-      }
-      // If there is a plugin defined create an instance of it.
-      if ($plugin_config && $plugin_config['type'] != 'hidden') {
-        $plugin = $this->diffBuilderManager->createInstance($plugin_config['type'], $plugin_config['settings']);
-      }
-      if ($plugin) {
-        // Configurable field. It is the responsibility of the class extending
-        // this class to hide some configurable fields from comparison. This
-        // class compares all configurable fields.
-        $build = $plugin->build($field_items);
-        if (!empty($build)) {
-          $result[$field_items->getName()] = $build;
+        else {
+          $build = $plugin->build($field_items);
+          if (!empty($build)) {
+            $result[$entity->id() . ':' . $entity_type_id . '.' . $field_items->getName()] = $build;
+            $result[$entity->id() . ':' . $entity_type_id . '.' . $field_items->getName()]['label'] = $field_items->getFieldDefinition()->getLabel();
+          }
         }
       }
     }
 
+    $this->diffBuilderManager->clearCachedDefinitions();
     return $result;
   }
 }

@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\features\FeaturesGenerationMethodBase.
- */
-
 namespace Drupal\features;
 
 use Drupal\Component\Serialization\Yaml;
@@ -81,7 +76,9 @@ abstract class FeaturesGenerationMethodBase implements FeaturesGenerationMethodI
 
     foreach ($packages as &$package) {
       list($full_name, $path) = $this->featuresManager->getExportInfo($package, $bundle);
-      $package->setDirectory($path);
+      if (empty($package->getDirectory())) {
+        $package->setDirectory($path);
+      }
 
       // If this is the profile, its directory is already assigned.
       if (!isset($bundle) || !$bundle->isProfilePackage($package->getMachineName())) {

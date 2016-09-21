@@ -1,17 +1,10 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\diff\Form\RevisionOverviewForm
- *
- * This form displays all the revisions of a node and allows the selection
- * of two of them for comparison.
- */
-
 namespace Drupal\diff\Form;
 
-use Drupal\Core\Language\LanguageInterface;
 use Drupal\Core\Language\LanguageManagerInterface;
+use Drupal\diff\DiffEntityComparison;
+use Drupal\diff\DiffLayoutManager;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\Core\Entity\EntityManagerInterface;
 use Drupal\Core\Form\FormBase;
@@ -67,6 +60,17 @@ class RevisionOverviewForm extends FormBase {
    */
   protected $config;
 
+  /**
+   * The field diff layout plugin manager service.
+   *
+   * @var \Drupal\diff\DiffLayoutManager
+   */
+  protected $diffLayoutManager;
+
+  /**
+   * The diff entity comparison service.
+   */
+  protected $entityComparison;
 
   /**
    * Constructs a RevisionOverviewForm object.
@@ -81,14 +85,20 @@ class RevisionOverviewForm extends FormBase {
    *   The renderer service.
    * @param \Drupal\Core\Language\LanguageManagerInterface $language_manager
    *   The language manager.
+   * @param DiffLayoutManager $diff_layout_manager
+   *   DiffLayoutManager service.
+   * @param \Drupal\diff\DiffEntityComparison $entity_comparison
+   *   The diff entity comparison service.
    */
-  public function __construct(EntityManagerInterface $entityManager, AccountInterface $currentUser, DateFormatter $date, RendererInterface $renderer, LanguageManagerInterface $language_manager) {
+  public function __construct(EntityManagerInterface $entityManager, AccountInterface $currentUser, DateFormatter $date, RendererInterface $renderer, LanguageManagerInterface $language_manager, DiffLayoutManager $diff_layout_manager, DiffEntityComparison $entity_comparison) {
     $this->entityManager = $entityManager;
     $this->currentUser = $currentUser;
     $this->date = $date;
     $this->renderer = $renderer;
     $this->languageManager = $language_manager;
     $this->config = $this->config('diff.settings');
+    $this->diffLayoutManager = $diff_layout_manager;
+    $this->entityComparison = $entity_comparison;
   }
 
   /**
@@ -100,7 +110,9 @@ class RevisionOverviewForm extends FormBase {
       $container->get('current_user'),
       $container->get('date.formatter'),
       $container->get('renderer'),
-      $container->get('language_manager')
+      $container->get('language_manager'),
+      $container->get('plugin.manager.diff.layout'),
+      $container->get('diff.entity_comparison')
     );
   }
 
@@ -143,6 +155,7 @@ class RevisionOverviewForm extends FormBase {
 
     $table_header = array(
       'revision' => $this->t('Revision'),
+      'summary' => $this->t('Summary'),
       'operations' => $this->t('Operations'),
     );
 
@@ -177,7 +190,7 @@ class RevisionOverviewForm extends FormBase {
     $latest_revision = empty($page);
 
     // Add rows to the table.
-    foreach ($vids as $vid) {
+    foreach ($vids as $key => $vid) {
       if ($revision = $node_storage->loadRevision($vid)) {
         if ($revision->hasTranslation($langcode) && $revision->getTranslation($langcode)->isRevisionTranslationAffected()) {
           $username = array(
@@ -205,6 +218,10 @@ class RevisionOverviewForm extends FormBase {
                   'message' => ['#markup' => $revision->revision_log->value, '#allowed_tags' => Xss::getHtmlTagList()],
                 ],
               ),
+              'summary' => [
+                '#type' => 'markup',
+                '#markup' => $this->entityComparison->getRevisionDescription($revision, isset($vids[$key + 1]) ? $vids[$key + 1] : $vids[$key]),
+              ],
             );
             // Allow comparisons only if there are 2 or more revisions.
             if ($revision_count > 1) {
@@ -270,6 +287,10 @@ class RevisionOverviewForm extends FormBase {
                   'message' => ['#markup' => $revision->revision_log->value, '#allowed_tags' => Xss::getHtmlTagList()],
                 ],
               ),
+              'summary' => [
+                '#type' => 'markup',
+                '#markup' => $this->entityComparison->getRevisionDescription($revision, isset($vids[$key + 1]) ? $vids[$key + 1] : $vids[$key]),
+              ],
               'select_column_one' => array(
                 '#type' => 'radio',
                 '#title_display' => 'invisible',
@@ -320,9 +341,14 @@ class RevisionOverviewForm extends FormBase {
    */
   public function validateForm(array &$form, FormStateInterface $form_state) {
     $input = $form_state->getUserInput();
-    $vid_left = $input['radios_left'];
-    $vid_right = $input['radios_right'];
-    if ($vid_left == $vid_right || !$vid_left || !$vid_right) {
+
+    if (count($form_state->getValue('node_revisions_table')) <= 1) {
+      $form_state->setErrorByName('node_revisions_table', $this->t('Multiple revisions are needed for comparison.'));
+    }
+    elseif (!isset($input['radios_left']) || !isset($input['radios_right'])) {
+      $form_state->setErrorByName('node_revisions_table', $this->t('Select two revisions to compare.'));
+    }
+    elseif ($input['radios_left'] == $input['radios_right']) {
       // @todo Radio-boxes selection resets if there are errors.
       $form_state->setErrorByName('node_revisions_table', $this->t('Select different revisions to compare.'));
     }
@@ -350,8 +376,9 @@ class RevisionOverviewForm extends FormBase {
       'diff.revisions_diff',
       array(
         'node' => $nid,
-        'left_vid' => $vid_left,
-        'right_vid' => $vid_right,
+        'left_revision' => $vid_left,
+        'right_revision' => $vid_right,
+        'filter' => $this->diffLayoutManager->getDefaultLayout(),
       )
     );
     $form_state->setRedirectUrl($redirect_url);

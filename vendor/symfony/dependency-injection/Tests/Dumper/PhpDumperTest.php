@@ -100,7 +100,7 @@ class PhpDumperTest extends \PHPUnit_Framework_TestCase
     {
         return array(
             array(array('foo' => new Definition('stdClass'))),
-            array(array('foo' => new Expression('service("foo").foo() ~ (container.hasparameter("foo") ? parameter("foo") : "default")'))),
+            array(array('foo' => new Expression('service("foo").foo() ~ (container.hasParameter("foo") ? parameter("foo") : "default")'))),
             array(array('foo' => new Reference('foo'))),
             array(array('foo' => new Variable('foo'))),
         );
@@ -169,7 +169,7 @@ class PhpDumperTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider provideInvalidFactories
-     * @expectedException Symfony\Component\DependencyInjection\Exception\RuntimeException
+     * @expectedException \Symfony\Component\DependencyInjection\Exception\RuntimeException
      * @expectedExceptionMessage Cannot dump definition
      */
     public function testInvalidFactories($factory)

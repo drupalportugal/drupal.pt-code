@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\features\Plugin\FeaturesGeneration\FeaturesGenerationWrite.
- */
-
 namespace Drupal\features\Plugin\FeaturesGeneration;
 
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
@@ -130,7 +125,7 @@ class FeaturesGenerationWrite extends FeaturesGenerationMethodBase implements Co
    */
   protected function generatePackage(array &$return, Package $package) {
     if (!$package->getFiles()) {
-      $this->failure($return, $package, NULL, t('No configuration was selected to be exported.'));
+      $this->failure($return, $package, NULL, $this->t('No configuration was selected to be exported.'));
       return;
     }
     $success = TRUE;

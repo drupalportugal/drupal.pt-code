@@ -1,9 +1,6 @@
 <?php
 
 /**
- * @file
- * Contains \Drupal\diff\DiffPluginTest.
- *
  * @ingroup diff
  */
 
@@ -15,14 +12,13 @@ use Drupal\field\Entity\FieldConfig;
 use Drupal\field\Entity\FieldStorageConfig;
 use Drupal\field_ui\Tests\FieldUiTestTrait;
 use Drupal\link\LinkItemInterface;
-use Drupal\simpletest\WebTestBase;
 
 /**
  * Tests the Diff module plugins.
  *
  * @group diff
  */
-class DiffPluginTest extends WebTestBase {
+class DiffPluginTest extends DiffTestBase {
 
   use CommentTestTrait;
   use FieldUiTestTrait;
@@ -32,7 +28,15 @@ class DiffPluginTest extends WebTestBase {
    *
    * @var array
    */
-  public static $modules = array('node', 'diff', 'diff_test', 'block', 'comment', 'field_ui', 'file', 'image', 'link', 'options');
+  public static $modules = [
+    'diff_test',
+    'comment',
+    'file',
+    'image',
+    'link',
+    'options',
+    'field_ui',
+  ];
 
   /**
    * {@inheritdoc}
@@ -40,19 +44,12 @@ class DiffPluginTest extends WebTestBase {
   protected function setUp() {
     parent::setUp();
 
-    // Create Article node type.
-    $this->drupalCreateContentType(array('type' => 'article', 'name' => 'Article'));
     // Add the comment field to articles.
     $this->addDefaultCommentField('node', 'article');
-
-    // Place the blocks that Diff module uses.
-    $this->drupalPlaceBlock('local_tasks_block');
-    $this->drupalPlaceBlock('local_actions_block');
 
     // FieldUiTestTrait checks the breadcrumb when adding a field, so we need
     // to show the breadcrumb block.
     $this->drupalPlaceBlock('system_breadcrumb_block');
-
     $this->drupalLogin($this->rootUser);
   }
 
@@ -80,7 +77,7 @@ class DiffPluginTest extends WebTestBase {
     // Check the difference between the last two revisions.
     $this->clickLink(t('Revisions'));
     $this->drupalPostForm(NULL, NULL, t('Compare'));
-    $this->assertText('Changes to Comments');
+    $this->assertText('Comments');
     $this->assertText('Comments for this entity are open.');
     $this->assertText('Comments for this entity are closed.');
   }
@@ -135,9 +132,96 @@ class DiffPluginTest extends WebTestBase {
     // Check the difference between the last two revisions.
     $this->clickLink(t('Revisions'));
     $this->drupalPostForm(NULL, NULL, t('Compare'));
-    $this->assertText('Changes to Email');
+    $this->assertText('Email');
     $this->assertText('foo@example.com');
     $this->assertText('bar@example.com');
+  }
+
+  /**
+   * Tests the Core plugin with a timestamp field.
+   */
+  public function testCorePluginTimestampField() {
+    // Add a timestamp field (supported by the Diff core plugin) to the Article
+    // content type.
+    $field_name = 'field_timestamp';
+    $this->fieldStorage = FieldStorageConfig::create([
+      'field_name' => $field_name,
+      'entity_type' => 'node',
+      'type' => 'timestamp',
+    ]);
+    $this->fieldStorage->save();
+    $this->field = FieldConfig::create([
+      'field_storage' => $this->fieldStorage,
+      'bundle' => 'article',
+      'label' => 'Timestamp test',
+    ]);
+    $this->field->save();
+
+    // Add the timestamp field to the article form.
+    entity_get_form_display('node', 'article', 'default')
+      ->setComponent($field_name, array(
+        'type' => 'datetime_timestamp',
+      ))
+      ->save();
+
+    // Add the timestamp field to the default display
+    entity_get_display('node', 'article', 'default')
+      ->setComponent($field_name, array(
+        'type' => 'timestamp',
+      ))
+      ->save();
+
+    $old_timestamp = '321321321';
+    $new_timestamp = '123123123';
+
+    // Create an article with an timestamp.
+    $this->drupalCreateNode([
+      'title' => 'timestamp_test',
+      'type' => 'article',
+      'field_timestamp' => $old_timestamp,
+    ]);
+
+    // Create a new revision with an updated timestamp.
+    $node = $this->drupalGetNodeByTitle('timestamp_test');
+    $node->field_timestamp = $new_timestamp;
+    $node->setNewRevision(TRUE);
+    $node->save();
+
+    // Compare the revisions.
+    $this->drupalGet('node/' . $node->id() . '/revisions');
+    $this->drupalPostForm(NULL, NULL, t('Compare'));
+
+    // Assert that the timestamp field does not show a unix time format.
+    $this->assertText('Timestamp test');
+    $date_formatter = \Drupal::service('date.formatter');
+    $this->assertText($date_formatter->format($old_timestamp));
+    $this->assertText($date_formatter->format($new_timestamp));
+  }
+
+  /**
+   * Tests the changed field without plugins.
+   */
+  public function testFieldWithNoPlugin() {
+    // Create an article.
+    $node = $this->drupalCreateNode([
+      'type' => 'article',
+    ]);
+
+    // Update the article and add a new revision, the "changed" field should be
+    // updated which does not have plugins provided by diff.
+    $edit = array(
+      'revision' => TRUE,
+    );
+    $this->drupalPostForm('node/' . $node->id() . '/edit', $edit, t('Save and keep published'));
+
+    // Check the difference between the last two revisions.
+    $this->clickLink(t('Revisions'));
+    $this->drupalPostForm(NULL, NULL, t('Compare'));
+
+    // "changed" field is not displayed since there is no plugin for it. This
+    // should not break the revisions comparison display.
+    $this->assertResponse(200);
+    $this->assertLink(t('Split fields'));
   }
 
   /**
@@ -183,7 +267,7 @@ class DiffPluginTest extends WebTestBase {
     // Check differences between revisions.
     $this->clickLink(t('Revisions'));
     $this->drupalPostForm(NULL, NULL, t('Compare'));
-    $this->assertText('Changes to Reference');
+    $this->assertText('Reference');
     $this->assertText('Article B');
     $this->assertText('Article C');
   }
@@ -249,7 +333,7 @@ class DiffPluginTest extends WebTestBase {
       'radios_right' => 3,
     ];
     $this->drupalPostForm(NULL, $edit, t('Compare'));
-    $this->assertText('Changes to File');
+    $this->assertText('File');
     $this->assertText('File: text-1.txt');
     $this->assertText('File ID: 4');
   }
@@ -326,7 +410,7 @@ class DiffPluginTest extends WebTestBase {
       'radios_right' => 3,
     ];
     $this->drupalPostForm(NULL, $edit, t('Compare'));
-    $this->assertText('Changes to Image');
+    $this->assertText('Image');
     $this->assertText('Image: image-test-transparent-indexed.gif');
     $this->assertText('File ID: 2');
   }
@@ -395,7 +479,7 @@ class DiffPluginTest extends WebTestBase {
     // Check differences between revisions.
     $this->clickLink(t('Revisions'));
     $this->drupalPostForm(NULL, [], t('Compare'));
-    $this->assertText('Changes to Link');
+    $this->assertText('Link');
     $this->assertText('Google');
     $this->assertText('http://www.google.com');
     $this->assertText('Guguel');
@@ -458,7 +542,7 @@ class DiffPluginTest extends WebTestBase {
     // Check differences between revisions.
     $this->clickLink(t('Revisions'));
     $this->drupalPostForm(NULL, [], t('Compare'));
-    $this->assertText('Changes to List');
+    $this->assertText('List');
     $this->assertText('value_a');
     $this->assertText('value_b');
   }
@@ -490,12 +574,42 @@ class DiffPluginTest extends WebTestBase {
     // Check differences between revisions.
     $this->clickLink(t('Revisions'));
     $this->drupalPostForm(NULL, [], t('Compare'));
-    $this->assertText('Changes to Text Field');
-    $this->assertText('Changes to Text Long Field');
+    $this->assertText('Text Field');
+    $this->assertText('Text Long Field');
     $this->assertText('Foo');
     $this->assertText('Fighters');
     $this->assertText('Bar');
     $this->assertText('Fly');
+  }
+
+  /**
+   * Tests the access check for a field while comparing revisions.
+   */
+  public function testFieldNoAccess() {
+    // Add a text and a text field to article.
+    $this->addTextField('field_diff_deny_access', 'field_diff_deny_access', 'string', 'string_textfield');
+
+    // Create an article.
+    $this->drupalCreateNode([
+      'type' => 'article',
+      'title' => 'Test article access',
+      'field_diff_deny_access' => 'Foo',
+    ]);
+
+    // Create a revision of the article.
+    $node = $this->getNodeByTitle('Test article access');
+    $node->setTitle('Test article no access');
+    $node->set('field_diff_deny_access', 'Fighters');
+    $node->setNewRevision(TRUE);
+    $node->save();
+
+    // Check the "Text Field No Access" field is not displayed.
+    $this->drupalGet('node/'. $node->id() .'/revisions');
+    $this->drupalPostForm(NULL, [], t('Compare'));
+    $this->assertResponse(200);
+    $this->assertNoText('field_diff_deny_access');
+    $rows = $this->xpath('//tbody/tr');
+    $this->assertEqual(count($rows), 2);
   }
 
   /**
@@ -565,11 +679,60 @@ class DiffPluginTest extends WebTestBase {
     // Check differences between revisions.
     $this->clickLink(t('Revisions'));
     $this->drupalPostForm(NULL, [], t('Compare'));
-    $this->assertText('Changes to Body');
+    $this->assertText('Body');
     $this->assertText('Foo value');
     $this->assertText('Foo summary');
     $this->assertText('Bar value');
     $this->assertText('Bar summary');
+  }
+
+  /**
+   * Tests plugin applicability and weight relevance.
+   */
+  public function testApplicablePlugin() {
+    // Add three text fields to the article.
+    $this->addTextField('test_field', 'Test Applicable', 'text', 'text_textfield');
+    $this->addTextField('test_field_lighter', 'Test Lighter Applicable', 'text', 'text_textfield');
+    $this->addTextField('test_field_non_applicable', 'Test Not Applicable', 'text', 'text_textfield');
+
+    // Create an article, setting values on fields.
+    $node = $this->drupalCreateNode([
+      'type' => 'article',
+      'title' => 'Test article',
+      'test_field' => 'first_nice_applicable',
+      'test_field_lighter' => 'second_nice_applicable',
+      'test_field_non_applicable' => 'not_applicable',
+    ]);
+
+    // Edit the article and update these fields, creating a new revision.
+    $edit = [
+      'test_field[0][value]' => 'first_nicer_applicable',
+      'test_field_lighter[0][value]' => 'second_nicer_applicable',
+      'test_field_non_applicable[0][value]' => 'nicer_not_applicable',
+      'revision' => TRUE,
+    ];
+    $this->drupalPostForm('node/' . $node->id() . '/edit', $edit, t('Save and keep published'));
+
+    // Check differences between revisions.
+    $this->clickLink(t('Revisions'));
+    $this->drupalPostForm(NULL, [], t('Compare'));
+
+    // Check diff for an applicable field of testTextPlugin.
+    $this->assertText('Test Applicable');
+    $this->assertText('first_nice_heavier_test_plugin');
+    $this->assertText('first_nicer_heavier_test_plugin');
+
+    // Check diff for an applicable field of testTextPlugin and
+    // testLighterTextPlugin. The plugin selected for this field should be the
+    // lightest one.
+    $this->assertText('Test Lighter Applicable');
+    $this->assertText('second_nice_lighter_test_plugin');
+    $this->assertText('second_nicer_lighter_test_plugin');
+
+    // Check diff for a non applicable field of both test plugins.
+    $this->assertText('Test Not Applicable');
+    $this->assertText('not_applicable');
+    $this->assertText('nicer_not_applicable');
   }
 
 }

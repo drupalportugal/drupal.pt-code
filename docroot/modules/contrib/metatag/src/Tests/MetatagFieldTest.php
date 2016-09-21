@@ -1,8 +1,4 @@
 <?php
-/**
- * @file
- * Contains \Drupal\metatag\Tests\MetatagFieldTest.
- */
 
 namespace Drupal\metatag\Tests;
 
@@ -50,7 +46,7 @@ class MetatagFieldTest extends WebTestBase {
     'metatag',
 
     // Some extra custom logic for testing Metatag.
-    'metatag_test',
+    'metatag_test_tag',
 
     // Needed for testSecureTagOption().
     'metatag_open_graph',
@@ -95,13 +91,15 @@ class MetatagFieldTest extends WebTestBase {
    */
   public function testMetatag() {
     // Create a test entity.
+    $this->drupalGet('entity_test/add');
+    $this->assertResponse(200);
+    $this->assertNoText('Fatal error');
     $edit = [
       'name[0][value]' => 'Barfoo',
       'user_id[0][target_id]' => 'foo (' . $this->adminUser->id() . ')',
       'field_metatag[0][basic][metatag_test]' => 'Kilimanjaro',
     ];
-
-    $this->drupalPostForm('entity_test/add', $edit, t('Save'));
+    $this->drupalPostForm(NULL, $edit, t('Save'));
     $entities = entity_load_multiple_by_properties('entity_test', [
       'name' => 'Barfoo',
     ]);
@@ -118,13 +116,15 @@ class MetatagFieldTest extends WebTestBase {
 
     // @TODO: This should not be required, but metatags does not invalidate
     // cache upon setting globals.
-    Cache::invalidateTags(array('entity_test:' . $entity->id()));
+    Cache::invalidateTags(['entity_test:' . $entity->id()]);
 
     // Update the Global defaults and test them.
-    $values = array(
+    $this->drupalGet('admin/config/search/metatag/global');
+    $this->assertResponse(200);
+    $values = [
       'keywords' => 'Purple monkey dishwasher',
-    );
-    $this->drupalPostForm('admin/config/search/metatag/global', $values, 'Save');
+    ];
+    $this->drupalPostForm(NULL, $values, 'Save');
     $this->assertText('Saved the Global Metatag defaults.');
     $this->drupalGet('entity_test/' . $entity->id());
     $this->assertResponse(200);
@@ -133,12 +133,14 @@ class MetatagFieldTest extends WebTestBase {
     $this->assertEqual((string) $elements[0]['content'], $values['keywords'], 'Default keywords applied');
 
     // Tests metatags with URLs work.
+    $this->drupalGet('entity_test/add');
+    $this->assertResponse(200);
     $edit = [
       'name[0][value]' => 'UrlTags',
       'user_id[0][target_id]' => 'foo (' . $this->adminUser->id() . ')',
       'field_metatag[0][advanced][original_source]' => 'http://example.com/foo.html',
     ];
-    $this->drupalPostForm('entity_test/add', $edit, t('Save'));
+    $this->drupalPostForm(NULL, $edit, t('Save'));
     $entities = entity_load_multiple_by_properties('entity_test', [
       'name' => 'UrlTags',
     ]);
@@ -153,10 +155,10 @@ class MetatagFieldTest extends WebTestBase {
     // Test a route where the entity for that route does not implement
     // ContentEntityInterface.
     $controller = \Drupal::entityTypeManager()->getStorage('contact_form');
-    $controller->create(array(
+    $controller->create([
       'id' => 'test_contact_form',
-    ))->save();
-    $account = $this->drupalCreateUser(array('access site-wide contact form'));
+    ])->save();
+    $account = $this->drupalCreateUser(['access site-wide contact form']);
     $this->drupalLogin($account);
     $this->drupalGet('contact/test_contact_form');
     $this->assertResponse(200);
@@ -170,10 +172,12 @@ class MetatagFieldTest extends WebTestBase {
    */
   public function testDefaultInheritance() {
     // First we set global defaults.
-    $global_values = array(
+    $this->drupalGet('admin/config/search/metatag/global');
+    $this->assertResponse(200);
+    $global_values = [
       'description' => 'Global description',
-    );
-    $this->drupalPostForm('admin/config/search/metatag/global', $global_values, 'Save');
+    ];
+    $this->drupalPostForm(NULL, $global_values, 'Save');
     $this->assertText('Saved the Global Metatag defaults.');
 
     // Now when we create an entity, global defaults are used to fill the form
@@ -190,13 +194,15 @@ class MetatagFieldTest extends WebTestBase {
    * To pass all HTML including escaped should be removed.
    */
   public function testHTMLIsRemoved() {
-    $values = array(
+    $this->drupalGet('admin/config/search/metatag/global');
+    $this->assertResponse(200);
+    $values = [
       'abstract' => 'No HTML here',
       'description' => '<html><body><p class="test">Surrounded by raw HTML</p></body></html>',
       'keywords' => '&lt;html&gt;&lt;body&gt;&lt;p class="test"&gt;Surrounded by escaped HTML&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;',
-    );
+    ];
 
-    $this->drupalPostForm('admin/config/search/metatag/global', $values, 'Save');
+    $this->drupalPostForm(NULL, $values, 'Save');
     $this->assertText('Saved the Global Metatag defaults.');
     drupal_flush_all_caches();
     $this->drupalGet('hit-a-404');
@@ -217,11 +223,13 @@ class MetatagFieldTest extends WebTestBase {
    * unchanged.
    */
   public function testSecureTagOption() {
-    $values = array(
+    $this->drupalGet('admin/config/search/metatag/global');
+    $this->assertResponse(200);
+    $values = [
       'og_image' => 'http://blahblahblah.com/insecure.jpg',
       'og_image_secure_url' => 'http://blahblahblah.com/secure.jpg',
-    );
-    $this->drupalPostForm('admin/config/search/metatag/global', $values, 'Save');
+    ];
+    $this->drupalPostForm(NULL, $values, 'Save');
     $this->assertText('Saved the Global Metatag defaults.');
     drupal_flush_all_caches();
     $this->drupalGet('');

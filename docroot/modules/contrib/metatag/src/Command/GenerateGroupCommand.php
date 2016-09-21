@@ -10,10 +10,10 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Drupal\Console\Command\GeneratorCommand;
-use Drupal\Console\Command\ServicesTrait;
-use Drupal\Console\Command\ModuleTrait;
-use Drupal\Console\Command\FormTrait;
-use Drupal\Console\Command\ConfirmationTrait;
+use Drupal\Console\Command\Shared\ContainerAwareCommandTrait;
+use Drupal\Console\Command\Shared\ModuleTrait;
+use Drupal\Console\Command\Shared\FormTrait;
+use Drupal\Console\Command\Shared\ConfirmationTrait;
 use Drupal\Console\Style\DrupalStyle;
 use Drupal\metatag\Generator\MetatagGroupGenerator;
 
@@ -25,7 +25,8 @@ use Drupal\metatag\Generator\MetatagGroupGenerator;
  * @package Drupal\metatag
  */
 class GenerateGroupCommand extends GeneratorCommand {
-  use ServicesTrait;
+
+  use ContainerAwareCommandTrait;
   use ModuleTrait;
   use FormTrait;
   use ConfirmationTrait;

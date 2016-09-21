@@ -1,7 +1,7 @@
 eu_cookie_compliance.settings:
   path: '/admin/config/system/eu-cookie-compliance'
   defaults:
-    _form: '\Drupal\eu_cookie_compliance\Form\EuCookieComplianceAdminForm'
+    _form: '\Drupal\eu_cookie_compliance\Form\EuCookieComplianceConfigForm'
     _title: 'EU Cookie Compliance'
   requirements:
-    _permission: 'administer EU Cookie Compliance popup'
+    _permission: 'administer eu cookie compliance popup'

@@ -1,9 +1,8 @@
 diff.revisions_diff:
-  path: '/node/{node}/revisions/view/{left_vid}/{right_vid}/{filter}'
+  path: '/node/{node}/revisions/view/{left_revision}/{right_revision}/{filter}'
   defaults:
     _controller: '\Drupal\diff\Controller\NodeRevisionController::compareNodeRevisions'
     _title: Diff General Settings
-    filter: 'raw'
   requirements:
     _access_node_revision: 'view'
   options:

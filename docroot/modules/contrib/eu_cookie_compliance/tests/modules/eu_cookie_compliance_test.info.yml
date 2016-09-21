@@ -1,0 +1,8 @@
+name: EUCC module tests
+type: module
+description: Support module for EUCC testing.
+package: Testing
+version: VERSION
+core: 8.x
+dependencies:
+  - eu_cookie_compliance

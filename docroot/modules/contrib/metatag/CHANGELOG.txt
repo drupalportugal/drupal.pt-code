@@ -1,3 +1,63 @@
+Metatag 8.x-1.0-beta10, 2016-08-22
+----------------------------------
+#2747793 by rajeshwari10, cilefen, DamienMcKenna: Removed the @file docblocks.
+#2764163 by chrisfree, markdorison: Allow the 'referrer' meta tag to not have a
+  value selected.
+#2762981 by felribeiro, DamienMcKenna: Changed codebase to only use short array
+  syntax.
+#2753595 by sylus: Moved the extra XML namespaces to the OpenGraph module.
+#2765137 by balsama: Don't display the installation message during site install,
+  it looks funny.
+#2759843 by DamienMcKenna: Removed the Alexa verification tag.
+#2759855 by DamienMcKenna: Removed the Yahoo verification tag.
+#2759917 by Nikhilesh Gupta, cilefen: Remove unused imports / 'use' statements.
+#2759927 by Nikhilesh Gupta: Replace deprecated \Drupal::entityTypeManager()
+  with \Drupal::entityManager().
+#2759919 by Nikhilesh Gupta: Replace deprecated entity->urlInfo() with
+  entity->toUrl().
+#2755225 by jlbellido: Corrected the 'type' tag generator definition in
+  tag.php.twig.
+#2759931 by Nikhilesh Gupta: Replace deprecated ConfigEntityListBuilder::
+  getLabel() with entity->label().
+#2761231 by ashwin.shaharkar: Minor fix to image tag form selection logic.
+#2745177 by DamienMcKenna, cilefen: Added tests for each submodule to ensure
+  they can be enabled and that each meta tag can be used.
+#2750705 by susannecoates, jalpesh: Updated description of the Google Play app
+  ID meta tag.
+#2752239 by Saphyel, sylus, DamienMcKenna: Temporary fix for DrupalConsole
+  integration.
+#2775245 by DamienMcKenna: Fix tests.
+#2776407 by cilefen: Module names must be wrapped in quotes if they contain
+  certain characters.
+By DamienMcKenna: Renamed the custom routes module.
+#2745173 by jibellido: Tag generator now appends metatag_tag.schema.yml.
+#2673902 by DamienMcKenna: Confirm that forum posts can be loaded when the
+  module is enabled and outputting meta tags.
+#2707791 by ashwin.shaharkar, DamienMcKenna, Shreya Shetty, MattDanger: Changed
+  the Description and Abstract meta tags to use a textarea, matching the D7
+  branch.
+#2780025 by DamienMcKenna: Basic tests for the output of every meta tag. Fixes
+  the output of all Google Plus tags. Fixed the test route module.
+#2746031 by jalpesh, cilefen, DamienMcKenna, susannecoates: Fixed output of all
+  Twitter Cards meta tags.
+#2780109 by DamienMcKenna: Always run drupalGet() before drupalPostForm() to
+  ensure the form loads correctly.
+#2748615 by yannickoo, DamienMcKenna, agentrickard, SteffenR, paulmckibben: Try
+  generating an empty entity on entity-add (e.g. node/add/*) so default values
+  can be filled in.
+#2775441 by tom_ek, DamienMcKenna: Replace deprecated core entity APIs with the
+  newer ones.
+#2762981 by DamienMcKenna: More codebase changes to only use short array syntax.
+#2774807 by DamienMcKenna, Berdir, hussainweb: Token browser showed items that
+  were irrelevant, and didn't show the correct entities on default config forms.
+#2748615 by yannickoo, DamienMcKenna, SteffenR: The default configurations were
+  not loading properly in entity form fields.
+#2752239 by DamienMcKenna: Fixes to Drupal:Console integration.
+#1865228 by DamienMcKenna, greggles: Added the Author meta tag.
+#2493711 by DamienMcKenna: Added the geographical meta tags.
+#1343914 by DamienMcKenna, Dave Reid: Added the (Google+) Publisher meta tag.
+
+
 Metatag 8.x-1.0-beta9, 2016-06-02
 ---------------------------------
 #2725895 by DamienMcKenna: Fixed the name of the Validation submodule to avoid

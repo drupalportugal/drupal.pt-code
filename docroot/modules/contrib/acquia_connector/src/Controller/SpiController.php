@@ -322,10 +322,16 @@ class SpiController extends ControllerBase {
    *   The Acquia Hosted name.
    */
   public function getAcquiaHostedName() {
-    $subscription_name = $this->config('acquia_connector.settings')->get('subscription_name');
+    $config = $this->config('acquia_connector.settings');
+    $subscription_name = $config->get('subscription_name');
 
     if ($this->checkAcquiaHosted() && $subscription_name) {
-      return $this->config('acquia_connector.settings')->get('subscription_name') . ': ' . $_SERVER['AH_SITE_ENVIRONMENT'];
+
+      if ($config->get('spi.is_multisite')) {
+        return $config->get('subscription_name') . '__' . $config->get('spi.multisite_identifier') . ': ' . $_SERVER['AH_SITE_ENVIRONMENT'];
+      }
+
+      return $config->get('subscription_name') . ': ' . $_SERVER['AH_SITE_ENVIRONMENT'];
     }
   }
 
@@ -336,11 +342,16 @@ class SpiController extends ControllerBase {
    *   The suggested Acquia Hosted machine name.
    */
   public function getAcquiaHostedMachineName() {
-    $sub_data = $this->config('acquia_connector.settings')->get('subscription_data');
+    $config = $this->config('acquia_connector.settings');
+    $sub_data = $config->get('subscription_data');
 
     if ($this->checkAcquiaHosted() && $sub_data) {
       $uuid = new StatusController();
       $sub_uuid = str_replace('-', '_', $uuid->getIdFromSub($sub_data));
+
+      if ($config->get('spi.is_multisite')) {
+        return $sub_uuid . '__' . $_SERVER['AH_SITE_NAME'] . '__' . $config->get('spi.machine_multisite_identifier');
+      }
 
       return $sub_uuid . '__' . $_SERVER['AH_SITE_NAME'];
     }

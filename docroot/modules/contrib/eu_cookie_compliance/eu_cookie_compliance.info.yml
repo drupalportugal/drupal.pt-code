@@ -4,3 +4,5 @@ description: 'This module aims at making the website compliant with the new EU c
 package: custom
 core: 8.x
 configure: eu_cookie_compliance.settings
+dependencies:
+  - filter

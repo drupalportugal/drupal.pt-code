@@ -1,13 +1,9 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\diff\FieldDiffBuilderBase
- */
-
 namespace Drupal\diff;
 
 use Drupal\Component\Plugin\PluginBase;
+use Drupal\Core\Field\FieldStorageDefinitionInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
@@ -166,4 +162,10 @@ abstract class FieldDiffBuilderBase extends PluginBase implements FieldDiffBuild
     return array();
   }
 
+  /**
+   * {@inheritdoc}
+   */
+  public static function isApplicable(FieldStorageDefinitionInterface $field_definition) {
+    return TRUE;
+  }
 }

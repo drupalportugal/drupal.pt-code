@@ -157,9 +157,60 @@ class SettingsForm extends ConfigFormBase {
     $acquia_hosted = \Drupal::service('acquia_connector.spi')->checkAcquiaHosted();
 
     if ($acquia_hosted) {
-      $form['identification']['#description'] = $this->t('Acquia hosted sites are automatically provided with a name and machine name.');
+      $form['identification']['site']['name']['#description'] = $this->t('Acquia hosted sites are automatically provided with a name and machine name.');
       $form['identification']['site']['name']['#default_value'] = \Drupal::service('acquia_connector.spi')->getAcquiaHostedName();
       $form['identification']['site']['name']['#disabled'] = TRUE;
+
+      $form['identification']['multisite'] = array(
+        '#type' => 'details',
+        '#title' => $this->t('Multisite settings'),
+        '#open' => $config->get('spi.is_multisite'),
+      );
+
+      $form['identification']['multisite']['description']['#markup'] = $this->t('This is only relevant if this site is a part of a Drupal <a href=":url">multisite configuration</a>.', array(
+        ':url' => Url::fromUri('https://docs.acquia.com/cloud/multi-site')->getUri(),
+      ));
+      $form['identification']['multisite']['is_multisite'] = array(
+        '#type' => 'checkbox',
+        '#title' => $this->t('Multisite'),
+        '#default_value' => $config->get('spi.is_multisite'),
+        '#description' => $this->t('Selecting this option allows each site in a multisite to be displayed as a separate record in Acquia Insight.'),
+      );
+
+      $form['identification']['multisite']['multisite_identifier'] = array(
+        '#type' => 'textfield',
+        '#title' => $this->t('Enter the unique identifier for the site'),
+        '#maxlength' => 10,
+        '#default_value' => $config->get('spi.multisite_identifier'),
+        '#states' => array(
+          'visible' => array(
+            ':input[name="is_multisite"]' => array('checked' => TRUE),
+          ),
+          'required' => array(
+            ':input[name="is_multisite"]' => array('checked' => TRUE),
+          ),
+        ),
+      );
+
+      $form['identification']['multisite']['machine_multisite_identifier'] = array(
+        '#type' => 'machine_name',
+        '#default_value' => $config->get('spi.machine_multisite_identifier'),
+        '#maxlength' => 10,
+        '#required' => FALSE,
+        '#machine_name' => array(
+          'exists' => array($this, 'exists'),
+          'source' => array('identification', 'multisite', 'multisite_identifier'),
+        ),
+        '#states' => array(
+          'visible' => array(
+            ':input[name="is_multisite"]' => array('checked' => TRUE),
+          ),
+          'required' => array(
+            ':input[name="is_multisite"]' => array('checked' => TRUE),
+          ),
+        ),
+      );
+
     }
 
     $form['identification']['site']['machine_name'] = array(
@@ -303,7 +354,9 @@ class SettingsForm extends ConfigFormBase {
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
     $config = \Drupal::configFactory()->getEditable('acquia_connector.settings');
+    $acquia_hosted = \Drupal::service('acquia_connector.spi')->checkAcquiaHosted();
     $values = $form_state->getValues();
+
     $config->set('spi.module_diff_data', $values['module_diff_data'])
       ->set('spi.site_name', $values['name'])
       ->set('spi.dynamic_banner', $values['acquia_dynamic_banner'])
@@ -313,6 +366,14 @@ class SettingsForm extends ConfigFormBase {
       ->set('spi.use_cron', $values['use_cron'])
       ->set('spi.set_variables_override', $values['alter_variables'])
       ->save();
+
+    // Set unique identifier for the multisite.
+    if ($acquia_hosted) {
+      $config->set('spi.multisite_identifier', $values['multisite_identifier'])
+        ->set('spi.machine_multisite_identifier', $values['machine_multisite_identifier'])
+        ->set('spi.is_multisite', $values['is_multisite'])
+        ->save();
+    }
 
     // If the machine name changed, send information so we know if it is a dupe.
     if ($values['machine_name'] != $this->config('acquia_connector.settings')->get('spi.site_machine_name')) {

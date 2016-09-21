@@ -1,11 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains
- * \Drupal\features\Plugin\FeaturesAssignment\FeaturesAssignmentSiteType.
- */
-
 namespace Drupal\features\Plugin\FeaturesAssignment;
 
 use Drupal\features\FeaturesAssignmentMethodBase;
@@ -35,8 +29,8 @@ class FeaturesAssignmentSiteType extends FeaturesAssignmentMethodBase {
     $machine_name = 'site';
     $name = $this->t('Site');
     $description = $this->t('Provides site components.');
-    $this->featuresManager->initPackage($machine_name, $name, $description, 'module', $current_bundle);
-    $this->assignPackageByConfigTypes($machine_name, $force);
+    $package = $this->featuresManager->initPackage($machine_name, $name, $description, 'module', $current_bundle);
+    $this->assignPackageByConfigTypes($package->getMachineName(), $force);
   }
 
 }

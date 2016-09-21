@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @file
  * Installation hooks for diff module.
@@ -24,4 +25,40 @@ function diff_update_8002() {
   $config = $config_factory->getEditable('diff.settings');
   $config->set('general_settings.revision_pager_limit', 50);
   $config->save(TRUE);
+}
+
+/**
+ * Delete stale theme configuration.
+ */
+function diff_update_8003() {
+  $config = \Drupal::configFactory()->getEditable('diff.settings');
+  $config->clear('general_settings.theme');
+  $config->save();
+}
+
+/**
+ * Enable all layout plugins to be used.
+ */
+function diff_update_8004() {
+  $config = \Drupal::configFactory()->getEditable('diff.settings');
+  $plugins = \Drupal::service('plugin.manager.diff.layout')->getDefinitions();
+  foreach ($plugins as $key => $value) {
+    $plugin_options[$key] = $value['label'];
+    $config->set('general_settings.layout_plugins.' . $key . '.enabled', TRUE);
+  }
+  $config->save();
+}
+
+/**
+ * Update settings.
+ */
+function diff_update_8005() {
+  $config = \Drupal::configFactory()->getEditable('diff.settings');
+  $plugins = \Drupal::service('plugin.manager.diff.layout')->getDefinitions();
+  $config->clear('general_settings.layout_plugins');
+  foreach ($plugins as $key => $value) {
+    $plugin_options[$key] = $value['label'];
+    $config->set('general_settings.layout_plugins.' . $key . '.enabled', TRUE);
+  }
+  $config->save();
 }

@@ -2,30 +2,28 @@
 
 namespace Drupal\diff\Tests;
 
-use Drupal\simpletest\WebTestBase;
-
 /**
  * Test diff functionality with localization and translation.
  *
  * @group diff
  */
-class DiffLocaleTest extends WebTestBase {
+class DiffLocaleTest extends DiffTestBase {
 
   /**
    * Modules to enable.
    *
    * @var array
    */
-  public static $modules = array('node', 'diff', 'locale', 'content_translation');
+  public static $modules = [
+    'locale',
+    'content_translation',
+  ];
 
   /**
    * {@inheritdoc}
    */
   protected function setUp() {
     parent::setUp();
-
-    // Create the Article content type.
-    $this->drupalCreateContentType(array('type' => 'article', 'name' => 'Article'));
 
     $this->drupalLogin($this->rootUser);
   }
@@ -82,13 +80,13 @@ class DiffLocaleTest extends WebTestBase {
 
     // View differences between revisions. Check that they don't mix up.
     $this->drupalGet('node/' . $english_node->id() . '/revisions');
-    $this->drupalGet('node/' . $english_node->id() . '/revisions/view/1/2');
-    $this->assertText('Changes to Title');
+    $this->drupalGet('node/' . $english_node->id() . '/revisions/view/1/2/split_fields');
+    $this->assertText('Title');
     $this->assertText('English node');
     $this->assertText('Updated title');
     $this->drupalGet('fr/node/' . $english_node->id() . '/revisions');
-    $this->drupalGet('fr/node/' . $english_node->id() . '/revisions/view/1/3');
-    $this->assertText('Changes to Title');
+    $this->drupalGet('fr/node/' . $english_node->id() . '/revisions/view/1/3/split_fields');
+    $this->assertText('Title');
     $this->assertNoText('English node');
     $this->assertNoText('Updated title');
     $this->assertText('French node');
@@ -149,19 +147,19 @@ class DiffLocaleTest extends WebTestBase {
     $french_node->save();
 
     // Compare first two revisions.
-    $this->drupalGet('node/' . $node->id() . '/revisions/view/1/2');
+    $this->drupalGet('node/' . $node->id() . '/revisions/view/1/2/split_fields');
     $diffs = $this->xpath('//span[@class="diffchange"]');
     $this->assertEqual($diffs[0], 'english_revision_0');
     $this->assertEqual($diffs[1], 'english_revision_1');
 
     // Check next difference.
-    $this->clickLink('Next difference >');
+    $this->clickLink('Next change >');
     $diffs = $this->xpath('//span[@class="diffchange"]');
     $this->assertEqual($diffs[0], 'english_revision_1');
     $this->assertEqual($diffs[1], 'english_revision_2');
 
     // There shouldn't be other differences in the current language.
-    $this->assertNoLink('Next difference >');
+    $this->assertNoLink('Next change >');
   }
 
   /**
@@ -194,13 +192,13 @@ class DiffLocaleTest extends WebTestBase {
     $this->assertEqual(count($element), 4);
 
     // Compare the first two revisions.
-    $this->drupalGet('node/' . $node->id() . '/revisions/view/1/2');
+    $this->drupalGet('node/' . $node->id() . '/revisions/view/1/2/split_fields');
     $diffs = $this->xpath('//span[@class="diffchange"]');
     $this->assertEqual($diffs[0], 'undefined_language_revision_0');
     $this->assertEqual($diffs[1], 'undefined_language_revision_1');
 
     // Compare the next two revisions.
-    $this->clickLink('Next difference >');
+    $this->clickLink('Next change >');
     $diffs = $this->xpath('//span[@class="diffchange"]');
     $this->assertEqual($diffs[0], 'undefined_language_revision_1');
     $this->assertEqual($diffs[1], 'undefined_language_revision_2');

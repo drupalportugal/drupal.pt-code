@@ -13,6 +13,13 @@ eu_cookie_compliance.settings:
     eu_only:
       type: boolean
       label: 'Only display popup in EU countries'
+    export:
+      type: mapping
+      label: 'Export'
+      mapping:
+        folder:
+          type: string
+          label: 'Folder'
     popup_position:
       type: boolean
       label: 'Place the pop-up at the top of the website'
@@ -31,9 +38,9 @@ eu_cookie_compliance.settings:
           label: 'Popup message - Value'
         format:
           type: string
-          label: 'Popip message - Format'
+          label: 'Popup message - Format'
     popup_agreed_enabled:
-      type: string
+      type: boolean
       label: 'Enable thank you message'
     popup_hide_agreed:
       type: boolean
@@ -53,9 +60,9 @@ eu_cookie_compliance.settings:
           label: 'Popup message Agree - Value'
         format:
           type: string
-          label: 'Popip message  - Format'
+          label: 'Popup message  - Format'
     popup_link:
-      type: path
+      type: string
       label: 'Privacy policy link'
     popup_link_new_window:
       type: boolean
@@ -87,3 +94,10 @@ eu_cookie_compliance.settings:
     exclude_paths:
       type: text
       label: 'Exclude paths'
+    export:
+      type: mapping
+      label: 'Export'
+      mapping:
+        folder:
+          type: text
+          label: 'folder'

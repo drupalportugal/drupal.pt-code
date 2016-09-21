@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\metatag\MetatagDefaultsListBuilder.
- */
-
 namespace Drupal\metatag;
 
 use Drupal\Core\Config\Entity\ConfigEntityListBuilder;
@@ -21,7 +16,7 @@ class MetatagDefaultsListBuilder extends ConfigEntityListBuilder {
   public function load() {
     $entities = parent::load();
     // Move the Global defaults to the top.
-    return array('global' => $entities['global']) + $entities;
+    return ['global' => $entities['global']] + $entities;
   }
 
   /**
@@ -49,11 +44,11 @@ class MetatagDefaultsListBuilder extends ConfigEntityListBuilder {
     // Global and entity defaults can be reverted but not deleted.
     if (strpos($entity->id(), '__') === FALSE) {
       unset($operations['delete']);
-      $operations['revert'] = array(
+      $operations['revert'] = [
         'title' => t('Revert'),
         'weight' => $operations['edit']['weight'] + 1,
-        'url' => $entity->urlInfo('revert-form'),
-      );
+        'url' => $entity->toUrl('revert-form'),
+      ];
     }
 
     return $operations;
@@ -83,7 +78,7 @@ class MetatagDefaultsListBuilder extends ConfigEntityListBuilder {
     }
 
     if (!empty($inherits)) {
-      $output .= '<div><p>' . t('Inherits meta tags from: @inherits', array('@inherits' => $inherits)) . '</p></div>';
+      $output .= '<div><p>' . t('Inherits meta tags from: @inherits', ['@inherits' => $inherits]) . '</p></div>';
     }
     $tags = $entity->get('tags');
     if (count($tags)) {
@@ -97,25 +92,25 @@ class MetatagDefaultsListBuilder extends ConfigEntityListBuilder {
 
     $output .= '</div></div>';
 
-    return array(
-      'data' => array(
+    return [
+      'data' => [
         '#type' => 'details',
         '#prefix' => $prefix,
-        '#title' => $this->getLabel($entity),
-        'config' => array(
+        '#title' => $entity->label(),
+        'config' => [
           '#markup' => $output,
-        ),
-      ),
-    );
+        ],
+      ],
+    ];
   }
 
   /**
    * {@inheritdoc}
    */
   public function render() {
-    $build['header'] = array(
+    $build['header'] = [
       '#markup' => '<p>' . t("To view a summary of the default meta tags and the inheritance, click on a meta tag type. If you need to set metatags for a specific entity, edit its bundle and add the Metatag field.") . '</p>',
-    );
+    ];
     return $build + parent::render();
   }
 }

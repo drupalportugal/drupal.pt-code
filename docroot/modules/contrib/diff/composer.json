@@ -1,0 +1,12 @@
+{
+  "name": "drupal/diff",
+  "description": "Compares two entity revisions",
+  "type": "drupal-module",
+  "license": "GPL-2.0+",
+  "support": {
+    "issues": "https://www.drupal.org/project/issues/diff"
+  },
+  "require":{
+    "mkalkbrenner/php-htmldiff-advanced": "~0.0.8"
+  }
+}

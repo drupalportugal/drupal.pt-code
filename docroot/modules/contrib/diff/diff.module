@@ -88,6 +88,25 @@ function diff_help($route_name, RouteMatchInterface $route_match) {
 }
 
 /**
+ * Implements hook_requirements().
+ */
+function diff_requirements($phase) {
+  $requirements = [];
+
+  $has_htmlDiffAdvanced = class_exists('\HtmlDiffAdvanced');
+
+  $requirements['html_diff_advanced'] = [
+    'title' => t('Diff'),
+    'value' => $has_htmlDiffAdvanced ? t('Found') : t('Not found'),
+  ];
+  if (!$has_htmlDiffAdvanced) {
+    $requirements['html_diff_advanced']['severity'] = REQUIREMENT_ERROR;
+    $requirements['html_diff_advanced']['description'] = t("The HTML Diff layout requires the HtmlDiffAdvanced library. Please consult README.txt for installation instructions.");
+  }
+  return $requirements;
+}
+
+/**
  * Returns the label of a certain field.
  *
  * Therefore it looks up in all bundles to find the most used field.
@@ -122,4 +141,22 @@ function _diff_field_label($entity_type, $field_name) {
   // Return the labels sorted by the most used.
   arsort($labels);
   return array_keys($labels);
+}
+
+/**
+ * Implements hook_theme().
+ */
+
+function diff_theme() {
+  $theme = [];
+
+  $theme['node_diff'] = array(
+    'render element' => 'elements'
+  );
+
+  return $theme;
+}
+
+function template_preprocess_node_diff(&$variables) {
+  template_preprocess_node($variables);
 }

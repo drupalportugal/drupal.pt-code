@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\diff\Routing\DiffRouteProvider.
- */
-
 namespace Drupal\diff\Routing;
 
 use Drupal\Core\Entity\EntityTypeInterface;
@@ -41,8 +36,8 @@ class DiffRouteProvider implements EntityRouteProviderInterface {
     if ($entity_type->hasLinkTemplate('revisions-diff')) {
       $route = new Route($entity_type->getLinkTemplate('revisions-diff'));
       $route->addDefaults([
-        '_controller' => '\Drupal\diff\Controller\GenericRevisionController::compareEntityRevisions',
-        'filter' => 'raw',
+        '_controller' => '\Drupal\diff\Controller\PluginRevisionController::compareEntityRevisions',
+        'filter' => 'split_fields',
       ]);
       $route->addRequirements([
         '_entity_access' => $entity_type->id() . '.view',

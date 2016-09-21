@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\Tests\features\Unit\PackageTest.
- */
-
 namespace Drupal\Tests\features\Unit;
 
 use Drupal\features\Package;
@@ -23,8 +18,8 @@ class PackageTest extends \PHPUnit_Framework_TestCase {
 
     $this->assertEquals([], $package->getFeaturesInfo());
     $package->setFeaturesInfo(['bundle' => 'test_bundle']);
-    $this->assertEquals('test_bundle', $package->getBundle());
     $this->assertEquals(['bundle' => 'test_bundle'], $package->getFeaturesInfo());
+    $this->assertEquals('test_bundle', $package->getBundle());
   }
 
   public function testGetConfig() {
