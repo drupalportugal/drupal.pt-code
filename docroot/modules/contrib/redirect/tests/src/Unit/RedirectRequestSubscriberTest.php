@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains Drupal\Tests\redirect\Unit\RedirectRequestSubscriberTest.
- */
-
 namespace Drupal\Tests\redirect\Unit;
 
 use Drupal\Core\Language\Language;

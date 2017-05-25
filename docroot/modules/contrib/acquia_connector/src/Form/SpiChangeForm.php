@@ -53,10 +53,6 @@ class SpiChangeForm extends ConfigFormBase {
       $env_changes = $config->get('spi.environment_changes');
       $off_acquia_hosting = array_key_exists('acquia_hosted', $env_changes) && !$acquia_hosted;
 
-      $storage = &$form_state->getStorage();
-      $storage['off_acquia_hosting'] = $off_acquia_hosting;
-      $form_state->setStorage($storage);
-
       $form['env'] = array(
         '#type' => 'fieldset',
         '#title' => $this->t('<strong>The following changes have been detected in your site environment:</strong>'),
@@ -164,16 +160,6 @@ class SpiChangeForm extends ConfigFormBase {
         ->set('spi.site_machine_name', $values['machine_name'])
         ->save();
     }
-
-    // Remove multisite_identifier if not acquia_hosting.
-    $storage = &$form_state->getStorage();
-    if ($config->get('spi.is_multisite') && $storage['off_acquia_hosting']) {
-      $config->clear('spi.multisite_identifier');
-      $config->clear('spi.is_multisite');
-      $config->clear('spi.machine_multisite_identifier');
-      $config->save();
-    }
-
     parent::submitForm($form, $form_state);
 
     // Send information as soon as the key/identifier pair is submitted.

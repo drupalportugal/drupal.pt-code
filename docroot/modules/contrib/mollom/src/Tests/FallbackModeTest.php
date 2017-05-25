@@ -1,7 +1,4 @@
 <?php
-/**
- * @file contains Drupal\mollom\Tests\FallbackModeTest
- */
 
 namespace Drupal\mollom\Tests;
 use Drupal\Core\Logger\RfcLogLevel;

@@ -20,6 +20,8 @@ class DiffFormatter extends CoreDiffFormatterBase {
    *   The config factory.
    */
   public function __construct(ConfigFactoryInterface $config_factory) {
+    parent::__construct($config_factory);
+
     $config = $config_factory->get('diff.settings');
     $this->leading_context_lines = $config->get('general_settings.context_lines_leading');
     $this->trailing_context_lines = $config->get('general_settings.context_lines_trailing');

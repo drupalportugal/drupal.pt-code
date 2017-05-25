@@ -1,7 +1,4 @@
 <?php
-/**
- * @file contains \Drupal\mollom_test_server\OAuthRequestParser.
- */
 
 namespace Drupal\mollom_test_server;
 

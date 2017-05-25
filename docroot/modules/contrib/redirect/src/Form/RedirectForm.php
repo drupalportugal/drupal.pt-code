@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\redirect\Form\RedirectForm.
- */
-
 namespace Drupal\redirect\Form;
 
 use Drupal\Component\Utility\UrlHelper;
@@ -14,7 +9,6 @@ use Drupal\Core\Routing\MatchingRouteNotFoundException;
 use Drupal\Core\Url;
 use Drupal\redirect\Entity\Redirect;
 use Drupal\Core\Form\FormStateInterface;
-use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 
 class RedirectForm extends ContentEntityForm {
 

@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\Tests\redirect\Kernel\Migrate\d6\PathRedirectTest.
- */
-
 namespace Drupal\Tests\redirect\Kernel\Migrate\d6;
 
 use Drupal\redirect\Entity\Redirect;

@@ -1,16 +1,10 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\redirect\Plugin\Field\FieldWidget\RedirectSourceWidget
- */
-
 namespace Drupal\redirect\Plugin\Field\FieldWidget;
 
 use Drupal\Component\Utility\UrlHelper;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Field\WidgetBase;
-use Drupal\link\Plugin\Field\FieldWidget\LinkWidget;
 use Drupal\Core\Url;
 use Drupal\Core\Form\FormStateInterface;
 use Symfony\Component\Routing\Exception\ResourceNotFoundException;
@@ -50,7 +44,7 @@ class RedirectSourceWidget extends WidgetBase {
       '#default_value' => $default_url_value,
       '#maxlength' => 2048,
       '#required' => $element['#required'],
-      '#field_prefix' => \Drupal::url('<front>', array(), array('absolute' => TRUE)),
+      '#field_prefix' => Url::fromRoute('<front>', array(), array('absolute' => TRUE))->toString(),
       '#attributes' => array('data-disable-refocus' => 'true'),
     );
 

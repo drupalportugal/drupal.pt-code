@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\redirect\Plugin\Field\FieldType\RedirectSourceItem.
- */
-
 namespace Drupal\redirect\Plugin\Field\FieldType;
 
 use Drupal\Component\Utility\Random;

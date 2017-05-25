@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\mollom\Plugin\Action\UnpublishReportComment.
- */
-
 namespace Drupal\mollom\Plugin\Action;
 
 use Drupal\Core\Action\ActionBase;

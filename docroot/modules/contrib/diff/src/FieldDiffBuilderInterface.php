@@ -7,6 +7,9 @@ use Drupal\Core\Field\FieldStorageDefinitionInterface;
 use Drupal\Core\Plugin\PluginFormInterface;
 use Drupal\Component\Plugin\ConfigurablePluginInterface;
 
+/**
+ * Builds a diff from field item list.
+ */
 interface FieldDiffBuilderInterface extends PluginFormInterface, ConfigurablePluginInterface {
 
   /**
@@ -47,4 +50,5 @@ interface FieldDiffBuilderInterface extends PluginFormInterface, ConfigurablePlu
    *   TRUE if the plugin can be used, FALSE otherwise.
    */
   public static function isApplicable(FieldStorageDefinitionInterface $field_definition);
+
 }

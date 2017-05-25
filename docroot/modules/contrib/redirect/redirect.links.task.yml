@@ -8,9 +8,3 @@ redirect.settings:
   base_route: redirect.list
   title: Settings
   weight: 50
-
-redirect.fix_404:
-  route_name: redirect.fix_404
-  base_route: redirect.list
-  title: Fix 404 pages
-  weight: 30

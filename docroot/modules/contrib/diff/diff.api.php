@@ -32,11 +32,11 @@
 /**
  * Alter the information provided in \Drupal\diff\Annotation\FieldDiffBuilder.
  *
- * @param $diff_builders
+ * @param array $diff_builders
  *   The array of field diff builders plugins, keyed on the machine-readable
- * plugin name.
+ *    plugin name.
  */
-function hook_field_diff_builder_info_alter(&$diff_builders) {
+function hook_field_diff_builder_info_alter(array &$diff_builders) {
   // Set a new label for the text_field_diff_builder plugin
   // instead of the one provided in the annotation.
   $diff_builders['text_field_diff_builder']['label'] = t('New label');
@@ -45,11 +45,11 @@ function hook_field_diff_builder_info_alter(&$diff_builders) {
 /**
  * Alter the information provided in \Drupal\diff\Annotation\DiffLayoutBuilder.
  *
- * @param $diff_layouts
+ * @param array $diff_layouts
  *   The array of diff layout builders plugins, keyed on the machine-readable
- *   plugin name.
+ *    plugin name.
  */
-function hook_diff_layout_builder_info_alter(&$diff_layouts) {
+function hook_diff_layout_builder_info_alter(array &$diff_layouts) {
   // Set a new label for the text_field_diff_builder plugin
   // instead of the one provided in the annotation.
   $diff_layouts['my_layout']['label'] = t('New label');

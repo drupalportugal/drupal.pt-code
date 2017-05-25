@@ -1,7 +1,4 @@
 <?php
-/**
- * @file contains Drupal\mollom\Tests\ModerateUserTest
- */
 
 namespace Drupal\mollom\Tests;
 use Drupal\Core\Session\AccountInterface;

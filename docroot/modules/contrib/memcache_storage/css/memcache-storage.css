@@ -1,9 +1,0 @@
-table#memcache-storage-detailed-debug,
-table#memcache-storage-common-debug {
-    background: white;
-    color: black;
-}
-
-table#memcache-storage-detailed-debug tr.miss {
-    color: red;
-}

@@ -7,6 +7,8 @@ use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Form\FormStateInterface;
 
 /**
+ * Plugin to diff text with summary fields.
+ *
  * @FieldDiffBuilder(
  *   id = "text_summary_field_diff_builder",
  *   label = @Translation("Text with Summary Field"),
@@ -28,7 +30,7 @@ class TextWithSummaryFieldBuilder extends FieldDiffBuilderBase {
       // Compare text formats.
       if ($this->configuration['compare_format'] == 1) {
         if (isset($values['format'])) {
-          $controller = $this->entityManager->getStorage('filter_format');
+          $controller = $this->entityTypeManager->getStorage('filter_format');
           $format = $controller->load($values['format']);
           // The format loaded successfully.
           $label = $this->t('Format');

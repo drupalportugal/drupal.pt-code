@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * @file
+ */
+
 namespace Drupal\acquia_search\Tests;
 
 use Drupal\simpletest\WebTestBase;
@@ -150,24 +154,24 @@ class AcquiaConnectorSearchTest extends WebTestBase {
     $this->clickLink('Edit', 0);
     // Check backend server.
     $this->assertText('Backend', t('The Backend checkbox label exists'), 'Acquia Search');
-    $this->assertFieldChecked('edit-backend-search-api-solr-acquia', t('Is used as a backend  Acquia Solr'), 'Acquia Search');
+    $this->assertFieldChecked('edit-backend-config-connector-solr-acquia-connector', t('Is used as a Solr Connector: Acquia'), 'Acquia Search');
     // Check field Solr server URI.
     $this->assertText('Solr server URI', t('The Solr server URI label exist'), 'Acquia Search');
     // Check http-protocol.
     $this->assertText('HTTP protocol', t('The HTTP protocol label exists'), 'Acquia Search');
-    $this->assertOptionSelected('edit-backend-config-scheme', 'http', t('By default selected HTTP protocol'), 'Acquia Search');
+    $this->assertOptionSelected('edit-backend-config-connector-config-scheme', 'http', t('By default selected HTTP protocol'), 'Acquia Search');
     // Check Solr host, port, path.
-    $this->assertText('Solr host', t('The Solr host  label exist'), 'Acquia Search');
-    $this->assertText('Solr port', t('The Solr port label exist'), 'Acquia Search');
-    $this->assertText('Solr path', t('The Solr path label exist'), 'Acquia Search');
+    $this->assertNoText('Solr host', t('The Solr host label does not exist'), 'Acquia Search');
+    $this->assertNoText('Solr port', t('The Solr port label does not exist'), 'Acquia Search');
+    $this->assertNoText('Solr path', t('The Solr path label does not exist'), 'Acquia Search');
     // Check Basic HTTP authentication.
-    $this->assertText('Basic HTTP authentication', t('The basic HTTP authentication label exist'), 'Acquia Search');
+    $this->assertNoText('Basic HTTP authentication', t('The basic HTTP authentication label does not exist'), 'Acquia Search');
     // Ckeck Solr version override.
     $this->assertText('Solr version override', t('The selectbox "Solr version label" exist'), 'Acquia Search');
-    $this->assertOptionSelected('edit-backend-config-advanced-solr-version', '4', t('By default selected Solr version 4.x'), 'Acquia Search');
+    $this->assertOptionByText('edit-backend-config-connector-config-workarounds-solr-version', 'Determine automatically', t('By default selected Solr version "Determine automatically"'), 'Acquia Search');
     // Ckeck HTTP method.
     $this->assertText('HTTP method', t('The HTTP method label exist'));
-    $this->assertOptionSelected('edit-backend-config-advanced-http-method', 'AUTO', t('By default selected AUTO HTTP method'), 'Acquia Search');
+    $this->assertOptionSelected('edit-backend-config-connector-config-workarounds-http-method', 'AUTO', t('By default selected AUTO HTTP method'), 'Acquia Search');
     // Server save.
     $this->drupalPostForm('/admin/config/search/search-api/server/' . $this->server . '/edit', array(), 'Save');
     // Delete server.

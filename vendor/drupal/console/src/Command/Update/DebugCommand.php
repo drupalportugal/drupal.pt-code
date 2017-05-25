@@ -10,12 +10,39 @@ namespace Drupal\Console\Command\Update;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Command\Command;
-use Drupal\Console\Command\Shared\ContainerAwareCommandTrait;
-use Drupal\Console\Style\DrupalStyle;
+use Drupal\Core\Update\UpdateRegistry;
+use Drupal\Console\Core\Command\Shared\CommandTrait;
+use Drupal\Console\Utils\Site;
+use Drupal\Console\Core\Style\DrupalStyle;
 
 class DebugCommand extends Command
 {
-    use ContainerAwareCommandTrait;
+    use CommandTrait;
+
+    /**
+     * @var Site
+     */
+    protected $site;
+
+    /**
+     * @var UpdateRegistry
+     */
+    protected $postUpdateRegistry;
+
+    /**
+     * DebugCommand constructor.
+     *
+     * @param Site           $site
+     * @param UpdateRegistry $postUpdateRegistry
+     */
+    public function __construct(
+        Site $site,
+        UpdateRegistry $postUpdateRegistry
+    ) {
+        $this->site = $site;
+        $this->postUpdateRegistry = $postUpdateRegistry;
+        parent::__construct();
+    }
 
     /**
      * @inheritdoc
@@ -28,15 +55,14 @@ class DebugCommand extends Command
     }
 
     /**
-     * @param \Symfony\Component\Console\Input\InputInterface   $input
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
+     * @inheritdoc
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $io = new DrupalStyle($input, $output);
 
-        $this->get('site')->loadLegacyFile('/core/includes/update.inc');
-        $this->get('site')->loadLegacyFile('/core/includes/install.inc');
+        $this->site->loadLegacyFile('/core/includes/update.inc');
+        $this->site->loadLegacyFile('/core/includes/install.inc');
 
         drupal_load_updates();
         update_fix_compatibility();
@@ -58,7 +84,7 @@ class DebugCommand extends Command
     }
 
     /**
-     * @param \Drupal\Console\Style\DrupalStyle $io
+     * @param \Drupal\Console\Core\Style\DrupalStyle $io
      * @param $requirements
      */
     private function populateRequirements(DrupalStyle $io, $requirements)
@@ -92,7 +118,7 @@ class DebugCommand extends Command
     }
 
     /**
-     * @param \Drupal\Console\Style\DrupalStyle $io
+     * @param \Drupal\Console\Core\Style\DrupalStyle $io
      * @param $updates
      */
     private function populateUpdate(DrupalStyle $io, $updates)
@@ -118,7 +144,7 @@ class DebugCommand extends Command
     }
 
     /**
-     * @param \Drupal\Console\Style\DrupalStyle $io
+     * @param \Drupal\Console\Core\Style\DrupalStyle $io
      */
     private function populatePostUpdate(DrupalStyle $io)
     {
@@ -130,8 +156,8 @@ class DebugCommand extends Command
           $this->trans('commands.update.debug.messages.post-update'),
           $this->trans('commands.update.debug.messages.description')
         ];
-        $updateRegistry = $this->getDrupalService('update.post_update_registry');
-        $postUpdates = $updateRegistry->getPendingUpdateInformation();
+
+        $postUpdates = $this->postUpdateRegistry->getPendingUpdateInformation();
         $tableRows = [];
         foreach ($postUpdates as $module => $module_updates) {
             foreach ($module_updates['pending'] as $postUpdateFunction => $message) {

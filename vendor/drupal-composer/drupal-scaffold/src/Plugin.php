@@ -8,11 +8,10 @@ namespace DrupalComposer\DrupalScaffold;
 
 use Composer\Composer;
 use Composer\EventDispatcher\EventSubscriberInterface;
+use Composer\Installer\PackageEvent;
 use Composer\Installer\PackageEvents;
 use Composer\IO\IOInterface;
-use Composer\Plugin\CommandEvent;
 use Composer\Plugin\PluginInterface;
-use Composer\Installer\PackageEvent;
 use Composer\Script\ScriptEvents;
 
 /**

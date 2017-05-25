@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains Drupal\mollom_test\Form\PostForm.
- */
-
 namespace Drupal\mollom_test\Form;
 use Drupal\Core\Entity\ContentEntityForm;
 use Drupal\Core\Form\FormStateInterface;

@@ -10,7 +10,6 @@ use Drupal\Component\Annotation\Plugin;
  * Diff builders handle how fields are compared by the diff module.
  *
  * @Annotation
- *
  */
 class DiffLayoutBuilder extends Plugin {
 
@@ -24,10 +23,17 @@ class DiffLayoutBuilder extends Plugin {
   /**
    * The human-readable name of the diff layout builder.
    *
-   * @ingroup plugin_translatable
-   *
    * @var \Drupal\Core\Annotation\Translation
+   *
+   * @ingroup plugin_translatable
    */
   public $label;
+
+  /**
+   * The plugin description.
+   *
+   * @var string
+   */
+  public $description;
 
 }

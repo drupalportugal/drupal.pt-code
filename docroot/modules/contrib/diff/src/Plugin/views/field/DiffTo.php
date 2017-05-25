@@ -3,6 +3,8 @@
 namespace Drupal\diff\Plugin\views\field;
 
 /**
+ * Provides View field diff to plugin.
+ *
  * @ViewsField("diff__to")
  */
 class DiffTo extends DiffPluginBase {

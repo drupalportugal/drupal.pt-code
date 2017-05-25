@@ -8,6 +8,8 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\comment\Plugin\Field\FieldType\CommentItemInterface;
 
 /**
+ * Plugin to diff comment fields.
+ *
  * @FieldDiffBuilder(
  *   id = "comment_field_diff_builder",
  *   label = @Translation("Comment Field Diff"),
@@ -41,9 +43,11 @@ class CommentFieldBuilder extends FieldDiffBuilderBase {
               case CommentItemInterface::OPEN:
                 $result[$field_key][] = $this->t('Comments for this entity are open.');
                 break;
+
               case CommentItemInterface::CLOSED:
                 $result[$field_key][] = $this->t('Comments for this entity are closed.');
                 break;
+
               case CommentItemInterface::HIDDEN:
                 $result[$field_key][] = $this->t('Comments for this entity are hidden.');
                 break;

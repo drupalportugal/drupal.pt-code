@@ -7,10 +7,11 @@
 
 namespace Drupal\Console\Command\Shared;
 
-use Drupal\Console\Style\DrupalStyle;
+use Drupal\Console\Core\Style\DrupalStyle;
 
 /**
  * Class EventsTrait
+ *
  * @package Drupal\Console\Command
  */
 trait EventsTrait
@@ -54,5 +55,14 @@ trait EventsTrait
         }
 
         return $eventCollection;
+    }
+
+    public function getEvents()
+    {
+        if (null === $this->events) {
+            $this->events = [];
+            $this->events = array_keys($this->eventDispatcher->getListeners());
+        }
+        return $this->events;
     }
 }

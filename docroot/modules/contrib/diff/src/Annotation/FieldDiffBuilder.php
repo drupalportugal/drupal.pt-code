@@ -29,9 +29,9 @@ class FieldDiffBuilder extends Plugin {
   /**
    * The human-readable name of the diff builder.
    *
-   * @ingroup plugin_translatable
-   *
    * @var \Drupal\Core\Annotation\Translation
+   *
+   * @ingroup plugin_translatable
    */
   public $label;
 
@@ -40,7 +40,7 @@ class FieldDiffBuilder extends Plugin {
    *
    * @var array
    */
-  public $field_types = array();
+  public $field_types = [];
 
   /**
    * The weight of the plugin that defines its importance when applied.

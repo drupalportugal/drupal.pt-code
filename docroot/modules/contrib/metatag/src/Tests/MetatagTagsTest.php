@@ -8,7 +8,7 @@ use Drupal\metatag\Tests\MetatagTagsTestBase;
 /**
  * Tests that each of the Metatag base tags work correctly.
  *
- * @group Metatag
+ * @group metatag
  */
 class MetatagTagsTest extends MetatagTagsTestBase {
 
@@ -17,12 +17,9 @@ class MetatagTagsTest extends MetatagTagsTestBase {
    */
   public $tags = [
     'abstract',
-    'author',
     'canonical_url',
     'content_language',
     'description',
-    'fb_admins',
-    'fb_app_id',
     'generator',
     'geo_placename',
     'geo_position',
@@ -43,7 +40,7 @@ class MetatagTagsTest extends MetatagTagsTestBase {
   /**
    * Each of these meta tags has a different tag name vs its internal name.
    */
-  public function get_test_tag_name($tag_name) {
+  public function getTestTagName($tag_name) {
     if ($tag_name == 'geo_placename') {
       $tag_name = 'geo.placename';
     }
@@ -55,12 +52,6 @@ class MetatagTagsTest extends MetatagTagsTestBase {
     }
     elseif ($tag_name == 'content_language') {
       $tag_name = 'content-language';
-    }
-    elseif ($tag_name == 'fb_admins') {
-      $tag_name = 'fb:admins';
-    }
-    elseif ($tag_name == 'fb_app_id') {
-      $tag_name = 'fb:app_id';
     }
     elseif ($tag_name == 'original_source') {
       $tag_name = 'original-source';
@@ -118,17 +109,17 @@ class MetatagTagsTest extends MetatagTagsTestBase {
   }
 
   /**
-   * Implements {meta_tag_name}_test_name_attribute() for 'fb_admins'.
+   * Implements {meta_tag_name}_test_output_xpath() for 'image_src'.
    */
-  public function fb_admins_test_name_attribute() {
-    return 'property';
+  public function image_src_test_output_xpath() {
+    return "//link[@rel='image_src']";
   }
 
   /**
-   * Implements {meta_tag_name}_test_name_attribute() for 'fb_app_id'.
+   * Implements {meta_tag_name}_test_value_attribute() for 'image_src'.
    */
-  public function fb_app_id_test_name_attribute() {
-    return 'property';
+  public function image_src_test_value_attribute() {
+    return 'href';
   }
 
   /**

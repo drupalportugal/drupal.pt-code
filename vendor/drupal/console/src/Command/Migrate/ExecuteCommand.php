@@ -16,27 +16,37 @@ use Drupal\migrate\MigrateExecutable;
 use Drupal\Console\Utils\MigrateExecuteMessageCapture;
 use Drupal\Console\Command\Shared\MigrationTrait;
 use Drupal\Console\Command\Shared\DatabaseTrait;
-use Drupal\Console\Command\Shared\ContainerAwareCommandTrait;
-use Drupal\Console\Style\DrupalStyle;
+use Drupal\Console\Core\Command\Shared\CommandTrait;
+use Drupal\Console\Core\Style\DrupalStyle;
 use Drupal\migrate\Plugin\MigrationInterface;
 use Drupal\State\StateInterface;
 use Symfony\Component\Console\Command\Command;
+use Drupal\migrate\Plugin\MigrationPluginManagerInterface;
 
 class ExecuteCommand extends Command
 {
     use DatabaseTrait;
     use MigrationTrait;
-    use ContainerAwareCommandTrait;
+    use CommandTrait;
 
     protected $migrateConnection;
 
     /**
-     * @DrupalCommand(
-     *     dependencies = {
-     *         "migrate"
-     *     }
-     * )
+     * @var MigrationPluginManagerInterface $pluginManagerMigration
      */
+    protected $pluginManagerMigration;
+
+    /**
+     * DebugCommand constructor.
+     *
+     * @param MigrationPluginManagerInterface $pluginManagerMigration
+     */
+    public function __construct(MigrationPluginManagerInterface $pluginManagerMigration)
+    {
+        $this->pluginManagerMigration = $pluginManagerMigration;
+        parent::__construct();
+    }
+
     protected function configure()
     {
         $this
@@ -45,59 +55,66 @@ class ExecuteCommand extends Command
             ->addArgument('migration-ids', InputArgument::IS_ARRAY, $this->trans('commands.migrate.execute.arguments.id'))
             ->addOption(
                 'site-url',
-                '',
+                null,
                 InputOption::VALUE_REQUIRED,
                 $this->trans('commands.migrate.execute.options.site-url')
             )
             ->addOption(
                 'db-type',
-                '',
+                null,
                 InputOption::VALUE_REQUIRED,
                 $this->trans('commands.migrate.setup.migrations.options.db-type')
             )
             ->addOption(
                 'db-host',
-                '',
+                null,
                 InputOption::VALUE_REQUIRED,
                 $this->trans('commands.migrate.execute.options.db-host')
             )
             ->addOption(
                 'db-name',
-                '',
+                null,
                 InputOption::VALUE_REQUIRED,
                 $this->trans('commands.migrate.execute.options.db-name')
             )
             ->addOption(
                 'db-user',
-                '',
+                null,
                 InputOption::VALUE_REQUIRED,
                 $this->trans('commands.migrate.execute.options.db-user')
             )
             ->addOption(
                 'db-pass',
-                '',
+                null,
                 InputOption::VALUE_OPTIONAL,
                 $this->trans('commands.migrate.execute.options.db-pass')
             )
             ->addOption(
                 'db-prefix',
-                '',
+                null,
                 InputOption::VALUE_OPTIONAL,
                 $this->trans('commands.migrate.execute.options.db-prefix')
             )
             ->addOption(
                 'db-port',
-                '',
+                null,
                 InputOption::VALUE_REQUIRED,
                 $this->trans('commands.migrate.execute.options.db-port')
             )
             ->addOption(
                 'exclude',
-                '',
+                null,
                 InputOption::VALUE_OPTIONAL | InputOption::VALUE_IS_ARRAY,
                 $this->trans('commands.migrate.execute.options.exclude'),
-                array()
+                []
+            )
+            ->addOption(
+                'source-base_path',
+                null,
+                InputOption::VALUE_OPTIONAL,
+                $this->trans('commands.migrate.execute.options.source-base_path')
             );
+        ;
     }
 
     /**
@@ -175,27 +192,28 @@ class ExecuteCommand extends Command
             $input->setOption('db-port', $db_port);
         }
         
-        $this->registerMigrateDB($input, $output);
-        $this->migrateConnection = $this->getDBConnection($output, 'default', 'upgrade');
+        $this->registerMigrateDB($input, $io);
+        $this->migrateConnection = $this->getDBConnection($io, 'default', 'upgrade');
 
         if (!$drupal_version = $this->getLegacyDrupalVersion($this->migrateConnection)) {
             $io->error($this->trans('commands.migrate.setup.migrations.questions.not-drupal'));
-            return;
+            return 1;
         }
         
         $database = $this->getDBInfo();
         $version_tag = 'Drupal ' . $drupal_version;
          
-        // Get migrations 
+        // Get migrations
         $migrations_list = $this->getMigrations($version_tag);
-        
-        if (!in_array('all', $migration_ids)) {
-            $migrations = $migration_ids;
+
+        // --migration-id prefix
+        $migration_id = $input->getArgument('migration-ids');
+
+        if (!in_array('all', $migration_id)) {
+            $migrations = $migrations_list;
         } else {
             $migrations = array_keys($this->getMigrations($version_tag));
         }
-        // --migration-id prefix
-        $migration_id = $input->getArgument('migration-ids');
          
         if (!$migration_id) {
             $migrations_ids = [];
@@ -242,6 +260,16 @@ class ExecuteCommand extends Command
             }
             $input->setOption('exclude', $exclude_ids);
         }
+
+        // --source-base_path
+        $sourceBasepath = $input->getOption('source-base_path');
+        if (!$sourceBasepath) {
+            $sourceBasepath = $io->ask(
+                $this->trans('commands.migrate.setup.questions.source-base_path'),
+                ''
+            );
+            $input->setOption('source-base_path', $sourceBasepath);
+        }
     }
     
     /**
@@ -253,19 +281,23 @@ class ExecuteCommand extends Command
         $migration_ids = $input->getArgument('migration-ids');
         $exclude_ids = $input->getOption('exclude');
 
+        $sourceBasepath = $input->getOption('source-base_path');
+        $configuration['source']['constants']['source_base_path'] = rtrim($sourceBasepath, '/') . '/';
+
+
         // If migrations weren't provided finish execution
         if (empty($migration_ids)) {
-            return;
+            return 1;
         }
 
         if (!$this->migrateConnection) {
-            $this->registerMigrateDB($input, $output);
-            $this->migrateConnection = $this->getDBConnection($output, 'default', 'upgrade');
+            $this->registerMigrateDB($input, $io);
+            $this->migrateConnection = $this->getDBConnection($io, 'default', 'upgrade');
         }
         
         if (!$drupal_version = $this->getLegacyDrupalVersion($this->migrateConnection)) {
             $io->error($this->trans('commands.migrate.setup.migrations.questions.not-drupal'));
-            return;
+            return 1;
         }
         
         $version_tag = 'Drupal ' . $drupal_version;
@@ -283,7 +315,7 @@ class ExecuteCommand extends Command
         
         if (count($migrations) == 0) {
             $io->error($this->trans('commands.migrate.execute.messages.no-migrations'));
-            return;
+            return 1;
         }
 
         foreach ($migrations as $migration_id) {
@@ -294,9 +326,7 @@ class ExecuteCommand extends Command
                 )
             );
 
-            $migration_service = $this->getDrupalService('plugin.manager.migration');
-         
-            $migration_service = $migration_service->createInstance($migration_id);
+            $migration_service = $this->pluginManagerMigration->createInstance($migration_id, $configuration);
 
             if ($migration_service) {
                 $messages = new MigrateExecuteMessageCapture();
@@ -349,7 +379,11 @@ class ExecuteCommand extends Command
                 }
             } else {
                 $io->error($this->trans('commands.migrate.execute.messages.fail-load'));
+
+                return 1;
             }
         }
+
+        return 0;
     }
 }

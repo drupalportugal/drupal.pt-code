@@ -1,7 +1,4 @@
 <?php
-/**
- * @file contains Drupal\mollom\Tests\ProfanityCheckTest
- */
 
 namespace Drupal\mollom\Tests;
 

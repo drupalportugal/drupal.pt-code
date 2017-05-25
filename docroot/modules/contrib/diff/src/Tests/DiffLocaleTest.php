@@ -26,12 +26,7 @@ class DiffLocaleTest extends DiffTestBase {
     parent::setUp();
 
     $this->drupalLogin($this->rootUser);
-  }
 
-  /**
-   * Test Diff functionality for the revisions of a translated node.
-   */
-  function testTranslationRevisions() {
     // Add French language.
     $edit = array(
       'predefined_langcode' => 'fr',
@@ -46,6 +41,21 @@ class DiffLocaleTest extends DiffTestBase {
       'settings[node][article][settings][language][language_alterable]' => TRUE,
     );
     $this->drupalPostForm(NULL, $edit, t('Save configuration'));
+  }
+
+  /**
+   * Run all independent tests.
+   */
+  public function testAll() {
+    $this->doTestTranslationRevisions();
+    $this->doTestUndefinedTranslationFilter();
+    $this->doTestTranslationFilter();
+  }
+
+  /**
+   * Test Diff functionality for the revisions of a translated node.
+   */
+  protected function doTestTranslationRevisions() {
 
     // Create an article and its translation. Assert aliases.
     $edit = array(
@@ -96,27 +106,13 @@ class DiffLocaleTest extends DiffTestBase {
   /**
    * Tests the translation filtering when navigating trough revisions.
    */
-  function testTranslationFilter() {
-    // Add French language.
-    $edit = array(
-      'predefined_langcode' => 'fr',
-    );
-    $this->drupalPostForm('admin/config/regional/language/add', $edit, t('Add language'));
-
-    // Enable content translation on articles.
-    $this->drupalGet('admin/config/regional/content-language');
-    $edit = array(
-      'entity_types[node]' => TRUE,
-      'settings[node][article][translatable]' => TRUE,
-      'settings[node][article][settings][language][language_alterable]' => TRUE,
-    );
-    $this->drupalPostForm(NULL, $edit, t('Save configuration'));
-
+  protected function doTestTranslationFilter() {
     // Create a node in English.
     $node = $this->drupalCreateNode([
       'type' => 'article',
       'title' => 'english_revision_0',
     ]);
+    $revision1 = $node->getRevisionId();
 
     // Translate to french.
     $node->addTranslation('fr', ['title' => 'french_revision_0']);
@@ -127,6 +123,7 @@ class DiffLocaleTest extends DiffTestBase {
     $english_node->setTitle('english_revision_1');
     $english_node->setNewRevision(TRUE);
     $english_node->save();
+    $revision2 = $node->getRevisionId();
 
     // Create a revision in French.
     $french_node = $node->getTranslation('fr');
@@ -147,36 +144,38 @@ class DiffLocaleTest extends DiffTestBase {
     $french_node->save();
 
     // Compare first two revisions.
-    $this->drupalGet('node/' . $node->id() . '/revisions/view/1/2/split_fields');
+    $this->drupalGet('node/' . $node->id() . '/revisions/view/' . $revision1 . '/' . $revision2 . '/split_fields');
     $diffs = $this->xpath('//span[@class="diffchange"]');
     $this->assertEqual($diffs[0], 'english_revision_0');
     $this->assertEqual($diffs[1], 'english_revision_1');
 
     // Check next difference.
-    $this->clickLink('Next change >');
+    $this->clickLink('Next change');
     $diffs = $this->xpath('//span[@class="diffchange"]');
     $this->assertEqual($diffs[0], 'english_revision_1');
     $this->assertEqual($diffs[1], 'english_revision_2');
 
     // There shouldn't be other differences in the current language.
-    $this->assertNoLink('Next change >');
+    $this->assertNoLink('Next change');
   }
 
   /**
    * Tests the undefined translation filtering when navigating trough revisions.
    */
-  function testUndefinedTranslationFilter() {
+  protected function doTestUndefinedTranslationFilter() {
     // Create a node in with undefined langcode.
     $node = $this->drupalCreateNode([
       'type' => 'article',
       'title' => 'undefined_language_revision_0',
       'langcode' => 'und',
     ]);
+    $revision1 = $node->getRevisionId();
 
     // Create 3 new revisions of the node.
     $node->setTitle('undefined_language_revision_1');
     $node->setNewRevision(TRUE);
     $node->save();
+    $revision2 = $node->getRevisionId();
 
     $node->setTitle('undefined_language_revision_2');
     $node->setNewRevision(TRUE);
@@ -192,15 +191,16 @@ class DiffLocaleTest extends DiffTestBase {
     $this->assertEqual(count($element), 4);
 
     // Compare the first two revisions.
-    $this->drupalGet('node/' . $node->id() . '/revisions/view/1/2/split_fields');
+    $this->drupalGet('node/' . $node->id() . '/revisions/view/' . $revision1 . '/' . $revision2 . '/split_fields');
     $diffs = $this->xpath('//span[@class="diffchange"]');
     $this->assertEqual($diffs[0], 'undefined_language_revision_0');
     $this->assertEqual($diffs[1], 'undefined_language_revision_1');
 
     // Compare the next two revisions.
-    $this->clickLink('Next change >');
+    $this->clickLink('Next change');
     $diffs = $this->xpath('//span[@class="diffchange"]');
     $this->assertEqual($diffs[0], 'undefined_language_revision_1');
     $this->assertEqual($diffs[1], 'undefined_language_revision_2');
   }
+
 }

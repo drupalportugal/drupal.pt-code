@@ -1,9 +1,10 @@
 (function ($) {
+  'use strict';
 
 /**
  * Filters blacklist entries.
  */
-Drupal.behaviors.mollomBlacklistFilter = {
+  Drupal.behaviors.mollomBlacklistFilter = {
   attach: function (context) {
     var self = this;
     $('#mollom-blacklist', context).once('mollom-blacklist-filter', function () {
@@ -12,7 +13,8 @@ Drupal.behaviors.mollomBlacklistFilter = {
       // corresponding table row, context, and match.
       self.entries = {};
       $(this).find('tr:has(.mollom-blacklist-value)').each(function () {
-        var $row = $(this), entry = {
+        var $row = $(this);
+        var entry = {
           value: $row.find('.mollom-blacklist-value').text(),
           context: $row.children('.mollom-blacklist-context').attr('class').match(/value-(\w+)/)[1],
           match: $row.children('.mollom-blacklist-match').attr('class').match(/value-(\w+)/)[1],
@@ -29,7 +31,9 @@ Drupal.behaviors.mollomBlacklistFilter = {
       self.lastSearch = {};
       var filterRows = function () {
         // Prepare static variables and conditions only once.
-        var i, visible, changed;
+        var i;
+        var visible;
+        var changed;
         var search = {
           // Blacklist entries are stored in lowercase, so to get any filter
           // results, the entered text must be converted to lowercase, too.
@@ -40,7 +44,7 @@ Drupal.behaviors.mollomBlacklistFilter = {
         // Immediately cancel processing if search values did not change.
         changed = false;
         for (i in search) {
-          if (search[i] != self.lastSearch[i]) {
+          if (search[i] !== self.lastSearch[i]) {
             changed = true;
             break;
           }
@@ -55,14 +59,16 @@ Drupal.behaviors.mollomBlacklistFilter = {
         // jQuery.fn.hide() and jQuery.fn.show() call into jQuery.fn.animate(),
         // which is useless for this purpose.
         for (i in self.entries) {
-          visible = (search.context.length == 0 || self.entries[i].context == search.context);
-          visible = visible && (search.match.length == 0 || self.entries[i].match == search.match);
-          visible = visible && (search.value.length == 0 || self.entries[i].value.indexOf(search.value) != -1);
-          if (visible) {
-            self.entries[i].row.style.display = '';
-          }
-          else {
-            self.entries[i].row.style.display = 'none';
+          if (self.entries.hasOwnProperty(i)) {
+            visible = (search.context.length === 0 || self.entries[i].context === search.context);
+            visible = visible && (search.match.length === 0 || self.entries[i].match === search.match);
+            visible = visible && (search.value.length === 0 || self.entries[i].value.indexOf(search.value) !== -1);
+            if (visible) {
+              self.entries[i].row.style.display = '';
+            }
+            else {
+              self.entries[i].row.style.display = 'none';
+            }
           }
         }
       };

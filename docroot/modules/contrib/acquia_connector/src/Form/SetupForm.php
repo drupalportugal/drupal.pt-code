@@ -2,6 +2,7 @@
 
 namespace Drupal\acquia_connector\Form;
 
+use Drupal\acquia_connector\Helper\Storage;
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\acquia_connector\Client;
 use Drupal\Core\Form\ConfigFormBase;
@@ -181,10 +182,10 @@ class SetupForm extends ConfigFormBase {
     if (isset($storage['choose']) && isset($storage['response']['subscription'][$form_state->getValue('subscription')])) {
       $config = $this->config('acquia_connector.settings');
       $sub = $storage['response']['subscription'][$form_state->getValue('subscription')];
-      $config->set('key', $sub['key'])
-        ->set('identifier', $sub['identifier'])
-        ->set('subscription_name', $sub['name'])
-        ->save();
+      $config->set('subscription_name', $sub['name'])->save();
+
+      Storage::setKey($sub['key']);
+      Storage::setIdentifier($sub['identifier']);
     }
     else {
       $this->automaticStartSubmit($form_state);
@@ -231,10 +232,10 @@ class SetupForm extends ConfigFormBase {
     else {
       // One subscription so set id/key pair.
       $sub = $storage['response']['subscription'][0];
-      $config->set('key', $sub['key'])
-        ->set('identifier', $sub['identifier'])
-        ->set('subscription_name', $sub['name'])
-        ->save();
+      $config->set('subscription_name', $sub['name'])->save();
+
+      Storage::setKey($sub['key']);
+      Storage::setIdentifier($sub['identifier']);
     }
   }
 

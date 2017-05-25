@@ -12,12 +12,15 @@ namespace Drupal\Console\Command\Develop;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Input\InputOption;
-use Drupal\Console\Command\ContainerAwareCommand;
-use Drupal\Console\Style\DrupalStyle;
+use Symfony\Component\Console\Command\Command;
+use Drupal\Console\Core\Style\DrupalStyle;
 use Knp\Snappy\Pdf;
+use Drupal\Console\Core\Command\Shared\CommandTrait;
 
-class GenerateDocCheatsheetCommand extends ContainerAwareCommand
+class GenerateDocCheatsheetCommand extends Command
 {
+    use CommandTrait;
+
     private $singleCommands = [
       'about',
       'chain',
@@ -55,6 +58,14 @@ class GenerateDocCheatsheetCommand extends ContainerAwareCommand
     private $logoUrl = 'http://drupalconsole.com/themes/custom/drupalconsole/assets/src/images/drupal-console.png';
 
     private $wkhtmltopdfPath = "/usr/bin/wkhtmltopdf";
+
+    /**
+     * GenerateDocCheatsheetCommand constructor.
+     */
+    public function __construct()
+    {
+        parent::__construct();
+    }
 
     /**
      * {@inheritdoc}
@@ -164,7 +175,7 @@ class GenerateDocCheatsheetCommand extends ContainerAwareCommand
 
         // 1st page
         foreach ($this->orderCommands as $command) {
-            $str .= $this->doTable($command,  $array_content[$command]);
+            $str .= $this->doTable($command, $array_content[$command]);
         }
 
         // 2nd page
@@ -173,8 +184,8 @@ class GenerateDocCheatsheetCommand extends ContainerAwareCommand
 
         $str .= "<td style='vertical-align: bottom;'><h1>DrupalConsole Cheatsheet</h1></td></tr></table><br/><br/>";
 
-        $str .= $this->doTable("generate",  $array_content["generate"]);
-        $str .= $this->doTable("miscelaneous",  $array_content["none"]);
+        $str .= $this->doTable("generate", $array_content["generate"]);
+        $str .= $this->doTable("miscelaneous", $array_content["none"]);
 
         $this->doPdf($str, $path, $io);
     }

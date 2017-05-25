@@ -13,3 +13,7 @@ field.formatter.settings.redirect_source:
   type: mapping
   label: 'Redirect Source formatter'
   mapping: { }
+
+views.field.redirect_bulk_form:
+  type: views_field_bulk_form
+  label: 'Redirect bulk form'

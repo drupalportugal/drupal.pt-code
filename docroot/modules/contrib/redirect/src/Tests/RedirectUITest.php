@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\redirect\Tests\RedirectUITest
- */
-
 namespace Drupal\redirect\Tests;
 
 use Drupal\Component\Utility\Unicode;
@@ -20,6 +15,8 @@ use Drupal\simpletest\WebTestBase;
  * @group redirect
  */
 class RedirectUITest extends WebTestBase {
+
+  use AssertRedirectTrait;
 
   /**
    * @var \Drupal\Core\Session\AccountInterface
@@ -50,6 +47,7 @@ class RedirectUITest extends WebTestBase {
     $this->drupalCreateContentType(array('type' => 'article', 'name' => 'Article'));
     $this->adminUser = $this->drupalCreateUser(array(
       'administer redirects',
+      'administer redirect settings',
       'access site reports',
       'access content',
       'bypass node access',
@@ -213,49 +211,30 @@ class RedirectUITest extends WebTestBase {
     // Check if the list has 2 rows.
     $this->assertTrue(count($rows) == 2);
 
-    // Finally test the delete action.
+    // Test the plural form of the bulk delete action.
     $this->drupalGet('admin/config/search/redirect');
+    $edit = [
+      'redirect_bulk_form[0]' => TRUE,
+      'redirect_bulk_form[1]' => TRUE,
+    ];
+    $this->drupalPostForm(NULL, $edit, t('Apply to selected items'));
+    $this->assertText('Are you sure you want to delete these redirects?');
+    $this->clickLink('Cancel');
+
+    // Test the delete action.
     $this->clickLink(t('Delete'));
     $this->assertRaw(t('Are you sure you want to delete the URL redirect from %source to %redirect?',
       array('%source' => Url::fromUri('base:non-existing', ['query' => ['key' => 'value']])->toString(), '%redirect' => Url::fromUri('base:node')->toString())));
     $this->drupalPostForm(NULL, array(), t('Delete'));
-
-    // Delete the other redirect.
-    $this->clickLink(t('Delete'));
-    $this->drupalPostForm(NULL, array(), t('Delete'));
-
     $this->assertUrl('admin/config/search/redirect');
+
+    // Test the bulk delete action.
+    $this->drupalPostForm(NULL, ['redirect_bulk_form[0]' => TRUE], t('Apply to selected items'));
+    $this->assertText('Are you sure you want to delete this redirect?');
+    $this->assertText('test27');
+    $this->drupalPostForm(NULL, [], t('Delete'));
+
     $this->assertText(t('There is no redirect yet.'));
-
-  }
-
-  /**
-   * Tests the fix 404 pages workflow.
-   */
-  public function testFix404Pages() {
-    $this->drupalLogin($this->adminUser);
-
-    // Visit a non existing page to have the 404 watchdog entry.
-    $this->drupalGet('non-existing');
-
-    // Go to the "fix 404" page and check the listing.
-    $this->drupalGet('admin/config/search/redirect/404');
-    $this->assertText('non-existing');
-    $this->clickLink(t('Add redirect'));
-
-    // Check if we generate correct Add redirect url and if the form is
-    // pre-filled.
-    $destination = Url::fromUri('base:admin/config/search/redirect/404')->toString();
-    $this->assertUrl('admin/config/search/redirect/add', ['query' => ['source' => 'non-existing', 'destination' => $destination]]);
-    $this->assertFieldByName('redirect_source[0][path]', 'non-existing');
-
-    // Save the redirect.
-    $this->drupalPostForm(NULL, array('redirect_redirect[0][uri]' => '/node'), t('Save'));
-    $this->assertUrl('admin/config/search/redirect/404');
-
-    // Check if the redirect works as expected.
-    $this->drupalGet('non-existing');
-    $this->assertUrl('node');
   }
 
   /**
@@ -402,42 +381,6 @@ class RedirectUITest extends WebTestBase {
   }
 
   /**
-   * Asserts the redirect from $path to the $expected_ending_url.
-   *
-   * @param string $path
-   *   The request path.
-   * @param $expected_ending_url
-   *   The path where we expect it to redirect. If NULL value provided, no
-   *   redirect is expected.
-   * @param string $expected_ending_status
-   *   The status we expect to get with the first request.
-   */
-  public function assertRedirect($path, $expected_ending_url, $expected_ending_status = 'HTTP/1.1 301 Moved Permanently') {
-    $this->drupalHead($path);
-    $headers = $this->drupalGetHeaders(TRUE);
-
-    $ending_url = isset($headers[0]['location']) ? $headers[0]['location'] : NULL;
-    $message = SafeMarkup::format('Testing redirect from %from to %to. Ending url: %url', array('%from' => $path, '%to' => $expected_ending_url, '%url' => $ending_url));
-
-    if ($expected_ending_url == '<front>') {
-      $expected_ending_url = Url::fromUri('base:')->setAbsolute()->toString();
-    }
-    elseif (!empty($expected_ending_url)) {
-      // Check for absolute/external urls.
-      if (!parse_url($expected_ending_url, PHP_URL_SCHEME)) {
-        $expected_ending_url = Url::fromUri('base:' . $expected_ending_url)->setAbsolute()->toString();
-      }
-    }
-    else {
-      $expected_ending_url = NULL;
-    }
-
-    $this->assertEqual($expected_ending_url, $ending_url, $message);
-
-    $this->assertEqual($headers[0][':status'], $expected_ending_status);
-  }
-
-  /**
    * Test cache tags.
    *
    * @todo Not sure this belongs in a UI test, but a full web test is needed.
@@ -454,7 +397,8 @@ class RedirectUITest extends WebTestBase {
     $headers = $this->drupalGetHeaders(TRUE);
     // Note, self::assertCacheTag() cannot be used here since it only looks at
     // the final set of headers.
-    $this->assertEqual(implode(' ', $redirect1->getCacheTags()), $headers[0]['x-drupal-cache-tags'], 'Redirect cache tags properly set.');
+    $expected = 'http_response ' . implode(' ', $redirect1->getCacheTags());
+    $this->assertEqual($expected, $headers[0]['x-drupal-cache-tags'], 'Redirect cache tags properly set.');
 
     // First request should be a cache MISS.
     $this->assertEqual($headers[0]['x-drupal-cache'], 'MISS', 'First request to the redirect was not cached.');
@@ -482,9 +426,6 @@ class RedirectUITest extends WebTestBase {
     $redirect->save();
     $this->assertRedirect('a-path', 'https://www.example.org');
     $this->drupalLogin($this->adminUser);
-    $this->drupalPostForm('admin/config/search/redirect/settings', ['redirect_deslash' => 1], t('Save configuration'));
-    $this->drupalGet('/2015/10/10/');
-    $this->assertResponse(404);
   }
 
 }

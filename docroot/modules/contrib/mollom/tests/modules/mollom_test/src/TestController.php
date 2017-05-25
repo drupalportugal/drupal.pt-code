@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file contains
- * \Drupal\mollom_test\TestController.php
- */
-
 namespace Drupal\mollom_test;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Routing\RouteMatch;

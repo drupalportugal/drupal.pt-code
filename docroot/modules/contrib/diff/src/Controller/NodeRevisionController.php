@@ -2,10 +2,7 @@
 
 namespace Drupal\diff\Controller;
 
-use Drupal\Core\Url;
 use Drupal\node\NodeInterface;
-use Drupal\diff\EntityComparisonBase;
-use Drupal\Component\Utility\Xss;
 
 /**
  * Returns responses for Node Revision routes.
@@ -18,7 +15,7 @@ class NodeRevisionController extends PluginRevisionController {
    * @todo This might be changed to a view when the issue at this link is
    *   resolved: https://drupal.org/node/1863906
    *
-   * @param NodeInterface $node
+   * @param \Drupal\node\NodeInterface $node
    *   The node whose revisions are inspected.
    *
    * @return array
@@ -31,15 +28,15 @@ class NodeRevisionController extends PluginRevisionController {
   /**
    * Returns a table which shows the differences between two node revisions.
    *
-   * @param NodeInterface $node
+   * @param \Drupal\node\NodeInterface $node
    *   The node whose revisions are compared.
-   * @param $left_revision
+   * @param int $left_revision
    *   Vid of the node revision from the left.
-   * @param $right_revision
+   * @param int $right_revision
    *   Vid of the node revision from the right.
-   * @param $filter
+   * @param string $filter
    *   If $filter == 'raw' raw text is compared (including html tags)
-   *   If filter == 'raw-plain' markdown function is applied to the text before comparison.
+   *   If $filter == 'raw-plain' markdown function is applied to the text before comparison.
    *
    * @return array
    *   Table showing the diff between the two node revisions.
@@ -52,6 +49,5 @@ class NodeRevisionController extends PluginRevisionController {
     $build = $this->compareEntityRevisions($route_match, $left_revision, $right_revision, $filter);
     return $build;
   }
-
 
 }

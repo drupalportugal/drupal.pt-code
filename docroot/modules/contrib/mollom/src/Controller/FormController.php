@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\mollom\Form\FormController.
- */
-
 namespace Drupal\mollom\Controller;
 
 use Drupal\Component\Utility\SafeMarkup;
@@ -13,7 +8,6 @@ use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Entity\EntityFormInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Logger\RfcLogLevel;
-use Drupal\Core\Entity\FieldableEntityInterface;
 use Drupal\mollom\Element\Mollom;
 use Drupal\mollom\Storage\ResponseDataStorage;
 use Drupal\mollom\Utility\Logger;

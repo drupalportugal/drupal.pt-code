@@ -1,13 +1,7 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\mollom\Plugin\Action\UnpublishReportNode.
- */
-
 namespace Drupal\mollom\Plugin\Action;
 
-use Drupal\Core\Access\AccessResultAllowed;
 use Drupal\Core\Action\ActionBase;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\mollom\API\FeedbackManager;

@@ -14,17 +14,92 @@ use Drupal\Console\Command\Shared\ThemeRegionTrait;
 use Drupal\Console\Command\Shared\ThemeBreakpointTrait;
 use Drupal\Console\Generator\ThemeGenerator;
 use Drupal\Console\Command\Shared\ConfirmationTrait;
-use Drupal\Console\Command\GeneratorCommand;
-use Drupal\Console\Style\DrupalStyle;
+use Symfony\Component\Console\Command\Command;
+use Drupal\Console\Core\Style\DrupalStyle;
+use Drupal\Console\Extension\Manager;
+use Drupal\Console\Utils\Site;
+use Drupal\Console\Core\Utils\StringConverter;
+use Drupal\Console\Core\Command\Shared\CommandTrait;
+use Drupal\Console\Utils\Validator;
+use Drupal\Core\Extension\ThemeHandler;
 
 /**
+ * Class ThemeCommand
  *
+ * @package Drupal\Console\Command\Generate
  */
-class ThemeCommand extends GeneratorCommand
+class ThemeCommand extends Command
 {
     use ConfirmationTrait;
     use ThemeRegionTrait;
     use ThemeBreakpointTrait;
+    use CommandTrait;
+
+    /**
+ * @var Manager
+*/
+    protected $extensionManager;
+
+    /**
+ * @var ThemeGenerator
+*/
+    protected $generator;
+
+    /**
+ * @var Validator
+*/
+    protected $validator;
+
+    /**
+     * @var string
+     */
+    protected $appRoot;
+
+    /**
+     * @var ThemeHandler
+     */
+    protected $themeHandler;
+
+    /**
+     * @var Site
+     */
+    protected $site;
+
+    /**
+     * @var StringConverter
+     */
+    protected $stringConverter;
+
+    /**
+     * ThemeCommand constructor.
+     *
+     * @param Manager         $extensionManager
+     * @param ThemeGenerator  $generator
+     * @param Validator       $validator
+     * @param $appRoot
+     * @param ThemeHandler    $themeHandler
+     * @param Site            $site
+     * @param StringConverter $stringConverter
+     */
+    public function __construct(
+        Manager $extensionManager,
+        ThemeGenerator $generator,
+        Validator $validator,
+        $appRoot,
+        ThemeHandler $themeHandler,
+        Site $site,
+        StringConverter $stringConverter
+    ) {
+        $this->extensionManager = $extensionManager;
+        $this->generator = $generator;
+        $this->validator = $validator;
+        $this->appRoot = $appRoot;
+        $this->themeHandler = $themeHandler;
+        $this->site = $site;
+        $this->stringConverter = $stringConverter;
+        parent::__construct();
+    }
+
 
     /**
      * {@inheritdoc}
@@ -37,56 +112,56 @@ class ThemeCommand extends GeneratorCommand
             ->setHelp($this->trans('commands.generate.theme.help'))
             ->addOption(
                 'theme',
-                '',
+                null,
                 InputOption::VALUE_REQUIRED,
                 $this->trans('commands.generate.theme.options.module')
             )
             ->addOption(
                 'machine-name',
-                '',
+                null,
                 InputOption::VALUE_REQUIRED,
                 $this->trans('commands.generate.theme.options.machine-name')
             )
             ->addOption(
                 'theme-path',
-                '',
+                null,
                 InputOption::VALUE_REQUIRED,
                 $this->trans('commands.generate.theme.options.module-path')
             )
             ->addOption(
                 'description',
-                '',
+                null,
                 InputOption::VALUE_OPTIONAL,
                 $this->trans('commands.generate.theme.options.description')
             )
-            ->addOption('core', '', InputOption::VALUE_OPTIONAL, $this->trans('commands.generate.theme.options.core'))
+            ->addOption('core', null, InputOption::VALUE_OPTIONAL, $this->trans('commands.generate.theme.options.core'))
             ->addOption(
                 'package',
-                '',
+                null,
                 InputOption::VALUE_OPTIONAL,
                 $this->trans('commands.generate.theme.options.package')
             )
             ->addOption(
                 'global-library',
-                '',
+                null,
                 InputOption::VALUE_OPTIONAL,
                 $this->trans('commands.generate.theme.options.global-library')
             )
             ->addOption(
                 'base-theme',
-                '',
+                null,
                 InputOption::VALUE_OPTIONAL,
                 $this->trans('commands.generate.theme.options.base-theme')
             )
             ->addOption(
                 'regions',
-                '',
+                null,
                 InputOption::VALUE_OPTIONAL,
                 $this->trans('commands.generate.theme.options.regions')
             )
             ->addOption(
                 'breakpoints',
-                '',
+                null,
                 InputOption::VALUE_OPTIONAL,
                 $this->trans('commands.generate.theme.options.breakpoints')
             );
@@ -99,21 +174,16 @@ class ThemeCommand extends GeneratorCommand
     {
         $io = new DrupalStyle($input, $output);
 
-        $validators = $this->getValidator();
-
         // @see use Drupal\Console\Command\Shared\ConfirmationTrait::confirmGeneration
         if (!$this->confirmGeneration($io)) {
-            return;
+            return 1;
         }
 
-        $theme = $validators->validateModuleName($input->getOption('theme'));
+        $theme = $this->validator->validateModuleName($input->getOption('theme'));
+        $theme_path = $this->appRoot . $input->getOption('theme-path');
+        $theme_path = $this->validator->validateModulePath($theme_path, true);
 
-        $drupal = $this->getDrupalHelper();
-        $drupal_root = $drupal->getRoot();
-        $theme_path = $drupal_root . $input->getOption('theme-path');
-        $theme_path = $validators->validateModulePath($theme_path, true);
-
-        $machine_name = $validators->validateMachineName($input->getOption('machine-name'));
+        $machine_name = $this->validator->validateMachineName($input->getOption('machine-name'));
         $description = $input->getOption('description');
         $core = $input->getOption('core');
         $package = $input->getOption('package');
@@ -122,8 +192,7 @@ class ThemeCommand extends GeneratorCommand
         $regions = $input->getOption('regions');
         $breakpoints = $input->getOption('breakpoints');
 
-        $generator = $this->getGenerator();
-        $generator->generate(
+        $this->generator->generate(
             $theme,
             $machine_name,
             $theme_path,
@@ -135,6 +204,8 @@ class ThemeCommand extends GeneratorCommand
             $regions,
             $breakpoints
         );
+
+        return 0;
     }
 
     /**
@@ -144,20 +215,16 @@ class ThemeCommand extends GeneratorCommand
     {
         $io = new DrupalStyle($input, $output);
 
-        $stringUtils = $this->getStringHelper();
-        $validators = $this->getValidator();
-        $drupal = $this->getDrupalHelper();
-        $drupalRoot = $drupal->getRoot();
-
         try {
-            $theme = $input->getOption('theme') ? $this->validateModuleName($input->getOption('theme')) : null;
+            $theme = $input->getOption('theme') ? $this->validator->validateModuleName($input->getOption('theme')) : null;
         } catch (\Exception $error) {
             $io->error($error->getMessage());
 
-            return;
+            return 1;
         }
 
         if (!$theme) {
+            $validators = $this->validator;
             $theme = $io->ask(
                 $this->trans('commands.generate.theme.questions.theme'),
                 '',
@@ -169,17 +236,17 @@ class ThemeCommand extends GeneratorCommand
         }
 
         try {
-            $machine_name = $input->getOption('machine-name') ? $this->validateModule($input->getOption('machine-name')) : null;
+            $machine_name = $input->getOption('machine-name') ? $this->validator->validateModule($input->getOption('machine-name')) : null;
         } catch (\Exception $error) {
             $io->error($error->getMessage());
 
-            return;
+            return 1;
         }
 
         if (!$machine_name) {
             $machine_name = $io->ask(
                 $this->trans('commands.generate.module.questions.machine-name'),
-                $stringUtils->createMachineName($theme),
+                $this->stringConverter->createMachineName($theme),
                 function ($machine_name) use ($validators) {
                     return $validators->validateMachineName($machine_name);
                 }
@@ -189,6 +256,7 @@ class ThemeCommand extends GeneratorCommand
 
         $theme_path = $input->getOption('theme-path');
         if (!$theme_path) {
+            $drupalRoot = $this->appRoot;
             $theme_path = $io->ask(
                 $this->trans('commands.generate.theme.questions.theme-path'),
                 '/themes/custom',
@@ -239,8 +307,7 @@ class ThemeCommand extends GeneratorCommand
 
         $base_theme = $input->getOption('base-theme');
         if (!$base_theme) {
-            $themeHandler = $this->getThemeHandler();
-            $themes = $themeHandler->rebuildThemeData();
+            $themes = $this->themeHandler->rebuildThemeData();
             $themes['false'] ='';
 
             uasort($themes, 'system_sort_modules_by_info_name');
@@ -267,9 +334,10 @@ class ThemeCommand extends GeneratorCommand
             if ($io->confirm(
                 $this->trans('commands.generate.theme.questions.regions'),
                 true
-            )) {
+            )
+            ) {
                 // @see \Drupal\Console\Command\Shared\ThemeRegionTrait::regionQuestion
-                $regions = $this->regionQuestion($output);
+                $regions = $this->regionQuestion($io);
                 $input->setOption('regions', $regions);
             }
         }
@@ -280,19 +348,12 @@ class ThemeCommand extends GeneratorCommand
             if ($io->confirm(
                 $this->trans('commands.generate.theme.questions.breakpoints'),
                 true
-            )) {
+            )
+            ) {
                 // @see \Drupal\Console\Command\Shared\ThemeRegionTrait::regionQuestion
-                $breakpoints = $this->breakpointQuestion($output);
+                $breakpoints = $this->breakpointQuestion($io);
                 $input->setOption('breakpoints', $breakpoints);
             }
         }
-    }
-
-    /**
-     * @return ThemeGenerator
-     */
-    protected function createGenerator()
-    {
-        return new ThemeGenerator();
     }
 }

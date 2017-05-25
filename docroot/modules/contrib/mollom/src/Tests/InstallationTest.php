@@ -1,11 +1,7 @@
 <?php
-/**
- * @file contains Drupal\mollom\Tests\InstallationTest
- */
 
 namespace Drupal\mollom\Tests;
 use Drupal\Core\Logger\RfcLogLevel;
-use Drupal\Core\Url;
 
 /**
  * Tests module installation and key error handling.

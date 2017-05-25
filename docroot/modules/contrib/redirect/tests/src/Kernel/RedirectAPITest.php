@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\Tests\redirect\Kernel\RedirectAPITest.
- */
-
 namespace Drupal\Tests\redirect\Kernel;
 
 use Drupal\language\Entity\ConfigurableLanguage;
@@ -60,7 +55,7 @@ class RedirectAPITest extends KernelTestBase {
     $redirect->setRedirect('node');
 
     $redirect->save();
-    $this->assertEqual(Redirect::generateHash('some-url', array('key' => 'val'), Language::LANGCODE_NOT_SPECIFIED), $redirect->getHash());
+    $this->assertEquals(Redirect::generateHash('some-url', array('key' => 'val'), Language::LANGCODE_NOT_SPECIFIED), $redirect->getHash());
     // Update the redirect source query and check if hash has been updated as
     // expected.
     $redirect->setSource('some-url', array('key1' => 'val1'));

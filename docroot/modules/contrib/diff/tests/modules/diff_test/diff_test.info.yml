@@ -6,7 +6,6 @@ dependencies:
   - editor
   - entity_test
   - node
-  - views
 hidden: true
 name: Diff tests
 package: diff

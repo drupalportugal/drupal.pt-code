@@ -1,10 +1,6 @@
 <?php
-/**
- * @file contains Drupal\mollom\Tests\DataTest.
- */
 
 namespace Drupal\mollom\Tests;
-use Drupal\comment\Tests\CommentTestBase;
 use Drupal\Core\Form\FormState;
 use Drupal\Core\Session\AnonymousUserSession;
 use Drupal\Core\Session\UserSession;

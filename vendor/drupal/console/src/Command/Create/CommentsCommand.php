@@ -10,18 +10,36 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Command\Command;
-use Drupal\Console\Command\Shared\ContainerAwareCommandTrait;
+use Drupal\Console\Core\Command\Shared\CommandTrait;
 use Drupal\Console\Command\Shared\CreateTrait;
-use Drupal\Console\Style\DrupalStyle;
+use Drupal\Console\Utils\Create\CommentData;
+use Drupal\Console\Core\Style\DrupalStyle;
 
 /**
  * Class CommentsCommand
+ *
  * @package Drupal\Console\Command\Generate
  */
 class CommentsCommand extends Command
 {
     use CreateTrait;
-    use ContainerAwareCommandTrait;
+    use CommandTrait;
+
+    /**
+     * @var CommentData
+     */
+    protected $createCommentData;
+
+    /**
+     * CommentsCommand constructor.
+     *
+     * @param CommentData $createCommentData
+     */
+    public function __construct(CommentData $createCommentData)
+    {
+        $this->createCommentData = $createCommentData;
+        parent::__construct();
+    }
 
     /**
      * {@inheritdoc}
@@ -100,7 +118,7 @@ class CommentsCommand extends Command
                 array_values($timeRanges)
             );
 
-            $input->setOption('time-range',  array_search($timeRange, $timeRanges));
+            $input->setOption('time-range', array_search($timeRange, $timeRanges));
         }
     }
 
@@ -110,14 +128,13 @@ class CommentsCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $io = new DrupalStyle($input, $output);
-        $createComments = $this->getApplication()->getDrupalApi()->getCreateComments();
 
         $nodeId = $input->getArgument('node-id')?:1;
         $limit = $input->getOption('limit')?:25;
         $titleWords = $input->getOption('title-words')?:5;
         $timeRange = $input->getOption('time-range')?:31536000;
 
-        $comments = $createComments->createComment(
+        $comments = $this->createCommentData->create(
             $nodeId,
             $limit,
             $titleWords,
@@ -140,6 +157,6 @@ class CommentsCommand extends Command
             )
         );
 
-        return;
+        return 0;
     }
 }

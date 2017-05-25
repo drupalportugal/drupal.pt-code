@@ -1,9 +1,0 @@
-role_delegation.edit_form:
-  path: '/user/{user}/roles'
-  defaults:
-    _form: 'Drupal\role_delegation\Form\RoleDelegationSettingsForm'
-    _title: 'Roles'
-  requirements:
-    _role_delegation_access_check: 'TRUE'
-  options:
-    _admin_route: TRUE

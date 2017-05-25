@@ -31,6 +31,9 @@ diff.settings:
               weight:
                 type: integer
                 label: 'Weight'
+        visual_inline_theme:
+          type: string
+          label: 'Theme'
     entity:
       type: sequence
       label: 'Entities'
@@ -40,16 +43,6 @@ diff.settings:
           sequence:
             - type: integer
               label: 'Compare base field'
-    content_type_settings:
-      type: sequence
-      label: 'Content type settings'
-      sequence:
-        type: mapping
-        label: 'Content type'
-        mapping:
-          view_mode:
-            type: string
-            label: 'View mode'
 
 diff.plugins:
   type: config_object
@@ -119,6 +112,9 @@ diff.plugin.settings.image_field_diff_builder:
     property_separator:
       type: text
       label: 'Separator between multiple compared properties'
+    show_thumbnail:
+      type: integer
+      label: 'Show the image thumbnail'
 
 diff.plugin.settings.list_field_diff_builder:
   type: diff.plugin.settings_base

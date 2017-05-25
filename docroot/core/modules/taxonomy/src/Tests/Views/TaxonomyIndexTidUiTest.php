@@ -7,6 +7,7 @@ use Drupal\taxonomy\Entity\Term;
 use Drupal\taxonomy\Entity\Vocabulary;
 use Drupal\views\Tests\ViewTestData;
 use Drupal\views_ui\Tests\UITestBase;
+use Drupal\views\Entity\View;
 
 /**
  * Tests the taxonomy index filter handler UI.
@@ -23,7 +24,7 @@ class TaxonomyIndexTidUiTest extends UITestBase {
    *
    * @var array
    */
-  public static $testViews = array('test_filter_taxonomy_index_tid', 'test_taxonomy_term_name');
+  public static $testViews = ['test_filter_taxonomy_index_tid', 'test_taxonomy_term_name'];
 
   /**
    * Modules to enable.
@@ -70,7 +71,7 @@ class TaxonomyIndexTidUiTest extends UITestBase {
         $term->save();
       }
     }
-    ViewTestData::createTestViews(get_class($this), array('taxonomy_test_views'));
+    ViewTestData::createTestViews(get_class($this), ['taxonomy_test_views']);
 
     Vocabulary::create([
       'vid' => 'empty_vocabulary',
@@ -102,7 +103,7 @@ class TaxonomyIndexTidUiTest extends UITestBase {
 
     // Ensure the autocomplete input element appears when using the 'textfield'
     // type.
-    $view = entity_load('view', 'test_filter_taxonomy_index_tid');
+    $view = View::load('test_filter_taxonomy_index_tid');
     $display =& $view->getDisplay('default');
     $display['display_options']['filters']['tid']['type'] = 'textfield';
     $view->save();

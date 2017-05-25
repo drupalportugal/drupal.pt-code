@@ -7,12 +7,12 @@
 
 namespace Drupal\Console\Command\Shared;
 
-use Drupal\Console\Style\DrupalStyle;
+use Drupal\Console\Core\Style\DrupalStyle;
 use Drupal\Core\Database\Database;
 
 trait ConnectTrait
 {
-    protected $supportedDrivers = array('mysql','pgsql');
+    protected $supportedDrivers = ['mysql','pgsql'];
 
     public function resolveConnection(DrupalStyle $io, $database = 'default')
     {
@@ -46,8 +46,6 @@ trait ConnectTrait
 
     public function getRedBeanConnection($database = 'default')
     {
-        $redBean = $this->get('redbean');
-
         $connectionInfo = Database::getConnectionInfo();
         $databaseConnection = $connectionInfo[$database];
         if ($databaseConnection['driver'] == 'mysql') {
@@ -57,14 +55,14 @@ trait ConnectTrait
                 $databaseConnection['database']
             );
 
-            $redBean->setup(
+            $this->redBean->setup(
                 $dsn,
                 $databaseConnection['username'],
                 $databaseConnection['password'],
                 true
             );
 
-            return $redBean;
+            return $this->redBean;
         }
 
         return null;

@@ -1,14 +1,11 @@
 <?php
-/**
- * @file
- * Global Redirect functionality tests
- */
 
 namespace Drupal\redirect\Tests;
 
 use Drupal\Component\Utility\SafeMarkup;
 use Drupal\Core\Language\Language;
 use Drupal\simpletest\WebTestBase;
+use Drupal\language\Entity\ConfigurableLanguage;
 
 /**
  * Global redirect test cases.
@@ -22,7 +19,16 @@ class GlobalRedirectTest extends WebTestBase {
    *
    * @var array
    */
-  public static $modules = array('path', 'node', 'redirect', 'taxonomy', 'forum', 'views');
+  public static $modules = [
+    'path',
+    'node',
+    'redirect',
+    'taxonomy',
+    'forum',
+    'views',
+    'language',
+    'content_translation',
+  ];
 
   /**
    * @var \Drupal\Core\Session\AccountInterface
@@ -75,6 +81,12 @@ class GlobalRedirectTest extends WebTestBase {
     $this->adminUser = $this->drupalCreateUser([
       'administer site configuration',
       'access administration pages',
+      'administer languages',
+      'administer content types',
+      'administer content translation',
+      'create page content',
+      'edit own page content',
+      'create content translations',
     ]);
 
     // Save the node.
@@ -121,24 +133,27 @@ class GlobalRedirectTest extends WebTestBase {
    */
   public function testRedirects() {
 
+    // First test that the good stuff can be switched off.
+    $this->config->set('route_normalizer_enabled', FALSE)->save();
+    $this->assertRedirect('index.php/node/' . $this->node->id(), NULL, 'HTTP/1.1 200 OK');
+    $this->assertRedirect('index.php/test-node', NULL, 'HTTP/1.1 200 OK');
+    $this->assertRedirect('test-node/', NULL, 'HTTP/1.1 200 OK');
+    $this->assertRedirect('Test-node/', NULL, 'HTTP/1.1 200 OK');
+
+    $this->config->set('route_normalizer_enabled', TRUE)->save();
+
     // Test alias normalization.
-    $this->config->set('normalize_aliases', TRUE)->save();
     $this->assertRedirect('node/' . $this->node->id(), 'test-node');
     $this->assertRedirect('Test-node', 'test-node');
 
-    $this->config->set('normalize_aliases', FALSE)->save();
-    $this->assertRedirect('node/' . $this->node->id(), NULL, 'HTTP/1.1 200 OK');
-    $this->assertRedirect('Test-node', NULL, 'HTTP/1.1 200 OK');
+    // Test redirects for non-clean urls.
+    $this->assertRedirect('index.php/node/' . $this->node->id(), 'test-node');
+    $this->assertRedirect('index.php/test-node', 'test-node');
 
     // Test deslashing.
-    $this->config->set('deslash', TRUE)->save();
     $this->assertRedirect('test-node/', 'test-node');
 
-    $this->config->set('deslash', FALSE)->save();
-    $this->assertRedirect('test-node/', NULL, 'HTTP/1.1 200 OK');
-
     // Test front page redirects.
-    $this->config->set('frontpage_redirect', TRUE)->save();
     $this->config('system.site')->set('page.front', '/node')->save();
     $this->assertRedirect('node', '<front>');
 
@@ -146,19 +161,12 @@ class GlobalRedirectTest extends WebTestBase {
     \Drupal::service('path.alias_storage')->save('/node', '/node-alias');
     $this->assertRedirect('node-alias', '<front>');
 
-    $this->config->set('frontpage_redirect', FALSE)->save();
-
-    $this->assertRedirect('node', NULL, 'HTTP/1.1 200 OK');
-    $this->assertRedirect('node-alias', NULL, 'HTTP/1.1 200 OK');
-
     // Test post request.
-    $this->config->set('normalize_aliases', TRUE)->save();
     $this->drupalPost('Test-node', 'application/json', array());
     // Does not do a redirect, stays in the same path.
     $this->assertEqual(basename($this->getUrl()), 'Test-node');
 
     // Test the access checking.
-    $this->config->set('normalize_aliases', TRUE)->save();
     $this->config->set('access_check', TRUE)->save();
     $this->assertRedirect('admin/config/system/site-information', NULL, 'HTTP/1.1 403 Forbidden');
 
@@ -167,6 +175,17 @@ class GlobalRedirectTest extends WebTestBase {
     //   check why so and enable the test.
     //$this->assertRedirect('admin/config/system/site-information', 'site-info');
 
+    // Test original query string is preserved with alias normalization.
+    $this->assertRedirect('Test-node?&foo&.bar=baz', 'test-node?&foo&.bar=baz');
+
+    // Test alias normalization with trailing ?.
+    $this->assertRedirect('test-node?', 'test-node');
+    $this->assertRedirect('Test-node?', 'test-node');
+
+    // Test alias normalization still works without trailing ?.
+    $this->assertRedirect('test-node', NULL, 'HTTP/1.1 200 OK');
+    $this->assertRedirect('Test-node', 'test-node');
+
     // Login as user with admin privileges.
     $this->drupalLogin($this->adminUser);
 
@@ -174,8 +193,47 @@ class GlobalRedirectTest extends WebTestBase {
     $this->config->set('ignore_admin_path', FALSE)->save();
     $this->assertRedirect('admin/config/system/site-information', 'site-info');
 
+    // Test alias normalization again with ignore_admin_path false.
+    $this->assertRedirect('Test-node', 'test-node');
+
     $this->config->set('ignore_admin_path', TRUE)->save();
     $this->assertRedirect('admin/config/system/site-information', NULL, 'HTTP/1.1 200 OK');
+
+    // Test alias normalization again with ignore_admin_path true.
+    $this->assertRedirect('Test-node', 'test-node');
+  }
+
+  /**
+   * Test that redirects work properly with content_translation enabled.
+   */
+  public function testLanguageRedirects() {
+    $this->drupalLogin($this->adminUser);
+
+    // Add a new language.
+    ConfigurableLanguage::createFromLangcode('es')
+      ->save();
+
+    // Enable URL language detection and selection.
+    $edit = ['language_interface[enabled][language-url]' => '1'];
+    $this->drupalPostForm('admin/config/regional/language/detection', $edit, t('Save settings'));
+
+    // Set page content type to use multilingual support.
+    $edit = [
+      'language_configuration[language_alterable]' => TRUE,
+      'language_configuration[content_translation]' => TRUE,
+    ];
+    $this->drupalPostForm('admin/structure/types/manage/page', $edit, t('Save content type'));
+    $this->assertRaw(t('The content type %type has been updated.', array('%type' => 'Page')), 'Basic page content type has been updated.');
+
+    $spanish_node = $this->drupalCreateNode([
+      'type' => 'page',
+      'title' => 'Spanish Test Page Node',
+      'path' => ['alias' => '/spanish-test-node'],
+      'langcode' => 'es',
+    ]);
+
+    // Test multilingual redirect.
+    $this->assertRedirect('es/node/' . $spanish_node->id(), 'es/spanish-test-node');
   }
 
   /**

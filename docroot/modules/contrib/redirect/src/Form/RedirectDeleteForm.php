@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\redirect\Form\RedirectDeleteForm.
- */
-
 namespace Drupal\redirect\Form;
 
 use Drupal\Core\Entity\ContentEntityConfirmFormBase;

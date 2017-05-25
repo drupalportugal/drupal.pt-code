@@ -9,16 +9,44 @@ namespace Drupal\Console\Command\Config;
 
 use Drupal\Core\Archiver\ArchiveTar;
 use Drupal\Component\Serialization\Yaml;
+use Drupal\Core\Config\ConfigManagerInterface;
+use Drupal\Core\Config\StorageInterface;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Command\Command;
-use Drupal\Console\Command\Shared\ContainerAwareCommandTrait;
-use Drupal\Console\Style\DrupalStyle;
+use Symfony\Component\Filesystem\Filesystem;
+use Drupal\Console\Core\Command\Shared\CommandTrait;
+use Drupal\Console\Core\Style\DrupalStyle;
+use Drupal\Core\Config\ConfigManager;
 
 class ExportCommand extends Command
 {
-    use ContainerAwareCommandTrait;
+    use CommandTrait;
+
+    /**
+     * @var ConfigManager
+     */
+    protected $configManager;
+
+    /**
+     * @var StorageInterface
+     */
+    protected $storage;
+
+    /**
+     * ExportCommand constructor.
+     *
+     * @param ConfigManagerInterface $configManager
+     * @param StorageInterface       $storage
+     */
+    public function __construct(ConfigManagerInterface $configManager, StorageInterface $storage)
+    {
+        parent::__construct();
+        $this->configManager = $configManager;
+        $this->storage = $storage;
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -35,9 +63,19 @@ class ExportCommand extends Command
             )
             ->addOption(
                 'tar',
-                false,
+                null,
                 InputOption::VALUE_NONE,
                 $this->trans('commands.config.export.arguments.tar')
+            )->addOption(
+                'remove-uuid',
+                null,
+                InputOption::VALUE_NONE,
+                $this->trans('commands.config.export.single.options.remove-uuid')
+            )->addOption(
+                'remove-config-hash',
+                null,
+                InputOption::VALUE_NONE,
+                $this->trans('commands.config.export.single.options.remove-config-hash')
             );
     }
 
@@ -50,16 +88,29 @@ class ExportCommand extends Command
 
         $directory = $input->getOption('directory');
         $tar = $input->getOption('tar');
-
+        $removeUuid = $input->getOption('remove-uuid');
+        $removeHash = $input->getOption('remove-config-hash');
+        
         if (!$directory) {
             $directory = config_get_config_directory(CONFIG_SYNC_DIRECTORY);
         }
 
-        if ($tar) {
-            if (!is_dir($directory)) {
-                mkdir($directory, 0777, true);
-            }
+        $fileSystem = new Filesystem();
+        try {
+            $fileSystem->mkdir($directory);
+        } catch (IOExceptionInterface $e) {
+            $io->error(
+                sprintf(
+                    $this->trans('commands.config.export.messages.error'),
+                    $e->getPath()
+                )
+            );
+        }
 
+        // Remove previous yaml files before creating new ones
+        array_map('unlink', glob($directory . '/*'));
+
+        if ($tar) {
             $dateTime = new \DateTime();
 
             $archiveFile = sprintf(
@@ -71,41 +122,54 @@ class ExportCommand extends Command
         }
 
         try {
-            $configManager = $this->getDrupalService('config.manager');
             // Get raw configuration data without overrides.
-            foreach ($configManager->getConfigFactory()->listAll() as $name) {
-                $configData = $configManager->getConfigFactory()->get($name)->getRawData();
-                $configName =  sprintf('%s.yml', $name);
+            foreach ($this->configManager->getConfigFactory()->listAll() as $name) {
+                $configName = "$name.yml";
+                $configData = $this->configManager->getConfigFactory()->get($name)->getRawData();
+                if ($removeUuid) {
+                    unset($configData['uuid']);
+                }
+                if ($removeHash) {
+                    unset($configData['_core']['default_config_hash']);
+                }
                 $ymlData = Yaml::encode($configData);
 
                 if ($tar) {
-                    $archiveTar->addString(
-                        $configName,
-                        $ymlData
-                    );
-                    continue;
+                    $archiveTar->addString($configName, $ymlData);
+                } else {
+                    file_put_contents("$directory/$configName", $ymlData);
                 }
+            }
+            // Get all override data from the remaining collections.
+            foreach ($this->storage->getAllCollectionNames() as $collection) {
+                $collection_storage = $this->storage->createCollection($collection);
+                foreach ($collection_storage->listAll() as $name) {
+                    $configName = str_replace('.', '/', $collection) . "/$name.yml";
+                    $configData = $collection_storage->read($name);
+                    if ($removeUuid) {
+                        unset($configData['uuid']);
+                    }
+                    if ($removeHash) {
+                        unset($configData['_core']['default_config_hash']);
+                    }
 
-                $configFileName =  sprintf('%s/%s', $directory, $configName);
-
-                $fs = $this->get('filesystem');
-                try {
-                    $fs->mkdir($directory);
-                } catch (IOExceptionInterface $e) {
-                    $io->error(
-                        sprintf(
-                            $this->trans('commands.config.export.messages.error'),
-                            $e->getPath()
-                        )
-                    );
+                    $ymlData = Yaml::encode($configData);
+                    if ($tar) {
+                        $archiveTar->addString($configName, $ymlData);
+                    } else {
+                        file_put_contents("$directory/$configName", $ymlData);
+                    }
                 }
-                file_put_contents($configFileName, $ymlData);
             }
         } catch (\Exception $e) {
             $io->error($e->getMessage());
         }
 
-        $io->success($this->trans('commands.config.export.messages.directory'));
-        $io->simple($directory);
+        $io->info(
+            sprintf(
+                $this->trans('commands.config.export.messages.directory'),
+                $directory
+            )
+        );
     }
 }

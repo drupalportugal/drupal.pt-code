@@ -394,4 +394,14 @@ interface DrupalClientInterface {
    *   - tracking_id: the tracking id generated
    */
   public function getTrackingImage();
+
+  /**
+   * Convert array of expected languages to a string for storage.
+   *
+   * @param array $languages
+   *   An array of ISO-639-1 language codes
+   * @return string
+   *   A flattened string.
+   */
+  public static function flattenExpectedLanguages(array $languages);
 }

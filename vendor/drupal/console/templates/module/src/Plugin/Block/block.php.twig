@@ -32,7 +32,7 @@ class {{class_name}} extends BlockBase {% if services is not empty %}implements 
 {% block class_construct %}
 {% if services is not empty %}
   /**
-   * Construct.
+   * Constructs a new {{class_name}} object.
    *
    * @param array $configuration
    *   A configuration array containing information about the plugin instance.
@@ -69,17 +69,17 @@ class {{class_name}} extends BlockBase {% if services is not empty %}implements 
 {% endblock %}
 {% block class_methods %}
 {% if inputs %}
-  
+
   /**
    * {@inheritdoc}
    */
   public function defaultConfiguration() {
     return [
     {% for input in inputs %}
-     '{{ input.name }}' => $this->t('{{ input.default_value }}'),
+     '{{ input.name }}' => {{ input.default_code }},
     {% endfor %}
     ] + parent::defaultConfiguration();
-  
+
  }
 
   /**

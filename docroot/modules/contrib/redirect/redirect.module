@@ -19,6 +19,7 @@ use Drupal\Core\Field\FieldItemList;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Language\Language;
 use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\Core\Url;
 use Drupal\Core\Site\Settings;
 use Drupal\redirect\Entity\Redirect;
 
@@ -48,11 +49,28 @@ function redirect_hook_info() {
 function redirect_help($route_name, RouteMatchInterface $route_match) {
   $output = '';
   switch ($route_name) {
-    case 'redirect.fix_404':
-      $output = '<p>' . t('This page lists all paths that have resulted in 404 errors and do not yet have any redirects assigned to them.') . '</p>';
+    case 'help.page.redirect':
+      $output = '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('The Redirect module allows users to redirect from old URLs to new URLs.   For more information, see the <a href=":online">online documentation for Redirect</a>.', [':online' => 'https://www.drupal.org/documentation/modules/path-redirect']) . '</p>';
+      $output .= '<dl>';
+      $output .= '<h3>' . t('Uses') . '</h3>';
+      $output .= '<dd>' . t('Redirect is accessed from three tabs that help you manage <a href=":list">URL Redirects</a>.', [':list' => Url::fromRoute('redirect.list')->toString()]) . '</dd>';
+      $output .= '<dt>' . t('Manage URL Redirects') . '</dt>';
+      $output .= '<dd>' . t('The <a href=":redirect">"URL Redirects"</a> page is used to setup and manage URL Redirects.  New redirects are created here using the <a href=":add_form">Add redirect</a> button which presents a form to simplify the creation of redirects . The URL redirects page provides a list of all redirects on the site and allows you to edit them.', [':redirect' => Url::fromRoute('redirect.list')->toString(), ':add_form' => Url::fromRoute('redirect.add')->toString()]) . '</dd>';
+      if (\Drupal::moduleHandler()->moduleExists('redirect_404')) {
+        $output .= '<dt>' . t('Fix 404 pages') . '</dt>';
+        $output .= '<dd>' . t('<a href=":fix_404">"Fix 404 pages"</a> lists all paths that have resulted in 404 errors and do not yet have any redirects assigned to them. This 404 (or Not Found) error message is an HTTP standard response code indicating that the client was able to communicate with a given server, but the server could not find what was requested.', [':fix_404' => Url::fromRoute('redirect_404.fix_404')->toString()]) . '</dd>';
+      }
+      elseif (!\Drupal::moduleHandler()->moduleExists('redirect_404') && \Drupal::currentUser()->hasPermission('administer modules')) {
+        $output .= '<dt>' . t('Fix 404 pages') . '</dt>';
+        $output .= '<dd>' . t('404 (or Not Found) error message is an HTTP standard response code indicating that the client was able to communicate with a given server, but the server could not find what was requested. Please install the <a href=":extend">Redirect 404</a> submodule to be able to log all paths that have resulted in 404 errors.', [':extend' => Url::fromRoute('system.modules_list')->toString()]) . '</dd>';
+      }
+      $output .= '<dt>' . t('Configure Global Redirects') . '</dt>';
+      $output .= '<dd>' . t('The <a href=":settings">"Settings"</a> page presents you with a number of means to adjust redirect settings.', [':settings' => Url::fromRoute('redirect.settings')->toString()]) . '</dd>';
+      $output .= '</dl>';
+      return $output;
       break;
   }
-  return $output;
 }
 
 /**
@@ -62,7 +80,7 @@ function redirect_help($route_name, RouteMatchInterface $route_match) {
  */
 function redirect_entity_delete(EntityInterface $entity) {
   if (redirect_entity_has_path_field($entity)) {
-    redirect_delete_by_path('internal:/' . $entity->urlInfo()->getInternalPath());
+    redirect_delete_by_path('internal:/' . $entity->toUrl()->getInternalPath());
     redirect_delete_by_path('entity:' . $entity->getEntityTypeId() . '/' . $entity->id());
   }
 }
@@ -203,7 +221,7 @@ function redirect_repository() {
  */
 function redirect_delete_by_path($path, $langcode = NULL, $match_subpaths_and_redirect = TRUE) {
   $path = ltrim($path, '/');
-  $query = db_select('redirect');
+  $query = \Drupal::database()->select('redirect');
   $query->addField('redirect', 'rid');
   $query_or = db_or();
   $query_or->condition('redirect_source__path', db_like($path), 'LIKE');

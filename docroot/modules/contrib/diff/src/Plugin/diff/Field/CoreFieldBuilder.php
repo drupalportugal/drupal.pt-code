@@ -3,7 +3,7 @@
 namespace Drupal\diff\Plugin\diff\Field;
 
 use Drupal\Core\Config\ConfigFactoryInterface;
-use Drupal\Core\Entity\EntityManagerInterface;
+use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Render\RendererInterface;
 use Drupal\diff\DiffEntityParser;
 use Drupal\diff\FieldDiffBuilderBase;
@@ -11,6 +11,8 @@ use Drupal\Core\Field\FieldItemListInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
+ * Plugin to diff core field types.
+ *
  * @FieldDiffBuilder(
  *   id = "core_field_diff_builder",
  *   label = @Translation("Core Field Diff"),
@@ -30,7 +32,7 @@ class CoreFieldBuilder extends FieldDiffBuilderBase {
   protected $renderer;
 
   /**
-   * Constructs a FieldDiffBuilderBase object.
+   * Constructs a CoreFieldBuilder object.
    *
    * @param array $configuration
    *   A configuration array containing information about the plugin instance.
@@ -40,15 +42,15 @@ class CoreFieldBuilder extends FieldDiffBuilderBase {
    *   The plugin implementation definition.
    * @param \Drupal\Core\Config\ConfigFactoryInterface $config
    *   The configuration factory object.
-   * @param \Drupal\Core\Entity\EntityManagerInterface $entityManager
-   *   The entity manager.
-   * @param \Drupal\diff\DiffEntityParser $entityParser
-   *   The entity manager.
+   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
+   *   The entity type manager.
+   * @param \Drupal\diff\DiffEntityParser $entity_parser
+   *   The entity parser.
    * @param \Drupal\Core\Render\RendererInterface $renderer
    *   The renderer.
    */
-  public function __construct(array $configuration, $plugin_id, $plugin_definition, ConfigFactoryInterface $config, EntityManagerInterface $entityManager, DiffEntityParser $entityParser, RendererInterface $renderer) {
-    parent::__construct($configuration, $plugin_id, $plugin_definition, $config, $entityManager, $entityParser);
+  public function __construct(array $configuration, $plugin_id, $plugin_definition, EntityTypeManagerInterface $entity_type_manager, DiffEntityParser $entity_parser, RendererInterface $renderer) {
+    parent::__construct($configuration, $plugin_id, $plugin_definition, $entity_type_manager, $entity_parser);
     $this->renderer = $renderer;
   }
 
@@ -60,8 +62,7 @@ class CoreFieldBuilder extends FieldDiffBuilderBase {
       $configuration,
       $plugin_id,
       $plugin_definition,
-      $container->get('config.factory'),
-      $container->get('entity.manager'),
+      $container->get('entity_type.manager'),
       $container->get('diff.entity_parser'),
       $container->get('renderer')
     );

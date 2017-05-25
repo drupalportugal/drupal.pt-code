@@ -1,7 +1,4 @@
 <?php
-/**
- * @file contains Drupal\mollom\Storage\BlacklistStorage
- */
 
 namespace Drupal\mollom\Storage;
 

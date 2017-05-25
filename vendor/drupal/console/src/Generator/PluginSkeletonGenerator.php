@@ -7,22 +7,40 @@
 
 namespace Drupal\Console\Generator;
 
+use Drupal\Console\Core\Generator\Generator;
+use Drupal\Console\Extension\Manager;
+
 class PluginSkeletonGenerator extends Generator
 {
+    /**
+     * @var Manager
+     */
+    protected $extensionManager;
+
+    /**
+     * PluginSkeletonGenerator constructor.
+     *
+     * @param Manager $extensionManager
+     */
+    public function __construct(
+        Manager $extensionManager
+    ) {
+        $this->extensionManager = $extensionManager;
+    }
+
     /**
      * Generator Post Update Name function.
      *
      * @param $module
      * @param $pluginId
-     * * @param $plugin
+     * @param $plugin
      * @param $className
      * @param $pluginMetaData
      * @param $services
      */
     public function generate($module, $pluginId, $plugin, $className, $pluginMetaData, $services)
     {
-        $module_path =  $this->getSite()->getModulePath($module);
-
+        $module_path =  $this->extensionManager->getModule($module)->getPath();
 
         $parameters = [
             'module' => $module,

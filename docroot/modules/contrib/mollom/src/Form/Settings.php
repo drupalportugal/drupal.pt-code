@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\mollom\Form\Settings.
- */
-
 namespace Drupal\mollom\Form;
 
 use Drupal\Core\Form\ConfigFormBase;
@@ -185,6 +180,11 @@ class Settings extends ConfigFormBase {
     $message = $this->validateKey($form_state->getValue(array('keys','private')));
     if (!empty($message)) {
       $form_state->setError($form['keys']['private'], $message);
+    }
+    $languages = $form_state->getValue('languages_expected', []);
+    $flattened_languages = DrupalClient::flattenExpectedLanguages($languages);
+    if (strlen($flattened_languages) > DrupalClient::MAX_EXPECTED_LANGUAGES_LENGTH) {
+      $form_state->setError($form['expected_languages'], $this->t('You have selected too many expected languages.  Mollom can only accept approximately 20 expected languages.'));
     }
   }
 

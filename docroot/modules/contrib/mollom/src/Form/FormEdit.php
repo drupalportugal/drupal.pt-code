@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\mollom\Form\FormEdit.
- */
-
 namespace Drupal\mollom\Form;
 
 use Drupal\Core\Form\FormStateInterface;

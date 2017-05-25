@@ -32,6 +32,7 @@ td.rev-navigation {
 }
 td.diff-context {
   padding: 0.3em 1em;
+  vertical-align: top;
 }
 td.diff-marker {
   text-align: center;

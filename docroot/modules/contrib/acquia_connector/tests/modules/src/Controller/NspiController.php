@@ -525,9 +525,7 @@ class NspiController extends ControllerBase {
     if ($connections == 3 && $data['authenticator']['identifier'] == self::ACQTEST_503_ID) {
       // Trigger a 503 response on 3rd call to this (1st is
       // acquia.agent.subscription and 2nd is acquia.agent.validate)
-      $this->headers->set("Status", "503 Server Error");
-      print '';
-      exit;
+      return $this->errorResponse(self::ACQTEST_SUBSCRIPTION_SERVICE_UNAVAILABLE, 'Subscription service unavailable.');
     }
     $result['error'] = FALSE;
     $result['body']['subscription_name'] = 'TEST_AcquiaConnectorTestID';

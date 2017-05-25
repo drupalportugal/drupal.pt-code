@@ -1,8 +1,4 @@
 <?php
-/**
- * @file
- * Contains \Drupal\mollom_test_server\ServerController.
- */
 
 namespace Drupal\mollom_test_server;
 

@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\Tests\diff\Kernel\DiffControllerTest.
- */
-
 namespace Drupal\Tests\diff\Kernel;
 
 use Drupal\Core\Url;
@@ -24,7 +19,13 @@ class DiffControllerTest extends KernelTestBase {
   /**
    * {@inheritdoc}
    */
-  public static $modules = ['diff', 'entity_test', 'diff_test', 'entity', 'system', 'user'];
+  public static $modules = [
+    'diff',
+    'entity_test',
+    'diff_test',
+    'system',
+    'user',
+  ];
 
   /**
    * {@inheritdoc}
@@ -44,6 +45,9 @@ class DiffControllerTest extends KernelTestBase {
     $config->save();
   }
 
+  /**
+   * Tests the Controller.
+   */
   public function testController() {
     $entity = EntityTestRev::create([
       'name' => 'test entity 1',
@@ -59,11 +63,15 @@ class DiffControllerTest extends KernelTestBase {
 
     /** @var \Symfony\Component\HttpKernel\HttpKernelInterface $http_kernel */
     $http_kernel = \Drupal::service('http_kernel');
-    $request = Request::create(Url::fromRoute('entity.entity_test_rev.revisions_diff', ['node' => $entity->id(), 'entity_test_rev' => $entity->id(), 'left_revision' => $vid1, 'right_revision' => $vi2])->toString(TRUE)->getGeneratedUrl());
+    $request = Request::create(Url::fromRoute('entity.entity_test_rev.revisions_diff', [
+      'node' => $entity->id(),
+      'entity_test_rev' => $entity->id(),
+      'left_revision' => $vid1,
+      'right_revision' => $vi2,
+    ])->toString(TRUE)->getGeneratedUrl());
 
     $response = $http_kernel->handle($request);
     $this->assertEquals(403, $response->getStatusCode());
-
 
     $role = Role::create([
       'id' => 'test_role',
@@ -84,6 +92,5 @@ class DiffControllerTest extends KernelTestBase {
     $this->assertContains('<td class="diff-context diff-deletedline">test entity <span class="diffchange">1</span></td>', $output);
     $this->assertContains('<td class="diff-context diff-addedline">test entity <span class="diffchange">2</span></td>', $output);
   }
-
 
 }

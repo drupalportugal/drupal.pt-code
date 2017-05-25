@@ -1,10 +1,6 @@
 <?php
-/**
- * @file contains Drupal\mollom\Tests\CaptchaTest.
- */
 
 namespace Drupal\mollom\Tests;
-use Drupal\Component\Serialization\Json;
 use Drupal\mollom\Entity\FormInterface;
 
 /**

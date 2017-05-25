@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\redirect\Exception\RedirectLoopException.
- */
-
 namespace Drupal\redirect\Exception;
 
 use Drupal\Component\Utility\SafeMarkup;

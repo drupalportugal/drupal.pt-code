@@ -8,9 +8,9 @@
 namespace Drupal\acquia_connector\Tests;
 
 use Drupal\simpletest\WebTestBase;
+use Drupal\acquia_connector\Helper\Storage;
 use Drupal\acquia_connector\Subscription;
 use Drupal\acquia_connector\Controller\StatusController;
-use Drupal\acquia_connector\Controller\SpiController;
 
 /**
  * Tests the functionality of the Acquia Connector module.
@@ -156,10 +156,17 @@ class AcquiaConnectorModuleTest extends WebTestBase {
     }
   }
 
+  public function testAll() {
+    $this->_testAcquiaConnectorGetConnected();
+    $this->_testAcquiaConnectorSubscription();
+    $this->_testAcquiaConnectorCloudMigrate();
+    $this->_testAcquiaConnectorSiteStatus();
+  }
+
   /**
    * Test get connected.
    */
-  public function testAcquiaConnectorGetConnected() {
+  public function _testAcquiaConnectorGetConnected() {
     // Check for call to get connected.
     $this->drupalGet('admin');
     $this->assertText($this->acquiaConnectorStrings('free'), 'The explanation of services text exists');
@@ -205,9 +212,10 @@ class AcquiaConnectorModuleTest extends WebTestBase {
     $this->assertText($this->acquiaConnectorStrings('subscription'), 'Subscription connected with key and identifier');
     $this->assertLinkByHref($this->setupPath, 0, 'Link to change subscription exists');
     $this->assertText($this->acquiaConnectorStrings('migrate'), 'Acquia Cloud Migrate description exists');
+
+    $this->disconnectSite();
+
     // Connect via automatic setup.
-    \Drupal::configFactory()->getEditable('acquia_connector.settings')->clear('identifier')->save();
-    \Drupal::configFactory()->getEditable('acquia_connector.settings')->clear('key')->save();
     $edit_fields = [
       'email' => $this->acqtestEmail,
       'pass' => $this->acqtestPass,
@@ -250,12 +258,15 @@ class AcquiaConnectorModuleTest extends WebTestBase {
     foreach ($elements as $element) {
       $this->assertIdentical((string) $element['disabled'], 'disabled', 'Name field is disabled.');
     }
+
+    $this->disconnectSite();
+
   }
 
   /**
    * Test Connector subscription methods.
    */
-  public function testAcquiaConnectorSubscription() {
+  public function _testAcquiaConnectorSubscription() {
     // Starts as inactive.
     $is_active = Subscription::isActive();
     $this->assertFalse($is_active, 'Subscription is not currently active.');
@@ -359,7 +370,7 @@ class AcquiaConnectorModuleTest extends WebTestBase {
   /**
    * Test Migrate methods.
    */
-  public function testAcquiaConnectorCloudMigrate() {
+  public function _testAcquiaConnectorCloudMigrate() {
     // Connect site on pair that will trigger an error for migration.
     $edit_fields = [
       'acquia_identifier' => $this->acqtestErrorId,
@@ -409,7 +420,7 @@ class AcquiaConnectorModuleTest extends WebTestBase {
   /**
    * Tests the site status callback.
    */
-  public function testAcquiaConnectorSiteStatus() {
+  public function _testAcquiaConnectorSiteStatus() {
     $uuid = '0dee0d07-4032-44ea-a2f2-84182dc10d54';
     $test_url = "https://insight.acquia.com/node/uuid/{$uuid}/dashboard";
     $test_data = [
@@ -444,7 +455,7 @@ class AcquiaConnectorModuleTest extends WebTestBase {
   /**
    * Tests the SPI change form.
    */
-  public function testSpiChangeForm() {
+  public function _testSpiChangeForm() {
     // Connect site on key and id.
     $edit_fields = [
       'acquia_identifier' => $this->acqtestId,
@@ -543,57 +554,18 @@ class AcquiaConnectorModuleTest extends WebTestBase {
   }
 
   /**
-   * Test that setting multisite option properly modifies a machine name
-   * for Acquia hosted sites.
+   * Clear the connection data thus simulating a disconnected site.
    */
-  public function testAcquiaMachineNameMultisite() {
-    // 1. Connect a site
-    $edit_fields = [
-      'acquia_identifier' => $this->acqtestId,
-      'acquia_key' => $this->acqtestKey,
-    ];
-    $this->drupalPostForm($this->credentialsPath, $edit_fields, 'Connect');
+  protected function disconnectSite() {
+    $config = \Drupal::configFactory()->getEditable('acquia_connector.settings');
+    $config->clear('subscription_data')->set('subscription_data', ['active' => FALSE]);
+    $config->save();
 
-    $elements = $this->xpath('//input[@name=:name]', [':name' => 'multisite_identifier']);
-    $this->assertEqual($elements, [], "Multisite setting does not display for non-Acquia hosted site");
+    Storage::setKey('');
+    Storage::setIdentifier('');
 
-    // 2. Simulate Acquia hosted site
-    $this->writeSettings(['_SERVER' => [
-      'AH_SITE_NAME' => (object) [
-        'value' => 'acqtest_drupal',
-        'required' => TRUE,
-      ],
-      'AH_SITE_ENVIRONMENT' => (object) [
-        'value' => 'dev',
-        'required' => TRUE,
-      ],
-    ]]);
-    sleep(10);
-
-    \Drupal::configFactory()->getEditable('acquia_connector.settings')->set('subscription_data', [
-      'active' => 1,
-      'href' => "https://insight.acquia.com/node/uuid/0dee0d07_4032_44ea_a2f2_84182dc10d54/dashboard",
-    ])->save();
-
-    // 3. Verify machine name before setting the multisite option
-    $spi = new SpiController(\Drupal::service('acquia_connector.client'));
-
-    $spi_data = $spi->get();
-    $expected_machine_name = '0dee0d07_4032_44ea_a2f2_84182dc10d54' . '__' . 'acqtest_drupal';
-    $this->assertIdentical($spi_data['machine_name'], $expected_machine_name, "Machine name does contain multisite postfix");
-
-    // 4. Verify machine name after setting the multisite option
-    $edit_fields = [
-      'is_multisite' => TRUE,
-      'multisite_identifier' => 'my_site1',
-      'machine_multisite_identifier' => 'my_site1',
-    ];
-    $this->drupalGet($this->settingsPath);
-    $this->drupalPostForm($this->settingsPath, $edit_fields, 'Save configuration');
-
-    $spi_data = $spi->get();
-    $expected_machine_name = '0dee0d07_4032_44ea_a2f2_84182dc10d54' . '__' . 'acqtest_drupal' . '__' . 'my_site1';
-    $this->assertIdentical($spi_data['machine_name'], $expected_machine_name, "Machine name contains multisite postfix");
+    \Drupal::state()->set('acquia_connector_test_request_count', 0);
+    \Drupal::state()->resetCache();
   }
 
 }

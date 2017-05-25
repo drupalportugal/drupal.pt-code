@@ -8,7 +8,7 @@ use Drupal\metatag\Tests\MetatagTagsTestBase;
 /**
  * Tests that each of the Metatag Verification tags work correctly.
  *
- * @group Metatag
+ * @group metatag
  */
 class MetatagVerificationTagsTest extends MetatagTagsTestBase {
 
@@ -35,7 +35,7 @@ class MetatagVerificationTagsTest extends MetatagTagsTestBase {
   /**
    * Each of these meta tags has a different tag name vs its internal name.
    */
-  public function get_test_tag_name($tag_name) {
+  public function getTestTagName($tag_name) {
     if ($tag_name == 'baidu') {
       $tag_name = 'baidu-site-verification';
     }

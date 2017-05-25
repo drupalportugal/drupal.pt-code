@@ -1,7 +1,4 @@
 <?php
-/**
- * @file contains Mollom\Tests\Unit\ClientTest
- */
 
 namespace Mollom\Tests\Unit;
 

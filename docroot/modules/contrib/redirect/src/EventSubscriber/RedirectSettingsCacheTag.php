@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\redirect\EventSubscriber\RedirectSettingsCacheTag.
- */
-
 namespace Drupal\redirect\EventSubscriber;
 
 use Drupal\Core\Cache\CacheTagsInvalidatorInterface;

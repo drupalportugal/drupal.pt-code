@@ -2,6 +2,7 @@
 
 namespace Drupal\acquia_connector\Controller;
 
+use Drupal\acquia_connector\Helper\Storage;
 use Drupal\acquia_connector\Subscription;
 use Drupal\acquia_connector\CryptConnector;
 use Drupal\Core\Access\AccessResultAllowed;
@@ -59,7 +60,7 @@ class ModuleDataController extends ControllerBase {
    *   TRUE if request is valid, FALSE otherwise.
    */
   public function isValidRequest($data, $message) {
-    $key = $this->config('acquia_connector.settings')->get('key');
+    $key = Storage::getKey();
     if (!isset($data['authenticator']) || !isset($data['authenticator']['time']) || !isset($data['authenticator']['nonce'])) {
       return FALSE;
     }

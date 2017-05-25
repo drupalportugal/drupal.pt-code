@@ -3,7 +3,7 @@
 /*
  * This file is part of the Symfony CMF package.
  *
- * (c) 2011-2014 Symfony CMF
+ * (c) 2011-2015 Symfony CMF
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -16,12 +16,12 @@ use Symfony\Cmf\Component\Routing\RouteObjectInterface;
 
 /**
  * Empty abstract class to be able to mock an object that both extends Route
- * and implements RouteObjectInterface
+ * and implements RouteObjectInterface.
  */
 abstract class RouteObject extends Route implements RouteObjectInterface
 {
     public function getRouteKey()
     {
-        return null;
+        return;
     }
 }

@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains Drupal\mollom\Form\FormDelete.
- */
-
 namespace Drupal\mollom\Form;
 
 use Drupal\Core\Entity\EntityConfirmFormBase;

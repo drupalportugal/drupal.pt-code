@@ -12,7 +12,6 @@ namespace Drupal\mollom\API;
 use Drupal\Core\Config\ConfigFactory;
 use Drupal\mollom\API\DrupalTestClient;
 use Drupal\mollom\API\DrupalTestLocalClient;
-use Drupal\mollom\Utility\Logger;
 use GuzzleHttp\ClientInterface;
 
 class DrupalClientFactory {

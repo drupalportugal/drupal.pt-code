@@ -1,7 +1,4 @@
 <?php
-/**
- * @file contains Drupal\mollom\Tests\AccessTest.
- */
 
 namespace Drupal\mollom\Tests;
 

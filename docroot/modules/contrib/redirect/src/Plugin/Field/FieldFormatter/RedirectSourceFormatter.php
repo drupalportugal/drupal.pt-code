@@ -1,13 +1,7 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\redirect\Plugin\Field\FieldFormatter\RedirectSourceFormatter.
- */
-
 namespace Drupal\redirect\Plugin\Field\FieldFormatter;
 
-use Drupal\Component\Utility\SafeMarkup;
 use Drupal\Core\Field\FormatterBase;
 use Drupal\Core\Field\FieldItemListInterface;
 

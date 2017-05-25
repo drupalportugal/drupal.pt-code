@@ -1,7 +1,4 @@
 <?php
-/**
- * @file contains Drupal\mollom\Tests\CommentFormTestCase
- */
 
 namespace Drupal\mollom\Tests;
 use Drupal\mollom\Entity\FormInterface;

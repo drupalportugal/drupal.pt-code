@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\redirect\Tests\RedirectUILanguageTest
- */
-
 namespace Drupal\redirect\Tests;
 use Drupal\language\Entity\ConfigurableLanguage;
 

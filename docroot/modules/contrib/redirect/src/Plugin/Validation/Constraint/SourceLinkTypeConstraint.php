@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\redirect\Plugin\Validation\Constraint\SourceLinkTypeConstraint.
- */
-
 namespace Drupal\redirect\Plugin\Validation\Constraint;
 
 use Drupal\link\LinkItemInterface;

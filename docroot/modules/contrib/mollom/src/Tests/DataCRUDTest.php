@@ -1,7 +1,4 @@
 <?php
-/**
- * @file contains Drupal\mollom\Tests\DataCRUDTest
- */
 
 namespace Drupal\mollom\Tests;
 use Drupal\mollom\Storage\ResponseDataStorage;

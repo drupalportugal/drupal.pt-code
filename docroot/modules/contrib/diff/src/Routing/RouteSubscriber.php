@@ -20,7 +20,7 @@ class RouteSubscriber extends RouteSubscriberBase {
     if ($route) {
       $route->addDefaults(
         array(
-          '_controller' => '\Drupal\diff\Controller\NodeRevisionController::revisionOverview'
+          '_controller' => '\Drupal\diff\Controller\NodeRevisionController::revisionOverview',
         )
       );
     }

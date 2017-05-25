@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains Drupal\Tests\redirect\Unit\RedirectCheckerTest.
- */
-
 namespace Drupal\Tests\redirect\Unit;
 
 use Drupal\redirect\RedirectChecker;
@@ -68,6 +63,19 @@ class RedirectCheckerTest extends UnitTestCase {
     $request = $this->getRequestStub('index.php', 'POST');
     $this->assertFalse($checker->canRedirect($request), 'Cannot redirect other than GET method');
 
+
+    // Route access check, deny access.
+    $request = $this->getRequestStub('index.php', 'GET');
+    $this->assertFalse($checker->canRedirect($request, 'denied_route'), 'Can not redirect');
+
+    // Route access check, allow access.
+    $request = $this->getRequestStub('index.php', 'GET');
+    $this->assertTrue($checker->canRedirect($request, 'allowed_route'), 'Can redirect');
+
+    // Check destination parameter.
+    $request = $this->getRequestStub('index.php', 'GET', [], ['destination' => 'paradise']);
+    $this->assertFalse($checker->canRedirect($request), 'Cannot redirect');
+
     // Maintenance mode is on.
     $state = $this->getMockBuilder('Drupal\Core\State\StateInterface')
       ->getMock();
@@ -75,14 +83,6 @@ class RedirectCheckerTest extends UnitTestCase {
       ->method('get')
       ->with('system.maintenance_mode')
       ->will($this->returnValue(TRUE));
-
-    // Route access check, deny access.
-    $request = $this->getRequestStub('index.php', 'GET');
-    $this->assertFalse($checker->canRedirect($request, 'denied_route'), 'Can not redirect');
-
-    // Route access check, deny access.
-    $request = $this->getRequestStub('index.php', 'GET');
-    $this->assertTrue($checker->canRedirect($request, 'allowed_route'), 'Can redirect');
 
     $checker = new RedirectChecker($this->getConfigFactoryStub($config), $state, $access, $account, $route_provider);
 
@@ -123,16 +123,19 @@ class RedirectCheckerTest extends UnitTestCase {
   /**
    * Gets request mock object.
    *
-   * @param $script_name
+   * @param string $script_name
    *   The result of the getScriptName() method.
-   * @param $method
+   * @param string $method
    *   The request method.
    * @param array $attributes
    *   Attributes to be passed into request->attributes.
+   * @param array $query
+   *   Query paramter to be passed into request->query.
    *
    * @return PHPUnit_Framework_MockObject_MockObject
+   *   Mocked request object.
    */
-  protected function getRequestStub($script_name, $method, array $attributes = array()) {
+  protected function getRequestStub($script_name, $method, array $attributes = [], array $query = []) {
     $request = $this->getMockBuilder('Symfony\Component\HttpFoundation\Request')
       ->disableOriginalConstructor()
       ->getMock();
@@ -143,6 +146,7 @@ class RedirectCheckerTest extends UnitTestCase {
       ->method('isMethod')
       ->with($this->anything())
       ->will($this->returnValue($method == 'GET'));
+    $request->query = new ParameterBag($query);
     $request->attributes = new ParameterBag($attributes);
 
     return $request;

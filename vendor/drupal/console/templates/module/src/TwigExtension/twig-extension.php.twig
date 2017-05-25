@@ -9,7 +9,6 @@ namespace Drupal\{{module}}\TwigExtension;
 {% endblock %}
 
 {% block use_class %}
-use Drupal\Core\Template\TwigExtension;
 {% endblock %}
 
 {% block class_declaration %}
@@ -18,7 +17,7 @@ use Drupal\Core\Template\TwigExtension;
  *
  * @package Drupal\{{module}}
  */
-class {{ class }} extends TwigExtension {% endblock %}
+class {{ class }} extends \Twig_Extension {% endblock %}
 
 {% set properties = services[1:] %}
 {% block class_properties %}
@@ -37,7 +36,7 @@ class {{ class }} extends TwigExtension {% endblock %}
     {% if services|length > 1 %}
 
    /**
-    * Constructor.
+    * Constructs a new {{ class }} object.
     */
     public function __construct({{ servicesAsParameters(services)|join(', ') }}) {
         parent::__construct($renderer);

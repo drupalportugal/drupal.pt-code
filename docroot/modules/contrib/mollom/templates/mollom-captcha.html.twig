@@ -1,7 +1,7 @@
 {#
 The Mollom Captcha element.
 #}
-<label for="edit-mollom-captcha-input"{% if captcha_required %} class="form-required"{% endif %}>Verification</label>
+<label for="edit-mollom-captcha-input"{% if captcha_required %} class="form-required"{% endif %}>{{ 'Verification'|t }}</label>
 <span class="mollom-captcha-container">
   {{ element.refresh }}
   {{ element.captcha_display }}

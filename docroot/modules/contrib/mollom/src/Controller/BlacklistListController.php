@@ -1,7 +1,4 @@
 <?php
-/**
- * @file container Drupal\mollom\Controller\BlacklistListController.
- */
 
 namespace Drupal\mollom\Controller;
 

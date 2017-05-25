@@ -7,8 +7,27 @@
 
 namespace Drupal\Console\Generator;
 
+use Drupal\Console\Core\Generator\Generator;
+use Drupal\Console\Extension\Manager;
+
 class EventSubscriberGenerator extends Generator
 {
+    /**
+     * @var Manager
+     */
+    protected $extensionManager;
+
+    /**
+     * AuthenticationProviderGenerator constructor.
+     *
+     * @param Manager $extensionManager
+     */
+    public function __construct(
+        Manager $extensionManager
+    ) {
+        $this->extensionManager = $extensionManager;
+    }
+
     /**
      * Generator Service.
      *
@@ -27,19 +46,19 @@ class EventSubscriberGenerator extends Generator
           'class_path' => sprintf('Drupal\%s\EventSubscriber\%s', $module, $class),
           'events' => $events,
           'services' => $services,
-          'tags' => array('name' => 'event_subscriber'),
-          'file_exists' => file_exists($this->getSite()->getModulePath($module).'/'.$module.'.services.yml'),
+          'tags' => ['name' => 'event_subscriber'],
+          'file_exists' => file_exists($this->extensionManager->getModule($module)->getPath() .'/'.$module.'.services.yml'),
         ];
 
         $this->renderFile(
             'module/src/event-subscriber.php.twig',
-            $this->getSite()->getSourcePath($module).'/EventSubscriber/'.$class.'.php',
+            $this->extensionManager->getModule($module)->getSourcePath().'/EventSubscriber/'.$class.'.php',
             $parameters
         );
 
         $this->renderFile(
             'module/services.yml.twig',
-            $this->getSite()->getModulePath($module).'/'.$module.'.services.yml',
+            $this->extensionManager->getModule($module)->getPath() .'/'.$module.'.services.yml',
             $parameters,
             FILE_APPEND
         );

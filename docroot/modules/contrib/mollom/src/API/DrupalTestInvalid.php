@@ -1,7 +1,4 @@
 <?php
-/**
- * @file contains Drupal\mollom\API\DrupalTestInvalid
- */
 
 namespace Drupal\mollom\API;
 

@@ -5,18 +5,23 @@ namespace Drupal\diff;
 use Drupal\Component\Plugin\PluginBase;
 use Drupal\Component\Utility\Xss;
 use Drupal\Core\Datetime\DateFormatter;
-use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Entity\ContentEntityInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
+use Drupal\Core\Entity\RevisionLogInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Mail\MailFormatHelper;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
+use Drupal\Core\Link;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\Url;
 use Drupal\diff\Controller\PluginRevisionController;
 use Drupal\node\NodeInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
+/**
+ * Base class for diff layout plugins.
+ */
 abstract class DiffLayoutBase extends PluginBase implements DiffLayoutInterface, ContainerFactoryPluginInterface {
 
   use StringTranslationTrait;
@@ -50,7 +55,7 @@ abstract class DiffLayoutBase extends PluginBase implements DiffLayoutInterface,
   protected $date;
 
   /**
-   * Constructs a FieldDiffBuilderBase object.
+   * Constructs a DiffLayoutBase object.
    *
    * @param array $configuration
    *   A configuration array containing information about the plugin instance.
@@ -61,9 +66,9 @@ abstract class DiffLayoutBase extends PluginBase implements DiffLayoutInterface,
    * @param \Drupal\Core\Config\ConfigFactoryInterface $config
    *   The configuration factory object.
    * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
-   *   The entity manager.
+   *   The entity type manager.
    * @param \Drupal\diff\DiffEntityParser $entity_parser
-   *   The entity manager.
+   *   The entity parser.
    * @param \Drupal\Core\DateTime\DateFormatter $date
    *   The date service.
    */
@@ -85,7 +90,7 @@ abstract class DiffLayoutBase extends PluginBase implements DiffLayoutInterface,
       $plugin_id,
       $plugin_definition,
       $container->get('config.factory'),
-      $container->get('entity.manager'),
+      $container->get('entity_type.manager'),
       $container->get('diff.entity_parser'),
       $container->get('date.formatter')
     );
@@ -94,34 +99,121 @@ abstract class DiffLayoutBase extends PluginBase implements DiffLayoutInterface,
   /**
    * Build the revision link for a revision.
    *
-   * @param \Drupal\Core\Entity\EntityInterface $revision
+   * @param \Drupal\Core\Entity\ContentEntityInterface $revision
    *   A revision where to add a link.
    *
-   * @return \Drupal\Core\GeneratedLink
+   * @return \Drupal\Core\Link
    *   Header link for a revision in the table.
    */
-  protected function buildRevisionLink(EntityInterface $revision) {
+  protected function buildRevisionLink(ContentEntityInterface $revision) {
     $entity_type_id = $revision->getEntityTypeId();
-    if ($revision instanceof EntityRevisionLogInterface || $revision instanceof NodeInterface) {
-      $revision_log = '';
-
-      if ($revision instanceof EntityRevisionLogInterface) {
-        $revision_log = Xss::filter($revision->getRevisionLogMessage());
-      }
-      elseif ($revision instanceof NodeInterface) {
-        $revision_log = $revision->revision_log->value;
-      }
+    if ($revision instanceof RevisionLogInterface) {
       $revision_date = $this->date->format($revision->getRevisionCreationTime(), 'short');
       $route_name = $entity_type_id != 'node' ? "entity.$entity_type_id.revisions_diff" : 'entity.node.revision';
-      $revision_link = $this->t($revision_log . '@date', [
-        '@date' => \Drupal::l($revision_date, Url::fromRoute($route_name, [
-          $entity_type_id => $revision->id(),
-          $entity_type_id . '_revision' => $revision->getRevisionId(),
-        ])),
-      ]);
+      $revision_link = Link::fromTextAndUrl($revision_date, Url::fromRoute($route_name, [
+        $entity_type_id => $revision->id(),
+        $entity_type_id . '_revision' => $revision->getRevisionId(),
+      ]))->toString();
     }
     else {
-      $revision_link = \Drupal::l($revision->label(), $revision->toUrl('revision'));
+      $revision_link = Link::fromTextAndUrl($revision->label(), $revision->toUrl('revision'))
+        ->toString();
+    }
+    return $revision_link;
+  }
+
+  /**
+   * Build the revision link for the compared revisions.
+   *
+   * @param \Drupal\Core\Entity\ContentEntityInterface $left_revision
+   *   Left revision that is compared.
+   * @param \Drupal\Core\Entity\ContentEntityInterface $right_revision
+   *   Right revision that is compared.
+   *
+   * @return array
+   *   Header link for a revision in the revision comparison display.
+   */
+  public function buildRevisionsData(ContentEntityInterface $left_revision, ContentEntityInterface $right_revision) {
+    $right_revision = $this->buildRevisionData($right_revision);
+    $right_revision['#prefix'] = '<div class="diff-revision__items-group">';
+    $right_revision['#suffix'] = '</div>';
+
+    $left_revision = $this->buildRevisionData($left_revision);
+    $left_revision['#prefix'] = '<div class="diff-revision__items-group">';
+    $left_revision['#suffix'] = '</div>';
+
+    // Show the revisions that are compared.
+    return [
+      'header' => [
+        'diff_revisions' => [
+          '#type' => 'item',
+          '#title' => $this->t('Comparing'),
+          '#wrapper_attributes' => ['class' => 'diff-revision'],
+          'items' => [
+            '#prefix' => '<div class="diff-revision__items">',
+            '#suffix' => '</div></div>',
+            'right_revision' => $right_revision,
+            'left_revision' => $left_revision,
+          ],
+        ],
+      ],
+    ];
+  }
+
+  /**
+   * Build the revision link for a revision.
+   *
+   * @param \Drupal\Core\Entity\ContentEntityInterface $revision
+   *   Left revision that is compared.
+   *
+   * @return array
+   *   Revision data about author, creation date and log.
+   */
+  protected function buildRevisionData(ContentEntityInterface $revision) {
+    $entity_type_id = $revision->getEntityTypeId();
+    if ($revision instanceof RevisionLogInterface) {
+      $revision_log = Xss::filter($revision->getRevisionLogMessage());
+      $user_id = $revision->getRevisionUserId();
+      $route_name = $entity_type_id != 'node' ? "entity.$entity_type_id.revisions_diff" : 'entity.node.revision';
+
+      $revision_link['date'] = [
+        '#type' => 'link',
+        '#title' => $this->date->format($revision->getRevisionCreationTime(), 'short'),
+        '#url' => Url::fromRoute($route_name, [
+          $entity_type_id => $revision->id(),
+          $entity_type_id . '_revision' => $revision->getRevisionId(),
+        ]),
+        '#prefix' => '<div class="diff-revision__item diff-revision__item-date">',
+        '#suffix' => '</div>',
+      ];
+
+      $revision_link['author'] = [
+        '#type' => 'link',
+        '#title' => $revision->getRevisionUser()->getDisplayName(),
+        '#url' => Url::fromUri(\Drupal::request()->getUriForPath('/user/' . $user_id)),
+        '#theme' => 'username',
+        '#account' => $revision->getRevisionUser(),
+        '#prefix' => '<div class="diff-revision__item diff-revision__item-author">',
+        '#suffix' => '</div>',
+      ];
+
+      if ($revision_log) {
+        $revision_link['message'] = [
+          '#type' => 'markup',
+          '#prefix' => '<div class="diff-revision__item diff-revision__item-message">',
+          '#suffix' => '</div>',
+          '#markup' => $revision_log,
+        ];
+      }
+    }
+    else {
+      $revision_link['label'] = [
+        '#type' => 'link',
+        '#title' => $revision->label(),
+        '#url' => $revision->toUrl('revision'),
+        '#prefix' => '<div class="diff-revision__item diff-revision__item-date">',
+        '#suffix' => '</div>',
+      ];
     }
     return $revision_link;
   }
@@ -129,11 +221,11 @@ abstract class DiffLayoutBase extends PluginBase implements DiffLayoutInterface,
   /**
    * Build the filter navigation for the diff comparison.
    *
-   * @param \Drupal\Core\Entity\EntityInterface $entity
+   * @param \Drupal\Core\Entity\ContentEntityInterface $entity
    *   The entity.
-   * @param \Drupal\Core\Entity\EntityInterface $left_revision
+   * @param \Drupal\Core\Entity\ContentEntityInterface $left_revision
    *   Revision from the left side.
-   * @param \Drupal\Core\Entity\EntityInterface $right_revision
+   * @param \Drupal\Core\Entity\ContentEntityInterface $right_revision
    *   Revision from the right side.
    * @param string $layout
    *   The layout plugin selected.
@@ -143,7 +235,7 @@ abstract class DiffLayoutBase extends PluginBase implements DiffLayoutInterface,
    * @return array
    *   The filter options.
    */
-  protected function buildFilterNavigation(EntityInterface $entity, EntityInterface $left_revision, EntityInterface $right_revision, $layout, $active_filter) {
+  protected function buildFilterNavigation(ContentEntityInterface $entity, ContentEntityInterface $left_revision, ContentEntityInterface $right_revision, $layout, $active_filter) {
     // Build the view modes filter.
     $options['raw'] = [
       'title' => $this->t('Raw'),
@@ -172,8 +264,6 @@ abstract class DiffLayoutBase extends PluginBase implements DiffLayoutInterface,
     $build['options'] = [
       '#type' => 'operations',
       '#links' => $options,
-      '#prefix' => '<div class="diff-filter">',
-      '#suffix' => '</div>',
     ];
     return $build;
   }
@@ -181,10 +271,10 @@ abstract class DiffLayoutBase extends PluginBase implements DiffLayoutInterface,
   /**
    * Applies a markdown function to a string.
    *
-   * @param $markdown
+   * @param string $markdown
    *   Key of the markdown function to be applied to the items.
    *   One of drupal_html_to_text, filter_xss, filter_xss_all.
-   * @param $items
+   * @param string $items
    *   String to be processed.
    *
    * @return array|string
@@ -256,4 +346,5 @@ abstract class DiffLayoutBase extends PluginBase implements DiffLayoutInterface,
   public function calculateDependencies() {
     return [];
   }
+
 }

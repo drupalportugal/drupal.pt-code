@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\redirect\RedirectRepository
- */
-
 namespace Drupal\redirect;
 
 use Drupal\Core\Config\ConfigFactoryInterface;
@@ -132,7 +127,10 @@ class RedirectRepository {
    *   Array of redirect entities.
    */
   public function findBySourcePath($source_path) {
-    return $this->manager->getStorage('redirect')->loadByProperties(array('redirect_source__path' => $source_path));
+    $ids = $this->manager->getStorage('redirect')->getQuery()
+      ->condition('redirect_source.path', $source_path, 'LIKE')
+      ->execute();
+    return $this->manager->getStorage('redirect')->loadMultiple($ids);
   }
 
   /**
