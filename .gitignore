@@ -30,13 +30,10 @@ sites/*/files-public
 sites/*/files-private
 
 # Ignore paths that contain temporary files.
-docroot/cache/
 docroot/sites/*/translations
 docroot/sites/*/tmp
-web/cache/
 web/sites/*/translations
 web/sites/*/tmp
-cache/
 sites/*/translations
 sites/*/tmp
 
