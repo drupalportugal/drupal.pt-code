@@ -19,30 +19,19 @@ redirect.settings:
     warning:
       type: boolean
       label: 'Display a warning message to users when they are redirected.'
-    nonclean_to_clean:
-      type: boolean
-      label: 'Redirect from non-clean URLs to clean URLs.'
     ignore_admin_path:
       type: boolean
       label: 'Allow redirections on admin paths.'
-    frontpage_redirect:
-      type: boolean
-      label: 'Redirect from paths like index.php and /node to the root directory.'
-    deslash:
-      type: boolean
-      label: 'Remove trailing slashes from paths.'
-    trailing_zero:
-      type: integer
-      label: 'Remove Trailing Zero Argument'
     access_check:
       type: boolean
       label: 'Menu Access Checking'
-    normalize_aliases:
-      type: boolean
-      label: 'Case Sensitive URL Checking'
     content_location_header:
       type: boolean
       label: 'Set Content Location Header'
-    term_path_handler:
+    route_normalizer_enabled:
       type: boolean
-      label: 'Taxonomy Term Path Handler'
+      label: 'Enable route normalizer'
+
+action.configuration.redirect_delete_action:
+  type: action_configuration_default
+  label: 'Delete redirect configuration'

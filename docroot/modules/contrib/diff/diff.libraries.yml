@@ -5,6 +5,9 @@ diff.general:
       css/diff.general.css: {}
   js:
     js/diff.js: {}
+  dependencies:
+    - core/drupalSettings
+    - core/jquery.once
 
 diff.double_column:
   version: 1.x
@@ -24,8 +27,8 @@ diff.colors:
     theme:
       css/diff.colors.css: {}
 
-diff.html_diff:
+diff.visual_inline:
   version: VERSION
   css:
     base:
-      css/diff_html.css: {}
+      css/diff.visual-inline.css: {}

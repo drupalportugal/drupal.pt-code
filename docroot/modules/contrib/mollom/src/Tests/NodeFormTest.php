@@ -1,10 +1,6 @@
 <?php
-/**
- * @file contains Drupal\mollom\Tests\NodeFormTest.
- */
 
 namespace Drupal\mollom\Tests;
-use Drupal\Core\Session\AccountInterface;
 use Drupal\mollom\Entity\FormInterface;
 
 /**

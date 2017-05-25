@@ -31,12 +31,21 @@ td.rev-navigation {
   vertical-align: middle;
 }
 td.diff-context {
-  width: 50%;
+  padding: 0.3em 1em;
+  vertical-align: top;
 }
 td.diff-marker {
   text-align: center;
   padding: 0.3em 1em;
+  width: 1%;
 }
 td.diff td {
   padding: 0 1em;
+}
+td.diff-line-number {
+  text-align: center;
+  padding: 0.3em 1em;
+  width: 1%;
+  color: #AAA;
+  border-right: 1px #e6e4df solid;
 }

@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\redirect\Form\RedirectSettingsForm
- */
-
 namespace Drupal\redirect\Form;
 
 use Drupal\Core\Form\ConfigFormBase;
@@ -60,27 +55,16 @@ class RedirectSettingsForm extends ConfigFormBase {
       '#title' => $this->t('Global redirects'),
       '#description' => $this->t('(formerly Global Redirect features)'),
     );
-    $form['globals']['redirect_frontpage_redirect'] = array(
+    $form['globals']['redirect_route_normalizer_enabled'] = array(
       '#type' => 'checkbox',
-      '#title' => $this->t('Redirect from paths like index.php and /node to the root directory.'),
-      '#default_value' => $config->get('frontpage_redirect'),
-    );
-    $form['globals']['redirect_nonclean_to_clean'] = array(
-      '#type' => 'checkbox',
-      '#title' => $this->t('Redirect from non-clean URLs to clean URLs.'),
-      '#default_value' => $config->get('nonclean_to_clean'),
-      // @todo - does still apply? See https://drupal.org/node/1659580
-      //'#disabled' => !variable_get('clean_url', 0),
+      '#title' => $this->t('Enforce clean and canonical URLs.'),
+      '#description' => $this->t('Enabling this will automatically redirect to the canonical URL of any page. That includes redirecting to an alias if existing, removing trainling slashes, ensure the language prefix is set and similar clean-up.'),
+      '#default_value' => $config->get('route_normalizer_enabled'),
     );
     $form['globals']['redirect_canonical'] = array(
       '#type' => 'checkbox',
       '#title' => $this->t('Redirect from non-canonical URLs to the canonical URLs.'),
       '#default_value' => $config->get('canonical'),
-    );
-    $form['globals']['redirect_deslash'] = array(
-      '#type' => 'checkbox',
-      '#title' => $this->t('Remove trailing slashes from paths.'),
-      '#default_value' => $config->get('deslash'),
     );
     $form['globals']['redirect_ignore_admin_path'] = array(
       '#type' => 'checkbox',
@@ -94,25 +78,11 @@ class RedirectSettingsForm extends ConfigFormBase {
       '#default_value' => $config->get('access_check'),
     );
 
-    $form['globals']['redirect_normalize_aliases'] = array(
-      '#type' => 'checkbox',
-      '#title' => $this->t('Normalize aliases'),
-      '#description' => $this->t('Will check if for the given path an alias exists or if the used alias is in correct case and will redirect to the appropriate alias form.'),
-      '#default_value' => $config->get('normalize_aliases'),
-    );
-
     $form['globals']['redirect_content_location_header'] = array(
       '#type' => 'checkbox',
       '#title' => $this->t('Set Content Location Header'),
       '#description' => $this->t('If enabled, will add a <a href=":canonical">Content-Location</a> header.', array(':canonical' => 'http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.14')),
       '#default_value' => $config->get('content_location_header'),
-    );
-
-    $form['global']['redirect_term_path_handler'] = array(
-      '#type' => 'checkbox',
-      '#title' => $this->t('Taxonomy Term Path Handler'),
-      '#description' => $this->t('If enabled, any request to a taxonomy/term/[tid] page will check that the correct path is being used for the term\'s vocabulary.'),
-      '#default_value' => $config->get('term_path_handler'),
     );
 
     return parent::buildForm($form, $form_state);

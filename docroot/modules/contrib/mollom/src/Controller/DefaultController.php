@@ -1,7 +1,4 @@
-<?php /**
- * @file
- * Contains \Drupal\mollom\Controller\DefaultController.
- */
+<?php
 
 namespace Drupal\mollom\Controller;
 

@@ -7,7 +7,7 @@
 
 namespace Drupal\Console\Command\Shared;
 
-use Drupal\Console\Style\DrupalStyle;
+use Drupal\Console\Core\Style\DrupalStyle;
 
 trait PermissionTrait
 {
@@ -39,8 +39,8 @@ trait PermissionTrait
                 'none'
             );
 
-            $permission = $this->getStringHelper()->camelCaseToLowerCase($permission);
-            $title = $this->getStringHelper()->anyCaseToUcFirst($title);
+            $permission = $this->stringConverter->camelCaseToLowerCase($permission);
+            $title = $this->stringConverter->anyCaseToUcFirst($title);
 
             array_push(
                 $permissions,
@@ -55,7 +55,8 @@ trait PermissionTrait
             if (!$output->confirm(
                 $this->trans('commands.generate.permission.questions.add'),
                 true
-            )) {
+            )
+            ) {
                 break;
             }
         }

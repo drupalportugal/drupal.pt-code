@@ -28,3 +28,9 @@ services:
 
   diff.html_diff:
     class: HtmlDiffAdvanced
+
+  theme.negotiator.visual_diff:
+    class: Drupal\diff\VisualDiffThemeNegotiator
+    arguments: ['@config.factory']
+    tags:
+      - { name: theme_negotiator, priority: 0 }

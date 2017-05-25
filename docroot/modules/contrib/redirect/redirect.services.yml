@@ -1,3 +1,5 @@
+parameters:
+  route_normalizer_enabled: true
 services:
   redirect.repository:
     class: Drupal\redirect\RedirectRepository
@@ -17,3 +19,12 @@ services:
         arguments: ['@cache_tags.invalidator']
         tags:
           - { name: event_subscriber }
+  redirect.route_normalizer_request_subscriber:
+    class: Drupal\redirect\EventSubscriber\RouteNormalizerRequestSubscriber
+    arguments: ['@url_generator', '@path.matcher', '@config.factory', '@redirect.checker']
+    tags:
+      - { name: event_subscriber }
+  redirect.route_subscriber:
+    class: Drupal\redirect\Routing\RouteSubscriber
+    tags:
+      - { name: event_subscriber }

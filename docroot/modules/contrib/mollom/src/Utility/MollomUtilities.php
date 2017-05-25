@@ -2,11 +2,9 @@
 
 namespace Drupal\mollom\Utility;
 
-use Drupal\Core\Form\FormState;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Logger\RfcLogLevel;
 use Drupal\Core\Url;
-use Drupal\mollom\Controller\FormController;
 use Drupal\mollom\Entity\FormInterface;
 
 class MollomUtilities {

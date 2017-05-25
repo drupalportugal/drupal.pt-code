@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * @file
+ * Contains Drupal\Tests\acquia_search\Unit\AcquiaSearchTest.
+ */
+
 namespace Drupal\Tests\acquia_search\Unit;
 
 use Drupal\acquia_search\EventSubscriber\SearchSubscriber;
@@ -40,7 +45,7 @@ class AcquiaSearchTest extends UnitTestCase {
     foreach ($dirs as $path) {
       $extensions += drupal_phpunit_find_extension_directories($path);
     }
-    require_once $extensions['search_api_solr'] . '/vendor/autoload.php';
+
     unset($extensions);
 
     $this->searchSubscriber = new SearchSubscriber();

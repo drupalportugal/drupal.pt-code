@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\redirect\RedirectStorageSchema.
- */
-
 namespace Drupal\redirect;
 
 use Drupal\Core\Entity\ContentEntityTypeInterface;
@@ -27,7 +22,7 @@ class RedirectStorageSchema extends SqlContentEntityStorageSchema {
     ];
     $schema['redirect']['indexes'] += [
       // Limit length to 191.
-      'source_language' => [['redirect_source__path', 191],'language'],
+      'source_language' => [['redirect_source__path', 191], 'language'],
     ];
 
     return $schema;

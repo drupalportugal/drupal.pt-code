@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\redirect\EventSubscriber\RedirectRequestSubscriber.
- */
-
 namespace Drupal\redirect\EventSubscriber;
 
 use Drupal\Core\Cache\CacheableMetadata;
@@ -15,14 +10,11 @@ use Drupal\Core\Language\LanguageManagerInterface;
 use Drupal\Core\Logger\RfcLogLevel;
 use Drupal\Core\Path\AliasManager;
 use Drupal\Core\PathProcessor\InboundPathProcessorInterface;
-use Drupal\Core\Routing\MatchingRouteNotFoundException;
 use Drupal\Core\Routing\TrustedRedirectResponse;
 use Drupal\Core\Url;
 use Drupal\redirect\Exception\RedirectLoopException;
 use Drupal\redirect\RedirectChecker;
 use Drupal\redirect\RedirectRepository;
-use Psr\Log\InvalidArgumentException;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 use Symfony\Component\HttpKernel\KernelEvents;
@@ -170,111 +162,6 @@ class RedirectRequestSubscriber implements EventSubscriberInterface {
   }
 
   /**
-   * Detects a q=path/to/page style request and performs a redirect.
-   *
-   * @param \Symfony\Component\HttpKernel\Event\GetResponseEvent $event
-   *   The Event to process.
-   */
-  public function redirectCleanUrls(GetResponseEvent $event) {
-    if (!$this->config->get('nonclean_to_clean') || $event->getRequestType() != HttpKernelInterface::MASTER_REQUEST) {
-      return;
-    }
-
-    $request = $event->getRequest();
-    $uri = $request->getUri();
-    if (strpos($uri, 'index.php')) {
-      $url = str_replace('/index.php', '', $uri);
-      $response = new TrustedRedirectResponse($url, 301);
-      $response->addCacheableDependency(CacheableMetadata::createFromRenderArray([])->addCacheTags(['rendered']));
-      $event->setResponse($response);
-    }
-  }
-
-  /**
-   * Detects a url with an ending slash (/) and removes it.
-   *
-   * @param \Symfony\Component\HttpKernel\Event\GetResponseEvent $event
-   */
-  public function redirectDeslash(GetResponseEvent $event) {
-    if (!$this->config->get('deslash') || $event->getRequestType() != HttpKernelInterface::MASTER_REQUEST) {
-      return;
-    }
-
-    $path_info = $event->getRequest()->getPathInfo();
-    if (($path_info !== '/') && (substr($path_info, -1, 1) === '/')) {
-      $path_info = rtrim($path_info, '/');
-      try {
-        $path_info = $this->aliasManager->getPathByAlias($path_info);
-        $this->setResponse($event, Url::fromUri('internal:' . $path_info));
-      } catch (\Exception $e) {
-        watchdog_exception('redirect', $e, $e->getMessage(), [], RfcLogLevel::WARNING);
-      }
-    }
-  }
-
-  /**
-   * Redirects any path that is set as front page to the site root.
-   *
-   * @param \Symfony\Component\HttpKernel\Event\GetResponseEvent $event
-   */
-  public function redirectFrontPage(GetResponseEvent $event) {
-    if (!$this->config->get('frontpage_redirect') || $event->getRequestType() != HttpKernelInterface::MASTER_REQUEST) {
-      return;
-    }
-
-    $request = $event->getRequest();
-    $path = $request->getPathInfo();
-
-    // Redirect only if the current path is not the root and this is the front
-    // page.
-    if ($this->isFrontPage($path)) {
-      $this->setResponse($event, Url::fromRoute('<front>'));
-    }
-  }
-
-  /**
-   * Normalizes the path aliases.
-   *
-   * @param \Symfony\Component\HttpKernel\Event\GetResponseEvent $event
-   */
-  public function redirectNormalizeAliases(GetResponseEvent $event) {
-    if ($event->getRequestType() != HttpKernelInterface::MASTER_REQUEST || !$this->config->get('normalize_aliases') || !$path = $event->getRequest()->getPathInfo()) {
-      return;
-    }
-
-
-    $system_path = $this->aliasManager->getPathByAlias($path);
-    $alias = $this->aliasManager->getAliasByPath($system_path, $this->languageManager->getCurrentLanguage()
-      ->getId());
-    // If the alias defined in the system is not the same as the one via which
-    // the page has been accessed do a redirect to the one defined in the
-    // system.
-    if ($alias != $path) {
-      if ($url = \Drupal::pathValidator()->getUrlIfValid($alias)) {
-        $this->setResponse($event, $url);
-      }
-    }
-  }
-
-  /**
-   * Redirects forum taxonomy terms to correct forum path.
-   *
-   * @param \Symfony\Component\HttpKernel\Event\GetResponseEvent $event
-   */
-  public function redirectForum(GetResponseEvent $event) {
-    $request = $event->getRequest();
-    if ($event->getRequestType() != HttpKernelInterface::MASTER_REQUEST || !$this->config->get('term_path_handler') || !$this->moduleHandler->moduleExists('forum') || !preg_match('/taxonomy\/term\/([0-9]+)$/', $request->getUri(), $matches)) {
-      return;
-    }
-
-    $term = $this->entityManager->getStorage('taxonomy_term')
-      ->load($matches[1]);
-    if (!empty($term) && $term->url() != $request->getPathInfo()) {
-      $this->setResponse($event, Url::fromUri('entity:taxonomy_term/' . $term->id()));
-    }
-  }
-
-  /**
    * Prior to set the response it check if we can redirect.
    *
    * @param \Symfony\Component\HttpKernel\Event\GetResponseEvent $event
@@ -308,42 +195,7 @@ class RedirectRequestSubscriber implements EventSubscriberInterface {
     // a priority of 32. Otherwise, that aborts the request if no matching
     // route is found.
     $events[KernelEvents::REQUEST][] = array('onKernelRequestCheckRedirect', 33);
-    $events[KernelEvents::REQUEST][] = array('redirectCleanUrls', 34);
-    $events[KernelEvents::REQUEST][] = array('redirectDeslash', 35);
-    $events[KernelEvents::REQUEST][] = array('redirectFrontPage', 36);
-    $events[KernelEvents::REQUEST][] = array(
-      'redirectNormalizeAliases',
-      37,
-    );
-    $events[KernelEvents::REQUEST][] = array('redirectForum', 38);
     return $events;
-  }
-
-  /**
-   * Determine if the given path is the site's front page.
-   *
-   * @param string $path
-   *   The path to check.
-   *
-   * @return bool
-   *   Returns TRUE if the path is the site's front page.
-   */
-  protected function isFrontPage($path) {
-    // @todo PathMatcher::isFrontPage() doesn't work here for some reason.
-    $front = \Drupal::config('system.site')->get('page.front');
-
-    // Since deslash runs after the front page redirect, check and deslash here
-    // if enabled.
-    if ($this->config->get('deslash')) {
-      $path = rtrim($path, '/');
-    }
-
-    // This might be an alias.
-    $alias_path = \Drupal::service('path.alias_manager')->getPathByAlias($path);
-
-    return !empty($path)
-    // Path matches front or alias to front.
-    && (($path == $front) || ($alias_path == $front));
   }
 
 }

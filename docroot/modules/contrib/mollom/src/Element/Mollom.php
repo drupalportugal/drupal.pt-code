@@ -1,12 +1,8 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\mollom\Element\Mollom.
- */
-
 namespace Drupal\mollom\Element;
 
+use Drupal\Component\Utility\Unicode;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Render\Element;
 use Drupal\Core\Render\Element\FormElement;
@@ -84,7 +80,7 @@ class Mollom extends FormElement {
     // Load the CAPTCHA from the Mollom API.
     $data = array(
       'type' => in_array($element['captcha_required']['#value'], array('image', 'audio')) ? $element['captcha_required']['#value'] : 'image',
-      'ssl' => (int) (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on'),
+      'ssl' => (int) (!empty($_SERVER['HTTPS']) && Unicode::strtolower($_SERVER['HTTPS']) !== 'off'),
     );
     // If the requested type is audio, make sure it is enabled for the site.
     if ($data['type'] == 'audio') {
@@ -249,11 +245,11 @@ class Mollom extends FormElement {
       '#type' => 'hidden',
       // There is no default value; Form API will always use the value that was
       // submitted last (including rebuild scenarios).
-      '#attributes' => array('class' => 'mollom-content-id'),
+      '#attributes' => array('class' => array('mollom-content-id')),
     );
     $element['captchaId'] = array(
       '#type' => 'hidden',
-      '#attributes' => array('class' => 'mollom-captcha-id'),
+      '#attributes' => array('class' => array('mollom-captcha-id')),
     );
     $element['captcha_response_id'] = array(
       '#type' => 'hidden',

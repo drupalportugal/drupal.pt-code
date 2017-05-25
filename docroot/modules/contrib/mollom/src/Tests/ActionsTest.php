@@ -1,10 +1,8 @@
 <?php
-/**
- * @file contains Drupal\mollom\Tests\ActionsTest
- */
 
 namespace Drupal\mollom\Tests;
 use Drupal\mollom\Storage\ResponseDataStorage;
+use Drupal\system\Entity\Action;
 
 /**
  * Tests actions provided for comments and nodes.
@@ -66,12 +64,11 @@ class ActionsTest extends MollomTestBase {
       $data = ResponseDataStorage::loadByEntity('comment', $comment->id());
       $contentIds[] = $data->contentId;
       $this->assertTrue($comment->isPublished(), 'Initial comment is published');
-      $action = entity_load('action', 'mollom_comment_unpublish_action');
-      $this->assertTrue($comment->isPublished(), 'Comment was unpublished');
     }
+    $action = Action::load('mollom_comment_unpublish_action');
     $action->execute($comments);
 
-    $comment_storage->resetCache();
+    $this->resetAll();
     foreach ($comments as $comment) {
       $this->assertFalse($comment->isPublished(), 'Comment is now unpublished');
       $server = $this->getServerRecord('feedback');
@@ -104,7 +101,10 @@ class ActionsTest extends MollomTestBase {
       $contentIds[] = $data->contentId;
       $i++;
     }
-    $this->drupalPostForm(NULL, $edit, t('Apply'));
+
+    list(,$minor_version) = explode('.', \Drupal::VERSION);
+    $button_name =  $minor_version < 2 ? t('Apply') : t('Apply to selected items');
+    $this->drupalPostForm(NULL, $edit, $button_name);
 
     // Verify that all nodes are now unpublished.
     $node_storage->resetCache();

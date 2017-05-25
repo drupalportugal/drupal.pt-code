@@ -1,7 +1,4 @@
 <?php
-/**
- * @file contains Drupal\mollom\Tests\AnalysisOptionsTest
- */
 
 namespace Drupal\mollom\Tests;
 use Drupal\mollom\Entity\FormInterface;

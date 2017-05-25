@@ -12,14 +12,49 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Command\Command;
-use Drupal\Console\Command\Shared\ContainerAwareCommandTrait;
+use Drupal\Console\Core\Command\Shared\CommandTrait;
+use Drupal\Core\Config\ConfigFactory;
+use Drupal\Core\Extension\ThemeHandler;
 use Drupal\Core\Config\UnmetDependenciesException;
-use Drupal\Console\Style\DrupalStyle;
+use Drupal\Console\Core\Style\DrupalStyle;
+use Drupal\Console\Core\Utils\ChainQueue;
 
 class InstallCommand extends Command
 {
-    protected $moduleInstaller;
-    use ContainerAwareCommandTrait;
+    use CommandTrait;
+
+    /**
+     * @var ConfigFactory
+     */
+    protected $configFactory;
+
+    /**
+     * @var ThemeHandler
+     */
+    protected $themeHandler;
+
+    /**
+     * @var ChainQueue
+     */
+    protected $chainQueue;
+
+    /**
+     * DebugCommand constructor.
+     *
+     * @param ConfigFactory $configFactory
+     * @param ThemeHandler  $themeHandler
+     * @param ChainQueue    $chainQueue
+     */
+    public function __construct(
+        ConfigFactory $configFactory,
+        ThemeHandler $themeHandler,
+        ChainQueue $chainQueue
+    ) {
+        $this->configFactory = $configFactory;
+        $this->themeHandler = $themeHandler;
+        $this->chainQueue = $chainQueue;
+        parent::__construct();
+    }
 
     protected function configure()
     {
@@ -29,7 +64,7 @@ class InstallCommand extends Command
             ->addArgument('theme', InputArgument::IS_ARRAY, $this->trans('commands.theme.install.options.module'))
             ->addOption(
                 'set-default',
-                '',
+                null,
                 InputOption::VALUE_NONE,
                 $this->trans('commands.theme.install.options.set-default')
             );
@@ -47,7 +82,7 @@ class InstallCommand extends Command
         if (!$theme) {
             $theme_list = [];
 
-            $themes = $this->getThemeHandler()->rebuildThemeData();
+            $themes = $this->themeHandler->rebuildThemeData();
 
             foreach ($themes as $theme_id => $theme) {
                 if (!empty($theme->info['hidden'])) {
@@ -88,23 +123,19 @@ class InstallCommand extends Command
     {
         $io = new DrupalStyle($input, $output);
 
-        $configFactory = $this->getService('config.factory');
+        $config = $this->configFactory->getEditable('system.theme');
 
-        $config = $configFactory->getEditable('system.theme');
-
-        $themeHandler = $this->getService('theme_handler');
-        $themeHandler->refreshInfo();
+        $this->themeHandler->refreshInfo();
         $theme = $input->getArgument('theme');
         $default = $input->getOption('set-default');
 
         if ($default && count($theme) > 1) {
             $io->error($this->trans('commands.theme.install.messages.invalid-theme-default'));
 
-            return;
+            return 1;
         }
 
-
-        $themes  = $themeHandler->rebuildThemeData();
+        $themes  = $this->themeHandler->rebuildThemeData();
         $themesAvailable = [];
         $themesInstalled = [];
         $themesUnavailable = [];
@@ -121,7 +152,7 @@ class InstallCommand extends Command
 
         if (count($themesAvailable) > 0) {
             try {
-                if ($themeHandler->install($theme)) {
+                if ($this->themeHandler->install($theme)) {
                     if (count($themesAvailable) > 1) {
                         $io->info(
                             sprintf(
@@ -157,6 +188,8 @@ class InstallCommand extends Command
                     )
                 );
                 drupal_set_message($e->getTranslatedMessage($this->getStringTranslation(), $theme), 'error');
+
+                return 1;
             }
         } elseif (empty($themesAvailable) && count($themesInstalled) > 0) {
             if (count($themesInstalled) > 1) {
@@ -193,6 +226,8 @@ class InstallCommand extends Command
         }
 
         // Run cache rebuild to see changes in Web UI
-        $this->get('chain_queue')->addCommand('cache:rebuild', ['cache' => 'all']);
+        $this->chainQueue->addCommand('cache:rebuild', ['cache' => 'all']);
+
+        return 0;
     }
 }

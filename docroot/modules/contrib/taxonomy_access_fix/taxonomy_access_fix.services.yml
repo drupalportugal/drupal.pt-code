@@ -1,5 +1,0 @@
-services:
-  taxonomy_access_fix.route_subscriber:
-    class: Drupal\taxonomy_access_fix\Routing\RouteSubscriber
-    tags:
-      - { name: event_subscriber }

@@ -7,8 +7,27 @@
 
 namespace Drupal\Console\Generator;
 
+use Drupal\Console\Core\Generator\Generator;
+use Drupal\Console\Extension\Manager;
+
 class PluginViewsFieldGenerator extends Generator
 {
+    /**
+     * @var Manager
+     */
+    protected $extensionManager;
+
+    /**
+     * PluginViewsFieldGenerator constructor.
+     *
+     * @param Manager $extensionManager
+     */
+    public function __construct(
+        Manager $extensionManager
+    ) {
+        $this->extensionManager = $extensionManager;
+    }
+
     /**
      * Generator Plugin Field Formatter.
      *
@@ -30,13 +49,13 @@ class PluginViewsFieldGenerator extends Generator
 
         $this->renderFile(
             'module/module.views.inc.twig',
-            $this->getSite()->getModulePath($module) . '/' . $module . '.views.inc',
+            $this->extensionManager->getModule($module)->getPath() . '/' . $module . '.views.inc',
             $parameters
         );
 
         $this->renderFile(
             'module/src/Plugin/Views/field/field.php.twig',
-            $this->getSite()->getPluginPath($module, '/views/field') . '/' . $class_name . '.php',
+            $this->extensionManager->getPluginPath($module, 'views/field') . '/' . $class_name . '.php',
             $parameters
         );
     }

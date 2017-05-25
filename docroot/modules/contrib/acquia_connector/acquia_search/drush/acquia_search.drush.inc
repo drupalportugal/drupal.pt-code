@@ -5,6 +5,9 @@
  * Drush integration for the acquia search module.
  */
 
+// TODO: This complete file is deprecated? Contains many D7isms and there is no
+// use to set a derived key per environment? (Preferred method is auto-switch or
+// acquia_search.settings.connection_override).
 use Drupal\search_api\Entity\Server;
 use Drupal\acquia_connector\CryptConnector;
 

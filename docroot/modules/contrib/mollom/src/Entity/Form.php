@@ -1,12 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains Drupal\mollom\Entity\Form.
- *
- * This contains a form that is protected by Mollom.
- */
-
 namespace Drupal\mollom\Entity;
 
 use Drupal\Core\Config\Entity\ConfigEntityBase;

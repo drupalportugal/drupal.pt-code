@@ -18,20 +18,6 @@ redirect.settings:
   description: 'Configure behavior for URL redirects.'
   menu_name: admin
 
-redirect.fix_404:
-  title: 'Fix 404 pages'
-  parent: redirect.list
-  route_name: redirect.fix_404
-  description: 'Add redirects for 404 pages.'
-  menu_name: admin
-
-redirect.goto_fix_404:
-  title: 'Fix 404 pages'
-  parent: redirect.list
-  route_name: redirect.fix_404
-  description: 'Fix 404 pages with URL redirects.'
-  menu_name: admin
-
 #redirect.devel_generate:
 #  title: 'Generate redirects'
 #  parent: dblog.page_not_found

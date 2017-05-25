@@ -1,7 +1,4 @@
 <?php
-/**
- * @file contains Drupal\mollom\Tests\ReportingTest
- */
 
 namespace Drupal\mollom\Tests;
 use Drupal\Core\Session\AccountInterface;
@@ -237,7 +234,9 @@ class ReportingTest extends MollomTestBase {
       $edit["node_bulk_form[{$i}]"] = TRUE;
       $i++;
     }
-    $this->drupalPostForm(NULL, $edit, t('Apply'));
+    list(,$minor_version) = explode('.', \Drupal::VERSION);
+    $button_name =  $minor_version < 2 ? t('Apply') : t('Apply to selected items');
+    $this->drupalPostForm(NULL, $edit, $button_name);
     /* @var $node \Drupal\node\Entity\Node */
     foreach ($nodes as $node) {
       $this->assertText($node->label(), t('Node found.'));

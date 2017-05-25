@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\redirect\Plugin\migrate\source\PathRedirect.
- */
-
 namespace Drupal\redirect\Plugin\migrate\source;
 
 use Drupal\migrate_drupal\Plugin\migrate\source\DrupalSqlBase;

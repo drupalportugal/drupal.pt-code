@@ -1,7 +1,4 @@
-<?php /**
- * @file
- * Contains \Drupal\mollom\Form\MollomReportForm.
- */
+<?php
 
 namespace Drupal\mollom\Form;
 

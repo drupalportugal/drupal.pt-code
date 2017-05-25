@@ -23,12 +23,16 @@ class DiffLayoutManager extends DefaultPluginManager {
   protected $entityTypeManager;
 
   /**
-   * Wrapper object for writing/reading simple configuration from diff.settings.yml
+   * Wrapper object for simple configuration from diff.settings.yml.
+   *
+   * @var \Drupal\Core\Config\ImmutableConfig
    */
   protected $config;
 
   /**
-   * Wrapper object for writing/reading simple configuration from diff.plugins.yml
+   * Wrapper object for simple configuration from diff.plugins.yml.
+   *
+   * @var \Drupal\Core\Config\ImmutableConfig
    */
   protected $layoutPluginsConfig;
 
@@ -42,19 +46,19 @@ class DiffLayoutManager extends DefaultPluginManager {
    *   Cache backend instance to use.
    * @param \Drupal\Core\Extension\ModuleHandlerInterface $module_handler
    *   The module handler.
-   * @param EntityTypeManagerInterface $entity_type_manager
-   *   Entity Manager service.
-   * @param ConfigFactoryInterface $configFactory
+   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
+   *   The entity type manager.
+   * @param \Drupal\Core\Config\ConfigFactoryInterface $config_factory
    *   The configuration factory.
    */
-  public function __construct(\Traversable $namespaces, CacheBackendInterface $cache_backend, ModuleHandlerInterface $module_handler, EntityTypeManagerInterface $entity_type_manager, ConfigFactoryInterface $configFactory) {
+  public function __construct(\Traversable $namespaces, CacheBackendInterface $cache_backend, ModuleHandlerInterface $module_handler, EntityTypeManagerInterface $entity_type_manager, ConfigFactoryInterface $config_factory) {
     parent::__construct('Plugin/diff/Layout', $namespaces, $module_handler, '\Drupal\diff\DiffLayoutInterface', 'Drupal\diff\Annotation\DiffLayoutBuilder');
 
     $this->setCacheBackend($cache_backend, 'diff_layout_builder_plugins');
-    $this->alterInfo('field_diff_builder_info');
+    $this->alterInfo('diff_layout_builder_info');
     $this->entityTypeManager = $entity_type_manager;
-    $this->config = $configFactory->get('diff.settings');
-    $this->layoutPluginsConfig =  $configFactory->get('diff.layout_plugins');
+    $this->config = $config_factory->get('diff.settings');
+    $this->layoutPluginsConfig = $config_factory->get('diff.layout_plugins');
   }
 
   /**
@@ -67,7 +71,7 @@ class DiffLayoutManager extends DefaultPluginManager {
    *   The layout plugin options.
    */
   public function getPluginOptions() {
-    $plugins = $this->config->get('general_settings' . '.' . 'layout_plugins');
+    $plugins = $this->config->get('general_settings.layout_plugins');
     $plugin_options = [];
     // Get the plugins sorted and build an array keyed by the plugin id.
     if ($plugins) {
@@ -111,4 +115,5 @@ class DiffLayoutManager extends DefaultPluginManager {
     }
     return $definitions;
   }
+
 }

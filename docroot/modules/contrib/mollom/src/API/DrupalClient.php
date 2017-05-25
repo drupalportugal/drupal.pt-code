@@ -30,6 +30,8 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class DrupalClient extends Client implements DrupalClientInterface {
 
+  const MAX_EXPECTED_LANGUAGES_LENGTH = 64;
+
   /**
    * The settings configuration.
    *
@@ -307,5 +309,12 @@ class DrupalClient extends Client implements DrupalClientInterface {
     // UX: Sort installed languages first.
     // @todo array_intersect_key($options, $installed_languages) + $options;
     return $options;
+  }
+
+  /**
+   * Implements flattenExpectedLanguages().
+   */
+  public static function flattenExpectedLanguages(array $languages) {
+    return implode(',', $languages);
   }
 }

@@ -5,9 +5,10 @@
  * Install, update, and uninstall functions for the Acquia Connector module.
  */
 
-use Drupal\Core\Url;
+use Drupal\acquia_connector\Helper\Storage;
 use Drupal\acquia_connector\Controller\TestStatusController;
 use Drupal\acquia_connector\Subscription;
+use Drupal\Core\Url;
 
 /**
  * Implements hook_requirements().
@@ -215,3 +216,38 @@ function acquia_connector_update_8003() {
   $config->set('spi.set_variables_automatic', array_values($variables_automatic));
   $config->save(TRUE);
 }
+
+/**
+ * Delete the multisite related settings as it is not currently supported.
+ */
+function acquia_connector_update_8004() {
+  $config_factory = \Drupal::configFactory();
+  $config = $config_factory->getEditable('acquia_connector.settings');
+
+  $config->clear('spi.multisite_identifier');
+  $config->clear('spi.is_multisite');
+  $config->clear('spi.machine_multisite_identifier');
+
+  $config->save(TRUE);
+}
+
+/**
+ * Remove Acquia Subscription credentials from the config and place it into the
+ * State storage. For more info see https://www.drupal.org/node/2635138.
+ */
+function acquia_connector_update_8005() {
+  $config = \Drupal::configFactory()->getEditable('acquia_connector.settings');
+
+  if ($config->get('key')) {
+    Storage::setKey($config->get('key'));
+    $config->clear('key');
+  }
+
+  if ($config->get('identifier')) {
+    Storage::setIdentifier($config->get('identifier'));
+    $config->clear('identifier');
+  }
+
+  $config->save(TRUE);
+}
+

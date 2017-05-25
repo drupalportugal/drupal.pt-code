@@ -1,14 +1,8 @@
 <?php
 
-/**
- * @file
- * Contains Drupal\mollom\Tests\MollomTestBase.
- */
-
 namespace Drupal\mollom\Tests;
 
 
-use Drupal\comment\Tests\CommentTestTrait;
 use Drupal\Component\Utility\Html;
 use Drupal\Component\Utility\SafeMarkup;
 use Drupal\Core\Logger\RfcLogLevel;

@@ -1,12 +1,5 @@
 <?php
 
-/**
- * @file
- * Mollom client class.
- *
- * @license MIT|GNU GPL v2
- *   See LICENSE-MIT.txt or LICENSE-GPL.txt shipped with this library.
- */
 namespace Mollom\Client;
 
 use Mollom\Exception\MollomAuthenticationException;

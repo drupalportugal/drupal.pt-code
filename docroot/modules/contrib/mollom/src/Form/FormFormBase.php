@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains Drupal\mollom\Form\FormFormBase.
- */
-
 namespace Drupal\mollom\Form;
 
 use Drupal\Component\Utility\Html;

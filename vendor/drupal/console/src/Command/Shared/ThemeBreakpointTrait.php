@@ -7,7 +7,7 @@
 
 namespace Drupal\Console\Command\Shared;
 
-use Drupal\Console\Style\DrupalStyle;
+use Drupal\Console\Core\Style\DrupalStyle;
 
 trait ThemeBreakpointTrait
 {
@@ -18,8 +18,8 @@ trait ThemeBreakpointTrait
      */
     public function breakpointQuestion(DrupalStyle $io)
     {
-        $stringUtils = $this->getStringHelper();
-        $validators = $this->getValidator();
+        $stringUtils = $this->stringConverter;
+        $validators = $this->validator;
 
         $breakpoints = [];
         while (true) {
@@ -69,7 +69,8 @@ trait ThemeBreakpointTrait
             if (!$io->confirm(
                 $this->trans('commands.generate.theme.questions.breakpoint-add'),
                 true
-            )) {
+            )
+            ) {
                 break;
             }
         }

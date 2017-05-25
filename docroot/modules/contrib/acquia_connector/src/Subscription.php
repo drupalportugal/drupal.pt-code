@@ -2,6 +2,8 @@
 
 namespace Drupal\acquia_connector;
 
+use Drupal\acquia_connector\Helper\Storage;
+
 /**
  * Class Subscription.
  *
@@ -53,7 +55,9 @@ class Subscription {
     else {
       // Get our subscription data.
       try {
-        $subscription = \Drupal::service('acquia_connector.client')->getSubscription($config->get('identifier'), $config->get('key'), $params);
+        $key = Storage::getKey();
+        $identifier = Storage::getIdentifier();
+        $subscription = \Drupal::service('acquia_connector.client')->getSubscription($identifier, $key, $params);
       }
       catch (ConnectorException $e) {
         switch ($e->getCustomMessage('code')) {
@@ -84,8 +88,7 @@ class Subscription {
    * Helper function to check if an identifier and key exist.
    */
   static public function hasCredentials() {
-    $config = \Drupal::config('acquia_connector.settings');
-    return $config->get('identifier') && $config->get('key');
+    return Storage::getIdentifier() && Storage::getKey();
   }
 
   /**
@@ -102,7 +105,9 @@ class Subscription {
       // Make sure we have data at least once per day.
       if (isset($subscription_timestamp) && (time() - $subscription_timestamp > 60 * 60 * 24)) {
         try {
-          $subscription = \Drupal::service('acquia_connector.client')->getSubscription($config->get('identifier'), $config->get('key'), ['no_heartbeat' => 1]);
+          $key = Storage::getKey();
+          $identifier = Storage::getIdentifier();
+          $subscription = \Drupal::service('acquia_connector.client')->getSubscription($identifier, $key, ['no_heartbeat' => 1]);
         }
         catch (ConnectorException $e) {
         }

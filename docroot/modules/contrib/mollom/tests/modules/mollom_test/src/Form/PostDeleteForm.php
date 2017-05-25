@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file contains
- * \Drupal\mollom_test\Form\PostDeleteForm
- */
-
 namespace Drupal\mollom_test\Form;
 use Drupal\Core\Entity\ContentEntityConfirmFormBase;
 use Drupal\Core\Form\FormStateInterface;

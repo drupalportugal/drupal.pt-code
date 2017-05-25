@@ -7,8 +7,7 @@ use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Form\FormStateInterface;
 
 /**
- * This plugins offers the possibility to compare the title and the uris
- * of two link fields.
+ * Plugin to compare the title and the uris of two link fields.
  *
  * @FieldDiffBuilder(
  *   id = "link_field_diff_builder",

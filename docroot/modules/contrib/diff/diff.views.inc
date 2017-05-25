@@ -1,6 +1,11 @@
 <?php
 
 /**
+ * @file
+ * Provide views data for diff.module.
+ */
+
+/**
  * Implements hook_views_data().
  */
 function diff_views_data() {

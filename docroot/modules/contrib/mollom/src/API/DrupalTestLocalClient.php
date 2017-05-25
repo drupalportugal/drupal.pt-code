@@ -3,7 +3,6 @@
 namespace Drupal\mollom\API;
 
 use Drupal\Core\Config\ConfigFactory;
-use Drupal\mollom\Utility\Logger;
 use GuzzleHttp\ClientInterface;
 
 /**

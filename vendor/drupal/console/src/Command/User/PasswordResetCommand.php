@@ -10,15 +10,42 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Command\Command;
-use Drupal\Console\Command\Shared\ContainerAwareCommandTrait;
+use Drupal\Console\Core\Command\Shared\CommandTrait;
+use Drupal\Core\Database\Connection;
+use Drupal\Console\Core\Utils\ChainQueue;
 use Drupal\Console\Command\Shared\ConfirmationTrait;
 use Drupal\user\Entity\User;
-use Drupal\Console\Style\DrupalStyle;
+use Drupal\Console\Core\Style\DrupalStyle;
 
 class PasswordResetCommand extends Command
 {
-    use ContainerAwareCommandTrait;
+    use CommandTrait;
     use ConfirmationTrait;
+
+    /**
+     * @var Connection
+     */
+    protected $database;
+
+    /**
+     * @var ChainQueue
+     */
+    protected $chainQueue;
+
+    /**
+     * PasswordHashCommand constructor.
+     *
+     * @param Connection $database
+     * @param ChainQueue $chainQueue
+     */
+    public function __construct(
+        Connection $database,
+        ChainQueue $chainQueue
+    ) {
+        $this->database = $database;
+        $this->chainQueue = $chainQueue;
+        parent::__construct();
+    }
 
     /**
      * {@inheritdoc}
@@ -71,12 +98,11 @@ class PasswordResetCommand extends Command
             $user->setPassword($password);
             $user->save();
 
-            $database = $this->getDrupalService('database');
-            $schema = $database->schema();
+            $schema = $this->database->schema();
             $flood = $schema->findTables('flood');
 
             if ($flood) {
-                $this->get('chain_queue')
+                $this-$this->chainQueue
                     ->addCommand('user:login:clear:attempts', ['uid' => $uid]);
             }
         } catch (\Exception $e) {
@@ -148,7 +174,6 @@ class PasswordResetCommand extends Command
                                 return false;
                             }
                         }
-
                     }
                 );
 

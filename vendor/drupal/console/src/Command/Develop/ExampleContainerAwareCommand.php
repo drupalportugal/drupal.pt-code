@@ -10,16 +10,25 @@ namespace Drupal\Console\Command\Develop;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Command\Command;
-use Drupal\Console\Command\Shared\ContainerAwareCommandTrait;
-use Drupal\Console\Style\DrupalStyle;
+use Drupal\Console\Core\Command\Shared\CommandTrait;
+use Drupal\Console\Core\Style\DrupalStyle;
 
 /**
  * Class ExampleContainerAwareCommand
+ *
  * @package Drupal\Console\Command\Develop
  */
 class ExampleContainerAwareCommand extends Command
 {
-    use ContainerAwareCommandTrait;
+    use CommandTrait;
+
+    /**
+     * ExampleContainerAwareCommand constructor.
+     */
+    public function __construct()
+    {
+        parent::__construct();
+    }
 
     /**
      * {@inheritdoc}
@@ -44,12 +53,12 @@ class ExampleContainerAwareCommand extends Command
         /* Register your command as a service
          *
          * Make sure you register your command class at
-         * config/services/namespace.yml file and add the `console.command` tag.
+         * config/services/namespace.yml file and add the `drupal.command` tag.
          *
          * develop_example_container_aware:
          *   class: Drupal\Console\Command\Develop\ExampleContainerAwareCommand
          *   tags:
-         *     - { name: console.command }
+         *     - { name: drupal.command }
          *
          * NOTE: Make the proper changes on the namespace and class
          *       according your new command.
@@ -69,9 +78,9 @@ class ExampleContainerAwareCommand extends Command
          *  the service container.
          *
          *  In other words, you can access to any configured Drupal service
-         *  using the provided getService method.
+         *  using the provided get method.
          *
-         *  $this->getDrupalService('entity_type.manager');
+         *  $this->get('entity_type.manager');
          *
          *  Reading user input argument
          *  $input->getArgument('ARGUMENT_NAME');

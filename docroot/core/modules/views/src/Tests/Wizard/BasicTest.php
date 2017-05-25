@@ -20,16 +20,16 @@ class BasicTest extends WizardTestBase {
     $this->drupalPlaceBlock('page_title_block');
   }
 
-  function testViewsWizardAndListing() {
-    $this->drupalCreateContentType(array('type' => 'article'));
-    $this->drupalCreateContentType(array('type' => 'page'));
+  public function testViewsWizardAndListing() {
+    $this->drupalCreateContentType(['type' => 'article']);
+    $this->drupalCreateContentType(['type' => 'page']);
 
     // Check if we can access the main views admin page.
     $this->drupalGet('admin/structure/views');
-    $this->assertText(t('Add new view'));
+    $this->assertText(t('Add view'));
 
     // Create a simple and not at all useful view.
-    $view1 = array();
+    $view1 = [];
     $view1['label'] = $this->randomMachineName(16);
     $view1['id'] = strtolower($this->randomMachineName(16));
     $view1['description'] = $this->randomMachineName(16);
@@ -51,11 +51,11 @@ class BasicTest extends WizardTestBase {
     $this->assertNoText($view1['label']);
 
     // Create two nodes.
-    $node1 = $this->drupalCreateNode(array('type' => 'page'));
-    $node2 = $this->drupalCreateNode(array('type' => 'article'));
+    $node1 = $this->drupalCreateNode(['type' => 'page']);
+    $node2 = $this->drupalCreateNode(['type' => 'article']);
 
     // Now create a page with simple node listing and an attached feed.
-    $view2 = array();
+    $view2 = [];
     $view2['label'] = $this->randomMachineName(16);
     $view2['id'] = strtolower($this->randomMachineName(16));
     $view2['description'] = $this->randomMachineName(16);
@@ -102,7 +102,7 @@ class BasicTest extends WizardTestBase {
     $this->assertNoText('View: ' . $view2['label']);
 
     // Create a view with a page and a block, and filter the listing.
-    $view3 = array();
+    $view3 = [];
     $view3['label'] = $this->randomMachineName(16);
     $view3['id'] = strtolower($this->randomMachineName(16));
     $view3['description'] = $this->randomMachineName(16);
@@ -150,7 +150,7 @@ class BasicTest extends WizardTestBase {
     $this->assertNoText('tracker', 'Default tracker view does not show on the listing page.');
 
     // Create a view with only a REST export.
-    $view4 = array();
+    $view4 = [];
     $view4['label'] = $this->randomMachineName(16);
     $view4['id'] = strtolower($this->randomMachineName(16));
     $view4['description'] = $this->randomMachineName(16);
@@ -159,7 +159,7 @@ class BasicTest extends WizardTestBase {
     $view4['rest_export[create]'] = 1;
     $view4['rest_export[path]'] = $this->randomMachineName(16);
     $this->drupalPostForm('admin/structure/views/add', $view4, t('Save and edit'));
-    $this->assertRaw(t('The view %view has been saved.', array('%view' => $view4['label'])));
+    $this->assertRaw(t('The view %view has been saved.', ['%view' => $view4['label']]));
 
     // Check that the REST export path works.
     $this->drupalGet($view4['rest_export[path]']);
@@ -171,26 +171,6 @@ class BasicTest extends WizardTestBase {
   }
 
   /**
-   * Tests the actual wizard form.
-   *
-   * @see \Drupal\views_ui\ViewAddForm::form()
-   */
-  public function testWizardForm() {
-    $this->drupalGet('admin/structure/views/add');
-
-    $result = $this->xpath('//small[@id = "edit-label-machine-name-suffix"]');
-    $this->assertTrue(count($result), 'Ensure that the machine name is applied to the name field.');
-
-    $this->drupalPostAjaxForm(NULL, array('show[wizard_key]' => 'users'), 'show[wizard_key]');
-    $this->assertNoFieldByName('show[type]', NULL, 'The "of type" filter is not added for users.');
-    $this->drupalPostAjaxForm(NULL, array('show[wizard_key]' => 'node'), 'show[wizard_key]');
-    $this->assertNoFieldByName('show[type]', 'all', 'The "of type" filter is not added for nodes when there are no node types.');
-    $this->drupalCreateContentType(array('type' => 'page'));
-    $this->drupalPostAjaxForm(NULL, array('show[wizard_key]' => 'node'), 'show[wizard_key]');
-    $this->assertFieldByName('show[type]', 'all', 'The "of type" filter is added for nodes when there is at least one node type.');
-  }
-
-  /**
    * Tests default plugin values are populated from the wizard form.
    *
    * @see \Drupal\views\Plugin\views\display\DisplayPluginBase::mergeDefaults()
@@ -198,7 +178,7 @@ class BasicTest extends WizardTestBase {
   public function testWizardDefaultValues() {
     $random_id = strtolower($this->randomMachineName(16));
     // Create a basic view.
-    $view = array();
+    $view = [];
     $view['label'] = $this->randomMachineName(16);
     $view['id'] = $random_id;
     $view['description'] = $this->randomMachineName(16);
@@ -212,8 +192,8 @@ class BasicTest extends WizardTestBase {
     $displays = $view->storage->get('display');
 
     foreach ($displays as $display) {
-      foreach (array('query', 'exposed_form', 'pager', 'style', 'row') as $type) {
-        $this->assertFalse(empty($display['display_options'][$type]['options']), SafeMarkup::format('Default options found for @plugin.', array('@plugin' => $type)));
+      foreach (['query', 'exposed_form', 'pager', 'style', 'row'] as $type) {
+        $this->assertFalse(empty($display['display_options'][$type]['options']), SafeMarkup::format('Default options found for @plugin.', ['@plugin' => $type]));
       }
     }
   }

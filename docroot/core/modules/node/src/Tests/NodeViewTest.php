@@ -2,6 +2,8 @@
 
 namespace Drupal\node\Tests;
 
+use Drupal\Component\Utility\Html;
+
 /**
  * Tests the node/{node} page.
  *
@@ -64,12 +66,30 @@ class NodeViewTest extends NodeTestBase {
   }
 
   /**
+   * Tests the Link header.
+   */
+  public function testLinkHeader() {
+    $node = $this->drupalCreateNode();
+
+    $expected = [
+      '<' . Html::escape($node->url('canonical')) . '>; rel="canonical"',
+      '<' . Html::escape($node->url('canonical'), ['alias' => TRUE]) . '>; rel="shortlink"',
+      '<' . Html::escape($node->url('revision')) . '>; rel="revision"',
+    ];
+
+    $this->drupalGet($node->urlInfo());
+
+    $links = explode(',', $this->drupalGetHeader('Link'));
+    $this->assertEqual($links, $expected);
+  }
+
+  /**
    * Tests that we store and retrieve multi-byte UTF-8 characters correctly.
    */
   public function testMultiByteUtf8() {
     $title = '🐝';
     $this->assertTrue(mb_strlen($title, 'utf-8') < strlen($title), 'Title has multi-byte characters.');
-    $node = $this->drupalCreateNode(array('title' => $title));
+    $node = $this->drupalCreateNode(['title' => $title]);
     $this->drupalGet($node->urlInfo());
     $result = $this->xpath('//span[contains(@class, "field--name-title")]');
     $this->assertEqual((string) $result[0], $title, 'The passed title was returned.');

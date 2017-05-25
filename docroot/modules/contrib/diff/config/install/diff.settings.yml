@@ -5,7 +5,7 @@ general_settings:
   revision_pager_limit: 50
   layout_plugins:
     visual_inline:
-      enabled: true
+      enabled: false
       weight: 0
     split_fields:
       enabled: true
@@ -13,3 +13,4 @@ general_settings:
     unified_fields:
       enabled: true
       weight: 2
+  visual_inline_theme: default

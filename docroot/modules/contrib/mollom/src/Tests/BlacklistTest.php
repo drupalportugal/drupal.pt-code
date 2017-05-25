@@ -1,13 +1,9 @@
 <?php
-/**
- * @file contains Drupal\mollom\Tests\BlacklistTest
- */
 
 namespace Drupal\mollom\Tests;
 
 use Drupal\component\Utility\Unicode;
 use Drupal\Core\Logger\RfcLogLevel;
-use Drupal\Core\Url;
 use Drupal\mollom\Storage\BlacklistStorage;
 
 /**

@@ -1,6 +1,6 @@
 {
     "name": "mollom",
-    "type": "",
+    "type": "drupal-module",
     "description": "Mollom drupal module",
     "keywords": ["acquia", "mollom", "spam"],
     "homepage": "https://drupal.org/project/mollom",

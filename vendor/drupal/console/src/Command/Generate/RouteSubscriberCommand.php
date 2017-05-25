@@ -13,13 +13,55 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Drupal\Console\Command\Shared\ModuleTrait;
 use Drupal\Console\Generator\RouteSubscriberGenerator;
 use Drupal\Console\Command\Shared\ConfirmationTrait;
-use Drupal\Console\Command\GeneratorCommand;
-use Drupal\Console\Style\DrupalStyle;
+use Symfony\Component\Console\Command\Command;
+use Drupal\Console\Core\Style\DrupalStyle;
+use Drupal\Console\Extension\Manager;
+use Drupal\Console\Core\Utils\ChainQueue;
+use Drupal\Console\Core\Command\Shared\CommandTrait;
 
-class RouteSubscriberCommand extends GeneratorCommand
+/**
+ * Class RouteSubscriberCommand
+ *
+ * @package Drupal\Console\Command\Generate
+ */
+class RouteSubscriberCommand extends Command
 {
     use ModuleTrait;
     use ConfirmationTrait;
+    use CommandTrait;
+
+    /**
+ * @var Manager
+*/
+    protected $extensionManager;
+
+    /**
+ * @var RouteSubscriberGenerator
+*/
+    protected $generator;
+
+    /**
+     * @var ChainQueue
+     */
+    protected $chainQueue;
+
+    /**
+     * RouteSubscriberCommand constructor.
+     *
+     * @param Manager                  $extensionManager
+     * @param RouteSubscriberGenerator $generator
+     * @param ChainQueue               $chainQueue
+     */
+    public function __construct(
+        Manager $extensionManager,
+        RouteSubscriberGenerator $generator,
+        ChainQueue $chainQueue
+    ) {
+        $this->extensionManager = $extensionManager;
+        $this->generator = $generator;
+        $this->chainQueue = $chainQueue;
+        parent::__construct();
+    }
 
     /**
      * {@inheritdoc}
@@ -59,18 +101,18 @@ class RouteSubscriberCommand extends GeneratorCommand
 
         // @see use Drupal\Console\Command\Shared\ConfirmationTrait::confirmGeneration
         if (!$this->confirmGeneration($output)) {
-            return;
+            return 1;
         }
 
         $module = $input->getOption('module');
         $name = $input->getOption('name');
         $class = $input->getOption('class');
 
-        $this
-            ->getGenerator()
-            ->generate($module, $name, $class);
+        $this->generator->generate($module, $name, $class);
 
-        $this->getChain()->addCommand('cache:rebuild', ['cache' => 'all']);
+        $this->chainQueue->addCommand('cache:rebuild', ['cache' => 'all']);
+
+        return 0;
     }
 
     /**
@@ -84,7 +126,7 @@ class RouteSubscriberCommand extends GeneratorCommand
         $module = $input->getOption('module');
         if (!$module) {
             // @see Drupal\Console\Command\Shared\ModuleTrait::moduleQuestion
-            $module = $this->moduleQuestion($output);
+            $module = $this->moduleQuestion($io);
             $input->setOption('module', $module);
         }
 

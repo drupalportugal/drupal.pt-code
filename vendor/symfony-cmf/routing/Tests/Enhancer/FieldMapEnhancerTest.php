@@ -3,7 +3,7 @@
 /*
  * This file is part of the Symfony CMF package.
  *
- * (c) 2011-2014 Symfony CMF
+ * (c) 2011-2015 Symfony CMF
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -12,7 +12,6 @@
 namespace Symfony\Cmf\Component\Routing\Tests\Mapper;
 
 use Symfony\Component\HttpFoundation\Request;
-
 use Symfony\Cmf\Component\Routing\Test\CmfUnitTestCase;
 use Symfony\Cmf\Component\Routing\Enhancer\FieldMapEnhancer;
 

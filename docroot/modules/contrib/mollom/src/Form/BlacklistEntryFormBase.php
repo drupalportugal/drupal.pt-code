@@ -1,8 +1,4 @@
 <?php
-/**
- * @file
- * Contains Drupal\mollom\Form\BlacklistEntryFormBase.
- */
 
 namespace Drupal\mollom\Form;
 

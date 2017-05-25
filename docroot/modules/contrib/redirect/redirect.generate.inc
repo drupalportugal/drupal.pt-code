@@ -85,8 +85,7 @@ function redirect_generate_batch_generate($num, array &$context) {
     $context['sandbox'] = array();
     $context['sandbox']['progress'] = 0;
     $context['sandbox']['max'] = $num;
-
-    $query = db_select('node', 'n');
+    $query = \Drupal::database()->select('node', 'n');
     $query->addField('n', 'nid');
     $query->condition('n.status', NODE_PUBLISHED);
     $query->addTag('node_access');
@@ -140,13 +139,14 @@ function redirect_generate_batch_generate($num, array &$context) {
     $redirect->save();
 
     if (mt_rand(0, 1)) {
-      db_update('redirect')
-        ->fields(array(
-          'count' => mt_rand(1, 500),
-          'access' => mt_rand(REQUEST_TIME - 31536000, REQUEST_TIME),
-        ))
-        ->condition('rid', $redirect->id())
-        ->execute();
+    $query = \Drupal::database();
+    $query->update('redirect')
+      ->fields(array(
+        'count' => mt_rand(1, 500),
+        'access' => mt_rand(REQUEST_TIME - 31536000, REQUEST_TIME),
+      ))
+      ->condition('rid', $redirect->id())
+      ->execute();
     }
 
     $context['results'][] = $redirect->id();

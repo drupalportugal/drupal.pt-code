@@ -1,7 +1,4 @@
-<?php /**
- * @file
- * Contains \Drupal\mollom\EventSubscriber\InitSubscriber.
- */
+<?php
 
 namespace Drupal\mollom\EventSubscriber;
 

@@ -4,10 +4,10 @@ description: Provides support for Twitter's Card meta tags.
 # core: 8.x
 package: SEO
 dependencies:
-  - metatag
+  - metatag:metatag
 
-# Information added by Drupal.org packaging script on 2016-08-22
-version: '8.x-1.0-beta10'
+# Information added by Drupal.org packaging script on 2017-01-31
+version: '8.x-1.0'
 core: '8.x'
 project: 'metatag'
-datestamp: 1471888741
+datestamp: 1485901986

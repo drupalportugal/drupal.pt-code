@@ -170,6 +170,7 @@ you agree to abide by its terms. See [CODE_OF_CONDUCT][code_of_conduct] file.
 
 ## Credits
 
+* [SavageTiger][] for contributing many improvements and fixes to caxy/php-htmldiff! 
 * [rashid2538][] for the port to PHP and the base for our project: [rashid2538/php-htmldiff][upstream]
 * [willdurand][] for an excellent post on [open sourcing libraries][].
 Much of this documentation is based off of the examples in the post.
@@ -179,6 +180,26 @@ Did we miss anyone? If we did, let us know or put in a pull request!
 ## License
 
 php-htmldiff is available under [GNU General Public License, version 2][gnu]. See the [LICENSE][license] file for details.
+
+## TODO
+
+* Tests, tests, and more tests! (mostly unit tests) - need more tests before we can major refactoring / cleanup for a v1 release
+* Add documentation for setting up a cache provider (doctrine cache)
+    * Maybe add abstraction layer for cache + adapter for doctrine cache
+* Make HTML Purifier an optional dependency - possibly use abstraction layer for purifiers so alternatives could be used (or none at all for performance)
+* Expose configuration for HTML Purifier (used in table diffing) - currently only cache dir is configurable through HtmlDiffConfig object
+* Add option to enable using HTML Purifier to purify all input
+* Performance improvements (we have 1 benchmark test, we should probably get more)
+    * Algorithm improvements - trimming alike text at start and ends, store nested diff results in memory to re-use (like we do w/ caching)
+    * Benchmark using DOMDocument vs. alternatives vs. string parsing
+* Benchmarking
+* Look into removing dependency on php-simple-html-dom-parser library - possibly find alternative or no library at all. Consider how this affects performance.
+* Refactoring (but... tests first)
+    * Overall design/architecture improvements
+    * API improvements so a new HtmlDiff isn't required for each new diff (especially so that configuration can be re-used)
+* Split demo application to separate repository
+* Add documentation on alternative htmldiff engines and perhaps some comparisons
+
 
 [badge_score]: https://scrutinizer-ci.com/g/caxy/php-htmldiff/?branch=master
 [badge_status]: https://scrutinizer-ci.com/g/caxy/php-htmldiff/build-status/master
@@ -196,6 +217,7 @@ php-htmldiff is available under [GNU General Public License, version 2][gnu]. Se
 [code_of_conduct]: https://github.com/caxy/php-htmldiff/blob/master/CODE_OF_CONDUCT.md
 [composer]: http://getcomposer.org/
 [contributor_covenant]: http://contributor-covenant.org/
+[SavageTiger]: https://github.com/SavageTiger
 [rashid2538]: https://github.com/rashid2538
 [willdurand]: https://github.com/willdurand
 [open sourcing libraries]: http://williamdurand.fr/2013/07/04/on-open-sourcing-libraries/

@@ -1,11 +1,7 @@
 <?php
-/**
- * @file contains Drupal\mollom\Tests\MollomCommentTestTrait
- */
 
 namespace Drupal\mollom\Tests;
 
-use Drupal\comment\CommentInterface;
 use Drupal\comment\Entity\CommentType;
 use Drupal\comment\Plugin\Field\FieldType\CommentItemInterface;
 use Drupal\comment\Tests\CommentTestTrait;

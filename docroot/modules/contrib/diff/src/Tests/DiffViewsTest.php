@@ -10,6 +10,8 @@ use Drupal\views\Tests\ViewTestBase;
 /**
  * Tests the diff views integration.
  *
+ * Loads optional config of views.
+ *
  * @group diff
  */
 class DiffViewsTest extends ViewTestBase {
@@ -17,12 +19,16 @@ class DiffViewsTest extends ViewTestBase {
   /**
    * {@inheritdoc}
    */
-  public static $modules = ['node', 'diff', 'user', 'diff_test'];
+  public static $modules = ['node', 'diff', 'user', 'views', 'diff_test'];
 
   /**
    * Tests the behavior of a view that uses the diff_from and diff_to fields.
    */
   public function testDiffView() {
+    // Make sure HTML Diff is disabled.
+    $config = \Drupal::configFactory()->getEditable('diff.settings');
+    $config->set('general_settings.layout_plugins.visual_inline.enabled', FALSE)->save();
+
     $node_type = NodeType::create([
       'type' => 'article',
       'label' => 'Article',
@@ -33,10 +39,12 @@ class DiffViewsTest extends ViewTestBase {
       'title' => 'Test article: giraffe',
     ]);
     $node->save();
+    $revision1 = $node->getRevisionId();
 
     $node->setNewRevision(TRUE);
     $node->setTitle('Test article: llama');
     $node->save();
+    $revision2 = $node->getRevisionId();
 
     $this->drupalGet("node/{$node->id()}/diff-views");
     $this->assertResponse(403);
@@ -57,17 +65,17 @@ class DiffViewsTest extends ViewTestBase {
     $this->drupalPostForm(NULL, $edit, t('Compare'));
     $expected_url = Url::fromRoute(
       'diff.revisions_diff',
-      // Route parameters
+      // Route parameters.
       [
         'node' => $node->id(),
-        'left_revision' => 1,
-        'right_revision' => 2,
+        'left_revision' => $revision1,
+        'right_revision' => $revision2,
         'filter' => 'split_fields',
       ],
-      // Additional route options
+      // Additional route options.
       [
         'query' => [
-          'destination' => Url::fromUri('internal:/node/1/diff-views')->toString(),
+          'destination' => Url::fromUri("internal:/node/{$node->id()}/diff-views")->toString(),
         ],
       ]
     );

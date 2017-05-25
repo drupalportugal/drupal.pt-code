@@ -1,9 +1,5 @@
 <?php
 
-/**
- * @file contains Drupal\mollom_test\Entity\Post
- */
-
 namespace Drupal\mollom_test\Entity;
 use Drupal\Core\Entity\ContentEntityBase;
 use Drupal\Core\Entity\EntityTypeInterface;

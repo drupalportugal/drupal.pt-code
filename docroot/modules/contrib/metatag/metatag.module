@@ -19,14 +19,34 @@ function metatag_help($route_name, RouteMatchInterface $route_match) {
   switch ($route_name) {
     // Main module help for the Metatag module.
     case 'help.page.metatag':
-      $output = '<h3>' . t('About') . '</h3>';
-      $output .= '<p>' . t('This module allows you to automatically provide structured metadata, aka "metatags", about your website and web pages. In the context of search engine optimization, providing an extensive set of meta tags may help improve your site\'s & pages\' ranking, thus may aid with achieving a more prominent display of your content within search engine results.  For additional information, see the <a href=":online">online documentation for Metatag</a>.', [':online' => 'https://www.drupal.org/node/1774342']) . '</p>';
-      $output .= '<h3>' . t('Usage') . '</h3>';
-      $output .= '<dl>';
-      $output .= '<dt>' . t('Manage Metatags') . '</dt>';
-      $output .= '<dd>' . t('The <a href=":meta">"Metatag"</a> page is used to setup and manage Metatags.  Here you can view a summary of the default meta tags and the inheritance associated with them. From it you can use the <a href=":add">Add default meta tags</a> button to configure default metatags.  Tokens can be used to avoid redundant meta data and search engine penalization.', [':meta' => Url::fromRoute('entity.metatag_defaults.collection')->toString(), ':add' => Url::fromRoute('entity.metatag_defaults.add_form')->toString()]) . '</dd>';
-      $output .= '</dl>';
+      $output = '<h2>' . t('About') . '</h2>';
+      $output .= '<p>' . t('This module allows a site to automatically provide structured metadata, aka "meta tags", about the site and individual pages.');
+      $output .= '<p>' . t('In the context of search engine optimization, providing an extensive set of meta tags may help improve the site\'s and pages\' rankings, thus may aid with achieving a more prominent display of the content within search engine results. They can also be used to tailor how content is displayed when shared on social networks. For additional information, see the <a href=":online">online documentation for Metatag</a>.', [':online' => 'https://www.drupal.org/node/1774342']) . '</p>';
+      $output .= '<h3>' . t('Intended worflow') . '</h3>';
+      $output .= '<p>' . t('The module uses <a href=":tokens">"tokens"</a> to automatically fill in values for different meta tags. Specific values may also be filled in.', [':tokens' => Url::fromRoute('help.page', ['name' => 'token'])->toString()]) . '</p>';
+      $output .= '<p>' . t('The best way of using Metatag is as follows:') . '</p>';
+      $output .= '<ol>';
+      $output .= '<li>' . t('Customize the <a href=":defaults">global defaults</a>, fill in the specific values and tokens that every page should have.', [':defaults' => Url::fromRoute('entity.metatag_defaults.edit_form', ['metatag_defaults' => 'global'])->toString()]) . '</li>';
+      $output .= '<li>' . t('Override each of the <a href=":defaults">other defaults</a>, fill in specific values and tokens that each item should have by default. This allows e.g. for all nodes to have different values than taxonomy terms.', [':defaults' => Url::fromRoute('entity.metatag_defaults.collection')->toString()]) . '</li>';
+      $output .= '<li>' . t('<a href=":add">Add more default configurations</a> as necessary for different entity types and entity bundles, e.g. for different content types or different vocabularies.', [':add' => Url::fromRoute('entity.metatag_defaults.add_form')->toString()]) . '</li>';
+      $output .= '<li>' . t('To override the meta tags for individual entities, e.g. for individual nodes, add the "Metatag" field via the field settings for that entity or bundle type.') . '</li>';
+      $output .= '</ol>';
+      return $output;
+      break;
 
+    // The main configuration page.
+    case 'entity.metatag_defaults.collection':
+      $output = '<p>' . t('Configure global meta tag default values below. Meta tags may be ') . '</p>';
+      $output .= '<p>' . t('Meta tags inherit from one level to the next unless they are overridden. To view a summary of the meta tags and the inheritance for a specific configuration, click on its name below.') . '</p>';
+      $output .= '<p>' . t('If the top-level configuration is not specific enough, additional default meta tag configurations can be added for a specific entity type or entity bundle, e.g. for a specific content type.') . '</p>';
+      $output .= '<p>' . t('Meta tags can be further refined on a per-entity basis, e.g. for individual nodes, by adding the "Metatag" field to that entity type through its normal field settings pages.') . '</p>';
+      return $output;
+      break;
+
+    // The 'add default meta tags' configuration page.
+    case 'entity.metatag_defaults.add_form':
+      $output = '<p>' . t('Use the following form to override the global default meta tags for a specific entity type or entity bundle. In practical terms, this allows the meta tags to be changed for a specific content type or taxonomy vocabulary, so that its content will have different meta tags <em>default values</em> than others.') . '</p>';
+      $output .= '<p>' . t('As a reminder, if the "Metatag" field is added to the entity type through its normal field settings, the meta tags can be further refined on a per entity basis; this allows eg. each node to have its meta tags refined as needed.') . '</p>';
       return $output;
       break;
   }
@@ -64,7 +84,7 @@ function metatag_form_field_config_edit_form_alter(&$form, FormStateInterface $f
         foreach ($outer as $key => &$inner) {
           if (is_array($inner) && isset($inner['#default_value'])) {
             if (is_array($inner['#default_value'])) {
-              $inner['#default_value'] = array();
+              $inner['#default_value'] = [];
             }
             else {
               $inner['#default_value'] = NULL;
@@ -124,22 +144,18 @@ function metatag_entity_view_alter(array &$build, EntityInterface $entity, Entit
     }
 
     // Check to see if the page currently outputs a canonical tag.
-    $has_canonical = FALSE;
     if (isset($metatag_attachments['#attached']['html_head'])) {
       foreach ($metatag_attachments['#attached']['html_head'] as $metatag_item) {
         if ($metatag_item[1] == 'canonical_url') {
           // Metatag provides a link rel="canonical" tag.
-          $has_canonical = TRUE;
-          break;
-        }
-      }
-    }
-
-    if ($has_canonical) {
-      foreach ($build['#attached']['html_head_link'] as $key => $item) {
-        if (isset($item[0]['rel']) && $item[0]['rel'] == 'canonical') {
-          // Remove the link rel="canonical" tag from the entity's build array.
-          unset($build['#attached']['html_head_link'][$key]);
+          foreach ($build['#attached']['html_head_link'] as $key => $item) {
+            if (isset($item[0]['rel']) && $item[0]['rel'] == 'canonical') {
+              // Remove the link rel="canonical" tag from the entity's build
+              // array.
+              unset($build['#attached']['html_head_link'][$key]);
+              break;
+            }
+          }
           break;
         }
       }
@@ -155,7 +171,8 @@ function metatag_entity_view_alter(array &$build, EntityInterface $entity, Entit
  */
 function metatag_is_current_route_supported() {
   // If upgrading, we need to wait for database updates to complete.
-  $is_ready = \Drupal::service('entity_type.manager')->getDefinition('metatag_defaults', FALSE);
+  $is_ready = \Drupal::service('entity_type.manager')
+    ->getDefinition('metatag_defaults', FALSE);
   if (!$is_ready) {
     return FALSE;
   }
@@ -188,18 +205,54 @@ function metatag_get_route_entity() {
 
   // Look for entity object 'add' pages, e.g. node/add/{bundle}.
   $route_name_matches = [];
-  preg_match('/(.*)\.add/', $route_name, $route_name_matches);
+  preg_match('/(entity\.)?(.*)\.add(_form)?/', $route_name, $route_name_matches);
+  if (!empty($route_name_matches[2])) {
+    $entity_type = $route_name_matches[2];
+    $definition = Drupal::entityTypeManager()->getDefinition($entity_type, FALSE);
+    if (!empty($definition)) {
+      $type = $route_match->getRawParameter($definition->get('bundle_entity_type'));
+      if (!empty($type)) {
+        return \Drupal::entityTypeManager()
+          ->getStorage($entity_type)
+          ->create([
+            $definition->get('entity_keys')['bundle'] => $type,
+          ]);
+      }
+    }
+  }
+
+  // Look for entity object 'edit' pages, e.g. node/{entity_id}/edit.
+  $route_name_matches = [];
+  preg_match('/entity\.(.*)\.edit_form/', $route_name, $route_name_matches);
   if (!empty($route_name_matches[1])) {
     $entity_type = $route_name_matches[1];
-    $type = $route_match->getParameter($entity_type . '_type');
+    $entity_id = $route_match->getRawParameter($entity_type);
+
+    if (!empty($entity_id)) {
+      return \Drupal::entityTypeManager()
+        ->getStorage($entity_type)
+        ->load($entity_id);
+    }
+  }
+
+  // Special handling for the admin user_create page. In this case, there's only
+  // one bundle and it's named the same as the entity type, so some shortcuts
+  // can be used.
+  if ($route_name == 'user.admin_create') {
+    $entity_type = $type = 'user';
+    $definition = Drupal::entityTypeManager()->getDefinition($entity_type);
     if (!empty($type)) {
-      $entity_type = str_replace('entity.', '', $entity_type);
       return \Drupal::entityTypeManager()
         ->getStorage($entity_type)
         ->create([
-          'type' => $type->getOriginalId(),
+          $definition->get('entity_keys')['bundle'] => $type,
         ]);
     }
+  }
+
+  // Trigger hook_metatag_route_entity().
+  if ($entities = \Drupal::moduleHandler()->invokeAll('metatag_route_entity', [$route_match])) {
+    return reset($entities);
   }
 
   return NULL;

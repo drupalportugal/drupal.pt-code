@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\mollom\Form\Statistics.
- */
-
 namespace Drupal\mollom\Controller;
 
 use Drupal\Core\Controller\ControllerBase;

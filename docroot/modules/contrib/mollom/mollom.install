@@ -12,6 +12,7 @@
 
 use Drupal\Core\Url;
 use Drupal\mollom\Utility\MollomUtilities;
+use Mollom\Client\Client;
 
 /**
  * Implements hook_requirements().
@@ -76,7 +77,7 @@ function mollom_requirements($phase = 'runtime', $check = TRUE) {
     elseif ($status['response'] === $mollom::REQUEST_ERROR) {
       $requirements['mollom']['value'] = t('Client error');
       $requirements['mollom']['description'] = t('The server time of this site is incorrect. The time of the operating system is not synchronized with the Coordinated Universal Time (UTC), which prevents a successful authentication with Mollom. The maximum allowed offset is @minutes minutes. Please consult your hosting provider or server operator to correct the server time.', array(
-        '@minutes' => MollomUtilities::TIME_OFFSET_MAX / 60,
+        '@minutes' => Client::TIME_OFFSET_MAX / 60,
       ));
     }
     // Invalid API keys.

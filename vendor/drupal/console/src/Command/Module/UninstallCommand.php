@@ -7,19 +7,73 @@
 
 namespace Drupal\Console\Command\Module;
 
-use Drupal\Console\Command\Shared\ContainerAwareCommandTrait;
+use Drupal\Console\Core\Command\Shared\CommandTrait;
+use Drupal\Console\Extension\Manager;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Command\Command;
 use Drupal\Console\Command\Shared\ProjectDownloadTrait;
-use Drupal\Console\Style\DrupalStyle;
+use Drupal\Console\Core\Style\DrupalStyle;
+use Drupal\Console\Utils\Site;
+use Drupal\Core\ProxyClass\Extension\ModuleInstaller;
+use Drupal\Console\Core\Utils\ChainQueue;
+use Drupal\Core\Config\ConfigFactory;
 
 class UninstallCommand extends Command
 {
-    use ContainerAwareCommandTrait;
+    use CommandTrait;
     use ProjectDownloadTrait;
+
+    /**
+     * @var Site
+     */
+    protected $site;
+
+    /**
+     * @var ModuleInstaller
+     */
+    protected $moduleInstaller;
+
+    /**
+     * @var ChainQueue
+     */
+    protected $chainQueue;
+
+    /**
+     * @var ConfigFactory
+     */
+    protected $configFactory;
+
+    /**
+     * @var Manager
+     */
+    protected $extensionManager;
+
+    /**
+     * InstallCommand constructor.
+     *
+     * @param Site            $site
+     * @param ModuleInstaller $moduleInstaller
+     * @param ChainQueue      $chainQueue
+     * @param ConfigFactory   $configFactory
+     * @param Manager         $extensionManager
+     */
+    public function __construct(
+        Site $site,
+        ModuleInstaller $moduleInstaller,
+        ChainQueue $chainQueue,
+        ConfigFactory $configFactory,
+        Manager $extensionManager
+    ) {
+        $this->site = $site;
+        $this->moduleInstaller = $moduleInstaller;
+        $this->chainQueue = $chainQueue;
+        $this->configFactory = $configFactory;
+        $this->extensionManager = $extensionManager;
+        parent::__construct();
+    }
 
     /**
      * {@inheritdoc}
@@ -36,13 +90,13 @@ class UninstallCommand extends Command
             )
             ->addOption(
                 'force',
-                '',
+                null,
                 InputOption::VALUE_NONE,
                 $this->trans('commands.module.uninstall.options.force')
             )
             ->addOption(
                 'composer',
-                '',
+                null,
                 InputOption::VALUE_NONE,
                 $this->trans('commands.module.uninstall.options.composer')
             );
@@ -69,9 +123,9 @@ class UninstallCommand extends Command
         $composer = $input->getOption('composer');
         $module = $input->getArgument('module');
 
-        $this->get('site')->loadLegacyFile('/core/modules/system/system.module');
-        $coreExtension = $this->getDrupalService('config.factory')->getEditable('core.extension');
-        $moduleInstaller = $this->getDrupalService('module_installer');
+        $this->site->loadLegacyFile('/core/modules/system/system.module');
+
+        $coreExtension = $this->configFactory->getEditable('core.extension');
 
         // Get info about modules available
         $moduleData = system_rebuild_module_data();
@@ -109,7 +163,7 @@ class UninstallCommand extends Command
             return 1;
         }
 
-        $installedModules = $coreExtension->get('module') ?: array();
+        $installedModules = $coreExtension->get('module') ?: [];
         if (!$moduleList = array_intersect_key($moduleList, $installedModules)) {
             $io->info($this->trans('commands.module.uninstall.messages.nothing'));
 
@@ -130,7 +184,7 @@ class UninstallCommand extends Command
                 $io->error(
                     sprintf(
                         $this->trans('commands.module.uninstall.messages.dependents'),
-                        implode(', ', $module),
+                        implode('", "', $moduleList),
                         implode(', ', $dependencies)
                     )
                 );
@@ -140,12 +194,20 @@ class UninstallCommand extends Command
         }
 
         try {
-            $moduleInstaller->uninstall($moduleList);
+            $this->moduleInstaller->uninstall($moduleList);
 
             $io->info(
                 sprintf(
                     $this->trans('commands.module.uninstall.messages.success'),
                     implode(', ', $moduleList)
+                )
+            );
+
+            $io->comment(
+                sprintf(
+                    $this->trans('commands.module.uninstall.messages.composer-success'),
+                    implode(', ', $moduleList),
+                    false
                 )
             );
         } catch (\Exception $e) {
@@ -154,6 +216,7 @@ class UninstallCommand extends Command
             return 1;
         }
 
-        $this->get('chain_queue')->addCommand('cache:rebuild', ['cache' => 'discovery']);
+        $this->site->removeCachedServicesFile();
+        $this->chainQueue->addCommand('cache:rebuild', ['cache' => 'all']);
     }
 }

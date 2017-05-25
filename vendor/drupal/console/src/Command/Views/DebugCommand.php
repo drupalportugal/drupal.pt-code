@@ -13,16 +13,35 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Command\Command;
 use Drupal\views\Entity\View;
-use Drupal\Console\Command\Shared\ContainerAwareCommandTrait;
-use Drupal\Console\Style\DrupalStyle;
+use Drupal\Console\Core\Command\Shared\CommandTrait;
+use Drupal\Core\Entity\EntityTypeManagerInterface;
+use Drupal\Console\Core\Style\DrupalStyle;
 
 /**
  * Class DebugCommand
+ *
  * @package Drupal\Console\Command\Views
  */
 class DebugCommand extends Command
 {
-    use ContainerAwareCommandTrait;
+    use CommandTrait;
+
+    /**
+     * @var EntityTypeManagerInterface
+     */
+    protected $entityTypeManager;
+
+    /**
+     * DebugCommand constructor.
+     *
+     * @param EntityTypeManagerInterface $entityTypeManager
+     */
+    public function __construct(EntityTypeManagerInterface $entityTypeManager)
+    {
+        $this->entityTypeManager = $entityTypeManager;
+        parent::__construct();
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -38,12 +57,12 @@ class DebugCommand extends Command
             )
             ->addOption(
                 'tag',
-                '',
+                null,
                 InputOption::VALUE_OPTIONAL,
                 $this->trans('commands.views.debug.arguments.view-tag')
             )->addOption(
                 'status',
-                '',
+                null,
                 InputOption::VALUE_OPTIONAL,
                 $this->trans('commands.views.debug.arguments.view-status')
             );
@@ -76,14 +95,13 @@ class DebugCommand extends Command
 
 
     /**
-     * @param \Drupal\Console\Style\DrupalStyle $io
+     * @param \Drupal\Console\Core\Style\DrupalStyle $io
      * @param $view_id
      * @return bool
      */
     private function viewDetail(DrupalStyle $io, $view_id)
     {
-        $entityTypeManager =  $this->getDrupalService('entity_type.manager');
-        $view = $entityTypeManager->getStorage('view')->load($view_id);
+        $view = $this->entityTypeManager->getStorage('view')->load($view_id);
 
         if (empty($view)) {
             $io->error(sprintf($this->trans('commands.views.debug.messages.not-found'), $view_id));
@@ -91,7 +109,7 @@ class DebugCommand extends Command
             return false;
         }
 
-        $configuration = array();
+        $configuration = [];
         $configuration [] = [$this->trans('commands.views.debug.messages.view-id'), $view->get('id')];
         $configuration [] = [$this->trans('commands.views.debug.messages.view-name'), (string) $view->get('label')];
         $configuration [] = [$this->trans('commands.views.debug.messages.tag'), $view->get('tag')];
@@ -126,15 +144,13 @@ class DebugCommand extends Command
     }
 
     /**
-     * @param \Drupal\Console\Style\DrupalStyle $io
+     * @param \Drupal\Console\Core\Style\DrupalStyle $io
      * @param $tag
      * @param $status
      */
     protected function viewList(DrupalStyle $io, $tag, $status)
     {
-        $entityTypeManager =  $this->getDrupalService('entity_type.manager');
-
-        $views = $entityTypeManager->getStorage('view')->loadMultiple();
+        $views = $this->entityTypeManager->getStorage('view')->loadMultiple();
 
         $tableHeader = [
           $this->trans('commands.views.debug.messages.view-id'),
@@ -172,7 +188,7 @@ class DebugCommand extends Command
      */
     protected function viewDisplayPaths(View $view, $display_id = null)
     {
-        $all_paths = array();
+        $all_paths = [];
         $executable = $view->getExecutable();
         $executable->initDisplay();
         foreach ($executable->displayHandlers as $display) {
@@ -202,7 +218,7 @@ class DebugCommand extends Command
     protected function viewDisplayList(View $view)
     {
         $displayManager = $this->getViewDisplayManager();
-        $displays = array();
+        $displays = [];
         foreach ($view->get('display') as $display) {
             $definition = $displayManager->getDefinition($display['display_plugin']);
             if (!empty($definition['admin'])) {

@@ -19,7 +19,7 @@ use Symfony\Component\Validator\ExecutionContextInterface;
  * @Assert\GroupSequence({"Foo", "Entity"})
  * @Assert\Callback({"Symfony\Component\Validator\Tests\Fixtures\CallbackClass", "callback"})
  */
-class Entity extends EntityParent
+class Entity extends EntityParent implements EntityInterfaceB
 {
     /**
      * @Assert\NotNull
@@ -61,6 +61,10 @@ class Entity extends EntityParent
     public function getLastName()
     {
         return $this->lastName;
+    }
+
+    public function getValid()
+    {
     }
 
     /**

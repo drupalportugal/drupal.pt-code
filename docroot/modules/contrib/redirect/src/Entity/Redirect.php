@@ -1,8 +1,4 @@
 <?php
-/**
- * @file
- * Contains \Drupal\redirect\Entity\Redirect.
- */
 
 namespace Drupal\redirect\Entity;
 
@@ -13,7 +9,6 @@ use Drupal\Core\Entity\ContentEntityBase;
 use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Field\BaseFieldDefinition;
-use Drupal\Core\Language\LanguageInterface;
 use Drupal\link\LinkItemInterface;
 
 /**
@@ -172,6 +167,20 @@ class Redirect extends ContentEntityBase {
    */
   public function getSourceUrl() {
     return $this->get('redirect_source')->get(0)->getUrl()->toString();
+  }
+
+  /**
+   * Gets the source URL path with its query.
+   *
+   * @return string
+   *   The source URL path, eventually with its query.
+   */
+  public function getSourcePathWithQuery() {
+    $path = '/' . $this->get('redirect_source')->path;
+    if ($this->get('redirect_source')->query) {
+      $path .= '?' . UrlHelper::buildQuery($this->get('redirect_source')->query);
+    }
+    return $path;
   }
 
   /**

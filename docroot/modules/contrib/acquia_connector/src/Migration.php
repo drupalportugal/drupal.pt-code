@@ -2,6 +2,7 @@
 
 namespace Drupal\acquia_connector;
 
+use Drupal\acquia_connector\Helper\Storage;
 use Drupal\Core\Archiver\ArchiveTar;
 use Drupal\Component\Serialization\Json;
 use Drupal\Core\Url;
@@ -170,9 +171,8 @@ class Migration {
    * Complete migration tasks.
    */
   public function complete(&$migration) {
-    $config = \Drupal::config('acquia_connector.settings');
-    $identifier = $config->get('identifier');
-    $key = $config->get('key');
+    $identifier = Storage::getIdentifier();
+    $key = Storage::getKey();
     $client = \Drupal::service('acquia_connector.client');
     $body = array('identifier' => $identifier);
     if (isset($migration['redirect']) && is_array($migration['redirect']['data'])) {
@@ -437,7 +437,14 @@ class Migration {
       $gz = new ArchiveTar($dest_file, $migration['compression_ext'] ? $migration['compression_ext'] : NULL);
       if (!empty($migration['db_file'])) {
         // Add db file.
-        $gz->addModify(array($migration['db_file']), '', $migration['dir'] . DIRECTORY_SEPARATOR);
+        try {
+          $gz->addModify(array($migration['db_file']), '', $migration['dir'] . DIRECTORY_SEPARATOR);
+        }
+        catch (\Exception $e) {
+          \Drupal::logger('acquia-migrate')->error('Failed to add file @file to the archive.', array(
+            '@file' => array($migration['db_file'])
+          ));
+        }
       }
       // Remove Drupal root from the file paths, OS dependent.
       if (defined('OS_WINDOWS') && OS_WINDOWS) {
@@ -446,7 +453,12 @@ class Migration {
       else {
         $remove_dir = DRUPAL_ROOT . '/';
       }
-      $gz->addModify($files, '', $remove_dir);
+      try {
+        $gz->addModify($files, '', $remove_dir);
+      }
+      catch (\Exception $e) {
+        \Drupal::logger('acquia-migrate')->error('Failed to add files to the archive.');
+      }
       $migration['tar_file'] = $dest_file;
     }
     else {

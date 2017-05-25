@@ -1,7 +1,4 @@
 <?php
-/**
- * @file Drupal\mollom\Tests\AnalysisAuthenticatedFormCacheTest
- */
 
 namespace Drupal\mollom\Tests;
 

@@ -320,9 +320,9 @@ class Renderer implements RendererInterface {
         '#lazy_builder',
         '#cache',
         '#create_placeholder',
-        // These keys are not actually supported, but they are added automatically
-        // by the Renderer, so we don't crash on them; them being missing when
-        // their #lazy_builder callback is invoked won't surprise the developer.
+        // The keys below are not actually supported, but these are added
+        // automatically by the Renderer. Adding them as though they are
+        // supported allows us to avoid throwing an exception 100% of the time.
         '#weight',
         '#printed'
       ];
@@ -365,11 +365,6 @@ class Renderer implements RendererInterface {
       $elements['#lazy_builder_built'] = TRUE;
     }
 
-    // All render elements support #markup and #plain_text.
-    if (!empty($elements['#markup']) || !empty($elements['#plain_text'])) {
-      $elements = $this->ensureMarkupIsSafe($elements);
-    }
-
     // Make any final changes to the element before it is rendered. This means
     // that the $element or the children can be altered or corrected before the
     // element is rendered into the final text.
@@ -382,10 +377,15 @@ class Renderer implements RendererInterface {
       }
     }
 
+    // All render elements support #markup and #plain_text.
+    if (!empty($elements['#markup']) || !empty($elements['#plain_text'])) {
+      $elements = $this->ensureMarkupIsSafe($elements);
+    }
+
     // Defaults for bubbleable rendering metadata.
-    $elements['#cache']['tags'] = isset($elements['#cache']['tags']) ? $elements['#cache']['tags'] : array();
+    $elements['#cache']['tags'] = isset($elements['#cache']['tags']) ? $elements['#cache']['tags'] : [];
     $elements['#cache']['max-age'] = isset($elements['#cache']['max-age']) ? $elements['#cache']['max-age'] : Cache::PERMANENT;
-    $elements['#attached'] = isset($elements['#attached']) ? $elements['#attached'] : array();
+    $elements['#attached'] = isset($elements['#attached']) ? $elements['#attached'] : [];
 
     // Allow #pre_render to abort rendering.
     if (!empty($elements['#printed'])) {
@@ -415,11 +415,11 @@ class Renderer implements RendererInterface {
     $theme_is_implemented = isset($elements['#theme']);
     // Check the elements for insecure HTML and pass through sanitization.
     if (isset($elements)) {
-      $markup_keys = array(
+      $markup_keys = [
         '#description',
         '#field_prefix',
         '#field_suffix',
-      );
+      ];
       foreach ($markup_keys as $key) {
         if (!empty($elements[$key]) && is_scalar($elements[$key])) {
           $elements[$key] = $this->xssFilterAdminIfUnsafe($elements[$key]);
@@ -733,7 +733,7 @@ class Renderer implements RendererInterface {
    *
    * @see \Drupal\Component\Utility\Html::escape()
    * @see \Drupal\Component\Utility\Xss::filter()
-   * @see \Drupal\Component\Utility\Xss::adminFilter()
+   * @see \Drupal\Component\Utility\Xss::filterAdmin()
    */
   protected function ensureMarkupIsSafe(array $elements) {
     if (empty($elements['#markup']) && empty($elements['#plain_text'])) {

@@ -13,13 +13,79 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Drupal\Console\Generator\PluginFieldWidgetGenerator;
 use Drupal\Console\Command\Shared\ModuleTrait;
 use Drupal\Console\Command\Shared\ConfirmationTrait;
-use Drupal\Console\Command\GeneratorCommand;
-use Drupal\Console\Style\DrupalStyle;
+use Symfony\Component\Console\Command\Command;
+use Drupal\Console\Core\Style\DrupalStyle;
+use Drupal\Console\Extension\Manager;
+use Drupal\Console\Core\Command\Shared\CommandTrait;
+use Drupal\Console\Core\Utils\StringConverter;
+use Drupal\Console\Core\Utils\ChainQueue;
+use Drupal\Core\Field\FieldTypePluginManager;
 
-class PluginFieldWidgetCommand extends GeneratorCommand
+/**
+ * Class PluginFieldWidgetCommand
+ *
+ * @package Drupal\Console\Command\Generate
+ */
+class PluginFieldWidgetCommand extends Command
 {
     use ModuleTrait;
     use ConfirmationTrait;
+    use CommandTrait;
+
+    /**
+ * @var Manager
+*/
+    protected $extensionManager;
+
+    /**
+ * @var PluginFieldWidgetGenerator
+*/
+    protected $generator;
+
+    /**
+     * @var StringConverter
+     */
+    protected $stringConverter;
+
+    /**
+ * @var Validator
+*/
+    protected $validator;
+
+    /**
+ * @var FieldTypePluginManager
+*/
+    protected $fieldTypePluginManager;
+
+    /**
+     * @var ChainQueue
+     */
+    protected $chainQueue;
+
+
+    /**
+     * PluginFieldWidgetCommand constructor.
+     *
+     * @param Manager                    $extensionManager
+     * @param PluginFieldWidgetGenerator $generator
+     * @param StringConverter            $stringConverter
+     * @param FieldTypePluginManager     $fieldTypePluginManager
+     * @param ChainQueue                 $chainQueue
+     */
+    public function __construct(
+        Manager $extensionManager,
+        PluginFieldWidgetGenerator $generator,
+        StringConverter $stringConverter,
+        FieldTypePluginManager $fieldTypePluginManager,
+        ChainQueue $chainQueue
+    ) {
+        $this->extensionManager = $extensionManager;
+        $this->generator = $generator;
+        $this->stringConverter = $stringConverter;
+        $this->fieldTypePluginManager = $fieldTypePluginManager;
+        $this->chainQueue = $chainQueue;
+        parent::__construct();
+    }
 
     protected function configure()
     {
@@ -27,28 +93,28 @@ class PluginFieldWidgetCommand extends GeneratorCommand
             ->setName('generate:plugin:fieldwidget')
             ->setDescription($this->trans('commands.generate.plugin.fieldwidget.description'))
             ->setHelp($this->trans('commands.generate.plugin.fieldwidget.help'))
-            ->addOption('module', '', InputOption::VALUE_REQUIRED, $this->trans('commands.common.options.module'))
+            ->addOption('module', null, InputOption::VALUE_REQUIRED, $this->trans('commands.common.options.module'))
             ->addOption(
                 'class',
-                '',
+                null,
                 InputOption::VALUE_REQUIRED,
                 $this->trans('commands.generate.plugin.fieldwidget.options.class')
             )
             ->addOption(
                 'label',
-                '',
+                null,
                 InputOption::VALUE_OPTIONAL,
                 $this->trans('commands.generate.plugin.fieldwidget.options.label')
             )
             ->addOption(
                 'plugin-id',
-                '',
+                null,
                 InputOption::VALUE_OPTIONAL,
                 $this->trans('commands.generate.plugin.fieldwidget.options.plugin-id')
             )
             ->addOption(
                 'field-type',
-                '',
+                null,
                 InputOption::VALUE_OPTIONAL,
                 $this->trans('commands.generate.plugin.fieldwidget.options.field-type')
             );
@@ -63,7 +129,7 @@ class PluginFieldWidgetCommand extends GeneratorCommand
 
         // @see use Drupal\Console\Command\Shared\ConfirmationTrait::confirmGeneration
         if (!$this->confirmGeneration($io)) {
-            return;
+            return 1;
         }
 
         $module = $input->getOption('module');
@@ -72,23 +138,22 @@ class PluginFieldWidgetCommand extends GeneratorCommand
         $plugin_id = $input->getOption('plugin-id');
         $field_type = $input->getOption('field-type');
 
-        $this
-            ->getGenerator()
-            ->generate($module, $class_name, $label, $plugin_id, $field_type);
+        $this->generator->generate($module, $class_name, $label, $plugin_id, $field_type);
 
-        $this->getChain()->addCommand('cache:rebuild', ['cache' => 'discovery']);
+        $this->chainQueue->addCommand('cache:rebuild', ['cache' => 'discovery']);
+
+        return 0;
     }
 
     protected function interact(InputInterface $input, OutputInterface $output)
     {
         $io = new DrupalStyle($input, $output);
-        $fieldTypePluginManager = $this->getService('plugin.manager.field.field_type');
 
         // --module option
         $module = $input->getOption('module');
         if (!$module) {
             // @see Drupal\Console\Command\Shared\ModuleTrait::moduleQuestion
-            $module = $this->moduleQuestion($output);
+            $module = $this->moduleQuestion($io);
             $input->setOption('module', $module);
         }
 
@@ -107,7 +172,7 @@ class PluginFieldWidgetCommand extends GeneratorCommand
         if (!$label) {
             $label = $io->ask(
                 $this->trans('commands.generate.plugin.fieldwidget.questions.label'),
-                $this->getStringHelper()->camelCaseToHuman($class_name)
+                $this->stringConverter->camelCaseToHuman($class_name)
             );
             $input->setOption('label', $label);
         }
@@ -117,7 +182,7 @@ class PluginFieldWidgetCommand extends GeneratorCommand
         if (!$plugin_id) {
             $plugin_id = $io->ask(
                 $this->trans('commands.generate.plugin.fieldwidget.questions.plugin-id'),
-                $this->getStringHelper()->camelCaseToUnderscore($class_name)
+                $this->stringConverter->camelCaseToUnderscore($class_name)
             );
             $input->setOption('plugin-id', $plugin_id);
         }
@@ -126,8 +191,8 @@ class PluginFieldWidgetCommand extends GeneratorCommand
         $field_type = $input->getOption('field-type');
         if (!$field_type) {
             // Gather valid field types.
-            $field_type_options = array();
-            foreach ($fieldTypePluginManager->getGroupedDefinitions($fieldTypePluginManager->getUiDefinitions()) as $category => $field_types) {
+            $field_type_options = [];
+            foreach ($this->fieldTypePluginManager->getGroupedDefinitions($this->fieldTypePluginManager->getUiDefinitions()) as $category => $field_types) {
                 foreach ($field_types as $name => $field_type) {
                     $field_type_options[] = $name;
                 }
@@ -140,10 +205,5 @@ class PluginFieldWidgetCommand extends GeneratorCommand
 
             $input->setOption('field-type', $field_type);
         }
-    }
-
-    protected function createGenerator()
-    {
-        return new PluginFieldWidgetGenerator();
     }
 }

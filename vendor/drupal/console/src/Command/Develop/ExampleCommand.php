@@ -10,20 +10,29 @@ namespace Drupal\Console\Command\Develop;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Command\Command;
-use Drupal\Console\Command\Shared\CommandTrait;
-use Drupal\Console\Style\DrupalStyle;
+use Drupal\Console\Core\Command\Shared\CommandTrait;
+use Drupal\Console\Core\Style\DrupalStyle;
 
 /**
  * Class ExampleCommand
+ *
  * @package Drupal\Console\Command\Develop
  */
 class ExampleCommand extends Command
 {
     use CommandTrait;
-
     /**
      * {@inheritdoc}
      */
+
+    /**
+     * ExampleCommand constructor.
+     */
+    public function __construct()
+    {
+        parent::__construct();
+    }
+
     protected function configure()
     {
         $this->setName('develop:example');
@@ -44,12 +53,13 @@ class ExampleCommand extends Command
         /* Register your command as a service
          *
          * Make sure you register your command class at
-         * config/services/namespace.yml file and add the `console.command` tag.
+         * config/services/namespace.yml file and add the `drupal.command` tag.
          *
          * develop_example:
          *   class: Drupal\Console\Command\Develop\ExampleCommand
+         *   arguments: ['@service_id', '@console.service_id']
          *   tags:
-         *     - { name: console.command }
+         *     - { name: drupal.command }
          *
          * NOTE: Make the proper changes on the namespace and class
          *       according your new command.

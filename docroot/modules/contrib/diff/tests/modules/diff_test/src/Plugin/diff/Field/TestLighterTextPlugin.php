@@ -7,6 +7,8 @@ use Drupal\diff\FieldDiffBuilderBase;
 use Drupal\Core\Field\FieldItemListInterface;
 
 /**
+ * Test diff builder with light weight.
+ *
  * @FieldDiffBuilder(
  *   id = "test_lighter_text_plugin",
  *   label = @Translation("Test Lighter Text Plugin"),
@@ -42,4 +44,5 @@ class TestLighterTextPlugin extends FieldDiffBuilderBase {
   public static function isApplicable(FieldStorageDefinitionInterface $field_definition) {
     return ($field_definition->getName() == 'test_field_lighter');
   }
+
 }

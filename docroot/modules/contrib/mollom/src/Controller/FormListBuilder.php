@@ -1,8 +1,4 @@
 <?php
-/**
- * @file
- * Contains Drupal\mollom\Controller\FormListBuilder.
- */
 
 namespace Drupal\mollom\Controller;
 

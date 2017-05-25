@@ -1,9 +1,5 @@
 <?php
 
-/**
- * @file contains Drupal\mollom\EntityReportAccessManager
- */
-
 namespace Drupal\mollom;
 
 use Drupal\Core\Access\AccessResultAllowed;

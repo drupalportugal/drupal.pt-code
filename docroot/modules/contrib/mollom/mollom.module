@@ -599,7 +599,7 @@ function mollom_entity_update(EntityInterface $entity) {
   // If the entity update function provides the original entity, only mark the
   // data as moderated when the entity's status transitioned to published.
   if (!isset($entity->original)) {
-    $entity->original = \Drupal::entityManager()->getStorage($entity->getEntityTypeId())->loadUnchanged($entity->id);
+    $entity->original = \Drupal::entityManager()->getStorage($entity->getEntityTypeId())->loadUnchanged($entity->id());
   }
   if (isset($entity->original->status)) {
     if (empty($entity->original->status->value) && !empty($entity->status->value)) {

@@ -2,6 +2,7 @@
 
 namespace Drupal\acquia_connector\Form;
 
+use Drupal\acquia_connector\Helper\Storage;
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\acquia_connector\Client;
 use Drupal\Core\Form\ConfigFormBase;
@@ -64,19 +65,18 @@ class CredentialForm extends ConfigFormBase {
    * {@inheritdoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state) {
-    $config = $this->config('acquia_connector.settings');
 
     $form['#prefix'] = $this->t('Enter your <a href=":net">identifier and key</a> from your subscriptions overview or <a href=":url">log in</a> to connect your site to the Acquia Subscription.', array(':net' => Url::fromUri('https://insight.acquia.com/subscriptions')->getUri(), ':url' => \Drupal::url('acquia_connector.setup')));
     $form['acquia_identifier'] = array(
       '#type' => 'textfield',
       '#title' => $this->t('Identifier'),
-      '#default_value' => $config->get('identifier'),
+      '#default_value' => Storage::getIdentifier(),
       '#required' => TRUE,
     );
     $form['acquia_key'] = array(
       '#type' => 'textfield',
       '#title' => $this->t('Network key'),
-      '#default_value' => $config->get('key'),
+      '#default_value' => Storage::getKey(),
       '#required' => TRUE,
     );
     $form['actions'] = array('#type' => 'actions');
@@ -134,10 +134,11 @@ class CredentialForm extends ConfigFormBase {
   public function submitForm(array &$form, FormStateInterface $form_state) {
     $config = $this->config('acquia_connector.settings');
 
-    $config->set('key', $form_state->getValue('acquia_key'))
-      ->set('identifier', $form_state->getValue('acquia_identifier'))
-      ->set('subscription_name', $form_state->getValue('subscription'))
+    $config->set('subscription_name', $form_state->getValue('subscription'))
       ->save();
+
+    Storage::setKey($form_state->getValue('acquia_key'));
+    Storage::setIdentifier($form_state->getValue('acquia_identifier'));
 
     // Check subscription and send a heartbeat to Acquia Network via XML-RPC.
     // Our status gets updated locally via the return data.

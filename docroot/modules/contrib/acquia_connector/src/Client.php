@@ -2,6 +2,7 @@
 
 namespace Drupal\acquia_connector;
 
+use Drupal\acquia_connector\Helper\Storage;
 use Drupal\Component\Utility\Crypt;
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Component\Serialization\Json;
@@ -381,8 +382,7 @@ class Client {
    */
   public function nspiCall($method, $params, $key = NULL) {
     if (empty($key)) {
-      $config = \Drupal::config('acquia_connector.settings');
-      $key = $config->get('key');
+      $key = Storage::getKey();
     }
     // Used in HMAC validation.
     $params['rpc_version'] = ACQUIA_SPI_DATA_VERSION;

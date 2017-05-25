@@ -1,9 +1,0 @@
-services:
-
-  cache.backend.memcache_storage:
-    class: Drupal\memcache_storage\MemcachedBackendFactory
-    arguments: ['@memcache_storage.factory', '@settings', '@cache_tags.invalidator.checksum']
-
-  memcache_storage.factory:
-    class: Drupal\memcache_storage\DrupalMemcachedFactory
-    arguments: ['@settings']

@@ -53,7 +53,7 @@ abstract class EntityWithUriCacheTagsTestBase extends EntityCacheTagsTestBase {
       }
       $expected_cache_tags = Cache::mergeTags($cache_tag, $view_cache_tag);
       $expected_cache_tags = Cache::mergeTags($expected_cache_tags, $this->getAdditionalCacheTagsForEntity($this->entity));
-      $expected_cache_tags = Cache::mergeTags($expected_cache_tags, array($render_cache_tag));
+      $expected_cache_tags = Cache::mergeTags($expected_cache_tags, [$render_cache_tag]);
       $this->verifyRenderCache($cid, $expected_cache_tags, $redirected_cid);
     }
 
@@ -80,7 +80,9 @@ abstract class EntityWithUriCacheTagsTestBase extends EntityCacheTagsTestBase {
       // Verify that after modifying the corresponding bundle entity, there is a
       // cache miss.
       $this->pass("Test modification of entity's bundle entity.", 'Debug');
-      $bundle_entity = entity_load($bundle_entity_type_id, $this->entity->bundle());
+      $bundle_entity = $this->container->get('entity_type.manager')
+        ->getStorage($bundle_entity_type_id)
+        ->load($this->entity->bundle());
       $bundle_entity->save();
       $this->verifyPageCache($entity_url, 'MISS');
 

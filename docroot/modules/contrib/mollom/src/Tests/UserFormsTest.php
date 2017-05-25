@@ -1,7 +1,4 @@
 <?php
-/**
- * @file contains Drupal\mollom\Tests\UserFormsTest
- */
 
 namespace Drupal\mollom\Tests;
 

@@ -1,7 +1,4 @@
 <?php
-/**
- * @file contains Drupal\mollom\Tests\FormConfigurationTest
- */
 
 namespace Drupal\mollom\Tests;
 use Drupal\mollom\Controller\FormController;

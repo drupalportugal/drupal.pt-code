@@ -6,7 +6,10 @@
     attach: function (context, settings) {
       // drupalSettings in not anymore bound to attached functions.
       // It is available outside the scope of this anonymous function also.
-      var $rows = $('table.diff-revisions tbody tr');
+      var $rows = $('table.diff-revisions tbody tr').once('diff-revisions');
+      if ($rows.length === 0) {
+        return;
+      }
 
       function updateDiffRadios() {
         var newTd = false;

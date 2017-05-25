@@ -362,6 +362,31 @@ class Filesystem
         $startPathArr = explode('/', trim($startPath, '/'));
         $endPathArr = explode('/', trim($endPath, '/'));
 
+        if ('/' !== $startPath[0]) {
+            array_shift($startPathArr);
+        }
+
+        if ('/' !== $endPath[0]) {
+            array_shift($endPathArr);
+        }
+
+        $normalizePathArray = function ($pathSegments) {
+            $result = array();
+
+            foreach ($pathSegments as $segment) {
+                if ('..' === $segment) {
+                    array_pop($result);
+                } else {
+                    $result[] = $segment;
+                }
+            }
+
+            return $result;
+        };
+
+        $startPathArr = $normalizePathArray($startPathArr);
+        $endPathArr = $normalizePathArray($endPathArr);
+
         // Find for which directory the common path stops
         $index = 0;
         while (isset($startPathArr[$index]) && isset($endPathArr[$index]) && $startPathArr[$index] === $endPathArr[$index]) {
@@ -369,10 +394,14 @@ class Filesystem
         }
 
         // Determine how deep the start path is relative to the common path (ie, "web/bundles" = 2 levels)
-        $depth = count($startPathArr) - $index;
+        if (count($startPathArr) === 1 && $startPathArr[0] === '') {
+            $depth = 0;
+        } else {
+            $depth = count($startPathArr) - $index;
+        }
 
         // When we need to traverse from the start, and we are starting from a root path, don't add '../'
-        if ('/' === $startPath[0] && 0 === $index && 1 === $depth) {
+        if ('/' === $startPath[0] && 0 === $index && 0 === $depth) {
             $traverser = '';
         } else {
             // Repeated "../" for each level need to reach the common path
@@ -546,7 +575,9 @@ class Filesystem
 
         if (!is_dir($dir)) {
             $this->mkdir($dir);
-        } elseif (!is_writable($dir)) {
+        }
+
+        if (!is_writable($dir)) {
             throw new IOException(sprintf('Unable to write to the "%s" directory.', $dir), 0, null, $dir);
         }
 
@@ -562,7 +593,10 @@ class Filesystem
             }
 
             $this->chmod($tmpFile, $mode);
+        } elseif (file_exists($filename)) {
+            @chmod($tmpFile, fileperms($filename));
         }
+
         $this->rename($tmpFile, $filename, true);
     }
 

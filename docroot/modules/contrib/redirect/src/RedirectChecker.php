@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains Drupal\redirect\RedirectChecker.
- */
-
 namespace Drupal\redirect;
 
 use Drupal\Core\Access\AccessManager;
@@ -77,7 +72,7 @@ class RedirectChecker {
       $route = $request->attributes->get(RouteObjectInterface::ROUTE_OBJECT);
     }
 
-    if (strpos($request->getScriptName(), 'index.php') === FALSE) {
+    if (!preg_match('/index\.php$/', $request->getScriptName())) {
       // Do not redirect if the root script is not /index.php.
       $can_redirect = FALSE;
     }
@@ -87,6 +82,9 @@ class RedirectChecker {
     }
     elseif ($this->state->get('system.maintenance_mode') || defined('MAINTENANCE_MODE')) {
       // Do not redirect in offline or maintenance mode.
+      $can_redirect = FALSE;
+    }
+    elseif ($request->query->has('destination')) {
       $can_redirect = FALSE;
     }
     elseif ($this->config->get('ignore_admin_path') && isset($route)) {
