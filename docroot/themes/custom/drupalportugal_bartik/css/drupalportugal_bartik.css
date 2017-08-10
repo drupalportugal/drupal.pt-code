@@ -1,0 +1,137 @@
+#header {
+    background: none;
+}
+
+body {
+    font-family: Tahoma,sans-serif;
+}
+
+.menu--main-menu .content {
+    background-color: #333;
+    border-bottom: 1px solid #fff;
+}
+
+.region-primary-menu .menu a {
+    background: none;
+    color: white;
+}
+
+.region-primary-menu .menu-item, body:not(:target) .region-primary-menu .menu-item {
+    border-left: 1px solid #dedede;
+}
+
+
+.region-primary-menu .menu-item, body:not(:target) .region-primary-menu .menu-item:nth-child(0) {
+    border: none;
+}
+
+.region-sidebar-second .block {
+    background: none;
+    border: 1px solid #ccc;
+    margin: 0 10px 20px;
+    padding: 0;
+}
+
+.region-sidebar-second .block li.menu-item {
+    border-bottom: 1px solid #dedede
+}
+
+.region-sidebar-second .block li.menu-item a {
+    color: #000;
+    padding: 6px 0;
+    text-decoration: none;
+    border-bottom: 0;
+}
+
+.region-sidebar-second .block h2 {
+    border-bottom: 1px solid #cdcdcd;
+    margin: 0;
+    padding: 8px 15px;
+}
+
+.region-primary-menu .menu-item a.is-active, .region-primary-menu .menu-item--active-trail a {
+    background: #007fc8;
+    color: white;
+}
+
+.region-primary-menu .menu-item a:hover {
+    background: #007fc8;
+}
+
+.region-primary-menu .menu a {
+    border-radius: 0;
+    margin: 0;
+    text-shadow: none;
+}
+
+.region-primary-menu .menu-item, body:not(:target) .region-primary-menu .menu-item {
+    margin: 0;
+}
+
+.region-primary-menu .menu a:active {
+    background: none;
+}
+
+.sidebar .block .content {
+    padding: 10px;
+}
+
+.region-primary-menu ul.menu :first-child {
+    border-left: 0;
+}
+.page-title {
+    color: #08c;
+}
+
+article.node .field--name-field-image .image-style-medium {
+    border: 1px solid #cdcdcd;
+    float: right;
+    margin: .5em 0 1em 1em;
+    padding: 3px;
+}
+
+.featured-top {
+    padding: 0;
+}
+
+.featured-top .content {
+    margin: 0;
+}
+
+.views-slideshow-controls-bottom {
+    background: #333;
+    bottom: 20px;
+    color: #cdcdcd;
+    font-size: .92em;
+    height: auto;
+    position: relative;
+    right: 0;
+    text-transform: uppercase;
+    width: auto;
+    z-index: 20;
+    text-shadow: none;
+    float: right;
+    top: -39px;
+}
+
+.views_slideshow_controls_text {
+    float: left;
+}
+
+.views_slideshow_slide_counter {
+    border-left: 1px solid #666;
+    float: left;
+    padding: 5px;
+}
+
+.views_slideshow_controls_text span {
+    cursor: pointer;
+    display: inline-block;
+    padding: 6px;
+}
+
+.views_slideshow_controls_text a:link {
+    text-decoration: none;
+    color: #cdcdcd;
+    border-bottom: none;
+}

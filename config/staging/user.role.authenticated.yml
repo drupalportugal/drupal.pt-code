@@ -1,0 +1,43 @@
+uuid: f69b3e26-c2d8-4431-9abc-8b3984ce87aa
+langcode: pt-pt
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: dJ0L2DNSj5q6XVZAGsuVDpJTh5UeYkIPwKrUOOpr8YI
+id: authenticated
+label: 'Authenticated user'
+weight: -9
+is_admin: false
+permissions:
+  0: 'access comments'
+  1: 'access content'
+  2: 'access news feeds'
+  3: 'access own webform results'
+  4: 'access own webform submissions'
+  5: 'access site-wide contact form'
+  6: 'access user profiles'
+  7: 'cancel account'
+  8: 'cancel own vote'
+  9: 'change own username'
+  10: 'create forum content'
+  11: 'create showcase content'
+  12: 'delete own webform submissions'
+  14: 'edit own comments'
+  16: 'edit own forum content'
+  20: 'edit own showcase content'
+  23: 'edit own webform submissions'
+  24: 'edit webform components'
+  25: 'post comments'
+  26: 'rate content'
+  27: 'search content'
+  28: 'use advanced search'
+  29: 'use text format 2'
+  30: 'use text format markdown'
+  31: 'view own unpublished content'
+  32: 'view the administration theme'
+  33: 'vote on polls'
+  34: 'opt-in or out of tracking'
+  35: 'access contextual links'
+  36: 'use text format 1'
+  37: 'access user contact forms'
+  38: 'use text format basic_html'

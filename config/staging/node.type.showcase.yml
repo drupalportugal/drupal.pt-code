@@ -1,0 +1,11 @@
+uuid: ac3f3dc3-8d3c-421c-ad5a-03a2ad9d5457
+langcode: en
+status: true
+dependencies: {  }
+name: Showcase
+type: showcase
+description: 'Divulgação de websites produzidos com Drupal'
+help: ''
+new_revision: false
+preview_mode: 1
+display_submitted: false

@@ -1,0 +1,414 @@
+name.name_format.*:
+  type: config_entity
+  label: 'Name format'
+  mapping:
+    id:
+      type: string
+      label: 'Format identifier'
+    uuid:
+      type: string
+      label: 'UUID'
+    label:
+      type: label
+      label: 'Label'
+    locked:
+      type: boolean
+      label: 'Locked'
+    status:
+      type: boolean
+      label: 'Status'
+    pattern:
+      type: string
+      label: 'Pattern'
+
+name.settings:
+  type: config_object
+  label: 'Name sttings'
+  mapping:
+    component_required_marker:
+     type: string
+     label: 'Component required marker'
+    default_format:
+      type: string
+      label: 'Default wrapper'
+    element_wrapper:
+      type: boolean
+      label: 'Element wrapper'
+    inline_styles:
+      type: string
+      label: 'Inline styles'
+    inline_styles_rtl:
+     type: string
+     label: 'Inline styles (RTL)'
+    sep1:
+      type: string
+      label: 'Separator 1'
+    sep2:
+      type: string
+      label: 'Separator 2'
+    sep3:
+      type: string
+      label: 'Separator 3'
+    user_preferred:
+      type: string
+      label: 'User preferred'
+
+name.examples.*:
+  type: config_object
+  label: 'Examples'
+  mapping:
+    examples:
+      type: sequence
+      label: 'Examples'
+      sequence:
+        - type: mapping
+          label: 'Example'
+          mapping:
+            title:
+              type: string
+              label: 'Title'
+            given:
+              type: string
+              label: 'Given'
+            middle:
+              type: string
+              label: 'Middle'
+            family:
+              type: string
+              label: 'Familry'
+            generational:
+              type: string
+              label: 'Generational'
+            credentials:
+              type: string
+              label: 'Credentials'
+
+field.storage_settings.name:
+  type: mapping
+  label: 'Name field settings'
+  mapping:
+    components:
+      type: mapping
+      label: 'Enabled components'
+      mapping:
+        title:
+          type: boolean
+          label: 'Title'
+        given:
+          type: boolean
+          label: 'Given'
+        middle:
+          type: boolean
+          label: 'Middle'
+        family:
+          type: boolean
+          label: 'Family'
+        generational:
+          type: boolean
+          label: 'Generational'
+        credentials:
+          type: boolean
+          label: 'Credentials'
+    minimum_components:
+      type: mapping
+      label: 'Minimum components'
+      mapping:
+        title:
+          type: boolean
+          label: 'Title'
+        given:
+          type: boolean
+          label: 'Given'
+        middle:
+          type: boolean
+          label: 'Middle'
+        family:
+          type: boolean
+          label: 'Family'
+        generational:
+          type: boolean
+          label: 'Generational'
+        credentials:
+          type: boolean
+          label: 'Credentials'
+    max_length:
+      type: mapping
+      label: 'Maximum length'
+      mapping:
+        title:
+          type: integer
+          label: 'Title'
+        given:
+          type: integer
+          label: 'Given'
+        middle:
+          type: integer
+          label: 'Middle'
+        family:
+          type: integer
+          label: 'Family'
+        generational:
+          type: integer
+          label: 'Generational'
+        credentials:
+          type: integer
+          label: 'Credentials'
+    labels:
+      type: mapping
+      label: 'Labels'
+      mapping:
+        title:
+          type: string
+          label: 'Title'
+        given:
+          type: string
+          label: 'Given'
+        middle:
+          type: string
+          label: 'Middle'
+        family:
+          type: string
+          label: 'Family'
+        generational:
+          type: string
+          label: 'Generational'
+        credentials:
+          type: string
+          label: 'Credentials'
+    allow_family_or_given:
+      label: 'Allow family or given'
+      type: boolean
+    autocomplete_source:
+      type: mapping
+      label: 'Sources'
+      mapping:
+        title:
+          type: sequence
+          label: 'Title'
+          sequence:
+            - type: string
+        given:
+          type: sequence
+          label: 'Given'
+          sequence:
+            - type: string
+        middle:
+          type: sequence
+          label: 'Middle'
+          sequence:
+            - type: string
+        family:
+          type: sequence
+          label: 'Family'
+          sequence:
+            - type: string
+        generational:
+          type: sequence
+          label: 'Generational'
+          sequence:
+            - type: string
+        credentials:
+          type: sequence
+          label: 'Credentials'
+          sequence:
+            - type: string
+    autocomplete_separator:
+      type: mapping
+      label: 'Maximum length'
+      mapping:
+        title:
+          type: string
+          label: 'Title'
+        given:
+          type: string
+          label: 'Given'
+        middle:
+          type: string
+          label: 'Middle'
+        family:
+          type: string
+          label: 'Family'
+        generational:
+          type: string
+          label: 'Generational'
+        credentials:
+          type: string
+          label: 'Credentials'
+    title_options:
+      type: sequence
+      label: 'Title options'
+      sequence:
+        - type: string
+    generational_options:
+      type: sequence
+      label: 'Generational options'
+      sequence:
+        - type: string
+    sort_options:
+      type: sequence
+      label: 'Sort options'
+      sequence:
+        - type: boolean
+
+field.field_settings.name:
+  type: mapping
+  label: 'Name field settings'
+  mapping:
+    component_css:
+      type: string
+      label: 'Component CSS'
+    component_layout:
+      type: string
+      label: 'Component layout'
+    show_component_required_marker:
+      type: boolean
+      label: 'Show component required marker'
+    credentials_inline:
+      type: boolean
+      lable: 'Credentials inline'
+    override_format:
+      type: string
+      label: 'Override format'
+    field_type:
+      type: mapping
+      label: 'Field type'
+      mapping:
+        title:
+          label: 'Title'
+          type: string
+        given:
+          label: 'Given'
+          type: string
+        middle:
+          label: 'Middle'
+          type: string
+        family:
+          label: 'Family'
+          type: string
+        generational:
+          label: 'Generational'
+          type: string
+        credentials:
+          label: 'Credentials'
+          type: string
+    size:
+      type: mapping
+      label: 'Field type'
+      mapping:
+        title:
+          label: 'Title'
+          type: integer
+        given:
+          label: 'Given'
+          type: integer
+        middle:
+          label: 'Middle'
+          type: integer
+        family:
+          label: 'Family'
+          type: integer
+        generational:
+          label: 'Generational'
+          type: integer
+        credentials:
+          label: 'Credentials'
+          type: integer
+    title_display:
+      type: mapping
+      label: 'Field type'
+      mapping:
+        title:
+          label: 'Title'
+          type: string
+        given:
+          label: 'Given'
+          type: string
+        middle:
+          label: 'Middle'
+          type: string
+        family:
+          label: 'Family'
+          type: string
+        generational:
+          label: 'Generational'
+          type: string
+        credentials:
+          label: 'Credentials'
+          type: string
+    inline_css:
+      type: mapping
+      label: 'Field type'
+      mapping:
+        title:
+          label: 'Title'
+          type: string
+        given:
+          label: 'Given'
+          type: string
+        middle:
+          label: 'Middle'
+          type: string
+        family:
+          label: 'Family'
+          type: string
+        generational:
+          label: 'Generational'
+          type: string
+        credentials:
+          label: 'Credentials'
+          type: string
+
+field.value.name:
+    type: mapping
+    label: 'Default value'
+    mapping:
+      title:
+        label: 'Title'
+        type: string
+      given:
+        label: 'Given'
+        type: string
+      middle:
+        label: 'Middle'
+        type: string
+      family:
+        label: 'Family'
+        type: string
+      generational:
+        label: 'Generational'
+        type: string
+      credentials:
+        label: 'Credentials'
+        type: string
+
+field.formatter.settings.name_default:
+  type: mapping
+  label: 'Name format settings'
+  mapping:
+    format:
+      type: string
+      label: 'Name format'
+    markup:
+      type: boolean
+      label: 'Markup'
+    output:
+      type: string
+      label: 'Output'
+    multiple:
+      type: string
+      label: 'Multiple format options'
+    multiple_delimiter:
+      type: string
+      label: 'Delimiter'
+    multiple_and:
+      type: string
+      label: 'Last delimiter type'
+    multiple_delimiter_precedes_last:
+      type: string
+      label: 'Standard delimiter precedes last delimiter'
+    multiple_el_al_min:
+      type: string
+      label: 'Reduce list and append el al'
+    multiple_el_al_first:
+      type: string
+      label: 'Number of names to display when using el al'

@@ -1,0 +1,22 @@
+uuid: b1e9c3e2-dc77-45b9-b424-dfe7a22610ab
+langcode: en
+status: true
+dependencies:
+  module:
+    - aggregator
+  theme:
+    - stark
+id: stark_aggregator_feed-1
+theme: stark
+region: sidebar_first
+weight: -22
+provider: null
+plugin: aggregator_feed_block
+settings:
+  id: aggregator_feed_block
+  label: ''
+  provider: aggregator
+  label_display: '0'
+  block_count: 5
+  feed: '1'
+visibility: {  }

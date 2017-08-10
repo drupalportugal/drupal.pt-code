@@ -1,0 +1,24 @@
+uuid: 377fac26-c32b-45d8-b34b-e0f97599977f
+langcode: en
+status: true
+dependencies:
+  module:
+    - system
+  theme:
+    - bartik
+id: tb_purity_menu_menu-menu-acerca
+theme: bartik
+region: sidebar_second
+weight: -22
+provider: null
+plugin: 'system_menu_block:menu-menu-acerca'
+settings:
+  id: broken
+  label: '<none>'
+  provider: core
+  label_display: visible
+visibility:
+  request_path:
+    id: request_path
+    negate: false
+    pages: "/acerca\n/acerca/*"

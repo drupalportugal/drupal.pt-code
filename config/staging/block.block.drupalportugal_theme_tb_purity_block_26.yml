@@ -1,0 +1,25 @@
+uuid: 0245faad-71f7-4cbb-95fb-bfb1b165adb7
+langcode: en
+status: true
+dependencies:
+  content:
+    - 'block_content:basic:7d0b431e-3cad-462f-945e-033b9ee05392'
+  module:
+    - block_content
+  theme:
+    - drupalportugal_theme
+id: drupalportugal_theme_tb_purity_block_26
+theme: drupalportugal_theme
+region: content
+weight: -12
+provider: null
+plugin: 'block_content:7d0b431e-3cad-462f-945e-033b9ee05392'
+settings:
+  id: 'block_content:7d0b431e-3cad-462f-945e-033b9ee05392'
+  label: Encontra-nos!
+  provider: block_content
+  label_display: visible
+  status: true
+  info: ''
+  view_mode: full
+visibility: {  }

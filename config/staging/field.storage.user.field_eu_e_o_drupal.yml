@@ -1,0 +1,19 @@
+uuid: 086cfed9-69b1-47a1-8284-79248db04adc
+langcode: und
+status: true
+dependencies:
+  module:
+    - text
+    - user
+id: user.field_eu_e_o_drupal
+field_name: field_eu_e_o_drupal
+entity_type: user
+type: text_long
+settings: {  }
+module: text
+locked: false
+cardinality: 1
+translatable: false
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

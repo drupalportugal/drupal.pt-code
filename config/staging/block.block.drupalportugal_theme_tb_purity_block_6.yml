@@ -1,0 +1,25 @@
+uuid: 8b84a104-105b-4589-81fa-97cea2eccb54
+langcode: en
+status: true
+dependencies:
+  content:
+    - 'block_content:basic:188060c5-ecb6-4ba8-abd9-df809a552681'
+  module:
+    - block_content
+  theme:
+    - drupalportugal_theme
+id: drupalportugal_theme_tb_purity_block_6
+theme: drupalportugal_theme
+region: content
+weight: -12
+provider: null
+plugin: 'block_content:188060c5-ecb6-4ba8-abd9-df809a552681'
+settings:
+  id: 'block_content:188060c5-ecb6-4ba8-abd9-df809a552681'
+  label: 'Junta-te a nós no IRC'
+  provider: block_content
+  label_display: visible
+  status: true
+  info: ''
+  view_mode: full
+visibility: {  }

@@ -1,0 +1,24 @@
+uuid: de1af0a1-408f-42e6-987b-14e2bb9b9527
+langcode: en
+status: true
+dependencies:
+  module:
+    - system
+  theme:
+    - nucleus_starter
+id: nucleus_starter_menu_menu-menu-drupal
+theme: nucleus_starter
+region: sidebar_second
+weight: -21
+provider: null
+plugin: 'system_menu_block:menu-menu-drupal'
+settings:
+  id: broken
+  label: '<none>'
+  provider: core
+  label_display: visible
+visibility:
+  request_path:
+    id: request_path
+    negate: false
+    pages: "/drupal\n/drupal/*"

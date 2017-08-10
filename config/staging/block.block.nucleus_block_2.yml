@@ -1,0 +1,25 @@
+uuid: 92781680-c38d-430e-b710-e4aa5fc18428
+langcode: en
+status: true
+dependencies:
+  content:
+    - 'block_content:basic:25678aef-4f17-4688-9f8e-e5cff2cbd6e4'
+  module:
+    - block_content
+  theme:
+    - nucleus
+id: nucleus_block_2
+theme: nucleus
+region: sidebar_second
+weight: -19
+provider: null
+plugin: 'block_content:25678aef-4f17-4688-9f8e-e5cff2cbd6e4'
+settings:
+  id: 'block_content:25678aef-4f17-4688-9f8e-e5cff2cbd6e4'
+  label: Segue-nos!
+  provider: block_content
+  label_display: visible
+  status: true
+  info: ''
+  view_mode: full
+visibility: {  }

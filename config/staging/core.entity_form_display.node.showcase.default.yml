@@ -1,0 +1,97 @@
+uuid: e553d03a-b551-4e64-878e-f83d1083285a
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.showcase.comment_node_showcase
+    - field.field.node.showcase.field_categoria
+    - field.field.node.showcase.field_empresas
+    - field.field.node.showcase.field_image
+    - field.field.node.showcase.field_link
+    - image.style.thumbnail
+    - node.type.showcase
+  module:
+    - image
+    - link
+    - path
+    - text
+id: node.showcase.default
+targetEntityType: node
+bundle: showcase
+mode: default
+content:
+  comment:
+    type: comment_default
+    weight: 20
+    settings: {  }
+    third_party_settings: {  }
+  created:
+    type: datetime_timestamp
+    weight: 10
+    settings: {  }
+    third_party_settings: {  }
+  field_categoria:
+    weight: -2
+    type: options_select
+    settings: {  }
+    third_party_settings: {  }
+  field_empresas:
+    weight: 0
+    type: text_textfield
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_image:
+    weight: -4
+    type: image_image
+    settings:
+      progress_indicator: throbber
+      preview_image_style: thumbnail
+    third_party_settings: {  }
+  field_link:
+    weight: 31
+    settings:
+      placeholder_url: ''
+      placeholder_title: ''
+    third_party_settings: {  }
+    type: link_default
+  langcode:
+    type: language_select
+    weight: 2
+    settings: {  }
+    third_party_settings: {  }
+  path:
+    type: path
+    weight: 30
+    settings: {  }
+    third_party_settings: {  }
+  promote:
+    type: boolean_checkbox
+    settings:
+      display_label: true
+    weight: 15
+    third_party_settings: {  }
+  sticky:
+    type: boolean_checkbox
+    settings:
+      display_label: true
+    weight: 16
+    third_party_settings: {  }
+  title:
+    type: string_textfield
+    weight: -5
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  uid:
+    type: entity_reference_autocomplete
+    weight: 5
+    settings:
+      match_operator: CONTAINS
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+hidden:
+  comment_node_showcase: true

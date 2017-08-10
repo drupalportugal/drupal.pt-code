@@ -1,0 +1,24 @@
+langcode: en
+id: user_register_form
+uuid: 09ab33ce-3267-49b2-b3fa-3b648c61356f
+label: 'User registration form'
+mode: '2'
+enabled_fields:
+  - name
+  - mail
+  - timezone
+  - init
+  - field_email
+checks:
+  - spam
+strictness: normal
+unsure: captcha
+discard: '1'
+moderation: null
+mapping:
+  author_name: name
+  author_mail: mail
+  post_id: uid
+module: user
+entity: user
+bundle: user

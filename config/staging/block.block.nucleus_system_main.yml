@@ -1,0 +1,20 @@
+uuid: dc993e02-79d2-4412-9519-f16c735302de
+langcode: en
+status: true
+dependencies:
+  module:
+    - system
+  theme:
+    - nucleus
+id: nucleus_system_main
+theme: nucleus
+region: content
+weight: -22
+provider: null
+plugin: system_main_block
+settings:
+  id: system_main_block
+  label: '<none>'
+  provider: system
+  label_display: visible
+visibility: {  }

@@ -1,0 +1,20 @@
+uuid: c55f7afa-109b-41a9-8fb8-2d83652446b0
+langcode: und
+status: true
+dependencies:
+  module:
+    - text
+    - user
+id: user.field_nome_e_apelido
+field_name: field_nome_e_apelido
+entity_type: user
+type: text
+settings:
+  max_length: 255
+module: text
+locked: false
+cardinality: 1
+translatable: false
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

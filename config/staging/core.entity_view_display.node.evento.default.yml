@@ -1,0 +1,81 @@
+uuid: 15d64a73-5aa5-4b40-a31b-0b8ec8d559ee
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.evento.body
+    - field.field.node.evento.comment_node_evento
+    - field.field.node.evento.field_date
+    - field.field.node.evento.field_eventos_participantes
+    - field.field.node.evento.field_image
+    - field.field.node.evento.field_local
+    - field.field.node.evento.field_tags
+    - image.style.medium
+    - node.type.evento
+  module:
+    - comment
+    - datetime
+    - image
+    - text
+    - user
+id: node.evento.default
+targetEntityType: node
+bundle: evento
+mode: default
+content:
+  body:
+    label: hidden
+    weight: 1
+    type: text_default
+    settings: {  }
+    third_party_settings: {  }
+  comment_node_evento:
+    label: hidden
+    type: comment_default
+    weight: 20
+    settings:
+      pager_id: 0
+    third_party_settings: {  }
+  field_date:
+    weight: 101
+    label: inline
+    settings:
+      format_type: medium
+      timezone_override: ''
+    third_party_settings: {  }
+    type: datetime_default
+  field_eventos_participantes:
+    label: inline
+    weight: 4
+    type: number_integer
+    settings:
+      thousand_separator: ''
+      prefix_suffix: true
+    third_party_settings: {  }
+  field_image:
+    label: hidden
+    weight: 0
+    type: image
+    settings:
+      image_style: medium
+      image_link: content
+    third_party_settings: {  }
+  field_local:
+    label: inline
+    weight: 3
+    type: text_default
+    settings: {  }
+    third_party_settings: {  }
+  field_tags:
+    label: inline
+    weight: 7
+    type: entity_reference_label
+    settings:
+      link: true
+    third_party_settings: {  }
+  links:
+    weight: 100
+    settings: {  }
+    third_party_settings: {  }
+hidden:
+  langcode: true

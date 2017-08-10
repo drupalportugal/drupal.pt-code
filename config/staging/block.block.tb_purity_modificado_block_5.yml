@@ -1,0 +1,25 @@
+uuid: ebd44530-af15-4e32-bfac-bd030c134e45
+langcode: en
+status: true
+dependencies:
+  content:
+    - 'block_content:basic:8846e75e-e430-49f9-be76-8e0310535f45'
+  module:
+    - block_content
+  theme:
+    - tb_purity_modificado
+id: tb_purity_modificado_block_5
+theme: tb_purity_modificado
+region: footer
+weight: -15
+provider: null
+plugin: 'block_content:8846e75e-e430-49f9-be76-8e0310535f45'
+settings:
+  id: 'block_content:8846e75e-e430-49f9-be76-8e0310535f45'
+  label: ''
+  provider: block_content
+  label_display: '0'
+  status: true
+  info: ''
+  view_mode: full
+visibility: {  }

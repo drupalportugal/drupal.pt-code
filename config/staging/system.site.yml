@@ -1,0 +1,15 @@
+uuid: 434b1848-fc20-487f-9b15-d7ad10acd4a0
+name: 'Drupal Portugal'
+mail: webmaster@drupal.pt
+slogan: ''
+page:
+  403: ''
+  404: ''
+  front: /node
+admin_compact_mode: false
+weight_select_max: 100
+langcode: pt-pt
+default_langcode: pt-pt
+_core:
+  default_config_hash: yXadRE77Va-G6dxhd2kPYapAvbnSvTF6hO4oXiOEynI
+mail_notification: ''

@@ -1,0 +1,24 @@
+uuid: 2006e305-2b04-4d1d-b2b7-f9e5add9fdfa
+langcode: en
+status: true
+dependencies:
+  module:
+    - system
+  theme:
+    - tb_purity_modificado
+id: tb_purity_modificado_menu_menu-menu-drupal
+theme: tb_purity_modificado
+region: sidebar_second
+weight: -21
+provider: null
+plugin: 'system_menu_block:menu-menu-drupal'
+settings:
+  id: broken
+  label: '<none>'
+  provider: core
+  label_display: visible
+visibility:
+  request_path:
+    id: request_path
+    negate: false
+    pages: "/drupal\n/drupal/*"

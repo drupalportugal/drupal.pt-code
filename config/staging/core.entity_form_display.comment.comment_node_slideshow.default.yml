@@ -1,0 +1,36 @@
+uuid: 338d8efa-f07f-4fb5-8af1-b6ffd12046e6
+langcode: en
+status: true
+dependencies:
+  config:
+    - comment.type.comment_node_slideshow
+    - field.field.comment.comment_node_slideshow.comment_body
+  module:
+    - text
+id: comment.comment_node_slideshow.default
+targetEntityType: comment
+bundle: comment_node_slideshow
+mode: default
+content:
+  author:
+    weight: -2
+  comment_body:
+    type: text_textarea
+    weight: 11
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+  langcode:
+    type: language_select
+    weight: 2
+    settings: {  }
+    third_party_settings: {  }
+  subject:
+    type: string_textfield
+    weight: 10
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+hidden: {  }

@@ -1,0 +1,20 @@
+uuid: c73991c9-e288-41ee-ba8d-f74bdb7d5249
+langcode: en
+status: true
+dependencies:
+  module:
+    - system
+  theme:
+    - tb_purity_modificado
+id: tb_purity_modificado_system_powered-by
+theme: tb_purity_modificado
+region: footer
+weight: -14
+provider: null
+plugin: system_powered_by_block
+settings:
+  id: system_powered_by_block
+  label: ''
+  provider: system
+  label_display: '0'
+visibility: {  }

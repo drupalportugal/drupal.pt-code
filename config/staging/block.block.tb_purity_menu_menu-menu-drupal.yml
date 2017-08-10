@@ -1,0 +1,24 @@
+uuid: fe806351-a84b-4976-bcb6-a6eac64680f8
+langcode: en
+status: true
+dependencies:
+  module:
+    - system
+  theme:
+    - bartik
+id: tb_purity_menu_menu-menu-drupal
+theme: bartik
+region: sidebar_second
+weight: -21
+provider: null
+plugin: 'system_menu_block:menu-menu-drupal'
+settings:
+  id: broken
+  label: '<none>'
+  provider: core
+  label_display: visible
+visibility:
+  request_path:
+    id: request_path
+    negate: false
+    pages: "/drupal\n/drupal/*"

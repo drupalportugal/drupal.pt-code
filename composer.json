@@ -1,0 +1,112 @@
+{
+  "name": "drupalportugal/drupal-pt.org",
+  "description": "Drupal Portugal",
+  "keywords": [ "project", "drupal", "community" ],
+  "homepage": "http://drupal.pt",
+  "support": {
+    "source": "https://github.com/drupalportugal/drupal-pt.org",
+    "docs": "https://github.com/drupalportugal/drupal-pt.org/wiki",
+    "wiki": "https://github.com/drupalportugal/drupal-pt.org/wiki",
+    "issues": "https://github.com/drupalportugal/drupal-pt.org/issues",
+    "forum": "https://groups.drupal.org/portugal",
+    "irc": "irc://irc.freenode.org/drupal-pt",
+    "email": "info@drupal.pt"
+  },
+  "type": "project",
+  "license": [
+    "GPL-2.0+"
+  ],
+  "authors": [
+    {
+      "name": "Luís Pedro Algarvio",
+      "email": "lp.algarvio@gmail.com",
+      "homepage": "http://lp.algarvio.org",
+      "role": "DevOps"
+    },
+    {
+      "name": "Hernani Freitas",
+      "email": "hernaniborgesdefreitas@gmail.com",
+      "homepage": "http://hernani.pt",
+      "role": "DevOps"
+    }
+  ],
+  "repositories": [
+    {
+      "type": "composer",
+      "url": "https://packages.drupal.org/8"
+    }
+  ],
+  "require": {
+    "composer/installers": "^1.2",
+    "cweagans/composer-patches": "^1.6",
+    "drupal-composer/drupal-scaffold": "^2.2",
+    "drupal/console": "~1.0",
+    "drupal/core": "^8.3",
+
+    "drupal/acquia_connector": "^1.10",
+    "drupal/ctools": "^3.0",
+    "drupal/diff": "1.x-dev",
+    "drupal/entity": "^1.0-alpha4",
+    "drupal/field_group": "^1.0",
+    "drupal/google_analytics": "^2.1",
+    "drupal/honeypot": "^1.24",
+    "drupal/markdown": "^1.1",
+    "drupal/metatag": "^1.0",
+    "drupal/mollom": "^1.2",
+    "drupal/name": "^1.0-beta1",
+    "drupal/pathauto": "^1.0",
+    "drupal/redirect": "^1.0-alpha5",
+    "drupal/select_or_other": "^1.0-alpha2",
+    "drupal/token": "^1.0",
+    "drupal/views_slideshow": "^4.4",
+    "webflo/drupal-finder": "^0.3.0",
+    "webmozart/path-util": "^2.3"
+  },
+  "require-dev": {
+    "behat/mink": "~1.7",
+    "behat/mink-goutte-driver": "~1.2",
+    "jcalderonzumba/gastonjs": "~1.0.2",
+    "jcalderonzumba/mink-phantomjs-driver": "~0.3.1",
+    "mikey179/vfsstream": "~1.2",
+    "phpunit/phpunit": ">=4.8.28 <5",
+    "symfony/css-selector": "~2.8"
+  },
+  "conflict": {
+    "drupal/drupal": "*"
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "config": {
+    "sort-packages": true
+  },
+  "autoload": {
+    "classmap": [
+      "scripts/composer/ScriptHandler.php"
+    ]
+  },
+  "scripts": {
+    "drupal-scaffold": "DrupalComposer\\DrupalScaffold\\Plugin::scaffold",
+    "pre-install-cmd": [
+      "DrupalProject\\composer\\ScriptHandler::checkComposerVersion"
+    ],
+    "pre-update-cmd": [
+      "DrupalProject\\composer\\ScriptHandler::checkComposerVersion"
+    ],
+    "post-install-cmd": [
+      "DrupalProject\\composer\\ScriptHandler::createRequiredFiles"
+    ],
+    "post-update-cmd": [
+      "DrupalProject\\composer\\ScriptHandler::createRequiredFiles"
+    ]
+  },
+  "extra": {
+    "installer-paths": {
+      "docroot/core": ["type:drupal-core"],
+      "docroot/libraries/{$name}": ["type:drupal-library"],
+      "docroot/modules/contrib/{$name}": ["type:drupal-module"],
+      "docroot/profiles/contrib/{$name}": ["type:drupal-profile"],
+      "docroot/themes/contrib/{$name}": ["type:drupal-theme"],
+      "drush/contrib/{$name}": ["type:drupal-drush"]
+    }
+  }
+}

@@ -1,0 +1,20 @@
+uuid: 4fde313d-5ba6-427e-bb43-3e79c0f00e9f
+langcode: en
+status: true
+dependencies:
+  module:
+    - user
+  theme:
+    - drupalportugal_theme
+id: drupalportugal_theme_tb_purity_user_login
+theme: drupalportugal_theme
+region: sidebar_second
+weight: -12
+provider: null
+plugin: user_login_block
+settings:
+  id: user_login_block
+  label: ''
+  provider: user
+  label_display: '0'
+visibility: {  }

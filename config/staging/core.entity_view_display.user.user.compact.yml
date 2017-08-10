@@ -1,0 +1,40 @@
+uuid: f82e9648-776f-4f30-9f32-557e3c00effd
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.user.compact
+    - field.field.user.user.field_distrito
+    - field.field.user.user.field_email
+    - field.field.user.user.field_empresa
+    - field.field.user.user.field_eu_e_o_drupal
+    - field.field.user.user.field_nome_e_apelido
+    - field.field.user.user.field_perfil_p_blico
+    - field.field.user.user.user_picture
+    - image.style.mini_thumbna
+  module:
+    - image
+    - user
+_core:
+  default_config_hash: C3k_McOy8bL8rTnIjspy5OfFdgqV1z6OdGZaI-tO5eM
+id: user.user.compact
+targetEntityType: user
+bundle: user
+mode: compact
+content:
+  user_picture:
+    type: image
+    weight: 0
+    settings:
+      image_style: mini_thumbna
+      image_link: content
+    third_party_settings: {  }
+    label: hidden
+hidden:
+  field_distrito: true
+  field_email: true
+  field_empresa: true
+  field_eu_e_o_drupal: true
+  field_nome_e_apelido: true
+  field_perfil_p_blico: true
+  member_for: true

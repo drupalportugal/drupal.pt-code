@@ -1,0 +1,20 @@
+uuid: f32af15f-4aa9-4f64-9d9c-00a1b2fd01ee
+langcode: en
+status: true
+dependencies:
+  module:
+    - user
+  theme:
+    - tao
+id: tao_user_login
+theme: tao
+region: sidebar_first
+weight: 0
+provider: null
+plugin: user_login_block
+settings:
+  id: user_login_block
+  label: ''
+  provider: user
+  label_display: '0'
+visibility: {  }

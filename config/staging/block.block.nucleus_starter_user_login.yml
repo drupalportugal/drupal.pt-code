@@ -1,0 +1,20 @@
+uuid: b44f8eff-5d55-4d12-bc8a-eb96d6917906
+langcode: en
+status: true
+dependencies:
+  module:
+    - user
+  theme:
+    - nucleus_starter
+id: nucleus_starter_user_login
+theme: nucleus_starter
+region: sidebar_second
+weight: -22
+provider: null
+plugin: user_login_block
+settings:
+  id: user_login_block
+  label: ''
+  provider: user
+  label_display: '0'
+visibility: {  }

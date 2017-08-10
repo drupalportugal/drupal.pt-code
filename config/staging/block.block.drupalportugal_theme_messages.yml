@@ -1,0 +1,22 @@
+uuid: 12e54912-0c8d-4e18-b8bb-7579cfbfcb72
+langcode: en
+status: true
+dependencies:
+  module:
+    - system
+  theme:
+    - drupalportugal_theme
+_core:
+  default_config_hash: KHQIJ7Vfl25lTjzIc7qIvnuistt-Mw2O0kG4jCofmkI
+id: drupalportugal_theme_messages
+theme: drupalportugal_theme
+region: highlighted
+weight: 0
+provider: null
+plugin: system_messages_block
+settings:
+  id: system_messages_block
+  label: 'Status messages'
+  provider: system
+  label_display: '0'
+visibility: {  }

@@ -1,0 +1,22 @@
+uuid: 58afa7f2-07fa-4fe5-b7cf-b0aa05104a5d
+langcode: en
+status: true
+dependencies:
+  module:
+    - system
+  theme:
+    - drupalportugal_bartik
+_core:
+  default_config_hash: KHQIJ7Vfl25lTjzIc7qIvnuistt-Mw2O0kG4jCofmkI
+id: drupalportugal_bartik_messages
+theme: drupalportugal_bartik
+region: highlighted
+weight: 0
+provider: null
+plugin: system_messages_block
+settings:
+  id: system_messages_block
+  label: 'Status messages'
+  provider: system
+  label_display: '0'
+visibility: {  }

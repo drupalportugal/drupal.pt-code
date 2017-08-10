@@ -1,0 +1,10 @@
+uuid: c1719bd6-e5a7-45d4-88bd-6930f3a2d97e
+langcode: en
+status: true
+dependencies: {  }
+id: secondtestfor2774143
+label: secondtestfor2774143
+weight: 4
+is_admin: null
+permissions:
+  - 'display EU Cookie Compliance popup'

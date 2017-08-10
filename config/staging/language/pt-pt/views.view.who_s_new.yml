@@ -1,0 +1,18 @@
+label: 'Novos utilizadores'
+display:
+  default:
+    display_title: Principal
+    display_options:
+      exposed_form:
+        options:
+          submit_button: Aplicar
+          reset_button_label: Reiniciar
+          exposed_sorts_label: 'Ordenar por'
+          sort_asc_label: Ascendente
+          sort_desc_label: Descendente
+      title: 'Novos utilizadores'
+  block_1:
+    display_title: 'Novos utilizadores'
+    display_options:
+      block_description: 'Novos utilizadores'
+      block_category: Utilizador

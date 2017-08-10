@@ -1,0 +1,26 @@
+uuid: 6d13c385-607e-4735-90d0-897a5c268bbc
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.poll.comment_node_poll
+    - node.type.poll
+  module:
+    - comment
+    - user
+id: node.poll.default
+targetEntityType: node
+bundle: poll
+mode: default
+content:
+  comment_node_poll:
+    label: hidden
+    type: comment_default
+    weight: 20
+    settings:
+      pager_id: 0
+    third_party_settings: {  }
+  links:
+    weight: 100
+hidden:
+  langcode: true

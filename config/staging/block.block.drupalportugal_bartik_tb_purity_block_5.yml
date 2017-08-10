@@ -1,0 +1,25 @@
+uuid: e7669618-043c-4fd3-8ea4-6852d7124ffd
+langcode: en
+status: true
+dependencies:
+  content:
+    - 'block_content:basic:8846e75e-e430-49f9-be76-8e0310535f45'
+  module:
+    - block_content
+  theme:
+    - drupalportugal_bartik
+id: drupalportugal_bartik_tb_purity_block_5
+theme: drupalportugal_bartik
+region: footer_fifth
+weight: -10
+provider: null
+plugin: 'block_content:8846e75e-e430-49f9-be76-8e0310535f45'
+settings:
+  id: 'block_content:8846e75e-e430-49f9-be76-8e0310535f45'
+  label: ''
+  provider: block_content
+  label_display: '0'
+  status: true
+  info: ''
+  view_mode: full
+visibility: {  }

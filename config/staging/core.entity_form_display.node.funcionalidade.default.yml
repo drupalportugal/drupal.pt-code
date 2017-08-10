@@ -1,0 +1,72 @@
+uuid: 6cfdac01-e785-4eba-bdc6-7ed3adbed6d4
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.funcionalidade.comment_node_funcionalidade
+    - field.field.node.funcionalidade.field_func_body
+    - node.type.funcionalidade
+  module:
+    - path
+    - text
+id: node.funcionalidade.default
+targetEntityType: node
+bundle: funcionalidade
+mode: default
+content:
+  comment:
+    type: comment_default
+    weight: 20
+    settings: {  }
+    third_party_settings: {  }
+  created:
+    type: datetime_timestamp
+    weight: 10
+    settings: {  }
+    third_party_settings: {  }
+  field_func_body:
+    weight: -4
+    type: text_textarea
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+  langcode:
+    type: language_select
+    weight: 2
+    settings: {  }
+    third_party_settings: {  }
+  path:
+    type: path
+    weight: 30
+    settings: {  }
+    third_party_settings: {  }
+  promote:
+    type: boolean_checkbox
+    settings:
+      display_label: true
+    weight: 15
+    third_party_settings: {  }
+  sticky:
+    type: boolean_checkbox
+    settings:
+      display_label: true
+    weight: 16
+    third_party_settings: {  }
+  title:
+    type: string_textfield
+    weight: -5
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  uid:
+    type: entity_reference_autocomplete
+    weight: 5
+    settings:
+      match_operator: CONTAINS
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+hidden:
+  comment_node_funcionalidade: true

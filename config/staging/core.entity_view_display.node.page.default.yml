@@ -1,0 +1,54 @@
+uuid: ef2d43df-e70e-413d-930f-bcad401e3c42
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - field.field.node.page.body
+    - field.field.node.page.comment_node_page
+    - field.field.node.page.field_page_file
+    - field.field.node.page.field_pageimage
+    - node.type.page
+  module:
+    - comment
+    - file
+    - image
+    - text
+    - user
+_core:
+  default_config_hash: oZ-7vpIJxjxL2up9B5KrJGD0lazQ9aN0P-fIPo6OrSU
+id: node.page.default
+targetEntityType: node
+bundle: page
+mode: default
+content:
+  body:
+    label: hidden
+    weight: 1
+    type: text_default
+    settings: {  }
+    third_party_settings: {  }
+  comment_node_page:
+    label: hidden
+    type: comment_default
+    weight: 20
+    settings:
+      pager_id: 0
+    third_party_settings: {  }
+  field_page_file:
+    label: above
+    weight: 2
+    type: file_default
+    settings: {  }
+    third_party_settings: {  }
+  field_pageimage:
+    label: hidden
+    weight: 0
+    type: image
+    settings:
+      image_style: ''
+      image_link: ''
+    third_party_settings: {  }
+  links:
+    weight: 101
+hidden:
+  langcode: true

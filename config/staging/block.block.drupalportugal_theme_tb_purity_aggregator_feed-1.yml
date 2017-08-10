@@ -1,0 +1,22 @@
+uuid: 5c0d262f-39ef-4ae2-aeb5-0116ac53e800
+langcode: en
+status: true
+dependencies:
+  module:
+    - aggregator
+  theme:
+    - drupalportugal_theme
+id: drupalportugal_theme_tb_purity_aggregator_feed-1
+theme: drupalportugal_theme
+region: content
+weight: -12
+provider: null
+plugin: aggregator_feed_block
+settings:
+  id: aggregator_feed_block
+  label: ''
+  provider: aggregator
+  label_display: '0'
+  block_count: 5
+  feed: '1'
+visibility: {  }

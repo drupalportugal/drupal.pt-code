@@ -1,0 +1,11 @@
+uuid: 3714c79d-e928-41e1-ae23-33c5bcd38d40
+langcode: en
+status: true
+dependencies: {  }
+name: Funcionalidade
+type: funcionalidade
+description: 'Conteúdos que descrevem as funcionalidades do drupal.'
+help: ''
+new_revision: false
+preview_mode: 1
+display_submitted: false

@@ -1,0 +1,77 @@
+uuid: cfa4a43d-90dc-4226-a946-3c7bdd736046
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - field.field.user.user.field_distrito
+    - field.field.user.user.field_email
+    - field.field.user.user.field_empresa
+    - field.field.user.user.field_eu_e_o_drupal
+    - field.field.user.user.field_nome_e_apelido
+    - field.field.user.user.field_perfil_p_blico
+    - field.field.user.user.user_picture
+    - image.style.large
+  module:
+    - image
+    - options
+    - text
+    - user
+_core:
+  default_config_hash: L2mtwGWH_7wDRCMIR4r_Iu_jmvQ10DV1L8ht8iNZ5qY
+id: user.user.default
+targetEntityType: user
+bundle: user
+mode: default
+content:
+  field_distrito:
+    label: inline
+    weight: 4
+    type: list_default
+    settings: {  }
+    third_party_settings: {  }
+  field_email:
+    label: above
+    weight: 1
+    type: email_mailto
+    settings: {  }
+    third_party_settings: {  }
+  field_empresa:
+    label: above
+    weight: 0
+    type: text_default
+    settings: {  }
+    third_party_settings: {  }
+  field_eu_e_o_drupal:
+    label: inline
+    weight: 5
+    type: text_default
+    settings: {  }
+    third_party_settings: {  }
+  field_nome_e_apelido:
+    label: inline
+    weight: 7
+    type: text_default
+    settings: {  }
+    third_party_settings: {  }
+  field_perfil_p_blico:
+    label: inline
+    weight: 6
+    type: boolean
+    settings:
+      format: default
+      format_custom_false: ''
+      format_custom_true: ''
+    third_party_settings: {  }
+  member_for:
+    weight: 2
+    settings: {  }
+    third_party_settings: {  }
+  user_picture:
+    label: hidden
+    settings:
+      image_style: large
+      image_link: content
+    type: image
+    weight: 3
+    third_party_settings: {  }
+hidden: {  }

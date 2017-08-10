@@ -1,0 +1,25 @@
+uuid: 5247c881-818b-4bd8-b7c6-0fa6765b10f5
+langcode: en
+status: true
+dependencies:
+  content:
+    - 'block_content:basic:188060c5-ecb6-4ba8-abd9-df809a552681'
+  module:
+    - block_content
+  theme:
+    - tb_purity_modificado
+id: tb_purity_modificado_block_6
+theme: tb_purity_modificado
+region: sidebar_first
+weight: -22
+provider: null
+plugin: 'block_content:188060c5-ecb6-4ba8-abd9-df809a552681'
+settings:
+  id: 'block_content:188060c5-ecb6-4ba8-abd9-df809a552681'
+  label: 'Junta-te a nós no IRC'
+  provider: block_content
+  label_display: visible
+  status: true
+  info: ''
+  view_mode: full
+visibility: {  }

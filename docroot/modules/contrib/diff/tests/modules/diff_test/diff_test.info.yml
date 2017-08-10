@@ -1,0 +1,12 @@
+description: Supports diff's automated tests.
+core: 8.x
+dependencies:
+  - diff
+  - filter
+  - editor
+  - entity_test
+  - node
+hidden: true
+name: Diff tests
+package: diff
+type: module
