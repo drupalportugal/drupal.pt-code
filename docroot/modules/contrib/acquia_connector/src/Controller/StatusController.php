@@ -21,7 +21,8 @@ class StatusController extends ControllerBase {
     // Refresh subscription information, so we are sure about our update status.
     // We send a heartbeat here so that all of our status information gets
     // updated locally via the return data.
-    Subscription::update();
+    $subscription = new Subscription();
+    $subscription->update();
 
     // Return to the setting pages (or destination).
     return $this->redirect('system.status');

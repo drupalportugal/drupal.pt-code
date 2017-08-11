@@ -143,7 +143,7 @@ function _views_slideshow_preprocess_views_view_slideshow(&$vars) {
       foreach ($weight as $location => $order) {
         if ($options['widgets'][$location][$widgetTypeId]['enable']) {
           // If hide on single slide and only a single slide skip rendering.
-          if ($options['widgets'][$location][$widgetTypeId]['hide_on_single_slide'] && $slide_count < 2) {
+          if ($options['widgets'][$location][$widgetTypeId]['hide_on_single_slide'] && $slide_count <= 1) {
             continue;
           }
           $widgetWeight = ($options['widgets'][$location][$widgetTypeId]['weight'] > count($widgetTypes)) ? count($widgetTypes) : $options['widgets'][$location][$widgetTypeId]['weight'];
@@ -349,7 +349,7 @@ function template_preprocess_views_slideshow_controls_text_previous(&$vars) {
  * Views Slideshow: "pause" control.
  */
 function template_preprocess_views_slideshow_controls_text_pause(&$vars) {
-  $vars['attributes']['class'][]  = 'views_slideshow_controls_text_pause  views-slideshow-controls-text-status-play';
+  $vars['attributes']['class'][] = 'views_slideshow_controls_text_pause  views-slideshow-controls-text-status-play';
   $vars['start_text'] = t('Pause');
 }
 

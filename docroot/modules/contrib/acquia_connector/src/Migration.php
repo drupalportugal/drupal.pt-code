@@ -171,8 +171,9 @@ class Migration {
    * Complete migration tasks.
    */
   public function complete(&$migration) {
-    $identifier = Storage::getIdentifier();
-    $key = Storage::getKey();
+    $storage = new Storage();
+    $identifier = $storage->getIdentifier();
+    $key = $storage->getKey();
     $client = \Drupal::service('acquia_connector.client');
     $body = array('identifier' => $identifier);
     if (isset($migration['redirect']) && is_array($migration['redirect']['data'])) {

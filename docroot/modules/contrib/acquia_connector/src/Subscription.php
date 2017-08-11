@@ -43,7 +43,7 @@ class Subscription {
    * @return mixed
    *   FALSE, integer (error number), or subscription data.
    */
-  static public function update($params = array()) {
+  public function update($params = array()) {
     $config = \Drupal::configFactory()->getEditable('acquia_connector.settings');
     $current_subscription = $config->get('subscription_data');
     $subscription = FALSE;
@@ -55,14 +55,15 @@ class Subscription {
     else {
       // Get our subscription data.
       try {
-        $key = Storage::getKey();
-        $identifier = Storage::getIdentifier();
+        $storage = new Storage();
+        $key = $storage->getKey();
+        $identifier = $storage->getIdentifier();
         $subscription = \Drupal::service('acquia_connector.client')->getSubscription($identifier, $key, $params);
       }
       catch (ConnectorException $e) {
         switch ($e->getCustomMessage('code')) {
-          case static::NOT_FOUND:
-          case static::EXPIRED:
+          case self::NOT_FOUND:
+          case self::EXPIRED:
             // Fall through since these values are stored and used by
             // acquia_search_acquia_subscription_status()
             $subscription = $e->getCustomMessage('code');
@@ -87,14 +88,15 @@ class Subscription {
   /**
    * Helper function to check if an identifier and key exist.
    */
-  static public function hasCredentials() {
-    return Storage::getIdentifier() && Storage::getKey();
+  public function hasCredentials() {
+    $storage = new Storage();
+    return $storage->getIdentifier() && $storage->getKey();
   }
 
   /**
    * Helper function to check if the site has an active subscription.
    */
-  static public function isActive() {
+  public function isActive() {
     $active = FALSE;
     // Subscription cannot be active if we have no credentials.
     if (self::hasCredentials()) {
@@ -105,8 +107,9 @@ class Subscription {
       // Make sure we have data at least once per day.
       if (isset($subscription_timestamp) && (time() - $subscription_timestamp > 60 * 60 * 24)) {
         try {
-          $key = Storage::getKey();
-          $identifier = Storage::getIdentifier();
+          $storage = new Storage();
+          $key = $storage->getKey();
+          $identifier = $storage->getIdentifier();
           $subscription = \Drupal::service('acquia_connector.client')->getSubscription($identifier, $key, ['no_heartbeat' => 1]);
         }
         catch (ConnectorException $e) {

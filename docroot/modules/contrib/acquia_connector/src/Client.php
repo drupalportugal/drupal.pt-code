@@ -382,7 +382,8 @@ class Client {
    */
   public function nspiCall($method, $params, $key = NULL) {
     if (empty($key)) {
-      $key = Storage::getKey();
+      $storage = new Storage();
+      $key = $storage->getKey();
     }
     // Used in HMAC validation.
     $params['rpc_version'] = ACQUIA_SPI_DATA_VERSION;

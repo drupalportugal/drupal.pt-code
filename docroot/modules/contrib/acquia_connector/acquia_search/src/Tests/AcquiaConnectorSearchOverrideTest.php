@@ -302,7 +302,8 @@ class AcquiaConnectorSearchOverrideTest extends WebTestBase {
       );
     }
 
-    Storage::setIdentifier($acquia_identifier);
+    $storage = new Storage();
+    $storage->setIdentifier($acquia_identifier);
 
     $subscription = \Drupal::config('acquia_connector.settings')->get('subscription_data');
     $subscription['heartbeat_data'] = array('search_cores' => $available_cores);

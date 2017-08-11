@@ -18,7 +18,8 @@ function acquia_search_install() {
   system_rebuild_module_data();
 
   _acquia_search_set_version();
-  Subscription::update();
+  $subscription = new Subscription();
+  $subscription->update();
 }
 
 /**
@@ -32,7 +33,8 @@ function acquia_search_requirements($phase) {
   // a profile.
   if ($phase == 'install' && (!defined('MAINTENANCE_MODE') || MAINTENANCE_MODE != 'install')) {
     if (class_exists('Drupal\acquia_connector\Subscription')) {
-      if (Subscription::hasCredentials()) {
+      $subscription = new Subscription();
+      if ($subscription->hasCredentials()) {
         $severity = REQUIREMENT_OK;
       }
       else {

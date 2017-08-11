@@ -16,7 +16,7 @@ function views_slideshow_cycle_help($route_name, RouteMatchInterface $route_matc
   switch ($route_name) {
     case 'help.page.views_slideshow_cycle':
       if (\Drupal::moduleHandler()->moduleExists('advanced_help')) {
-        $output = '<p>' . Link::fromTextAndUrl('Click here to view the documentation for Views Slideshow Cycle.', Url::fromRoute('advanced_help.module_index', ['module' => 'views_slideshow_cycle'])->toString()) . '</p>';
+        $output = '<p>' . Link::fromTextAndUrl(t('Click here to view the documentation for Views Slideshow Cycle.'), Url::fromRoute('advanced_help.module_index', ['module' => 'views_slideshow_cycle'])->toString()) . '</p>';
       }
       else {
         $output = '<p>' . t('Views Slideshow Cycle help can be found by installing and enabling the @advanced_help', ['@advanced_help' => Link::fromTextAndUrl(t('Advanced Help module'), Url::fromUri('http://drupal.org/project/advanced_help'))->toString()]) . '</p>';

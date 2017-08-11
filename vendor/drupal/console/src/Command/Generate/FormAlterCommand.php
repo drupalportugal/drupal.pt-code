@@ -16,9 +16,8 @@ use Drupal\Console\Command\Shared\ModuleTrait;
 use Drupal\Console\Command\Shared\MenuTrait;
 use Drupal\Console\Command\Shared\FormTrait;
 use Drupal\Console\Command\Shared\ConfirmationTrait;
-use Symfony\Component\Console\Command\Command;
+use Drupal\Console\Core\Command\Command;
 use Drupal\Console\Core\Style\DrupalStyle;
-use Drupal\Console\Core\Command\Shared\CommandTrait;
 use Drupal\Console\Core\Utils\StringConverter;
 use Drupal\Console\Extension\Manager;
 use Drupal\Core\Extension\ModuleHandlerInterface;
@@ -35,7 +34,6 @@ class FormAlterCommand extends Command
     use FormTrait;
     use MenuTrait;
     use ConfirmationTrait;
-    use CommandTrait;
 
     /**
  * @var Manager
@@ -153,7 +151,8 @@ class FormAlterCommand extends Command
                 null,
                 InputOption::VALUE_OPTIONAL | InputOption::VALUE_IS_ARRAY,
                 $this->trans('commands.common.options.inputs')
-            );
+            )
+            ->setAliases(['gfa']);
     }
 
     /**

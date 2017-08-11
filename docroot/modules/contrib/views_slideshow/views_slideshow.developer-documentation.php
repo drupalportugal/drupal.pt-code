@@ -1,6 +1,11 @@
 <?php
 
-/** @mainpage Views Slideshow API & Developer Documentation
+/**
+ * @file Provides API homepage for Views Slideshow.
+ */
+
+/**
+ * @mainpage Views Slideshow API & Developer Documentation
  * Welcome to the Views Slideshow developer's documentation.
  *
  * Newcomers to Drupal development should read the conceptual information

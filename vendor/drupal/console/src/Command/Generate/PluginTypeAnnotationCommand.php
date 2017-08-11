@@ -15,9 +15,8 @@ use Drupal\Console\Command\Shared\ServicesTrait;
 use Drupal\Console\Command\Shared\ModuleTrait;
 use Drupal\Console\Command\Shared\FormTrait;
 use Drupal\Console\Command\Shared\ConfirmationTrait;
-use Symfony\Component\Console\Command\Command;
+use Drupal\Console\Core\Command\Command;
 use Drupal\Console\Core\Style\DrupalStyle;
-use Drupal\Console\Core\Command\Shared\CommandTrait;
 use Drupal\Console\Extension\Manager;
 use Drupal\Console\Core\Utils\StringConverter;
 
@@ -32,7 +31,6 @@ class PluginTypeAnnotationCommand extends Command
     use ModuleTrait;
     use FormTrait;
     use ConfirmationTrait;
-    use CommandTrait;
 
     /**
  * @var Manager
@@ -91,7 +89,8 @@ class PluginTypeAnnotationCommand extends Command
                 null,
                 InputOption::VALUE_OPTIONAL,
                 $this->trans('commands.generate.plugin.type.annotation.options.label')
-            );
+            )
+            ->setAliases(['gpta']);
     }
 
     /**

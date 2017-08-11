@@ -9,8 +9,8 @@ dependencies:
   - views_slideshow
   - views_slideshow_cycle
 
-# Information added by Drupal.org packaging script on 2017-03-07
-version: '8.x-4.4'
+# Information added by Drupal.org packaging script on 2017-06-08
+version: '8.x-4.5'
 core: '8.x'
 project: 'views_slideshow'
-datestamp: 1488919690
+datestamp: 1496901249

@@ -10,11 +10,10 @@ namespace Drupal\Console\Command\Generate;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Command\Command;
+use Drupal\Console\Core\Command\Command;
 use Drupal\Console\Generator\PluginCKEditorButtonGenerator;
 use Drupal\Console\Command\Shared\ModuleTrait;
 use Drupal\Console\Command\Shared\ConfirmationTrait;
-use Drupal\Console\Core\Command\Shared\CommandTrait;
 use Drupal\Console\Core\Style\DrupalStyle;
 use Drupal\Console\Core\Utils\ChainQueue;
 use Drupal\Console\Extension\Manager;
@@ -22,7 +21,6 @@ use Drupal\Console\Core\Utils\StringConverter;
 
 class PluginCKEditorButtonCommand extends Command
 {
-    use CommandTrait;
     use ModuleTrait;
     use ConfirmationTrait;
 
@@ -111,7 +109,7 @@ class PluginCKEditorButtonCommand extends Command
                 null,
                 InputOption::VALUE_REQUIRED,
                 $this->trans('commands.generate.plugin.ckeditorbutton.options.button-icon-path')
-            );
+            )->setAliases(['gpc']);
     }
 
     /**

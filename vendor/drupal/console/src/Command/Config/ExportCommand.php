@@ -14,16 +14,13 @@ use Drupal\Core\Config\StorageInterface;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Command\Command;
+use Drupal\Console\Core\Command\Command;
 use Symfony\Component\Filesystem\Filesystem;
-use Drupal\Console\Core\Command\Shared\CommandTrait;
 use Drupal\Console\Core\Style\DrupalStyle;
 use Drupal\Core\Config\ConfigManager;
 
 class ExportCommand extends Command
 {
-    use CommandTrait;
-
     /**
      * @var ConfigManager
      */
@@ -59,24 +56,25 @@ class ExportCommand extends Command
                 'directory',
                 null,
                 InputOption::VALUE_OPTIONAL,
-                $this->trans('commands.config.export.arguments.directory')
+                $this->trans('commands.config.export.options.directory')
             )
             ->addOption(
                 'tar',
                 null,
                 InputOption::VALUE_NONE,
-                $this->trans('commands.config.export.arguments.tar')
+                $this->trans('commands.config.export.options.tar')
             )->addOption(
                 'remove-uuid',
                 null,
                 InputOption::VALUE_NONE,
-                $this->trans('commands.config.export.single.options.remove-uuid')
+                $this->trans('commands.config.export.options.remove-uuid')
             )->addOption(
                 'remove-config-hash',
                 null,
                 InputOption::VALUE_NONE,
-                $this->trans('commands.config.export.single.options.remove-config-hash')
-            );
+                $this->trans('commands.config.export.options.remove-config-hash')
+            )
+            ->setAliases(['ce']);
     }
 
     /**
@@ -90,7 +88,7 @@ class ExportCommand extends Command
         $tar = $input->getOption('tar');
         $removeUuid = $input->getOption('remove-uuid');
         $removeHash = $input->getOption('remove-config-hash');
-        
+
         if (!$directory) {
             $directory = config_get_config_directory(CONFIG_SYNC_DIRECTORY);
         }
