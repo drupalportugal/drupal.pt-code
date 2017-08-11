@@ -45,7 +45,7 @@
 
     "drupal/acquia_connector": "^1.10",
     "drupal/ctools": "^3.0",
-    "drupal/diff": "1.x-dev",
+    "drupal/diff": "^1.0,
     "drupal/entity": "^1.0-alpha4",
     "drupal/field_group": "^1.0",
     "drupal/google_analytics": "^2.1",
