@@ -132,11 +132,6 @@ class BlockViewBuilder extends EntityViewBuilder {
    *   A render array with a #pre_render callback to render the block.
    */
   protected static function buildPreRenderableBlock($entity, ModuleHandlerInterface $module_handler) {
-
-    if (!is_object($entity)) {
-      var_dump($entity);
-    }
-
     $plugin = $entity->getPlugin();
     $plugin_id = $plugin->getPluginId();
     $base_id = $plugin->getBaseId();

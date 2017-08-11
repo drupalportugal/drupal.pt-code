@@ -119,13 +119,13 @@ class PhpDumperTest extends TestCase
         // without compilation
         $container = include self::$fixturesPath.'/containers/container9.php';
         $dumper = new PhpDumper($container);
-        $this->assertEquals(str_replace('%path%', str_replace('\\', '\\\\', self::$fixturesPath.DIRECTORY_SEPARATOR.'includes'.DIRECTORY_SEPARATOR), file_get_contents(self::$fixturesPath.'/php/services9.php')), $dumper->dump(), '->dump() dumps services');
+        $this->assertStringEqualsFile(self::$fixturesPath.'/php/services9.php', str_replace(str_replace('\\', '\\\\', self::$fixturesPath.DIRECTORY_SEPARATOR.'includes'.DIRECTORY_SEPARATOR), '%path%', $dumper->dump()), '->dump() dumps services');
 
         // with compilation
         $container = include self::$fixturesPath.'/containers/container9.php';
         $container->compile();
         $dumper = new PhpDumper($container);
-        $this->assertEquals(str_replace('%path%', str_replace('\\', '\\\\', self::$fixturesPath.DIRECTORY_SEPARATOR.'includes'.DIRECTORY_SEPARATOR), file_get_contents(self::$fixturesPath.'/php/services9_compiled.php')), $dumper->dump(), '->dump() dumps services');
+        $this->assertStringEqualsFile(self::$fixturesPath.'/php/services9_compiled.php', str_replace(str_replace('\\', '\\\\', self::$fixturesPath.DIRECTORY_SEPARATOR.'includes'.DIRECTORY_SEPARATOR), '%path%', $dumper->dump()), '->dump() dumps services');
 
         $dumper = new PhpDumper($container = new ContainerBuilder());
         $container->register('foo', 'FooClass')->addArgument(new \stdClass());
@@ -145,7 +145,7 @@ class PhpDumperTest extends TestCase
     {
         $container = include self::$fixturesPath.'/containers/container20.php';
         $dumper = new PhpDumper($container);
-        $this->assertEquals(str_replace('%path%', str_replace('\\', '\\\\', self::$fixturesPath.DIRECTORY_SEPARATOR.'includes'.DIRECTORY_SEPARATOR), file_get_contents(self::$fixturesPath.'/php/services20.php')), $dumper->dump(), '->dump() dumps services');
+        $this->assertStringEqualsFile(self::$fixturesPath.'/php/services20.php', str_replace(str_replace('\\', '\\\\', self::$fixturesPath.DIRECTORY_SEPARATOR.'includes'.DIRECTORY_SEPARATOR), '%path%', $dumper->dump()), '->dump() dumps services');
     }
 
     public function testServicesWithAnonymousFactories()
@@ -263,7 +263,7 @@ class PhpDumperTest extends TestCase
         $container = include self::$fixturesPath.'/containers/container24.php';
         $dumper = new PhpDumper($container);
 
-        $this->assertEquals(file_get_contents(self::$fixturesPath.'/php/services24.php'), $dumper->dump());
+        $this->assertStringEqualsFile(self::$fixturesPath.'/php/services24.php', $dumper->dump());
     }
 
     public function testInlinedDefinitionReferencingServiceContainer()
@@ -346,5 +346,44 @@ class PhpDumperTest extends TestCase
         $dumper->dump();
 
         $this->addToAssertionCount(1);
+    }
+
+    public function testDumpHandlesLiteralClassWithRootNamespace()
+    {
+        $container = new ContainerBuilder();
+        $container->register('foo', '\\stdClass');
+
+        $dumper = new PhpDumper($container);
+        eval('?>'.$dumper->dump(array('class' => 'Symfony_DI_PhpDumper_Test_Literal_Class_With_Root_Namespace')));
+
+        $container = new \Symfony_DI_PhpDumper_Test_Literal_Class_With_Root_Namespace();
+
+        $this->assertInstanceOf('stdClass', $container->get('foo'));
+    }
+
+    /**
+     * This test checks the trigger of a deprecation note and should not be removed in major releases.
+     *
+     * @group legacy
+     * @expectedDeprecation The "foo" service is deprecated. You should stop using it, as it will soon be removed.
+     */
+    public function testPrivateServiceTriggersDeprecation()
+    {
+        $container = new ContainerBuilder();
+        $container->register('foo', 'stdClass')
+            ->setPublic(false)
+            ->setDeprecated(true);
+        $container->register('bar', 'stdClass')
+            ->setPublic(true)
+            ->setProperty('foo', new Reference('foo'));
+
+        $container->compile();
+
+        $dumper = new PhpDumper($container);
+        eval('?>'.$dumper->dump(array('class' => 'Symfony_DI_PhpDumper_Test_Private_Service_Triggers_Deprecation')));
+
+        $container = new \Symfony_DI_PhpDumper_Test_Private_Service_Triggers_Deprecation();
+
+        $container->get('bar');
     }
 }

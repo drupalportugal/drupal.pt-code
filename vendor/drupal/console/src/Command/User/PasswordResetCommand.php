@@ -9,8 +9,7 @@ namespace Drupal\Console\Command\User;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Command\Command;
-use Drupal\Console\Core\Command\Shared\CommandTrait;
+use Drupal\Console\Core\Command\Command;
 use Drupal\Core\Database\Connection;
 use Drupal\Console\Core\Utils\ChainQueue;
 use Drupal\Console\Command\Shared\ConfirmationTrait;
@@ -19,7 +18,6 @@ use Drupal\Console\Core\Style\DrupalStyle;
 
 class PasswordResetCommand extends Command
 {
-    use CommandTrait;
     use ConfirmationTrait;
 
     /**
@@ -56,8 +54,17 @@ class PasswordResetCommand extends Command
             ->setName('user:password:reset')
             ->setDescription($this->trans('commands.user.password.reset.description'))
             ->setHelp($this->trans('commands.user.password.reset.help'))
-            ->addArgument('user', InputArgument::REQUIRED, $this->trans('commands.user.password.reset.options.user-id'))
-            ->addArgument('password', InputArgument::REQUIRED, $this->trans('commands.user.password.reset.options.password'));
+            ->addArgument(
+                'user',
+                InputArgument::REQUIRED,
+                $this->trans('commands.user.password.reset.options.user-id')
+            )
+            ->addArgument(
+                'password',
+                InputArgument::REQUIRED,
+                $this->trans('commands.user.password.reset.options.password')
+            )
+            ->setAliases(['upr']);
     }
 
     /**

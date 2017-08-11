@@ -120,7 +120,7 @@ class ContainerBuilderTest extends TestCase
             $this->assertEquals('Circular reference detected for service "baz", path: "baz".', $e->getMessage(), '->get() throws a LogicException if the service has a circular reference to itself');
         }
 
-        $this->assertTrue($builder->get('bar') === $builder->get('bar'), '->get() always returns the same instance if the service is shared');
+        $this->assertSame($builder->get('bar'), $builder->get('bar'), '->get() always returns the same instance if the service is shared');
     }
 
     public function testNonSharedServicesReturnsDifferentInstances()
@@ -890,6 +890,27 @@ class ContainerBuilderTest extends TestCase
         $container->compile();
 
         $this->assertEquals('a', (string) $container->getDefinition('b')->getArgument(0));
+    }
+
+    /**
+     * This test checks the trigger of a deprecation note and should not be removed in major releases.
+     *
+     * @group legacy
+     * @expectedDeprecation The "foo" service is deprecated. You should stop using it, as it will soon be removed.
+     */
+    public function testPrivateServiceTriggersDeprecation()
+    {
+        $container = new ContainerBuilder();
+        $container->register('foo', 'stdClass')
+            ->setPublic(false)
+            ->setDeprecated(true);
+        $container->register('bar', 'stdClass')
+            ->setPublic(true)
+            ->setProperty('foo', new Reference('foo'));
+
+        $container->compile();
+
+        $container->get('bar');
     }
 }
 

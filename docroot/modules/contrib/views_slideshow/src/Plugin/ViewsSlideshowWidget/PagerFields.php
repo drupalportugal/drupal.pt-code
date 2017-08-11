@@ -46,10 +46,10 @@ class PagerFields extends ViewsSlideshowWidgetBase {
     // Add ability to choose which fields to show in the pager.
     $form['views_slideshow_pager_fields_fields'] = [
       '#type' => 'checkboxes',
-      '#title' => t('Pager fields'),
+      '#title' => $this->t('Pager fields'),
       '#options' => $options,
       '#default_value' => $this->getConfiguration()['views_slideshow_pager_fields_fields'],
-      '#description' => t('Choose the fields that will appear in the pager.'),
+      '#description' => $this->t('Choose the fields that will appear in the pager.'),
       '#states' => [
         'visible' => [
           ':input[name="' . $this->getConfiguration()['dependency'] . '[enable]"]' => ['checked' => TRUE],
@@ -62,9 +62,9 @@ class PagerFields extends ViewsSlideshowWidgetBase {
     // hover.
     $form['views_slideshow_pager_fields_hover'] = [
       '#type' => 'checkbox',
-      '#title' => t('Activate Slide and Pause on Pager Hover'),
+      '#title' => $this->t('Activate Slide and Pause on Pager Hover'),
       '#default_value' => $this->getConfiguration()['views_slideshow_pager_fields_hover'],
-      '#description' => t('Should the slide be activated and paused when hovering over a pager item.'),
+      '#description' => $this->t('Should the slide be activated and paused when hovering over a pager item.'),
       '#states' => [
         'visible' => [
           ':input[name="' . $this->getConfiguration()['dependency'] . '[enable]"]' => ['checked' => TRUE],

@@ -1228,7 +1228,8 @@ class SpiController extends ControllerBase {
       return FALSE;
     }
 
-    $response = $this->client->sendNspi(Storage::getIdentifier(), Storage::getKey(), $spi);
+    $storage = new Storage();
+    $response = $this->client->sendNspi($storage->getIdentifier(), $storage->getKey(), $spi);
 
     if ($response === FALSE) {
       return FALSE;
@@ -1467,7 +1468,8 @@ class SpiController extends ControllerBase {
    */
   public function sendAccess() {
     $request = \Drupal::request();
-    $acquia_key = Storage::getKey();
+    $storage = new Storage();
+    $acquia_key = $storage->getKey();
     if (!empty($acquia_key) && $request->get('key')) {
       $key = sha1(\Drupal::service('private_key')->get());
       if ($key === $request->get('key')) {

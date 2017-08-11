@@ -57,9 +57,17 @@ class AddServicesCompilerPass implements CompilerPassInterface
             new FileLocator($this->root)
         );
 
-        $loader->load($this->root. DRUPAL_CONSOLE_CORE . 'services.yml');
-        $loader->load($this->root. DRUPAL_CONSOLE . 'uninstall.services.yml');
-        $loader->load($this->root. DRUPAL_CONSOLE . 'services.yml');
+        $servicesFiles = [
+            $this->root. DRUPAL_CONSOLE_CORE . 'services.yml',
+            $this->root. DRUPAL_CONSOLE . 'uninstall.services.yml',
+            $this->root. DRUPAL_CONSOLE . 'services.yml'
+        ];
+
+        foreach ($servicesFiles as $servicesFile) {
+            if (file_exists($servicesFile)) {
+                $loader->load($servicesFile);
+            }
+        }
 
         $container->get('console.configuration_manager')
             ->loadConfiguration($this->root)
@@ -69,9 +77,13 @@ class AddServicesCompilerPass implements CompilerPassInterface
          * @var Site $site
          */
         $site = $container->get('console.site');
+        \Drupal::getContainer()->set(
+            'console.root',
+            $this->root
+        );
 
         if (!$this->rebuild && $site->cachedServicesFileExists()) {
-            $loader->load($site->cachedServicesFile());
+            $loader->load($site->getCachedServicesFile());
         } else {
             $site->removeCachedServicesFile();
             $finder = new Finder();
@@ -79,7 +91,7 @@ class AddServicesCompilerPass implements CompilerPassInterface
                 ->name('*.yml')
                 ->in(
                     sprintf(
-                        '%s/config/services/drupal-console',
+                        '%s/config/services',
                         $this->root.DRUPAL_CONSOLE
                     )
                 );
@@ -107,18 +119,6 @@ class AddServicesCompilerPass implements CompilerPassInterface
                 ->getList(false);
 
             foreach ($modules as $module) {
-                if ($module->origin == 'core') {
-                    $consoleServicesExtensionFile = $this->root . DRUPAL_CONSOLE .
-                        'config/services/drupal-core/'.$module->getName().'.yml';
-                    if (is_file($consoleServicesExtensionFile)) {
-                        $loader->load($consoleServicesExtensionFile);
-                        $servicesData = $this->extractServiceData(
-                            $consoleServicesExtensionFile,
-                            $servicesData
-                        );
-                    }
-                }
-
                 $consoleServicesExtensionFile = $this->appRoot . '/' .
                     $module->getPath() . '/console.services.yml';
                 if (is_file($consoleServicesExtensionFile)) {
@@ -150,18 +150,23 @@ class AddServicesCompilerPass implements CompilerPassInterface
                 }
             }
 
-            if ($servicesData && is_writable($site->getCacheDirectory())) {
+            if ($servicesData) {
                 file_put_contents(
-                    $site->cachedServicesFile(),
+                    $site->getCachedServicesFile(),
                     Yaml::dump($servicesData, 4, 2)
                 );
             }
         }
 
-        $consoleExtendServicesFile = $this->root . DRUPAL_CONSOLE . '/extend.console.services.yml';
+        $extendServicesFiles = [
+            $this->root . DRUPAL_CONSOLE . 'extend.console.services.yml',
+            $this->root . DRUPAL_CONSOLE . 'extend.console.uninstall.services.yml',
+        ];
 
-        if (file_exists($consoleExtendServicesFile)) {
-            $loader->load($consoleExtendServicesFile);
+        foreach ($extendServicesFiles as $extendServicesFile) {
+            if (file_exists($extendServicesFile)) {
+                $loader->load($extendServicesFile);
+            }
         }
 
         $configurationManager = $container->get('console.configuration_manager');
@@ -169,9 +174,16 @@ class AddServicesCompilerPass implements CompilerPassInterface
         $autoloadFile = $directory . 'vendor/autoload.php';
         if (is_file($autoloadFile)) {
             include_once $autoloadFile;
-            $extendServicesFile = $directory . 'extend.console.services.yml';
-            if (is_file($extendServicesFile)) {
-                $loader->load($extendServicesFile);
+
+            $extendServicesFiles = [
+                $directory . 'extend.console.services.yml',
+                $directory . 'extend.console.uninstall.services.yml',
+            ];
+
+            foreach ($extendServicesFiles as $extendServicesFile) {
+                if (file_exists($extendServicesFile)) {
+                    $loader->load($extendServicesFile);
+                }
             }
         }
 

@@ -73,8 +73,8 @@ class Pager extends ViewsSlideshowWidgetTypeBase {
       // Create the widget type field.
       $form['type'] = [
         '#type' => 'select',
-        '#title' => t('Pager Type'),
-        '#description' => t('Style of the pager'),
+        '#title' => $this->t('Pager Type'),
+        '#description' => $this->t('Style of the pager'),
         '#default_value' => $this->getConfiguration()['type'],
         '#options' => $widgets,
         '#states' => [

@@ -25,7 +25,7 @@ class Application extends BaseApplication
     /**
      * @var string
      */
-    const VERSION = '1.0.0-rc19';
+    const VERSION = '1.0.0';
 
     public function __construct(ContainerInterface $container)
     {
@@ -44,13 +44,11 @@ class Application extends BaseApplication
         if ('UNKNOWN' !== $this->getName()) {
             if ('UNKNOWN' !== $this->getVersion()) {
                 $output .= sprintf('<info>%s</info> version <comment>%s</comment>', $this->getName(), $this->getVersion());
+            } else {
+                $output .= sprintf('<info>%s</info>', $this->getName());
             }
-            else {
-              $output .= sprintf('<info>%s</info>', $this->getName());
-            }
-        }
-        else {
-          $output .= '<info>Console Tool</info>';
+        } else {
+            $output .= '<info>Drupal Console</info>';
         }
 
         return $output;
@@ -158,6 +156,7 @@ class Application extends BaseApplication
             ->get('application.commands.aliases')?:[];
 
         foreach ($consoleCommands as $name) {
+
             AnnotationRegistry::reset();
             AnnotationRegistry::registerLoader(
                 [
@@ -175,6 +174,10 @@ class Application extends BaseApplication
                     continue;
                 }
 
+                if (!$annotationValidator->isValidCommand($serviceDefinition->getClass())) {
+                    continue;
+                }
+
                 $annotation = $annotationCommandReader
                     ->readAnnotation($serviceDefinition->getClass());
                 if ($annotation) {
@@ -183,10 +186,6 @@ class Application extends BaseApplication
                             $annotation['extension'],
                             $annotation['extensionType']
                         );
-                }
-
-                if (!$annotationValidator->isValidCommand($serviceDefinition->getClass())) {
-                    continue;
                 }
             }
 
@@ -215,7 +214,10 @@ class Application extends BaseApplication
             }
 
             if (array_key_exists($command->getName(), $aliases)) {
-                $commandAliases = $aliases[$command->getName()];
+                $commandAliases = array_unique(array_merge(
+                    $command->getAliases()?$command->getAliases():[],
+                    array_key_exists($command->getName(), $aliases)?$aliases[$command->getName()]:[]
+                ));
                 if (!is_array($commandAliases)) {
                     $commandAliases = [$commandAliases];
                 }
@@ -302,16 +304,16 @@ class Application extends BaseApplication
             'arguments' => $arguments,
             'languages' => $languages,
             'messages' => [
-                'title' =>  $this->trans('commands.generate.doc.gitbook.messages.title'),
-                'note' =>  $this->trans('commands.generate.doc.gitbook.messages.note'),
-                'note_description' =>  $this->trans('commands.generate.doc.gitbook.messages.note-description'),
-                'command' =>  $this->trans('commands.generate.doc.gitbook.messages.command'),
-                'options' => $this->trans('commands.generate.doc.gitbook.messages.options'),
-                'option' => $this->trans('commands.generate.doc.gitbook.messages.option'),
-                'details' => $this->trans('commands.generate.doc.gitbook.messages.details'),
-                'arguments' => $this->trans('commands.generate.doc.gitbook.messages.arguments'),
-                'argument' => $this->trans('commands.generate.doc.gitbook.messages.argument'),
-                'examples' => $this->trans('commands.generate.doc.gitbook.messages.examples')
+                'title' => $this->trans('application.gitbook.messages.title'),
+                'note' =>  $this->trans('application.gitbook.messages.note'),
+                'note_description' =>  $this->trans('application.gitbook.messages.note-description'),
+                'command' =>  $this->trans('application.gitbook.messages.command'),
+                'options' => $this->trans('application.gitbook.messages.options'),
+                'option' => $this->trans('application.gitbook.messages.option'),
+                'details' => $this->trans('application.gitbook.messages.details'),
+                'arguments' => $this->trans('application.gitbook.messages.arguments'),
+                'argument' => $this->trans('application.gitbook.messages.argument'),
+                'examples' => $this->trans('application.gitbook.messages.examples')
             ],
             'examples' => []
         ];
@@ -379,13 +381,13 @@ class Application extends BaseApplication
             'key' => $commandKey,
             'dashed' => str_replace(':', '-', $command->getName()),
             'messages' => [
-                'usage' =>  $this->trans('commands.generate.doc.gitbook.messages.usage'),
-                'options' => $this->trans('commands.generate.doc.gitbook.messages.options'),
-                'option' => $this->trans('commands.generate.doc.gitbook.messages.option'),
-                'details' => $this->trans('commands.generate.doc.gitbook.messages.details'),
-                'arguments' => $this->trans('commands.generate.doc.gitbook.messages.arguments'),
-                'argument' => $this->trans('commands.generate.doc.gitbook.messages.argument'),
-                'examples' => $this->trans('commands.generate.doc.gitbook.messages.examples')
+                'usage' =>  $this->trans('application.gitbook.messages.usage'),
+                'options' => $this->trans('application.gitbook.messages.options'),
+                'option' => $this->trans('application.gitbook.messages.option'),
+                'details' => $this->trans('application.gitbook.messages.details'),
+                'arguments' => $this->trans('application.gitbook.messages.arguments'),
+                'argument' => $this->trans('application.gitbook.messages.argument'),
+                'examples' => $this->trans('application.gitbook.messages.examples')
             ],
         ];
 

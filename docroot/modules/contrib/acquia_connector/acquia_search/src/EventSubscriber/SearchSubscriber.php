@@ -204,7 +204,8 @@ class SearchSubscriber extends Plugin {
       }
 
       $acquia_index_id = $server->getOption('index_id');
-      $key = Storage::getKey();
+      $storage = new Storage();
+      $key = $storage->getKey();
 
       // See if we need to overwrite these values.
       // @todo: Implement the derived key per solr environment storage.

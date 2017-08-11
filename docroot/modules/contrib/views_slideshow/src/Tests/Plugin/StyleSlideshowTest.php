@@ -96,7 +96,7 @@ class StyleSlideshowTest extends PluginTestBase {
           'type' => 'views_slideshow_controls_text',
         ],
       ],
-      'top' => []
+      'top' => [],
     ];
     $view->save();
 

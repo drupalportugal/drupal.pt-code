@@ -13,19 +13,17 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Drupal\Console\Command\Shared\ModuleTrait;
 use Drupal\Console\Generator\CacheContextGenerator;
 use Drupal\Console\Command\Shared\ConfirmationTrait;
-use Symfony\Component\Console\Command\Command;
+use Drupal\Console\Core\Command\ContainerAwareCommand;
 use Drupal\Console\Core\Style\DrupalStyle;
-use Drupal\Console\Core\Command\Shared\ContainerAwareCommandTrait;
 use Drupal\Console\Core\Utils\ChainQueue;
 use Drupal\Console\Extension\Manager;
 use Drupal\Console\Command\Shared\ServicesTrait;
 use Drupal\Console\Core\Utils\StringConverter;
 
-class CacheContextCommand extends Command
+class CacheContextCommand extends ContainerAwareCommand
 {
     use ModuleTrait;
     use ConfirmationTrait;
-    use ContainerAwareCommandTrait;
     use ServicesTrait;
 
     /**
@@ -78,9 +76,13 @@ class CacheContextCommand extends Command
             ->setName('generate:cache:context')
             ->setDescription($this->trans('commands.generate.cache.context.description'))
             ->setHelp($this->trans('commands.generate.cache.context.description'))
-            ->addOption('module', null, InputOption::VALUE_REQUIRED, $this->trans('commands.common.options.module'))
             ->addOption(
-                'cache_context',
+            	'module', 
+            	null, 
+            	InputOption::VALUE_REQUIRED, 
+            	$this->trans('commands.common.options.module'))
+            ->addOption(
+                'cache-context',
                 null,
                 InputOption::VALUE_OPTIONAL,
                 $this->trans('commands.generate.cache.context.questions.name')
@@ -96,7 +98,7 @@ class CacheContextCommand extends Command
                 null,
                 InputOption::VALUE_OPTIONAL | InputOption::VALUE_IS_ARRAY,
                 $this->trans('commands.common.options.services')
-            );
+            )->setAliases(['gcc']);
     }
 
     /**
@@ -112,7 +114,7 @@ class CacheContextCommand extends Command
         }
 
         $module = $input->getOption('module');
-        $cache_context = $input->getOption('cache_context');
+        $cache_context = $input->getOption('cache-context');
         $class = $input->getOption('class');
         $services = $input->getOption('services');
 
@@ -140,13 +142,13 @@ class CacheContextCommand extends Command
         }
 
         // --cache_context option
-        $cache_context = $input->getOption('cache_context');
+        $cache_context = $input->getOption('cache-context');
         if (!$cache_context) {
             $cache_context = $io->ask(
                 $this->trans('commands.generate.cache.context.questions.name'),
                 sprintf('%s', $module)
             );
-            $input->setOption('cache_context', $cache_context);
+            $input->setOption('cache-context', $cache_context);
         }
 
         // --class option

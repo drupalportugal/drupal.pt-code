@@ -41,9 +41,9 @@ function template_preprocess_views_slideshow_cycle_main_frame(&$vars) {
 
   $num_divs = count($rows);
   if ($settings['items_per_slide_first']) {
-   $num_divs -= $settings['items_per_slide_first_number'];
-   $num_divs = $num_divs / $settings['items_per_slide'];
-   $num_divs += 1;
+    $num_divs -= $settings['items_per_slide_first_number'];
+    $num_divs = $num_divs / $settings['items_per_slide'];
+    $num_divs += 1;
   }
   else {
     $num_divs = $num_divs / $settings['items_per_slide'];
@@ -204,7 +204,7 @@ function _views_slideshow_cycle_preprocess_views_slideshow_pager_fields(&$vars) 
   }
 
   $vars['rendered_field_items'] = [];
-  for ($slide = 0, $count=0; $slide < $slide_count; $count++) {
+  for ($slide = 0, $count = 0; $slide < $slide_count; $count++) {
     $rendered_fields = [];
     foreach ($vars['settings']['views_slideshow_pager_fields']['views_slideshow_pager_fields_fields'] as $field => $use) {
       if ($use !== 0 && is_object($vars['view']->field[$field])) {
@@ -244,9 +244,9 @@ function _views_slideshow_cycle_preprocess_views_slideshow_pager_fields(&$vars) 
 function _views_slideshow_cycle_preprocess_views_slideshow_slide_counter(&$vars) {
   $options = $vars['view']->style_plugin->options['views_slideshow_cycle'];
   if ($options['items_per_slide_first']) {
-     $slide_count = $vars['slide_count'] - $options['items_per_slide_first_number'];
-     $slide_count = $slide_count / $options['items_per_slide'];
-     $slide_count += 1;
+    $slide_count = $vars['slide_count'] - $options['items_per_slide_first_number'];
+    $slide_count = $slide_count / $options['items_per_slide'];
+    $slide_count += 1;
   }
   else {
     $slide_count = $vars['slide_count'] / $options['items_per_slide'];

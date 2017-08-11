@@ -10,8 +10,7 @@ namespace Drupal\Console\Command\User;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Command\Command;
-use Drupal\Console\Core\Command\Shared\CommandTrait;
+use Drupal\Console\Core\Command\Command;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Entity\Query\QueryFactory;
 use Drupal\Console\Core\Style\DrupalStyle;
@@ -24,8 +23,6 @@ use Drupal\Console\Utils\DrupalApi;
  */
 class DeleteCommand extends Command
 {
-    use CommandTrait;
-
     /**
      * @var EntityTypeManagerInterface
      */
@@ -78,7 +75,7 @@ class DeleteCommand extends Command
                 null,
                 InputOption::VALUE_IS_ARRAY | InputOption::VALUE_OPTIONAL,
                 $this->trans('commands.user.delete.options.roles')
-            );
+            )->setAliases(['ud']);
     }
 
     /**

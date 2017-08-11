@@ -10,11 +10,10 @@ namespace Drupal\Console\Command\Update;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Command\Command;
+use Drupal\Console\Core\Command\Command;
 use Drupal\Core\State\StateInterface;
 use Drupal\Core\Extension\ModuleHandler;
 use Drupal\Core\Update\UpdateRegistry;
-use Drupal\Console\Core\Command\Shared\CommandTrait;
 use Drupal\Console\Core\Style\DrupalStyle;
 use Drupal\Console\Utils\Site;
 use Drupal\Console\Extension\Manager;
@@ -22,8 +21,6 @@ use Drupal\Console\Core\Utils\ChainQueue;
 
 class ExecuteCommand extends Command
 {
-    use CommandTrait;
-
     /**
      * @var Site
      */
@@ -109,7 +106,8 @@ class ExecuteCommand extends Command
                 'update-n',
                 InputArgument::OPTIONAL,
                 $this->trans('commands.update.execute.options.update-n')
-            );
+            )
+            ->setAliases(['upex']);
     }
 
     /**
@@ -229,13 +227,19 @@ class ExecuteCommand extends Command
                     return false;
                 }
 
-                $io->info(
+                $io->comment(
                     sprintf(
                         $this->trans('commands.update.execute.messages.executing-update'),
                         $update_number,
                         $module_name
                     )
                 );
+
+                $updateExploded = explode(" - ", $update);
+                $updateExploded = count($updateExploded)>0?$updateExploded[1]:$updateExploded[0];
+
+                $io->comment(trim($updateExploded));
+                $io->newLine();
 
                 $this->moduleHandler->invoke($module_name, 'update_'  . $update_number);
                 drupal_set_installed_schema_version($module_name, $update_number);

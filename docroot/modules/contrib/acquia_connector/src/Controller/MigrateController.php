@@ -17,8 +17,9 @@ class MigrateController extends ControllerBase {
    * Acquia_connector.migrate route callback.
    */
   public function migratePage() {
-    $identifier = Storage::getIdentifier();
-    $key = Storage::getKey();
+    $storage = new Storage();
+    $identifier = $storage->getIdentifier();
+    $key = $storage->getKey();
 
     if (!empty($identifier) && !empty($key)) {
       try {

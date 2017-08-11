@@ -6,11 +6,9 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
-    'org\\bovigo\\vfs\\' => array($vendorDir . '/mikey179/vfsStream/src/main/php'),
     'Twig_' => array($vendorDir . '/twig/twig/lib'),
     'Sunra\\PhpSimple\\HtmlDomParser' => array($vendorDir . '/sunra/php-simple-html-dom-parser/Src'),
     'Stack' => array($vendorDir . '/stack/builder/src'),
-    'Prophecy\\' => array($vendorDir . '/phpspec/prophecy/src'),
     'Michelf' => array($vendorDir . '/michelf/php-markdown'),
     'JakubOnderka\\PhpConsoleHighlighter' => array($vendorDir . '/jakub-onderka/php-console-highlighter/src'),
     'JakubOnderka\\PhpConsoleColor' => array($vendorDir . '/jakub-onderka/php-console-color/src'),

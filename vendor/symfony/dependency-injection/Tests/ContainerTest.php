@@ -134,8 +134,8 @@ class ContainerTest extends TestCase
     public function testSet()
     {
         $sc = new Container();
-        $sc->set('foo', $foo = new \stdClass());
-        $this->assertSame($foo, $sc->get('foo'), '->set() sets a service');
+        $sc->set('._. \\o/', $foo = new \stdClass());
+        $this->assertSame($foo, $sc->get('._. \\o/'), '->set() sets a service');
     }
 
     public function testSetWithNullResetTheService()
@@ -698,7 +698,7 @@ class ContainerTest extends TestCase
     {
         $class = new \ReflectionClass('Symfony\Component\DependencyInjection\Container');
         $clone = $class->getMethod('__clone');
-        if (PHP_VERSION_ID >= 50400) {
+        if (\PHP_VERSION_ID >= 50400) {
             $this->assertFalse($class->isCloneable());
         }
         $this->assertTrue($clone->isPrivate());

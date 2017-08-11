@@ -51,8 +51,8 @@ class Controls extends ViewsSlideshowWidgetTypeBase {
       // Create the widget type field.
       $form['type'] = [
         '#type' => 'select',
-        '#title' => t('Controls Type'),
-        '#description' => t('Style of the controls'),
+        '#title' => $this->t('Controls Type'),
+        '#description' => $this->t('Style of the controls'),
         '#default_value' => $this->getConfiguration()['type'],
         '#options' => $options,
         '#states' => [

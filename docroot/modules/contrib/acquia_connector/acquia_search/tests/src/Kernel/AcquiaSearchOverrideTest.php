@@ -245,7 +245,8 @@ class AcquiaSearchOverrideTest extends KernelTestBase {
       );
     }
 
-    Storage::setIdentifier($acquia_identifier);
+    $storage = new Storage();
+    $storage->setIdentifier($acquia_identifier);
 
     \Drupal::configFactory()->getEditable('acquia_connector.settings')
       ->set('subscription_data', array(

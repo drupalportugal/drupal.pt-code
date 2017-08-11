@@ -35,8 +35,9 @@ class MigrateForm extends ConfigFormBase {
    */
   public function buildForm(array $form, FormStateInterface $form_state) {
     $config = $this->config('acquia_connector.settings');
-    $identifier = Storage::getIdentifier();
-    $key = Storage::getKey();
+    $storage = new Storage();
+    $identifier = $storage->getIdentifier();
+    $key = $storage->getKey();
     $client = \Drupal::service('acquia_connector.client');
     $error = NULL;
     try {

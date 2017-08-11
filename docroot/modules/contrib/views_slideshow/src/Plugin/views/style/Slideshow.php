@@ -93,7 +93,7 @@ class Slideshow extends StylePluginBase {
 
     // Skins.
     $form['slideshow_skin_header'] = [
-      '#markup' => '<h2>' . t('Style') . '</h2>',
+      '#markup' => '<h2>' . $this->t('Style') . '</h2>',
     ];
 
     /* @var \Drupal\Component\Plugin\PluginManagerInterface */
@@ -109,15 +109,15 @@ class Slideshow extends StylePluginBase {
     // Create the drop down box so users can choose an available skin.
     $form['slideshow_skin'] = [
       '#type' => 'select',
-      '#title' => t('Skin'),
+      '#title' => $this->t('Skin'),
       '#options' => $skins,
       '#default_value' => $this->options['slideshow_skin'],
-      '#description' => t('Select the skin to use for this display.  Skins allow for easily swappable layouts of things like next/prev links and thumbnails.  Note that not all skins support all widgets, so a combination of skins and widgets may lead to unpredictable results in layout.'),
+      '#description' => $this->t('Select the skin to use for this display.  Skins allow for easily swappable layouts of things like next/prev links and thumbnails.  Note that not all skins support all widgets, so a combination of skins and widgets may lead to unpredictable results in layout.'),
     ];
 
     // Slides.
     $form['slides_header'] = [
-      '#markup' => '<h2>' . t('Slides') . '</h2>',
+      '#markup' => '<h2>' . $this->t('Slides') . '</h2>',
     ];
 
     // Get all slideshow types.
@@ -134,7 +134,7 @@ class Slideshow extends StylePluginBase {
 
       $form['slideshow_type'] = [
         '#type' => 'select',
-        '#title' => t('Slideshow Type'),
+        '#title' => $this->t('Slideshow Type'),
         '#options' => $slideshow_options,
         '#default_value' => $this->options['slideshow_type'],
       ];
@@ -149,7 +149,7 @@ class Slideshow extends StylePluginBase {
 
         $form[$id] = [
           '#type' => 'fieldset',
-          '#title' => t('@module options', ['@module' => $definition['label']]),
+          '#title' => $this->t('@module options', ['@module' => $definition['label']]),
           '#collapsible' => TRUE,
           '#attributes' => ['class' => [$id]],
           '#states' => [
@@ -164,23 +164,23 @@ class Slideshow extends StylePluginBase {
     }
     else {
       $form['enable_module'] = [
-        '#markup' => t('There is no Views Slideshow plugin enabled. Go to the @modules and enable a Views Slideshow plugin module. For example Views Slideshow Cycle.', ['@modules' => Link::fromTextAndUrl(t('Modules Page'), Url::fromRoute('system.modules_list'))->toString()]),
+        '#markup' => $this->t('There is no Views Slideshow plugin enabled. Go to the @modules and enable a Views Slideshow plugin module. For example Views Slideshow Cycle.', ['@modules' => Link::fromTextAndUrl($this->t('Modules Page'), Url::fromRoute('system.modules_list'))->toString()]),
       ];
     }
 
     // Widgets.
     // @todo: Improve the UX by using Ajax.
     $form['widgets_header'] = [
-      '#markup' => '<h2>' . t('Widgets') . '</h2>',
+      '#markup' => '<h2>' . $this->t('Widgets') . '</h2>',
     ];
 
     // Define the available locations.
-    $location = ['top' => t('Top'), 'bottom' => t('Bottom')];
+    $location = ['top' => $this->t('Top'), 'bottom' => $this->t('Bottom')];
 
     // Loop through all locations so we can add header for each location.
     foreach ($location as $location_id => $location_name) {
       $form['widgets'][$location_id]['header'] = [
-        '#markup' => '<h3>' . t('@location Widgets', ['@location' => $location_name]) . '</h3>',
+        '#markup' => '<h3>' . $this->t('@location Widgets', ['@location' => $location_name]) . '</h3>',
       ];
     }
 
@@ -218,7 +218,7 @@ class Slideshow extends StylePluginBase {
               '#type' => 'checkbox',
               '#title' => $widget_info['label'],
               '#default_value' => $this->options['widgets'][$location_id][$widget_id]['enable'],
-              '#description' => t('Should @name be rendered at the @location of the slides.', ['@name' => $widget_info['label'], '@location' => $location_name]),
+              '#description' => $this->t('Should @name be rendered at the @location of the slides.', ['@name' => $widget_info['label'], '@location' => $location_name]),
               '#dependency' => [
                 'edit-style-options-slideshow-type' => $compatible_slideshows,
               ],
@@ -239,10 +239,10 @@ class Slideshow extends StylePluginBase {
             }
             $form['widgets'][$location_id][$widget_id]['weight'] = [
               '#type' => 'select',
-              '#title' => t('Weight of the @name', ['@name' => $widget_info['label']]),
+              '#title' => $this->t('Weight of the @name', ['@name' => $widget_info['label']]),
               '#default_value' => $weight,
               '#options' => $weights,
-              '#description' => t('Determines in what order the @name appears. A lower weight will cause the @name to be above higher weight items.', ['@name' => $widget_info['label']]),
+              '#description' => $this->t('Determines in what order the @name appears. A lower weight will cause the @name to be above higher weight items.', ['@name' => $widget_info['label']]),
               '#prefix' => '<div class="vs-dependent">',
               '#suffix' => '</div>',
               '#states' => [

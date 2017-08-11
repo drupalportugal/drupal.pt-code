@@ -11,6 +11,14 @@ use Drupal\acquia_connector\Subscription;
 use Drupal\Core\Url;
 
 /**
+ * Implements hook_uninstall().
+ */
+function acquia_connector_uninstall() {
+  $storage = new Storage();
+  $storage->deleteAllData();
+}
+
+/**
  * Implements hook_requirements().
  */
 function acquia_connector_requirements($phase) {
@@ -22,7 +30,8 @@ function acquia_connector_requirements($phase) {
       $config = \Drupal::config('acquia_connector.settings');
       $use_cron = $config->get('spi.use_cron');
       $last_sent = \Drupal::state()->get('acquia_connector.cron_last', 0);
-      $has_credentials = Subscription::hasCredentials();
+      $subscription = new Subscription();
+      $has_credentials = $subscription->hasCredentials();
 
       if ($has_credentials) {
         $key = sha1(Drupal::service('private_key')->get());
@@ -104,7 +113,7 @@ function acquia_connector_requirements($phase) {
       // or we know they have credentials but not active (not set up yet) or
       // we have credentials but an inactive subscription (either bad
       // credentials or expired subscription).
-      if (Subscription::isActive()) {
+      if ($subscription->isActive()) {
         $requirements['acquia_subscription_status'] = array(
           'title' => t('Acquia Subscription status'),
           'severity' => REQUIREMENT_OK,
@@ -237,14 +246,15 @@ function acquia_connector_update_8004() {
  */
 function acquia_connector_update_8005() {
   $config = \Drupal::configFactory()->getEditable('acquia_connector.settings');
+  $storage = new Storage();
 
   if ($config->get('key')) {
-    Storage::setKey($config->get('key'));
+    $storage->setKey($config->get('key'));
     $config->clear('key');
   }
 
   if ($config->get('identifier')) {
-    Storage::setIdentifier($config->get('identifier'));
+    $storage->setIdentifier($config->get('identifier'));
     $config->clear('identifier');
   }
 

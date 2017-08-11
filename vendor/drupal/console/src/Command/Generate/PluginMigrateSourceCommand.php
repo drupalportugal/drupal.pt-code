@@ -10,11 +10,10 @@ namespace Drupal\Console\Command\Generate;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Command\Command;
+use Drupal\Console\Core\Command\ContainerAwareCommand;
 use Drupal\Console\Generator\PluginMigrateSourceGenerator;
 use Drupal\Console\Command\Shared\ModuleTrait;
 use Drupal\Console\Command\Shared\ConfirmationTrait;
-use Drupal\Console\Core\Command\Shared\ContainerAwareCommandTrait;
 use Drupal\Console\Extension\Manager;
 use Drupal\Console\Utils\Validator;
 use Drupal\Console\Core\Utils\StringConverter;
@@ -24,11 +23,10 @@ use Drupal\Core\Config\ConfigFactory;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Render\ElementInfoManagerInterface;
 
-class PluginMigrateSourceCommand extends Command
+class PluginMigrateSourceCommand extends ContainerAwareCommand
 {
     use ModuleTrait;
     use ConfirmationTrait;
-    use ContainerAwareCommandTrait;
 
     /**
      * @var ConfigFactory
@@ -145,7 +143,7 @@ class PluginMigrateSourceCommand extends Command
                 null,
                 InputOption::VALUE_OPTIONAL | InputOption::VALUE_IS_ARRAY,
                 $this->trans('commands.generate.plugin.migrate.source.options.fields')
-            );
+            )->setAliases(['gpms']);
     }
 
     /**

@@ -6,6 +6,8 @@
  */
 
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\acquia_connector\AutoConnector;
+use Drupal\acquia_connector\Helper\Storage;
 use Drupal\acquia_connector\Subscription;
 use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\Core\Url;
@@ -87,7 +89,8 @@ function acquia_connector_cron() {
   }
 
   // Check subscription and send a heartbeat to Acquia Network.
-  Subscription::update();
+  $subscription = new Subscription();
+  $subscription->update();
 
   // Get the last time we processed data.
   $last = \Drupal::state()->get('acquia_connector.cron_last', 0);
@@ -117,14 +120,15 @@ function acquia_connector_toolbar() {
     ],
   ];
 
-  if (Subscription::isActive()) {
-    $subscription = \Drupal::config('acquia_connector.settings')->get('subscription_data');
-    if (is_array($subscription['expiration_date']) && isset($subscription['active']) && $subscription['active'] !== FALSE) {
+  $subscription = new Subscription();
+  if ($subscription->isActive()) {
+    $subscription_data = \Drupal::config('acquia_connector.settings')->get('subscription_data');
+    if (is_array($subscription_data['expiration_date']) && isset($subscription_data['active']) && $subscription_data['active'] !== FALSE) {
       $link['#title'] = t('Subscription active (expires @date)', array(
-        '@date' => \Drupal::service('date.formatter')->format(strtotime($subscription['expiration_date']['value']), 'custom', 'Y/n/j'),
+        '@date' => \Drupal::service('date.formatter')->format(strtotime($subscription_data['expiration_date']['value']), 'custom', 'Y/n/j'),
       ));
       $link['#attributes']['class'][] = 'acquia-active-subscription';
-      $link['#url'] = Url::fromUri($subscription['href']);
+      $link['#url'] = Url::fromUri($subscription_data['href']);
     }
   }
 
@@ -299,5 +303,82 @@ function acquia_connector_modules_installed($modules) {
       drupal_set_message(t("A new invocation of hook_acquia_connector_spi_test() has been detected in @module.", array('@module' => $module)));
       \Drupal::logger('acquia connector spi test')->info("A new invocation of hook_acquia_connector_spi_test() has been detected in @module.", array('@module' => $module));
     }
+  }
+}
+
+/**
+ * Displays promo DSM for Acquia Cloud Free offering.
+ */
+function acquia_connector_show_free_tier_promo() {
+
+  $subscription = new Subscription();
+
+  if (PHP_SAPI == 'cli') {
+    return;
+  }
+  // Check that there's no form submission in progress.
+  if (\Drupal::request()->server->get('REQUEST_METHOD') == 'POST') {
+    return;
+  }
+  // Check that we're not on an AJAX request.
+  if (\Drupal::request()->isXmlHttpRequest()) {
+    return;
+  }
+
+  // Check that we're not serving a private file or image.
+  $controller_name = \Drupal::request()->attributes->get('_controller');
+  if (strpos($controller_name, 'FileDownloadController') !== FALSE || strpos($controller_name, 'ImageStyleDownloadController') !== FALSE) {
+    return;
+  }
+
+  $ac_config = \Drupal::configFactory()->get('acquia_connector.settings');
+
+  if ($ac_config->get('hide_signup_messages')) {
+    return;
+  }
+
+  // Check that we're not on one of our own config pages, all of which are
+  // prefixed with admin/config/system/acquia-connector.
+  $current_path = \Drupal::Request()->attributes->get('_system_path');
+  if (\Drupal::service('path.matcher')->matchPath($current_path, 'admin/config/system/acquia-connector/*')) {
+    return;
+  }
+
+  // Check that the user has 'administer site configuration' permission.
+  if (!\Drupal::currentUser()->hasPermission('administer site configuration')) {
+    return;
+  }
+
+  // Check that there are no Acquia credentials currently set up.
+  if ($subscription->hasCredentials()) {
+    return;
+  }
+
+  // Display the promo message.
+  $message = t('Sign up for Acquia Cloud Free, a free Drupal sandbox to experiment with new features, test your code quality, and apply continuous integration best practices. Check out the <a href="@acquia-free">epic set of dev features and tools</a> that come with your free subscription.<br/>If you have an Acquia Subscription, <a href="@settings">connect now</a>. Otherwise, you can turn this message off by disabling the Acquia Connector modules.', [
+    '@acquia-free' => Url::fromUri('https://www.acquia.com/acquia-cloud-free')->getUri(),
+    '@settings' => Url::fromRoute('acquia_connector.setup')->toString(),
+  ]);
+
+  drupal_set_message($message, 'warning', FALSE);
+
+}
+
+/**
+ * Auto-connects the site to Acquia Subscription.
+ */
+function acquia_connector_auto_connect() {
+  $subscription = new Subscription();
+  $storage = new Storage();
+  $user = \Drupal::currentUser();
+  global $config;
+
+  $auto_connector = new AutoConnector($subscription, $storage, $config);
+  $connected = $auto_connector->connectToAcquia();
+
+  if ($connected && $user->hasPermission('administer site configuration')) {
+    $url = Url::fromRoute('acquia_connector.setup')->toString();
+    $text = t('Your site has been automatically connected to Acquia. <a href=":url">Change subscription</a>', [':url' => $url]);
+    drupal_set_message($text, 'status', FALSE);
   }
 }
