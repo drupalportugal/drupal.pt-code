@@ -56,6 +56,8 @@ acquia_connector.settings:
                     type: string
                   core_id:
                     type: string
+                  version:
+                    type: string
     subscription_name:
       type: string
       lable: 'Acquia Subscripiton Name'
