@@ -41,7 +41,7 @@
     "cweagans/composer-patches": "^1.6",
     "drupal-composer/drupal-scaffold": "^2.2",
     "drupal/console": "~1.0",
-    "drupal/core": "^8.3",
+    "drupal/core": "^8.4",
     "drupal/acquia_connector": "^1.10",
     "drupal/ctools": "^3.0",
     "drupal/diff": "^1.0",
