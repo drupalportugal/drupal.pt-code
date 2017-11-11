@@ -99,7 +99,6 @@ class ComposerStaticInitf12ba5821e88c1187922b930d3234f2e
         ),
         'M' => 
         array (
-            'Mollom\\' => 7,
             'Masterminds\\' => 12,
         ),
         'L' => 
@@ -337,10 +336,6 @@ class ComposerStaticInitf12ba5821e88c1187922b930d3234f2e
         'PhpParser\\' => 
         array (
             0 => __DIR__ . '/..' . '/nikic/php-parser/lib/PhpParser',
-        ),
-        'Mollom\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/mollom/client/src',
         ),
         'Masterminds\\' => 
         array (

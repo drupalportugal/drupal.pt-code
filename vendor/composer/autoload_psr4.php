@@ -53,7 +53,6 @@ return array(
     'Psr\\Http\\Message\\' => array($vendorDir . '/psr/http-message/src'),
     'Psr\\Cache\\' => array($vendorDir . '/psr/cache/src'),
     'PhpParser\\' => array($vendorDir . '/nikic/php-parser/lib/PhpParser'),
-    'Mollom\\' => array($vendorDir . '/mollom/client/src'),
     'Masterminds\\' => array($vendorDir . '/masterminds/html5/src'),
     'League\\CommonMark\\' => array($vendorDir . '/league/commonmark/src'),
     'GuzzleHttp\\Psr7\\' => array($vendorDir . '/guzzlehttp/psr7/src'),
