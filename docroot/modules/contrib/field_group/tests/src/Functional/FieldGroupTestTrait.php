@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\field_group\Tests;
+namespace Drupal\Tests\field_group\Functional;
 
 use Drupal\Component\Utility\Unicode;
 
@@ -11,10 +11,22 @@ trait FieldGroupTestTrait {
 
   /**
    * Create a new group.
+   *
+   * @param string $entity_type
+   *   The entity type as string.
+   * @param string $bundle
+   *   The bundle of the enity type
+   * @param string $context
+   *   The context for the group.
+   * @param string $mode
+   *   The view/form mode.
    * @param array $data
    *   Data for the field group.
+   *
+   * @return \stdClass
+   *   An object that represents the field group.
    */
-  function createGroup($entity_type, $bundle, $context, $mode, array $data) {
+  protected function createGroup($entity_type, $bundle, $context, $mode, array $data) {
 
     if (!isset($data['format_settings'])) {
       $data['format_settings'] = array();
@@ -36,6 +48,7 @@ trait FieldGroupTestTrait {
       'label' => isset($data['label']) ? $data['label'] : $this->randomString(8),
       'format_type' => $data['format_type'],
       'format_settings' => $data['format_settings'],
+      'region' => 'content',
     );
 
     field_group_group_save($field_group);

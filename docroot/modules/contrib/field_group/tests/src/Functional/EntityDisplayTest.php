@@ -1,48 +1,76 @@
 <?php
 
-namespace Drupal\field_group\Tests;
+namespace Drupal\Tests\field_group\Functional;
 
 use Drupal\field\Entity\FieldConfig;
 use Drupal\field\Entity\FieldStorageConfig;
-use Drupal\simpletest\WebTestBase;
+use Drupal\Tests\BrowserTestBase;
 
 /**
  * Tests for displaying entities.
  *
  * @group field_group
  */
-class EntityDisplayTest extends WebTestBase {
+class EntityDisplayTest extends BrowserTestBase {
 
   use FieldGroupTestTrait;
 
   /**
-   * Modules to enable.
-   *
-   * @var array
+   * {@inheritdoc}
    */
-  public static $modules = array('node', 'field_test', 'field_ui', 'field_group', 'field_group_test');
+  public static $modules = [
+    'node',
+    'field_test',
+    'field_ui',
+    'field_group',
+    'field_group_test',
+  ];
 
-  function setUp() {
+  /**
+   * The node type id.
+   *
+   * @var string
+   */
+  protected $type;
 
+  /**
+   * A node to use for testing.
+   *
+   * @var \Drupal\node\NodeInterface
+   */
+  protected $node;
+
+  /**
+   * {@inheritdoc}
+   */
+  public function setUp() {
     parent::setUp();
 
     // Create test user.
-    $admin_user = $this->drupalCreateUser(array('access content', 'administer content types', 'administer node fields', 'administer node form display', 'administer node display', 'bypass node access'));
+    $admin_user = $this->drupalCreateUser([
+      'access content',
+      'administer content types',
+      'administer node fields',
+      'administer node form display',
+      'administer node display',
+      'bypass node access'
+    ]);
     $this->drupalLogin($admin_user);
 
     // Create content type, with underscores.
     $type_name = strtolower($this->randomMachineName(8)) . '_test';
     $type = $this->drupalCreateContentType(array('name' => $type_name, 'type' => $type_name));
     $this->type = $type->id();
-    $display = entity_get_display('node', $type_name, 'default');
+    /** @var \Drupal\Core\Entity\Display\EntityViewDisplayInterface $display */
+    $display = \Drupal::entityTypeManager()
+      ->getStorage('entity_view_display')
+      ->load('node' . '.' . $type_name . '.' . 'default');
 
     // Create a node.
     $node_values = array('type' => $type_name);
 
     // Create test fields.
-    $test_fields = array('field_test', 'field_test_2', 'field_no_access');
-    foreach ($test_fields as $field_name) {
-
+    foreach (['field_test', 'field_test_2', 'field_no_access'] as $field_name) {
       $field_storage = FieldStorageConfig::create([
         'field_name' => $field_name,
         'entity_type' => 'node',
@@ -74,15 +102,12 @@ class EntityDisplayTest extends WebTestBase {
     // Save display + create node.
     $display->save();
     $this->node = $this->drupalCreateNode($node_values);
-
   }
 
   /**
-   * Test if an fieldgroup that only contains fields
-   * that has no access is not shown.
+   * Test field access for field groups.
    */
-  function testFieldAccess() {
-
+  public function testFieldAccess() {
     $data = array(
       'label' => 'Wrapper',
       'children' => array(
@@ -105,8 +130,7 @@ class EntityDisplayTest extends WebTestBase {
   /**
    * Test the html element formatter.
    */
-  function testHtmlElement() {
-
+  public function testHtmlElement() {
     $data = array(
       'weight' => '1',
       'children' => array(
@@ -128,11 +152,11 @@ class EntityDisplayTest extends WebTestBase {
     $this->drupalGet('node/' . $this->node->id());
 
     // Test group ids and classes.
-    $this->assertFieldByXPath("//div[contains(@id, 'wrapper-id')]", NULL, t('Wrapper id set on wrapper div'));
-    $this->assertFieldByXPath("//div[contains(@class, 'test-class')]", NULL, t('Test class set on wrapper div') . 'class="' . $group->group_name . ' test-class');
+    $this->assertFieldByXPath("//div[contains(@id, 'wrapper-id')]", NULL, 'Wrapper id set on wrapper div');
+    $this->assertFieldByXPath("//div[contains(@class, 'test-class')]", NULL, 'Test class set on wrapper div, class="' . $group->group_name . ' test-class');
 
     // Test group label.
-    $this->assertNoRaw('<h3><span>' . $data['label'] . '</span></h3>', t('Label is not shown'));
+    $this->assertNoRaw('<h3><span>' . $data['label'] . '</span></h3>');
 
     // Set show label to true.
     $group->format_settings['show_label'] = TRUE;
@@ -140,7 +164,7 @@ class EntityDisplayTest extends WebTestBase {
     field_group_group_save($group);
 
     $this->drupalGet('node/' . $this->node->id());
-    $this->assertRaw('<h3>' . $data['label'] . '</h3>', t('Label is shown'));
+    $this->assertRaw('<h3>' . $data['label'] . '</h3>');
 
     // Change to collapsible with blink effect.
     $group->format_settings['effect'] = 'blink';
@@ -148,15 +172,14 @@ class EntityDisplayTest extends WebTestBase {
     field_group_group_save($group);
 
     $this->drupalGet('node/' . $this->node->id());
-    $this->assertFieldByXPath("//div[contains(@class, 'speed-fast')]", NULL, t('Speed class is set'));
-    $this->assertFieldByXPath("//div[contains(@class, 'effect-blink')]", NULL, t('Effect class is set'));
+    $this->assertFieldByXPath("//div[contains(@class, 'speed-fast')]", NULL, 'Speed class is set');
+    $this->assertFieldByXPath("//div[contains(@class, 'effect-blink')]", NULL, 'Effect class is set');
   }
 
   /**
    * Test the fieldset formatter.
    */
-  function testFieldset() {
-
+  public function testFieldset() {
     $data = array(
       'weight' => '1',
       'children' => array(
@@ -171,21 +194,19 @@ class EntityDisplayTest extends WebTestBase {
         'description' => 'test description',
       ),
     );
-    $group = $this->createGroup('node', $this->type, 'view', 'default', $data);
+    $this->createGroup('node', $this->type, 'view', 'default', $data);
 
     $this->drupalGet('node/' . $this->node->id());
 
     // Test group ids and classes.
-    $this->assertFieldByXPath("//fieldset[contains(@id, 'fieldset-id')]", NULL, t('Correct id set on the fieldset'));
-    $this->assertFieldByXPath("//fieldset[contains(@class, 'test-class')]", NULL, t('Test class set on the fieldset'));
-
+    $this->assertFieldByXPath("//fieldset[contains(@id, 'fieldset-id')]", NULL, 'Correct id set on the fieldset');
+    $this->assertFieldByXPath("//fieldset[contains(@class, 'test-class')]", NULL, 'Test class set on the fieldset');
   }
 
   /**
    * Test the tabs formatter.
    */
-  function testTabs() {
-
+  public function testTabs() {
     $data = array(
       'label' => 'Tab 1',
       'weight' => '1',
@@ -237,9 +258,9 @@ class EntityDisplayTest extends WebTestBase {
     $this->drupalGet('node/' . $this->node->id());
 
     // Test properties.
-    $this->assertFieldByXPath("//div[contains(@class, 'test-class-wrapper')]", NULL, t('Test class set on tabs wrapper'));
-    $this->assertFieldByXPath("//details[contains(@class, 'test-class-2')]", NULL, t('Test class set on second tab'));
-    $this->assertRaw('<div class="details-description">description of second tab</div>', t('Description of tab is shown'));
+    $this->assertFieldByXPath("//div[contains(@class, 'test-class-wrapper')]", NULL, 'Test class set on tabs wrapper');
+    $this->assertFieldByXPath("//details[contains(@class, 'test-class-2')]", NULL, 'Test class set on second tab');
+    $this->assertRaw('<div class="details-description">description of second tab</div>');
 
     // Test if correctly nested.
     $this->assertFieldByXPath("//div[contains(@class, 'test-class-wrapper')]//details[contains(@class, 'test-class')]", NULL, 'First tab is displayed as child of the wrapper.');
@@ -256,14 +277,12 @@ class EntityDisplayTest extends WebTestBase {
 
     // Test if it's a horizontal tab.
     $this->assertFieldByXPath('//div[@data-horizontal-tabs-panes=""]', NULL, 'Tabs are shown horizontal.');
-
   }
 
   /**
    * Test the accordion formatter.
    */
-  function testAccordion() {
-
+  public function testAccordion() {
     $data = array(
       'label' => 'Accordion item 1',
       'weight' => '1',
@@ -278,7 +297,6 @@ class EntityDisplayTest extends WebTestBase {
       ),
     );
     $first_item = $this->createGroup('node', $this->type, 'view', 'default', $data);
-    $first_item_id = 'node_article_full_' . $first_item->group_name;
 
     $data = array(
       'label' => 'Accordion item 2',
@@ -294,7 +312,6 @@ class EntityDisplayTest extends WebTestBase {
       ),
     );
     $second_item = $this->createGroup('node', $this->type, 'view', 'default', $data);
-    $second_item_id = 'node_article_full_' . $second_item->group_name;
 
     $data = array(
       'label' => 'Accordion',
@@ -310,16 +327,16 @@ class EntityDisplayTest extends WebTestBase {
         'effect' => 'bounceslide'
       ),
     );
-    $accordion = $this->createGroup('node', $this->type, 'view', 'default', $data);
+    $this->createGroup('node', $this->type, 'view', 'default', $data);
 
     $this->drupalGet('node/' . $this->node->id());
 
     // Test properties.
-    $this->assertFieldByXPath("//div[contains(@class, 'test-class-wrapper')]", NULL, t('Test class set on tabs wrapper'));
-    $this->assertFieldByXPath("//div[contains(@class, 'effect-bounceslide')]", NULL, t('Correct effect is set on the accordion'));
-    $this->assertFieldByXPath("//div[contains(@class, 'test-class')]", NULL, t('Accordion item with test-class is shown'));
-    $this->assertFieldByXPath("//div[contains(@class, 'test-class-2')]", NULL, t('Accordion item with test-class-2 is shown'));
-    $this->assertFieldByXPath("//h3[contains(@class, 'field-group-accordion-active')]", NULL, t('Accordion item 2 was set active'));
+    $this->assertFieldByXPath("//div[contains(@class, 'test-class-wrapper')]", NULL, 'Test class set on tabs wrapper');
+    $this->assertFieldByXPath("//div[contains(@class, 'effect-bounceslide')]", NULL, 'Correct effect is set on the accordion');
+    $this->assertFieldByXPath("//div[contains(@class, 'test-class')]", NULL, 'Accordion item with test-class is shown');
+    $this->assertFieldByXPath("//div[contains(@class, 'test-class-2')]", NULL, 'Accordion item with test-class-2 is shown');
+    $this->assertFieldByXPath("//h3[contains(@class, 'field-group-accordion-active')]", NULL, 'Accordion item 2 was set active');
 
     // Test if correctly nested
     $this->assertFieldByXPath("//div[contains(@class, 'test-class-wrapper')]//div[contains(@class, 'test-class')]", NULL, 'First item is displayed as child of the wrapper.');
