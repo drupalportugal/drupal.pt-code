@@ -1,0 +1,5 @@
+languagefield.custom_language_add:
+  route_name: languagefield.custom_language_add
+  title: 'Add language for Language field'
+  appears_on:
+    - languagefield.custom_language.collection

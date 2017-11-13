@@ -1,0 +1,3 @@
+administer languages:
+    title: 'Administer (custom) languages'
+    description: 'Maintain the custom languages used by the languagefield module'

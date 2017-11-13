@@ -1,0 +1,14 @@
+{
+  "name": "drupal/age_field_formatter",
+  "type": "drupal-module",
+  "description": "Takes the value from a date field and calculate and display the age.",
+  "keywords": ["Drupal"],
+  "license": "GPL-2.0+",
+  "homepage": "https://www.drupal.org/project/age_field_formatter",
+  "minimum-stability": "dev",
+  "support": {
+    "issues": "https://www.drupal.org/project/issues/age_field_formatter",
+    "source": "http://cgit.drupalcode.org/age_field_formatter"
+  },
+  "require": { }
+}
