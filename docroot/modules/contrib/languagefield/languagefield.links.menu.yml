@@ -1,0 +1,5 @@
+languagefield.admin:
+  title: 'Custom Languages'
+  description: 'Configure custom languages for usage in Language field.'
+  parent: system.admin_config_regional
+  route_name: languagefield.custom_language.collection
