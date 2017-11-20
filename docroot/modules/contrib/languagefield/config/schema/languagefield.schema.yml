@@ -1,0 +1,19 @@
+languagefield.custom_language.*:
+  type: config_entity
+  label: 'Custom language'
+  mapping:
+    id:
+      type: string
+      label: 'ID'
+    label:
+      type: label
+      label: 'Label'
+    direction:
+      type: string
+      label: 'Direction'
+    weight:
+      type: integer
+      label: 'Weight'
+    native_name:
+      type: string
+      label: 'Native name'

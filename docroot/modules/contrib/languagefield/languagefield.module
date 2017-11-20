@@ -1,0 +1,39 @@
+<?php
+
+/**
+ * @file
+ * Hook implementations for Languagefield module.
+ */
+
+use \Drupal\Core\Entity\FieldableEntityInterface;
+use \Drupal\Core\Field\FieldStorageDefinitionInterface;
+use \Drupal\languagefield\Entity\CustomLanguageManager;
+
+/**
+ * Implements hook_field_widget_info_alter().
+ */
+function languagefield_field_widget_info_alter(array &$info) {
+  // Allow boxes/radio buttons widget to be used for language field.
+  $info['options_buttons']['field_types'][] = 'language_field';
+}
+
+/**
+ * Implements hook_field_formatter_info_alter().
+ *
+ * The module reuses the formatters defined in list.module.
+ */
+function languagefield_field_formatter_info_alter(array &$info) {
+  $info['list_key']['field_types'][] = 'language_field';
+  $info['list_default']['field_types'][] = 'language_field';
+}
+
+/**
+ * Returns the array of allowed values for a Custom language field.
+ *
+ * @see callback_allowed_values_function()
+ * @see options_allowed_values()
+ */
+function languagefield_allowed_values(FieldStorageDefinitionInterface $definition, FieldableEntityInterface $entity = NULL, &$cacheable = TRUE) {
+  $valueOptions = CustomLanguageManager::allowed_values($definition->getSettings());
+  return $valueOptions;
+}

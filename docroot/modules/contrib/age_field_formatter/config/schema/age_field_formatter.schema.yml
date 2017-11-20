@@ -1,0 +1,9 @@
+# Schema for the configuration files of the age_field_formatted module.
+
+field.formatter.settings.age_field_formatter:
+  type: mapping
+  label: 'Formatter settings'
+  mapping:
+    display_as_link:
+      type: boolean
+      label: 'Include birthdate'

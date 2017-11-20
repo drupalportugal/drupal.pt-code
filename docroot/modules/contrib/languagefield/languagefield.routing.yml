@@ -1,0 +1,39 @@
+languagefield.autocomplete:
+  path: '/languagefield/autocomplete/{field_name}'
+  defaults:
+    _controller: '\Drupal\languagefield\Controller\LanguageAutocompleteController::autocomplete'
+  requirements:
+    _permission: 'administer content types'
+
+languagefield.custom_language.collection:
+  path: '/admin/config/regional/custom_language'
+  defaults:
+    # Must be the same as our config entity type id.
+    _entity_list: 'custom_language'
+    _title: 'Custom languages'
+  requirements:
+    _permission: 'administer languages'
+
+languagefield.custom_language_add:
+  path: '/admin/config/regional/custom_language/add'
+  defaults:
+    _entity_form: custom_language.default
+    _title: 'Add custom language'
+  requirements:
+    _permission: 'administer languages'
+
+entity.custom_language.edit_form:
+  path: '/admin/config/regional/custom_language/manage/{custom_language}'
+  defaults:
+    _entity_form: custom_language.default
+    _title: 'Edit custom language'
+  requirements:
+    _permission: 'administer languages'
+
+entity.custom_language.delete_form:
+  path: '/admin/config/regional/custom_language/manage/{custom_language}/delete'
+  defaults:
+    _entity_form: custom_language.delete
+    _title: 'Delete custom language'
+  requirements:
+    _permission: 'administer languages'

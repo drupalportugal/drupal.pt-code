@@ -1,0 +1,37 @@
+<?php
+
+/**
+ * @file
+ * Field hooks to implement a date field formatter to calculate and display the age.
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_help().
+ */
+function age_field_formatter_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    // Main module help for the age_field_formatter module.
+    case 'help.page.age_field_formatter':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('The Age field formatter calculates and formats the display of a date field to display the age. It also offers the option to display both the date with the age.') . '</p>';
+      $output .= '<p>' . t('This is a date field formatter. You can access the field format in the content type Manage display tab.') . '</p>';
+      return $output;
+
+    default:
+  }
+}
+
+/**
+ * Implements hook_theme().
+ */
+function age_field_formatter_theme() {
+  return [
+    'age_field_formatter' => [
+      'template' => 'age_field_formatter',
+      'render element' => 'children',
+    ],
+  ];
+}
