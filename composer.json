@@ -59,7 +59,7 @@
     "drupal/redirect": "^1.0-beta1",
     "drupal/select_or_other": "^1.0-alpha2",
     "drupal/token": "^1.0",
-    "drupal/views_slideshow": "^4.5",
+    "drupal/views_slideshow": "^4.6",
     "webflo/drupal-finder": "^0.3.0",
     "webmozart/path-util": "^2.3"
   },
