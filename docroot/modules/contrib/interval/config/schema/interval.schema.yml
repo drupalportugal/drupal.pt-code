@@ -1,0 +1,10 @@
+field.widget.settings.interval_default:
+  type: mapping
+  label: 'Interval widget settings'
+  mapping:
+    allowed_periods:
+      type: sequence
+      label: 'Allowed periods'
+      sequence:
+        type: string
+        label: 'Allowed period'

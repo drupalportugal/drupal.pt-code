@@ -1,0 +1,12 @@
+name: 'Recurring Time Period'
+type: module
+description: 'Provides a configurable plugin for defining recurring time periods.'
+# core: 8.x
+dependencies:
+  - interval
+
+# Information added by Drupal.org packaging script on 2017-10-23
+version: '8.x-1.0-alpha2'
+core: '8.x'
+project: 'recurring_period'
+datestamp: 1508751548
