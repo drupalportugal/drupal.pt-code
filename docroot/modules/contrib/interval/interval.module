@@ -1,0 +1,41 @@
+<?php
+/**
+ * @file
+ * Defines an interval field
+ * @copyright Copyright(c) 2011 Rowlands Group
+ * @license GPL v2+ http://www.fsf.org/licensing/licenses/gpl.html
+ * @author Lee Rowlands leerowlands at rowlandsgroup dot com
+ *
+ */
+
+/**
+ * Implements hook_theme().
+ */
+function interval_theme() {
+  $hooks = array(
+    'interval' => array(
+      'render element' => 'element',
+      'template' => 'interval',
+    ),
+  );
+
+  return $hooks;
+}
+
+/**
+ * Returns HTML for an interval form element.
+ */
+function template_preprocess_interval(&$variables) {
+  $element = $variables['element'];
+  $element['interval']['#size'] = 8;
+
+  $variables['attributes'] = array();
+  if (isset($element['#id'])) {
+    $variables['attributes']['id'] = $element['#id'];
+  }
+  if (!empty($element['#attributes']['class'])) {
+    $variables['attributes']['class'] = (array) $element['#attributes']['class'];
+  }
+  $variables['attributes']['class'][] = 'container-inline';
+  $variables['children'] = drupal_render($element);
+}
