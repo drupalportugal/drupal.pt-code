@@ -1,0 +1,5 @@
+recurring_period:
+  label: Recurring period
+  provider: recurring_period
+  plugin_manager_service_id: plugin.manager.recurring_period
+  plugin_definition_decorator_class: Drupal\plugin\PluginDefinition\ArrayPluginDefinitionDecorator
