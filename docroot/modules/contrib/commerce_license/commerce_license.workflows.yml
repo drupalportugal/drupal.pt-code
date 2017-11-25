@@ -1,0 +1,50 @@
+license_default:
+  id: license_default
+  group: commerce_license
+  label: 'Default'
+  states:
+    new:
+      label: New
+    pending:
+      # State for remote licenses that are awaiting activation
+      # (provisioning call in progress).
+      label: Pending
+    active:
+      label: Active
+    suspended:
+      label: Suspended
+    expired:
+      label: Expired
+    revoked:
+      label: Revoked
+    canceled:
+      label: Canceled
+  transitions:
+    activate:
+      label: 'Activate'
+      from: [new]
+      to: pending
+    confirm:
+      label: 'Confirm Activation'
+      from: [new, pending]
+      to: active
+    suspend:
+      label: 'Suspend'
+      from: [active]
+      to: suspended
+    expire:
+      label: 'Expire'
+      from: [active]
+      to: expired
+    reactivate:
+      label: 'Reactivate'
+      from: [suspended, expired]
+      to: pending
+    revoke:
+      label: 'Revoke'
+      from: [active, suspended, expired]
+      to: revoked
+    cancel:
+      label: Cancel
+      from: [pending]
+      to: canceled

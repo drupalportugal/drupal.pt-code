@@ -1,0 +1,5 @@
+name: 'Commerce License Test'
+type: module
+description: 'Provides test license types'
+package: Testing
+core: 8.x

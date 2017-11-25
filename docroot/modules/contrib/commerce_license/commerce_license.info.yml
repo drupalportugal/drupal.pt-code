@@ -1,0 +1,16 @@
+name: Commerce License
+type: module
+description: Provides a framework for selling access to local or remote resources.
+core: 8.x
+package: 'Commerce (contrib)'
+configure: entity.commerce_license.collection
+dependencies:
+  - entity
+  - commerce
+  - commerce:commerce_checkout
+  - commerce:commerce_product
+  - state_machine
+  - recurring_period
+config_devel:
+  install:
+    - views.view.commerce_licenses

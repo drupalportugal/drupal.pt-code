@@ -1,0 +1,277 @@
+<?php
+
+/**
+ * @file
+ * Contains commerce_license.module.
+ */
+
+use Drupal\Core\Entity\EntityFormInterface;
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\Core\Session\AccountInterface;
+use Drupal\commerce_license\FormAlter\GrantedEntityFormAlter;
+
+/**
+ * Implements hook_help().
+ */
+function commerce_license_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    // Main module help for the commerce_license module.
+    case 'help.page.commerce_license':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('License entities and product behavior') . '</p>';
+      return $output;
+
+    default:
+  }
+}
+
+/**
+ * Implements hook_form_alter().
+ */
+function commerce_license_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  $form_object = $form_state->getFormObject();
+
+  if ($form_object instanceof EntityFormInterface) {
+    $form_alter = new GrantedEntityFormAlter($form_state->getFormObject()->getEntity());
+    $form_alter->formAlter($form, $form_state, $form_id);
+  }
+}
+
+/**
+ * Implements hook_form_BASE_FORM_ID_alter(): commerce_product_variation_type_form
+ *
+ * @see commerce_license_field_widget_form_alter()
+ */
+function commerce_license_form_commerce_product_variation_type_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  $variation_type = $form_state->getFormObject()->getEntity();
+
+  // Add checkboxes to the product variation type form to select the license
+  // types that product variations of this type may use.
+  $options = array_column(\Drupal::service('plugin.manager.commerce_license_type')->getDefinitions(), 'label', 'id');
+  $our_form['license_types'] = [
+    '#type' => 'checkboxes',
+    '#title' => t("Available license types"),
+    '#description' => t("Limit the license types that can be used on product variations of this type. All types will be allowed if none are selected."),
+    '#options' => $options,
+    '#default_value' => $variation_type->getThirdPartySetting('commerce_license', 'license_types') ?: [],
+    // Only show this if the license trait is set on the product variation type.
+    '#states' => [
+      'visible' => [
+        ':input[name="traits[commerce_license]"]' => ['checked' => TRUE],
+      ],
+    ],
+  ];
+  // TODO: consider whether to lock this once the product variation type is
+  // created or has product variation entities, or at least lock the enabled
+  // license types.
+
+  // Insert our form elements into the form after the 'traits' element.
+  // The form elements don't have their weight set, so we can't use that.
+  $traits_element_form_array_index = array_search('traits', array_keys($form));
+
+  $form = array_merge(
+    array_slice($form, 0, $traits_element_form_array_index + 1),
+    $our_form,
+    array_slice($form, $traits_element_form_array_index + 1)
+  );
+
+  $form['#validate'][] = 'commerce_license_form_commerce_product_variation_type_form_validate';
+
+  $form['actions']['submit']['#submit'][] = 'commerce_license_form_commerce_product_variation_type_form_submit';
+}
+
+/**
+ * Form validation handler to ensure everything joins up for license traits.
+ *
+ * @see commerce_license_form_commerce_product_variation_type_form_alter()
+ */
+function commerce_license_form_commerce_product_variation_type_form_validate($form, FormStateInterface $form_state) {
+  $traits = $form_state->getValue('traits');
+  $original_traits = $form_state->getValue('original_traits');
+
+  // Only validate if our trait is in use. Need to check both new traits and
+  // existing traits values, as the 'traits' form value won't have a value for
+  // a checkbox that's disabled because an existing trait can't be removed.
+  if (empty($traits['commerce_license']) && !in_array('commerce_license', $original_traits)) {
+    return;
+  }
+
+  // The order item type must have the license trait.
+  $order_item_type_id = $form_state->getValue('orderItemType');
+  $order_item_type = \Drupal::entityTypeManager()->getStorage('commerce_order_item_type')->load($order_item_type_id);
+
+  if (!in_array('commerce_license_order_item_type', $order_item_type->getTraits())) {
+    $form_state->setError($form['orderItemType'], t(
+      'The License trait requires an order item type with the order item license trait. ' .
+      'This product variation is set to use the @order-item-type-label order item type. You must either change this, or <a href="@url-edit-order-item-type">edit the order item type</a> to add the license trait.',
+      [
+        '@order-item-type-label' => $order_item_type->label(),
+        '@url-edit-order-item-type' => $order_item_type->toUrl('edit-form')->toString(),
+      ]
+    ));
+  }
+
+  // The order must use a workflow with a fulfilment state.
+  $order_type_id = $order_item_type->getOrderTypeId();
+  $order_type = \Drupal::entityTypeManager()->getStorage('commerce_order_type')->load($order_type_id);
+  $workflow_id = $order_type->getWorkflowId();
+  $workflow = \Drupal::service('plugin.manager.workflow')->createInstance($workflow_id);
+  $states = $workflow->getStates();
+  if (!isset($states['fulfillment'])) {
+    $form_state->setError($form['orderItemType'], t(
+      "The License trait requires an order workflow with the 'fulfillment' state. " .
+      'This product variation is set to use the @order-item-type-label order item type, ' .
+      'which is set to use the @order-type-label order type, ' .
+      'which is set to use the @workflow-label workflow. ' .
+      'You must either change this, or <a href="@url-edit-order-type">edit the order type</a> to change the workflow.',
+      [
+        '@order-item-type-label' => $order_item_type->label(),
+        '@order-type-label' => $order_type->label(),
+        '@workflow-label' => $workflow->getLabel(),
+        '@url-edit-order-type' => $order_type->toUrl('edit-form')->toString(),
+      ]
+    ));
+  }
+
+  // The checkout flow may not allow anonymous checkout.
+  $checkout_flow_id = $order_type->getThirdPartySetting('commerce_checkout', 'checkout_flow');
+  if ($checkout_flow_id) {
+    $checkout_flow = \Drupal::entityTypeManager()->getStorage('commerce_checkout_flow')->load($checkout_flow_id);
+    $login_pane_configuration = $checkout_flow->get('configuration')['panes']['login'];
+    if ($login_pane_configuration['step'] != '_disabled') {
+      if ($login_pane_configuration['allow_guest_checkout']) {
+        $form_state->setError($form['orderItemType'], t(
+          "The License trait requires a checkout flow that does not allow guest checkout. " .
+          'This product variation is set to use the @order-item-type-label order item type, ' .
+          'which is set to use the @order-type-label order type, ' .
+          'which is set to use the @flow-label checkout flow. ' .
+          'You must either change this, or <a href="@url-checkout-flow">edit the checkout flow</a>.',
+          [
+            '@order-item-type-label' => $order_item_type->label(),
+            '@order-type-label' => $order_type->label(),
+            '@flow-label' => $checkout_flow->label(),
+            '@url-checkout-flow' => $checkout_flow->toUrl('edit-form')->toString(),
+          ]
+        ));
+      }
+    }
+  }
+}
+
+/**
+ * Form submit handler for our alterations to the product variation type form.
+ *
+ * @see commerce_license_form_commerce_product_variation_type_form_alter()
+ */
+function commerce_license_form_commerce_product_variation_type_form_submit($form, FormStateInterface $form_state) {
+  $value = $form_state->getValue('license_types');
+  $license_types = array_filter($value);
+
+  $variation_type = $form_state->getFormObject()->getEntity();
+  $variation_type->setThirdPartySetting('commerce_license', 'license_types', $license_types);
+  // This is saving it a second time... but Commerce does the same in its form
+  // alterations.
+  $variation_type->save();
+}
+
+/**
+ * Implements hook_field_widget_form_alter().
+ *
+ * @see commerce_license_form_commerce_product_variation_type_form_alter()
+ */
+function commerce_license_field_widget_form_alter(&$element, FormStateInterface $form_state, $context) {
+  /** @var \Drupal\Core\Field\FieldDefinitionInterface $field_definition */
+  $field_definition = $context['items']->getFieldDefinition();
+  $field_name = $field_definition->getName();
+  $entity_type_id = $field_definition->getTargetEntityTypeId();
+
+  if ($field_name == 'license_type' && $entity_type_id == 'commerce_product_variation') {
+    // If the plugin ID form element doesn't have an '#options' key, then we
+    // can't remove the plugins that should not be allowed here, either because
+    // the widget for this field has been changed by an admin, or because the
+    // code for the commerce_plugin_item field type widgets has been changed.
+    // In which case, just crash rather than allowing access to a license type
+    // that shouldn't be allowed. License types can escalate a user's privileges
+    // on the site, and so granting license that shouldn't be allowed is a
+    // security risk.
+    if (!isset($element['target_plugin_id']['#options'])) {
+      throw new \Exception("Unable to change the plugin type options on the license_type field on the commerce_product_variation. Check the field widget type.");
+    }
+
+    // Get the allowed license types for this product variation type.
+    $bundle_name = $field_definition->getTargetBundle();
+    $product_variation_type = \Drupal::entityTypeManager()->getStorage('commerce_product_variation_type')->load($bundle_name);
+    $license_types = $product_variation_type->getThirdPartySetting('commerce_license', 'license_types') ?: [];
+
+    // If there's no license type restrictions defined, we allow all types.
+    if ($license_types) {
+      // Remove plugin IDs from the options array.
+      $element['target_plugin_id']['#options'] = array_intersect_key(
+        $element['target_plugin_id']['#options'],
+        $license_types
+      );
+    }
+  }
+}
+
+/**
+ * Implements hook_theme().
+ */
+function commerce_license_theme() {
+  $theme = [];
+  $theme['commerce_license'] = array(
+    'render element' => 'elements',
+    'file' => 'commerce_license.page.inc',
+    'template' => 'commerce_license',
+  );
+  $theme['commerce_license_content_add_list'] = [
+    'render element' => 'content',
+    'variables' => ['content' => NULL],
+    'file' => 'commerce_license.page.inc',
+  ];
+  return $theme;
+}
+
+/**
+* Implements hook_theme_suggestions_HOOK().
+*/
+function commerce_license_theme_suggestions_commerce_license(array $variables) {
+  $suggestions = array();
+  $entity = $variables['elements']['#commerce_license'];
+  $sanitized_view_mode = strtr($variables['elements']['#view_mode'], '.', '_');
+
+  $suggestions[] = 'commerce_license__' . $sanitized_view_mode;
+  $suggestions[] = 'commerce_license__' . $entity->bundle();
+  $suggestions[] = 'commerce_license__' . $entity->bundle() . '__' . $sanitized_view_mode;
+  $suggestions[] = 'commerce_license__' . $entity->id();
+  $suggestions[] = 'commerce_license__' . $entity->id() . '__' . $sanitized_view_mode;
+  return $suggestions;
+}
+
+/**
+ * Gets the timezone for the given user.
+ *
+ * Helper function equivalent to drupal_get_user_timezone() but accepting
+ * an arbitrary user object as a parameter, rather than assuming the
+ * current user.
+ *
+ * @param \Drupal\Core\Session\AccountInterface $user
+ *    A user account.
+ *
+ * @return string
+ *    The timezone name.
+ */
+function commerce_licence_get_user_timezone(AccountInterface $user) {
+  $config = \Drupal::config('system.date');
+  if ($user && $config->get('timezone.user.configurable') && $user->isAuthenticated() && $user->getTimezone()) {
+    return $user->getTimezone();
+  }
+  else {
+    // Ignore PHP strict notice if time zone has not yet been set in the php.ini
+    // configuration.
+    $config_data_default_timezone = $config->get('timezone.default');
+    return !empty($config_data_default_timezone) ? $config_data_default_timezone : @date_default_timezone_get();
+  }
+}

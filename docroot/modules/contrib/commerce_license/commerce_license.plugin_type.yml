@@ -1,0 +1,5 @@
+commerce_license.license_type:
+  label: Commerce license type
+  provider: commerce_license
+  plugin_manager_service_id: plugin.manager.commerce_license_type
+  plugin_definition_decorator_class: Drupal\plugin\PluginDefinition\ArrayPluginDefinitionDecorator

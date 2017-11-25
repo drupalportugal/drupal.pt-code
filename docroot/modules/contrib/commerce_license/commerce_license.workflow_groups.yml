@@ -1,0 +1,3 @@
+commerce_license:
+  label: License
+  entity_type: commerce_license
