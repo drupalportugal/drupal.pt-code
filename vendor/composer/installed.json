@@ -4526,65 +4526,6 @@
         "description": "Internationalization library powered by CLDR data."
     },
     {
-        "name": "drupal/address",
-        "version": "1.2.0",
-        "version_normalized": "1.2.0.0",
-        "source": {
-            "type": "git",
-            "url": "https://git.drupal.org/project/address",
-            "reference": "8.x-1.2"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://ftp.drupal.org/files/projects/address-8.x-1.2.zip",
-            "reference": "8.x-1.2",
-            "shasum": "041445ac14087be943c0c1c562b9bf800d87f7e8"
-        },
-        "require": {
-            "commerceguys/addressing": "~1.0",
-            "commerceguys/intl": "~0.7",
-            "drupal/core": "*"
-        },
-        "type": "drupal-module",
-        "extra": {
-            "branch-alias": {
-                "dev-1.x": "1.x-dev"
-            },
-            "drupal": {
-                "version": "8.x-1.2",
-                "datestamp": "1505896144",
-                "security-coverage": {
-                    "status": "covered",
-                    "message": "Covered by Drupal's security advisory policy"
-                }
-            }
-        },
-        "installation-source": "dist",
-        "notification-url": "https://packages.drupal.org/8/downloads",
-        "license": [
-            "GPL-2.0+"
-        ],
-        "authors": [
-            {
-                "name": "bojanz",
-                "homepage": "https://www.drupal.org/user/86106"
-            },
-            {
-                "name": "googletorp",
-                "homepage": "https://www.drupal.org/user/386230"
-            },
-            {
-                "name": "rszrama",
-                "homepage": "https://www.drupal.org/user/49344"
-            }
-        ],
-        "description": "Provides functionality for storing, validating and displaying international postal addresses.",
-        "homepage": "http://drupal.org/project/address",
-        "support": {
-            "source": "http://cgit.drupalcode.org/address"
-        }
-    },
-    {
         "name": "drupal/age_field_formatter",
         "version": "1.0.0",
         "version_normalized": "1.0.0.0",
@@ -6985,7 +6926,7 @@
         "source": {
             "type": "git",
             "url": "https://git.drupal.org/project/commerce_license",
-            "reference": "6504af9fb47979a78a1f619b582a08b68506bbe6"
+            "reference": "4afdcf9970abc8d648d5e9ec9d79ec0a56280822"
         },
         "require": {
             "drupal/commerce": "*",
@@ -7003,7 +6944,7 @@
             },
             "drupal": {
                 "version": "8.x-2.x-dev",
-                "datestamp": "1511174884",
+                "datestamp": "1511209685",
                 "security-coverage": {
                     "status": "not-covered",
                     "message": "Dev releases are not covered by Drupal security advisories."
@@ -7164,6 +7105,65 @@
         "homepage": "http://drupal.org/project/commerce_paypal",
         "support": {
             "source": "http://cgit.drupalcode.org/commerce_paypal"
+        }
+    },
+    {
+        "name": "drupal/address",
+        "version": "1.3.0",
+        "version_normalized": "1.3.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://git.drupal.org/project/address",
+            "reference": "8.x-1.3"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://ftp.drupal.org/files/projects/address-8.x-1.3.zip",
+            "reference": "8.x-1.3",
+            "shasum": "170551d6ecf4a08bac178f31b9869a626279d9eb"
+        },
+        "require": {
+            "commerceguys/addressing": "~1.0",
+            "commerceguys/intl": "~0.7",
+            "drupal/core": "*"
+        },
+        "type": "drupal-module",
+        "extra": {
+            "branch-alias": {
+                "dev-1.x": "1.x-dev"
+            },
+            "drupal": {
+                "version": "8.x-1.3",
+                "datestamp": "1511382784",
+                "security-coverage": {
+                    "status": "covered",
+                    "message": "Covered by Drupal's security advisory policy"
+                }
+            }
+        },
+        "installation-source": "dist",
+        "notification-url": "https://packages.drupal.org/8/downloads",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "authors": [
+            {
+                "name": "bojanz",
+                "homepage": "https://www.drupal.org/user/86106"
+            },
+            {
+                "name": "googletorp",
+                "homepage": "https://www.drupal.org/user/386230"
+            },
+            {
+                "name": "rszrama",
+                "homepage": "https://www.drupal.org/user/49344"
+            }
+        ],
+        "description": "Provides functionality for storing, validating and displaying international postal addresses.",
+        "homepage": "http://drupal.org/project/address",
+        "support": {
+            "source": "http://cgit.drupalcode.org/address"
         }
     },
     {

@@ -1278,17 +1278,17 @@
         },
         {
             "name": "drupal/address",
-            "version": "1.2.0",
+            "version": "1.3.0",
             "source": {
                 "type": "git",
                 "url": "https://git.drupal.org/project/address",
-                "reference": "8.x-1.2"
+                "reference": "8.x-1.3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/address-8.x-1.2.zip",
-                "reference": "8.x-1.2",
-                "shasum": "041445ac14087be943c0c1c562b9bf800d87f7e8"
+                "url": "https://ftp.drupal.org/files/projects/address-8.x-1.3.zip",
+                "reference": "8.x-1.3",
+                "shasum": "170551d6ecf4a08bac178f31b9869a626279d9eb"
             },
             "require": {
                 "commerceguys/addressing": "~1.0",
@@ -1301,8 +1301,8 @@
                     "dev-1.x": "1.x-dev"
                 },
                 "drupal": {
-                    "version": "8.x-1.2",
-                    "datestamp": "1505896144",
+                    "version": "8.x-1.3",
+                    "datestamp": "1511382784",
                     "security-coverage": {
                         "status": "covered",
                         "message": "Covered by Drupal's security advisory policy"
@@ -1583,7 +1583,7 @@
             "source": {
                 "type": "git",
                 "url": "https://git.drupal.org/project/commerce_license",
-                "reference": "6504af9fb47979a78a1f619b582a08b68506bbe6"
+                "reference": "4afdcf9970abc8d648d5e9ec9d79ec0a56280822"
             },
             "require": {
                 "drupal/commerce": "*",
@@ -1601,7 +1601,7 @@
                 },
                 "drupal": {
                     "version": "8.x-2.x-dev",
-                    "datestamp": "1511174884",
+                    "datestamp": "1511209685",
                     "security-coverage": {
                         "status": "not-covered",
                         "message": "Dev releases are not covered by Drupal security advisories."
@@ -7602,16 +7602,16 @@
         },
         {
             "name": "phpspec/prophecy",
-            "version": "v1.7.2",
+            "version": "1.7.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpspec/prophecy.git",
-                "reference": "c9b8c6088acd19d769d4cc0ffa60a9fe34344bd6"
+                "reference": "e4ed002c67da8eceb0eb8ddb8b3847bb53c5c2bf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpspec/prophecy/zipball/c9b8c6088acd19d769d4cc0ffa60a9fe34344bd6",
-                "reference": "c9b8c6088acd19d769d4cc0ffa60a9fe34344bd6",
+                "url": "https://api.github.com/repos/phpspec/prophecy/zipball/e4ed002c67da8eceb0eb8ddb8b3847bb53c5c2bf",
+                "reference": "e4ed002c67da8eceb0eb8ddb8b3847bb53c5c2bf",
                 "shasum": ""
             },
             "require": {
@@ -7623,7 +7623,7 @@
             },
             "require-dev": {
                 "phpspec/phpspec": "^2.5|^3.2",
-                "phpunit/phpunit": "^4.8 || ^5.6.5"
+                "phpunit/phpunit": "^4.8.35 || ^5.7"
             },
             "type": "library",
             "extra": {
@@ -7661,7 +7661,7 @@
                 "spy",
                 "stub"
             ],
-            "time": "2017-09-04T11:05:03+00:00"
+            "time": "2017-11-24T13:59:53+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",
