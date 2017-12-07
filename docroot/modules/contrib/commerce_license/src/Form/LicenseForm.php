@@ -18,6 +18,8 @@ class LicenseForm extends ContentEntityForm {
   public function save(array $form, FormStateInterface $form_state) {
     $status = parent::save($form, $form_state);
 
+    $entity = $this->entity;
+
     switch ($status) {
       case SAVED_NEW:
         drupal_set_message($this->t('Created the %label License.', [

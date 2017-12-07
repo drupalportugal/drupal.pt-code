@@ -1,7 +1,0 @@
-entity.commerce_license.create_form:
-  path: '/admin/commerce/licenses/create'
-  defaults:
-    _form: '\Drupal\commerce_license\Form\LicenseCreateForm'
-    _title: 'Create license'
-  requirements:
-    _permission: 'administer licenses'

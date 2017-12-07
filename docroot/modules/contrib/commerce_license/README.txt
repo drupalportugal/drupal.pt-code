@@ -14,6 +14,7 @@ A product variation that sells a License will have a configured License type
 plugin field value. This acts as template to create the License when a user
 purchases that product variation.
 
+
 REQUIREMENTS
 ------------
 
@@ -21,3 +22,13 @@ This module requires the following modules:
 
  * Commerce (https://drupal.org/project/commerce)
  * Recurring Period (https://drupal.org/project/recurring_period)
+
+
+KNOWN ISSUES AND LIMITATIONS
+----------------------------
+
+This module is still incomplete, and has the following limitations:
+
+- The admin forms to create/edit licenses are not yet complete. They should only
+  be used by developers who know what they are doing. Changing values here can
+  break things!

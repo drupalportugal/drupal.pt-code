@@ -1,0 +1,35 @@
+<?php
+
+/**
+ * @file
+ * Provides sites customizations.
+ */
+
+use Drupal\commerce_cart\Form\AddToCartFormInterface;
+use Drupal\Core\Form\FormStateInterface;
+
+/**
+ * Implements hook_form_alter().
+ */
+function drupalportugal_custom_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  /*
+   * Commerce add to cart form has dynamic form ids.
+   * One of the solutions is to check if Form is instance of AddToCartInterface.
+   */
+  if ($form_state->getFormObject() instanceof AddToCartFormInterface) {
+    /*
+     * Set new submit form callback.
+     */
+    $form["actions"]["submit"]["#submit"][] = "drupalportugal_custom_form_redirect_callback";
+  }
+}
+
+/**
+ * Form submit callback.
+ */
+function drupalportugal_custom_form_redirect_callback($form, FormStateInterface $form_state) {
+  /*
+   * Redirect to commerce_cart page.
+   */
+  $form_state->setRedirect("commerce_cart.page");
+}

@@ -51,9 +51,16 @@ class LicenseOrderSyncSubscriber implements EventSubscriberInterface {
 
       // Events for reaching the 'fulfillment' state. This depends on whether
       // the workflow in use has validation or not.
-      'commerce_order.place.post_transition' => ['onCartOrderFulfillment', -100],
+      // We need our commerce_order.place.pre_transition method to run before
+      // Commerce Recurring's, so that an initial order that purchases a
+      // license subscription runs our method before
+      // \Drupal\commerce_recurring\EventSubscriber's.
+      // This is to ensure that the license is created here before it's
+      // set on the subscription entity in
+      // \Drupal\commerce_license\Plugin\Commerce\SubscriptionType::onSubscriptionCreate().
+      'commerce_order.place.pre_transition' => ['onCartOrderFulfillment', 100],
       'commerce_order.validate.post_transition' => ['onCartOrderFulfillment', -100],
-      // Event for reaching the 'canceled' state.
+      // Event for reaching the 'canceled' order state.
       'commerce_order.cancel.post_transition' => ['onCartOrderCancel', -100],
     ];
     return $events;
