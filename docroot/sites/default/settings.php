@@ -429,7 +429,7 @@ $settings['update_free_access'] = FALSE;
  * performance reasons. Detection can be prevented by setting
  * class_loader_auto_detect to false, as in the example below.
  */
-# $settings['class_loader_auto_detect'] = FALSE;
+$settings['class_loader_auto_detect'] = FALSE;
 
 /*
  * If the APC extension is not detected, either because APC is missing or
