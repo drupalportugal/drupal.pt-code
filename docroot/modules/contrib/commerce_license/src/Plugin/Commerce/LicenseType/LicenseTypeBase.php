@@ -46,6 +46,13 @@ abstract class LicenseTypeBase extends PluginBase implements LicenseTypeInterfac
   /**
    * {@inheritdoc}
    */
+  public function getActivationOrderState() {
+    return $this->pluginDefinition['activation_order_state'];
+  }
+
+  /**
+   * {@inheritdoc}
+   */
   public function buildConfigurationForm(array $form, FormStateInterface $form_state) {
     return [];
   }

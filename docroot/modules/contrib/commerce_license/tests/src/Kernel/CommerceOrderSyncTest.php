@@ -17,6 +17,7 @@ use Drupal\Tests\commerce_cart\Kernel\CartManagerTestTrait;
 class CommerceOrderSyncTest extends CommerceKernelTestBase {
 
   use CartManagerTestTrait;
+  use LicenseOrderCompletionTestTrait;
 
   /**
    * The variation to test against.
@@ -78,7 +79,7 @@ class CommerceOrderSyncTest extends CommerceKernelTestBase {
     $order_type = $this->createEntity('commerce_order_type', [
       'id' => 'license_order_type',
       'label' => $this->randomMachineName(),
-      'workflow' => 'order_fulfillment',
+      'workflow' => 'order_default',
     ]);
     commerce_order_add_order_items_field($order_type);
 
@@ -154,15 +155,8 @@ class CommerceOrderSyncTest extends CommerceKernelTestBase {
     $this->cartManager = $this->container->get('commerce_cart.cart_manager');
     $this->cartManager->addEntity($cart_order, $this->variation);
 
-    // Place, then fulfill the order.
-    $workflow = $cart_order->getState()->getWorkflow();
-    $cart_order->getState()->applyTransition($workflow->getTransition('place'));
-    $cart_order->save();
-
-    $workflow = $cart_order->getState()->getWorkflow();
-    $cart_order->getState()->applyTransition($workflow->getTransition('fulfill'));
-    $cart_order->save();
-
+    // Take the order through checkout.
+    $this->completeLicenseOrderCheckout($cart_order);
     $order = $this->reloadEntity($cart_order);
 
     // Get the order item. There should be only one in the order.

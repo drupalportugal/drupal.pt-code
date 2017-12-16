@@ -49,8 +49,7 @@ class LicenseOrderSyncSubscriber implements EventSubscriberInterface {
 
       // TODO: Revisit these transitions and check they are correct.
 
-      // Events for reaching the 'fulfillment' state. This depends on whether
-      // the workflow in use has validation or not.
+      // Subscribe to events for reaching the states we support for activation.
       // We need our commerce_order.place.pre_transition method to run before
       // Commerce Recurring's, so that an initial order that purchases a
       // license subscription runs our method before
@@ -73,11 +72,8 @@ class LicenseOrderSyncSubscriber implements EventSubscriberInterface {
    *   The event we subscribed to.
    */
   public function onCartOrderFulfillment(WorkflowTransitionEvent $event) {
-    // Only act if we are reaching the 'fulfillment' state. Different workflows
-    // use the same transition names to reach different states.
-    if ($event->getToState()->getId() != 'fulfillment') {
-      return;
-    }
+    // Get the state we are reaching.
+    $reached_state = $event->getToState()->getId();
 
     /** @var \Drupal\commerce_order\Entity\OrderInterface $order */
     $order = $event->getEntity();
@@ -85,6 +81,17 @@ class LicenseOrderSyncSubscriber implements EventSubscriberInterface {
     $license_order_items = $this->getOrderItemsWithLicensedProducts($order);
 
     foreach ($license_order_items as $order_item) {
+      $purchased_entity = $order_item->getPurchasedEntity();
+
+      // TODO: throw an exception if the variation doesn't have this set.
+      $license_type_plugin = $purchased_entity->get('license_type')->first()->getTargetInstance();
+
+      // Only act if the license type activates in the state the order is
+      // reaching.
+      if ($license_type_plugin->getActivationOrderState() != $reached_state) {
+        continue;
+      }
+
       // Only create a new license if the order item doesn't already have one:
       // this allows for orders to be created programmatically with a configured
       // license.

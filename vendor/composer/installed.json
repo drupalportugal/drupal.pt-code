@@ -1,48 +1,5 @@
 [
     {
-        "name": "drupal-composer/drupal-scaffold",
-        "version": "2.3.0",
-        "version_normalized": "2.3.0.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/drupal-composer/drupal-scaffold.git",
-            "reference": "1374e1031b98beb502abea3854f361304965c628"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/drupal-composer/drupal-scaffold/zipball/1374e1031b98beb502abea3854f361304965c628",
-            "reference": "1374e1031b98beb502abea3854f361304965c628",
-            "shasum": ""
-        },
-        "require": {
-            "composer-plugin-api": "^1.0.0",
-            "php": ">=5.4.5"
-        },
-        "require-dev": {
-            "composer/composer": "dev-master",
-            "phpunit/phpunit": "^4.4.0"
-        },
-        "time": "2017-05-05T21:26:28+00:00",
-        "type": "composer-plugin",
-        "extra": {
-            "class": "DrupalComposer\\DrupalScaffold\\Plugin",
-            "branch-alias": {
-                "dev-master": "2.0.x-dev"
-            }
-        },
-        "installation-source": "dist",
-        "autoload": {
-            "psr-4": {
-                "DrupalComposer\\DrupalScaffold\\": "src/"
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "GPL-2.0+"
-        ],
-        "description": "Composer Plugin for updating the Drupal scaffold files when using drupal/core"
-    },
-    {
         "name": "zendframework/zend-escaper",
         "version": "2.5.2",
         "version_normalized": "2.5.2.0",
@@ -2843,196 +2800,6 @@
         ]
     },
     {
-        "name": "drupal/core",
-        "version": "8.4.2",
-        "version_normalized": "8.4.2.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/drupal/core.git",
-            "reference": "68d25c07b7306340900abc4020c38683a817f0eb"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/drupal/core/zipball/68d25c07b7306340900abc4020c38683a817f0eb",
-            "reference": "68d25c07b7306340900abc4020c38683a817f0eb",
-            "shasum": ""
-        },
-        "require": {
-            "asm89/stack-cors": "^1.1",
-            "composer/semver": "^1.0",
-            "doctrine/annotations": "^1.2",
-            "doctrine/common": "^2.5",
-            "easyrdf/easyrdf": "^0.9",
-            "egulias/email-validator": "^1.2",
-            "guzzlehttp/guzzle": "^6.2.1",
-            "masterminds/html5": "^2.1",
-            "paragonie/random_compat": "^1.0|^2.0",
-            "php": ">=5.5.9",
-            "stack/builder": "^1.0",
-            "symfony-cmf/routing": "^1.4",
-            "symfony/class-loader": "~3.2.8",
-            "symfony/console": "~3.2.8",
-            "symfony/dependency-injection": "~3.2.8",
-            "symfony/event-dispatcher": "~3.2.8",
-            "symfony/http-foundation": "~3.2.8",
-            "symfony/http-kernel": "~3.2.8",
-            "symfony/polyfill-iconv": "^1.0",
-            "symfony/process": "~3.2.8",
-            "symfony/psr-http-message-bridge": "^1.0",
-            "symfony/routing": "~3.2.8",
-            "symfony/serializer": "~3.2.8",
-            "symfony/translation": "~3.2.8",
-            "symfony/validator": "~3.2.8",
-            "symfony/yaml": "~3.2.8",
-            "twig/twig": "^1.23.1",
-            "zendframework/zend-diactoros": "^1.1",
-            "zendframework/zend-feed": "^2.4"
-        },
-        "conflict": {
-            "drush/drush": "<8.1.10"
-        },
-        "replace": {
-            "drupal/action": "self.version",
-            "drupal/aggregator": "self.version",
-            "drupal/automated_cron": "self.version",
-            "drupal/ban": "self.version",
-            "drupal/bartik": "self.version",
-            "drupal/basic_auth": "self.version",
-            "drupal/big_pipe": "self.version",
-            "drupal/block": "self.version",
-            "drupal/block_content": "self.version",
-            "drupal/block_place": "self.version",
-            "drupal/book": "self.version",
-            "drupal/breakpoint": "self.version",
-            "drupal/ckeditor": "self.version",
-            "drupal/classy": "self.version",
-            "drupal/color": "self.version",
-            "drupal/comment": "self.version",
-            "drupal/config": "self.version",
-            "drupal/config_translation": "self.version",
-            "drupal/contact": "self.version",
-            "drupal/content_moderation": "self.version",
-            "drupal/content_translation": "self.version",
-            "drupal/contextual": "self.version",
-            "drupal/core-annotation": "self.version",
-            "drupal/core-assertion": "self.version",
-            "drupal/core-bridge": "self.version",
-            "drupal/core-class-finder": "self.version",
-            "drupal/core-datetime": "self.version",
-            "drupal/core-dependency-injection": "self.version",
-            "drupal/core-diff": "self.version",
-            "drupal/core-discovery": "self.version",
-            "drupal/core-event-dispatcher": "self.version",
-            "drupal/core-file-cache": "self.version",
-            "drupal/core-filesystem": "self.version",
-            "drupal/core-gettext": "self.version",
-            "drupal/core-graph": "self.version",
-            "drupal/core-http-foundation": "self.version",
-            "drupal/core-php-storage": "self.version",
-            "drupal/core-plugin": "self.version",
-            "drupal/core-proxy-builder": "self.version",
-            "drupal/core-render": "self.version",
-            "drupal/core-serialization": "self.version",
-            "drupal/core-transliteration": "self.version",
-            "drupal/core-utility": "self.version",
-            "drupal/core-uuid": "self.version",
-            "drupal/datetime": "self.version",
-            "drupal/datetime_range": "self.version",
-            "drupal/dblog": "self.version",
-            "drupal/dynamic_page_cache": "self.version",
-            "drupal/editor": "self.version",
-            "drupal/entity_reference": "self.version",
-            "drupal/field": "self.version",
-            "drupal/field_layout": "self.version",
-            "drupal/field_ui": "self.version",
-            "drupal/file": "self.version",
-            "drupal/filter": "self.version",
-            "drupal/forum": "self.version",
-            "drupal/hal": "self.version",
-            "drupal/help": "self.version",
-            "drupal/history": "self.version",
-            "drupal/image": "self.version",
-            "drupal/inline_form_errors": "self.version",
-            "drupal/language": "self.version",
-            "drupal/layout_discovery": "self.version",
-            "drupal/link": "self.version",
-            "drupal/locale": "self.version",
-            "drupal/media": "self.version",
-            "drupal/menu_link_content": "self.version",
-            "drupal/menu_ui": "self.version",
-            "drupal/migrate": "self.version",
-            "drupal/migrate_drupal": "self.version",
-            "drupal/migrate_drupal_ui": "self.version",
-            "drupal/minimal": "self.version",
-            "drupal/node": "self.version",
-            "drupal/options": "self.version",
-            "drupal/page_cache": "self.version",
-            "drupal/path": "self.version",
-            "drupal/quickedit": "self.version",
-            "drupal/rdf": "self.version",
-            "drupal/responsive_image": "self.version",
-            "drupal/rest": "self.version",
-            "drupal/search": "self.version",
-            "drupal/serialization": "self.version",
-            "drupal/settings_tray": "self.version",
-            "drupal/seven": "self.version",
-            "drupal/shortcut": "self.version",
-            "drupal/simpletest": "self.version",
-            "drupal/standard": "self.version",
-            "drupal/stark": "self.version",
-            "drupal/statistics": "self.version",
-            "drupal/syslog": "self.version",
-            "drupal/system": "self.version",
-            "drupal/taxonomy": "self.version",
-            "drupal/telephone": "self.version",
-            "drupal/text": "self.version",
-            "drupal/toolbar": "self.version",
-            "drupal/tour": "self.version",
-            "drupal/tracker": "self.version",
-            "drupal/update": "self.version",
-            "drupal/user": "self.version",
-            "drupal/views": "self.version",
-            "drupal/views_ui": "self.version",
-            "drupal/workflows": "self.version"
-        },
-        "require-dev": {
-            "behat/mink": "1.7.x-dev",
-            "behat/mink-goutte-driver": "^1.2",
-            "drupal/coder": "^8.2.12",
-            "jcalderonzumba/gastonjs": "^1.0.2",
-            "jcalderonzumba/mink-phantomjs-driver": "^0.3.1",
-            "mikey179/vfsstream": "^1.2",
-            "phpspec/prophecy": "^1.4",
-            "phpunit/phpunit": ">=4.8.35 <5",
-            "symfony/css-selector": "~3.2.8",
-            "symfony/phpunit-bridge": "~3.2.8"
-        },
-        "time": "2017-11-03T13:20:16+00:00",
-        "type": "drupal-core",
-        "installation-source": "dist",
-        "autoload": {
-            "psr-4": {
-                "Drupal\\Core\\": "lib/Drupal/Core",
-                "Drupal\\Component\\": "lib/Drupal/Component",
-                "Drupal\\Driver\\": "../drivers/lib/Drupal/Driver"
-            },
-            "classmap": [
-                "lib/Drupal.php",
-                "lib/Drupal/Component/Utility/Timer.php",
-                "lib/Drupal/Component/Utility/Unicode.php",
-                "lib/Drupal/Core/Database/Database.php",
-                "lib/Drupal/Core/DrupalKernel.php",
-                "lib/Drupal/Core/DrupalKernelInterface.php",
-                "lib/Drupal/Core/Site/Settings.php"
-            ]
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "GPL-2.0+"
-        ],
-        "description": "Drupal is an open source content management platform powering millions of websites and applications."
-    },
-    {
         "name": "symfony/polyfill-apcu",
         "version": "v1.6.0",
         "version_normalized": "1.6.0.0",
@@ -4213,81 +3980,6 @@
         ]
     },
     {
-        "name": "psy/psysh",
-        "version": "v0.8.15",
-        "version_normalized": "0.8.15.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/bobthecow/psysh.git",
-            "reference": "b1d289c2cb03a2f8249912c53e96ced38f879926"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/bobthecow/psysh/zipball/b1d289c2cb03a2f8249912c53e96ced38f879926",
-            "reference": "b1d289c2cb03a2f8249912c53e96ced38f879926",
-            "shasum": ""
-        },
-        "require": {
-            "dnoegel/php-xdg-base-dir": "0.1",
-            "jakub-onderka/php-console-highlighter": "0.3.*",
-            "nikic/php-parser": "~1.3|~2.0|~3.0",
-            "php": ">=5.3.9",
-            "symfony/console": "~2.3.10|^2.4.2|~3.0",
-            "symfony/var-dumper": "~2.7|~3.0"
-        },
-        "require-dev": {
-            "friendsofphp/php-cs-fixer": "~1.11",
-            "hoa/console": "~3.16|~1.14",
-            "phpunit/phpunit": "^4.8.35|^5.4.3",
-            "symfony/finder": "~2.1|~3.0"
-        },
-        "suggest": {
-            "ext-pcntl": "Enabling the PCNTL extension makes PsySH a lot happier :)",
-            "ext-pdo-sqlite": "The doc command requires SQLite to work.",
-            "ext-posix": "If you have PCNTL, you'll want the POSIX extension as well.",
-            "ext-readline": "Enables support for arrow-key history navigation, and showing and manipulating command history.",
-            "hoa/console": "A pure PHP readline implementation. You'll want this if your PHP install doesn't already support readline or libedit."
-        },
-        "time": "2017-11-16T14:29:51+00:00",
-        "bin": [
-            "bin/psysh"
-        ],
-        "type": "library",
-        "extra": {
-            "branch-alias": {
-                "dev-develop": "0.8.x-dev"
-            }
-        },
-        "installation-source": "dist",
-        "autoload": {
-            "files": [
-                "src/Psy/functions.php"
-            ],
-            "psr-4": {
-                "Psy\\": "src/Psy/"
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "name": "Justin Hileman",
-                "email": "justin@justinhileman.info",
-                "homepage": "http://justinhileman.com"
-            }
-        ],
-        "description": "An interactive shell for modern PHP.",
-        "homepage": "http://psysh.org",
-        "keywords": [
-            "REPL",
-            "console",
-            "interactive",
-            "shell"
-        ]
-    },
-    {
         "name": "symfony/config",
         "version": "v3.2.14",
         "version_normalized": "3.2.14.0",
@@ -4347,17 +4039,17 @@
     },
     {
         "name": "cweagans/composer-patches",
-        "version": "1.6.3",
-        "version_normalized": "1.6.3.0",
+        "version": "1.6.4",
+        "version_normalized": "1.6.4.0",
         "source": {
             "type": "git",
             "url": "https://github.com/cweagans/composer-patches.git",
-            "reference": "730f0f620845974764a91482ac936cc6f39da184"
+            "reference": "462e65061606dc6149349535d4322241515d1b16"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/cweagans/composer-patches/zipball/730f0f620845974764a91482ac936cc6f39da184",
-            "reference": "730f0f620845974764a91482ac936cc6f39da184",
+            "url": "https://api.github.com/repos/cweagans/composer-patches/zipball/462e65061606dc6149349535d4322241515d1b16",
+            "reference": "462e65061606dc6149349535d4322241515d1b16",
             "shasum": ""
         },
         "require": {
@@ -4368,7 +4060,7 @@
             "composer/composer": "~1.0",
             "phpunit/phpunit": "~4.6"
         },
-        "time": "2017-11-22T20:18:27+00:00",
+        "time": "2017-12-07T16:16:31+00:00",
         "type": "composer-plugin",
         "extra": {
             "class": "cweagans\\Composer\\Patches"
@@ -4390,6 +4082,50 @@
             }
         ],
         "description": "Provides a way to patch Composer packages."
+    },
+    {
+        "name": "drupal-composer/drupal-scaffold",
+        "version": "2.4.0",
+        "version_normalized": "2.4.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/drupal-composer/drupal-scaffold.git",
+            "reference": "745f0a2d4141fc83d3b42222beff43d66afb3dc6"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/drupal-composer/drupal-scaffold/zipball/745f0a2d4141fc83d3b42222beff43d66afb3dc6",
+            "reference": "745f0a2d4141fc83d3b42222beff43d66afb3dc6",
+            "shasum": ""
+        },
+        "require": {
+            "composer-plugin-api": "^1.0.0",
+            "composer/semver": "^1.4",
+            "php": ">=5.4.5"
+        },
+        "require-dev": {
+            "composer/composer": "dev-master",
+            "phpunit/phpunit": "^4.4.0"
+        },
+        "time": "2017-12-08T22:53:11+00:00",
+        "type": "composer-plugin",
+        "extra": {
+            "class": "DrupalComposer\\DrupalScaffold\\Plugin",
+            "branch-alias": {
+                "dev-master": "2.0.x-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "DrupalComposer\\DrupalScaffold\\": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "description": "Composer Plugin for updating the Drupal scaffold files when using drupal/core"
     },
     {
         "name": "symfony/psr-http-message-bridge",
@@ -4518,17 +4254,17 @@
     },
     {
         "name": "symfony/debug",
-        "version": "v3.4.1",
-        "version_normalized": "3.4.1.0",
+        "version": "v3.4.2",
+        "version_normalized": "3.4.2.0",
         "source": {
             "type": "git",
             "url": "https://github.com/symfony/debug.git",
-            "reference": "fb2001e5d85f95d8b6ab94ae3be5d2672df128fd"
+            "reference": "543deab3ffff94402440b326fc94153bae2dfa7a"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/symfony/debug/zipball/fb2001e5d85f95d8b6ab94ae3be5d2672df128fd",
-            "reference": "fb2001e5d85f95d8b6ab94ae3be5d2672df128fd",
+            "url": "https://api.github.com/repos/symfony/debug/zipball/543deab3ffff94402440b326fc94153bae2dfa7a",
+            "reference": "543deab3ffff94402440b326fc94153bae2dfa7a",
             "shasum": ""
         },
         "require": {
@@ -4541,7 +4277,7 @@
         "require-dev": {
             "symfony/http-kernel": "~2.8|~3.0|~4.0"
         },
-        "time": "2017-11-21T09:01:46+00:00",
+        "time": "2017-12-12T08:27:14+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -4642,6 +4378,196 @@
             "singularize",
             "string"
         ]
+    },
+    {
+        "name": "drupal/core",
+        "version": "8.4.3",
+        "version_normalized": "8.4.3.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/drupal/core.git",
+            "reference": "793cb14c54624b4be160b78f742af44a01cc7b4e"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/drupal/core/zipball/793cb14c54624b4be160b78f742af44a01cc7b4e",
+            "reference": "793cb14c54624b4be160b78f742af44a01cc7b4e",
+            "shasum": ""
+        },
+        "require": {
+            "asm89/stack-cors": "^1.1",
+            "composer/semver": "^1.0",
+            "doctrine/annotations": "^1.2",
+            "doctrine/common": "^2.5",
+            "easyrdf/easyrdf": "^0.9",
+            "egulias/email-validator": "^1.2",
+            "guzzlehttp/guzzle": "^6.2.1",
+            "masterminds/html5": "^2.1",
+            "paragonie/random_compat": "^1.0|^2.0",
+            "php": ">=5.5.9",
+            "stack/builder": "^1.0",
+            "symfony-cmf/routing": "^1.4",
+            "symfony/class-loader": "~3.2.8",
+            "symfony/console": "~3.2.8",
+            "symfony/dependency-injection": "~3.2.8",
+            "symfony/event-dispatcher": "~3.2.8",
+            "symfony/http-foundation": "~3.2.8",
+            "symfony/http-kernel": "~3.2.8",
+            "symfony/polyfill-iconv": "^1.0",
+            "symfony/process": "~3.2.8",
+            "symfony/psr-http-message-bridge": "^1.0",
+            "symfony/routing": "~3.2.8",
+            "symfony/serializer": "~3.2.8",
+            "symfony/translation": "~3.2.8",
+            "symfony/validator": "~3.2.8",
+            "symfony/yaml": "~3.2.8",
+            "twig/twig": "^1.23.1",
+            "zendframework/zend-diactoros": "^1.1",
+            "zendframework/zend-feed": "^2.4"
+        },
+        "conflict": {
+            "drush/drush": "<8.1.10"
+        },
+        "replace": {
+            "drupal/action": "self.version",
+            "drupal/aggregator": "self.version",
+            "drupal/automated_cron": "self.version",
+            "drupal/ban": "self.version",
+            "drupal/bartik": "self.version",
+            "drupal/basic_auth": "self.version",
+            "drupal/big_pipe": "self.version",
+            "drupal/block": "self.version",
+            "drupal/block_content": "self.version",
+            "drupal/block_place": "self.version",
+            "drupal/book": "self.version",
+            "drupal/breakpoint": "self.version",
+            "drupal/ckeditor": "self.version",
+            "drupal/classy": "self.version",
+            "drupal/color": "self.version",
+            "drupal/comment": "self.version",
+            "drupal/config": "self.version",
+            "drupal/config_translation": "self.version",
+            "drupal/contact": "self.version",
+            "drupal/content_moderation": "self.version",
+            "drupal/content_translation": "self.version",
+            "drupal/contextual": "self.version",
+            "drupal/core-annotation": "self.version",
+            "drupal/core-assertion": "self.version",
+            "drupal/core-bridge": "self.version",
+            "drupal/core-class-finder": "self.version",
+            "drupal/core-datetime": "self.version",
+            "drupal/core-dependency-injection": "self.version",
+            "drupal/core-diff": "self.version",
+            "drupal/core-discovery": "self.version",
+            "drupal/core-event-dispatcher": "self.version",
+            "drupal/core-file-cache": "self.version",
+            "drupal/core-filesystem": "self.version",
+            "drupal/core-gettext": "self.version",
+            "drupal/core-graph": "self.version",
+            "drupal/core-http-foundation": "self.version",
+            "drupal/core-php-storage": "self.version",
+            "drupal/core-plugin": "self.version",
+            "drupal/core-proxy-builder": "self.version",
+            "drupal/core-render": "self.version",
+            "drupal/core-serialization": "self.version",
+            "drupal/core-transliteration": "self.version",
+            "drupal/core-utility": "self.version",
+            "drupal/core-uuid": "self.version",
+            "drupal/datetime": "self.version",
+            "drupal/datetime_range": "self.version",
+            "drupal/dblog": "self.version",
+            "drupal/dynamic_page_cache": "self.version",
+            "drupal/editor": "self.version",
+            "drupal/entity_reference": "self.version",
+            "drupal/field": "self.version",
+            "drupal/field_layout": "self.version",
+            "drupal/field_ui": "self.version",
+            "drupal/file": "self.version",
+            "drupal/filter": "self.version",
+            "drupal/forum": "self.version",
+            "drupal/hal": "self.version",
+            "drupal/help": "self.version",
+            "drupal/history": "self.version",
+            "drupal/image": "self.version",
+            "drupal/inline_form_errors": "self.version",
+            "drupal/language": "self.version",
+            "drupal/layout_discovery": "self.version",
+            "drupal/link": "self.version",
+            "drupal/locale": "self.version",
+            "drupal/media": "self.version",
+            "drupal/menu_link_content": "self.version",
+            "drupal/menu_ui": "self.version",
+            "drupal/migrate": "self.version",
+            "drupal/migrate_drupal": "self.version",
+            "drupal/migrate_drupal_ui": "self.version",
+            "drupal/minimal": "self.version",
+            "drupal/node": "self.version",
+            "drupal/options": "self.version",
+            "drupal/page_cache": "self.version",
+            "drupal/path": "self.version",
+            "drupal/quickedit": "self.version",
+            "drupal/rdf": "self.version",
+            "drupal/responsive_image": "self.version",
+            "drupal/rest": "self.version",
+            "drupal/search": "self.version",
+            "drupal/serialization": "self.version",
+            "drupal/settings_tray": "self.version",
+            "drupal/seven": "self.version",
+            "drupal/shortcut": "self.version",
+            "drupal/simpletest": "self.version",
+            "drupal/standard": "self.version",
+            "drupal/stark": "self.version",
+            "drupal/statistics": "self.version",
+            "drupal/syslog": "self.version",
+            "drupal/system": "self.version",
+            "drupal/taxonomy": "self.version",
+            "drupal/telephone": "self.version",
+            "drupal/text": "self.version",
+            "drupal/toolbar": "self.version",
+            "drupal/tour": "self.version",
+            "drupal/tracker": "self.version",
+            "drupal/update": "self.version",
+            "drupal/user": "self.version",
+            "drupal/views": "self.version",
+            "drupal/views_ui": "self.version",
+            "drupal/workflows": "self.version"
+        },
+        "require-dev": {
+            "behat/mink": "1.7.x-dev",
+            "behat/mink-goutte-driver": "^1.2",
+            "drupal/coder": "^8.2.12",
+            "jcalderonzumba/gastonjs": "^1.0.2",
+            "jcalderonzumba/mink-phantomjs-driver": "^0.3.1",
+            "mikey179/vfsstream": "^1.2",
+            "phpspec/prophecy": "^1.4",
+            "phpunit/phpunit": ">=4.8.35 <5",
+            "symfony/css-selector": "~3.2.8",
+            "symfony/phpunit-bridge": "~3.2.8"
+        },
+        "time": "2017-12-06T22:45:30+00:00",
+        "type": "drupal-core",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Drupal\\Core\\": "lib/Drupal/Core",
+                "Drupal\\Component\\": "lib/Drupal/Component",
+                "Drupal\\Driver\\": "../drivers/lib/Drupal/Driver"
+            },
+            "classmap": [
+                "lib/Drupal.php",
+                "lib/Drupal/Component/Utility/Timer.php",
+                "lib/Drupal/Component/Utility/Unicode.php",
+                "lib/Drupal/Core/Database/Database.php",
+                "lib/Drupal/Core/DrupalKernel.php",
+                "lib/Drupal/Core/DrupalKernelInterface.php",
+                "lib/Drupal/Core/Site/Settings.php"
+            ]
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "description": "Drupal is an open source content management platform powering millions of websites and applications."
     },
     {
         "name": "drupal/state_machine",
@@ -5479,142 +5405,18 @@
         "homepage": "https://symfony.com"
     },
     {
-        "name": "symfony/cache",
-        "version": "v3.4.1",
-        "version_normalized": "3.4.1.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/symfony/cache.git",
-            "reference": "1accdf8ee7d479e2f6d867a18c99a9a859ba99c0"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/symfony/cache/zipball/1accdf8ee7d479e2f6d867a18c99a9a859ba99c0",
-            "reference": "1accdf8ee7d479e2f6d867a18c99a9a859ba99c0",
-            "shasum": ""
-        },
-        "require": {
-            "php": "^5.5.9|>=7.0.8",
-            "psr/cache": "~1.0",
-            "psr/log": "~1.0",
-            "psr/simple-cache": "^1.0",
-            "symfony/polyfill-apcu": "~1.1"
-        },
-        "conflict": {
-            "symfony/var-dumper": "<3.3"
-        },
-        "provide": {
-            "psr/cache-implementation": "1.0",
-            "psr/simple-cache-implementation": "1.0"
-        },
-        "require-dev": {
-            "cache/integration-tests": "dev-master",
-            "doctrine/cache": "~1.6",
-            "doctrine/dbal": "~2.4",
-            "predis/predis": "~1.0"
-        },
-        "time": "2017-11-19T21:17:36+00:00",
-        "type": "library",
-        "extra": {
-            "branch-alias": {
-                "dev-master": "3.4-dev"
-            }
-        },
-        "installation-source": "dist",
-        "autoload": {
-            "psr-4": {
-                "Symfony\\Component\\Cache\\": ""
-            },
-            "exclude-from-classmap": [
-                "/Tests/"
-            ]
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "name": "Nicolas Grekas",
-                "email": "p@tchwork.com"
-            },
-            {
-                "name": "Symfony Community",
-                "homepage": "https://symfony.com/contributors"
-            }
-        ],
-        "description": "Symfony Cache component with PSR-6, PSR-16, and tags",
-        "homepage": "https://symfony.com",
-        "keywords": [
-            "caching",
-            "psr6"
-        ]
-    },
-    {
-        "name": "symfony/expression-language",
-        "version": "v3.4.1",
-        "version_normalized": "3.4.1.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/symfony/expression-language.git",
-            "reference": "823b852c20432569c1fe8e20a76eaba88a526bef"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/symfony/expression-language/zipball/823b852c20432569c1fe8e20a76eaba88a526bef",
-            "reference": "823b852c20432569c1fe8e20a76eaba88a526bef",
-            "shasum": ""
-        },
-        "require": {
-            "php": "^5.5.9|>=7.0.8",
-            "symfony/cache": "~3.1|~4.0"
-        },
-        "time": "2017-11-12T16:41:51+00:00",
-        "type": "library",
-        "extra": {
-            "branch-alias": {
-                "dev-master": "3.4-dev"
-            }
-        },
-        "installation-source": "dist",
-        "autoload": {
-            "psr-4": {
-                "Symfony\\Component\\ExpressionLanguage\\": ""
-            },
-            "exclude-from-classmap": [
-                "/Tests/"
-            ]
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "name": "Fabien Potencier",
-                "email": "fabien@symfony.com"
-            },
-            {
-                "name": "Symfony Community",
-                "homepage": "https://symfony.com/contributors"
-            }
-        ],
-        "description": "Symfony ExpressionLanguage Component",
-        "homepage": "https://symfony.com"
-    },
-    {
         "name": "symfony/var-dumper",
-        "version": "v3.4.1",
-        "version_normalized": "3.4.1.0",
+        "version": "v3.4.2",
+        "version_normalized": "3.4.2.0",
         "source": {
             "type": "git",
             "url": "https://github.com/symfony/var-dumper.git",
-            "reference": "ec650a975a8e04e0c114d35eab732981243db3a2"
+            "reference": "757074cf71b952ce9e75b557538948811c2bf006"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/symfony/var-dumper/zipball/ec650a975a8e04e0c114d35eab732981243db3a2",
-            "reference": "ec650a975a8e04e0c114d35eab732981243db3a2",
+            "url": "https://api.github.com/repos/symfony/var-dumper/zipball/757074cf71b952ce9e75b557538948811c2bf006",
+            "reference": "757074cf71b952ce9e75b557538948811c2bf006",
             "shasum": ""
         },
         "require": {
@@ -5633,7 +5435,7 @@
             "ext-intl": "To show region name in time zone dump",
             "ext-symfony_debug": ""
         },
-        "time": "2017-11-30T14:59:23+00:00",
+        "time": "2017-12-11T22:06:16+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -5674,18 +5476,216 @@
         ]
     },
     {
-        "name": "symfony/dom-crawler",
-        "version": "v3.4.1",
-        "version_normalized": "3.4.1.0",
+        "name": "psy/psysh",
+        "version": "v0.8.16",
+        "version_normalized": "0.8.16.0",
         "source": {
             "type": "git",
-            "url": "https://github.com/symfony/dom-crawler.git",
-            "reference": "7bf68716e400997a291ad42c9f9fe7972e6656d2"
+            "url": "https://github.com/bobthecow/psysh.git",
+            "reference": "d4c8eab0683dc056f2ca54ca67f5388527c068b1"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/symfony/dom-crawler/zipball/7bf68716e400997a291ad42c9f9fe7972e6656d2",
-            "reference": "7bf68716e400997a291ad42c9f9fe7972e6656d2",
+            "url": "https://api.github.com/repos/bobthecow/psysh/zipball/d4c8eab0683dc056f2ca54ca67f5388527c068b1",
+            "reference": "d4c8eab0683dc056f2ca54ca67f5388527c068b1",
+            "shasum": ""
+        },
+        "require": {
+            "dnoegel/php-xdg-base-dir": "0.1",
+            "jakub-onderka/php-console-highlighter": "0.3.*",
+            "nikic/php-parser": "~1.3|~2.0|~3.0",
+            "php": ">=5.3.9",
+            "symfony/console": "~2.3.10|^2.4.2|~3.0|~4.0",
+            "symfony/var-dumper": "~2.7|~3.0|~4.0"
+        },
+        "require-dev": {
+            "hoa/console": "~3.16|~1.14",
+            "phpunit/phpunit": "^4.8.35|^5.4.3",
+            "symfony/finder": "~2.1|~3.0|~4.0"
+        },
+        "suggest": {
+            "ext-pcntl": "Enabling the PCNTL extension makes PsySH a lot happier :)",
+            "ext-pdo-sqlite": "The doc command requires SQLite to work.",
+            "ext-posix": "If you have PCNTL, you'll want the POSIX extension as well.",
+            "ext-readline": "Enables support for arrow-key history navigation, and showing and manipulating command history.",
+            "hoa/console": "A pure PHP readline implementation. You'll want this if your PHP install doesn't already support readline or libedit."
+        },
+        "time": "2017-12-10T21:49:27+00:00",
+        "bin": [
+            "bin/psysh"
+        ],
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-develop": "0.8.x-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "files": [
+                "src/Psy/functions.php"
+            ],
+            "psr-4": {
+                "Psy\\": "src/Psy/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Justin Hileman",
+                "email": "justin@justinhileman.info",
+                "homepage": "http://justinhileman.com"
+            }
+        ],
+        "description": "An interactive shell for modern PHP.",
+        "homepage": "http://psysh.org",
+        "keywords": [
+            "REPL",
+            "console",
+            "interactive",
+            "shell"
+        ]
+    },
+    {
+        "name": "symfony/cache",
+        "version": "v3.4.2",
+        "version_normalized": "3.4.2.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/symfony/cache.git",
+            "reference": "94ce2a457bfc720be2720767b97caf44ecac6c41"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/symfony/cache/zipball/94ce2a457bfc720be2720767b97caf44ecac6c41",
+            "reference": "94ce2a457bfc720be2720767b97caf44ecac6c41",
+            "shasum": ""
+        },
+        "require": {
+            "php": "^5.5.9|>=7.0.8",
+            "psr/cache": "~1.0",
+            "psr/log": "~1.0",
+            "psr/simple-cache": "^1.0",
+            "symfony/polyfill-apcu": "~1.1"
+        },
+        "conflict": {
+            "symfony/var-dumper": "<3.3"
+        },
+        "provide": {
+            "psr/cache-implementation": "1.0",
+            "psr/simple-cache-implementation": "1.0"
+        },
+        "require-dev": {
+            "cache/integration-tests": "dev-master",
+            "doctrine/cache": "~1.6",
+            "doctrine/dbal": "~2.4",
+            "predis/predis": "~1.0"
+        },
+        "time": "2017-12-08T16:11:27+00:00",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "3.4-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Symfony\\Component\\Cache\\": ""
+            },
+            "exclude-from-classmap": [
+                "/Tests/"
+            ]
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Nicolas Grekas",
+                "email": "p@tchwork.com"
+            },
+            {
+                "name": "Symfony Community",
+                "homepage": "https://symfony.com/contributors"
+            }
+        ],
+        "description": "Symfony Cache component with PSR-6, PSR-16, and tags",
+        "homepage": "https://symfony.com",
+        "keywords": [
+            "caching",
+            "psr6"
+        ]
+    },
+    {
+        "name": "symfony/expression-language",
+        "version": "v3.4.2",
+        "version_normalized": "3.4.2.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/symfony/expression-language.git",
+            "reference": "c4b195436a74d9672d8463e4d427ca42449238e5"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/symfony/expression-language/zipball/c4b195436a74d9672d8463e4d427ca42449238e5",
+            "reference": "c4b195436a74d9672d8463e4d427ca42449238e5",
+            "shasum": ""
+        },
+        "require": {
+            "php": "^5.5.9|>=7.0.8",
+            "symfony/cache": "~3.1|~4.0"
+        },
+        "time": "2017-12-08T15:24:53+00:00",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "3.4-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Symfony\\Component\\ExpressionLanguage\\": ""
+            },
+            "exclude-from-classmap": [
+                "/Tests/"
+            ]
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Fabien Potencier",
+                "email": "fabien@symfony.com"
+            },
+            {
+                "name": "Symfony Community",
+                "homepage": "https://symfony.com/contributors"
+            }
+        ],
+        "description": "Symfony ExpressionLanguage Component",
+        "homepage": "https://symfony.com"
+    },
+    {
+        "name": "symfony/dom-crawler",
+        "version": "v3.4.2",
+        "version_normalized": "3.4.2.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/symfony/dom-crawler.git",
+            "reference": "dc847845c66fa68ad4522ed27e62b9b9dd12ab3b"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/symfony/dom-crawler/zipball/dc847845c66fa68ad4522ed27e62b9b9dd12ab3b",
+            "reference": "dc847845c66fa68ad4522ed27e62b9b9dd12ab3b",
             "shasum": ""
         },
         "require": {
@@ -5698,7 +5698,7 @@
         "suggest": {
             "symfony/css-selector": ""
         },
-        "time": "2017-11-05T16:10:10+00:00",
+        "time": "2017-12-14T19:40:10+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -5733,23 +5733,23 @@
     },
     {
         "name": "symfony/filesystem",
-        "version": "v3.4.1",
-        "version_normalized": "3.4.1.0",
+        "version": "v3.4.2",
+        "version_normalized": "3.4.2.0",
         "source": {
             "type": "git",
             "url": "https://github.com/symfony/filesystem.git",
-            "reference": "de56eee71e0a128d8c54ccc1909cdefd574bad0f"
+            "reference": "25b135bea251829e3db6a77d773643408b575ed4"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/symfony/filesystem/zipball/de56eee71e0a128d8c54ccc1909cdefd574bad0f",
-            "reference": "de56eee71e0a128d8c54ccc1909cdefd574bad0f",
+            "url": "https://api.github.com/repos/symfony/filesystem/zipball/25b135bea251829e3db6a77d773643408b575ed4",
+            "reference": "25b135bea251829e3db6a77d773643408b575ed4",
             "shasum": ""
         },
         "require": {
             "php": "^5.5.9|>=7.0.8"
         },
-        "time": "2017-11-19T18:59:05+00:00",
+        "time": "2017-12-14T19:40:10+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -5784,8 +5784,8 @@
     },
     {
         "name": "symfony/finder",
-        "version": "v3.4.1",
-        "version_normalized": "3.4.1.0",
+        "version": "v3.4.2",
+        "version_normalized": "3.4.2.0",
         "source": {
             "type": "git",
             "url": "https://github.com/symfony/finder.git",
@@ -5832,254 +5832,6 @@
         ],
         "description": "Symfony Finder Component",
         "homepage": "https://symfony.com"
-    },
-    {
-        "name": "drupal/interval",
-        "version": "1.1.0",
-        "version_normalized": "1.1.0.0",
-        "source": {
-            "type": "git",
-            "url": "https://git.drupal.org/project/interval",
-            "reference": "8.x-1.1"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://ftp.drupal.org/files/projects/interval-8.x-1.1.zip",
-            "reference": "8.x-1.1",
-            "shasum": "ff44df8c609a1b490132407b4ef3f7584ca8a6e7"
-        },
-        "require": {
-            "drupal/core": "*"
-        },
-        "type": "drupal-module",
-        "extra": {
-            "branch-alias": {
-                "dev-1.x": "1.x-dev"
-            },
-            "drupal": {
-                "version": "8.x-1.1",
-                "datestamp": "1510950785",
-                "security-coverage": {
-                    "status": "covered",
-                    "message": "Covered by Drupal's security advisory policy"
-                }
-            }
-        },
-        "installation-source": "dist",
-        "notification-url": "https://packages.drupal.org/8/downloads",
-        "license": [
-            "GPL-2.0+"
-        ],
-        "authors": [
-            {
-                "name": "Deciphered",
-                "homepage": "https://www.drupal.org/user/103796"
-            },
-            {
-                "name": "jonhattan",
-                "homepage": "https://www.drupal.org/user/49817"
-            },
-            {
-                "name": "larowlan",
-                "homepage": "https://www.drupal.org/user/395439"
-            },
-            {
-                "name": "nick_schuch",
-                "homepage": "https://www.drupal.org/user/1412036"
-            },
-            {
-                "name": "pcambra",
-                "homepage": "https://www.drupal.org/user/122101"
-            }
-        ],
-        "description": "A field and widget to allow entry of a date/time interval",
-        "homepage": "https://www.drupal.org/project/interval",
-        "support": {
-            "source": "http://cgit.drupalcode.org/interval"
-        }
-    },
-    {
-        "name": "drupal/recurring_period",
-        "version": "1.0.0-alpha2",
-        "version_normalized": "1.0.0.0-alpha2",
-        "source": {
-            "type": "git",
-            "url": "https://git.drupal.org/project/recurring_period",
-            "reference": "8.x-1.0-alpha2"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://ftp.drupal.org/files/projects/recurring_period-8.x-1.0-alpha2.zip",
-            "reference": "8.x-1.0-alpha2",
-            "shasum": "715a0bb15a224384ff924b9f0f8a713acf3b01e7"
-        },
-        "require": {
-            "drupal/core": "~8.0",
-            "drupal/interval": "*"
-        },
-        "type": "drupal-module",
-        "extra": {
-            "branch-alias": {
-                "dev-1.x": "1.x-dev"
-            },
-            "drupal": {
-                "version": "8.x-1.0-alpha2",
-                "datestamp": "1508751545",
-                "security-coverage": {
-                    "status": "not-covered",
-                    "message": "Project has not opted into security advisory coverage!"
-                }
-            }
-        },
-        "installation-source": "dist",
-        "notification-url": "https://packages.drupal.org/8/downloads",
-        "license": [
-            "GPL-2.0+"
-        ],
-        "authors": [
-            {
-                "name": "chrisrockwell",
-                "homepage": "https://www.drupal.org/user/448158"
-            },
-            {
-                "name": "joachim",
-                "homepage": "https://www.drupal.org/user/107701"
-            }
-        ],
-        "description": "Provides a configurable plugin for defining recurring time periods.",
-        "homepage": "https://www.drupal.org/project/recurring_period",
-        "support": {
-            "source": "http://cgit.drupalcode.org/recurring_period"
-        }
-    },
-    {
-        "name": "drupal/commerce_checkout",
-        "version": "2.2.0",
-        "version_normalized": "2.2.0.0",
-        "require": {
-            "drupal/commerce": "self.version",
-            "drupal/commerce_cart": "*",
-            "drupal/commerce_order": "*",
-            "drupal/core": "~8.0"
-        },
-        "type": "metapackage",
-        "extra": {
-            "branch-alias": {
-                "dev-2.x": "2.x-dev"
-            },
-            "drupal": {
-                "version": "8.x-2.2",
-                "datestamp": "1512585785",
-                "security-coverage": {
-                    "status": "covered",
-                    "message": "Covered by Drupal's security advisory policy"
-                }
-            }
-        },
-        "notification-url": "https://packages.drupal.org/8/downloads",
-        "license": [
-            "GPL-2.0+"
-        ],
-        "authors": [
-            {
-                "name": "Damien Tournoud",
-                "homepage": "https://www.drupal.org/user/22211"
-            },
-            {
-                "name": "bojanz",
-                "homepage": "https://www.drupal.org/user/86106"
-            },
-            {
-                "name": "jsacksick",
-                "homepage": "https://www.drupal.org/user/972218"
-            },
-            {
-                "name": "mglaman",
-                "homepage": "https://www.drupal.org/user/2416470"
-            },
-            {
-                "name": "rszrama",
-                "homepage": "https://www.drupal.org/user/49344"
-            }
-        ],
-        "description": "Provides configurable checkout flows.",
-        "homepage": "https://www.drupal.org/project/commerce",
-        "support": {
-            "source": "http://cgit.drupalcode.org/commerce"
-        }
-    },
-    {
-        "name": "drupal/commerce_license",
-        "version": "dev-2.x",
-        "version_normalized": "dev-2.x",
-        "source": {
-            "type": "git",
-            "url": "https://git.drupal.org/project/commerce_license",
-            "reference": "f6228b7d9d6a7ab32a8487738e5f25075cfeceb5"
-        },
-        "require": {
-            "drupal/commerce": "*",
-            "drupal/commerce_checkout": "*",
-            "drupal/commerce_product": "*",
-            "drupal/core": "~8.0",
-            "drupal/entity": "*",
-            "drupal/recurring_period": "*",
-            "drupal/state_machine": "*"
-        },
-        "require-dev": {
-            "drupal/advancedqueue": "*",
-            "drupal/commerce_recurring": "*"
-        },
-        "type": "drupal-module",
-        "extra": {
-            "branch-alias": {
-                "dev-2.x": "2.x-dev"
-            },
-            "drupal": {
-                "version": "8.x-2.x-dev",
-                "datestamp": "1512397985",
-                "security-coverage": {
-                    "status": "not-covered",
-                    "message": "Dev releases are not covered by Drupal security advisories."
-                }
-            }
-        },
-        "installation-source": "source",
-        "notification-url": "https://packages.drupal.org/8/downloads",
-        "license": [
-            "GPL-2.0+"
-        ],
-        "authors": [
-            {
-                "name": "Kazanir",
-                "homepage": "https://www.drupal.org/user/2279698"
-            },
-            {
-                "name": "bojanz",
-                "homepage": "https://www.drupal.org/user/86106"
-            },
-            {
-                "name": "joachim",
-                "homepage": "https://www.drupal.org/user/107701"
-            },
-            {
-                "name": "jsacksick",
-                "homepage": "https://www.drupal.org/user/972218"
-            },
-            {
-                "name": "pjcdawkins",
-                "homepage": "https://www.drupal.org/user/1025236"
-            }
-        ],
-        "description": "License entities and product behavior",
-        "homepage": "https://www.drupal.org/project/commerce_license",
-        "keywords": [
-            "Drupal"
-        ],
-        "support": {
-            "source": "http://cgit.drupalcode.org/commerce_license",
-            "issues": "https://www.drupal.org/project/issues/commerce_license"
-        }
     },
     {
         "name": "drupal/acquia_connector",
@@ -6339,6 +6091,260 @@
         "homepage": "http://drupal.org/project/commerce_paypal",
         "support": {
             "source": "http://cgit.drupalcode.org/commerce_paypal"
+        }
+    },
+    {
+        "name": "drupal/interval",
+        "version": "1.1.0",
+        "version_normalized": "1.1.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://git.drupal.org/project/interval",
+            "reference": "8.x-1.1"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://ftp.drupal.org/files/projects/interval-8.x-1.1.zip",
+            "reference": "8.x-1.1",
+            "shasum": "ff44df8c609a1b490132407b4ef3f7584ca8a6e7"
+        },
+        "require": {
+            "drupal/core": "*"
+        },
+        "type": "drupal-module",
+        "extra": {
+            "branch-alias": {
+                "dev-1.x": "1.x-dev"
+            },
+            "drupal": {
+                "version": "8.x-1.1",
+                "datestamp": "1510950785",
+                "security-coverage": {
+                    "status": "covered",
+                    "message": "Covered by Drupal's security advisory policy"
+                }
+            }
+        },
+        "installation-source": "dist",
+        "notification-url": "https://packages.drupal.org/8/downloads",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "authors": [
+            {
+                "name": "Deciphered",
+                "homepage": "https://www.drupal.org/user/103796"
+            },
+            {
+                "name": "jonhattan",
+                "homepage": "https://www.drupal.org/user/49817"
+            },
+            {
+                "name": "larowlan",
+                "homepage": "https://www.drupal.org/user/395439"
+            },
+            {
+                "name": "nick_schuch",
+                "homepage": "https://www.drupal.org/user/1412036"
+            },
+            {
+                "name": "pcambra",
+                "homepage": "https://www.drupal.org/user/122101"
+            }
+        ],
+        "description": "A field and widget to allow entry of a date/time interval",
+        "homepage": "https://www.drupal.org/project/interval",
+        "support": {
+            "source": "http://cgit.drupalcode.org/interval"
+        }
+    },
+    {
+        "name": "drupal/recurring_period",
+        "version": "1.0.0-alpha2",
+        "version_normalized": "1.0.0.0-alpha2",
+        "source": {
+            "type": "git",
+            "url": "https://git.drupal.org/project/recurring_period",
+            "reference": "8.x-1.0-alpha2"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://ftp.drupal.org/files/projects/recurring_period-8.x-1.0-alpha2.zip",
+            "reference": "8.x-1.0-alpha2",
+            "shasum": "715a0bb15a224384ff924b9f0f8a713acf3b01e7"
+        },
+        "require": {
+            "drupal/core": "~8.0",
+            "drupal/interval": "*"
+        },
+        "type": "drupal-module",
+        "extra": {
+            "branch-alias": {
+                "dev-1.x": "1.x-dev"
+            },
+            "drupal": {
+                "version": "8.x-1.0-alpha2",
+                "datestamp": "1508751545",
+                "security-coverage": {
+                    "status": "not-covered",
+                    "message": "Project has not opted into security advisory coverage!"
+                }
+            }
+        },
+        "installation-source": "dist",
+        "notification-url": "https://packages.drupal.org/8/downloads",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "authors": [
+            {
+                "name": "chrisrockwell",
+                "homepage": "https://www.drupal.org/user/448158"
+            },
+            {
+                "name": "joachim",
+                "homepage": "https://www.drupal.org/user/107701"
+            }
+        ],
+        "description": "Provides a configurable plugin for defining recurring time periods.",
+        "homepage": "https://www.drupal.org/project/recurring_period",
+        "support": {
+            "source": "http://cgit.drupalcode.org/recurring_period"
+        }
+    },
+    {
+        "name": "drupal/commerce_checkout",
+        "version": "2.2.0",
+        "version_normalized": "2.2.0.0",
+        "require": {
+            "drupal/commerce": "self.version",
+            "drupal/commerce_cart": "*",
+            "drupal/commerce_order": "*",
+            "drupal/core": "~8.0"
+        },
+        "type": "metapackage",
+        "extra": {
+            "branch-alias": {
+                "dev-2.x": "2.x-dev"
+            },
+            "drupal": {
+                "version": "8.x-2.2",
+                "datestamp": "1512585785",
+                "security-coverage": {
+                    "status": "covered",
+                    "message": "Covered by Drupal's security advisory policy"
+                }
+            }
+        },
+        "notification-url": "https://packages.drupal.org/8/downloads",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "authors": [
+            {
+                "name": "Damien Tournoud",
+                "homepage": "https://www.drupal.org/user/22211"
+            },
+            {
+                "name": "bojanz",
+                "homepage": "https://www.drupal.org/user/86106"
+            },
+            {
+                "name": "jsacksick",
+                "homepage": "https://www.drupal.org/user/972218"
+            },
+            {
+                "name": "mglaman",
+                "homepage": "https://www.drupal.org/user/2416470"
+            },
+            {
+                "name": "rszrama",
+                "homepage": "https://www.drupal.org/user/49344"
+            }
+        ],
+        "description": "Provides configurable checkout flows.",
+        "homepage": "https://www.drupal.org/project/commerce",
+        "support": {
+            "source": "http://cgit.drupalcode.org/commerce"
+        }
+    },
+    {
+        "name": "drupal/commerce_license",
+        "version": "2.0.0-alpha1",
+        "version_normalized": "2.0.0.0-alpha1",
+        "source": {
+            "type": "git",
+            "url": "https://git.drupal.org/project/commerce_license",
+            "reference": "8.x-2.0-alpha1"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://ftp.drupal.org/files/projects/commerce_license-8.x-2.0-alpha1.zip",
+            "reference": "8.x-2.0-alpha1",
+            "shasum": "614fe83015466404d58a350c707e5bec934e7365"
+        },
+        "require": {
+            "drupal/commerce": "*",
+            "drupal/commerce_checkout": "*",
+            "drupal/commerce_product": "*",
+            "drupal/core": "~8.0",
+            "drupal/entity": "*",
+            "drupal/recurring_period": "*",
+            "drupal/state_machine": "*"
+        },
+        "require-dev": {
+            "drupal/advancedqueue": "*",
+            "drupal/commerce_recurring": "*"
+        },
+        "type": "drupal-module",
+        "extra": {
+            "branch-alias": {
+                "dev-2.x": "2.x-dev"
+            },
+            "drupal": {
+                "version": "8.x-2.0-alpha1",
+                "datestamp": "1512658384",
+                "security-coverage": {
+                    "status": "not-covered",
+                    "message": "Alpha releases are not covered by Drupal security advisories."
+                }
+            }
+        },
+        "installation-source": "dist",
+        "notification-url": "https://packages.drupal.org/8/downloads",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "authors": [
+            {
+                "name": "Kazanir",
+                "homepage": "https://www.drupal.org/user/2279698"
+            },
+            {
+                "name": "bojanz",
+                "homepage": "https://www.drupal.org/user/86106"
+            },
+            {
+                "name": "joachim",
+                "homepage": "https://www.drupal.org/user/107701"
+            },
+            {
+                "name": "jsacksick",
+                "homepage": "https://www.drupal.org/user/972218"
+            },
+            {
+                "name": "pjcdawkins",
+                "homepage": "https://www.drupal.org/user/1025236"
+            }
+        ],
+        "description": "License entities and product behavior",
+        "homepage": "https://www.drupal.org/project/commerce_license",
+        "keywords": [
+            "Drupal"
+        ],
+        "support": {
+            "source": "http://cgit.drupalcode.org/commerce_license",
+            "issues": "https://www.drupal.org/project/issues/commerce_license"
         }
     },
     {

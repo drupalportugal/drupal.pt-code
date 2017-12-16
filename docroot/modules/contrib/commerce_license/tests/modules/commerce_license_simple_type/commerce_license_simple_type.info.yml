@@ -2,4 +2,10 @@ name: 'Commerce License Simple Type'
 type: module
 description: 'Test module for Commerce License. Provides a simple license type.'
 package: Testing
-core: 8.x
+# core: 8.x
+
+# Information added by Drupal.org packaging script on 2017-12-07
+version: '8.x-2.0-alpha1'
+core: '8.x'
+project: 'commerce_license'
+datestamp: 1512658393

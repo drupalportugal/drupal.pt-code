@@ -27,7 +27,7 @@ class ProductVariationTypeFormAlter {
   /**
    * Construct a ProductVariationTypeFormAlter object.
    *
-   * @param \Drupal\commerce_product\Entity\ProductVariationType $entity
+   * @param \Drupal\commerce_product\Entity\ProductVariationType $variation_type
    *   The product variation type entity.
    */
   public function __construct(ProductVariationType $variation_type) {
@@ -51,7 +51,8 @@ class ProductVariationTypeFormAlter {
       '#description' => t("Limit the license types that can be used on product variations of this type. All types will be allowed if none are selected."),
       '#options' => $options,
       '#default_value' => $this->variation_type->getThirdPartySetting('commerce_license', 'license_types') ?: [],
-      // Only show this if the license trait is set on the product variation type.
+      // Only show this if the license trait is set on the product variation
+      // type.
       '#states' => [
         'visible' => [
           ':input[name="traits[commerce_license]"]' => ['checked' => TRUE],
@@ -107,28 +108,6 @@ class ProductVariationTypeFormAlter {
         [
           '@order-item-type-label' => $order_item_type->label(),
           '@url-edit-order-item-type' => $order_item_type->toUrl('edit-form')->toString(),
-        ]
-      ));
-    }
-
-    // The order must use a workflow with a fulfilment state.
-    $order_type_id = $order_item_type->getOrderTypeId();
-    $order_type = \Drupal::entityTypeManager()->getStorage('commerce_order_type')->load($order_type_id);
-    $workflow_id = $order_type->getWorkflowId();
-    $workflow = \Drupal::service('plugin.manager.workflow')->createInstance($workflow_id);
-    $states = $workflow->getStates();
-    if (!isset($states['fulfillment'])) {
-      $form_state->setError($form['orderItemType'], t(
-        "The License trait requires an order workflow with the 'fulfillment' state. " .
-        'This product variation is set to use the @order-item-type-label order item type, ' .
-        'which is set to use the @order-type-label order type, ' .
-        'which is set to use the @workflow-label workflow. ' .
-        'You must either change this, or <a href="@url-edit-order-type">edit the order type</a> to change the workflow.',
-        [
-          '@order-item-type-label' => $order_item_type->label(),
-          '@order-type-label' => $order_type->label(),
-          '@workflow-label' => $workflow->getLabel(),
-          '@url-edit-order-type' => $order_type->toUrl('edit-form')->toString(),
         ]
       ));
     }

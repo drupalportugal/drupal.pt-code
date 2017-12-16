@@ -24,6 +24,8 @@ use Drupal\Tests\commerce\Kernel\CommerceKernelTestBase;
  */
 class CommerceRecurringSubscriptionLifecycleTest extends CommerceKernelTestBase {
 
+  use LicenseOrderCompletionTestTrait;
+
   /**
    * The license storage.
    *
@@ -85,7 +87,7 @@ class CommerceRecurringSubscriptionLifecycleTest extends CommerceKernelTestBase 
     $order_type = $this->createEntity('commerce_order_type', [
       'id' => 'license_order_type',
       'label' => $this->randomMachineName(),
-      'workflow' => 'order_fulfillment',
+      'workflow' => 'order_default',
     ]);
     commerce_order_add_order_items_field($order_type);
 
@@ -216,12 +218,9 @@ class CommerceRecurringSubscriptionLifecycleTest extends CommerceKernelTestBase 
     $subscriptions = Subscription::loadMultiple();
     $this->assertCount(0, $subscriptions);
 
-    // Take the order via fulfillment and completion. We need this sequence for
-    // the license to get activated.
-    $order->state = 'fulfillment';
-    $order->save();
-    $order->state = 'completed';
-    $order->save();
+    // Take the order through checkout.
+    $this->completeLicenseOrderCheckout($order);
+    $order = $this->reloadEntity($order);
 
     $subscriptions = Subscription::loadMultiple();
     $this->assertCount(1, $subscriptions);
