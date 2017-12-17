@@ -30,4 +30,18 @@ class CommerceLicenseType extends Plugin {
    * @var \Drupal\Core\Annotation\Translation
    */
   public $label;
+
+  /**
+   * The order state in which the license activates.
+   *
+   * Supported values are:
+   *  - 'completed'
+   *  - 'fulfillment'
+   *
+   * @see commerce_order.workflows.yml
+   *
+   * @var string
+   */
+  public $activation_order_state;
+
 }

@@ -11,6 +11,9 @@ dependencies:
   - commerce:commerce_product
   - state_machine
   - recurring_period
+test_dependencies:
+  - advancedqueue
+  - commerce_recurring
 config_devel:
   install:
     - views.view.commerce_licenses

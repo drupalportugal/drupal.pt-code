@@ -15,7 +15,7 @@ use Drupal\commerce\BundleFieldDefinition;
  *
  * @CommerceEntityTrait(
  *  id = "commerce_license",
- *  label = @Translation("Provides a license."),
+ *  label = @Translation("Provides a license"),
  *  entity_types = {"commerce_product_variation"}
  * )
  */

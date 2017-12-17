@@ -28,8 +28,8 @@ config_devel:
     - profile.type.customer
     - system.action.commerce_delete_order_action
 
-# Information added by Drupal.org packaging script on 2017-11-03
-version: '8.x-2.1'
+# Information added by Drupal.org packaging script on 2017-12-06
+version: '8.x-2.2'
 core: '8.x'
 project: 'commerce'
-datestamp: 1509734300
+datestamp: 1512585809

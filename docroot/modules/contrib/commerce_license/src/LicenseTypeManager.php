@@ -47,10 +47,14 @@ class LicenseTypeManager extends DefaultPluginManager {
   public function processDefinition(&$definition, $plugin_id) {
     parent::processDefinition($definition, $plugin_id);
 
-    foreach (['id', 'label'] as $required_property) {
+    foreach (['id', 'label', 'activation_order_state'] as $required_property) {
       if (empty($definition[$required_property])) {
         throw new PluginException(sprintf('The license type %s must define the %s property.', $plugin_id, $required_property));
       }
+    }
+
+    if (!in_array($definition['activation_order_state'], ['completed', 'fulfillment'])) {
+      throw new PluginException(sprintf('The license type %s defines an activation_order_state value %s that is unsupported.', $plugin_id, $state));
     }
   }
 

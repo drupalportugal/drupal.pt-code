@@ -14,7 +14,7 @@ use Drupal\Core\Entity\EntityTypeBundleInfoInterface;
 use Drupal\Component\Datetime\TimeInterface;
 
 /**
- * Form controller for License edit forms.
+ * Form controller for License create forms.
  *
  * @ingroup commerce_license
  */

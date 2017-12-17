@@ -37,7 +37,7 @@ class LicenseStorage extends CommerceContentEntityStorage implements LicenseStor
   /**
    * {@inheritdoc}
    */
-  public function createFromProductVariation(ProductVariationInterface $variation, int $uid) {
+  public function createFromProductVariation(ProductVariationInterface $variation, $uid) {
     // TODO: throw an exception if the variation doesn't have this field.
     $license_type_plugin = $variation->get('license_type')->first()->getTargetInstance();
 

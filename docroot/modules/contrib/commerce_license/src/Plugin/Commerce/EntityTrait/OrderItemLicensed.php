@@ -20,7 +20,7 @@ use Drupal\commerce\BundleFieldDefinition;
  *
  * @CommerceEntityTrait(
  *  id = "commerce_license_order_item_type",
- *  label = @Translation("Provides an order item type for use with licenses."),
+ *  label = @Translation("Provides an order item type for use with licenses"),
  *  entity_types = {"commerce_order_item"}
  * )
  */

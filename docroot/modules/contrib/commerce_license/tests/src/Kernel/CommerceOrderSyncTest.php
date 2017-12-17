@@ -17,6 +17,7 @@ use Drupal\Tests\commerce_cart\Kernel\CartManagerTestTrait;
 class CommerceOrderSyncTest extends CommerceKernelTestBase {
 
   use CartManagerTestTrait;
+  use LicenseOrderCompletionTestTrait;
 
   /**
    * The variation to test against.
@@ -31,6 +32,13 @@ class CommerceOrderSyncTest extends CommerceKernelTestBase {
    * @var \Drupal\commerce_cart\CartManagerInterface
    */
   protected $cartManager;
+
+  /**
+   * The license storage.
+   *
+   * @var \Drupal\Core\Entity\EntityStorageInterface
+   */
+  protected $licenseStorage;
 
   /**
    * Modules to enable.
@@ -60,15 +68,18 @@ class CommerceOrderSyncTest extends CommerceKernelTestBase {
     $this->installEntitySchema('commerce_product_variation');
     $this->installEntitySchema('commerce_order');
     $this->installEntitySchema('commerce_order_item');
+    $this->installEntitySchema('commerce_license');
     $this->installConfig('commerce_order');
     $this->installConfig('commerce_product');
     $this->createUser();
+
+    $this->licenseStorage = $this->container->get('entity_type.manager')->getStorage('commerce_license');
 
     // Create an order type for licenses which uses the fulfillment workflow.
     $order_type = $this->createEntity('commerce_order_type', [
       'id' => 'license_order_type',
       'label' => $this->randomMachineName(),
-      'workflow' => 'order_fulfillment',
+      'workflow' => 'order_default',
     ]);
     commerce_order_add_order_items_field($order_type);
 
@@ -135,21 +146,17 @@ class CommerceOrderSyncTest extends CommerceKernelTestBase {
   public function testOrderFulfillment() {
     $this->installCommerceCart();
 
+    $licenses = $this->licenseStorage->loadMultiple();
+    $this->assertCount(0, $licenses, "There are no licenses yet.");
+
     $this->store = $this->createStore();
     $customer = $this->createUser();
     $cart_order = $this->container->get('commerce_cart.cart_provider')->createCart('license_order_type', $this->store, $customer);
     $this->cartManager = $this->container->get('commerce_cart.cart_manager');
     $this->cartManager->addEntity($cart_order, $this->variation);
 
-    // Place, then fulfill the order.
-    $workflow = $cart_order->getState()->getWorkflow();
-    $cart_order->getState()->applyTransition($workflow->getTransition('place'));
-    $cart_order->save();
-
-    $workflow = $cart_order->getState()->getWorkflow();
-    $cart_order->getState()->applyTransition($workflow->getTransition('fulfill'));
-    $cart_order->save();
-
+    // Take the order through checkout.
+    $this->completeLicenseOrderCheckout($cart_order);
     $order = $this->reloadEntity($cart_order);
 
     // Get the order item. There should be only one in the order.
@@ -157,7 +164,11 @@ class CommerceOrderSyncTest extends CommerceKernelTestBase {
 
     // Check that the order item now refers to a new license which has been
     // created for the user.
-    $license = $order_item->license->entity;
+    $licenses = $this->licenseStorage->loadMultiple();
+    $this->assertCount(1, $licenses, "One license was saved.");
+    $license = reset($licenses);
+
+    $this->assertEquals($license->id(), $order_item->license->entity->id(), "The order item has a reference to the saved license.");
 
     $this->assertEquals('commerce_license', $license->getEntityTypeId(), 'The order item has a license entity set in its license field.');
     $this->assertEquals('simple', $license->bundle(), 'The license entity is of the expected type.');

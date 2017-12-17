@@ -19,14 +19,14 @@ use Drupal\commerce_license\Plugin\Commerce\LicenseType\GrantedEntityLockingInte
 class GrantedEntityFormAlter {
 
   /**
-   * The form entity which has been used for populating form element defaults.
+   * The entity that is being edited in the form being altered.
    *
    * @var \Drupal\Core\Entity\EntityInterface
    */
   protected $entity;
 
   /**
-   * Construct a BundleFormAlter object.
+   * Construct a GrantedEntityFormAlter object.
    *
    * @param \Drupal\Core\Entity\EntityInterface $entity
    *   The entity object.

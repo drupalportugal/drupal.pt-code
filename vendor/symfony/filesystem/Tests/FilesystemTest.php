@@ -26,7 +26,7 @@ class FilesystemTest extends FilesystemTestCase
         $this->filesystem->copy($sourceFilePath, $targetFilePath);
 
         $this->assertFileExists($targetFilePath);
-        $this->assertEquals('SOURCE FILE', file_get_contents($targetFilePath));
+        $this->assertStringEqualsFile($targetFilePath, 'SOURCE FILE');
     }
 
     /**
@@ -73,7 +73,7 @@ class FilesystemTest extends FilesystemTestCase
         $this->filesystem->copy($sourceFilePath, $targetFilePath);
 
         $this->assertFileExists($targetFilePath);
-        $this->assertEquals('SOURCE FILE', file_get_contents($targetFilePath));
+        $this->assertStringEqualsFile($targetFilePath, 'SOURCE FILE');
     }
 
     public function testCopyDoesNotOverrideExistingFileByDefault()
@@ -92,7 +92,7 @@ class FilesystemTest extends FilesystemTestCase
         $this->filesystem->copy($sourceFilePath, $targetFilePath);
 
         $this->assertFileExists($targetFilePath);
-        $this->assertEquals('TARGET FILE', file_get_contents($targetFilePath));
+        $this->assertStringEqualsFile($targetFilePath, 'TARGET FILE');
     }
 
     public function testCopyOverridesExistingFileIfForced()
@@ -111,7 +111,7 @@ class FilesystemTest extends FilesystemTestCase
         $this->filesystem->copy($sourceFilePath, $targetFilePath, true);
 
         $this->assertFileExists($targetFilePath);
-        $this->assertEquals('SOURCE FILE', file_get_contents($targetFilePath));
+        $this->assertStringEqualsFile($targetFilePath, 'SOURCE FILE');
     }
 
     /**
@@ -153,7 +153,7 @@ class FilesystemTest extends FilesystemTestCase
 
         $this->assertTrue(is_dir($targetFileDirectory));
         $this->assertFileExists($targetFilePath);
-        $this->assertEquals('SOURCE FILE', file_get_contents($targetFilePath));
+        $this->assertStringEqualsFile($targetFilePath, 'SOURCE FILE');
     }
 
     /**
@@ -840,9 +840,9 @@ class FilesystemTest extends FilesystemTestCase
 
         $this->filesystem->remove($link);
 
-        $this->assertTrue(!is_link($link));
-        $this->assertTrue(!is_file($link));
-        $this->assertTrue(!is_dir($link));
+        $this->assertFalse(is_link($link));
+        $this->assertFalse(is_file($link));
+        $this->assertFalse(is_dir($link));
     }
 
     public function testSymlinkIsOverwrittenIfPointsToDifferentTarget()
@@ -1100,9 +1100,7 @@ class FilesystemTest extends FilesystemTestCase
             array('/var/lib/symfony/src/Symfony/', '/var/lib/symfony/src/Symfony/Component/', '../'),
             array('/var/lib/symfony/src/Symfony', '/var/lib/symfony/src/Symfony/Component', '../'),
             array('/var/lib/symfony/src/Symfony', '/var/lib/symfony/src/Symfony/Component/', '../'),
-            array('var/lib/symfony/', 'var/lib/symfony/src/Symfony/Component', '../../../'),
             array('/usr/lib/symfony/', '/var/lib/symfony/src/Symfony/Component', '../../../../../../usr/lib/symfony/'),
-            array('usr/lib/symfony/', 'var/lib/symfony/src/Symfony/Component', '../../../../../../usr/lib/symfony/'),
             array('/var/lib/symfony/src/Symfony/', '/var/lib/symfony/', 'src/Symfony/'),
             array('/aa/bb', '/aa/bb', './'),
             array('/aa/bb', '/aa/bb/', './'),
@@ -1134,6 +1132,31 @@ class FilesystemTest extends FilesystemTestCase
             array('C:/aa/bb/../../cc', 'C:/aa/../dd/..', 'cc/'),
             array('C:/../aa/bb/cc', 'C:/aa/dd/..', 'bb/cc/'),
             array('C:/../../aa/../bb/cc', 'C:/aa/dd/..', '../bb/cc/'),
+        );
+
+        if ('\\' === DIRECTORY_SEPARATOR) {
+            $paths[] = array('c:\var\lib/symfony/src/Symfony/', 'c:/var/lib/symfony/', 'src/Symfony/');
+        }
+
+        return $paths;
+    }
+
+    /**
+     * @group legacy
+     * @dataProvider provideLegacyPathsForMakePathRelativeWithRelativePaths
+     * @expectedDeprecation Support for passing relative paths to Symfony\Component\Filesystem\Filesystem::makePathRelative() is deprecated since version 3.4 and will be removed in 4.0.
+     */
+    public function testMakePathRelativeWithRelativePaths($endPath, $startPath, $expectedPath)
+    {
+        $path = $this->filesystem->makePathRelative($endPath, $startPath);
+
+        $this->assertEquals($expectedPath, $path);
+    }
+
+    public function provideLegacyPathsForMakePathRelativeWithRelativePaths()
+    {
+        return array(
+            array('usr/lib/symfony/', 'var/lib/symfony/src/Symfony/Component', '../../../../../../usr/lib/symfony/'),
             array('aa/bb', 'aa/cc', '../bb/'),
             array('aa/cc', 'bb/cc', '../../aa/cc/'),
             array('aa/bb', 'aa/./cc', '../bb/'),
@@ -1146,12 +1169,6 @@ class FilesystemTest extends FilesystemTestCase
             array('', 'aa/', '../'),
             array('aa/', '', 'aa/'),
         );
-
-        if ('\\' === DIRECTORY_SEPARATOR) {
-            $paths[] = array('c:\var\lib/symfony/src/Symfony/', 'c:/var/lib/symfony/', 'src/Symfony/');
-        }
-
-        return $paths;
     }
 
     public function testMirrorCopiesFilesAndDirectoriesRecursively()
@@ -1457,7 +1474,7 @@ class FilesystemTest extends FilesystemTestCase
 
         $this->filesystem->dumpFile($filename, 'bar');
         $this->assertFileExists($filename);
-        $this->assertSame('bar', file_get_contents($filename));
+        $this->assertStringEqualsFile($filename, 'bar');
 
         // skip mode check on Windows
         if ('\\' !== DIRECTORY_SEPARATOR) {
@@ -1474,7 +1491,7 @@ class FilesystemTest extends FilesystemTestCase
         $this->filesystem->dumpFile($filename, 'bar');
 
         $this->assertFileExists($filename);
-        $this->assertSame('bar', file_get_contents($filename));
+        $this->assertStringEqualsFile($filename, 'bar');
     }
 
     public function testDumpFileWithFileScheme()
@@ -1489,7 +1506,7 @@ class FilesystemTest extends FilesystemTestCase
         $this->filesystem->dumpFile($filename, 'bar');
 
         $this->assertFileExists($filename);
-        $this->assertSame('bar', file_get_contents($filename));
+        $this->assertStringEqualsFile($filename, 'bar');
     }
 
     public function testDumpFileWithZlibScheme()
@@ -1501,7 +1518,7 @@ class FilesystemTest extends FilesystemTestCase
 
         // Zlib stat uses file:// wrapper so remove scheme
         $this->assertFileExists(str_replace($scheme, '', $filename));
-        $this->assertSame('bar', file_get_contents($filename));
+        $this->assertStringEqualsFile($filename, 'bar');
     }
 
     public function testAppendToFile()
@@ -1518,7 +1535,7 @@ class FilesystemTest extends FilesystemTestCase
         $this->filesystem->appendToFile($filename, 'bar');
 
         $this->assertFileExists($filename);
-        $this->assertSame('foobar', file_get_contents($filename));
+        $this->assertStringEqualsFile($filename, 'foobar');
 
         // skip mode check on Windows
         if ('\\' !== DIRECTORY_SEPARATOR) {
@@ -1540,7 +1557,7 @@ class FilesystemTest extends FilesystemTestCase
         $this->filesystem->appendToFile($filename, 'bar');
 
         $this->assertFileExists($filename);
-        $this->assertSame('foobar', file_get_contents($filename));
+        $this->assertStringEqualsFile($filename, 'foobar');
     }
 
     public function testAppendToFileWithZlibScheme()
@@ -1550,12 +1567,12 @@ class FilesystemTest extends FilesystemTestCase
         $this->filesystem->dumpFile($filename, 'foo');
 
         // Zlib stat uses file:// wrapper so remove it
-        $this->assertSame('foo', file_get_contents(str_replace($scheme, '', $filename)));
+        $this->assertStringEqualsFile(str_replace($scheme, '', $filename), 'foo');
 
         $this->filesystem->appendToFile($filename, 'bar');
 
         $this->assertFileExists($filename);
-        $this->assertSame('foobar', file_get_contents($filename));
+        $this->assertStringEqualsFile($filename, 'foobar');
     }
 
     public function testAppendToFileCreateTheFileIfNotExists()
@@ -1576,7 +1593,7 @@ class FilesystemTest extends FilesystemTestCase
         }
 
         $this->assertFileExists($filename);
-        $this->assertSame('bar', file_get_contents($filename));
+        $this->assertStringEqualsFile($filename, 'bar');
     }
 
     public function testDumpKeepsExistingPermissionsWhenOverwritingAnExistingFile()

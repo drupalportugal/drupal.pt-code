@@ -1,5 +1,5 @@
-entity.commerce_license.create_form:
-  route_name: entity.commerce_license.create_form
+entity.commerce_license.add_page:
+  route_name: entity.commerce_license.add_page
   title: 'Create license'
   appears_on:
     - entity.commerce_license.collection
