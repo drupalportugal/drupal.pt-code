@@ -44,7 +44,7 @@
     "drupal/core": "^8.4.3",
     "drupal/acquia_connector": "^1.14",
     "drupal/address": "^1.2",
-    "drupal/age_field_formatter": "^1.0",
+    "drupal/age_field_formatter": "^2.0",
     "drupal/commerce": "^2.2",
     "drupal/commerce_paypal": "^1.0-beta1",
     "drupal/commerce_license": "^2.0-alpha1",
