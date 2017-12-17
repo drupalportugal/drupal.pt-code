@@ -117,6 +117,12 @@
       "docroot/profiles/contrib/{$name}": ["type:drupal-profile"],
       "docroot/themes/contrib/{$name}": ["type:drupal-theme"],
       "drush/contrib/{$name}": ["type:drupal-drush"]
+    },
+    "patches": {
+      "drupal/page_manager": {
+        "#2876880 - page_variant entity type does not exist when installing or enabling": "https://www.drupal.org/files/issues/2876880-page-varient-cache-2.patch",
+        "#2868216 - Page variants cannot be selected": "https://www.drupal.org/files/issues/page_manager-page_variants_selection-2868216-7.patch"
+      }
     }
   }
 }
