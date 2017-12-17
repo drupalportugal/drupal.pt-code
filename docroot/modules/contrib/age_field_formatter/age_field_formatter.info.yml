@@ -4,10 +4,10 @@ description: Takes the value from a date field and calculate and display the age
 # core: 8.x
 package: Date
 dependencies:
-  - datetime
+  - drupal:datetime
 
-# Information added by Drupal.org packaging script on 2017-03-29
-version: '8.x-1.0'
+# Information added by Drupal.org packaging script on 2017-11-30
+version: '8.x-2.0'
 core: '8.x'
 project: 'age_field_formatter'
-datestamp: 1490782986
+datestamp: 1512000786

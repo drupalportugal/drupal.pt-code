@@ -28,7 +28,8 @@ class AgeFieldFormatter extends FormatterBase {
   public static function defaultSettings() {
     $options = parent::defaultSettings();
 
-    $options['birthdate'] = TRUE;
+    $options['age_format'] = TRUE;
+    $options['year_suffix'] = TRUE;
     return $options;
   }
 
@@ -38,12 +39,24 @@ class AgeFieldFormatter extends FormatterBase {
   public function settingsForm(array $form, FormStateInterface $form_state) {
     $elements = parent::settingsForm($form, $form_state);
 
-    $elements['birthdate'] = array(
+    $age_formats = [
+      'birthdate' => $this->t('Date plus Age with label'),
+      'birthdate_nolabel' => $this->t('Date with no Age label'),
+      'age_only' => $this->t('Age only'),
+    ];
+
+    $elements['age_format'] = [
+      '#type' => 'select',
+      '#title' => $this->t('Date/age format'),
+      '#options' => $age_formats,
+      '#default_value' => $this->getSetting('age_format'),
+    ];
+
+    $elements['year_suffix'] = [
       '#type' => 'checkbox',
-      '#title' => $this->t('Include birthdate'),
-      '#description' => $this->t('Include the birthdate before the age.'),
-      '#default_value' => $this->getSetting('birthdate'),
-    );
+      '#title' => $this->t('Display a “years” suffix after the age'),
+      '#default_value' => $this->getSetting('year_suffix'),
+    ];
 
     return $elements;
   }
@@ -54,12 +67,22 @@ class AgeFieldFormatter extends FormatterBase {
   public function settingsSummary() {
     $summary = [];
     // Implement settings summary.
-    $settings = $this->getSetting('birthdate');
-    if ($settings == '1') {
+    $setting = $this->getSetting('age_format');
+    $year_suffix = $this->getSetting('year_suffix');
+    $year_suffix_summary = $this->t('years suffix');
+
+    if ($setting == 'age_only') {
+      $format = $this->t('age only');
+    } elseif ($setting == 'birthdate_nolabel') {
       $format = $this->t('date (age)');
     } else {
-      $format = $this->t('age only');
+      $format = $this->t('date (age: xx)');
     }
+
+    if ($year_suffix == true) {
+      $format = $format . ' + ' . $year_suffix_summary;
+    }
+
     $summary[] = $this->t('Age format: %format', array('%format' => $format));
 
     return $summary;
@@ -88,8 +111,6 @@ class AgeFieldFormatter extends FormatterBase {
    *   The textual output generated.
    */
   protected function viewValue(FieldItemInterface $item) {
-    // The text value has no text format assigned to it, so the user input
-    // should equal the output, including newlines.
 
     $from = new DrupalDateTime($item->date);
     $to = new DrupalDateTime();
@@ -98,13 +119,23 @@ class AgeFieldFormatter extends FormatterBase {
 
     $agelabel = $this->t('Age');
 
-    if ($this->getSetting('birthdate')) { //1
-      $age = $item->value." (".$agelabel.": ". $age .")";
-    } else {
-      $age; // We do not force prefix label to the value.
+    $setting = $this->getSetting('age_format');
+    $year_suffix = $this->getSetting('year_suffix');
+
+    if ($year_suffix == true) {
+      $age_suffix = $this->stringTranslation->formatPlural($age, 'year', 'years');
+      $age = $age . ' ' . $age_suffix;
     }
 
-    return nl2br(Html::escape($age));
+    if ($setting == 'birthdate') {
+      $age_formatted = $item->value." (".$agelabel.": ". $age .")";
+    } elseif ($setting == 'birthdate_nolabel') {
+      $age_formatted = $item->value." (". $age .")";
+    } else {
+      $age_formatted = $age; // We do not force prefix a label to the value.
+    }
+
+    return nl2br(Html::escape($age_formatted));
   }
 
 }

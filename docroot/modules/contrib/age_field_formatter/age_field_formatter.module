@@ -16,7 +16,7 @@ function age_field_formatter_help($route_name, RouteMatchInterface $route_match)
     case 'help.page.age_field_formatter':
       $output = '';
       $output .= '<h3>' . t('About') . '</h3>';
-      $output .= '<p>' . t('The Age field formatter calculates and formats the display of a date field to display the age. It also offers the option to display both the date with the age.') . '</p>';
+      $output .= '<p>' . t('The Age field formatter calculates and formats the display of a date field to display the age. It also offers the option to display both the date with the age, along with the possibility to add the “years” suffix to the age value.') . '</p>';
       $output .= '<p>' . t('This is a date field formatter. You can access the field format in the content type Manage display tab.') . '</p>';
       return $output;
 

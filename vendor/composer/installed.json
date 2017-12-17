@@ -5225,59 +5225,6 @@
         "description": "Internationalization library powered by CLDR data."
     },
     {
-        "name": "drupal/age_field_formatter",
-        "version": "1.0.0",
-        "version_normalized": "1.0.0.0",
-        "source": {
-            "type": "git",
-            "url": "https://git.drupal.org/project/age_field_formatter",
-            "reference": "8.x-1.0"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://ftp.drupal.org/files/projects/age_field_formatter-8.x-1.0.zip",
-            "reference": "8.x-1.0",
-            "shasum": "6c89bb37dd154002151a4b7750cfb2ac5965d893"
-        },
-        "require": {
-            "drupal/core": "*"
-        },
-        "type": "drupal-module",
-        "extra": {
-            "branch-alias": {
-                "dev-1.x": "1.x-dev"
-            },
-            "drupal": {
-                "version": "8.x-1.0",
-                "datestamp": "1490782982",
-                "security-coverage": {
-                    "status": "covered",
-                    "message": "Covered by Drupal's security advisory policy"
-                }
-            }
-        },
-        "installation-source": "dist",
-        "notification-url": "https://packages.drupal.org/8/downloads",
-        "license": [
-            "GPL-2.0+"
-        ],
-        "authors": [
-            {
-                "name": "xmacinfo",
-                "homepage": "https://www.drupal.org/user/12131"
-            }
-        ],
-        "description": "Takes the value from a date field and calculate and display the age.",
-        "homepage": "https://www.drupal.org/project/age_field_formatter",
-        "keywords": [
-            "Drupal"
-        ],
-        "support": {
-            "source": "http://cgit.drupalcode.org/age_field_formatter",
-            "issues": "https://www.drupal.org/project/issues/age_field_formatter"
-        }
-    },
-    {
         "name": "symfony/yaml",
         "version": "v3.2.14",
         "version_normalized": "3.2.14.0",
@@ -8762,5 +8709,58 @@
             }
         ],
         "description": "With this component, a library can provide support for annotations via DocBlocks or otherwise retrieve information that is embedded in a DocBlock."
+    },
+    {
+        "name": "drupal/age_field_formatter",
+        "version": "2.0.0",
+        "version_normalized": "2.0.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://git.drupal.org/project/age_field_formatter",
+            "reference": "8.x-2.0"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://ftp.drupal.org/files/projects/age_field_formatter-8.x-2.0.zip",
+            "reference": "8.x-2.0",
+            "shasum": "ff7ba5288f499dc94f53ec7555c417c2d2559174"
+        },
+        "require": {
+            "drupal/core": "*"
+        },
+        "type": "drupal-module",
+        "extra": {
+            "branch-alias": {
+                "dev-2.x": "2.x-dev"
+            },
+            "drupal": {
+                "version": "8.x-2.0",
+                "datestamp": "1512000784",
+                "security-coverage": {
+                    "status": "covered",
+                    "message": "Covered by Drupal's security advisory policy"
+                }
+            }
+        },
+        "installation-source": "dist",
+        "notification-url": "https://packages.drupal.org/8/downloads",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "authors": [
+            {
+                "name": "xmacinfo",
+                "homepage": "https://www.drupal.org/user/12131"
+            }
+        ],
+        "description": "Takes the value from a date field and calculate and display the age.",
+        "homepage": "https://www.drupal.org/project/age_field_formatter",
+        "keywords": [
+            "Drupal"
+        ],
+        "support": {
+            "source": "http://cgit.drupalcode.org/age_field_formatter",
+            "issues": "https://www.drupal.org/project/issues/age_field_formatter"
+        }
     }
 ]
