@@ -8,6 +8,7 @@
 namespace Drupal\page_manager\Routing;
 
 use Drupal\Component\Plugin\Exception\ContextException;
+use Drupal\Component\Plugin\Exception\PluginNotFoundException;
 use Drupal\Component\Utility\NestedArray;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Path\CurrentPathStack;
@@ -61,7 +62,14 @@ class VariantRouteFilter implements RouteFilterInterface {
    *   The current request stack.
    */
   public function __construct(EntityTypeManagerInterface $entity_type_manager, CurrentPathStack $current_path, RequestStack $request_stack) {
-    $this->pageVariantStorage = $entity_type_manager->getStorage('page_variant');
+    // If configuration is defined prior to install cache may need to clear.
+    try {
+      $this->pageVariantStorage = $entity_type_manager->getStorage('page_variant');
+    }
+    catch (PluginNotFoundException $e) {
+      $entity_type_manager->clearCachedDefinitions();
+      $this->pageVariantStorage = $entity_type_manager->getStorage('page_variant');
+    }
     $this->currentPath = $current_path;
     $this->requestStack = $request_stack;
   }
