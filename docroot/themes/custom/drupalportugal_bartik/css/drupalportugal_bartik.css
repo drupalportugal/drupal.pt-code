@@ -135,3 +135,8 @@ article.node .field--name-field-image .image-style-medium {
     color: #cdcdcd;
     border-bottom: none;
 }
+
+body.path-user .user--view-mode-full.ds-1col .view-profiles > .view-content > .views-view-grid > .views-row.row-1 > .views-col.col-1 {
+    width: 100% !important;
+}
+
