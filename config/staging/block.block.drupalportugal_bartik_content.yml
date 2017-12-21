@@ -1,0 +1,20 @@
+uuid: 6efe916a-2274-4b72-829d-27689c55f610
+langcode: en
+status: true
+dependencies:
+  module:
+    - system
+  theme:
+    - drupalportugal_bartik
+id: drupalportugal_bartik_content
+theme: drupalportugal_bartik
+region: content
+weight: -9
+provider: null
+plugin: system_main_block
+settings:
+  id: system_main_block
+  label: 'Main page content'
+  provider: system
+  label_display: '0'
+visibility: {  }

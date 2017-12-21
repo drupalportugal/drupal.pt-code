@@ -1,6 +1,6 @@
 uuid: 12e54912-0c8d-4e18-b8bb-7579cfbfcb72
 langcode: en
-status: true
+status: false
 dependencies:
   module:
     - system
@@ -10,8 +10,8 @@ _core:
   default_config_hash: KHQIJ7Vfl25lTjzIc7qIvnuistt-Mw2O0kG4jCofmkI
 id: drupalportugal_theme_messages
 theme: drupalportugal_theme
-region: highlighted
-weight: 0
+region: ''
+weight: null
 provider: null
 plugin: system_messages_block
 settings:

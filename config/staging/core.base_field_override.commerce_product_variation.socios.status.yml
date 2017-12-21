@@ -1,0 +1,22 @@
+uuid: 280aea1d-04d2-4dd2-b16e-6b5b0fbf18cc
+langcode: en
+status: true
+dependencies:
+  config:
+    - commerce_product.commerce_product_variation_type.socios
+id: commerce_product_variation.socios.status
+field_name: status
+entity_type: commerce_product_variation
+bundle: socios
+label: Active
+description: 'Whether the variation is active.'
+required: false
+translatable: false
+default_value:
+  -
+    value: 1
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean

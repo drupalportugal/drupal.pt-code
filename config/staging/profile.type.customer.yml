@@ -1,0 +1,17 @@
+uuid: 521e0569-a9d7-4f47-b8df-cb719c3bd0f0
+langcode: pt-pt
+status: true
+dependencies:
+  enforced:
+    module:
+      - commerce_order
+_core:
+  default_config_hash: PZl4AQDUouSVwavb0FNRlcbJx924n5FtCq8l73AMj5g
+id: customer
+label: Cliente
+registration: false
+multiple: true
+roles: {  }
+weight: 0
+use_revisions: false
+description: null

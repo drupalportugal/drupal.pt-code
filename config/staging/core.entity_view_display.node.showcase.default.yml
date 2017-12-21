@@ -3,6 +3,7 @@ langcode: en
 status: true
 dependencies:
   config:
+    - core.entity_view_display.comment.comment_node_showcase.default
     - field.field.node.showcase.comment_node_showcase
     - field.field.node.showcase.field_categoria
     - field.field.node.showcase.field_empresas
@@ -25,7 +26,9 @@ content:
     weight: 20
     settings:
       pager_id: 0
+      view_mode: default
     third_party_settings: {  }
+    region: content
   field_categoria:
     label: inline
     weight: 2
@@ -33,12 +36,14 @@ content:
     settings:
       link: true
     third_party_settings: {  }
+    region: content
   field_empresas:
     label: inline
     weight: 0
     type: text_default
     settings: {  }
     third_party_settings: {  }
+    region: content
   field_link:
     weight: 101
     label: above
@@ -50,8 +55,10 @@ content:
       target: ''
     third_party_settings: {  }
     type: link
+    region: content
   links:
     weight: 100
+    region: content
 hidden:
   field_image: true
   langcode: true

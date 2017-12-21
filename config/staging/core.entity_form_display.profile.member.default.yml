@@ -1,0 +1,125 @@
+uuid: b3856192-8bba-44d8-9006-e6013e011eef
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.profile.member.field_profile_address_postal
+    - field.field.profile.member.field_profile_bool_indirectory
+    - field.field.profile.member.field_profile_date_birthdate
+    - field.field.profile.member.field_profile_email_email
+    - field.field.profile.member.field_profile_lang_languages
+    - field.field.profile.member.field_profile_link_website
+    - field.field.profile.member.field_profile_list_genderident
+    - field.field.profile.member.field_profile_name_fullname
+    - field.field.profile.member.field_profile_phone_telephone
+    - field.field.profile.member.field_profile_text_biography
+    - field.field.profile.member.field_profile_text_drupalorguser
+    - field.field.profile.member.field_profile_text_jobtitle
+    - profile.type.member
+  module:
+    - address
+    - datetime
+    - languagefield
+    - link
+    - name
+    - telephone
+    - text
+id: profile.member.default
+targetEntityType: profile
+bundle: member
+mode: default
+content:
+  field_profile_address_postal:
+    weight: 6
+    settings:
+      default_country: PT
+    third_party_settings: {  }
+    type: address_default
+    region: content
+  field_profile_bool_indirectory:
+    weight: 0
+    settings:
+      display_label: true
+    third_party_settings: {  }
+    type: boolean_checkbox
+    region: content
+  field_profile_date_birthdate:
+    weight: 2
+    settings:
+      date_order: YMD
+      time_type: none
+      increment: 15
+    third_party_settings: {  }
+    type: datetime_datelist
+    region: content
+  field_profile_email_email:
+    weight: 8
+    settings:
+      size: 60
+      placeholder: '@'
+    third_party_settings: {  }
+    type: email_default
+    region: content
+  field_profile_lang_languages:
+    weight: 4
+    settings:
+      format:
+        name: name
+        iso: 0
+        name_native: 0
+    third_party_settings: {  }
+    type: languagefield_select
+    region: content
+  field_profile_link_website:
+    weight: 9
+    settings:
+      placeholder_url: 'https://'
+      placeholder_title: ''
+    third_party_settings: {  }
+    type: link_default
+    region: content
+  field_profile_list_genderident:
+    weight: 3
+    settings: {  }
+    third_party_settings: {  }
+    type: options_select
+    region: content
+  field_profile_name_fullname:
+    weight: 1
+    settings: {  }
+    third_party_settings: {  }
+    type: name_default
+    region: content
+  field_profile_phone_telephone:
+    weight: 7
+    settings:
+      placeholder: '+351'
+    third_party_settings: {  }
+    type: telephone_default
+    region: content
+  field_profile_text_biography:
+    weight: 5
+    settings:
+      rows: 9
+      summary_rows: 3
+      placeholder: ''
+    third_party_settings: {  }
+    type: text_textarea_with_summary
+    region: content
+  field_profile_text_drupalorguser:
+    weight: 10
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_profile_text_jobtitle:
+    weight: 11
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+hidden: {  }

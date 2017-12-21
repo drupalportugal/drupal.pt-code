@@ -1,6 +1,6 @@
 uuid: 8ad12adb-5e90-449e-a3ad-9baeffd329e8
 langcode: en
-status: true
+status: false
 dependencies:
   module:
     - system
@@ -8,8 +8,8 @@ dependencies:
     - nucleus_starter
 id: nucleus_starter_system_main
 theme: nucleus_starter
-region: content
-weight: -22
+region: ''
+weight: null
 provider: null
 plugin: system_main_block
 settings:

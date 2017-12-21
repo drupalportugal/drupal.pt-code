@@ -1,0 +1,19 @@
+uuid: e72bd785-cb09-4d3c-8ca8-1aa7a078113a
+langcode: en
+status: true
+dependencies:
+  module:
+    - commerce
+    - commerce_product
+id: commerce_product_variation.license_type
+field_name: license_type
+entity_type: commerce_product_variation
+type: 'commerce_plugin_item:commerce_license_type'
+settings: {  }
+module: commerce
+locked: true
+cardinality: 1
+translatable: false
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

@@ -36,10 +36,19 @@ separator: '-'
 max_length: 100
 max_component_length: 100
 transliterate: true
-reduce_ascii: false
+reduce_ascii: true
 ignore_words: 'a, an, as, at, before, but, by, for, from, is, in, into, like, of, off, on, onto, per, since, than, the, this, that, to, up, via, with, um, uma, como, em, antes, mas, por, para, de, e, desde, o, a, isto, aquilo, ate, até, do, da, dos, das, uns, outros, umas, os, as'
 case: true
 update_action: 2
 _core:
   default_config_hash: x3zd5G959ntrLWnPqsPRjCqmznMo4F9Z3fmvE89Hcak
 langcode: pt-pt
+enabled_entity_types:
+  - aggregator_feed
+  - block_content
+  - comment
+  - commerce_license
+  - commerce_order
+  - commerce_store
+  - profile
+  - user

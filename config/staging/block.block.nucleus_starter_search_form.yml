@@ -1,6 +1,6 @@
 uuid: 4d65ed2b-22ab-4bde-8acc-ee46d578d860
 langcode: en
-status: true
+status: false
 dependencies:
   module:
     - search
@@ -8,8 +8,8 @@ dependencies:
     - nucleus_starter
 id: nucleus_starter_search_form
 theme: nucleus_starter
-region: header
-weight: -10
+region: ''
+weight: null
 provider: null
 plugin: search_form_block
 settings:

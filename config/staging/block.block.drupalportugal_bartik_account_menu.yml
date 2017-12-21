@@ -1,26 +1,32 @@
-uuid: 076e2515-7296-4fd8-bf05-461380204d7f
+uuid: b2d7ad4a-d642-4d6f-84a2-8d60696a1091
 langcode: en
-status: false
+status: true
 dependencies:
   config:
     - system.menu.account
   module:
     - system
+    - user
   theme:
     - drupalportugal_bartik
-_core:
-  default_config_hash: DweBpscQZdG0-fHkSpUzdYucrNH45G_KF7Z82V-oyQM
 id: drupalportugal_bartik_account_menu
 theme: drupalportugal_bartik
-region: '-1'
-weight: -7
+region: sidebar_second
+weight: -9
 provider: null
 plugin: 'system_menu_block:account'
 settings:
   id: 'system_menu_block:account'
   label: 'User account menu'
   provider: system
-  label_display: '0'
+  label_display: visible
   level: 1
-  depth: 1
-visibility: {  }
+  depth: 0
+visibility:
+  user_role:
+    id: user_role
+    roles:
+      authenticated: authenticated
+    negate: false
+    context_mapping:
+      user: '@user.current_user_context:current_user'

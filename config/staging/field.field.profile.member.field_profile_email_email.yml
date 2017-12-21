@@ -1,0 +1,19 @@
+uuid: 9a919645-ed6d-48dc-bd36-0f36c6db3a0a
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.profile.field_profile_email_email
+    - profile.type.member
+id: profile.member.field_profile_email_email
+field_name: field_profile_email_email
+entity_type: profile
+bundle: member
+label: 'Email address'
+description: 'Your personal or professional email address(es). This information will be <strong>public</strong>.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: email

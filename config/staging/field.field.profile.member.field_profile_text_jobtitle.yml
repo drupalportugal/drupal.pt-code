@@ -1,0 +1,19 @@
+uuid: 31e17459-9fb9-4eaf-9d4c-828d0a456925
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.profile.field_profile_text_jobtitle
+    - profile.type.member
+id: profile.member.field_profile_text_jobtitle
+field_name: field_profile_text_jobtitle
+entity_type: profile
+bundle: member
+label: 'Job title'
+description: 'Your current job title(s). This information will be <strong>public</strong>.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

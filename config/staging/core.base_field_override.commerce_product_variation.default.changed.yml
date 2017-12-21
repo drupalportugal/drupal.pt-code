@@ -1,0 +1,18 @@
+uuid: fa133524-1912-44cb-ae19-4f2c3389867b
+langcode: en
+status: true
+dependencies:
+  config:
+    - commerce_product.commerce_product_variation_type.default
+id: commerce_product_variation.default.changed
+field_name: changed
+entity_type: commerce_product_variation
+bundle: default
+label: Changed
+description: 'The time when the variation was last edited.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: changed

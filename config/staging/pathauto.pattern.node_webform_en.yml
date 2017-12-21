@@ -1,0 +1,33 @@
+uuid: a640543f-28aa-442e-a919-77e81c990cd2
+langcode: en
+status: true
+dependencies:
+  module:
+    - language
+    - node
+id: node_webform_en
+label: 'Node: Webform EN'
+type: 'canonical_entities:node'
+pattern: 'formulary/[node:title]'
+selection_criteria:
+  cdcb9e18-c54b-499a-93d6-aa9b60d7efd9:
+    id: node_type
+    bundles:
+      webform: webform
+    negate: false
+    context_mapping:
+      node: node
+    uuid: cdcb9e18-c54b-499a-93d6-aa9b60d7efd9
+  ebad896a-df8d-4348-b6f1-a904fd73b26e:
+    id: language
+    langcodes:
+      en: en
+    negate: false
+    context_mapping:
+      language: 'node:langcode:language'
+    uuid: ebad896a-df8d-4348-b6f1-a904fd73b26e
+selection_logic: and
+weight: -2
+relationships:
+  'node:langcode:language':
+    label: Language

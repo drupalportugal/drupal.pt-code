@@ -1,11 +1,26 @@
 uuid: 228dc87b-4ef1-4346-9b7a-f8dcf4704d90
 langcode: en
 status: true
-dependencies: {  }
+dependencies:
+  module:
+    - menu_ui
+third_party_settings:
+  menu_ui:
+    available_menus:
+      - footer
+      - main-menu
+      - main
+      - menu-associacao
+      - menu-comunidade
+      - menu-menu-drupal
+      - section-association
+      - section-community
+      - section-drupal
+    parent: 'main:'
 name: Webform
 type: webform
 description: 'Create a new form or questionnaire accessible to users. Submission results and statistics are recorded and accessible to privileged users.'
 help: ''
-new_revision: false
+new_revision: true
 preview_mode: 1
-display_submitted: true
+display_submitted: false

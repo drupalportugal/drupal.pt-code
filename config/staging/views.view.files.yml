@@ -8,9 +8,9 @@ dependencies:
 _core:
   default_config_hash: rRWxAX-IQkJ5viACQRovRkC784EyCl9493GU_G23n2Q
 id: files
-label: Files
+label: Ficheiros
 module: file
-description: 'Find and manage files.'
+description: 'Encontrar e gerir ficheiros.'
 tag: default
 base_table: file_managed
 base_field: fid
@@ -19,7 +19,7 @@ display:
   default:
     display_plugin: default
     id: default
-    display_title: Master
+    display_title: Principal
     position: 0
     display_options:
       access:
@@ -40,13 +40,13 @@ display:
       exposed_form:
         type: basic
         options:
-          submit_button: Filter
+          submit_button: Filtro
           reset_button: false
-          reset_button_label: Reset
-          exposed_sorts_label: 'Sort by'
+          reset_button_label: Reiniciar
+          exposed_sorts_label: 'Ordenar por'
           expose_sort_order: true
-          sort_asc_label: Asc
-          sort_desc_label: Desc
+          sort_asc_label: Ascendente
+          sort_desc_label: Descendente
       pager:
         type: mini
         options:
@@ -56,15 +56,15 @@ display:
           total_pages: 0
           tags:
             previous: '‹ Previous'
-            next: 'Next ›'
+            next: 'Seguinte ›'
           expose:
             items_per_page: false
-            items_per_page_label: 'Items per page'
+            items_per_page_label: 'Itens por página'
             items_per_page_options: '5, 10, 25, 50'
             items_per_page_options_all: false
-            items_per_page_options_all_label: '- All -'
+            items_per_page_options_all_label: '- Todos -'
             offset: false
-            offset_label: Offset
+            offset_label: Deslocamento
       style:
         type: table
         options:
@@ -187,7 +187,7 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
-          label: Name
+          label: Nome
           exclude: false
           alter:
             alter_text: false
@@ -250,7 +250,7 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
-          label: 'MIME type'
+          label: 'Tipo MIME'
           exclude: false
           alter:
             alter_text: false
@@ -302,7 +302,7 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
-          label: Size
+          label: Tamanho
           exclude: false
           alter:
             alter_text: false
@@ -354,7 +354,7 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
-          label: Status
+          label: Estado
           exclude: false
           alter:
             alter_text: false
@@ -398,8 +398,8 @@ display:
           type: boolean
           settings:
             format: custom
-            format_custom_false: Temporary
-            format_custom_true: Permanent
+            format_custom_false: Temporário
+            format_custom_true: Permanente
           plugin_id: field
           entity_type: file
           entity_field: status
@@ -410,7 +410,7 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
-          label: 'Upload date'
+          label: 'Data de carregamento'
           exclude: false
           alter:
             alter_text: false
@@ -466,7 +466,7 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
-          label: 'Changed date'
+          label: 'Data alterada'
           exclude: false
           alter:
             alter_text: false
@@ -522,7 +522,7 @@ display:
           relationship: fid
           group_type: sum
           admin_label: ''
-          label: 'Used in'
+          label: 'Usado em'
           exclude: false
           alter:
             alter_text: false
@@ -568,7 +568,7 @@ display:
           decimal: .
           separator: ','
           format_plural: true
-          format_plural_string: "1 place\x03@count places"
+          format_plural_string: !!binary MSBsdWdhcgNAY291bnQgbHVnYXJlcw==
           prefix: ''
           suffix: ''
           plugin_id: numeric
@@ -586,7 +586,7 @@ display:
           exposed: true
           expose:
             operator_id: filemime_op
-            label: Filename
+            label: 'Nome do ficheiro'
             description: ''
             use_operator: false
             operator: filename_op
@@ -626,7 +626,7 @@ display:
           exposed: true
           expose:
             operator_id: filemime_op
-            label: 'MIME type'
+            label: 'Tipo MIME'
             description: ''
             use_operator: false
             operator: filemime_op
@@ -666,7 +666,7 @@ display:
           exposed: true
           expose:
             operator_id: status_op
-            label: Status
+            label: Estado
             description: ''
             use_operator: false
             operator: status_op
@@ -695,7 +695,7 @@ display:
           entity_type: file
           entity_field: status
       sorts: {  }
-      title: Files
+      title: Ficheiros
       header: {  }
       footer: {  }
       empty:
@@ -704,7 +704,7 @@ display:
           table: views
           field: area_text_custom
           empty: true
-          content: 'No files available.'
+          content: 'Sem ficheiros disponíveis.'
           plugin_id: text_custom
       relationships:
         fid:
@@ -737,11 +737,13 @@ display:
       path: admin/content/files
       menu:
         type: tab
-        title: Files
+        title: Ficheiros
         description: ''
         menu_name: admin
         weight: 0
         context: ''
+        enabled: true
+        expanded: false
       display_description: ''
       defaults:
         pager: true
@@ -795,15 +797,15 @@ display:
           total_pages: 0
           tags:
             previous: '‹ Previous'
-            next: 'Next ›'
+            next: 'Seguinte ›'
           expose:
             items_per_page: false
-            items_per_page_label: 'Items per page'
+            items_per_page_label: 'Itens por página'
             items_per_page_options: '5, 10, 25, 50'
             items_per_page_options_all: false
-            items_per_page_options_all_label: '- All -'
+            items_per_page_options_all_label: '- Todos -'
             offset: false
-            offset_label: Offset
+            offset_label: Deslocamento
       filters: {  }
       filter_groups:
         operator: AND
@@ -816,7 +818,7 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
-          label: Entity
+          label: Entidade
           exclude: false
           alter:
             alter_text: false
@@ -866,7 +868,7 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
-          label: 'Entity type'
+          label: 'Tipo de entidade'
           exclude: false
           alter:
             alter_text: false
@@ -915,7 +917,7 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
-          label: 'Registering module'
+          label: 'A registar o módulo'
           exclude: false
           alter:
             alter_text: false
@@ -964,7 +966,7 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
-          label: 'Use count'
+          label: 'Nº de Utilizações'
           exclude: false
           alter:
             alter_text: false
@@ -1010,7 +1012,7 @@ display:
           decimal: .
           separator: ','
           format_plural: false
-          format_plural_string: "1\x03@count"
+          format_plural_string: !!binary MQNAY291bnQ=
           prefix: ''
           suffix: ''
           plugin_id: numeric
@@ -1028,9 +1030,9 @@ display:
           exception:
             value: all
             title_enable: false
-            title: All
+            title: Todos
           title_enable: true
-          title: 'File usage information for {{ arguments.fid }}'
+          title: 'Informação de utilização de ficheiro para {{ arguments.fid }}'
           default_argument_type: fixed
           default_argument_options:
             argument: ''
@@ -1114,6 +1116,9 @@ display:
           admin_label: 'File usage'
           required: true
       display_extenders: {  }
+      menu:
+        enabled: true
+        expanded: false
     cache_metadata:
       contexts:
         - 'languages:language_interface'

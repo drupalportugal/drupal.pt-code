@@ -1,0 +1,25 @@
+uuid: 11e5a866-a335-47f5-84da-362ebce1c33b
+langcode: en
+status: true
+dependencies:
+  content:
+    - 'block_content:basic:16347f52-8287-44de-85ed-e6e0c8255d8a'
+  module:
+    - block_content
+  theme:
+    - drupalportugal_bartik
+id: drupalportugal_bartik_custom_take_part
+theme: drupalportugal_bartik
+region: footer_second
+weight: -14
+provider: null
+plugin: 'block_content:16347f52-8287-44de-85ed-e6e0c8255d8a'
+settings:
+  id: 'block_content:16347f52-8287-44de-85ed-e6e0c8255d8a'
+  label: 'Take part'
+  provider: block_content
+  label_display: visible
+  status: true
+  info: ''
+  view_mode: full
+visibility: {  }

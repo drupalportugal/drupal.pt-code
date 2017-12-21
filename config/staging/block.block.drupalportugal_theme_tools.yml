@@ -1,6 +1,6 @@
 uuid: 04b66ab3-03f3-4105-87f9-b172a6e12381
 langcode: en
-status: true
+status: false
 dependencies:
   config:
     - system.menu.tools
@@ -12,8 +12,8 @@ _core:
   default_config_hash: NeHSoqm4XFqA7_0bDmR429ZZQt3LRbZMNRJTMsFyOfI
 id: drupalportugal_theme_tools
 theme: drupalportugal_theme
-region: sidebar_first
-weight: 0
+region: ''
+weight: null
 provider: null
 plugin: 'system_menu_block:tools'
 settings:

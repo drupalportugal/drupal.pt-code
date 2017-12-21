@@ -1,0 +1,16 @@
+uuid: 316c5176-e127-470d-b448-24bb138da42c
+langcode: en
+status: true
+dependencies:
+  config:
+    - shortcut.set.moderator
+  module:
+    - content_translation
+third_party_settings:
+  content_translation:
+    enabled: false
+id: shortcut.moderator
+target_entity_type_id: shortcut
+target_bundle: moderator
+default_langcode: site_default
+language_alterable: false

@@ -1,0 +1,16 @@
+uuid: 510f2879-62a0-4b89-857d-d2c4c882c81d
+langcode: en
+status: true
+dependencies:
+  module:
+    - commerce_license
+third_party_settings:
+  commerce_license:
+    license_types:
+      role: role
+id: socios
+label: Socios
+orderItemType: socios
+generateTitle: false
+traits:
+  - commerce_license

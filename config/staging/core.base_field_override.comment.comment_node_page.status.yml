@@ -1,0 +1,22 @@
+uuid: c181f7eb-5df0-4883-9128-942b79630c46
+langcode: en
+status: true
+dependencies:
+  config:
+    - comment.type.comment_node_page
+id: comment.comment_node_page.status
+field_name: status
+entity_type: comment
+bundle: comment_node_page
+label: 'Publishing status'
+description: 'A boolean indicating whether the comment is published.'
+required: false
+translatable: false
+default_value:
+  -
+    value: 1
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean

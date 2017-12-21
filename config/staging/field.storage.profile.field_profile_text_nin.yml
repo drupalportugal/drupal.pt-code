@@ -1,0 +1,21 @@
+uuid: 9ea78de5-3150-466b-953d-5939ccc3341d
+langcode: en
+status: true
+dependencies:
+  module:
+    - profile
+id: profile.field_profile_text_nin
+field_name: field_profile_text_nin
+entity_type: profile
+type: string
+settings:
+  max_length: 20
+  is_ascii: false
+  case_sensitive: false
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

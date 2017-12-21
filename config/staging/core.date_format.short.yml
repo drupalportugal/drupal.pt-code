@@ -5,6 +5,6 @@ dependencies: {  }
 _core:
   default_config_hash: AlzeyytA8InBgxIG9H2UDJYs3CG98Zj6yRsDKmlbZwA
 id: short
-label: 'Default short date'
+label: 'Data curta predefinida'
 locked: false
-pattern: 'Y-m-d, H:m:s'
+pattern: 'Y-m-d H:i'

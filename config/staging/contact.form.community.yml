@@ -1,0 +1,12 @@
+uuid: 860aa841-c901-4669-8bd2-f9afc155ce97
+langcode: en
+status: true
+dependencies: {  }
+id: community
+label: Community
+recipients:
+  - gestao@drupal.pt
+reply: ''
+weight: 0
+message: 'Your message has been sent.'
+redirect: ''

@@ -1,6 +1,6 @@
-uuid: 0d4a9c2c-8596-4349-a239-01b6236e017b
+uuid: ff6508dc-a0ea-4419-89e2-7f0144fd7855
 langcode: en
-status: false
+status: true
 dependencies:
   config:
     - system.menu.footer
@@ -8,12 +8,10 @@ dependencies:
     - system
   theme:
     - drupalportugal_bartik
-_core:
-  default_config_hash: kkISXE1LT2FJEoYnqCrCpeFB-2pmGmMxMklVk7rQcfg
 id: drupalportugal_bartik_footer
 theme: drupalportugal_bartik
-region: '-1'
-weight: -10
+region: footer_fifth
+weight: -13
 provider: null
 plugin: 'system_menu_block:footer'
 settings:

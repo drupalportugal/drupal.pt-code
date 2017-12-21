@@ -13,10 +13,10 @@ id: node.page.body
 field_name: body
 entity_type: node
 bundle: page
-label: Body
+label: Corpo
 description: ''
 required: false
-translatable: true
+translatable: false
 default_value: {  }
 default_value_callback: ''
 settings:

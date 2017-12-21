@@ -29,6 +29,7 @@ content:
     settings:
       trim_length: 600
     third_party_settings: {  }
+    region: content
   field_image:
     label: hidden
     weight: -1
@@ -37,6 +38,7 @@ content:
       image_style: medium
       image_link: content
     third_party_settings: {  }
+    region: content
   field_tags:
     label: above
     weight: 10
@@ -44,8 +46,10 @@ content:
     settings:
       link: true
     third_party_settings: {  }
+    region: content
   links:
     weight: 100
+    region: content
     settings: {  }
     third_party_settings: {  }
 hidden:

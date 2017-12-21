@@ -11,7 +11,7 @@ dependencies:
 _core:
   default_config_hash: YY-QIsPmXCITvYjAnlCzaqASCB1Telev3U0IKOztZkc
 id: taxonomy_term
-label: 'Taxonomy term'
+label: 'Termo de taxonomia'
 module: taxonomy
 description: 'Content belonging to a certain taxonomy term.'
 tag: default
@@ -21,7 +21,7 @@ core: '8'
 display:
   default:
     id: default
-    display_title: Master
+    display_title: Principal
     display_plugin: default
     position: 0
     display_options:
@@ -43,13 +43,13 @@ display:
       exposed_form:
         type: basic
         options:
-          submit_button: Apply
+          submit_button: Aplicar
           reset_button: false
-          reset_button_label: Reset
-          exposed_sorts_label: 'Sort by'
+          reset_button_label: Reiniciar
+          exposed_sorts_label: 'Ordenar por'
           expose_sort_order: true
-          sort_asc_label: Asc
-          sort_desc_label: Desc
+          sort_asc_label: Ascendente
+          sort_desc_label: Descendente
       pager:
         type: mini
         options:
@@ -59,12 +59,12 @@ display:
           total_pages: 0
           expose:
             items_per_page: false
-            items_per_page_label: 'Items per page'
+            items_per_page_label: 'Itens por página'
             items_per_page_options: '5, 10, 25, 50'
             items_per_page_options_all: false
-            items_per_page_options_all_label: '- All -'
+            items_per_page_options_all_label: '- Todos -'
             offset: false
-            offset_label: Offset
+            offset_label: Deslocamento
           tags:
             previous: ‹‹
             next: ››
@@ -106,7 +106,7 @@ display:
           exception:
             value: ''
             title_enable: false
-            title: All
+            title: Todos
           title_enable: true
           title: '{{ arguments.tid }}'
           default_argument_type: fixed
@@ -185,7 +185,7 @@ display:
           group_type: group
           admin_label: ''
           operator: '='
-          value: true
+          value: '1'
           group: 1
           exposed: false
           expose:
@@ -294,7 +294,7 @@ display:
       tags: {  }
   page_1:
     id: page_1
-    display_title: Page
+    display_title: Página
     display_plugin: page
     position: 1
     display_options:
@@ -303,6 +303,9 @@ display:
         options: {  }
       path: taxonomy/term/%
       display_extenders: {  }
+      menu:
+        enabled: true
+        expanded: false
     cache_metadata:
       contexts:
         - 'languages:language_interface'

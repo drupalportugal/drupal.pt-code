@@ -1,8 +1,27 @@
-label: Content
-description: 'Find and manage content.'
 display:
   default:
     display_options:
+      filters:
+        status:
+          group_info:
+            group_items:
+              1:
+                value: '1'
+                title: Published
+              2:
+                title: Unpublished
+            label: 'Published status'
+          expose:
+            label: Status
+        title:
+          expose:
+            label: Title
+        type:
+          expose:
+            label: 'Content type'
+        langcode:
+          expose:
+            label: Language
       exposed_form:
         options:
           submit_button: Filter
@@ -27,31 +46,13 @@ display:
           label: Author
         status:
           label: Status
+          settings:
+            format_custom_true: Published
+            format_custom_false: Unpublished
         changed:
           label: Updated
         operations:
           label: Operations
-      filters:
-        status:
-          expose:
-            label: Status
-          group_info:
-            label: 'Published status'
-            group_items:
-              1:
-                title: Published
-                value: '1'
-              2:
-                title: Unpublished
-        type:
-          expose:
-            label: 'Content type'
-        title:
-          expose:
-            label: Title
-        langcode:
-          expose:
-            label: Language
       title: Content
       empty:
         area_text_custom:
@@ -65,3 +66,5 @@ display:
         title: Content
         description: 'Find and manage content'
     display_title: Page
+label: Content
+description: 'Find and manage content.'

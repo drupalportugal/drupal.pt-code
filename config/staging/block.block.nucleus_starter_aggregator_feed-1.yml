@@ -1,6 +1,6 @@
 uuid: b11d9c95-3de3-4752-bf7f-2ac363662c60
 langcode: en
-status: true
+status: false
 dependencies:
   module:
     - aggregator
@@ -8,8 +8,8 @@ dependencies:
     - nucleus_starter
 id: nucleus_starter_aggregator_feed-1
 theme: nucleus_starter
-region: content
-weight: -22
+region: ''
+weight: null
 provider: null
 plugin: aggregator_feed_block
 settings:

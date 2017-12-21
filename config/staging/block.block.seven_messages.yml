@@ -1,4 +1,4 @@
-uuid: 0ebf9046-4a8d-41e9-bf38-034b8d62f2d8
+uuid: 342c5642-5bc7-43ae-8465-0bbe34e95de7
 langcode: pt-pt
 status: true
 dependencies:
@@ -7,16 +7,16 @@ dependencies:
   theme:
     - seven
 _core:
-  default_config_hash: XJqWwLt1LDCnazcEN6QkJmCLjk4R0__-8s0OO9xeNjg
+  default_config_hash: KHQIJ7Vfl25lTjzIc7qIvnuistt-Mw2O0kG4jCofmkI
 id: seven_messages
 theme: seven
 region: highlighted
-weight: 0
+weight: -4
 provider: null
 plugin: system_messages_block
 settings:
   id: system_messages_block
-  label: 'Status messages'
+  label: 'Mensagens de estado'
   provider: system
   label_display: '0'
 visibility: {  }

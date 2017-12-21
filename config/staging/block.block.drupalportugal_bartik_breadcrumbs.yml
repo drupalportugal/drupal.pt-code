@@ -1,17 +1,15 @@
-uuid: 8755934f-1c55-49ed-a0b5-011702dbf167
+uuid: 4d8b99fb-0246-4e2c-ac09-da6d94d62698
 langcode: en
-status: false
+status: true
 dependencies:
   module:
     - system
   theme:
     - drupalportugal_bartik
-_core:
-  default_config_hash: oXUb3JZR2WW5VOdw4HrhRicCsq51mCgLfRyvheG68ck
 id: drupalportugal_bartik_breadcrumbs
 theme: drupalportugal_bartik
-region: '-1'
-weight: -11
+region: breadcrumb
+weight: 0
 provider: null
 plugin: system_breadcrumb_block
 settings:

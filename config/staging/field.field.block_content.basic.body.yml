@@ -13,9 +13,9 @@ id: block_content.basic.body
 field_name: body
 entity_type: block_content
 bundle: basic
-label: Body
+label: Corpo
 description: ''
-required: false
+required: true
 translatable: true
 default_value: {  }
 default_value_callback: ''

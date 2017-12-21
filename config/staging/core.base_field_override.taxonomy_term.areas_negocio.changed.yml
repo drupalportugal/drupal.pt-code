@@ -1,0 +1,18 @@
+uuid: e6ba54c9-7aed-4358-977e-55d99119daef
+langcode: en
+status: true
+dependencies:
+  config:
+    - taxonomy.vocabulary.areas_negocio
+id: taxonomy_term.areas_negocio.changed
+field_name: changed
+entity_type: taxonomy_term
+bundle: areas_negocio
+label: Changed
+description: 'The time that the term was last edited.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: changed

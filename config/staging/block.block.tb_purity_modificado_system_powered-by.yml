@@ -1,6 +1,6 @@
 uuid: c73991c9-e288-41ee-ba8d-f74bdb7d5249
 langcode: en
-status: true
+status: false
 dependencies:
   module:
     - system
@@ -8,8 +8,8 @@ dependencies:
     - tb_purity_modificado
 id: tb_purity_modificado_system_powered-by
 theme: tb_purity_modificado
-region: footer
-weight: -14
+region: ''
+weight: null
 provider: null
 plugin: system_powered_by_block
 settings:

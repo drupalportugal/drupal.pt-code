@@ -1,0 +1,20 @@
+uuid: 95639a1a-ffb9-4e6e-877d-8530cd639046
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.poll
+id: node.poll.menu_link
+field_name: menu_link
+entity_type: node
+bundle: poll
+label: 'Menu link'
+description: 'Computed menu link for the node (only available during node saving).'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: default
+  handler_settings: {  }
+field_type: entity_reference

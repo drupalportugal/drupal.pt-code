@@ -1,0 +1,18 @@
+uuid: 26fd81ff-42bb-4e1d-96c6-74dccde82749
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.slideshow
+id: node.slideshow.created
+field_name: created
+entity_type: node
+bundle: slideshow
+label: 'Authored on'
+description: 'The time that the node was created.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: created

@@ -1,6 +1,6 @@
 uuid: 66d7a3a5-b1e0-40c6-b231-03eb706b606b
 langcode: en
-status: true
+status: false
 dependencies:
   module:
     - system
@@ -8,8 +8,8 @@ dependencies:
     - garland
 id: garland_system_powered-by
 theme: garland
-region: footer
-weight: -8
+region: ''
+weight: null
 provider: null
 plugin: system_powered_by_block
 settings:

@@ -1,6 +1,6 @@
 uuid: aaebf905-b1c1-4fc3-b7e5-1ccdfee3f31e
 langcode: en
-status: true
+status: false
 dependencies:
   content:
     - 'block_content:basic:25678aef-4f17-4688-9f8e-e5cff2cbd6e4'
@@ -10,8 +10,8 @@ dependencies:
     - drupal_pt
 id: drupal_pt_block_2
 theme: drupal_pt
-region: sidebar_second
-weight: -13
+region: ''
+weight: null
 provider: null
 plugin: 'block_content:25678aef-4f17-4688-9f8e-e5cff2cbd6e4'
 settings:

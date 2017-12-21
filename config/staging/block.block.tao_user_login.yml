@@ -1,6 +1,6 @@
 uuid: f32af15f-4aa9-4f64-9d9c-00a1b2fd01ee
 langcode: en
-status: true
+status: false
 dependencies:
   module:
     - user
@@ -8,8 +8,8 @@ dependencies:
     - tao
 id: tao_user_login
 theme: tao
-region: sidebar_first
-weight: 0
+region: ''
+weight: null
 provider: null
 plugin: user_login_block
 settings:

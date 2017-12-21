@@ -1,10 +1,13 @@
 label: 'A página inicial'
+description: 'Todo o conteúdo promovido para a primeira página.'
 display:
   default:
     display_options:
       empty:
         area_text_custom:
           content: 'Ainda não foi criado nenhum conteúdo para a página inicial.'
+        title:
+          title: 'Bem-vindo a [site:name]'
       exposed_form:
         options:
           submit_button: Aplicar
@@ -19,7 +22,10 @@ display:
             items_per_page_options_all_label: '- Todos -'
             offset_label: Deslocamento
           tags:
+            previous: '‹ Previous'
             next: 'Seguinte ›'
+            first: '« First'
+            last: 'Last »'
     display_title: Principal
   feed_1:
     display_title: Feed

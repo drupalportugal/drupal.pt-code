@@ -1,0 +1,16 @@
+uuid: 9f27bb7b-4953-4550-925c-efe56f11c4cc
+langcode: en
+status: true
+dependencies:
+  config:
+    - commerce_product.commerce_product_variation_type.socios
+  module:
+    - content_translation
+third_party_settings:
+  content_translation:
+    enabled: false
+id: commerce_product_variation.socios
+target_entity_type_id: commerce_product_variation
+target_bundle: socios
+default_langcode: site_default
+language_alterable: false

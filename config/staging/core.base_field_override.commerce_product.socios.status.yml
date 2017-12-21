@@ -1,0 +1,22 @@
+uuid: 57996423-1c56-43a7-8ac5-96275330787b
+langcode: en
+status: true
+dependencies:
+  config:
+    - commerce_product.commerce_product_type.socios
+id: commerce_product.socios.status
+field_name: status
+entity_type: commerce_product
+bundle: socios
+label: Published
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: 1
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean

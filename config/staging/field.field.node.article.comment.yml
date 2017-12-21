@@ -13,10 +13,10 @@ id: node.article.comment
 field_name: comment
 entity_type: node
 bundle: article
-label: Comments
+label: Comentários
 description: ''
 required: true
-translatable: true
+translatable: false
 default_value:
   -
     status: 2

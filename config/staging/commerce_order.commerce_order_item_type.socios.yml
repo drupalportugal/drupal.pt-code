@@ -1,0 +1,10 @@
+uuid: 509f7ac0-e8b5-4818-9b51-43897aca3b4f
+langcode: en
+status: true
+dependencies: {  }
+label: Socios
+id: socios
+purchasableEntityType: commerce_product_variation
+orderType: socios
+traits:
+  - commerce_license_order_item_type

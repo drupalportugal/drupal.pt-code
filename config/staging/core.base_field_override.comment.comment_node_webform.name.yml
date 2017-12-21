@@ -1,0 +1,20 @@
+uuid: abefaf41-1402-426a-8096-a2004df821c5
+langcode: en
+status: true
+dependencies:
+  config:
+    - comment.type.comment_node_webform
+id: comment.comment_node_webform.name
+field_name: name
+entity_type: comment
+bundle: comment_node_webform
+label: Name
+description: 'The comment author''s name.'
+required: false
+translatable: false
+default_value:
+  -
+    value: ''
+default_value_callback: ''
+settings: {  }
+field_type: string

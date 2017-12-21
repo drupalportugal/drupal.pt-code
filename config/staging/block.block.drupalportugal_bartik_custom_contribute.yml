@@ -1,0 +1,25 @@
+uuid: 3a2494b4-4891-45b8-8613-bbc08ea80180
+langcode: en
+status: true
+dependencies:
+  content:
+    - 'block_content:basic:1fb342e7-93cf-4aa3-9cea-e94080a33a16'
+  module:
+    - block_content
+  theme:
+    - drupalportugal_bartik
+id: drupalportugal_bartik_custom_contribute
+theme: drupalportugal_bartik
+region: footer_third
+weight: 0
+provider: null
+plugin: 'block_content:1fb342e7-93cf-4aa3-9cea-e94080a33a16'
+settings:
+  id: 'block_content:1fb342e7-93cf-4aa3-9cea-e94080a33a16'
+  label: Contribute
+  provider: block_content
+  label_display: visible
+  status: true
+  info: ''
+  view_mode: full
+visibility: {  }

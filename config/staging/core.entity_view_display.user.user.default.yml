@@ -3,19 +3,36 @@ langcode: pt-pt
 status: true
 dependencies:
   config:
-    - field.field.user.user.field_distrito
-    - field.field.user.user.field_email
-    - field.field.user.user.field_empresa
-    - field.field.user.user.field_eu_e_o_drupal
-    - field.field.user.user.field_nome_e_apelido
-    - field.field.user.user.field_perfil_p_blico
+    - field.field.user.user.commerce_remote_id
     - field.field.user.user.user_picture
-    - image.style.large
   module:
-    - image
-    - options
-    - text
+    - ds
     - user
+third_party_settings:
+  ds:
+    layout:
+      id: ds_1col_wrapper
+      library: null
+      disable_css: false
+      entity_classes: all_classes
+      settings:
+        wrappers:
+          ds_content: div
+        outer_wrapper: div
+        attributes: ''
+        link_attribute: ''
+        link_custom: ''
+        classes:
+          layout_class: {  }
+    regions:
+      ds_content:
+        - 'dynamic_block_field:user-profile_fields_member'
+    fields:
+      'dynamic_block_field:user-profile_fields_member':
+        plugin_id: 'dynamic_block_field:user-profile_fields_member'
+        weight: 0
+        label: hidden
+        formatter: default
 _core:
   default_config_hash: L2mtwGWH_7wDRCMIR4r_Iu_jmvQ10DV1L8ht8iNZ5qY
 id: user.user.default
@@ -23,55 +40,22 @@ targetEntityType: user
 bundle: user
 mode: default
 content:
-  field_distrito:
-    label: inline
-    weight: 4
-    type: list_default
-    settings: {  }
-    third_party_settings: {  }
-  field_email:
-    label: above
-    weight: 1
-    type: email_mailto
-    settings: {  }
-    third_party_settings: {  }
-  field_empresa:
-    label: above
+  field_user_picture:
     weight: 0
-    type: text_default
+    region: ds_content
     settings: {  }
     third_party_settings: {  }
-  field_eu_e_o_drupal:
-    label: inline
-    weight: 5
-    type: text_default
+  picture:
+    weight: 0
+    region: ds_content
     settings: {  }
     third_party_settings: {  }
-  field_nome_e_apelido:
-    label: inline
-    weight: 7
-    type: text_default
-    settings: {  }
-    third_party_settings: {  }
-  field_perfil_p_blico:
-    label: inline
-    weight: 6
-    type: boolean
-    settings:
-      format: default
-      format_custom_false: ''
-      format_custom_true: ''
-    third_party_settings: {  }
-  member_for:
-    weight: 2
-    settings: {  }
-    third_party_settings: {  }
-  user_picture:
-    label: hidden
-    settings:
-      image_style: large
-      image_link: content
-    type: image
-    weight: 3
-    third_party_settings: {  }
-hidden: {  }
+hidden:
+  commerce_remote_id: true
+  langcode: true
+  member_for: true
+  profile_collective_associate: true
+  profile_customer: true
+  profile_individual_associate: true
+  profile_member: true
+  user_picture: true

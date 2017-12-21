@@ -30,6 +30,7 @@ content:
     settings:
       trim_length: 600
     third_party_settings: {  }
+    region: content
   field_date:
     type: datetime_default
     weight: 0
@@ -38,6 +39,7 @@ content:
       timezone_override: ''
       format_type: medium_pt
     third_party_settings: {  }
+    region: content
   field_image:
     label: hidden
     weight: 0
@@ -46,6 +48,7 @@ content:
       image_style: medium
       image_link: content
     third_party_settings: {  }
+    region: content
   field_tags:
     label: inline
     weight: 2
@@ -53,10 +56,12 @@ content:
     settings:
       link: true
     third_party_settings: {  }
+    region: content
   links:
     weight: 100
     settings: {  }
     third_party_settings: {  }
+    region: content
 hidden:
   comment_node_evento: true
   field_eventos_participantes: true

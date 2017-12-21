@@ -1,0 +1,28 @@
+uuid: 2420fefe-8929-44ec-b424-8c24097a9166
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.profile.field_profile_bool_indirectory
+    - profile.type.collective_associate
+  module:
+    - profile
+third_party_settings:
+  profile:
+    profile_private: true
+id: profile.collective_associate.field_profile_bool_indirectory
+field_name: field_profile_bool_indirectory
+entity_type: profile
+bundle: collective_associate
+label: 'Show in directory?'
+description: 'Show in the collective associates directory?'
+required: false
+translatable: true
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  on_label: 'Yes'
+  off_label: 'No'
+field_type: boolean

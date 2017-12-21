@@ -1,9 +1,25 @@
-label: People
-description: 'Find and manage people interacting with your site.'
 display:
   default:
-    display_title: Master
     display_options:
+      filters:
+        status:
+          group_info:
+            group_items:
+              1:
+                value: '1'
+                title: Active
+              2:
+                title: Blocked
+            label: Status
+        combine:
+          expose:
+            label: 'Name or email contains'
+        roles_target_id:
+          expose:
+            label: Role
+        permission:
+          expose:
+            label: Permission
       exposed_form:
         options:
           submit_button: Filter
@@ -29,6 +45,9 @@ display:
           label: Username
         status:
           label: Status
+          settings:
+            format_custom_true: Active
+            format_custom_false: Blocked
         roles_target_id:
           label: Roles
         created:
@@ -39,30 +58,12 @@ display:
           label: Operations
         mail:
           separator: ', '
-      filters:
-        combine:
-          expose:
-            label: 'Name or email contains'
-        roles_target_id:
-          expose:
-            label: Role
-        permission:
-          expose:
-            label: Permission
-        status:
-          group_info:
-            label: Status
-            group_items:
-              1:
-                title: Active
-                value: '1'
-              2:
-                title: Blocked
       title: People
       empty:
         area_text_custom:
           content: 'No people available.'
       use_more_text: more
+    display_title: Master
   page_1:
     display_title: Page
     display_options:
@@ -72,3 +73,5 @@ display:
       tab_options:
         title: People
         description: 'Manage user accounts, roles, and permissions.'
+label: People
+description: 'Find and manage people interacting with your site.'

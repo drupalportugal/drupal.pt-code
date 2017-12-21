@@ -1,6 +1,6 @@
 uuid: 27e1f837-7b03-4955-a657-5e491874eccb
 langcode: en
-status: true
+status: false
 dependencies:
   theme:
     - drupalportugal_theme
@@ -8,8 +8,8 @@ _core:
   default_config_hash: 7rR9chwXvdM2H8OYMAYx9Zj3GGlPMrZp_M3ZA4thYTk
 id: drupalportugal_theme_page_title
 theme: drupalportugal_theme
-region: content
-weight: -12
+region: ''
+weight: null
 provider: null
 plugin: page_title_block
 settings:

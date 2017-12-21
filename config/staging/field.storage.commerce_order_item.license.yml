@@ -1,0 +1,20 @@
+uuid: 15671e75-54d3-450d-936e-42194c401abc
+langcode: en
+status: true
+dependencies:
+  module:
+    - commerce_license
+    - commerce_order
+id: commerce_order_item.license
+field_name: license
+entity_type: commerce_order_item
+type: entity_reference
+settings:
+  target_type: commerce_license
+module: core
+locked: true
+cardinality: 1
+translatable: false
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

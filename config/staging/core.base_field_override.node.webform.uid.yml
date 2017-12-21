@@ -1,0 +1,20 @@
+uuid: 1c30985c-9044-4db2-b8ae-b215715b6d8c
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.webform
+id: node.webform.uid
+field_name: uid
+entity_type: node
+bundle: webform
+label: 'Authored by'
+description: 'The username of the content author.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: 'Drupal\node\Entity\Node::getCurrentUserId'
+settings:
+  handler: default
+  handler_settings: {  }
+field_type: entity_reference

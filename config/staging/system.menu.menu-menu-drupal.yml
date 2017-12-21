@@ -1,8 +1,0 @@
-uuid: 36d56991-1964-4c54-9e64-9b29cdbb6348
-langcode: en
-status: true
-dependencies: {  }
-id: menu-menu-drupal
-label: 'Menu Drupal'
-description: 'Menu navegação na secção Drupal'
-locked: false

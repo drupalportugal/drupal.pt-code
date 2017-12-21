@@ -92,17 +92,17 @@ display:
           widgets:
             top:
               views_slideshow_controls:
-                enable: 0
+                enable: false
                 weight: '1'
-                hide_on_single_slide: 0
+                hide_on_single_slide: '0'
                 type: views_slideshow_controls_text
               views_slideshow_slide_counter:
-                enable: 0
+                enable: false
                 weight: '1'
               views_slideshow_pager:
-                enable: 0
+                enable: false
                 weight: '1'
-                hide_on_single_slide: 0
+                hide_on_single_slide: '0'
                 type: views_slideshow_pager_fields
                 views_slideshow_pager_fields:
                   views_slideshow_pager_fields_fields:
@@ -110,17 +110,17 @@ display:
                   views_slideshow_pager_fields_hover: 0
             bottom:
               views_slideshow_controls:
-                enable: 1
+                enable: true
                 weight: '1'
-                hide_on_single_slide: 0
+                hide_on_single_slide: '0'
                 type: views_slideshow_controls_text
               views_slideshow_slide_counter:
-                enable: 1
+                enable: true
                 weight: '1'
               views_slideshow_pager:
-                enable: 0
+                enable: false
                 weight: '1'
-                hide_on_single_slide: 0
+                hide_on_single_slide: '0'
                 type: views_slideshow_pager_fields
                 views_slideshow_pager_fields:
                   views_slideshow_pager_fields_fields:
@@ -195,7 +195,7 @@ display:
           plugin_id: field
       filters:
         status:
-          value: true
+          value: '1'
           table: node_field_data
           field: status
           plugin_id: boolean

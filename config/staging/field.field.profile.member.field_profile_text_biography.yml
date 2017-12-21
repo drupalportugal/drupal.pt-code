@@ -1,0 +1,22 @@
+uuid: 87a11612-66f2-45f0-ad2b-7851afe449ce
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.profile.field_profile_text_biography
+    - profile.type.member
+  module:
+    - text
+id: profile.member.field_profile_text_biography
+field_name: field_profile_text_biography
+entity_type: profile
+bundle: member
+label: Biography
+description: 'Please include a short text about yourself to let us know who you are outside of Drupal. This information will be <strong>public</strong>.'
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  display_summary: false
+field_type: text_with_summary

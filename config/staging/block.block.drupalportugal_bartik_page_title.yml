@@ -9,7 +9,7 @@ _core:
 id: drupalportugal_bartik_page_title
 theme: drupalportugal_bartik
 region: content
-weight: -12
+weight: -14
 provider: null
 plugin: page_title_block
 settings:

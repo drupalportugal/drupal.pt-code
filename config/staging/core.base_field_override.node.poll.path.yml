@@ -1,0 +1,20 @@
+uuid: a59c83ab-8455-4c19-87b8-e9bb8f9e28aa
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.poll
+  module:
+    - path
+id: node.poll.path
+field_name: path
+entity_type: node
+bundle: poll
+label: 'URL alias'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: path

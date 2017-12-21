@@ -1,6 +1,6 @@
 uuid: 7ddbc45d-3260-4bb3-9def-ef6073208aa0
 langcode: en
-status: true
+status: false
 dependencies:
   module:
     - system
@@ -8,8 +8,8 @@ dependencies:
     - tb_purity_modificado
 id: tb_purity_modificado_system_main
 theme: tb_purity_modificado
-region: content
-weight: -22
+region: ''
+weight: null
 provider: null
 plugin: system_main_block
 settings:

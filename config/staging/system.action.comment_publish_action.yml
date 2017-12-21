@@ -7,7 +7,7 @@ dependencies:
 _core:
   default_config_hash: f6w_Pd30AyyDIoMkD4QpPMM2-I8FTEHICchFVOpjiCI
 id: comment_publish_action
-label: 'Publish comment'
+label: 'Publicar comentário'
 type: comment
 plugin: comment_publish_action
 configuration: {  }

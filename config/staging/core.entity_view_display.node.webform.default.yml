@@ -3,6 +3,7 @@ langcode: en
 status: true
 dependencies:
   config:
+    - core.entity_view_display.comment.comment_node_webform.default
     - field.field.node.webform.body
     - field.field.node.webform.comment_node_webform
     - node.type.webform
@@ -21,14 +22,18 @@ content:
     type: text_default
     settings: {  }
     third_party_settings: {  }
+    region: content
   comment_node_webform:
     label: hidden
     type: comment_default
     weight: 20
     settings:
       pager_id: 0
+      view_mode: default
     third_party_settings: {  }
+    region: content
   links:
     weight: 100
+    region: content
 hidden:
   langcode: true

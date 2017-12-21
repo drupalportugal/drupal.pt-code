@@ -3,6 +3,7 @@ langcode: en
 status: true
 dependencies:
   config:
+    - core.entity_view_display.comment.comment_node_evento.default
     - field.field.node.evento.body
     - field.field.node.evento.comment_node_evento
     - field.field.node.evento.field_date
@@ -29,13 +30,16 @@ content:
     type: text_default
     settings: {  }
     third_party_settings: {  }
+    region: content
   comment_node_evento:
     label: hidden
     type: comment_default
     weight: 20
     settings:
       pager_id: 0
+      view_mode: default
     third_party_settings: {  }
+    region: content
   field_date:
     weight: 101
     label: inline
@@ -44,6 +48,7 @@ content:
       timezone_override: ''
     third_party_settings: {  }
     type: datetime_default
+    region: content
   field_eventos_participantes:
     label: inline
     weight: 4
@@ -52,6 +57,7 @@ content:
       thousand_separator: ''
       prefix_suffix: true
     third_party_settings: {  }
+    region: content
   field_image:
     label: hidden
     weight: 0
@@ -60,12 +66,14 @@ content:
       image_style: medium
       image_link: content
     third_party_settings: {  }
+    region: content
   field_local:
     label: inline
     weight: 3
     type: text_default
     settings: {  }
     third_party_settings: {  }
+    region: content
   field_tags:
     label: inline
     weight: 7
@@ -73,9 +81,11 @@ content:
     settings:
       link: true
     third_party_settings: {  }
+    region: content
   links:
     weight: 100
     settings: {  }
     third_party_settings: {  }
+    region: content
 hidden:
   langcode: true

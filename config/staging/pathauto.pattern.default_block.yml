@@ -1,0 +1,14 @@
+uuid: 7a799a65-a77c-4f2f-856f-4b28e356da9a
+langcode: pt-pt
+status: true
+dependencies:
+  module:
+    - block_content
+id: default_block
+label: 'Default Block'
+type: 'canonical_entities:block_content'
+pattern: 'block/[block_content:info]'
+selection_criteria: {  }
+selection_logic: and
+weight: 3
+relationships: {  }

@@ -1,0 +1,25 @@
+uuid: e38bf151-ce66-4f60-b2e0-331c4740fd40
+langcode: en
+status: true
+dependencies:
+  content:
+    - 'block_content:basic:1a0cb9e2-5772-45aa-9cee-14d1a3636182'
+  module:
+    - block_content
+  theme:
+    - drupalportugal_bartik
+id: drupalportugal_bartik_custom_credits_warnings
+theme: drupalportugal_bartik
+region: footer_fifth
+weight: 0
+provider: null
+plugin: 'block_content:1a0cb9e2-5772-45aa-9cee-14d1a3636182'
+settings:
+  id: 'block_content:1a0cb9e2-5772-45aa-9cee-14d1a3636182'
+  label: 'Credits and warnings'
+  provider: block_content
+  label_display: '0'
+  status: true
+  info: ''
+  view_mode: full
+visibility: {  }

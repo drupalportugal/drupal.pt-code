@@ -1,0 +1,24 @@
+uuid: 41e3ded3-de38-4df8-9bb0-39517076bc75
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.profile.field_profile_text_nin
+    - profile.type.collective_associate
+  module:
+    - profile
+third_party_settings:
+  profile:
+    profile_private: true
+id: profile.collective_associate.field_profile_text_nin
+field_name: field_profile_text_nin
+entity_type: profile
+bundle: collective_associate
+label: 'National Identification Number (NIN)'
+description: 'The National Identification Number of the Collective Associate, ie, organization. This information will be <strong>private</strong>.'
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

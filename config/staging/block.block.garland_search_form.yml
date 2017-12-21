@@ -1,6 +1,6 @@
 uuid: d081e142-48bd-4a26-b465-face7be89dbe
 langcode: en
-status: true
+status: false
 dependencies:
   module:
     - search
@@ -8,8 +8,8 @@ dependencies:
     - garland
 id: garland_search_form
 theme: garland
-region: header
-weight: -10
+region: ''
+weight: null
 provider: null
 plugin: search_form_block
 settings:

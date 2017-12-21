@@ -14,7 +14,7 @@ bundle: evento
 label: Local
 description: 'Colocar: nome da cidade - nome do local. Ex. Lisboa - Kompacto'
 required: false
-translatable: true
+translatable: false
 default_value: {  }
 default_value_callback: ''
 settings: {  }

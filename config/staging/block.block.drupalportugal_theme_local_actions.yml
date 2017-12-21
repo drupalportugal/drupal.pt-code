@@ -1,6 +1,6 @@
 uuid: e1516ffe-90b5-4927-ab23-b09f9252f63a
 langcode: en
-status: true
+status: false
 dependencies:
   theme:
     - drupalportugal_theme
@@ -8,8 +8,8 @@ _core:
   default_config_hash: 13GQpeITIJsp1kyPniXtWZfyFH87vb1xxJCHifL4UeE
 id: drupalportugal_theme_local_actions
 theme: drupalportugal_theme
-region: content
-weight: -12
+region: ''
+weight: null
 provider: null
 plugin: local_actions_block
 settings:

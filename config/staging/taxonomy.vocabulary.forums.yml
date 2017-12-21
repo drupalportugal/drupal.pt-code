@@ -1,9 +1,0 @@
-uuid: c79674c2-5a7c-43af-a0d9-faf021851ccd
-langcode: en
-status: true
-dependencies: {  }
-name: Fóruns
-vid: forums
-description: 'Fórum vocabulário de navegação'
-hierarchy: 1
-weight: -10

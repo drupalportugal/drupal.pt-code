@@ -8,9 +8,9 @@ dependencies:
 _core:
   default_config_hash: tDcmzGfShE0XJbfwJzyA6lJTUYC6X4iVu887dgoFfDg
 id: content_recent
-label: 'Recent content'
+label: 'Conteúdo recente'
 module: node
-description: 'Recent content.'
+description: 'Conteúdo recente.'
 tag: default
 base_table: node_field_data
 base_field: nid
@@ -19,7 +19,7 @@ display:
   default:
     display_plugin: default
     id: default
-    display_title: Master
+    display_title: Principal
     position: 0
     display_options:
       access:
@@ -40,13 +40,13 @@ display:
       exposed_form:
         type: basic
         options:
-          submit_button: Apply
+          submit_button: Aplicar
           reset_button: false
-          reset_button_label: Reset
-          exposed_sorts_label: 'Sort by'
+          reset_button_label: Reiniciar
+          exposed_sorts_label: 'Ordenar por'
           expose_sort_order: true
-          sort_asc_label: Asc
-          sort_desc_label: Desc
+          sort_asc_label: Ascendente
+          sort_desc_label: Descendente
       pager:
         type: some
         options:
@@ -258,7 +258,7 @@ display:
           entity_type: node
           entity_field: changed
           plugin_id: date
-      title: 'Recent content'
+      title: 'Conteúdo recente'
       header: {  }
       footer: {  }
       empty:
@@ -271,7 +271,7 @@ display:
           admin_label: ''
           empty: true
           tokenize: false
-          content: 'No content available.'
+          content: 'Conteúdo não disponível'
           plugin_id: text_custom
       relationships:
         uid:
@@ -289,7 +289,7 @@ display:
       display_extenders: {  }
       use_more: false
       use_more_always: false
-      use_more_text: More
+      use_more_text: Mais
       link_url: ''
       link_display: '0'
     cache_metadata:
@@ -304,7 +304,7 @@ display:
   block_1:
     display_plugin: block
     id: block_1
-    display_title: Block
+    display_title: Bloco
     position: 1
     display_options:
       display_extenders: {  }

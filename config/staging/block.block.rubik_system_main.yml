@@ -1,6 +1,6 @@
 uuid: be6ebb2e-d8ba-45d3-957a-8aea3950e019
 langcode: en
-status: true
+status: false
 dependencies:
   module:
     - system
@@ -8,8 +8,8 @@ dependencies:
     - rubik
 id: rubik_system_main
 theme: rubik
-region: content
-weight: 0
+region: ''
+weight: null
 provider: null
 plugin: system_main_block
 settings:

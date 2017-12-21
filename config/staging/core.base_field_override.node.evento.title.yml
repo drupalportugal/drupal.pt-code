@@ -11,7 +11,7 @@ bundle: evento
 label: 'Nome do evento'
 description: ''
 required: false
-translatable: true
+translatable: false
 default_value: {  }
 default_value_callback: ''
 settings: {  }

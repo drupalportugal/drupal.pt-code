@@ -1,26 +1,24 @@
-uuid: 610e443c-62d7-414f-aa7c-f2ab9986e134
+uuid: c91253fc-4b93-4b57-8fde-28bb938e6576
 langcode: en
-status: false
+status: true
 dependencies:
   config:
-    - system.menu.main
+    - system.menu.main-menu
   module:
     - system
   theme:
     - drupalportugal_bartik
-_core:
-  default_config_hash: rx9IrdDv7Ldc4kpalZAxdhIPZfYIeOMh1N-qKoQZwHo
 id: drupalportugal_bartik_main_menu
 theme: drupalportugal_bartik
-region: '-1'
-weight: -9
+region: primary_menu
+weight: 0
 provider: null
-plugin: 'system_menu_block:main'
+plugin: 'system_menu_block:main-menu'
 settings:
-  id: 'system_menu_block:main'
-  label: 'Main navigation'
+  id: 'system_menu_block:main-menu'
+  label: 'Main menu'
   provider: system
   label_display: '0'
   level: 1
-  depth: 1
+  depth: 0
 visibility: {  }

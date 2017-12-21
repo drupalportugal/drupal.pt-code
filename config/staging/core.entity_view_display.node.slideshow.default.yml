@@ -3,6 +3,7 @@ langcode: en
 status: true
 dependencies:
   config:
+    - core.entity_view_display.comment.comment_node_slideshow.default
     - field.field.node.slideshow.body
     - field.field.node.slideshow.comment_node_slideshow
     - field.field.node.slideshow.field_slideshow_image
@@ -23,13 +24,16 @@ content:
     type: text_default
     settings: {  }
     third_party_settings: {  }
+    region: content
   comment_node_slideshow:
     label: hidden
     type: comment_default
     weight: 20
     settings:
       pager_id: 0
+      view_mode: default
     third_party_settings: {  }
+    region: content
   field_slideshow_image:
     label: above
     weight: 1
@@ -38,7 +42,9 @@ content:
       image_style: ''
       image_link: ''
     third_party_settings: {  }
+    region: content
   links:
     weight: 100
+    region: content
 hidden:
   langcode: true

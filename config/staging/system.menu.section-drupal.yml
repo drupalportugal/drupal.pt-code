@@ -1,0 +1,8 @@
+uuid: 9369b753-4182-422c-96f3-dbbff81abf0e
+langcode: en
+status: true
+dependencies: {  }
+id: section-drupal
+label: 'Section: Drupal'
+description: 'Navigation for the Drupal section'
+locked: false

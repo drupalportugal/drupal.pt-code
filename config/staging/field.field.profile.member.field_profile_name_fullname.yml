@@ -1,0 +1,61 @@
+uuid: 694d186b-4f6e-4449-ae0c-29eeb357baf4
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.profile.field_profile_name_fullname
+    - profile.type.member
+  module:
+    - name
+id: profile.member.field_profile_name_fullname
+field_name: field_profile_name_fullname
+entity_type: profile
+bundle: member
+label: 'Full name'
+description: 'Your full civil name. This information will be <strong>public</strong>.'
+required: true
+translatable: false
+default_value:
+  -
+    title: null
+    given: ''
+    middle: ''
+    family: ''
+    generational: null
+    credentials: null
+default_value_callback: ''
+settings:
+  size:
+    title: 6
+    given: 20
+    middle: 20
+    family: 20
+    generational: 5
+    credentials: 35
+  title_display:
+    title: none
+    given: description
+    middle: description
+    family: description
+    generational: none
+    credentials: none
+  field_type:
+    title: select
+    given: text
+    middle: text
+    family: text
+    generational: select
+    credentials: text
+  inline_css:
+    title: ''
+    given: ''
+    middle: ''
+    family: ''
+    generational: ''
+    credentials: ''
+  component_css: ''
+  component_layout: default
+  show_component_required_marker: true
+  credentials_inline: false
+  override_format: default
+field_type: name

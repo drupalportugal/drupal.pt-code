@@ -1,4 +1,4 @@
 label: User
 tags:
-  title: '[user:name] | [site:name]'
   description: '[site:name]'
+  title: '[user:name] | [site:name]'

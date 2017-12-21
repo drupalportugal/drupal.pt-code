@@ -1,6 +1,6 @@
 uuid: c67120a0-6e4d-4b17-8857-f7d3d60a7a83
 langcode: en
-status: true
+status: false
 dependencies:
   module:
     - search
@@ -8,8 +8,8 @@ dependencies:
     - drupal_pt
 id: drupal_pt_search_form
 theme: drupal_pt
-region: header
-weight: -10
+region: ''
+weight: null
 provider: null
 plugin: search_form_block
 settings:

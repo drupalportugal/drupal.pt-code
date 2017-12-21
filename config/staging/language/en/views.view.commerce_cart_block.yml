@@ -1,0 +1,25 @@
+label: 'Cart block'
+display:
+  default:
+    display_title: Master
+    display_options:
+      exposed_form:
+        options:
+          submit_button: Apply
+          reset_button_label: Reset
+          exposed_sorts_label: 'Sort by'
+          sort_asc_label: Asc
+          sort_desc_label: Desc
+      fields:
+        quantity:
+          alter:
+            text: '{{ quantity }}&nbsp;x'
+          separator: ', '
+        title:
+          separator: ', '
+        total_price__number:
+          separator: ', '
+      arguments:
+        order_id:
+          exception:
+            title: All

@@ -1,0 +1,22 @@
+uuid: b042053b-1177-4158-b049-62611ec05d24
+langcode: en
+status: true
+dependencies:
+  config:
+    - commerce_product.commerce_product_type.socios
+    - field.storage.commerce_product.body
+  module:
+    - text
+id: commerce_product.socios.body
+field_name: body
+entity_type: commerce_product
+bundle: socios
+label: Body
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: null
+settings:
+  display_summary: false
+field_type: text_with_summary

@@ -1,0 +1,89 @@
+uuid: 8deea80f-5491-4985-aa41-19e7833f882e
+langcode: en
+status: true
+dependencies:
+  module:
+    - name
+    - profile
+id: profile.field_profile_name_fullname
+field_name: field_profile_name_fullname
+entity_type: profile
+type: name
+settings:
+  components:
+    given: true
+    middle: true
+    family: true
+    title: false
+    generational: false
+    credentials: false
+  minimum_components:
+    given: true
+    family: true
+    title: false
+    middle: false
+    generational: false
+    credentials: false
+  labels:
+    title: Title
+    given: Given
+    middle: 'Middle name(s)'
+    family: Family
+    generational: Generational
+    credentials: Credentials
+  max_length:
+    title: 31
+    given: 63
+    middle: 127
+    family: 63
+    generational: 15
+    credentials: 255
+  autocomplete_source:
+    title:
+      title: title
+    given: {  }
+    middle: {  }
+    family: {  }
+    generational:
+      generational: '0'
+    credentials: {  }
+  autocomplete_separator:
+    title: ' '
+    given: ' -'
+    middle: ' -'
+    family: ' -'
+    generational: ' '
+    credentials: ', '
+  allow_family_or_given: false
+  title_options:
+    - '-- --'
+    - Mr.
+    - Mrs.
+    - Miss
+    - Ms.
+    - Dr.
+    - Prof.
+  generational_options:
+    - '-- --'
+    - Jr.
+    - Sr.
+    - I
+    - II
+    - III
+    - IV
+    - V
+    - VI
+    - VII
+    - VIII
+    - IX
+    - X
+  sort_options:
+    title: false
+    generational: false
+module: name
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

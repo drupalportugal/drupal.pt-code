@@ -1,6 +1,6 @@
 uuid: 558e07ce-6415-4349-b3b0-851226c92061
 langcode: en
-status: true
+status: false
 dependencies:
   module:
     - system
@@ -8,8 +8,8 @@ dependencies:
     - drupal_pt
 id: drupal_pt_system_main
 theme: drupal_pt
-region: content
-weight: -13
+region: ''
+weight: null
 provider: null
 plugin: system_main_block
 settings:

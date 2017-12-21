@@ -1,6 +1,6 @@
 uuid: 33c95e05-6139-4e3b-855e-dcbf14743e9e
 langcode: en
-status: true
+status: false
 dependencies:
   module:
     - system
@@ -8,8 +8,8 @@ dependencies:
     - garland
 id: garland_system_main
 theme: garland
-region: content
-weight: -13
+region: ''
+weight: null
 provider: null
 plugin: system_main_block
 settings:

@@ -1,0 +1,19 @@
+uuid: 2fb701a5-1538-43d6-9622-973fe6dde7ab
+langcode: en
+status: true
+dependencies:
+  module:
+    - link
+    - profile
+id: profile.field_profile_link_website
+field_name: field_profile_link_website
+entity_type: profile
+type: link
+settings: {  }
+module: link
+locked: false
+cardinality: -1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

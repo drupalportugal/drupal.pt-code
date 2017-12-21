@@ -1,0 +1,23 @@
+uuid: 511ad75a-3e7c-4adc-9180-41799400ae6a
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.profile.field_profile_link_website
+    - profile.type.member
+  module:
+    - link
+id: profile.member.field_profile_link_website
+field_name: field_profile_link_website
+entity_type: profile
+bundle: member
+label: 'Website address'
+description: 'Your personal or professional website address(es). This information will be <strong>public</strong>.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  link_type: 16
+  title: 1
+field_type: link

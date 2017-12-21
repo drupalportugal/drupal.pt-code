@@ -1,6 +1,6 @@
 uuid: da8919ae-5dd5-463c-89ed-5f71716b6004
 langcode: en
-status: true
+status: false
 dependencies:
   module:
     - system
@@ -10,8 +10,8 @@ _core:
   default_config_hash: oXUb3JZR2WW5VOdw4HrhRicCsq51mCgLfRyvheG68ck
 id: drupalportugal_theme_breadcrumbs
 theme: drupalportugal_theme
-region: breadcrumb
-weight: 0
+region: ''
+weight: null
 provider: null
 plugin: system_breadcrumb_block
 settings:

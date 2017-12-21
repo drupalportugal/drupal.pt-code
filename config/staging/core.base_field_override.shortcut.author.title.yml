@@ -1,0 +1,18 @@
+uuid: 53b1dc64-a487-4a43-9cf0-463e44873f4b
+langcode: en
+status: true
+dependencies:
+  config:
+    - shortcut.set.author
+id: shortcut.author.title
+field_name: title
+entity_type: shortcut
+bundle: author
+label: Name
+description: 'The name of the shortcut.'
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

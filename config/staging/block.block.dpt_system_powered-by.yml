@@ -1,6 +1,6 @@
 uuid: c154ce4f-aa25-4697-9b79-d4d38f5b7cfd
 langcode: en
-status: true
+status: false
 dependencies:
   module:
     - system
@@ -8,8 +8,8 @@ dependencies:
     - dpt
 id: dpt_system_powered-by
 theme: dpt
-region: footer
-weight: -8
+region: ''
+weight: null
 provider: null
 plugin: system_powered_by_block
 settings:

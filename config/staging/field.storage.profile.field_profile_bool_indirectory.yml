@@ -1,0 +1,18 @@
+uuid: fa122a52-80b3-42b8-a067-74ccdc35b844
+langcode: en
+status: true
+dependencies:
+  module:
+    - profile
+id: profile.field_profile_bool_indirectory
+field_name: field_profile_bool_indirectory
+entity_type: profile
+type: boolean
+settings: {  }
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

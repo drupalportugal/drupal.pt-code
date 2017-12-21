@@ -1,0 +1,22 @@
+uuid: d24fa120-147b-42b1-b736-f1665c204189
+langcode: en
+status: true
+dependencies:
+  module:
+    - aggregator
+  theme:
+    - drupalportugal_bartik
+id: drupalportugal_bartik_aggregatorfeed_portugaldrupalgroups
+theme: drupalportugal_bartik
+region: footer_first
+weight: 0
+provider: null
+plugin: aggregator_feed_block
+settings:
+  id: aggregator_feed_block
+  label: 'In the forum'
+  provider: aggregator
+  label_display: visible
+  block_count: 5
+  feed: '1'
+visibility: {  }

@@ -1,6 +1,6 @@
 uuid: f2483563-33f1-4949-9567-12c829f1e831
 langcode: en
-status: true
+status: false
 dependencies:
   module:
     - system
@@ -8,8 +8,8 @@ dependencies:
     - nucleus_starter
 id: nucleus_starter_system_powered-by
 theme: nucleus_starter
-region: footer
-weight: -14
+region: ''
+weight: null
 provider: null
 plugin: system_powered_by_block
 settings:

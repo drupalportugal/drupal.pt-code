@@ -1,0 +1,18 @@
+uuid: 1b1bdf6c-553c-4e4f-a669-86f491512abb
+langcode: en
+status: true
+dependencies:
+  config:
+    - comment.type.comment_node_forum
+id: comment.comment_node_forum.created
+field_name: created
+entity_type: comment
+bundle: comment_node_forum
+label: Created
+description: 'The time that the comment was created.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: created

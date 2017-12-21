@@ -1,0 +1,27 @@
+uuid: a296093e-7c9c-400e-8677-7ab6ef22d585
+langcode: en
+status: true
+dependencies:
+  module:
+    - user
+  theme:
+    - drupalportugal_bartik
+id: drupalportugal_bartik_login
+theme: drupalportugal_bartik
+region: sidebar_second
+weight: -8
+provider: null
+plugin: user_login_block
+settings:
+  id: user_login_block
+  label: 'User login'
+  provider: user
+  label_display: visible
+visibility:
+  user_role:
+    id: user_role
+    roles:
+      anonymous: anonymous
+    negate: false
+    context_mapping:
+      user: '@user.current_user_context:current_user'

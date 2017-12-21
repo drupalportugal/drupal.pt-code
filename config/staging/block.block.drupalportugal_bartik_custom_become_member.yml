@@ -1,0 +1,33 @@
+uuid: c255d577-5d92-4a5c-8cfb-4db56247998b
+langcode: en
+status: true
+dependencies:
+  content:
+    - 'block_content:basic:d8c1cc5b-4249-43c9-aa50-ac85072f8862'
+  module:
+    - block_content
+    - user
+  theme:
+    - drupalportugal_bartik
+id: drupalportugal_bartik_custom_become_member
+theme: drupalportugal_bartik
+region: sidebar_second
+weight: -14
+provider: null
+plugin: 'block_content:d8c1cc5b-4249-43c9-aa50-ac85072f8862'
+settings:
+  id: 'block_content:d8c1cc5b-4249-43c9-aa50-ac85072f8862'
+  label: 'Become a member!'
+  provider: block_content
+  label_display: visible
+  status: true
+  info: ''
+  view_mode: full
+visibility:
+  user_role:
+    id: user_role
+    roles:
+      administrator: administrator
+    negate: false
+    context_mapping:
+      user: '@user.current_user_context:current_user'

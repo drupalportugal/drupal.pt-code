@@ -1,0 +1,18 @@
+settings:
+  allowed_values:
+    -
+      label: Bigenéro
+    -
+      label: Feminina
+    -
+      label: 'Genéro fluído'
+    -
+      label: 'Genéro neutral'
+    -
+      label: 'Genéro queer'
+    -
+      label: Masculino
+    -
+      label: Transgénero
+    -
+      label: 'Prefiro não dizer'

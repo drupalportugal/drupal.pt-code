@@ -1,0 +1,12 @@
+uuid: 43d2509f-c1b5-4fa5-a20f-b2edb10705c2
+langcode: en
+status: true
+dependencies: {  }
+id: association
+label: Association
+recipients:
+  - gestao@drupal.pt
+reply: ''
+weight: 0
+message: 'Your message has been sent.'
+redirect: ''

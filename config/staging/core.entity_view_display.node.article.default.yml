@@ -3,11 +3,13 @@ langcode: pt-pt
 status: true
 dependencies:
   config:
+    - core.entity_view_display.comment.comment_node_article.default
     - field.field.node.article.body
     - field.field.node.article.comment
     - field.field.node.article.comment_node_article
     - field.field.node.article.field_image
     - field.field.node.article.field_tags
+    - image.style.large
     - node.type.article
   module:
     - comment
@@ -23,41 +25,49 @@ mode: default
 content:
   body:
     label: hidden
-    weight: 0
+    weight: 1
     type: text_default
     settings: {  }
     third_party_settings: {  }
+    region: content
   comment:
-    label: above
     type: comment_default
-    weight: 20
-    settings:
-      pager_id: 0
-    third_party_settings: {  }
-  comment_node_article:
+    weight: 5
     label: hidden
-    type: comment_default
-    weight: 20
     settings:
       pager_id: 0
+      view_mode: default
     third_party_settings: {  }
+    region: content
+  comment_node_article:
+    type: comment_default
+    weight: 4
+    label: hidden
+    settings:
+      pager_id: 0
+      view_mode: default
+    third_party_settings: {  }
+    region: content
   field_image:
     label: hidden
-    weight: -1
+    weight: 0
     type: image
     settings:
-      image_style: ''
+      image_style: large
       image_link: ''
     third_party_settings: {  }
+    region: content
   field_tags:
     label: inline
-    weight: 10
+    weight: 2
     type: entity_reference_label
     settings:
       link: true
     third_party_settings: {  }
+    region: content
   links:
-    weight: 100
+    weight: 3
+    region: content
     settings: {  }
     third_party_settings: {  }
 hidden:

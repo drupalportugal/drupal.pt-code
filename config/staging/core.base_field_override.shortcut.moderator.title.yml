@@ -1,0 +1,18 @@
+uuid: bf3a9c13-eba8-408b-9a24-0ca5a379ad10
+langcode: en
+status: true
+dependencies:
+  config:
+    - shortcut.set.moderator
+id: shortcut.moderator.title
+field_name: title
+entity_type: shortcut
+bundle: moderator
+label: Name
+description: 'The name of the shortcut.'
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

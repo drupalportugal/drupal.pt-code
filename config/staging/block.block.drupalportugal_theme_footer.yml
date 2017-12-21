@@ -1,6 +1,6 @@
 uuid: c2798040-3712-40bd-be2a-cd09157ffe88
 langcode: en
-status: true
+status: false
 dependencies:
   config:
     - system.menu.footer
@@ -12,8 +12,8 @@ _core:
   default_config_hash: kkISXE1LT2FJEoYnqCrCpeFB-2pmGmMxMklVk7rQcfg
 id: drupalportugal_theme_footer
 theme: drupalportugal_theme
-region: footer_fifth
-weight: 0
+region: ''
+weight: null
 provider: null
 plugin: 'system_menu_block:footer'
 settings:

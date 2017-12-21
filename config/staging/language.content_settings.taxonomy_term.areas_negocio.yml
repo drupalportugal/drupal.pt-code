@@ -1,0 +1,16 @@
+uuid: 642b90bf-e9e7-452f-85e6-c1e62b4e78d6
+langcode: en
+status: true
+dependencies:
+  config:
+    - taxonomy.vocabulary.areas_negocio
+  module:
+    - content_translation
+third_party_settings:
+  content_translation:
+    enabled: true
+id: taxonomy_term.areas_negocio
+target_entity_type_id: taxonomy_term
+target_bundle: areas_negocio
+default_langcode: site_default
+language_alterable: true

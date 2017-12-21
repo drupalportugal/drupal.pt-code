@@ -1,0 +1,25 @@
+uuid: e927192c-9f96-40fe-9df9-cf0e58da0c1d
+langcode: en
+status: true
+dependencies:
+  content:
+    - 'block_content:basic:69cfffbe-8824-4271-9abe-d1e73257240d'
+  module:
+    - block_content
+  theme:
+    - drupalportugal_bartik
+id: drupalportugal_bartik_custom_communicate
+theme: drupalportugal_bartik
+region: footer_first
+weight: 0
+provider: null
+plugin: 'block_content:69cfffbe-8824-4271-9abe-d1e73257240d'
+settings:
+  id: 'block_content:69cfffbe-8824-4271-9abe-d1e73257240d'
+  label: Communicate
+  provider: block_content
+  label_display: visible
+  status: true
+  info: ''
+  view_mode: full
+visibility: {  }

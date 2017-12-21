@@ -1,6 +1,6 @@
 uuid: c929dda1-67c0-4972-8eae-72d99bb5e97b
 langcode: en
-status: true
+status: false
 dependencies:
   content:
     - 'block_content:basic:25678aef-4f17-4688-9f8e-e5cff2cbd6e4'
@@ -10,8 +10,8 @@ dependencies:
     - stark
 id: stark_block_2
 theme: stark
-region: sidebar_second
-weight: -19
+region: ''
+weight: null
 provider: null
 plugin: 'block_content:25678aef-4f17-4688-9f8e-e5cff2cbd6e4'
 settings:

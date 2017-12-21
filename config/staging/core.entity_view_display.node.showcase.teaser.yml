@@ -8,6 +8,7 @@ dependencies:
     - field.field.node.showcase.field_categoria
     - field.field.node.showcase.field_empresas
     - field.field.node.showcase.field_image
+    - field.field.node.showcase.field_link
     - image.style.large
     - node.type.showcase
   module:
@@ -26,6 +27,7 @@ content:
     settings:
       link: true
     third_party_settings: {  }
+    region: content
   field_empresas:
     type: text_trimmed
     weight: 1
@@ -33,6 +35,7 @@ content:
     settings:
       trim_length: 600
     third_party_settings: {  }
+    region: content
   field_image:
     label: hidden
     weight: 0
@@ -41,10 +44,13 @@ content:
       image_style: large
       image_link: content
     third_party_settings: {  }
+    region: content
   links:
     weight: 3
     settings: {  }
     third_party_settings: {  }
+    region: content
 hidden:
   comment_node_showcase: true
+  field_link: true
   langcode: true

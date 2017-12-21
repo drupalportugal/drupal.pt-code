@@ -9,7 +9,7 @@ _core:
 id: drupalportugal_bartik_local_actions
 theme: drupalportugal_bartik
 region: content
-weight: -8
+weight: -11
 provider: null
 plugin: local_actions_block
 settings:

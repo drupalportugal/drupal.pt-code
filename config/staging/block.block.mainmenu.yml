@@ -1,6 +1,6 @@
 uuid: 54f72b9b-10d8-492c-a631-f6aec3a7413d
 langcode: pt-pt
-status: true
+status: false
 dependencies:
   config:
     - system.menu.main-menu
@@ -10,8 +10,8 @@ dependencies:
     - drupalportugal_theme
 id: mainmenu
 theme: drupalportugal_theme
-region: primary_menu
-weight: -12
+region: ''
+weight: null
 provider: null
 plugin: 'system_menu_block:main-menu'
 settings:

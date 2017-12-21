@@ -1,6 +1,6 @@
 uuid: 46523442-48cd-4adf-853c-a8c6af68f996
 langcode: en
-status: true
+status: false
 dependencies:
   module:
     - system
@@ -8,8 +8,8 @@ dependencies:
     - nucleus
 id: nucleus_system_powered-by
 theme: nucleus
-region: footer
-weight: -14
+region: ''
+weight: null
 provider: null
 plugin: system_powered_by_block
 settings:

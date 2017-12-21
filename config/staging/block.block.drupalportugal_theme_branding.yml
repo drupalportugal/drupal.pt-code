@@ -1,6 +1,6 @@
 uuid: ec0f5af6-2778-4faa-acce-4b83fd0e77af
 langcode: en
-status: true
+status: false
 dependencies:
   module:
     - system
@@ -10,8 +10,8 @@ _core:
   default_config_hash: NDwadleLD3YVSbDUaakxyYZyINYtkFtOVGShfq4kWy8
 id: drupalportugal_theme_branding
 theme: drupalportugal_theme
-region: header
-weight: 0
+region: ''
+weight: null
 provider: null
 plugin: system_branding_block
 settings:

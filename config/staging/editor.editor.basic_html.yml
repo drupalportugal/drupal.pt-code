@@ -19,6 +19,12 @@ settings:
           items:
             - Bold
             - Italic
+            - '-'
+            - RemoveFormat
+        -
+          name: 'Block Formatting'
+          items:
+            - Format
         -
           name: Linking
           items:
@@ -32,16 +38,29 @@ settings:
         -
           name: Media
           items:
+            - SpecialChar
+            - '-'
             - Blockquote
             - DrupalImage
         -
-          name: 'Block Formatting'
+          name: Clipboard
           items:
-            - Format
+            - Undo
+            - Redo
+            - '-'
+            - Cut
+            - Copy
+            - Paste
+            - '-'
+            - PasteText
+            - PasteFromWord
         -
           name: Tools
           items:
+            - ShowBlocks
             - Source
+            - Maximize
+            - Language
   plugins:
     stylescombo:
       styles: ''

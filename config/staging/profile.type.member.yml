@@ -1,0 +1,17 @@
+uuid: 163eaf39-9afb-4df8-ba0a-fcdb8e9e7d42
+langcode: en
+status: true
+dependencies: {  }
+id: member
+label: Member
+registration: true
+multiple: false
+roles:
+  authenticated: authenticated
+  autor: '0'
+  moderator: '0'
+  administrator: '0'
+  socios: '0'
+weight: 0
+use_revisions: false
+description: 'Profile for Members.'

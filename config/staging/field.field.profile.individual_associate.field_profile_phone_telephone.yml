@@ -1,0 +1,25 @@
+uuid: 7e855ee0-93a2-42a3-8eca-ac87e37e8c36
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.profile.field_profile_phone_telephone
+    - profile.type.individual_associate
+  module:
+    - profile
+    - telephone
+third_party_settings:
+  profile:
+    profile_private: true
+id: profile.individual_associate.field_profile_phone_telephone
+field_name: field_profile_phone_telephone
+entity_type: profile
+bundle: individual_associate
+label: 'Telephone number'
+description: 'Your telephone number(s) as a citizen with international notation. This information will be <strong>private</strong>.'
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: telephone

@@ -1,0 +1,33 @@
+uuid: 60f34281-ae4d-4152-ac2b-2113b6341880
+langcode: en
+status: true
+dependencies:
+  module:
+    - language
+    - node
+id: node_functionality_pt
+label: 'Node: Functionality PT'
+type: 'canonical_entities:node'
+pattern: 'funcionalidade/[node:title]'
+selection_criteria:
+  2b2aa057-05da-4894-badf-0f336938a88c:
+    id: node_type
+    bundles:
+      funcionalidade: funcionalidade
+    negate: false
+    context_mapping:
+      node: node
+    uuid: 2b2aa057-05da-4894-badf-0f336938a88c
+  9e9a76c6-c72f-442e-9226-4997ddc650dc:
+    id: language
+    langcodes:
+      pt-pt: pt-pt
+    negate: false
+    context_mapping:
+      language: 'node:langcode:language'
+    uuid: 9e9a76c6-c72f-442e-9226-4997ddc650dc
+selection_logic: and
+weight: -7
+relationships:
+  'node:langcode:language':
+    label: Language

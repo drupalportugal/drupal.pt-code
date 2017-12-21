@@ -4,9 +4,9 @@ status: true
 dependencies: {  }
 _core:
   default_config_hash: NIKBt6kw_uPhNI0qtR2DnRf7mSOgAQdx7Q94SKMjXbQ
-name: 'Plain text'
+name: 'Texto simples'
 format: plain_text
-weight: -7
+weight: -5
 filters:
   filter_html_escape:
     id: filter_html_escape

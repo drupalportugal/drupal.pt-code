@@ -8,6 +8,7 @@ dependencies:
     - field.field.node.showcase.field_categoria
     - field.field.node.showcase.field_empresas
     - field.field.node.showcase.field_image
+    - field.field.node.showcase.field_link
     - node.type.showcase
   module:
     - text
@@ -24,15 +25,19 @@ content:
     settings:
       link: true
     third_party_settings: {  }
+    region: content
   field_empresas:
     label: inline
     weight: 0
     type: text_default
     settings: {  }
     third_party_settings: {  }
+    region: content
   links:
     weight: 100
+    region: content
 hidden:
   comment_node_showcase: true
   field_image: true
+  field_link: true
   langcode: true

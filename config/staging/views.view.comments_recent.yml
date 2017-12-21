@@ -9,9 +9,9 @@ dependencies:
 _core:
   default_config_hash: jmfZ73IDUpneecqVXUK3whGzTcvwLBBll9U3ZTCzndo
 id: comments_recent
-label: 'Recent comments'
+label: 'Comentários recentes'
 module: views
-description: 'Recent comments.'
+description: 'Comentários recentes.'
 tag: default
 base_table: comment_field_data
 base_field: cid
@@ -20,7 +20,7 @@ display:
   default:
     display_plugin: default
     id: default
-    display_title: Master
+    display_title: Principal
     position: 0
     display_options:
       access:
@@ -176,7 +176,7 @@ display:
           entity_field: changed
       filters:
         status:
-          value: true
+          value: '1'
           table: comment_field_data
           field: status
           id: status
@@ -187,7 +187,7 @@ display:
           entity_type: comment
           entity_field: status
         status_node:
-          value: true
+          value: '1'
           table: node_field_data
           field: status
           relationship: node
@@ -225,7 +225,7 @@ display:
           plugin_id: field
           entity_type: comment
           entity_field: cid
-      title: 'Recent comments'
+      title: 'Comentários recentes'
       empty:
         area_text_custom:
           id: area_text_custom
@@ -236,7 +236,7 @@ display:
           admin_label: ''
           label: ''
           empty: true
-          content: 'No comments available.'
+          content: 'Não existem comentários.'
           tokenize: false
           plugin_id: text_custom
       display_extenders: {  }
@@ -250,11 +250,11 @@ display:
   block_1:
     display_plugin: block
     id: block_1
-    display_title: Block
+    display_title: Bloco
     position: 1
     display_options:
-      block_description: 'Recent comments'
-      block_category: 'Lists (Views)'
+      block_description: 'Comentários recentes'
+      block_category: 'Listas (Views)'
       allow:
         items_per_page: true
       display_extenders: {  }

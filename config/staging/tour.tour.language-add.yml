@@ -7,7 +7,7 @@ dependencies:
 _core:
   default_config_hash: AMWw3H7E7fuBLMW6LmsCJvYFYQiWwSCl0Fbwe0wiIrU
 id: language-add
-label: 'Adding languages'
+label: 'Adicionar idiomas'
 module: language
 routes:
   -
@@ -16,13 +16,13 @@ tips:
   language-add-overview:
     id: language-add-overview
     plugin: text
-    label: 'Adding languages'
+    label: 'Adicionar idiomas'
     body: '<p>This page provides the ability to add common languages to your site.</p><p>If the desired language is not available, you can add a custom language.</p>'
     weight: 1
   language-add-choose:
     id: language-add-choose
     plugin: text
-    label: 'Select language'
+    label: 'Selecionar o idioma'
     body: '<p>Choose a language from the list, or choose "Custom language..." at the end of the list.</p><p>Click the "Add language" button when you are done choosing your language.</p><p>When adding a custom language, you will get an additional form where you can provide the name, code, and direction of the language.</p>'
     weight: 2
     attributes:

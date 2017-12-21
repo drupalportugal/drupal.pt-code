@@ -1,0 +1,18 @@
+uuid: 901160af-91aa-4619-a023-e35eeb75699c
+langcode: en
+status: true
+dependencies:
+  config:
+    - comment.type.comment_node_evento
+id: comment.comment_node_evento.homepage
+field_name: homepage
+entity_type: comment
+bundle: comment_node_evento
+label: Homepage
+description: 'The comment author''s home page address.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: uri

@@ -1,6 +1,6 @@
 uuid: 34f02823-5273-4c77-91ba-c69ee373058c
 langcode: en
-status: true
+status: false
 dependencies:
   module:
     - system
@@ -8,8 +8,8 @@ dependencies:
     - tao
 id: tao_system_powered-by
 theme: tao
-region: footer
-weight: 10
+region: ''
+weight: null
 provider: null
 plugin: system_powered_by_block
 settings:

@@ -1,0 +1,22 @@
+uuid: bb316a73-7fde-4efa-9cf0-0bf65d033339
+langcode: en
+status: true
+dependencies:
+  module:
+    - aggregator
+  theme:
+    - drupalportugal_bartik
+id: drupalportugal_bartik_aggregatorfeed_github
+theme: drupalportugal_bartik
+region: footer_third
+weight: 0
+provider: null
+plugin: aggregator_feed_block
+settings:
+  id: aggregator_feed_block
+  label: 'On GitHub'
+  provider: aggregator
+  label_display: visible
+  block_count: 5
+  feed: '6'
+visibility: {  }

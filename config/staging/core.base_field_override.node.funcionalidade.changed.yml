@@ -1,0 +1,18 @@
+uuid: 88b71d18-cab1-4fc7-b2f3-1d2b4d4b7f7f
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.funcionalidade
+id: node.funcionalidade.changed
+field_name: changed
+entity_type: node
+bundle: funcionalidade
+label: Changed
+description: 'The time that the node was last edited.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: changed

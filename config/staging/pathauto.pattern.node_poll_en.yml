@@ -1,0 +1,33 @@
+uuid: 133a1624-5c16-47f8-b94c-9dc4ff92b7c3
+langcode: en
+status: true
+dependencies:
+  module:
+    - language
+    - node
+id: node_poll_en
+label: 'Node: Poll EN'
+type: 'canonical_entities:node'
+pattern: 'poll/[node:title]'
+selection_criteria:
+  4b55fbc5-bd57-4d30-8787-d24cd4ff7e00:
+    id: node_type
+    bundles:
+      poll: poll
+    negate: false
+    context_mapping:
+      node: node
+    uuid: 4b55fbc5-bd57-4d30-8787-d24cd4ff7e00
+  f5ce884a-72c7-4bb8-8a31-f3692282ba90:
+    id: language
+    langcodes:
+      en: en
+    negate: false
+    context_mapping:
+      language: 'node:langcode:language'
+    uuid: f5ce884a-72c7-4bb8-8a31-f3692282ba90
+selection_logic: and
+weight: -6
+relationships:
+  'node:langcode:language':
+    label: Language

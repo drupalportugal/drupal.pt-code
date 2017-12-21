@@ -1,12 +1,27 @@
 uuid: 9dfe1af3-9381-4392-bcce-1c2b69d469e2
 langcode: pt-pt
 status: true
-dependencies: {  }
+dependencies:
+  module:
+    - menu_ui
+third_party_settings:
+  menu_ui:
+    available_menus:
+      - footer
+      - main-menu
+      - main
+      - menu-associacao
+      - menu-comunidade
+      - menu-menu-drupal
+      - section-association
+      - section-community
+      - section-drupal
+    parent: 'main:'
 _core:
   default_config_hash: zhtPXoRcC6REiepM0k16zw__FDW5YOXDR6U2WlldTrs
-name: 'Basic page'
+name: 'Página básica'
 type: page
-description: 'Use <em>basic pages</em> for your static content, such as an ''About us'' page.'
+description: 'Use as <em>Páginas básicas</em> para conteúdo estático, como por exemplo a página "Sobre nós".'
 help: ''
 new_revision: true
 preview_mode: 1

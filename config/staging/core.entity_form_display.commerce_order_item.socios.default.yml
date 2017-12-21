@@ -1,0 +1,52 @@
+uuid: 2457233f-4bf9-401a-9ebb-050b3130e616
+langcode: en
+status: true
+dependencies:
+  config:
+    - commerce_order.commerce_order_item_type.socios
+    - field.field.commerce_order_item.socios.field_nic
+    - field.field.commerce_order_item.socios.field_nif
+    - field.field.commerce_order_item.socios.license
+  module:
+    - commerce_order
+id: commerce_order_item.socios.default
+targetEntityType: commerce_order_item
+bundle: socios
+mode: default
+content:
+  field_nic:
+    weight: 2
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_nif:
+    weight: 3
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  purchased_entity:
+    type: entity_reference_autocomplete
+    weight: 0
+    settings:
+      match_operator: CONTAINS
+      size: 60
+      placeholder: ''
+    region: content
+    third_party_settings: {  }
+  unit_price:
+    type: commerce_unit_price
+    weight: 1
+    settings:
+      require_confirmation: true
+    region: content
+    third_party_settings: {  }
+hidden:
+  created: true
+  license: true
+  quantity: true

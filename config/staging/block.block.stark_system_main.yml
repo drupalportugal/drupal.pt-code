@@ -1,6 +1,6 @@
 uuid: 586f682e-b5e9-4160-941e-915a5b973b0b
 langcode: en
-status: true
+status: false
 dependencies:
   module:
     - system
@@ -8,8 +8,8 @@ dependencies:
     - stark
 id: stark_system_main
 theme: stark
-region: content
-weight: -22
+region: ''
+weight: null
 provider: null
 plugin: system_main_block
 settings:

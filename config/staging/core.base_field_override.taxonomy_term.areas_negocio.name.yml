@@ -1,0 +1,18 @@
+uuid: 2e72060a-3d6e-4ea7-9b4c-12cd97f64a99
+langcode: en
+status: true
+dependencies:
+  config:
+    - taxonomy.vocabulary.areas_negocio
+id: taxonomy_term.areas_negocio.name
+field_name: name
+entity_type: taxonomy_term
+bundle: areas_negocio
+label: Name
+description: 'The term name.'
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string
