@@ -34,7 +34,9 @@ function acapi_drush_command() {
     'arguments' => array(
     ),
     'options' => $options + array(
-      'reset' => 'Discard any existing stored values from a previous call. Without this option, new values will be merged with existing values.',
+      'reset' => array(
+        'description' => 'Discard any existing stored values from a previous call. Without this option, new values will be merged with existing values.'
+      ),
     ),
   );
 
@@ -100,6 +102,38 @@ function acapi_drush_command() {
     'params' => array('discard'),
     'callback' => 'drush_acapi_ac_generic_callback',
     'options' => $options,
+  );
+  $items['ac-environment-create'] = array(
+    'description' => "Create a new on-demand environment.",
+    'arguments' => array(
+      'source' => 'The name of the environment to use as the source.'
+    ),
+    'method' => 'POST',
+    'resource' => '/sites/:realm::site/envs',
+    'params' => array('source'),
+    'callback' => 'drush_acapi_ac_generic_callback',
+    'options' => $options,
+    'hidden' => TRUE, // Remove this once on-demand sites goes public
+  );
+  $items['ac-environment-delete'] = array(
+    'description' => "Delete the site on-demand environment.",
+    'arguments' => array(
+    ),
+    'method' => 'DELETE',
+    'resource' => '/sites/:realm::site/envs/:env',
+    'callback' => 'drush_acapi_ac_generic_callback',
+    'options' => $options,
+    'hidden' => TRUE, // Remove this once on-demand sites goes public
+  );
+  $items['ac-environment-remaining'] = array(
+    'description' => "The number of on-demand environments left to be created.",
+    'arguments' => array(
+    ),
+    'method' => 'GET',
+    'resource' => '/sites/:realm::site/envs/remaining',
+    'callback' => 'drush_acapi_ac_generic_callback',
+    'options' => $options,
+    'hidden' => TRUE, // Remove this once on-demand sites goes public
   );
 
   //////////////////////////////////////////////////////////////////////
@@ -284,11 +318,20 @@ function acapi_drush_command() {
     'description' => "List a site's tasks.",
     'arguments' => array(
     ),
-    'options' => array (
-      'state' => array (
+    'options' => array(
+      'state' => array(
         'description' => 'The task state to retrieve. If not specified, retrieve all tasks for the site.',
         'example-value' => 'done',
-      )) + $options,
+      ),
+      'days' => array(
+        'description' => 'The number of days worth of tasks to retrieve. If not specified, retrieve, at a maximum, 7 days worth of tasks.',
+        'example-value' => '5',
+      ),
+      'limit' => array(
+        'description' => 'The maximum number of tasks to retrieve. If not specified, retrieve a maximum of 50 tasks. The maximum value allowed is 1000.',
+        'example-value' => '500'
+      ),
+    ) + $options,
   );
 
   $items['ac-task-info'] = array(
@@ -783,9 +826,17 @@ function drush_acapi_ac_task_list() {
   $api_args = acapi_get_site_args();
   $format = acapi_get_option('format');
   $state = drush_get_option('state', NULL);
+  $days = drush_get_option('days', NULL);
+  $limit = drush_get_option('limit', NULL);
   $params = array();
   if (isset($state)) {
     $params['state'] = $state;
+  }
+  if (isset($days)) {
+    $params['days'] = $days;
+  }
+  if (isset($limit)) {
+    $params['limit'] = $limit;
   }
 
   list($status, $result) = acapi_call(
