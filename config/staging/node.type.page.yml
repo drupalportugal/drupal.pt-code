@@ -10,15 +10,12 @@ third_party_settings:
       - footer
       - main-menu
       - main
-      - menu-associacao
-      - menu-comunidade
-      - menu-menu-drupal
       - section-association
       - section-community
       - section-drupal
     parent: 'main:'
 _core:
-  default_config_hash: zhtPXoRcC6REiepM0k16zw__FDW5YOXDR6U2WlldTrs
+  default_config_hash: KuyA4NHPXcmKAjRtwa0vQc2ZcyrUJy6IlS2TAyMNRbc
 name: 'Página básica'
 type: page
 description: 'Use as <em>Páginas básicas</em> para conteúdo estático, como por exemplo a página "Sobre nós".'

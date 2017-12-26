@@ -3,9 +3,10 @@ langcode: pt-pt
 status: true
 dependencies: {  }
 _core:
-  default_config_hash: ydpmSCtxLjO9xqkBxObkeYx0Bf2dkW-d8bB_6Q1Ggjs
+  default_config_hash: rpwvgyEURXLz_JjgMCrkS1rUv-0k3L79BpO-ReN7fDI
 id: node
 label: Conteúdo
 tags:
+  canonical_url: '[node:url]'
   title: '[node:title] | [site:name]'
   description: '[node:summary]'

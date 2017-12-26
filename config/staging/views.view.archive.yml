@@ -8,7 +8,7 @@ dependencies:
     - node
     - user
 _core:
-  default_config_hash: Ea3cxQo9FjYVScZDVackg-6ID_GgTkdKORm_APgV-5I
+  default_config_hash: SRH1EhxAiIRj01P9xYv0h_LfIfWxjll0Yq-eDfjziFI
 id: archive
 label: Ficheiro
 module: node
@@ -66,8 +66,10 @@ display:
             offset: false
             offset_label: Deslocamento
           tags:
-            previous: ‹‹
-            next: ››
+            previous: '‹ Anterior'
+            next: 'Seguinte ›'
+            first: '« Primeira'
+            last: 'Última »'
       sorts:
         created:
           id: created
@@ -232,9 +234,6 @@ display:
         options: {  }
       path: archive
       display_extenders: {  }
-      menu:
-        enabled: true
-        expanded: false
     cache_metadata:
       contexts:
         - 'languages:language_interface'

@@ -16,37 +16,37 @@ dependencies:
     - text
     - user
 _core:
-  default_config_hash: U8ghxJXn8JE2p6Q2wLpPWAxpz4r_8crL1LxtapSrHAE
+  default_config_hash: 4NcL2hSQZBpJbYtNuh5jC6kyQTcAc1m5bQpTegEWEso
 id: node.article.teaser
 targetEntityType: node
 bundle: article
 mode: teaser
 content:
   body:
-    label: hidden
-    weight: 0
     type: text_summary_or_trimmed
+    weight: 0
+    region: content
     settings:
       trim_length: 600
     third_party_settings: {  }
-    region: content
-  field_image:
     label: hidden
-    weight: -1
+  field_image:
     type: image
+    weight: -1
+    region: content
     settings:
       image_style: medium
       image_link: content
     third_party_settings: {  }
-    region: content
+    label: hidden
   field_tags:
-    label: above
-    weight: 10
     type: entity_reference_label
+    weight: 10
+    region: content
     settings:
       link: true
     third_party_settings: {  }
-    region: content
+    label: above
   links:
     weight: 100
     region: content
