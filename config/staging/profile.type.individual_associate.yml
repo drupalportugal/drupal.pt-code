@@ -4,7 +4,6 @@ status: true
 dependencies: {  }
 id: individual_associate
 label: 'Sócio Individual'
-description: 'Perfil para Sócios Individuais.'
 registration: false
 multiple: false
 roles:
@@ -15,3 +14,4 @@ roles:
   associate: '0'
 weight: 0
 use_revisions: false
+description: 'Perfil para Sócios Individuais.'

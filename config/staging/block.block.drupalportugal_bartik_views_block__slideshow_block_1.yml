@@ -16,7 +16,7 @@ provider: null
 plugin: 'views_block:slideshow-block_1'
 settings:
   id: 'views_block:slideshow-block_1'
-  label: 'Slideshow'
+  label: Slideshow
   provider: views
   label_display: '0'
   views_label: ''

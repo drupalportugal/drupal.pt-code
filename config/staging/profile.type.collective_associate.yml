@@ -4,7 +4,6 @@ status: true
 dependencies: {  }
 id: collective_associate
 label: 'Sócio Coletivo'
-description: 'Perfil para Sócios Coletivos.'
 registration: false
 multiple: true
 roles:
@@ -15,3 +14,4 @@ roles:
   associate: '0'
 weight: 0
 use_revisions: false
+description: 'Perfil para Sócios Coletivos.'
