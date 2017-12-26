@@ -44,7 +44,7 @@ display:
           reset_button: true
           reset_button_label: Reiniciar
           exposed_sorts_label: 'Ordenar por'
-          expose_sort_order: false
+          expose_sort_order: true
           sort_asc_label: Ascendente
           sort_desc_label: Descendente
       pager:
@@ -63,8 +63,10 @@ display:
             offset: false
             offset_label: Deslocamento
           tags:
-            previous: ‹‹
-            next: ››
+            previous: '‹ Anterior'
+            next: 'Seguinte ›'
+            first: '« Primeira'
+            last: 'Última »'
       style:
         type: table
         options:
