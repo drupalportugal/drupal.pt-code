@@ -1,5 +1,5 @@
 uuid: 3d3f516e-31d5-49db-938c-b55ec2f287e6
-langcode: en
+langcode: pt-pt
 status: true
 dependencies: {  }
 name: user_grid_picture
