@@ -5,11 +5,11 @@ dependencies:
   theme:
     - seven
 _core:
-  default_config_hash: 13GQpeITIJsp1kyPniXtWZfyFH87vb1xxJCHifL4UeE
+  default_config_hash: HHryZVJbeKi9WnuBGC8FOhBZmBnk2G1H6KxFuy-rC9A
 id: seven_local_actions
 theme: seven
 region: content
-weight: -4
+weight: -10
 provider: null
 plugin: local_actions_block
 settings:

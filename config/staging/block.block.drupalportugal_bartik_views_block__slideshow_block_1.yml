@@ -1,5 +1,5 @@
 uuid: 3505a52a-5acf-4bc4-9983-f1d6170dad52
-langcode: en
+langcode: pt-pt
 status: true
 dependencies:
   config:
@@ -16,7 +16,7 @@ provider: null
 plugin: 'views_block:slideshow-block_1'
 settings:
   id: 'views_block:slideshow-block_1'
-  label: ''
+  label: 'Slideshow'
   provider: views
   label_display: '0'
   views_label: ''

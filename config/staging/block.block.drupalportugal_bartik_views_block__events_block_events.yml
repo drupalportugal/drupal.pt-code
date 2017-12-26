@@ -1,5 +1,5 @@
 uuid: e128ec59-4f7c-46c5-b7cb-7c07c8455e19
-langcode: en
+langcode: pt-pt
 status: true
 dependencies:
   config:
@@ -16,7 +16,7 @@ provider: null
 plugin: 'views_block:events-block_events'
 settings:
   id: 'views_block:events-block_events'
-  label: ''
+  label: 'Eventos'
   provider: views
   label_display: visible
   views_label: ''

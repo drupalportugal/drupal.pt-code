@@ -1,18 +1,20 @@
 uuid: df1f2deb-f18d-4ef3-8950-3d31ba8ca883
-langcode: en
+langcode: pt-pt
 status: true
 dependencies:
   theme:
     - bartik
+_core:
+  default_config_hash: X9I1OB0W3WlWtrK-CNcg6hNWwa8wficanpH8pYnDZDE
 id: bartik_local_tasks
 theme: bartik
 region: content
-weight: -6
+weight: -40
 provider: null
 plugin: local_tasks_block
 settings:
   id: local_tasks_block
-  label: Tabs
+  label: Separadores
   provider: core
   label_display: '0'
   primary: true

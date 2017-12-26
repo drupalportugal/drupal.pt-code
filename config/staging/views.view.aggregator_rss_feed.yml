@@ -6,7 +6,7 @@ dependencies:
     - aggregator
     - user
 _core:
-  default_config_hash: '-EppL4dPPEmHfDy5fsNAQ1N0s8u8FMr_6ZERFoEjWQw'
+  default_config_hash: 2uV1-bP-4ZwdUPr4BsJG_vxcEg_Half6UjEvYStWZsA
 id: aggregator_rss_feed
 label: 'Aggregator RSS feed'
 module: aggregator
@@ -63,10 +63,10 @@ display:
             offset: false
             offset_label: Deslocamento
           tags:
-            previous: '‹ Previous'
+            previous: '‹ Anterior'
             next: 'Seguinte ›'
-            first: '« First'
-            last: 'Last »'
+            first: '« Primeira'
+            last: 'Última »'
           quantity: 9
       style:
         type: default

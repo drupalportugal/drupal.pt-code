@@ -1,5 +1,5 @@
 uuid: 73360c74-8af7-4c08-803f-761bcd4efada
-langcode: en
+langcode: pt-pt
 status: true
 dependencies:
   content:
@@ -17,7 +17,7 @@ provider: null
 plugin: 'block_content:25678aef-4f17-4688-9f8e-e5cff2cbd6e4'
 settings:
   id: 'block_content:25678aef-4f17-4688-9f8e-e5cff2cbd6e4'
-  label: 'Follow us'
+  label: Segue-nos
   provider: block_content
   label_display: visible
   status: true

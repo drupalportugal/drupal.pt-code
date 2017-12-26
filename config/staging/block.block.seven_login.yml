@@ -1,20 +1,22 @@
 uuid: 80cd3fb9-2ff8-4741-ac99-b436b344d02a
-langcode: en
+langcode: pt-pt
 status: true
 dependencies:
   module:
     - user
   theme:
     - seven
+_core:
+  default_config_hash: IItlF4SKHgxduIysVQdvirDJ_v3HGuAviOkidAOJYRE
 id: seven_login
 theme: seven
 region: content
-weight: 0
+weight: 10
 provider: null
 plugin: user_login_block
 settings:
   id: user_login_block
-  label: 'User login'
+  label: 'Iniciar sessão de utilizador'
   provider: user
   label_display: visible
 visibility: {  }

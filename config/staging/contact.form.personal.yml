@@ -3,7 +3,7 @@ langcode: pt-pt
 status: true
 dependencies: {  }
 _core:
-  default_config_hash: 4w1vDIuPlVqNIiynysHZHU-9sBCpx5uiEIPlo4SW1tw
+  default_config_hash: jonvgt3CkUM2eMLTFwWfHileWWDC4YtXCuIlCahTk_I
 id: personal
 label: 'Formulário de contacto pessoal'
 recipients: {  }

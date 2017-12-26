@@ -1,5 +1,5 @@
 uuid: ff6508dc-a0ea-4419-89e2-7f0144fd7855
-langcode: en
+langcode: pt-pt
 status: true
 dependencies:
   config:
@@ -16,7 +16,7 @@ provider: null
 plugin: 'system_menu_block:footer'
 settings:
   id: 'system_menu_block:footer'
-  label: 'Footer menu'
+  label: 'Menu de rodapé'
   provider: system
   label_display: '0'
   level: 1

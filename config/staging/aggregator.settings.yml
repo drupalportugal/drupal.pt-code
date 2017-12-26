@@ -3,9 +3,9 @@ parser: aggregator
 processors:
   - aggregator
 items:
-  allowed_html: '<a> <b> <br> <dd> <dl> <dt> <em> <i> <li> <ol> <p> <strong> <u> <ul><div>'
-  teaser_length: 400
-  expire: 0
+  allowed_html: '<a> <b> <br> <dd> <dl> <dt> <em> <i> <li> <ol> <p> <strong> <u> <ul> <div>'
+  teaser_length: 600
+  expire: 9676800
 source:
   list_max: 25
 _core:

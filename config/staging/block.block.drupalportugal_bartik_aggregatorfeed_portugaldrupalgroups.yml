@@ -1,5 +1,5 @@
 uuid: d24fa120-147b-42b1-b736-f1665c204189
-langcode: en
+langcode: pt-pt
 status: true
 dependencies:
   module:
@@ -14,7 +14,7 @@ provider: null
 plugin: aggregator_feed_block
 settings:
   id: aggregator_feed_block
-  label: 'In the forum'
+  label: 'No fórum'
   provider: aggregator
   label_display: visible
   block_count: 5

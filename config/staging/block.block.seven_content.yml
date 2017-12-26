@@ -1,11 +1,13 @@
 uuid: 67d8a8c2-b9d8-46fe-9e49-0a44eb12d3f0
-langcode: en
+langcode: pt-pt
 status: true
 dependencies:
   module:
     - system
   theme:
     - seven
+_core:
+  default_config_hash: YRY68JWkaUiGeZlWMv1nzeIgDm0ZZwXYgpqUpLFzwAY
 id: seven_content
 theme: seven
 region: content
@@ -14,7 +16,7 @@ provider: null
 plugin: system_main_block
 settings:
   id: system_main_block
-  label: 'Main page content'
+  label: 'Conteúdo da página principal'
   provider: system
   label_display: '0'
 visibility: {  }

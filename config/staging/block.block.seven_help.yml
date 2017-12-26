@@ -7,11 +7,11 @@ dependencies:
   theme:
     - seven
 _core:
-  default_config_hash: 8I8iACSa0sKO3k3jlvUG1ge52rfcKX7USJAQYnzuBgg
+  default_config_hash: NU5A_49mwLHfs5xFzMFrZ850w9pgUolxMS9NNF3vv4c
 id: seven_help
 theme: seven
 region: help
-weight: -3
+weight: 0
 provider: null
 plugin: help_block
 settings:

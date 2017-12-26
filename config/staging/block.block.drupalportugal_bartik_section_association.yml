@@ -1,5 +1,5 @@
 uuid: 752695e4-370d-48fc-87d4-796e82e4afa7
-langcode: en
+langcode: pt-pt
 status: true
 dependencies:
   config:
@@ -16,7 +16,7 @@ provider: null
 plugin: 'system_menu_block:section-association'
 settings:
   id: 'system_menu_block:section-association'
-  label: Association
+  label: Associação
   provider: system
   label_display: visible
   level: 1

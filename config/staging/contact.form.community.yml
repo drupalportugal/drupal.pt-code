@@ -1,12 +1,12 @@
 uuid: 860aa841-c901-4669-8bd2-f9afc155ce97
-langcode: en
+langcode: pt-pt
 status: true
 dependencies: {  }
 id: community
-label: Community
+label: Comunidade
 recipients:
   - gestao@drupal.pt
 reply: ''
 weight: 0
-message: 'Your message has been sent.'
+message: 'A sua mensagem foi enviada.'
 redirect: ''

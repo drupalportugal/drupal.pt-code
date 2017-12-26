@@ -1,5 +1,5 @@
 uuid: dc7ae669-274b-4143-abf7-ec421ff43619
-langcode: en
+langcode: pt-pt
 status: true
 dependencies:
   content:
@@ -16,7 +16,7 @@ provider: null
 plugin: 'block_content:9258650d-736d-4f09-b9a1-f4ff27fe25fc'
 settings:
   id: 'block_content:9258650d-736d-4f09-b9a1-f4ff27fe25fc'
-  label: 'Keep up with us'
+  label: Acompanha
   provider: block_content
   label_display: visible
   status: true
