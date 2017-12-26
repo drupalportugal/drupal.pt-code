@@ -1,9 +1,0 @@
-uuid: bc3938db-3c60-470f-8f8d-e292edbd34ca
-langcode: en
-status: true
-dependencies: {  }
-id: socios
-label: Socio
-weight: -5
-is_admin: null
-permissions: {  }

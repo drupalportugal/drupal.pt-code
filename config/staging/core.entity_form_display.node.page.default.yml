@@ -4,7 +4,6 @@ status: true
 dependencies:
   config:
     - field.field.node.page.body
-    - field.field.node.page.comment_node_page
     - field.field.node.page.field_page_file
     - field.field.node.page.field_pageimage
     - image.style.thumbnail
@@ -108,5 +107,4 @@ content:
       placeholder: ''
     third_party_settings: {  }
     region: content
-hidden:
-  comment_node_page: true
+hidden: {  }

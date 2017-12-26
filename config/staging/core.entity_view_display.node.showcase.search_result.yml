@@ -4,7 +4,6 @@ status: true
 dependencies:
   config:
     - core.entity_view_mode.node.search_result
-    - field.field.node.showcase.comment_node_showcase
     - field.field.node.showcase.field_categoria
     - field.field.node.showcase.field_empresas
     - field.field.node.showcase.field_image
@@ -37,7 +36,6 @@ content:
     weight: 100
     region: content
 hidden:
-  comment_node_showcase: true
   field_image: true
   field_link: true
   langcode: true

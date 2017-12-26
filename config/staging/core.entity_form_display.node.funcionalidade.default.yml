@@ -3,7 +3,6 @@ langcode: pt-pt
 status: true
 dependencies:
   config:
-    - field.field.node.funcionalidade.comment_node_funcionalidade
     - field.field.node.funcionalidade.field_func_body
     - node.type.funcionalidade
   module:
@@ -85,5 +84,4 @@ content:
       placeholder: ''
     third_party_settings: {  }
     region: content
-hidden:
-  comment_node_funcionalidade: true
+hidden: {  }

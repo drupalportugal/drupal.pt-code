@@ -4,7 +4,6 @@ status: true
 dependencies: {  }
 id: member
 label: Membro
-description: 'Perfil para Membros.'
 registration: true
 multiple: false
 roles:
@@ -15,3 +14,4 @@ roles:
   associate: '0'
 weight: 0
 use_revisions: false
+description: 'Perfil para Membros.'

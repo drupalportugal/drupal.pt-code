@@ -3,13 +3,10 @@ langcode: pt-pt
 status: true
 dependencies:
   config:
-    - core.entity_view_display.comment.comment_node_slideshow.default
     - field.field.node.slideshow.body
-    - field.field.node.slideshow.comment_node_slideshow
     - field.field.node.slideshow.field_slideshow_image
     - node.type.slideshow
   module:
-    - comment
     - image
     - text
     - user
@@ -23,15 +20,6 @@ content:
     weight: 0
     type: text_default
     settings: {  }
-    third_party_settings: {  }
-    region: content
-  comment_node_slideshow:
-    label: hidden
-    type: comment_default
-    weight: 20
-    settings:
-      pager_id: 0
-      view_mode: default
     third_party_settings: {  }
     region: content
   field_slideshow_image:

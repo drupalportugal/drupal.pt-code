@@ -19,20 +19,11 @@ form_settings:
   node_evento_form: true
   node_funcionalidade_form: true
   node_page_form: true
-  node_poll_form: true
   node_showcase_form: true
   node_slideshow_form: true
-  node_webform_form: true
   comment_comment_form: true
   comment_comment_node_article_form: true
   comment_comment_node_evento_form: true
-  comment_comment_node_forum_form: true
-  comment_comment_node_funcionalidade_form: true
-  comment_comment_node_page_form: true
-  comment_comment_node_poll_form: true
-  comment_comment_node_showcase_form: true
-  comment_comment_node_slideshow_form: true
-  comment_comment_node_webform_form: true
 _core:
   default_config_hash: jEhrePho9bAz_8-E-zPMXvlx4knpphzUdaiQJX-xc8Q
 langcode: pt-pt

@@ -4,7 +4,6 @@ status: true
 dependencies:
   config:
     - core.entity_view_mode.node.teaser
-    - field.field.node.showcase.comment_node_showcase
     - field.field.node.showcase.field_categoria
     - field.field.node.showcase.field_empresas
     - field.field.node.showcase.field_image
@@ -51,6 +50,5 @@ content:
     third_party_settings: {  }
     region: content
 hidden:
-  comment_node_showcase: true
   field_link: true
   langcode: true

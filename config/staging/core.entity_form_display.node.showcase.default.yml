@@ -3,7 +3,6 @@ langcode: pt-pt
 status: true
 dependencies:
   config:
-    - field.field.node.showcase.comment_node_showcase
     - field.field.node.showcase.field_categoria
     - field.field.node.showcase.field_empresas
     - field.field.node.showcase.field_image
@@ -113,5 +112,4 @@ content:
       placeholder: ''
     third_party_settings: {  }
     region: content
-hidden:
-  comment_node_showcase: true
+hidden: {  }

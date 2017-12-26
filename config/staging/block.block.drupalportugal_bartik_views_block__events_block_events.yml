@@ -16,7 +16,7 @@ provider: null
 plugin: 'views_block:events-block_events'
 settings:
   id: 'views_block:events-block_events'
-  label: 'Eventos'
+  label: Eventos
   provider: views
   label_display: visible
   views_label: ''
