@@ -1,5 +1,5 @@
 uuid: d987df81-b96f-46e9-9e50-bc3cb6461872
-langcode: en
+langcode: pt-pt
 status: true
 dependencies:
   config:
@@ -46,13 +46,13 @@ display:
       exposed_form:
         type: basic
         options:
-          submit_button: Apply
+          submit_button: Aplicar
           reset_button: true
-          reset_button_label: Reset
-          exposed_sorts_label: 'Sort by'
+          reset_button_label: Reiniciar
+          exposed_sorts_label: 'Ordenar por'
           expose_sort_order: true
-          sort_asc_label: Asc
-          sort_desc_label: Desc
+          sort_asc_label: Ascendente
+          sort_desc_label: Descendente
       pager:
         type: full
         options:
@@ -60,19 +60,19 @@ display:
           offset: 0
           id: 0
           total_pages: null
-          tags:
-            previous: '‹‹ Previous'
-            next: 'Next ››'
-            first: '« First'
-            last: 'Last »'
           expose:
             items_per_page: false
-            items_per_page_label: 'Items per page'
+            items_per_page_label: 'Itens por página'
             items_per_page_options: '5, 10, 25, 50'
             items_per_page_options_all: false
-            items_per_page_options_all_label: '- All -'
+            items_per_page_options_all_label: '- Todos -'
             offset: false
-            offset_label: Offset
+            offset_label: Deslocamento
+          tags:
+            previous: '‹ Anterior'
+            next: 'Seguinte ›'
+            first: '« Primeira'
+            last: 'Última »'
           quantity: 9
       style:
         type: grid
@@ -597,7 +597,7 @@ display:
             remember_roles:
               authenticated: authenticated
               anonymous: '0'
-              autor: '0'
+              author: '0'
               moderator: '0'
               administrator: '0'
           is_grouped: false
@@ -639,7 +639,7 @@ display:
             remember_roles:
               authenticated: authenticated
               anonymous: '0'
-              autor: '0'
+              author: '0'
               moderator: '0'
               administrator: '0'
           is_grouped: false
@@ -679,7 +679,7 @@ display:
             remember_roles:
               authenticated: authenticated
               anonymous: '0'
-              autor: '0'
+              author: '0'
               moderator: '0'
               administrator: '0'
             reduce: false
@@ -720,7 +720,7 @@ display:
             remember_roles:
               authenticated: authenticated
               anonymous: '0'
-              autor: '0'
+              author: '0'
               moderator: '0'
               administrator: '0'
           is_grouped: false
@@ -838,7 +838,7 @@ display:
           entity_type: user
           entity_field: uid
           plugin_id: standard
-      title: 'Associate Directory'
+      title: 'Diretório de Associados'
       header:
         result:
           id: result
@@ -848,7 +848,7 @@ display:
           group_type: group
           admin_label: ''
           empty: false
-          content: 'Displaying @start - @end of @total'
+          content: 'Mostrando @start - @end de @total'
           plugin_id: result
       footer: {  }
       empty:
@@ -862,8 +862,8 @@ display:
           empty: true
           tokenize: false
           content:
-            value: 'No results were found.'
-            format: markdown
+            value: 'Nenhuns resultados foram encontrados.'
+            format: plain_text
           plugin_id: text
       relationships:
         profile_type:
@@ -938,7 +938,7 @@ display:
         filter_groups: true
       menu:
         type: normal
-        title: 'Associate Directory'
+        title: 'Diretório de Associados'
         description: ''
         expanded: true
         parent: ''
@@ -975,7 +975,7 @@ display:
         filter_groups: false
       menu:
         type: normal
-        title: 'Collective Associate Directory'
+        title: 'Diretório de Associados Coletivos'
         description: ''
         expanded: false
         parent: 'views_view:views.association_directory.page_associate'
@@ -1006,7 +1006,7 @@ display:
           profile_type: collective_associate
           entity_type: user
           plugin_id: profile_relationship
-      title: 'Collective Associate Directory'
+      title: 'Diretório de Associados Coletivos'
       filters:
         uid_raw:
           id: uid_raw
@@ -1146,7 +1146,7 @@ display:
             remember_roles:
               authenticated: authenticated
               anonymous: '0'
-              autor: '0'
+              author: '0'
               moderator: '0'
               administrator: '0'
           is_grouped: false
@@ -1188,7 +1188,7 @@ display:
             remember_roles:
               authenticated: authenticated
               anonymous: '0'
-              autor: '0'
+              author: '0'
               moderator: '0'
               administrator: '0'
           is_grouped: false
@@ -1228,7 +1228,7 @@ display:
             remember_roles:
               authenticated: authenticated
               anonymous: '0'
-              autor: '0'
+              author: '0'
               moderator: '0'
               administrator: '0'
             reduce: false
@@ -1269,7 +1269,7 @@ display:
             remember_roles:
               authenticated: authenticated
               anonymous: '0'
-              autor: '0'
+              author: '0'
               moderator: '0'
               administrator: '0'
           is_grouped: false
@@ -1318,7 +1318,7 @@ display:
         filter_groups: false
       menu:
         type: normal
-        title: 'Individual Associate Directory'
+        title: 'Diretório de Associados Individuais'
         description: ''
         expanded: false
         parent: 'views_view:views.association_directory.page_associate'
@@ -1349,7 +1349,7 @@ display:
           profile_type: individual_associate
           entity_type: user
           plugin_id: profile_relationship
-      title: 'Individual Associate Directory'
+      title: 'Diretório de Associados Individuais'
       filters:
         uid_raw:
           id: uid_raw
@@ -1489,7 +1489,7 @@ display:
             remember_roles:
               authenticated: authenticated
               anonymous: '0'
-              autor: '0'
+              author: '0'
               moderator: '0'
               administrator: '0'
           is_grouped: false
@@ -1531,7 +1531,7 @@ display:
             remember_roles:
               authenticated: authenticated
               anonymous: '0'
-              autor: '0'
+              author: '0'
               moderator: '0'
               administrator: '0'
           is_grouped: false
@@ -1571,7 +1571,7 @@ display:
             remember_roles:
               authenticated: authenticated
               anonymous: '0'
-              autor: '0'
+              author: '0'
               moderator: '0'
               administrator: '0'
             reduce: false
@@ -1612,7 +1612,7 @@ display:
             remember_roles:
               authenticated: authenticated
               anonymous: '0'
-              autor: '0'
+              author: '0'
               moderator: '0'
               administrator: '0'
           is_grouped: false

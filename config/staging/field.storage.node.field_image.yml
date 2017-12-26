@@ -1,5 +1,5 @@
 uuid: 3bbab1bc-33f1-4e56-b104-65b333b610b0
-langcode: und
+langcode: pt-pt
 status: true
 dependencies:
   module:
@@ -15,7 +15,11 @@ type: image
 settings:
   uri_scheme: public
   default_image:
-    uuid: ''
+    uuid: null
+    alt: ''
+    title: ''
+    width: null
+    height: null
   target_type: file
   display_field: false
   display_default: false

@@ -1,5 +1,5 @@
 uuid: 5513fa77-d8d5-4d2f-8ee0-0c467cea31df
-langcode: en
+langcode: pt-pt
 status: true
 dependencies:
   config:
@@ -46,13 +46,13 @@ display:
       exposed_form:
         type: basic
         options:
-          submit_button: Apply
+          submit_button: Aplicar
           reset_button: false
-          reset_button_label: Reset
-          exposed_sorts_label: 'Sort by'
+          reset_button_label: Reiniciar
+          exposed_sorts_label: 'Ordenar por'
           expose_sort_order: true
-          sort_asc_label: Asc
-          sort_desc_label: Desc
+          sort_asc_label: Ascendente
+          sort_desc_label: Descendente
       pager:
         type: full
         options:
@@ -60,19 +60,19 @@ display:
           offset: 0
           id: 0
           total_pages: null
-          tags:
-            previous: '‹‹ Previous'
-            next: 'Next ››'
-            first: '« First'
-            last: 'Last »'
           expose:
             items_per_page: false
-            items_per_page_label: 'Items per page'
+            items_per_page_label: 'Itens por página'
             items_per_page_options: '5, 10, 25, 50'
             items_per_page_options_all: false
-            items_per_page_options_all_label: '- All -'
+            items_per_page_options_all_label: '- Todos -'
             offset: false
-            offset_label: Offset
+            offset_label: Deslocamento
+          tags:
+            previous: '‹ Anterior'
+            next: 'Seguinte ›'
+            first: '« Primeira'
+            last: 'Última »'
           quantity: 9
       style:
         type: default
@@ -196,7 +196,7 @@ display:
           expose:
             label: ''
           granularity: second
-      title: Events
+      title: Eventos
       header: {  }
       footer: {  }
       empty: {  }
@@ -206,7 +206,7 @@ display:
         metatag_display_extender: {  }
       use_more: false
       use_more_always: false
-      use_more_text: more
+      use_more_text: mais
     cache_metadata:
       max-age: -1
       contexts:
@@ -442,8 +442,8 @@ display:
           plugin_id: field
       use_more: true
       use_more_always: true
-      use_more_text: more
-      block_description: Events
+      use_more_text: mais
+      block_description: Eventos
       link_display: page_events
       link_url: ''
     cache_metadata:
@@ -467,7 +467,7 @@ display:
       path: eventos
       menu:
         type: normal
-        title: Events
+        title: Eventos
         description: ''
         expanded: false
         parent: ''

@@ -1,5 +1,5 @@
 uuid: 7338b86a-7b20-4d87-854d-4ab8c586c71b
-langcode: en
+langcode: pt-pt
 status: true
 dependencies:
   config:
@@ -11,14 +11,14 @@ id: profile.member.field_profile_address_postal
 field_name: field_profile_address_postal
 entity_type: profile
 bundle: member
-label: 'Postal address'
-description: 'Your personal or professional postal address. This information will be <strong>public</strong>.'
+label: 'Endereço postal'
+description: 'O teu endereço postal pessoal ou profissional. Esta informação será <strong>pública</strong>.'
 required: true
 translatable: true
 default_value:
   -
     country_code: PT
-    langcode: en
+    langcode: pt-pt
     administrative_area: ''
     locality: ''
     dependent_locality: ''

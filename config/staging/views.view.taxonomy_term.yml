@@ -9,7 +9,7 @@ dependencies:
     - taxonomy
     - user
 _core:
-  default_config_hash: YY-QIsPmXCITvYjAnlCzaqASCB1Telev3U0IKOztZkc
+  default_config_hash: Gy5PaLdfFhtFSRqJxV-DBTF5AocKgNA2CsCNNEbvx4c
 id: taxonomy_term
 label: 'Termo de taxonomia'
 module: taxonomy
@@ -66,8 +66,10 @@ display:
             offset: false
             offset_label: Deslocamento
           tags:
-            previous: ‹‹
-            next: ››
+            previous: '‹ Anterior'
+            next: 'Seguinte ›'
+            first: '« Primeira'
+            last: 'Última »'
       sorts:
         sticky:
           id: sticky
@@ -303,9 +305,6 @@ display:
         options: {  }
       path: taxonomy/term/%
       display_extenders: {  }
-      menu:
-        enabled: true
-        expanded: false
     cache_metadata:
       contexts:
         - 'languages:language_interface'

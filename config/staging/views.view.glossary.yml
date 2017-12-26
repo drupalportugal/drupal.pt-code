@@ -8,7 +8,7 @@ dependencies:
     - node
     - user
 _core:
-  default_config_hash: '-pCFOVfbt__jaohFffTLnVavh4OBC6CjREAnchiRomQ'
+  default_config_hash: _12Vkw1VGBz_s0_W_LLVCrBPpioNSnB6zcd1lUAQubM
 id: glossary
 label: Glossário
 module: node
@@ -66,8 +66,10 @@ display:
             offset: false
             offset_label: Deslocamento
           tags:
-            previous: ‹‹
-            next: ››
+            previous: '‹ Anterior'
+            next: 'Seguinte ›'
+            first: '« Primeira'
+            last: 'Última »'
       fields:
         title:
           id: title
@@ -446,8 +448,6 @@ display:
         weight: 0
         menu_name: main
         parent: ''
-        enabled: true
-        expanded: false
       display_extenders: {  }
     cache_metadata:
       contexts:

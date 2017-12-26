@@ -1,5 +1,5 @@
 uuid: d1ea63d8-f24b-4e26-966d-c2088a6fd70e
-langcode: en
+langcode: pt-pt
 status: true
 dependencies:
   config:
@@ -11,11 +11,11 @@ dependencies:
     - node
     - user
 _core:
-  default_config_hash: rwRoOr3DiobxwoWSmtUcna1LQz5_HxHvS7H5dl7_-Uo
+  default_config_hash: GNfx9kN8-0_KgQ-xf3fjdXCCzZwXCI8T0IPFW8SIe7g
 id: frontpage
-label: Frontpage
+label: 'A página inicial'
 module: node
-description: 'All content promoted to the front page.'
+description: 'Todo o conteúdo promovido para a primeira página.'
 tag: default
 base_table: node_field_data
 base_field: nid
@@ -32,16 +32,16 @@ display:
         options: {  }
       empty:
         area_text_custom:
-          id: area_text_custom
-          table: views
-          field: area_text_custom
-          relationship: none
-          group_type: group
           admin_label: ''
+          content: 'Ainda não foi criado nenhum conteúdo para a página inicial.'
           empty: true
-          tokenize: false
-          content: 'No front page content has been created yet.'
+          field: area_text_custom
+          group_type: group
+          id: area_text_custom
           label: ''
+          relationship: none
+          table: views
+          tokenize: false
           plugin_id: text_custom
         node_listing_empty:
           admin_label: ''
@@ -61,20 +61,20 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
-          empty: true
-          title: 'Welcome to [site:name]'
           label: ''
+          empty: true
+          title: 'Bem-vindo a [site:name]'
           plugin_id: title
       exposed_form:
         type: basic
         options:
-          submit_button: Apply
+          submit_button: Aplicar
           reset_button: false
-          reset_button_label: Reset
-          exposed_sorts_label: 'Sort by'
+          reset_button_label: Reiniciar
+          exposed_sorts_label: 'Ordenar por'
           expose_sort_order: true
-          sort_asc_label: Ascending
-          sort_desc_label: Descending
+          sort_asc_label: Ascendente
+          sort_desc_label: Descendente
       filters:
         promote:
           admin_label: ''
@@ -213,19 +213,19 @@ display:
           offset: 0
           id: 0
           total_pages: 0
-          tags:
-            previous: '‹ Previous'
-            next: 'Next ›'
-            first: '« First'
-            last: 'Last »'
           expose:
             items_per_page: false
-            items_per_page_label: 'Items per page'
+            items_per_page_label: 'Itens por página'
             items_per_page_options: '5, 10, 25, 50'
             items_per_page_options_all: false
-            items_per_page_options_all_label: '- All -'
+            items_per_page_options_all_label: '- Todos -'
             offset: false
-            offset_label: Offset
+            offset_label: Deslocamento
+          tags:
+            previous: '‹ Anterior'
+            next: 'Seguinte ›'
+            first: '« Primeira'
+            last: 'Última »'
           quantity: 9
       query:
         type: views_query
@@ -347,7 +347,7 @@ display:
       rendering_language: pt-pt
       display_description: ''
     display_plugin: page
-    display_title: Page
+    display_title: Página
     id: page_1
     position: 1
     cache_metadata:

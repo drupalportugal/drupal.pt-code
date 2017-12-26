@@ -1,5 +1,5 @@
 uuid: f98bb201-815f-4dcc-b100-cd53fc0a0e7c
-langcode: en
+langcode: pt-pt
 status: true
 dependencies:
   config:
@@ -15,8 +15,8 @@ id: profile.collective_associate.field_profile_address_postal
 field_name: field_profile_address_postal
 entity_type: profile
 bundle: collective_associate
-label: 'Postal address'
-description: 'The postal address of the Collective Associate, ie, organization. This information will be <strong>private</strong>.'
+label: 'Endereço postal'
+description: 'O endereço postal do Associado Coletivo, ex, organização. Esta informação será <strong>privada</strong>.'
 required: true
 translatable: false
 default_value: {  }

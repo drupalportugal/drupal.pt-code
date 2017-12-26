@@ -1,5 +1,5 @@
 uuid: d7dba564-e19c-4fae-b3ae-06c149dd2f50
-langcode: en
+langcode: pt-pt
 status: true
 dependencies:
   config:
@@ -14,8 +14,8 @@ id: profile.individual_associate.field_profile_bool_indirectory
 field_name: field_profile_bool_indirectory
 entity_type: profile
 bundle: individual_associate
-label: 'Show in directory?'
-description: 'Show in the individual associates directory?'
+label: 'Mostrar no diretório?'
+description: 'Mostrar no diretório de associados individuais?'
 required: false
 translatable: true
 default_value:
@@ -23,6 +23,6 @@ default_value:
     value: 0
 default_value_callback: ''
 settings:
-  on_label: 'Yes'
-  off_label: 'No'
+  on_label: 'Sim'
+  off_label: 'Não'
 field_type: boolean

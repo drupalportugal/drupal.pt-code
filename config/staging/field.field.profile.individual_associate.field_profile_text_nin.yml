@@ -1,5 +1,5 @@
 uuid: 9c214f97-629a-454d-9f63-d52f439a9743
-langcode: en
+langcode: pt-pt
 status: true
 dependencies:
   config:
@@ -14,8 +14,8 @@ id: profile.individual_associate.field_profile_text_nin
 field_name: field_profile_text_nin
 entity_type: profile
 bundle: individual_associate
-label: 'National Identification Number (NIN)'
-description: 'Your National Identification Number as a citizen. This information will be <strong>private</strong>.'
+label: 'Número de Identificação Civil (NIC)'
+description: 'O teu Número de Identificação Civil como cidadão. Esta informação será <strong>privada</strong>.'
 required: true
 translatable: true
 default_value: {  }

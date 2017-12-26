@@ -1,5 +1,5 @@
 uuid: b9e9d4b7-1524-44b2-8d9c-ec15a974697a
-langcode: en
+langcode: pt-pt
 status: true
 dependencies:
   config:
@@ -11,8 +11,8 @@ id: profile.member.field_profile_lang_languages
 field_name: field_profile_lang_languages
 entity_type: profile
 bundle: member
-label: Languages
-description: 'Select one or more languages that you understand or speak. This information will be <strong>public</strong>.'
+label: Idiomas
+description: 'Seleciona um ou mais idiomas que compreendes ou falas. Esta informação será <strong>pública</strong>.'
 required: true
 translatable: false
 default_value: {  }

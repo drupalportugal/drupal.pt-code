@@ -1,5 +1,5 @@
 uuid: 166db63a-4077-4755-9b6c-851325fa551c
-langcode: en
+langcode: pt-pt
 status: true
 dependencies:
   config:
@@ -11,8 +11,8 @@ id: profile.member.field_profile_date_birthdate
 field_name: field_profile_date_birthdate
 entity_type: profile
 bundle: member
-label: 'Birth date'
-description: 'Your birth date. This information will be <strong>public</strong>.'
+label: 'Data de nascimento'
+description: 'A tua data de nascimento. Esta informação será <strong>pública</strong>.'
 required: false
 translatable: false
 default_value: {  }

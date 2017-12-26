@@ -1,5 +1,5 @@
 uuid: 2420fefe-8929-44ec-b424-8c24097a9166
-langcode: en
+langcode: pt-pt
 status: true
 dependencies:
   config:
@@ -14,8 +14,8 @@ id: profile.collective_associate.field_profile_bool_indirectory
 field_name: field_profile_bool_indirectory
 entity_type: profile
 bundle: collective_associate
-label: 'Show in directory?'
-description: 'Show in the collective associates directory?'
+label: 'Mostrar no diretório?'
+description: 'Mostrar no diretório de associados coletivos?'
 required: false
 translatable: true
 default_value:
@@ -23,6 +23,6 @@ default_value:
     value: 0
 default_value_callback: ''
 settings:
-  on_label: 'Yes'
-  off_label: 'No'
+  on_label: 'Sim'
+  off_label: 'Não'
 field_type: boolean

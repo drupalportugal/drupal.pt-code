@@ -1,5 +1,5 @@
 uuid: 5799e69e-a4cf-42bd-8e70-dc046a8404e3
-langcode: en
+langcode: pt-pt
 status: true
 dependencies:
   config:
@@ -14,8 +14,8 @@ id: profile.individual_associate.field_profile_text_vatin
 field_name: field_profile_text_vatin
 entity_type: profile
 bundle: individual_associate
-label: 'VAT Identification Number (VATIN)'
-description: 'The VAT Identification Number as a citizen. This information will be <strong>private</strong>.'
+label: 'Número de Identificação Fiscal (NIF)'
+description: 'O teu Número de Identificação Fiscal como cidadão. Esta informação será <strong>privada</strong>.'
 required: true
 translatable: false
 default_value: {  }

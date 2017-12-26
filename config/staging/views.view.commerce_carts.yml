@@ -70,10 +70,10 @@ display:
             offset: false
             offset_label: Deslocamento
           tags:
-            previous: '‹ anterior'
-            next: 'seguinte ›'
-            first: '« primeira'
-            last: 'última »'
+            previous: '‹ Anterior'
+            next: 'Seguinte ›'
+            first: '« Primeira'
+            last: 'Última »'
           quantity: 9
       style:
         type: table
@@ -197,7 +197,7 @@ display:
           hide_empty: false
           empty_zero: false
           hide_alter_empty: true
-          action_title: Ação
+          action_title: 'Com a seleção'
           include_exclude: exclude
           selected_actions: {  }
           entity_type: commerce_order

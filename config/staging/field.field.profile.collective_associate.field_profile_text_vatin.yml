@@ -1,5 +1,5 @@
 uuid: 7657e5b6-8384-4298-9236-091b43cf32e2
-langcode: en
+langcode: pt-pt
 status: true
 dependencies:
   config:
@@ -14,8 +14,8 @@ id: profile.collective_associate.field_profile_text_vatin
 field_name: field_profile_text_vatin
 entity_type: profile
 bundle: collective_associate
-label: 'VAT Identification Number (VATIN)'
-description: 'The VAT Identification Number of the Collective Associate, ie, organization. This information will be <strong>private</strong>.'
+label: 'Número de Identificação Fiscal (NIF)'
+description: 'O Número de Identificação Fiscal do Associado Coletivo, ex, organização. Esta informação será <strong>privada</strong>.'
 required: true
 translatable: true
 default_value: {  }

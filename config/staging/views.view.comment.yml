@@ -5,10 +5,12 @@ dependencies:
   module:
     - comment
     - user
+_core:
+  default_config_hash: cCq1vjj1qmyd39oBIUyOe8YPDsobJ5fZRhp2Xy5O7lA
 id: comment
-label: Comments
+label: Comentários
 module: comment
-description: 'Find and manage comments.'
+description: 'Encontrar e gerir comentários.'
 tag: default
 base_table: comment_field_data
 base_field: cid
@@ -17,7 +19,7 @@ display:
   default:
     display_plugin: default
     id: default
-    display_title: Master
+    display_title: Principal
     position: 0
     display_options:
       access:
@@ -38,13 +40,13 @@ display:
       exposed_form:
         type: basic
         options:
-          submit_button: Apply
+          submit_button: Aplicar
           reset_button: false
-          reset_button_label: Reset
-          exposed_sorts_label: 'Sort by'
+          reset_button_label: Reiniciar
+          exposed_sorts_label: 'Ordenar por'
           expose_sort_order: true
-          sort_asc_label: Asc
-          sort_desc_label: Desc
+          sort_asc_label: Ascendente
+          sort_desc_label: Descendente
       pager:
         type: full
         options:
@@ -52,19 +54,19 @@ display:
           offset: 0
           id: 0
           total_pages: null
-          tags:
-            previous: '‹ previous'
-            next: 'next ›'
-            first: '« first'
-            last: 'last »'
           expose:
             items_per_page: false
-            items_per_page_label: 'Items per page'
+            items_per_page_label: 'Itens por página'
             items_per_page_options: '5, 10, 25, 50'
             items_per_page_options_all: false
-            items_per_page_options_all_label: '- All -'
+            items_per_page_options_all_label: '- Todos -'
             offset: false
-            offset_label: Offset
+            offset_label: Deslocamento
+          tags:
+            previous: '‹ Anterior'
+            next: 'Seguinte ›'
+            first: '« Primeira'
+            last: 'Última »'
           quantity: 9
       style:
         type: table
@@ -178,7 +180,7 @@ display:
           hide_empty: false
           empty_zero: false
           hide_alter_empty: true
-          action_title: Action
+          action_title: 'Com a seleção'
           include_exclude: include
           selected_actions:
             - comment_delete_action
@@ -192,7 +194,7 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
-          label: Subject
+          label: Assunto
           exclude: false
           alter:
             alter_text: false
@@ -322,7 +324,7 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
-          label: Author
+          label: Autor
           exclude: false
           alter:
             alter_text: false
@@ -386,7 +388,7 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
-          label: 'Posted in'
+          label: 'Colocado em'
           exclude: false
           alter:
             alter_text: false
@@ -451,7 +453,7 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
-          label: Updated
+          label: Atualizado
           exclude: false
           alter:
             alter_text: false
@@ -518,7 +520,7 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
-          label: Operations
+          label: Operações
           exclude: false
           alter:
             alter_text: false
@@ -679,7 +681,7 @@ display:
           exposed: true
           expose:
             operator_id: subject_op
-            label: Subject
+            label: Assunto
             description: ''
             use_operator: false
             operator: subject_op
@@ -719,7 +721,7 @@ display:
           exposed: true
           expose:
             operator_id: combine_op
-            label: 'Author name'
+            label: 'Nome do autor'
             description: ''
             use_operator: false
             operator: combine_op
@@ -760,7 +762,7 @@ display:
           exposed: true
           expose:
             operator_id: langcode_op
-            label: Language
+            label: Idioma
             description: ''
             use_operator: false
             operator: langcode_op
@@ -804,7 +806,7 @@ display:
           entity_type: comment
           entity_field: changed
           plugin_id: date
-      title: Comments
+      title: Comentários
       header: {  }
       footer: {  }
       empty:
@@ -817,13 +819,13 @@ display:
           admin_label: ''
           empty: true
           tokenize: false
-          content: 'No comments available.'
+          content: 'Não existem comentários.'
           plugin_id: text_custom
       arguments: {  }
       display_extenders: {  }
       use_more: false
       use_more_always: true
-      use_more_text: more
+      use_more_text: mais
       use_ajax: false
       hide_attachment_summary: false
       show_admin_links: true
@@ -858,19 +860,19 @@ display:
   page_published:
     display_plugin: page
     id: page_published
-    display_title: 'Published comments'
+    display_title: 'Comentários publicados'
     position: 1
     display_options:
       path: admin/content/comment
       menu:
         type: tab
-        title: Comments
-        description: 'Comments published'
+        title: Comentários
+        description: 'Comentários publicados'
         parent: ''
         weight: 0
         context: '0'
         menu_name: admin
-      display_description: 'The approved comments listing.'
+      display_description: 'A Lista de comentários aprovados.'
       display_extenders: {  }
       exposed_block: false
       display_comment: ''
@@ -887,19 +889,19 @@ display:
   page_unapproved:
     display_plugin: page
     id: page_unapproved
-    display_title: 'Unapproved comments'
+    display_title: 'Comentários não aprovados'
     position: 2
     display_options:
       path: admin/content/comment/approval
       menu:
         type: tab
-        title: 'Unapproved comments'
-        description: 'Comments unapproved'
+        title: 'Comentários não aprovados'
+        description: 'Comentários não aprovados'
         parent: ''
         weight: 1
         context: '0'
         menu_name: admin
-      display_description: 'The unapproved comments listing.'
+      display_description: 'A lista de comentários não aprovados.'
       filters:
         status:
           id: status
@@ -952,7 +954,7 @@ display:
           exposed: true
           expose:
             operator_id: subject_op
-            label: Subject
+            label: Assunto
             description: ''
             use_operator: false
             operator: subject_op
@@ -992,7 +994,7 @@ display:
           exposed: true
           expose:
             operator_id: combine_op
-            label: 'Author Name'
+            label: 'Nome do autor'
             description: ''
             use_operator: false
             operator: combine_op
@@ -1033,7 +1035,7 @@ display:
           exposed: true
           expose:
             operator_id: langcode_op
-            label: Language
+            label: Idioma
             description: ''
             use_operator: false
             operator: langcode_op
@@ -1115,7 +1117,7 @@ display:
           hide_empty: false
           empty_zero: false
           hide_alter_empty: true
-          action_title: Action
+          action_title: 'Com a seleção'
           include_exclude: include
           selected_actions:
             - comment_delete_action
@@ -1129,7 +1131,7 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
-          label: Subject
+          label: Assunto
           exclude: false
           alter:
             alter_text: false
@@ -1259,7 +1261,7 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
-          label: Author
+          label: Autor
           exclude: false
           alter:
             alter_text: false
@@ -1323,7 +1325,7 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
-          label: 'Posted in'
+          label: 'Colocado em'
           exclude: false
           alter:
             alter_text: false
@@ -1388,7 +1390,7 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
-          label: Updated
+          label: Atualizado
           exclude: false
           alter:
             alter_text: false
@@ -1455,7 +1457,7 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
-          label: Operations
+          label: Operações
           exclude: false
           alter:
             alter_text: false

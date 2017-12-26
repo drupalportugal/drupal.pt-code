@@ -1,17 +1,17 @@
 uuid: 3166f8ef-1929-43c6-8b0d-0263f0f42564
-langcode: en
+langcode: pt-pt
 status: true
 dependencies: {  }
 id: collective_associate
-label: 'Collective Associate'
+label: 'Sócio Coletivo'
+description: 'Perfil para Sócios Coletivos.'
 registration: false
 multiple: true
 roles:
   moderator: moderator
   administrator: administrator
   authenticated: '0'
-  autor: '0'
-  socios: '0'
+  author: '0'
+  associate: '0'
 weight: 0
 use_revisions: false
-description: 'Profile for Collective Associates.'

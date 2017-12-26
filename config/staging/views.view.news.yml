@@ -1,5 +1,5 @@
 uuid: 235863f4-84b8-4429-a94d-4e0c25e12452
-langcode: en
+langcode: pt-pt
 status: true
 dependencies:
   config:
@@ -42,13 +42,13 @@ display:
       exposed_form:
         type: basic
         options:
-          submit_button: Apply
+          submit_button: Aplicar
           reset_button: false
-          reset_button_label: Reset
-          exposed_sorts_label: 'Sort by'
+          reset_button_label: Reiniciar
+          exposed_sorts_label: 'Ordenar por'
           expose_sort_order: true
-          sort_asc_label: Asc
-          sort_desc_label: Desc
+          sort_asc_label: Ascendente
+          sort_desc_label: Descendente
       pager:
         type: full
         options:
@@ -192,7 +192,7 @@ display:
           expose:
             label: ''
           granularity: second
-      title: News
+      title: Notícias
       header: {  }
       footer: {  }
       empty: {  }
@@ -217,7 +217,7 @@ display:
     display_options:
       display_extenders:
         metatag_display_extender: {  }
-      block_description: News
+      block_description: Notícias
       pager:
         type: some
         options:
@@ -232,7 +232,7 @@ display:
         link_url: false
       use_more: true
       use_more_always: true
-      use_more_text: more
+      use_more_text: mais
       link_display: page_1
       link_url: ''
     cache_metadata:
@@ -254,7 +254,7 @@ display:
       path: noticias
       menu:
         type: normal
-        title: News
+        title: Notícias
         description: ''
         expanded: false
         parent: ''

@@ -1,5 +1,5 @@
 uuid: 101e10c3-4f20-41e0-a3f9-9e186d5fadac
-langcode: en
+langcode: pt-pt
 status: true
 dependencies: {  }
 id: comment_node_webform

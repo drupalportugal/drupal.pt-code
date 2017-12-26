@@ -1,5 +1,5 @@
 uuid: 694d186b-4f6e-4449-ae0c-29eeb357baf4
-langcode: en
+langcode: pt-pt
 status: true
 dependencies:
   config:
@@ -11,8 +11,8 @@ id: profile.member.field_profile_name_fullname
 field_name: field_profile_name_fullname
 entity_type: profile
 bundle: member
-label: 'Full name'
-description: 'Your full civil name. This information will be <strong>public</strong>.'
+label: 'Nome completo'
+description: 'O teu nome civil completo. Esta informação será <strong>pública</strong>.'
 required: true
 translatable: false
 default_value:
