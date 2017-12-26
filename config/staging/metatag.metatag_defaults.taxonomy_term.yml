@@ -3,9 +3,10 @@ langcode: pt-pt
 status: true
 dependencies: {  }
 _core:
-  default_config_hash: ShncZd3oX-UZDBGDUrgbRiZ2BmIJYSLHvIIPjq6tRAQ
+  default_config_hash: 92bXZdyYJ5xqukdfmGRr_CYcwm1vfuS8b8aJ7X_G7E0
 id: taxonomy_term
 label: 'Termo de taxonomia'
 tags:
+  canonical_url: '[term:url]'
   title: '[term:name] | [site:name]'
   description: '[term:description]'
