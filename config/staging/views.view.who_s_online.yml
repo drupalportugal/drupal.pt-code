@@ -1,11 +1,11 @@
 uuid: ddd96ed5-2f96-47e3-9943-e46a1979e026
 langcode: pt-pt
-status: false
+status: true
 dependencies:
   module:
     - user
 _core:
-  default_config_hash: DWLCIpl8ku4NbiI9t3GgDeuW13KSOy2l1zho7ReP_Bg
+  default_config_hash: m0vmYmhrzMR6S_IC0UlK0Cl-q5lEvL8-EbxbbcDtk34
 id: who_s_online
 label: 'Bloco quem está ligado'
 module: user
