@@ -54,9 +54,6 @@ display:
           offset: 0
           id: 0
           total_pages: 0
-          tags:
-            previous: '‹ Previous'
-            next: 'Seguinte ›'
           expose:
             items_per_page: false
             items_per_page_label: 'Itens por página'
@@ -65,6 +62,11 @@ display:
             items_per_page_options_all_label: '- Todos -'
             offset: false
             offset_label: Deslocamento
+          tags:
+            previous: '‹ Anterior'
+            next: 'Seguinte ›'
+            first: '« Primeira'
+            last: 'Última »'
       style:
         type: table
         options:
@@ -568,7 +570,7 @@ display:
           decimal: .
           separator: ','
           format_plural: true
-          format_plural_string: !!binary MSBsdWdhcgNAY291bnQgbHVnYXJlcw==
+          format_plural_string: !!binary MSBwbGFjZQNAY291bnQgcGxhY2Vz
           prefix: ''
           suffix: ''
           plugin_id: numeric
@@ -742,8 +744,6 @@ display:
         menu_name: admin
         weight: 0
         context: ''
-        enabled: true
-        expanded: false
       display_description: ''
       defaults:
         pager: true
@@ -1116,9 +1116,6 @@ display:
           admin_label: 'File usage'
           required: true
       display_extenders: {  }
-      menu:
-        enabled: true
-        expanded: false
     cache_metadata:
       contexts:
         - 'languages:language_interface'
