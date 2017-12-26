@@ -14,7 +14,7 @@ bundle: evento
 label: 'Breve descrição'
 description: 'Pequeno texto para destacar algo no evento: tema aglutinador, convidado especial, nova localização...'
 required: false
-translatable: false
+translatable: true
 default_value: {  }
 default_value_callback: ''
 settings:

@@ -1,0 +1,20 @@
+uuid: 51fc199f-7e68-40e3-a9e7-630524c8488d
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - commerce_store.commerce_store_type.online
+  module:
+    - path
+id: commerce_store.online.path
+field_name: path
+entity_type: commerce_store
+bundle: online
+label: 'URL alternativo'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: path

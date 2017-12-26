@@ -34,14 +34,14 @@ content:
   comment_node_evento:
     label: hidden
     type: comment_default
-    weight: 20
+    weight: 7
     settings:
       pager_id: 0
       view_mode: default
     third_party_settings: {  }
     region: content
   field_date:
-    weight: 101
+    weight: 3
     label: inline
     settings:
       format_type: medium
@@ -69,23 +69,23 @@ content:
     region: content
   field_local:
     label: inline
-    weight: 3
+    weight: 2
     type: text_default
     settings: {  }
     third_party_settings: {  }
     region: content
   field_tags:
     label: inline
-    weight: 7
+    weight: 5
     type: entity_reference_label
     settings:
       link: true
     third_party_settings: {  }
     region: content
   links:
-    weight: 100
+    weight: 6
+    region: content
     settings: {  }
     third_party_settings: {  }
-    region: content
 hidden:
   langcode: true

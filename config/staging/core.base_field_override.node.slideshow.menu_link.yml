@@ -1,6 +1,6 @@
 uuid: c713ad20-ba50-4277-b061-4a7f23ebc8c2
 langcode: pt-pt
-status: true
+status: false
 dependencies:
   config:
     - node.type.slideshow

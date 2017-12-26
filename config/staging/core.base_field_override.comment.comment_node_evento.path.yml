@@ -1,0 +1,20 @@
+uuid: dc745802-78da-4147-a1c6-604d8f41dcf6
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - comment.type.comment_node_evento
+  module:
+    - path
+id: comment.comment_node_evento.path
+field_name: path
+entity_type: comment
+bundle: comment_node_evento
+label: 'URL alternativo'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: path
