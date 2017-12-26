@@ -4,7 +4,7 @@ status: true
 dependencies: {  }
 id: moderator
 label: Moderador
-weight: -7
+weight: -6
 is_admin: null
 permissions:
   - 'access administration pages'
@@ -19,10 +19,10 @@ permissions:
   - 'access news feeds'
   - 'access profile overview'
   - 'access shortcuts'
-  - 'access toolbar'
-  - 'access tour'
   - 'access site reports'
   - 'access site-wide contact form'
+  - 'access toolbar'
+  - 'access tour'
   - 'access user contact forms'
   - 'access user profiles'
   - 'add terms in tags'
@@ -72,9 +72,6 @@ permissions:
   - 'edit any page content'
   - 'edit any slideshow content'
   - 'edit own article content'
-  - 'edit own evento content'
-  - 'edit own page content'
-  - 'edit own slideshow content'
   - 'edit own comments'
   - 'edit own evento content'
   - 'edit own page content'
