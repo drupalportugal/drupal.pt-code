@@ -4,7 +4,6 @@ status: false
 dependencies:
   config:
     - core.entity_view_mode.user.full
-    - field.field.user.user.commerce_remote_id
     - field.field.user.user.user_picture
     - image.style.medium
   module:
@@ -82,7 +81,6 @@ content:
     third_party_settings: {  }
     type: image
 hidden:
-  commerce_remote_id: true
   langcode: true
   profile_collective_associate: true
   profile_customer: true
