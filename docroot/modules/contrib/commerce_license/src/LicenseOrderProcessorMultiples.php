@@ -9,6 +9,16 @@ use Drupal\commerce_order\OrderProcessorInterface;
 
 /**
  * Order processor that ensures only 1 of each license may be added to the cart.
+ *
+ * This is an order processor rather than an availability checker, as
+ * \Drupal\commerce_order\AvailabilityOrderProcessor::check() removes the
+ * entire order item if availability fails, whereas we only want to keep the
+ * quantity at 1.
+ *
+ * @todo: Figure out if this is still necessary or if the cart event
+ * subscriber covers all cases.
+ *
+ * @see \Drupal\commerce_license\EventSubscriber\LicenseMultiplesCartEventSubscriber
  */
 class LicenseOrderProcessorMultiples implements OrderProcessorInterface {
 
@@ -39,7 +49,7 @@ class LicenseOrderProcessorMultiples implements OrderProcessorInterface {
         // cart form for license products, so this is moot.
         drupal_set_message(t("You may only have one of @product-label in your cart.", [
           '@product-label' => $purchased_entity->label(),
-        ]));
+        ]), 'error');
       }
     }
 

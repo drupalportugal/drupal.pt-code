@@ -2,7 +2,8 @@
 
 namespace Drupal\commerce_license;
 
-use Drupal\Core\Session\AccountInterface;
+use Drupal\Core\Entity\EntityTypeManagerInterface;
+use Drupal\Core\Session\AccountProxyInterface;
 use Drupal\commerce\AvailabilityCheckerInterface;
 use Drupal\commerce\Context;
 use Drupal\commerce\PurchasableEntityInterface;
@@ -28,15 +29,33 @@ use Drupal\commerce_license\Plugin\Commerce\LicenseType\ExistingRightsFromConfig
 class LicenseAvailabilityCheckerExistingRights implements AvailabilityCheckerInterface {
 
   /**
-   * Constructs a new availability checker.
+   * The current active user.
    *
-   * @param \Drupal\Core\Session\AccountInterface $current_user
-   *   The current user.
+   * @var \Drupal\Core\Session\AccountProxyInterface
+   */
+  protected $currentUser;
+
+  /**
+   * The entity type manager.
+   *
+   * @var \Drupal\Core\Entity\EntityTypeManagerInterface
+   */
+  protected $entityTypeManager;
+
+  /**
+   * Creates a LicenseAvailabilityCheckerExistingRights instance.
+   *
+   * @param \Drupal\Core\Session\AccountProxyInterface $current_user
+   *   The current active user.
+   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
+   *   The entity type manager.
    */
   public function __construct(
-    AccountInterface $current_user
+    AccountProxyInterface $current_user,
+    EntityTypeManagerInterface $entity_type_manager
   ) {
     $this->currentUser = $current_user;
+    $this->entityTypeManager = $entity_type_manager;
   }
 
   /**
@@ -66,9 +85,12 @@ class LicenseAvailabilityCheckerExistingRights implements AvailabilityCheckerInt
     // Hand over to the license type plugin configured in the product variation,
     // to let it determine whether the user already has what the license would
     // grant.
-    $user = $context->getCustomer();
+    $customer = $context->getCustomer();
+
     $license_type_plugin = $entity->license_type->first()->getTargetInstance();
 
+    // Load the full user entity for the plugin.
+    $user = $this->entityTypeManager->getStorage('user')->load($customer->id());
     $existing_rights_result = $license_type_plugin->checkUserHasExistingRights($user);
 
     if ($existing_rights_result->hasExistingRights()) {

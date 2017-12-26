@@ -151,6 +151,20 @@ class License extends ContentEntityBase implements LicenseInterface {
   /**
    * {@inheritdoc}
    */
+  public function getExpirationPluginType() {
+    return $this->get('expiration_type')->target_plugin_id;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getExpirationPlugin() {
+    return $this->get('expiration_type')->first()->getTargetInstance();
+  }
+
+  /**
+   * {@inheritdoc}
+   */
   public function setValuesFromPlugin(LicenseTypeInterface $license_plugin) {
     $license_plugin->setConfigurationValuesOnLicense($this);
   }
@@ -228,7 +242,7 @@ class License extends ContentEntityBase implements LicenseInterface {
    */
   protected function calculateExpirationTime($start) {
     /** @var \Drupal\recurring_period\Plugin\RecurringPeriod\RecurringPeriodInterface $expiration_type_plugin */
-    $expiration_type_plugin = $this->get('expiration_type')->first()->getTargetInstance();
+    $expiration_type_plugin = $this->getExpirationPlugin();
 
     // The recurring period plugin needs DateTimeImmutable objects in order
     // to handle timezones properly. So we convert the timestamp to a datetime
@@ -326,13 +340,6 @@ class License extends ContentEntityBase implements LicenseInterface {
       ->setDisplayConfigurable('form', TRUE)
       ->setDisplayConfigurable('view', TRUE)
       ->setSetting('workflow_callback', ['\Drupal\commerce_license\Entity\License', 'getWorkflowId']);
-
-    $fields['queues'] = BaseFieldDefinition::create('string')
-      ->setLabel(t('Queues'))
-      ->setDescription(t('The queues in which this license is currently placed.'))
-      ->setCardinality(BaseFieldDefinition::CARDINALITY_UNLIMITED)
-      ->setDisplayConfigurable('form', FALSE)
-      ->setDisplayConfigurable('view', FALSE);
 
     $fields['product_variation'] = BaseFieldDefinition::create('entity_reference')
       ->setLabel(t('Licensed product variation'))

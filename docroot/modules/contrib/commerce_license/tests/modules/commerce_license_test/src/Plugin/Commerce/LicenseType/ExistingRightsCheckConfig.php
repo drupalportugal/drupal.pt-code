@@ -12,7 +12,6 @@ use Drupal\commerce_license\Plugin\Commerce\LicenseType\ExistingRightsFromConfig
  * @CommerceLicenseType(
  *   id = "existing_rights_check_config",
  *   label = @Translation("Tests existing rights"),
- *   activation_order_state = "completed",
  * )
  */
 class ExistingRightsCheckConfig extends TestLicenseBase implements ExistingRightsFromConfigurationCheckingInterface {

@@ -13,7 +13,6 @@ use Drupal\commerce_license\Entity\LicenseInterface;
  * @CommerceLicenseType(
  *   id = "simple",
  *   label = @Translation("Simple license"),
- *   activation_order_state = "completed",
  * )
  */
 class SimpleLicenseType extends LicenseTypeBase {

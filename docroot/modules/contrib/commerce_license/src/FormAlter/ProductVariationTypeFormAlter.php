@@ -42,15 +42,13 @@ class ProductVariationTypeFormAlter {
    * Helper for hook_form_FORM_ID_alter(); same parameters.
    */
   public function formAlter(&$form, FormStateInterface $form_state, $form_id) {
-    // Add checkboxes to the product variation type form to select the license
-    // types that product variations of this type may use.
-    $options = array_column(\Drupal::service('plugin.manager.commerce_license_type')->getDefinitions(), 'label', 'id');
-    $our_form['license_types'] = [
-      '#type' => 'checkboxes',
-      '#title' => t("Available license types"),
-      '#description' => t("Limit the license types that can be used on product variations of this type. All types will be allowed if none are selected."),
-      '#options' => $options,
-      '#default_value' => $this->variation_type->getThirdPartySetting('commerce_license', 'license_types') ?: [],
+    // Create our form elements which we insert into the form at the end.
+    $our_form = [];
+
+    $our_form['license'] = [
+      '#type' => 'details',
+      '#title' => t('License settings'),
+      '#open' => TRUE,
       // Only show this if the license trait is set on the product variation
       // type.
       '#states' => [
@@ -59,9 +57,31 @@ class ProductVariationTypeFormAlter {
         ],
       ],
     ];
+
+    // Add checkboxes to the product variation type form to select the license
+    // types that product variations of this type may use.
+    $options = array_column(\Drupal::service('plugin.manager.commerce_license_type')->getDefinitions(), 'label', 'id');
+    $our_form['license']['license_types'] = [
+      '#type' => 'checkboxes',
+      '#title' => t("Available license types"),
+      '#description' => t("Limit the license types that can be used on product variations of this type. All types will be allowed if none are selected."),
+      '#options' => $options,
+      '#default_value' => $this->variation_type->getThirdPartySetting('commerce_license', 'license_types') ?: [],
+    ];
     // TODO: consider whether to lock this once the product variation type is
     // created or has product variation entities, or at least lock the enabled
     // license types.
+
+    $our_form['license']['activate_on_place'] = [
+      '#type' => 'checkbox',
+      '#title' => t("Activate license when order is placed"),
+      '#description' => t(
+        "Activates the license as soon as the customer completes checkout, rather than waiting for payment to be taken. " .
+        "If payment subsequently fails, canceling the order will cancel the license. " .
+        "This only has an effect with order types that use validation or fulfilment states and payment gateways that are asynchronous."
+      ),
+      '#default_value' => $this->variation_type->getThirdPartySetting('commerce_license', 'activate_on_place', FALSE),
+    ];
 
     // Insert our form elements into the form after the 'traits' element.
     // The form elements don't have their weight set, so we can't use that.
@@ -113,6 +133,8 @@ class ProductVariationTypeFormAlter {
     }
 
     // The checkout flow may not allow anonymous checkout.
+    $order_type_id = $order_item_type->getOrderTypeId();
+    $order_type = \Drupal::entityTypeManager()->getStorage('commerce_order_type')->load($order_type_id);
     $checkout_flow_id = $order_type->getThirdPartySetting('commerce_checkout', 'checkout_flow');
     if ($checkout_flow_id) {
       $checkout_flow = \Drupal::entityTypeManager()->getStorage('commerce_checkout_flow')->load($checkout_flow_id);
@@ -143,11 +165,15 @@ class ProductVariationTypeFormAlter {
    * Saves our third-party settings into the product variation type.
    */
   public function formSubmit($form, FormStateInterface $form_state) {
+    $variation_type = $form_state->getFormObject()->getEntity();
+
     $value = $form_state->getValue('license_types');
     $license_types = array_filter($value);
-
-    $variation_type = $form_state->getFormObject()->getEntity();
     $variation_type->setThirdPartySetting('commerce_license', 'license_types', $license_types);
+
+    $activate_on_place = $form_state->getValue('activate_on_place');
+    $variation_type->setThirdPartySetting('commerce_license', 'activate_on_place', $activate_on_place);
+
     // This is saving it a second time... but Commerce does the same in its form
     // alterations.
     $variation_type->save();

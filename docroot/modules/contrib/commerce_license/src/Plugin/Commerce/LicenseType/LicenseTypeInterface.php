@@ -64,18 +64,6 @@ interface LicenseTypeInterface extends BundlePluginInterface, ConfigurablePlugin
   public function getWorkflowId();
 
   /**
-   * Gets the name of the order state in which a license should activate.
-   *
-   * @see commerce_order.workflows.yml
-   * @see \Drupal\commerce_license\EventSubscriber\LicenseOrderSyncSubscriber
-   *
-   * @return string
-   *   The ID of the order workflow in which licenses of this type should
-   *   activate.
-   */
-  public function getActivationOrderState();
-
-  /**
    * Copy configuration values to a license entity.
    *
    * This does not save the license; it is the caller's responsibility to do so.

@@ -57,8 +57,9 @@ class LicenseOrderSyncSubscriber implements EventSubscriberInterface {
       // This is to ensure that the license is created here before it's
       // set on the subscription entity in
       // \Drupal\commerce_license\Plugin\Commerce\SubscriptionType::onSubscriptionCreate().
-      'commerce_order.place.pre_transition' => ['onCartOrderFulfillment', 100],
-      'commerce_order.validate.post_transition' => ['onCartOrderFulfillment', -100],
+      'commerce_order.place.pre_transition' => ['onCartOrderTransition', 100],
+      'commerce_order.validate.pre_transition' => ['onCartOrderTransition', -100],
+      'commerce_order.fulfill.pre_transition' => ['onCartOrderTransition', -100],
       // Event for reaching the 'canceled' order state.
       'commerce_order.cancel.post_transition' => ['onCartOrderCancel', -100],
     ];
@@ -66,13 +67,18 @@ class LicenseOrderSyncSubscriber implements EventSubscriberInterface {
   }
 
   /**
-   * Reacts to an order reaching fulfillment state.
+   * Creates and activates a license in reaction to an order state change.
+   *
+   * We always create a license when the order goes through the 'place'
+   * transition, regardless of which state that reaches, and at latest activate
+   * it when the order reaches the 'completed' state.
    *
    * @param \Drupal\state_machine\Event\WorkflowTransitionEvent $event
    *   The event we subscribed to.
    */
-  public function onCartOrderFulfillment(WorkflowTransitionEvent $event) {
-    // Get the state we are reaching.
+  public function onCartOrderTransition(WorkflowTransitionEvent $event) {
+    // Get the states we are leaving and reaching.
+    $from_state = $event->getFromState()->getId();
     $reached_state = $event->getToState()->getId();
 
     /** @var \Drupal\commerce_order\Entity\OrderInterface $order */
@@ -81,22 +87,26 @@ class LicenseOrderSyncSubscriber implements EventSubscriberInterface {
     $license_order_items = $this->getOrderItemsWithLicensedProducts($order);
 
     foreach ($license_order_items as $order_item) {
+      // We don't need to do anything if there is already an active license on
+      // the order item.
+      // This happens when we come here for the 'validate' transition having
+      // already come for the 'place' transition , or if another event
+      // subscriber has activated the license.
+      if (!empty($order_item->license->entity) && $order_item->license->entity->getState()->value == 'active') {
+        continue;
+      }
+
       $purchased_entity = $order_item->getPurchasedEntity();
 
       // TODO: throw an exception if the variation doesn't have this set.
       $license_type_plugin = $purchased_entity->get('license_type')->first()->getTargetInstance();
 
-      // Only act if the license type activates in the state the order is
-      // reaching.
-      if ($license_type_plugin->getActivationOrderState() != $reached_state) {
-        continue;
-      }
-
-      // Only create a new license if the order item doesn't already have one:
-      // this allows for orders to be created programmatically with a configured
-      // license.
+      // Create the license the first time we come here, though allow for
+      // something else to have created it for us already: this allows for
+      // orders to be created programmatically with a configured license.
       if (empty($order_item->license->entity)) {
-        // Create a new license.
+        // Create a new license. It will be in the 'new' state and so not yet
+        // active.
         $license = $this->licenseStorage->createFromOrderItem($order_item);
 
         $license->save();
@@ -109,6 +119,31 @@ class LicenseOrderSyncSubscriber implements EventSubscriberInterface {
       else {
         // Get the existing license the order item refers to.
         $license = $order_item->license->entity;
+      }
+
+      // Now determine whether to activate it.
+      $activate_license = FALSE;
+      if ($reached_state == 'completed') {
+        // Always activate the license when we reach the 'completed' state.
+        $activate_license = TRUE;
+      }
+      else {
+        // Activate the license in the 'place' transition if the product
+        // variation type is configured to do so.
+        // This then relies on onCartOrderCancel() to cancel the license if
+        // the order itself is canceled later.
+        $product_variation_type = $this->entityTypeManager->getStorage('commerce_product_variation_type')->load($purchased_entity->bundle());
+        $activate_on_place = $product_variation_type->getThirdPartySetting('commerce_license', 'activate_on_place');
+
+        // We have to check the from state, because the event can't tell us
+        // the transition: see https://www.drupal.org/project/state_machine/issues/2931447
+        if ($activate_on_place && $from_state == 'draft') {
+          $activate_license = TRUE;
+        }
+      }
+
+      if (!$activate_license) {
+        continue;
       }
 
       // Attempt to activate and confirm the license.

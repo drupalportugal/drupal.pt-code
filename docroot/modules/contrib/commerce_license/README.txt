@@ -23,6 +23,23 @@ This module requires the following modules:
  * Commerce (https://drupal.org/project/commerce)
  * Recurring Period (https://drupal.org/project/recurring_period)
 
+The following patches are recommended:
+
+ * https://www.drupal.org/project/commerce/issues/2930979: Don't show the
+  'added to your cart' message if the item quantity is unchanged.
+
+INSTALLATION
+------------
+
+ 1 Install as you would normally install a contributed Drupal module. Visit
+   https://www.drupal.org/docs/8/extending-drupal-8/installing-drupal-8-modules
+   for further information.
+ 2 Configure or create a checkout flow which does not allow anonymous checkout.
+ 3 Configure or create an Order Type to use the checkout flow.
+ 4 Configure or create an Order Item Type to use the Order Type, and work with
+   Licenses.
+ 5 Configure or create a Product Variation Type to use the Order Item Type, and
+   provide Licenses.
 
 KNOWN ISSUES AND LIMITATIONS
 ----------------------------

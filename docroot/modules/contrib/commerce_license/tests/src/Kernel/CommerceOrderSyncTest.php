@@ -20,6 +20,20 @@ class CommerceOrderSyncTest extends CommerceKernelTestBase {
   use LicenseOrderCompletionTestTrait;
 
   /**
+   * The order type.
+   *
+   * @var \Drupal\commerce_order\Entity\OrderType
+   */
+  protected $orderType;
+
+  /**
+   * The product variation type.
+   *
+   * @var \Drupal\commerce_product\Entity\ProductVariationType
+   */
+  protected $variationType;
+
+  /**
    * The variation to test against.
    *
    * @var \Drupal\commerce_product\Entity\ProductVariation
@@ -76,12 +90,12 @@ class CommerceOrderSyncTest extends CommerceKernelTestBase {
     $this->licenseStorage = $this->container->get('entity_type.manager')->getStorage('commerce_license');
 
     // Create an order type for licenses which uses the fulfillment workflow.
-    $order_type = $this->createEntity('commerce_order_type', [
+    $this->orderType = $this->createEntity('commerce_order_type', [
       'id' => 'license_order_type',
       'label' => $this->randomMachineName(),
       'workflow' => 'order_default',
     ]);
-    commerce_order_add_order_items_field($order_type);
+    commerce_order_add_order_items_field($this->orderType);
 
     // Create an order item type that uses that order type.
     $order_item_type = $this->createEntity('commerce_order_item_type', [
@@ -97,14 +111,14 @@ class CommerceOrderSyncTest extends CommerceKernelTestBase {
 
     // Create a product variation type with the license trait, using our order
     // item type.
-    $product_variation_type = $this->createEntity('commerce_product_variation_type', [
+    $this->variationType = $this->createEntity('commerce_product_variation_type', [
       'id' => 'license_pv_type',
       'label' => $this->randomMachineName(),
       'orderItemType' => 'license_order_item_type',
       'traits' => ['commerce_license'],
     ]);
     $trait = $this->traitManager->createInstance('commerce_license');
-    $this->traitManager->installTrait($trait, 'commerce_product_variation', $product_variation_type->id());
+    $this->traitManager->installTrait($trait, 'commerce_product_variation', $this->variationType->id());
 
     // Create a product variation which grants a license.
     $this->variation = $this->createEntity('commerce_product_variation', [
@@ -157,6 +171,58 @@ class CommerceOrderSyncTest extends CommerceKernelTestBase {
 
     // Take the order through checkout.
     $this->completeLicenseOrderCheckout($cart_order);
+    $order = $this->reloadEntity($cart_order);
+
+    // Get the order item. There should be only one in the order.
+    $order_item = $order->getItems()[0];
+
+    // Check that the order item now refers to a new license which has been
+    // created for the user.
+    $licenses = $this->licenseStorage->loadMultiple();
+    $this->assertCount(1, $licenses, "One license was saved.");
+    $license = reset($licenses);
+
+    $this->assertEquals($license->id(), $order_item->license->entity->id(), "The order item has a reference to the saved license.");
+
+    $this->assertEquals('commerce_license', $license->getEntityTypeId(), 'The order item has a license entity set in its license field.');
+    $this->assertEquals('simple', $license->bundle(), 'The license entity is of the expected type.');
+    $this->assertEquals($customer->id(), $license->getOwnerId(), 'The license entity has the expected owner.');
+    $this->assertEquals($this->variation->id(), $license->product_variation->target_id, 'The license entity references the product variation.');
+    $this->assertEquals('active', $license->state->value, 'The license is active.');
+
+    // Note that we don't need to check that the license has activated its
+    // license type plugin, as that is covered by LicenseStateChangeTest.
+  }
+
+  /**
+   * Tests a license is created and activate with the activate_on_place setting.
+   */
+  public function testActivateOnOrderPlace() {
+    // Change the configuration of the order type to use validation.
+    $this->orderType->set('workflow', 'order_default_validation');
+    $this->orderType->save();
+
+    // Change the configuration of the product variation type to activate as
+    // soon as the customer places the order.
+    $this->variationType->setThirdPartySetting('commerce_license', 'activate_on_place', TRUE);
+    $this->variationType->save();
+
+    $this->installCommerceCart();
+
+    $licenses = $this->licenseStorage->loadMultiple();
+    $this->assertCount(0, $licenses, "There are no licenses yet.");
+
+    $this->store = $this->createStore();
+    $customer = $this->createUser();
+    $cart_order = $this->container->get('commerce_cart.cart_provider')->createCart('license_order_type', $this->store, $customer);
+    $this->cartManager = $this->container->get('commerce_cart.cart_manager');
+    $this->cartManager->addEntity($cart_order, $this->variation);
+
+    // Place the order. This takes it only as far as the 'validation' state.
+    $workflow = $cart_order->getState()->getWorkflow();
+    $cart_order->getState()->applyTransition($workflow->getTransition('place'));
+    $cart_order->save();
+
     $order = $this->reloadEntity($cart_order);
 
     // Get the order item. There should be only one in the order.

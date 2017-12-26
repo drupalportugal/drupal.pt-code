@@ -31,17 +31,4 @@ class CommerceLicenseType extends Plugin {
    */
   public $label;
 
-  /**
-   * The order state in which the license activates.
-   *
-   * Supported values are:
-   *  - 'completed'
-   *  - 'fulfillment'
-   *
-   * @see commerce_order.workflows.yml
-   *
-   * @var string
-   */
-  public $activation_order_state;
-
 }

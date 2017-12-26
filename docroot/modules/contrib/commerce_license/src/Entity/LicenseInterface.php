@@ -95,6 +95,22 @@ interface LicenseInterface extends EntityChangedInterface, EntityOwnerInterface 
   public function getTypePlugin();
 
   /**
+   * Gets the type of expiration this license uses.
+   *
+   * @return string
+   *   The ID of the recurring_period plugin.
+   */
+  public function getExpirationPluginType();
+
+  /**
+   * Gets the expiration plugin for this license.
+   *
+   * @return \Drupal\recurring_period\Plugin\RecurringPeriod\RecurringPeriodInterface
+   *   The recurring_period plugin configured for this license.
+   */
+  public function getExpirationPlugin();
+
+  /**
    * Gets the license state.
    *
    * @return \Drupal\state_machine\Plugin\Field\FieldType\StateItemInterface

@@ -9,7 +9,6 @@ use Drupal\commerce_license\Entity\LicenseInterface;
  * @CommerceLicenseType(
  *   id = "state_change_test",
  *   label = @Translation("State change test"),
- *   activation_order_state = "completed",
  * )
  */
 class LicenseStateChangeTest extends LicenseTypeBase {

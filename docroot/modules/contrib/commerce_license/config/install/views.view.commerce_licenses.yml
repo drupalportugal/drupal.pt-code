@@ -688,7 +688,22 @@ display:
           entity_type: commerce_license
           entity_field: state
           plugin_id: state_machine_state
-      sorts: {  }
+      sorts:
+        granted:
+          id: granted
+          table: commerce_license
+          field: granted
+          relationship: none
+          group_type: group
+          admin_label: ''
+          order: DESC
+          exposed: false
+          expose:
+            label: ''
+          granularity: second
+          entity_type: commerce_license
+          entity_field: granted
+          plugin_id: date
       title: Licenses
       header: {  }
       footer: {  }
