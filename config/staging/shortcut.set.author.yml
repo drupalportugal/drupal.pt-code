@@ -1,6 +1,6 @@
 uuid: f0756e50-3b9c-4dab-ab53-7f5756e3d186
-langcode: en
+langcode: pt-pt
 status: true
 dependencies: {  }
 id: author
-label: Author
+label: Autor

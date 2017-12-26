@@ -6,7 +6,7 @@ dependencies:
     - redirect_404
     - user
 _core:
-  default_config_hash: buduFGAdaFGOdE2NiawHXVsrm8k6wtiUoIp5Bcpxh3k
+  default_config_hash: kAe9LN5CFd5dvECtV8RZtKnyvURX37zd7nIMOURm-U0
 id: redirect_404
 label: 'Redirect 404'
 module: views
@@ -25,7 +25,7 @@ display:
       access:
         type: perm
         options:
-          perm: 'access site reports'
+          perm: 'administer redirects'
       cache:
         type: none
         options: {  }
@@ -63,8 +63,10 @@ display:
             offset: false
             offset_label: Deslocamento
           tags:
-            previous: ‹‹
-            next: ››
+            previous: '‹ Anterior'
+            next: 'Seguinte ›'
+            first: '« Primeira'
+            last: 'Última »'
       style:
         type: table
         options:

@@ -5,7 +5,7 @@ dependencies:
   module:
     - language
 _core:
-  default_config_hash: eYyOjXVghEin1Ed7t7vr9X0dSn018_zeZegu2Ao-j4Q
+  default_config_hash: uwUxQwqEzjNphw2r1_eXr3GJkw1uI0gWkmWQ6J5OvPI
 id: language-edit
 label: 'A editar os idiomas'
 module: language
@@ -47,5 +47,5 @@ tips:
     id: language-edit-continue
     plugin: text
     label: 'Continuing on'
-    body: '<p>Now that you have an overview of the "Edit language" feature, you can continue by:<ul><li>Editing a language</li><li><a href="[site:url]/admin/config/regional/language">Viewing configured languages</a></li></ul></p>'
+    body: '<p>Now that you have an overview of the "Edit language" feature, you can continue by:<ul><li>Editing a language</li><li><a href="[site:url]admin/config/regional/language">Viewing configured languages</a></li></ul></p>'
     weight: 5
