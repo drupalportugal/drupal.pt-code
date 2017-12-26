@@ -17,7 +17,7 @@ index:
     strong: 3
     em: 3
     a: 10
-logging: true
+logging: false
 _core:
   default_config_hash: hvVxL1G-ZCxaq32IZws0YsfuhvaDiQE_np-0g35KjUk
 langcode: pt-pt

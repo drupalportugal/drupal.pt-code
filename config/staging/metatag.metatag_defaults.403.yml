@@ -3,7 +3,7 @@ langcode: pt-pt
 status: true
 dependencies: {  }
 _core:
-  default_config_hash: pscSGylkY0o3turPVv8wDx4YsZiHxluIboyzlDMghF8
+  default_config_hash: Da5YWhJdKLxaJ9gDRI1u5oCbm5WBxiiDgA4M1QrOEPQ
 id: '403'
 label: '403 access denied'
 tags:
