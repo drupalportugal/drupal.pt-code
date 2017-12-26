@@ -1,5 +1,5 @@
 uuid: e38bf151-ce66-4f60-b2e0-331c4740fd40
-langcode: en
+langcode: pt-pt
 status: true
 dependencies:
   content:
@@ -16,7 +16,7 @@ provider: null
 plugin: 'block_content:1a0cb9e2-5772-45aa-9cee-14d1a3636182'
 settings:
   id: 'block_content:1a0cb9e2-5772-45aa-9cee-14d1a3636182'
-  label: 'Credits and warnings'
+  label: 'Créditos e avisos'
   provider: block_content
   label_display: '0'
   status: true

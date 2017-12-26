@@ -1,5 +1,5 @@
 uuid: e927192c-9f96-40fe-9df9-cf0e58da0c1d
-langcode: en
+langcode: pt-pt
 status: true
 dependencies:
   content:
@@ -16,7 +16,7 @@ provider: null
 plugin: 'block_content:69cfffbe-8824-4271-9abe-d1e73257240d'
 settings:
   id: 'block_content:69cfffbe-8824-4271-9abe-d1e73257240d'
-  label: Communicate
+  label: Comunica
   provider: block_content
   label_display: visible
   status: true

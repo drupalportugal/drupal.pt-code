@@ -1,5 +1,5 @@
 uuid: 3a2494b4-4891-45b8-8613-bbc08ea80180
-langcode: en
+langcode: pt-pt
 status: true
 dependencies:
   content:
@@ -16,7 +16,7 @@ provider: null
 plugin: 'block_content:1fb342e7-93cf-4aa3-9cea-e94080a33a16'
 settings:
   id: 'block_content:1fb342e7-93cf-4aa3-9cea-e94080a33a16'
-  label: Contribute
+  label: Contribui
   provider: block_content
   label_display: visible
   status: true

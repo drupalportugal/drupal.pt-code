@@ -1,5 +1,5 @@
 uuid: 0030d852-59cd-4aca-b8b0-ad5d56ed4767
-langcode: en
+langcode: pt-pt
 status: true
 dependencies:
   config:
@@ -12,5 +12,5 @@ third_party_settings:
 id: block_content.basic
 target_entity_type_id: block_content
 target_bundle: basic
-default_langcode: en
+default_langcode: site_default
 language_alterable: true

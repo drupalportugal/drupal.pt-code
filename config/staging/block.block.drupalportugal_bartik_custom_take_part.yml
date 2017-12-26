@@ -1,5 +1,5 @@
 uuid: 11e5a866-a335-47f5-84da-362ebce1c33b
-langcode: en
+langcode: pt-pt
 status: true
 dependencies:
   content:
@@ -16,7 +16,7 @@ provider: null
 plugin: 'block_content:16347f52-8287-44de-85ed-e6e0c8255d8a'
 settings:
   id: 'block_content:16347f52-8287-44de-85ed-e6e0c8255d8a'
-  label: 'Take part'
+  label: Participa
   provider: block_content
   label_display: visible
   status: true

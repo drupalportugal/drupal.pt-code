@@ -6,7 +6,7 @@ dependencies:
     - block_content
     - user
 _core:
-  default_config_hash: tp4wP6wVrEPZfApiCfkpoCxUzN-B1ceGcGv5sEzQ2Sg
+  default_config_hash: msYnighLW1IbiBfyQbwbQwb2cU-5LECiFryt60k0Nfk
 id: block_content
 label: 'Biblioteca de blocos personalizados'
 module: views
@@ -54,9 +54,6 @@ display:
           offset: 0
           id: 0
           total_pages: null
-          tags:
-            previous: '‹ Previous'
-            next: 'Seguinte ›'
           expose:
             items_per_page: false
             items_per_page_label: 'Itens por página'
@@ -65,6 +62,11 @@ display:
             items_per_page_options_all_label: '- Todos -'
             offset: false
             offset_label: Deslocamento
+          tags:
+            previous: '‹ Anterior'
+            next: 'Seguinte ›'
+            first: '« Primeira'
+            last: 'Última »'
       style:
         type: table
         options:
@@ -395,7 +397,7 @@ display:
           plugin_id: string
         type:
           id: type
-          table: block_content
+          table: block_content_field_data
           field: type
           relationship: none
           group_type: group
@@ -489,8 +491,6 @@ display:
         weight: 0
         context: '0'
         menu_name: admin
-        enabled: true
-        expanded: false
     cache_metadata:
       contexts:
         - 'languages:language_content'

@@ -1,5 +1,5 @@
 uuid: 58743a63-1c94-49e9-818b-915d82979a26
-langcode: en
+langcode: pt-pt
 status: true
 dependencies:
   module:
@@ -14,7 +14,7 @@ provider: null
 plugin: system_powered_by_block
 settings:
   id: system_powered_by_block
-  label: 'Powered by Drupal'
+  label: 'Energizado com Drupal'
   provider: system
   label_display: '0'
 visibility: {  }

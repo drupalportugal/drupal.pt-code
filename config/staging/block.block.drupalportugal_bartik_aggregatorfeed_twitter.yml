@@ -1,5 +1,5 @@
 uuid: 6b467085-8f79-4139-ba92-1a311f74a42e
-langcode: en
+langcode: pt-pt
 status: true
 dependencies:
   module:
@@ -14,7 +14,7 @@ provider: null
 plugin: aggregator_feed_block
 settings:
   id: aggregator_feed_block
-  label: 'In the social networks'
+  label: 'Nas redes sociais'
   provider: aggregator
   label_display: visible
   block_count: 5

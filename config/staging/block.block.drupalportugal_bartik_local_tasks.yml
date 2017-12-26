@@ -1,5 +1,5 @@
 uuid: ae095e50-3b38-4c10-a193-bc434be776e0
-langcode: en
+langcode: pt-pt
 status: true
 dependencies:
   theme:
@@ -14,7 +14,7 @@ provider: null
 plugin: local_tasks_block
 settings:
   id: local_tasks_block
-  label: Tabs
+  label: Separadores
   provider: core
   label_display: '0'
   primary: true

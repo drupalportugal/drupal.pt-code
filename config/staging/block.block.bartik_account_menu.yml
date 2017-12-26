@@ -1,32 +1,26 @@
 uuid: aeae9d08-2de2-4334-8fa7-eb68498ba2d0
-langcode: en
+langcode: pt-pt
 status: true
 dependencies:
   config:
     - system.menu.account
   module:
     - system
-    - user
   theme:
     - bartik
+_core:
+  default_config_hash: DweBpscQZdG0-fHkSpUzdYucrNH45G_KF7Z82V-oyQM
 id: bartik_account_menu
 theme: bartik
 region: secondary_menu
-weight: -7
+weight: 0
 provider: null
 plugin: 'system_menu_block:account'
 settings:
   id: 'system_menu_block:account'
-  label: 'User account menu'
+  label: 'Menu de utilizador'
   provider: system
   label_display: '0'
   level: 1
-  depth: 0
-visibility:
-  user_role:
-    id: user_role
-    roles:
-      authenticated: authenticated
-    negate: false
-    context_mapping:
-      user: '@user.current_user_context:current_user'
+  depth: 1
+visibility: {  }
