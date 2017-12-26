@@ -3,7 +3,7 @@ langcode: pt-pt
 status: true
 dependencies: {  }
 id: associate
-label: Associate
+label: Sócio
 weight: -3
 is_admin: null
 permissions: {  }
