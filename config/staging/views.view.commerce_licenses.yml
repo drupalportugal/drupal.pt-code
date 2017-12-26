@@ -57,11 +57,6 @@ display:
           offset: 0
           id: 0
           total_pages: null
-          tags:
-            previous: ‹‹
-            next: ››
-            first: '« First'
-            last: 'Last »'
           expose:
             items_per_page: false
             items_per_page_label: 'Itens por página'
@@ -70,6 +65,11 @@ display:
             items_per_page_options_all_label: '- Todos -'
             offset: false
             offset_label: Deslocamento
+          tags:
+            previous: '‹ Anterior'
+            next: 'Seguinte ›'
+            first: '« Primeira'
+            last: 'Última »'
           quantity: 9
       style:
         type: table
