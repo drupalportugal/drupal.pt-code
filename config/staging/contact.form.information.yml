@@ -1,12 +1,12 @@
 uuid: 190e088f-f1a6-4bf2-a6ab-5012faab35fa
-langcode: en
+langcode: pt-pt
 status: true
 dependencies: {  }
 id: information
-label: Information
+label: Informação
 recipients:
   - info@drupal.pt
 reply: ''
 weight: 0
-message: 'Your message has been sent.'
+message: 'A sua mensagem foi enviada.'
 redirect: ''
