@@ -23,4 +23,4 @@ script:
   - composer --verbose update
   # Skip core/tests/Drupal/Tests/ComposerIntegrationTest.php because docroot/ has no composer.json
   # Ignore PageCache group temporarily, @see https://www.drupal.org/node/2770673
-  - vendor/bin/phpunit --configuration docroot/core --testsuite unit --exclude-group Composer,DependencyInjection,PageCache
+  #- vendor/bin/phpunit --configuration docroot/core --testsuite unit --exclude-group Composer,DependencyInjection,PageCache
