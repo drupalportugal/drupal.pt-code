@@ -6,7 +6,7 @@ warning: false
 ignore_admin_path: false
 access_check: false
 content_location_header: false
-_core:
-  default_config_hash: IxLwI-D9NeuZKfY2iz87l0NeM8LfBn7IVucsc6RG6l4
-langcode: pt-pt
 route_normalizer_enabled: true
+_core:
+  default_config_hash: FEwQLW1wXW7fiJdG1B2bxW1c_-k6w-r-3V3bSsW6PqM
+langcode: pt-pt

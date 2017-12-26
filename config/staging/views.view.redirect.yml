@@ -8,7 +8,7 @@ dependencies:
     - system
     - user
 _core:
-  default_config_hash: CmEaMuCJ98kSh_yrKoFCxG628jM5_QIS9Nmb7cHFBc4
+  default_config_hash: Tm6QoaGPvoGikEEJs6iuSB0LdSw3uzD9PPJ7DhkQJAg
 id: redirect
 label: Redirecionamento
 module: views
@@ -56,11 +56,6 @@ display:
           offset: 0
           id: 0
           total_pages: null
-          tags:
-            previous: '‹ anterior'
-            next: 'seguinte ›'
-            first: '« primeira'
-            last: 'última »'
           expose:
             items_per_page: false
             items_per_page_label: 'Itens por página'
@@ -69,6 +64,11 @@ display:
             items_per_page_options_all_label: '- Todos -'
             offset: false
             offset_label: Deslocamento
+          tags:
+            previous: '‹ Anterior'
+            next: 'Seguinte ›'
+            first: '« Primeira'
+            last: 'Última »'
           quantity: 9
       style:
         type: table
@@ -184,11 +184,11 @@ display:
           hide_empty: false
           empty_zero: false
           hide_alter_empty: true
-          action_title: Ação
+          action_title: 'Com a seleção'
           include_exclude: exclude
           selected_actions: {  }
           entity_type: redirect
-          plugin_id: bulk_form
+          plugin_id: redirect_bulk_form
         redirect_source__path:
           id: redirect_source__path
           table: redirect
@@ -589,9 +589,6 @@ display:
     display_options:
       display_extenders: {  }
       path: admin/config/search/redirect
-      menu:
-        enabled: true
-        expanded: false
     cache_metadata:
       contexts:
         - 'languages:language_content'

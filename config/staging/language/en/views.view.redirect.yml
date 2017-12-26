@@ -23,6 +23,8 @@ display:
             items_per_page_options_all_label: '- All -'
             offset_label: Offset
       fields:
+        redirect_bulk_form:
+          action_title: 'With selection'
         redirect_source__path:
           label: From
           separator: ', '
