@@ -1,8 +1,8 @@
 uuid: 9f528b60-fdcc-4435-bee0-e3bf80d03ea2
-langcode: en
+langcode: pt-pt
 status: true
 dependencies: {  }
 id: section-association
-label: 'Section: Association'
-description: 'Navigation for the Association section'
+label: 'Secção: Associação'
+description: 'Navegação para a secção Associação'
 locked: false
