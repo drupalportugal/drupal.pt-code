@@ -1,5 +1,0 @@
-label: 'Mostrar no diretório?'
-description: 'Mostrar no diretório de associados coletivos?'
-settings:
-  on_label: Sim
-  off_label: Não
