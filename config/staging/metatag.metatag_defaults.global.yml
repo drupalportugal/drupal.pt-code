@@ -3,14 +3,14 @@ langcode: pt-pt
 status: true
 dependencies: {  }
 _core:
-  default_config_hash: 5rOnjIF_aDyGBmfXNhJnkPXxQMlem0CmVmggV-TF3Fg
+  default_config_hash: sL588ui1E_8-2c_UupwyYxcqX2OVyMFp3HTLbbFqvPc
 id: global
 label: Global
 tags:
+  canonical_url: '[current-page:url:absolute]'
+  shortlink: '[current-page:url:unaliased]'
   title: '[current-page:title] | [site:name]'
+  description: '[site:slogan]'
   abstract: '[site:slogan]'
   rights: 'CC BY-SA 4.0 Drupal Portugal'
   generator: 'Drupal 8 (http://drupal.org)'
-  canonical_url: '[current-page:url:absolute]'
-  shortlink: '[current-page:url:unaliased]'
-  description: '[site:slogan]'
