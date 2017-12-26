@@ -1,0 +1,21 @@
+uuid: 551b0b1e-6730-48ed-85c6-5c91a20aa871
+langcode: en
+status: true
+dependencies:
+  config:
+    - commerce_order.commerce_order_type.associate
+    - field.storage.commerce_order.order_items
+id: commerce_order.associate.order_items
+field_name: order_items
+entity_type: commerce_order
+bundle: associate
+label: 'Order items'
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: null
+settings:
+  handler: 'default:commerce_order_item'
+  handler_settings: {  }
+field_type: entity_reference

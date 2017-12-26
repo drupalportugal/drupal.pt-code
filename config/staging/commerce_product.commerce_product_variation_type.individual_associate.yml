@@ -1,0 +1,17 @@
+uuid: 14372452-7703-4cea-af02-0d8e01b8ff7d
+langcode: en
+status: true
+dependencies:
+  module:
+    - commerce_license
+third_party_settings:
+  commerce_license:
+    license_types:
+      role: role
+    activate_on_place: false
+id: individual_associate
+label: 'Sócio Individual'
+orderItemType: individual_associate
+generateTitle: false
+traits:
+  - commerce_license
