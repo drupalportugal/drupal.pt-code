@@ -1,6 +1,6 @@
 uuid: 0a4a2910-e43e-44c1-979a-bd8edf57398d
 langcode: pt-pt
-status: true
+status: false
 dependencies:
   config:
     - node.type.funcionalidade

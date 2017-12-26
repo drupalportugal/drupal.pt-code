@@ -14,7 +14,6 @@ dependencies:
     - image.style.medium
     - node.type.evento
   module:
-    - datetime
     - image
     - text
     - user
@@ -29,15 +28,6 @@ content:
     type: text_summary_or_trimmed
     settings:
       trim_length: 600
-    third_party_settings: {  }
-    region: content
-  field_date:
-    type: datetime_default
-    weight: 0
-    label: inline
-    settings:
-      timezone_override: ''
-      format_type: medium_pt
     third_party_settings: {  }
     region: content
   field_image:
@@ -58,12 +48,13 @@ content:
     third_party_settings: {  }
     region: content
   links:
-    weight: 100
+    weight: 3
+    region: content
     settings: {  }
     third_party_settings: {  }
-    region: content
 hidden:
   comment_node_evento: true
+  field_date: true
   field_eventos_participantes: true
   field_local: true
   langcode: true

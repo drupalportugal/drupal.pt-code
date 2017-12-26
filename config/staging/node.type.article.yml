@@ -16,4 +16,4 @@ description: 'Utilize <em>artigos</em> para conteúdos onde a data é relevante,
 help: ''
 new_revision: true
 preview_mode: 1
-display_submitted: true
+display_submitted: false

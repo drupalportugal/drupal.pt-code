@@ -7,9 +7,9 @@ dependencies:
 third_party_settings:
   menu_ui:
     available_menus:
-      - footer
       - main-menu
       - main
+      - footer
       - section-association
       - section-community
       - section-drupal
