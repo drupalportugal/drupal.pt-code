@@ -1,5 +1,5 @@
 uuid: 4a37f47d-1ff7-46b9-ba3a-9381dfdde0d6
-langcode: en
+langcode: pt-pt
 status: true
 dependencies:
   config:
@@ -14,8 +14,8 @@ id: profile.member.field_profile_bool_indirectory
 field_name: field_profile_bool_indirectory
 entity_type: profile
 bundle: member
-label: 'Show in directory?'
-description: 'Show in the members directory?'
+label: 'Mostrar no diretório?'
+description: 'Mostrar no diretório de membros?'
 required: false
 translatable: false
 default_value:
@@ -23,6 +23,6 @@ default_value:
     value: 0
 default_value_callback: ''
 settings:
-  on_label: 'Yes'
-  off_label: 'No'
+  on_label: 'Sim'
+  off_label: 'Não'
 field_type: boolean

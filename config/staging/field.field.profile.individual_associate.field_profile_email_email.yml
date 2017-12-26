@@ -1,5 +1,5 @@
 uuid: bf75701e-6628-4bbe-810c-ff75d5cc0e4b
-langcode: en
+langcode: pt-pt
 status: true
 dependencies:
   config:
@@ -14,8 +14,8 @@ id: profile.individual_associate.field_profile_email_email
 field_name: field_profile_email_email
 entity_type: profile
 bundle: individual_associate
-label: 'Email address'
-description: 'Your email address(es) as a citizen. This information will be <strong>private</strong>.'
+label: 'Endereço de email'
+description: 'O(s) teu(s) endereço(s) de email como cidadão. Esta informação será <strong>privada</strong>.'
 required: true
 translatable: true
 default_value: {  }

@@ -1,0 +1,5 @@
+label: 'Show in directory?'
+description: 'Show in the individual associates directory?'
+settings:
+  on_label: 'Yes'
+  off_label: 'No'

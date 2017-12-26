@@ -1,17 +1,17 @@
 uuid: 71d66e2c-eb94-4ddc-865e-3b66f4d1f113
-langcode: en
+langcode: pt-pt
 status: true
 dependencies: {  }
 id: individual_associate
-label: 'Individual Associate'
+label: 'Sócio Individual'
+description: 'Perfil para Sócios Individuais.'
 registration: false
 multiple: false
 roles:
   authenticated: authenticated
-  autor: '0'
+  author: '0'
   moderator: '0'
   administrator: '0'
-  socios: '0'
+  associate: '0'
 weight: 0
 use_revisions: false
-description: 'Profile for Individual Associates.'

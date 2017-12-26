@@ -1,5 +1,5 @@
 uuid: f1ce7740-c654-4e2d-8829-73bf454e12a5
-langcode: en
+langcode: pt-pt
 status: true
 dependencies:
   config:
@@ -15,8 +15,8 @@ id: profile.collective_associate.field_profile_phone_telephone
 field_name: field_profile_phone_telephone
 entity_type: profile
 bundle: collective_associate
-label: 'Telephone number'
-description: 'The telephone number(s) with international notation of the Collective Associate, ie, organization. This information will be <strong>private</strong>.'
+label: 'Número de telefone'
+description: 'O(s) número(s) de telefone com notação internacional do Associado Coletivo, ex, organização. Esta informação será <strong>privada</strong>.'
 required: true
 translatable: true
 default_value: {  }

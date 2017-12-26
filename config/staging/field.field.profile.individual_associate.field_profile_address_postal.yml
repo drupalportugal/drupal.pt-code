@@ -1,5 +1,5 @@
 uuid: fab8e031-30d7-4002-a73f-3db8d7bcfd39
-langcode: en
+langcode: pt-pt
 status: true
 dependencies:
   config:
@@ -15,14 +15,14 @@ id: profile.individual_associate.field_profile_address_postal
 field_name: field_profile_address_postal
 entity_type: profile
 bundle: individual_associate
-label: 'Postal address'
-description: 'Your postal address as a citizen. This information will be <strong>private</strong>.'
+label: 'Endereço postal'
+description: 'O teu endereço postal como cidadão. Esta informação será <strong>privada</strong>.'
 required: true
 translatable: true
 default_value:
   -
     country_code: PT
-    langcode: en
+    langcode: pt-pt
     administrative_area: ''
     locality: ''
     dependent_locality: ''

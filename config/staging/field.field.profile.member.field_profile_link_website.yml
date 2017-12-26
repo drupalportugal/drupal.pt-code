@@ -1,5 +1,5 @@
 uuid: 511ad75a-3e7c-4adc-9180-41799400ae6a
-langcode: en
+langcode: pt-pt
 status: true
 dependencies:
   config:
@@ -11,8 +11,8 @@ id: profile.member.field_profile_link_website
 field_name: field_profile_link_website
 entity_type: profile
 bundle: member
-label: 'Website address'
-description: 'Your personal or professional website address(es). This information will be <strong>public</strong>.'
+label: 'Endereço de website'
+description: 'O(s) teu(s) endereço(s) de website(s) pessoal(is) ou professional(is). Esta informação será <strong>pública</strong>.'
 required: false
 translatable: false
 default_value: {  }

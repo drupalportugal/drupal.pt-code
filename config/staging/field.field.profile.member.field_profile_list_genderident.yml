@@ -1,5 +1,5 @@
 uuid: 712f8f57-b9fb-4a46-962e-609ec3d17d8d
-langcode: en
+langcode: pt-pt
 status: true
 dependencies:
   config:
@@ -15,8 +15,8 @@ id: profile.member.field_profile_list_genderident
 field_name: field_profile_list_genderident
 entity_type: profile
 bundle: member
-label: 'Gender identity'
-description: 'Your <a href="http://www.telegraph.co.uk/men/the-filter/a-nearly-complete-glossary-of-gender-identities-for-your-next-ce/">gender identity</a>, ie, how you identity yourself with your own gender. This information will be <strong>private</strong>.'
+label: 'Identidade de género'
+description: 'A tua <a href="http://www.telegraph.co.uk/men/the-filter/a-nearly-complete-glossary-of-gender-identities-for-your-next-ce/">identidade de género</a>, isto é, como te identificas com o teu género. Esta informação será <strong>privada</strong>.'
 required: false
 translatable: false
 default_value: {  }

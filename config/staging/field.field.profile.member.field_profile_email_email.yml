@@ -1,5 +1,5 @@
 uuid: 9a919645-ed6d-48dc-bd36-0f36c6db3a0a
-langcode: en
+langcode: pt-pt
 status: true
 dependencies:
   config:
@@ -9,8 +9,8 @@ id: profile.member.field_profile_email_email
 field_name: field_profile_email_email
 entity_type: profile
 bundle: member
-label: 'Email address'
-description: 'Your personal or professional email address(es). This information will be <strong>public</strong>.'
+label: 'Endereço de email'
+description: 'O(s) teu(s) endereço(s) de email pessoal(is) ou professional(is). Esta informação será <strong>pública</strong>.'
 required: false
 translatable: false
 default_value: {  }

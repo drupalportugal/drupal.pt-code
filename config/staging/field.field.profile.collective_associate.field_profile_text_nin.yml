@@ -1,5 +1,5 @@
 uuid: 41e3ded3-de38-4df8-9bb0-39517076bc75
-langcode: en
+langcode: pt-pt
 status: true
 dependencies:
   config:
@@ -14,8 +14,8 @@ id: profile.collective_associate.field_profile_text_nin
 field_name: field_profile_text_nin
 entity_type: profile
 bundle: collective_associate
-label: 'National Identification Number (NIN)'
-description: 'The National Identification Number of the Collective Associate, ie, organization. This information will be <strong>private</strong>.'
+label: 'Número de Identificação de Pessoa Coletiva (NIPC)'
+description: 'O Número de Identificação de Pessoa Coletiva do Associado Coletivo, ex, organização. Esta informação será <strong>privada</strong>.'
 required: true
 translatable: false
 default_value: {  }
