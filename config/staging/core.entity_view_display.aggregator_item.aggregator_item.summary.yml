@@ -7,7 +7,7 @@ dependencies:
   module:
     - aggregator
 _core:
-  default_config_hash: '-sG2MEWK6wPetYIdNjfnpH5vkjTKjdtwdvxUaoazX_I'
+  default_config_hash: ei8DNHu3HVLFFuKrr2Y4MsxuHR8ZMt0kHQly-qfkTAU
 id: aggregator_item.aggregator_item.summary
 targetEntityType: aggregator_item
 bundle: aggregator_item

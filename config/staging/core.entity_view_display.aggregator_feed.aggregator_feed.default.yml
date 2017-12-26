@@ -5,7 +5,7 @@ dependencies:
   module:
     - aggregator
 _core:
-  default_config_hash: Kq7aA6ktcMeaKzO7Ng8GW6KZu4n3WcPiuXcsFJlpjUo
+  default_config_hash: ORtH44CMbYMb3_0zumUPwVhPmaLBiImWpZa_hO3qmhU
 id: aggregator_feed.aggregator_feed.default
 targetEntityType: aggregator_feed
 bundle: aggregator_feed
@@ -14,10 +14,10 @@ content:
   checked:
     type: timestamp_ago
     weight: 1
+    region: content
     settings: {  }
     third_party_settings: {  }
     label: inline
-    region: content
   description:
     weight: 3
     region: content
@@ -33,10 +33,10 @@ content:
   link:
     type: uri_link
     weight: 4
+    region: content
     settings: {  }
     third_party_settings: {  }
     label: inline
-    region: content
 hidden:
   langcode: true
   more_link: true

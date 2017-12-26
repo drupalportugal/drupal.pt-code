@@ -9,7 +9,7 @@ dependencies:
     - aggregator
     - user
 _core:
-  default_config_hash: eTJpMMTRL91ZEq6v5eJ74_1MmyVlfCBlaVrs4mQ1E6Q
+  default_config_hash: 0JhSbClCFgLQkyLCjxydZDoTOGs_qu-yyy_a77m8EcM
 id: aggregator_sources
 label: 'Fontes do agregador'
 module: aggregator
@@ -66,10 +66,10 @@ display:
             offset: false
             offset_label: Deslocamento
           tags:
-            previous: '‹ Previous'
+            previous: '‹ Anterior'
             next: 'Seguinte ›'
-            first: '« First'
-            last: 'Last »'
+            first: '« Primeira'
+            last: 'Última »'
           quantity: 9
       style:
         type: default
@@ -418,11 +418,9 @@ display:
         type: normal
         title: Fontes
         description: ''
-        weight: -46
+        weight: 0
         context: '0'
         menu_name: tools
-        enabled: true
-        expanded: false
       display_extenders: {  }
     cache_metadata:
       contexts:
