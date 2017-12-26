@@ -11,16 +11,6 @@ module:
   ckeditor: 0
   color: 0
   comment: 0
-  commerce: 0
-  commerce_cart: 0
-  commerce_checkout: 0
-  commerce_license: 0
-  commerce_order: 0
-  commerce_payment: 0
-  commerce_paypal: 0
-  commerce_price: 0
-  commerce_product: 0
-  commerce_store: 0
   config: 0
   config_translation: 0
   contact: 0
@@ -35,7 +25,6 @@ module:
   dynamic_page_cache: 0
   editor: 0
   entity: 0
-  entity_reference_revisions: 0
   field: 0
   field_ui: 0
   file: 0
@@ -45,8 +34,6 @@ module:
   history: 0
   honeypot: 0
   image: 0
-  inline_entity_form: 0
-  interval: 0
   language: 0
   languagefield: 0
   layout_discovery: 0
@@ -70,12 +57,10 @@ module:
   profile: 0
   quickedit: 0
   rdf: 0
-  recurring_period: 0
   redirect: 0
   redirect_404: 0
   search: 0
   shortcut: 0
-  state_machine: 0
   syslog: 0
   system: 0
   taxonomy: 0
