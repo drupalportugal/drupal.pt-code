@@ -1,0 +1,9 @@
+uuid: 758b4970-9342-4366-ae35-db032a768e8d
+langcode: pt-pt
+status: true
+dependencies: {  }
+id: author
+label: Author
+weight: -4
+is_admin: null
+permissions: {  }
