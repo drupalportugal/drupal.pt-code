@@ -1,44 +1,75 @@
-uuid: f69b3e26-c2d8-4431-9abc-8b3984ce87aa
+uuid: 758b4970-9342-4366-ae35-db032a768e8d
 langcode: pt-pt
 status: true
 dependencies: {  }
-_core:
-  default_config_hash: dJ0L2DNSj5q6XVZAGsuVDpJTh5UeYkIPwKrUOOpr8YI
-id: authenticated
-label: 'Utilizador autenticado'
-weight: -9
-is_admin: false
+id: author
+label: Autor
+weight: -8
+is_admin: null
 permissions:
+  - 'access administration pages'
   - 'access cart'
   - 'access checkout'
   - 'access comments'
   - 'access content'
+  - 'access content overview'
+  - 'access contextual links'
+  - 'access files overview'
   - 'access news feeds'
+  - 'access shortcuts'
+  - 'access toolbar'
+  - 'access tour'
   - 'access site-wide contact form'
   - 'access user contact forms'
   - 'access user profiles'
+  - 'add terms in tags'
+  - 'bypass honeypot protection'
   - 'cancel account'
   - 'change own username'
+  - 'create article content'
+  - 'create collective_associate profile'
+  - 'create content translations'
+  - 'create evento content'
   - 'create individual_associate profile'
   - 'create member profile'
+  - 'create page content'
+  - 'create slideshow content'
+  - 'create url aliases'
+  - 'delete content translations'
   - 'delete own collective_associate profile'
   - 'delete own individual_associate profile'
   - 'delete own member profile'
+  - 'edit own article content'
   - 'edit own comments'
+  - 'edit own evento content'
+  - 'edit own page content'
+  - 'edit own slideshow content'
+  - 'edit terms in tags'
   - 'opt-in or out of tracking'
   - 'post comments'
   - 'search content'
+  - 'skip comment approval'
+  - 'update content translations'
   - 'update own collective_associate profile'
   - 'update own individual_associate profile'
   - 'update own member profile'
   - 'use advanced search'
+  - 'use text format basic_html'
   - 'use text format markdown'
   - 'use text format plain_text'
   - 'use text format restricted_html'
+  - 'view all revisions'
   - 'view any member profile'
+  - 'view article revisions'
   - 'view commerce_product'
+  - 'view evento revisions'
   - 'view own collective_associate profile'
   - 'view own commerce_order'
   - 'view own individual_associate profile'
   - 'view own member profile'
+  - 'view own unpublished content'
+  - 'view page revisions'
   - 'view profile'
+  - 'view revisions'
+  - 'view slideshow revisions'
+  - 'view the administration theme'

@@ -5,9 +5,9 @@ dependencies:
   module:
     - pathauto
 _core:
-  default_config_hash: 8FWYvCPMGuE3eJVeh_845hWGbwwDhddj949Hx-dh-pQ
+  default_config_hash: fWszFHPeJ_dhZ8kJEEWo4w-FQH_etR4AxTQkQCW9OLk
 id: pathauto_update_alias_user
-label: 'Update URL-Alias'
+label: 'Atualizar um caminho alternativo'
 type: user
 plugin: pathauto_update_alias
 configuration: {  }

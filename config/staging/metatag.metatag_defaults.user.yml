@@ -3,10 +3,11 @@ langcode: pt-pt
 status: true
 dependencies: {  }
 _core:
-  default_config_hash: O0NfJbzQmkMg1brwA-gUw8v59V0Ana1YKTeRfb-okGI
+  default_config_hash: e3453dXHFW5TM24d8Odhumgwd8hIZVPvQv98wnGM7Ro
 id: user
 label: Utilizador
 tags:
+  canonical_url: '[user:url]'
   title: '[user:name] | [site:name]'
-  image_src: '[user:user_picture]'
   description: '[user:display-name]'
+  image_src: '[user:user_picture]'

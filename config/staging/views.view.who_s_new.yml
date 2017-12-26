@@ -1,11 +1,11 @@
 uuid: 02670756-39c0-4704-b379-6e337afa5723
 langcode: pt-pt
-status: false
+status: true
 dependencies:
   module:
     - user
 _core:
-  default_config_hash: B2M6BoNVm-hHVnH2ILCpbhCZV71T6zLNs8Ag5QH-oNE
+  default_config_hash: o_8fSWHZOVIbydZACGsSX09DtuJhqkRmNOzcVj-4bQI
 id: who_s_new
 label: 'Novos utilizadores'
 module: user
