@@ -1,0 +1,54 @@
+label: 'User orders'
+description: 'Display a list of placed orders for a user.'
+display:
+  default:
+    display_title: Master
+    display_options:
+      exposed_form:
+        options:
+          submit_button: Apply
+          reset_button_label: Reset
+          exposed_sorts_label: 'Sort by'
+          sort_asc_label: Asc
+          sort_desc_label: Desc
+      pager:
+        options:
+          tags:
+            previous: '‹ Previous'
+            next: 'Next ›'
+            first: '« First'
+            last: 'Last »'
+          expose:
+            items_per_page_label: 'Items per page'
+            items_per_page_options_all_label: '- All -'
+            offset_label: Offset
+      fields:
+        order_id:
+          label: ID
+          separator: ', '
+        order_number:
+          label: 'Order number'
+          separator: ', '
+        placed:
+          label: Date
+          separator: ', '
+        total_price__number:
+          label: Total
+          separator: ', '
+        state:
+          label: State
+          separator: ', '
+      title: Orders
+      empty:
+        area:
+          content:
+            value: 'You have not placed any orders with us yet.'
+      arguments:
+        uid:
+          exception:
+            title: All
+  order_page:
+    display_title: 'User orders'
+    display_options:
+      menu:
+        title: Orders

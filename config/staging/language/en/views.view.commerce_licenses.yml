@@ -1,0 +1,53 @@
+label: Licenses
+display:
+  default:
+    display_title: Master
+    display_options:
+      exposed_form:
+        options:
+          submit_button: Filter
+          reset_button_label: Reset
+          exposed_sorts_label: 'Sort by'
+          sort_asc_label: Asc
+          sort_desc_label: Desc
+      pager:
+        options:
+          tags:
+            previous: ‹‹
+            next: ››
+            first: '« First'
+            last: 'Last »'
+          expose:
+            items_per_page_label: 'Items per page'
+            items_per_page_options_all_label: '- All -'
+            offset_label: Offset
+      fields:
+        license_id:
+          label: ID
+          separator: ', '
+        label:
+          label: Label
+        type:
+          label: 'License type'
+          separator: ', '
+        uid:
+          label: Owner
+          separator: ', '
+        state:
+          label: State
+          separator: ', '
+        changed:
+          label: Updated
+          separator: ', '
+        granted:
+          label: Granted
+          separator: ', '
+        operations:
+          label: 'Operations links'
+      filters:
+        state:
+          expose:
+            label: State
+      title: Licenses
+  page_1:
+    display_title: Page

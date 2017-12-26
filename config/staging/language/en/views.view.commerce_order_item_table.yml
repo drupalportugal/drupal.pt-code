@@ -1,0 +1,30 @@
+label: 'Order items'
+description: 'Display a set of order items in a table.'
+display:
+  default:
+    display_title: Master
+    display_options:
+      exposed_form:
+        options:
+          submit_button: Apply
+          reset_button_label: Reset
+          exposed_sorts_label: 'Sort by'
+          sort_asc_label: Asc
+          sort_desc_label: Desc
+      fields:
+        title:
+          label: Title
+          separator: ', '
+        unit_price__number:
+          label: 'Unit price'
+          separator: ', '
+        quantity:
+          label: Quantity
+          separator: ', '
+        total_price__number:
+          label: 'Total price'
+          separator: ', '
+      arguments:
+        order_id:
+          exception:
+            title: All
