@@ -1,23 +1,22 @@
-uuid: be6089e7-94e5-4943-80ee-5a971b2b8533
+uuid: 7e6fc39e-0010-4422-b83a-9e80431853e4
 langcode: pt-pt
 status: true
 dependencies:
   config:
-    - core.entity_view_mode.taxonomy_term.token
-    - taxonomy.vocabulary.areas_negocio
+    - taxonomy.vocabulary.tags
   module:
     - text
-id: taxonomy_term.areas_negocio.token
+id: taxonomy_term.tags.default
 targetEntityType: taxonomy_term
-bundle: areas_negocio
-mode: token
+bundle: tags
+mode: default
 content:
   description:
     label: hidden
     type: text_default
     weight: 0
+    region: content
     settings: {  }
     third_party_settings: {  }
-    region: content
 hidden:
   langcode: true
