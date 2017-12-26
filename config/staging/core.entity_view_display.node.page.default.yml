@@ -4,7 +4,6 @@ status: true
 dependencies:
   config:
     - field.field.node.page.body
-    - field.field.node.page.comment_node_page
     - field.field.node.page.field_page_file
     - field.field.node.page.field_pageimage
     - image.style.large
@@ -50,5 +49,4 @@ content:
     settings: {  }
     third_party_settings: {  }
 hidden:
-  comment_node_page: true
   langcode: true

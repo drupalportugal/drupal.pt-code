@@ -3,15 +3,12 @@ langcode: pt-pt
 status: true
 dependencies:
   config:
-    - core.entity_view_display.comment.comment_node_showcase.default
-    - field.field.node.showcase.comment_node_showcase
     - field.field.node.showcase.field_categoria
     - field.field.node.showcase.field_empresas
     - field.field.node.showcase.field_image
     - field.field.node.showcase.field_link
     - node.type.showcase
   module:
-    - comment
     - link
     - text
     - user
@@ -20,15 +17,6 @@ targetEntityType: node
 bundle: showcase
 mode: default
 content:
-  comment_node_showcase:
-    label: hidden
-    type: comment_default
-    weight: 20
-    settings:
-      pager_id: 0
-      view_mode: default
-    third_party_settings: {  }
-    region: content
   field_categoria:
     label: inline
     weight: 2

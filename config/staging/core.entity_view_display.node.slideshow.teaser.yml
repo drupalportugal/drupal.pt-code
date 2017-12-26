@@ -5,7 +5,6 @@ dependencies:
   config:
     - core.entity_view_mode.node.teaser
     - field.field.node.slideshow.body
-    - field.field.node.slideshow.comment_node_slideshow
     - field.field.node.slideshow.field_slideshow_image
     - node.type.slideshow
   module:
@@ -28,6 +27,5 @@ content:
     weight: 100
     region: content
 hidden:
-  comment_node_slideshow: true
   field_slideshow_image: true
   langcode: true

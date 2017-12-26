@@ -1,8 +1,0 @@
-uuid: cac65157-ef3b-4269-b746-a45d6281341d
-langcode: pt-pt
-status: true
-dependencies: {  }
-id: comment_node_funcionalidade
-label: 'Funcionalidade comment'
-target_entity_type_id: node
-description: null

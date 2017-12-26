@@ -1,8 +1,0 @@
-uuid: 2981f65b-1257-484d-a26e-34a747be0d7f
-langcode: pt-pt
-status: true
-dependencies: {  }
-id: comment_node_forum
-label: 'Forum topic comment'
-target_entity_type_id: node
-description: null

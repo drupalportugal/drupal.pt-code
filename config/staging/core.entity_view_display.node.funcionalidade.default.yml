@@ -3,12 +3,9 @@ langcode: pt-pt
 status: true
 dependencies:
   config:
-    - core.entity_view_display.comment.comment_node_funcionalidade.default
-    - field.field.node.funcionalidade.comment_node_funcionalidade
     - field.field.node.funcionalidade.field_func_body
     - node.type.funcionalidade
   module:
-    - comment
     - text
     - user
 id: node.funcionalidade.default
@@ -16,15 +13,6 @@ targetEntityType: node
 bundle: funcionalidade
 mode: default
 content:
-  comment_node_funcionalidade:
-    label: hidden
-    type: comment_default
-    weight: 20
-    settings:
-      pager_id: 0
-      view_mode: default
-    third_party_settings: {  }
-    region: content
   field_func_body:
     label: hidden
     weight: 1

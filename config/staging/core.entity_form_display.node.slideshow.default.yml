@@ -4,7 +4,6 @@ status: true
 dependencies:
   config:
     - field.field.node.slideshow.body
-    - field.field.node.slideshow.comment_node_slideshow
     - field.field.node.slideshow.field_slideshow_image
     - image.style.thumbnail
     - node.type.slideshow
@@ -97,5 +96,4 @@ content:
       placeholder: ''
     third_party_settings: {  }
     region: content
-hidden:
-  comment_node_slideshow: true
+hidden: {  }
