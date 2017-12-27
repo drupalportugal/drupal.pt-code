@@ -1,0 +1,9 @@
+commerce_checkout.commerce_checkout_pane.profile_form:
+  type: commerce_checkout_pane_configuration
+  mapping:
+    form_mode:
+      type: string
+      label: 'Form mode'
+    display_label:
+      type: string
+      label: 'Display label'

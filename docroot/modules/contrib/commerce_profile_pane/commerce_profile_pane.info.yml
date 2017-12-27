@@ -1,0 +1,16 @@
+name: 'Commerce Profile Pane'
+type: module
+description: 'Provides a Commerce checkout pane for editing user profiles'
+# core: 8.x
+package: Commerce
+dependencies:
+  - commerce
+  - commerce_checkout
+  - profile
+  - inline_entity_form
+
+# Information added by Drupal.org packaging script on 2017-11-22
+version: '8.x-1.0-alpha2'
+core: '8.x'
+project: 'commerce_profile_pane'
+datestamp: 1511364789
