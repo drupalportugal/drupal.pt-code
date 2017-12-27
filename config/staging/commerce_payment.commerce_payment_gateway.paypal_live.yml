@@ -4,8 +4,8 @@ status: true
 dependencies:
   module:
     - commerce_paypal
-id: paypal
-label: Paypal
+id: paypal_live
+label: PayPal Live
 weight: null
 plugin: paypal_express_checkout
 configuration:
