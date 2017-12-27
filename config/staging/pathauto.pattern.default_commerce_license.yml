@@ -1,0 +1,14 @@
+uuid: b44d24bd-2813-4581-842e-a4f62f8e8650
+langcode: pt-pt
+status: true
+dependencies:
+  module:
+    - commerce_license
+id: default_commerce_license
+label: 'Default Commerce License'
+type: 'canonical_entities:commerce_license'
+pattern: 'license/[commerce_license:license_id]'
+selection_criteria: {  }
+selection_logic: and
+weight: 7
+relationships: {  }

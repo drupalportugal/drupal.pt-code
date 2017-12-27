@@ -1,0 +1,14 @@
+uuid: c788c2cb-1406-4694-8676-b8b28f5b9a67
+langcode: pt-pt
+status: true
+dependencies:
+  module:
+    - commerce_product
+id: default_commerce_product
+label: 'Default Commerce Product'
+type: 'canonical_entities:commerce_product'
+pattern: 'product/[commerce_product:uid:entity:display-name]'
+selection_criteria: {  }
+selection_logic: and
+weight: 9
+relationships: {  }
