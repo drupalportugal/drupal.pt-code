@@ -1,6 +1,6 @@
 uuid: b44d24bd-2813-4581-842e-a4f62f8e8650
 langcode: pt-pt
-status: true
+status: false
 dependencies:
   module:
     - commerce_license

@@ -1,16 +1,16 @@
-uuid: 9397a568-876e-46a1-b616-589487d6279b
+uuid: de1abeb3-bf57-47df-8683-0c82009635d0
 langcode: pt-pt
 status: true
 dependencies:
   config:
-    - commerce_product.commerce_product_variation_type.individual_associate
+    - commerce_product.commerce_product_variation_type.default
   module:
     - content_translation
 third_party_settings:
   content_translation:
     enabled: true
-id: commerce_product_variation.individual_associate
+id: commerce_product_variation.default
 target_entity_type_id: commerce_product_variation
-target_bundle: individual_associate
+target_bundle: default
 default_langcode: site_default
 language_alterable: true

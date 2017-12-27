@@ -9,17 +9,10 @@ id: commerce_order_item.individual_associate.default
 targetEntityType: commerce_order_item
 bundle: individual_associate
 mode: default
-content:
-  license:
-    region: hidden
-    weight: 1
-    label: above
-    settings:
-      link: true
-    third_party_settings: {  }
-    type: entity_reference_label
+content: {  }
 hidden:
   adjustments: true
+  license: true
   purchased_entity: true
   quantity: true
   total_price: true

@@ -7,18 +7,18 @@ dependencies:
     - field.field.commerce_order_item.individual_associate.license
   module:
     - commerce_order
+    - commerce_product
 id: commerce_order_item.individual_associate.default
 targetEntityType: commerce_order_item
 bundle: individual_associate
 mode: default
 content:
   purchased_entity:
-    type: entity_reference_autocomplete
+    type: commerce_product_variation_title
     weight: -1
     settings:
-      match_operator: CONTAINS
-      size: 60
-      placeholder: ''
+      label_display: true
+      label_text: 'Please select'
     region: content
     third_party_settings: {  }
   quantity:

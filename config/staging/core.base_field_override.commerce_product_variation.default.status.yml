@@ -1,0 +1,22 @@
+uuid: dea2260a-f837-4ec7-9083-6eae18b2e146
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - commerce_product.commerce_product_variation_type.default
+id: commerce_product_variation.default.status
+field_name: status
+entity_type: commerce_product_variation
+bundle: default
+label: Ativo
+description: 'Whether the variation is active.'
+required: false
+translatable: false
+default_value:
+  -
+    value: 1
+default_value_callback: ''
+settings:
+  on_label: Ligado
+  off_label: Desligado
+field_type: boolean
