@@ -1,0 +1,36 @@
+uuid: ba52a402-3fe1-4161-83b9-b8a04afca622
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - commerce_order.commerce_order_item_type.individual_associate
+    - core.entity_form_mode.commerce_order_item.add_to_cart
+    - field.field.commerce_order_item.individual_associate.license
+  module:
+    - commerce_order
+    - commerce_product
+id: commerce_order_item.individual_associate.add_to_cart
+targetEntityType: commerce_order_item
+bundle: individual_associate
+mode: add_to_cart
+content:
+  purchased_entity:
+    type: commerce_product_variation_title
+    weight: -1
+    settings:
+      label_display: true
+      label_text: 'Please select'
+    region: content
+    third_party_settings: {  }
+  quantity:
+    type: commerce_quantity
+    weight: 1
+    region: content
+    settings:
+      step: '1'
+      placeholder: ''
+    third_party_settings: {  }
+hidden:
+  created: true
+  license: true
+  unit_price: true

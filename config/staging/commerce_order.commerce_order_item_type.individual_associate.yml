@@ -1,0 +1,10 @@
+uuid: 287eb76b-6d4a-4cbf-8618-7c901a691e23
+langcode: pt-pt
+status: true
+dependencies: {  }
+label: 'Sócio Individual'
+id: individual_associate
+purchasableEntityType: commerce_product_variation
+orderType: associate
+traits:
+  - commerce_license_order_item_type

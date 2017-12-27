@@ -1,0 +1,18 @@
+uuid: efb6893f-6837-4e2c-a65b-e6d06371ec0c
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - commerce_product.commerce_product_type.individual_associate
+id: commerce_product.individual_associate.metatag
+field_name: metatag
+entity_type: commerce_product
+bundle: individual_associate
+label: Metatags
+description: 'The metatags for the entity.'
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: map
