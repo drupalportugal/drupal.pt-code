@@ -1,5 +1,5 @@
 id: profile_fields_member
-label: 'Profile fields: Member'
+label: 'Profile Fields: Member'
 ui_limit: ''
 properties:
   block: 'views_block:profile_fields-block_member'

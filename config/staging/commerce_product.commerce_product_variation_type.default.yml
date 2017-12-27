@@ -1,11 +1,17 @@
 uuid: 3394aa84-aba0-4156-8071-c5bb8e7b3ddd
 langcode: pt-pt
 status: true
-dependencies: {  }
+dependencies:
+  module:
+    - commerce_license
+third_party_settings:
+  commerce_license:
+    license_types: {  }
+    activate_on_place: false
 _core:
   default_config_hash: QPuFH9E4612ox18hXdUXL8FhU021rCvOtYISSmvMQzc
 id: default
-label: Default
+label: Predefinido
 orderItemType: default
 generateTitle: true
 traits: {  }

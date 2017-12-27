@@ -1,0 +1,16 @@
+uuid: b2c93563-6acf-47f4-ba4d-060aea795631
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - commerce_product.commerce_product_variation_type.associate
+  module:
+    - content_translation
+third_party_settings:
+  content_translation:
+    enabled: false
+id: commerce_product_variation.associate
+target_entity_type_id: commerce_product_variation
+target_bundle: associate
+default_langcode: site_default
+language_alterable: false

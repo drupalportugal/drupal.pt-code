@@ -1,4 +1,4 @@
-uuid: f6006cc3-7d6d-45de-8939-f68775c5e39c
+uuid: cd33f69c-0478-4289-a3ec-1955a711b8f7
 langcode: pt-pt
 status: true
 dependencies:
@@ -8,7 +8,6 @@ dependencies:
   module:
     - commerce_order
     - inline_entity_form
-    - path
 id: commerce_order.associate.default
 targetEntityType: commerce_order
 bundle: associate
@@ -16,46 +15,41 @@ mode: default
 content:
   adjustments:
     type: commerce_adjustment_default
-    weight: 0
+    weight: 3
     region: content
     settings: {  }
     third_party_settings: {  }
   billing_profile:
     type: commerce_billing_profile
-    weight: 0
-    settings: {  }
+    weight: 1
     region: content
+    settings: {  }
     third_party_settings: {  }
   cart:
     type: boolean_checkbox
     settings:
       display_label: true
-    weight: 20
+    weight: 4
     region: content
     third_party_settings: {  }
   order_items:
     type: inline_entity_form_complex
-    weight: 0
+    weight: 2
     settings:
+      form_mode: default
       override_labels: true
       label_singular: 'order item'
       label_plural: 'order items'
-      form_mode: default
       allow_new: true
-      allow_existing: false
       match_operator: CONTAINS
+      allow_existing: false
     third_party_settings: {  }
     region: content
-  path:
-    type: path
-    weight: 30
-    region: content
-    settings: {  }
-    third_party_settings: {  }
 hidden:
   ip_address: true
   mail: true
   order_number: true
+  path: true
   state: true
   store_id: true
   uid: true

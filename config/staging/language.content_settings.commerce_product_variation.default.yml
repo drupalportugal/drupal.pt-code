@@ -8,9 +8,9 @@ dependencies:
     - content_translation
 third_party_settings:
   content_translation:
-    enabled: true
+    enabled: false
 id: commerce_product_variation.default
 target_entity_type_id: commerce_product_variation
 target_bundle: default
 default_langcode: site_default
-language_alterable: true
+language_alterable: false

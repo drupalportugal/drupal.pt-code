@@ -1,0 +1,75 @@
+uuid: 3b51eeed-190a-44ed-9e40-21a389986b0c
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - field.field.profile.associate.field_profile_address_postal
+    - field.field.profile.associate.field_profile_bool_indirectory
+    - field.field.profile.associate.field_profile_email_email
+    - field.field.profile.associate.field_profile_name_fullname
+    - field.field.profile.associate.field_profile_phone_telephone
+    - field.field.profile.associate.field_profile_text_nin
+    - field.field.profile.associate.field_profile_text_vatin
+    - profile.type.associate
+  module:
+    - address
+    - name
+    - telephone
+id: profile.associate.default
+targetEntityType: profile
+bundle: associate
+mode: default
+content:
+  field_profile_address_postal:
+    type: address_default
+    weight: 4
+    region: content
+    settings:
+      default_country: null
+    third_party_settings: {  }
+  field_profile_bool_indirectory:
+    weight: 0
+    settings:
+      display_label: true
+    third_party_settings: {  }
+    type: boolean_checkbox
+    region: content
+  field_profile_email_email:
+    weight: 6
+    settings:
+      size: 60
+      placeholder: '@'
+    third_party_settings: {  }
+    type: email_default
+    region: content
+  field_profile_name_fullname:
+    weight: 1
+    settings: {  }
+    third_party_settings: {  }
+    type: name_default
+    region: content
+  field_profile_phone_telephone:
+    weight: 5
+    settings:
+      placeholder: '+351'
+    third_party_settings: {  }
+    type: telephone_default
+    region: content
+  field_profile_text_nin:
+    weight: 2
+    settings:
+      size: 20
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_profile_text_vatin:
+    type: string_textfield
+    weight: 3
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+hidden:
+  path: true

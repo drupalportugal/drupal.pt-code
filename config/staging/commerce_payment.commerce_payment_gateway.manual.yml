@@ -1,6 +1,6 @@
 uuid: 102b7a6f-9741-4cca-b07c-055282a71f5a
 langcode: pt-pt
-status: false
+status: true
 dependencies: {  }
 id: manual
 label: Manual

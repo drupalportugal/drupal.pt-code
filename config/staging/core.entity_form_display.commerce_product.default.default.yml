@@ -38,7 +38,8 @@ content:
     type: language_select
     weight: 3
     region: content
-    settings: {  }
+    settings:
+      include_locked: true
     third_party_settings: {  }
   path:
     type: path
@@ -71,6 +72,11 @@ content:
       placeholder: ''
     third_party_settings: {  }
     region: content
+  translation:
+    weight: 10
+    region: content
+    settings: {  }
+    third_party_settings: {  }
   uid:
     type: entity_reference_autocomplete
     weight: 4

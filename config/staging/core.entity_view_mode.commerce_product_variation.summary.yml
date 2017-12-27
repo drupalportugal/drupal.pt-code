@@ -10,6 +10,6 @@ dependencies:
 _core:
   default_config_hash: 23R0npqqL2T9F-gDL2Lor2GfZj_lDvmv-kwdQzPCxMw
 id: commerce_product_variation.summary
-label: Summary
+label: Resumo
 targetEntityType: commerce_product_variation
 cache: true

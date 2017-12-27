@@ -3,9 +3,12 @@ langcode: pt-pt
 status: true
 dependencies:
   config:
+    - field.field.user.user.commerce_remote_id
     - field.field.user.user.user_picture
+    - image.style.medium
   module:
     - ds
+    - image
     - user
 third_party_settings:
   ds:
@@ -25,13 +28,8 @@ third_party_settings:
           layout_class: {  }
     regions:
       ds_content:
-        - 'dynamic_block_field:user-profile_fields_member'
-    fields:
-      'dynamic_block_field:user-profile_fields_member':
-        plugin_id: 'dynamic_block_field:user-profile_fields_member'
-        weight: 0
-        label: hidden
-        formatter: default
+        - user_picture
+        - member_for
 _core:
   default_config_hash: V51QPCKkgNREKtSmB9Iu2wmAMEpktVpnzklWaZV8UYo
 id: user.user.default
@@ -44,16 +42,28 @@ content:
     region: ds_content
     settings: {  }
     third_party_settings: {  }
+  member_for:
+    weight: 1
+    region: ds_content
+    settings: {  }
+    third_party_settings: {  }
   picture:
     weight: 0
     region: ds_content
     settings: {  }
     third_party_settings: {  }
+  user_picture:
+    type: image
+    weight: 0
+    region: ds_content
+    label: hidden
+    settings:
+      image_style: medium
+      image_link: ''
+    third_party_settings: {  }
 hidden:
+  commerce_remote_id: true
   langcode: true
-  member_for: true
-  profile_collective_associate: true
+  profile_associate: true
   profile_customer: true
-  profile_individual_associate: true
   profile_member: true
-  user_picture: true

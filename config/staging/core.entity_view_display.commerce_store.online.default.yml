@@ -20,9 +20,15 @@ content:
     settings: {  }
     third_party_settings: {  }
     region: content
+  mail:
+    type: email_mailto
+    weight: 0
+    region: content
+    label: above
+    settings: {  }
+    third_party_settings: {  }
 hidden:
   billing_countries: true
   default_currency: true
   langcode: true
-  mail: true
   name: true

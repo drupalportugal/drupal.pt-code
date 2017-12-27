@@ -1,0 +1,18 @@
+id: user_fields_created
+label: 'User Fields: Created'
+ui_limit: ''
+properties:
+  block: 'views_block:user_fields-block_created'
+  use_block_title: false
+  config:
+    id: 'views_block:user_fields-block_created'
+    label: ''
+    provider: views
+    label_display: visible
+    views_label: ''
+    items_per_page: none
+    context_mapping: {  }
+type: block
+type_label: 'Block field'
+entities:
+  profile: profile

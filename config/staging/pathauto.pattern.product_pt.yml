@@ -1,0 +1,25 @@
+uuid: 25a57fd9-e5a1-4a9b-a2dc-c84db25423ea
+langcode: pt-pt
+status: true
+dependencies:
+  module:
+    - commerce_product
+    - language
+id: product_pt
+label: 'Product: PT'
+type: 'canonical_entities:commerce_product'
+pattern: 'produto/[commerce_product:title]'
+selection_criteria:
+  16d05442-421b-4f5e-a83a-3807a4d06ea7:
+    id: language
+    langcodes:
+      pt-pt: pt-pt
+    negate: false
+    context_mapping:
+      language: 'commerce_product:langcode:language'
+    uuid: 16d05442-421b-4f5e-a83a-3807a4d06ea7
+selection_logic: and
+weight: -3
+relationships:
+  'commerce_product:langcode:language':
+    label: Idioma

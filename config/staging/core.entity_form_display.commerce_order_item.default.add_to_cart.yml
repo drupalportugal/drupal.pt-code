@@ -19,9 +19,11 @@ bundle: default
 mode: add_to_cart
 content:
   purchased_entity:
-    type: commerce_product_variation_attributes
+    type: commerce_product_variation_title
     weight: 0
-    settings: {  }
+    settings:
+      label_display: true
+      label_text: 'Please select'
     third_party_settings: {  }
     region: content
 hidden:

@@ -1,0 +1,20 @@
+uuid: 73b89a1a-8f29-4604-8a58-bac6e7af7e3f
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - commerce_product.commerce_product_type.default
+  module:
+    - path
+id: commerce_product.default.path
+field_name: path
+entity_type: commerce_product
+bundle: default
+label: 'URL alternativo'
+description: 'The product URL alias.'
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: path

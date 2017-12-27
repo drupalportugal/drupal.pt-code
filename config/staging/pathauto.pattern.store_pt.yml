@@ -1,0 +1,14 @@
+uuid: 4461b7ab-a115-4015-bccd-6b2f8cb2b17c
+langcode: pt-pt
+status: true
+dependencies:
+  module:
+    - commerce_store
+id: store_pt
+label: 'Store: PT'
+type: 'canonical_entities:commerce_store'
+pattern: 'loja/[commerce_store:name]'
+selection_criteria: {  }
+selection_logic: and
+weight: -1
+relationships: {  }

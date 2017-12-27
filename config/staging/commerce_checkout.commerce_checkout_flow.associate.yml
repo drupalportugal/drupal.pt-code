@@ -1,38 +1,49 @@
-uuid: 0a4b5afb-82c9-452f-8549-82faa1517169
+uuid: 0e8e4c12-0fe4-4d63-848a-ff6fcc45a7b1
 langcode: pt-pt
 status: true
 dependencies:
   module:
     - commerce_payment
+    - commerce_profile_pane
 id: associate
 label: Sócio
 plugin: multistep_default
 configuration:
   display_checkout_progress: true
   panes:
-    review:
-      step: review
-      weight: 10
-    completion_message:
-      step: complete
-      weight: 10
     login:
       allow_guest_checkout: false
-      allow_registration: true
+      allow_registration: false
       step: login
-      weight: 10
+      weight: 0
     contact_information:
       double_entry: false
       step: order_information
-      weight: 10
-    order_summary:
-      view: commerce_checkout_order_summary
-      step: _sidebar
-      weight: 10
+      weight: 1
+    'profile_form:associate':
+      form_mode: checkout
+      display_label: 'Edit profile'
+      step: order_information
+      weight: 2
+    payment_information:
+      step: order_information
+      weight: 3
+    review:
+      step: review
+      weight: 4
     payment_process:
       capture: true
       step: payment
-      weight: 10
-    payment_information:
-      step: order_information
-      weight: 10
+      weight: 5
+    completion_message:
+      step: complete
+      weight: 6
+    order_summary:
+      view: null
+      step: _sidebar
+      weight: 7
+    'profile_form:member':
+      form_mode: default
+      display_label: 'Edit profile'
+      step: _disabled
+      weight: 8
