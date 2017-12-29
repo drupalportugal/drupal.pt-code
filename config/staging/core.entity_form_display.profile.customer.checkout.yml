@@ -1,0 +1,38 @@
+uuid: df3c29b9-72d1-48ab-b5a0-82ff64a05834
+langcode: pt-pt
+status: false
+dependencies:
+  config:
+    - core.entity_form_mode.profile.checkout
+    - field.field.profile.customer.address
+    - field.field.profile.customer.field_profile_text_vatin
+    - profile.type.customer
+  enforced:
+    module:
+      - commerce_order
+  module:
+    - address
+_core:
+  default_config_hash: 7mnnVkJkUSPhil9xoiTfdTivMqxCUloT_71AHWNUbJg
+id: profile.customer.checkout
+targetEntityType: profile
+bundle: customer
+mode: checkout
+content:
+  address:
+    type: address_default
+    weight: 1
+    settings:
+      default_country: PT
+    third_party_settings: {  }
+    region: content
+  field_profile_text_vatin:
+    weight: 0
+    settings:
+      size: 20
+      placeholder: PT
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+hidden:
+  path: true

@@ -21,6 +21,7 @@ module:
   commerce_paypal: 0
   commerce_price: 0
   commerce_product: 0
+  commerce_profile_pane: 0
   commerce_store: 0
   config: 0
   config_translation: 0

@@ -1,0 +1,40 @@
+uuid: 61f99e83-e731-40b4-871f-023f02f1efd8
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - commerce_product.commerce_product_type.associate
+    - field.field.commerce_product.associate.body
+    - field.field.commerce_product.associate.stores
+    - field.field.commerce_product.associate.variations
+  module:
+    - commerce_product
+    - ds
+    - text
+id: commerce_product.associate.default
+targetEntityType: commerce_product
+bundle: associate
+mode: default
+content:
+  body:
+    label: hidden
+    type: text_default
+    weight: -4
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  variations:
+    type: commerce_add_to_cart
+    weight: 10
+    label: hidden
+    settings:
+      combine: true
+    third_party_settings:
+      ds:
+        ds_limit: ''
+    region: content
+hidden:
+  created: true
+  langcode: true
+  stores: true
+  uid: true

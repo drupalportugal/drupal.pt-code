@@ -10,14 +10,16 @@ dependencies:
   module:
     - address
     - image
+    - languagefield
     - name
+    - options
     - profile
     - user
 id: community_directory
 label: 'Community Directory'
 module: views
 description: 'Directory of members of the community.'
-tag: community
+tag: 'community, user, profile'
 base_table: users_field_data
 base_field: uid
 core: 8.x
@@ -537,6 +539,42 @@ display:
           plugin_id: boolean
           entity_type: user
           entity_field: status
+        field_profile_bool_indirectory_value:
+          id: field_profile_bool_indirectory_value
+          table: profile__field_profile_bool_indirectory
+          field: field_profile_bool_indirectory_value
+          relationship: profile_type
+          group_type: group
+          admin_label: ''
+          operator: '='
+          value: '1'
+          group: 1
+          exposed: false
+          expose:
+            operator_id: ''
+            label: ''
+            description: ''
+            use_operator: false
+            operator: ''
+            identifier: ''
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+          plugin_id: boolean
         name:
           id: name
           table: users_field_data
@@ -550,17 +588,18 @@ display:
           exposed: true
           expose:
             operator_id: name_op
-            label: 'User name'
+            label: Utilizador
             description: ''
             use_operator: false
             operator: name_op
-            identifier: username
+            identifier: name
             required: false
             remember: false
             multiple: false
             remember_roles:
               authenticated: authenticated
               anonymous: '0'
+              associate: '0'
               author: '0'
               moderator: '0'
               administrator: '0'
@@ -592,7 +631,7 @@ display:
           exposed: true
           expose:
             operator_id: field_profile_name_fullname_op
-            label: 'Full name'
+            label: 'Nome completo'
             description: ''
             use_operator: false
             operator: field_profile_name_fullname_op
@@ -603,6 +642,7 @@ display:
             remember_roles:
               authenticated: authenticated
               anonymous: '0'
+              associate: '0'
               author: '0'
               moderator: '0'
               administrator: '0'
@@ -619,6 +659,91 @@ display:
             default_group_multiple: {  }
             group_items: {  }
           plugin_id: name_fulltext
+        field_profile_list_genderident_value:
+          id: field_profile_list_genderident_value
+          table: profile__field_profile_list_genderident
+          field: field_profile_list_genderident_value
+          relationship: profile_type
+          group_type: group
+          admin_label: ''
+          operator: or
+          value: {  }
+          group: 1
+          exposed: true
+          expose:
+            operator_id: field_profile_list_genderident_value_op
+            label: 'Identidade de género'
+            description: ''
+            use_operator: false
+            operator: field_profile_list_genderident_value_op
+            identifier: field_profile_list_genderident_value
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+              anonymous: '0'
+              associate: '0'
+              author: '0'
+              moderator: '0'
+              administrator: '0'
+            reduce: false
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+          reduce_duplicates: false
+          plugin_id: list_field
+        field_profile_lang_languages_value:
+          id: field_profile_lang_languages_value
+          table: profile__field_profile_lang_languages
+          field: field_profile_lang_languages_value
+          relationship: profile_type
+          group_type: group
+          admin_label: ''
+          operator: in
+          value: {  }
+          group: 1
+          exposed: true
+          expose:
+            operator_id: field_profile_lang_languages_value_op
+            label: Idioma
+            description: ''
+            use_operator: false
+            operator: field_profile_lang_languages_value_op
+            identifier: field_profile_lang_languages_value
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+              anonymous: '0'
+              associate: '0'
+              author: '0'
+              moderator: '0'
+              administrator: '0'
+            reduce: 0
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+          plugin_id: languagefield
         field_profile_address_postal_country_code:
           id: field_profile_address_postal_country_code
           table: profile__field_profile_address_postal
@@ -632,7 +757,7 @@ display:
           exposed: true
           expose:
             operator_id: field_profile_address_postal_country_code_op
-            label: Country
+            label: País
             description: ''
             use_operator: false
             operator: field_profile_address_postal_country_code_op
@@ -643,6 +768,7 @@ display:
             remember_roles:
               authenticated: authenticated
               anonymous: '0'
+              associate: '0'
               author: '0'
               moderator: '0'
               administrator: '0'
@@ -673,7 +799,7 @@ display:
           exposed: true
           expose:
             operator_id: field_profile_address_postal_locality_op
-            label: City
+            label: Cidade
             description: ''
             use_operator: false
             operator: field_profile_address_postal_locality_op
@@ -684,6 +810,7 @@ display:
             remember_roles:
               authenticated: authenticated
               anonymous: '0'
+              associate: '0'
               author: '0'
               moderator: '0'
               administrator: '0'
@@ -700,42 +827,6 @@ display:
             default_group_multiple: {  }
             group_items: {  }
           plugin_id: string
-        field_profile_bool_indirectory_value:
-          id: field_profile_bool_indirectory_value
-          table: profile__field_profile_bool_indirectory
-          field: field_profile_bool_indirectory_value
-          relationship: profile_type
-          group_type: group
-          admin_label: ''
-          operator: '='
-          value: '1'
-          group: 2
-          exposed: false
-          expose:
-            operator_id: ''
-            label: ''
-            description: ''
-            use_operator: false
-            operator: ''
-            identifier: ''
-            required: false
-            remember: false
-            multiple: false
-            remember_roles:
-              authenticated: authenticated
-          is_grouped: false
-          group_info:
-            label: ''
-            description: ''
-            identifier: ''
-            optional: true
-            widget: select
-            multiple: false
-            remember: false
-            default_group: All
-            default_group_multiple: {  }
-            group_items: {  }
-          plugin_id: boolean
       sorts:
         access:
           id: access
@@ -801,7 +892,7 @@ display:
           relationship: none
           group_type: group
           admin_label: 'Profile Type (Member)'
-          required: false
+          required: true
           profile_type: member
           entity_type: user
           plugin_id: profile_relationship
@@ -812,7 +903,6 @@ display:
         operator: AND
         groups:
           1: AND
-          2: AND
       use_ajax: true
       group_by: false
     cache_metadata:

@@ -47,6 +47,7 @@
     "drupal/age_field_formatter": "^2.0.0",
     "drupal/commerce": "^2.2.0",
     "drupal/commerce_paypal": "^1.0.0-beta1",
+    "drupal/commerce_profile_pane": "^1.0.0-alpha2",
     "drupal/commerce_license": "^2.0.0-alpha2",
     "drupal/ctools": "^3.0.0",
     "drupal/diff": "^1.0.0-rc1",

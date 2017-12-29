@@ -29,9 +29,7 @@ content:
     weight: 1
     label: hidden
     settings:
-      default_quantity: '1'
       combine: true
-      show_quantity: false
     third_party_settings: {  }
     region: content
 hidden:

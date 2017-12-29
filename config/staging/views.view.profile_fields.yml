@@ -10,8 +10,8 @@ dependencies:
 id: profile_fields
 label: 'Profile fields'
 module: views
-description: ''
-tag: ''
+description: 'Provides fields to user accounts from profile entities.'
+tag: 'user, profile'
 base_table: profile
 base_field: profile_id
 core: 8.x
@@ -47,8 +47,9 @@ display:
           sort_asc_label: Ascendente
           sort_desc_label: Descendente
       pager:
-        type: none
+        type: some
         options:
+          items_per_page: 1
           offset: 0
       style:
         type: default
@@ -129,7 +130,7 @@ display:
           empty: true
           tokenize: false
           content:
-            value: zxczxc
+            value: 'Nenhuns resultados foram encontrados.'
             format: markdown
           plugin_id: text
       relationships:
@@ -189,20 +190,20 @@ display:
           plugin_id: user_uid
       display_extenders:
         metatag_display_extender: {  }
+      title: Principal
     cache_metadata:
       max-age: -1
       contexts:
         - 'languages:language_interface'
         - url
       tags:
-        - 'config:core.entity_view_display.profile.member.default'
-        - 'config:core.entity_view_display.profile.collective_associate.default'
+        - 'config:core.entity_view_display.profile.associate.default'
         - 'config:core.entity_view_display.profile.customer.default'
-        - 'config:core.entity_view_display.profile.individual_associate.default'
+        - 'config:core.entity_view_display.profile.member.default'
   block_member:
     display_plugin: block
     id: block_member
-    display_title: Member
+    display_title: Membro
     position: 1
     display_options:
       display_extenders:
@@ -210,6 +211,8 @@ display:
       defaults:
         filters: false
         filter_groups: false
+        empty: false
+        title: false
       display_description: ''
       filters:
         type:
@@ -256,13 +259,27 @@ display:
         operator: AND
         groups:
           1: AND
+      empty:
+        entity_user:
+          id: entity_user
+          table: views
+          field: entity_user
+          relationship: none
+          group_type: group
+          admin_label: ''
+          empty: true
+          tokenize: true
+          target: '{{ raw_arguments.uid }}'
+          view_mode: default
+          bypass_access: false
+          plugin_id: entity
+      title: Membro
     cache_metadata:
       max-age: -1
       contexts:
         - 'languages:language_interface'
         - url
       tags:
-        - 'config:core.entity_view_display.profile.collective_associate.default'
+        - 'config:core.entity_view_display.profile.associate.default'
         - 'config:core.entity_view_display.profile.customer.default'
-        - 'config:core.entity_view_display.profile.individual_associate.default'
         - 'config:core.entity_view_display.profile.member.default'

@@ -9,6 +9,7 @@ dependencies:
       - commerce_product
   module:
     - commerce_order
+    - commerce_product
 _core:
   default_config_hash: AI9120ApX7uexCUMTuO3RgE5bWu8175i_bNlPMRXe7M
 id: commerce_order_item.default.default
@@ -17,12 +18,11 @@ bundle: default
 mode: default
 content:
   purchased_entity:
-    type: entity_reference_autocomplete
+    type: commerce_product_variation_title
     weight: 0
     settings:
-      match_operator: CONTAINS
-      size: 60
-      placeholder: ''
+      label_display: true
+      label_text: 'Please select'
     third_party_settings: {  }
     region: content
   quantity:

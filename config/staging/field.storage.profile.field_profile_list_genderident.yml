@@ -13,28 +13,28 @@ settings:
   allowed_values:
     -
       value: bigender
-      label: Bigender
+      label: Bigénero
     -
       value: feminine
-      label: Feminine
+      label: Feminina
     -
       value: genderfluid
-      label: 'Gender fluid'
+      label: 'Género fluido'
     -
       value: genderneutral
-      label: 'Gender neutral'
+      label: 'Género neutral'
     -
       value: genderqueer
-      label: 'Gender queer'
+      label: 'Género queer'
     -
       value: masculine
-      label: Masculine
+      label: Masculino
     -
       value: transgender
-      label: Transgender
+      label: Transgénero
     -
       value: unknown
-      label: 'Rather not say'
+      label: 'Prefiro não dizer'
   allowed_values_function: ''
 module: options
 locked: false

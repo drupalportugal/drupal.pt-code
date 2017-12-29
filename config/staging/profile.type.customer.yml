@@ -8,10 +8,15 @@ dependencies:
 _core:
   default_config_hash: PZl4AQDUouSVwavb0FNRlcbJx924n5FtCq8l73AMj5g
 id: customer
-label: Customer
+label: Cliente
 registration: false
 multiple: true
-roles: {  }
+roles:
+  authenticated: authenticated
+  associate: '0'
+  author: '0'
+  moderator: '0'
+  administrator: '0'
 weight: 0
 use_revisions: false
-description: null
+description: 'Perfil predefinido do Commerce.'

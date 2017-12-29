@@ -1,0 +1,10 @@
+uuid: fccc4688-2af9-4692-97f7-5985289598dd
+langcode: pt-pt
+status: true
+dependencies:
+  module:
+    - profile
+id: profile.checkout
+label: Checkout
+targetEntityType: profile
+cache: true

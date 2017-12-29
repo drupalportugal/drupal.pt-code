@@ -1,0 +1,36 @@
+uuid: a418682f-2897-49ff-8584-db2e27468046
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - commerce_product.commerce_product_variation_type.associate
+    - core.entity_view_mode.commerce_product_variation.cart
+    - field.field.commerce_product_variation.associate.license_expiration
+    - field.field.commerce_product_variation.associate.license_type
+id: commerce_product_variation.associate.cart
+targetEntityType: commerce_product_variation
+bundle: associate
+mode: cart
+content:
+  sku:
+    type: string
+    weight: 1
+    region: content
+    label: inline
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+  title:
+    type: string
+    weight: 0
+    region: content
+    label: hidden
+    settings:
+      link_to_entity: true
+    third_party_settings: {  }
+hidden:
+  langcode: true
+  license_expiration: true
+  license_type: true
+  price: true
+  product_id: true

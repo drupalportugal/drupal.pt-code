@@ -1,0 +1,25 @@
+uuid: 5eae4a6c-7e38-420c-81dd-f343de4b9811
+langcode: pt-pt
+status: true
+dependencies:
+  module:
+    - commerce_store
+    - language
+id: store_en
+label: 'Store: EN'
+type: 'canonical_entities:commerce_store'
+pattern: 'store/[commerce_store:name]'
+selection_criteria:
+  72d4f451-6bd5-452d-b33e-720ea3777cda:
+    id: language
+    langcodes:
+      en: en
+    negate: false
+    context_mapping:
+      language: 'commerce_store:langcode:language'
+    uuid: 72d4f451-6bd5-452d-b33e-720ea3777cda
+selection_logic: and
+weight: -2
+relationships:
+  'commerce_store:langcode:language':
+    label: Idioma

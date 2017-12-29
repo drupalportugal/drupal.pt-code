@@ -5,7 +5,7 @@ dependencies: {  }
 _core:
   default_config_hash: 96ryTApvzUl00vKGZusJUDgPHQALAKN8Mb13Jxm02KU
 id: default
-label: Default
+label: Predefinido
 description: ''
 variationType: default
 injectVariationFields: true

@@ -13,7 +13,7 @@ entity_type: profile
 bundle: member
 label: Biografia
 description: 'Por favor inclui um texto breve acerca de ti para nos deixares saber quem és fora do Drupal. Esta informação será <strong>pública</strong>.'
-required: true
+required: false
 translatable: false
 default_value: {  }
 default_value_callback: ''

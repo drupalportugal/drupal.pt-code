@@ -1,4 +1,4 @@
-uuid: d3ceab73-09df-4162-b39c-a78bbe7dca29
+uuid: 954a73ce-242a-4338-a28d-dd45d172c7f4
 langcode: pt-pt
 status: true
 dependencies:
@@ -14,71 +14,80 @@ targetEntityType: commerce_order
 bundle: associate
 mode: default
 content:
-  completed:
-    label: above
+  changed:
     type: timestamp
-    weight: 0
+    weight: 4
+    region: content
+    label: inline
+    settings:
+      date_format: short
+      custom_date_format: ''
+      timezone: ''
+    third_party_settings: {  }
+  completed:
+    label: inline
+    type: timestamp
+    weight: 2
     region: content
     settings:
-      date_format: medium
+      date_format: short
       custom_date_format: ''
       timezone: ''
     third_party_settings: {  }
   ip_address:
-    label: above
+    label: inline
     type: string
-    weight: 0
+    weight: 7
     region: content
     settings:
       link_to_entity: false
     third_party_settings: {  }
   mail:
-    label: above
-    type: email_mailto
-    weight: 0
+    type: basic_string
+    weight: 6
     region: content
+    label: inline
     settings: {  }
     third_party_settings: {  }
   order_items:
     type: commerce_order_item_table
     weight: 0
-    label: above
+    label: hidden
     settings: {  }
     third_party_settings: {  }
     region: content
   placed:
-    label: above
+    label: inline
     type: timestamp
-    weight: 0
+    weight: 3
     region: content
     settings:
-      date_format: medium
+      date_format: short
       custom_date_format: ''
       timezone: ''
     third_party_settings: {  }
   state:
     label: hidden
     type: state_transition_form
-    weight: 10
+    weight: 8
     region: content
     settings: {  }
     third_party_settings: {  }
   total_price:
     label: hidden
     type: commerce_order_total_summary
-    weight: 0
+    weight: 1
     region: content
     settings: {  }
     third_party_settings: {  }
   uid:
-    label: above
     type: author
-    weight: 0
+    weight: 5
     region: content
+    label: inline
     settings: {  }
     third_party_settings: {  }
 hidden:
   billing_profile: true
-  changed: true
   order_number: true
   store_id: true

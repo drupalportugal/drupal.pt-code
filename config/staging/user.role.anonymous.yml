@@ -19,4 +19,5 @@ permissions:
   - 'use text format restricted_html'
   - 'view any member profile'
   - 'view commerce_product'
+  - 'view commerce_store'
   - 'view profile'

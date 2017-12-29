@@ -28,17 +28,26 @@ display:
           content:
             value: 'No results were found.'
             format: plain_text
+      filters:
+        name:
+          expose:
+            label: 'User name'
+        field_profile_name_fullname:
+          expose:
+            label: 'Full name'
+        field_profile_list_genderident_value:
+          expose:
+            label: 'Gender identity'
+        field_profile_lang_languages_value:
+          expose:
+            label: Language
+        field_profile_address_postal_country_code:
+          expose:
+            label: Country
+        field_profile_address_postal_locality:
+          expose:
+            label: City
   page_associate:
     display_options:
       menu:
         title: 'Associate Directory'
-  page_collective:
-    display_options:
-      menu:
-        title: 'Collective Associate Directory'
-      title: 'Collective Associate Directory'
-  page_individual:
-    display_options:
-      menu:
-        title: 'Individual Associate Directory'
-      title: 'Individual Associate Directory'

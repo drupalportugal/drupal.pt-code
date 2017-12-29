@@ -1,0 +1,17 @@
+uuid: 3aa3e805-1f11-4b6c-ad0f-81d252109fd0
+langcode: pt-pt
+status: true
+dependencies: {  }
+id: associate
+label: Sócio
+registration: false
+multiple: false
+roles:
+  authenticated: authenticated
+  associate: '0'
+  author: '0'
+  moderator: '0'
+  administrator: '0'
+weight: 0
+use_revisions: false
+description: 'Perfil para Sócios.'

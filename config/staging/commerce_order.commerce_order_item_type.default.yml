@@ -7,7 +7,7 @@ dependencies:
       - commerce_product
 _core:
   default_config_hash: jNPt_s6r5tiynMJ5tvaDZjlOtQ4ply0Ii-GBJ7lMZ7Y
-label: Default
+label: Predefinido
 id: default
 purchasableEntityType: commerce_product_variation
 orderType: default

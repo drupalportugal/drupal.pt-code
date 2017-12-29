@@ -5,7 +5,7 @@ dependencies:
   module:
     - commerce_paypal
 id: paypal_live
-label: PayPal Live
+label: 'PayPal Live'
 weight: null
 plugin: paypal_express_checkout
 configuration:

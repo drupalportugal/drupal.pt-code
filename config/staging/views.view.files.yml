@@ -796,7 +796,7 @@ display:
           id: 0
           total_pages: 0
           tags:
-            previous: '‹ Previous'
+            previous: '‹ Anterior'
             next: 'Seguinte ›'
           expose:
             items_per_page: false

@@ -4,13 +4,16 @@ status: true
 dependencies:
   config:
     - field.field.profile.customer.address
+    - field.field.profile.customer.field_profile_address_postal
+    - field.field.profile.customer.field_profile_name_fullname
+    - field.field.profile.customer.field_profile_text_vatin
     - profile.type.customer
   enforced:
     module:
       - commerce_order
   module:
     - address
-    - path
+    - name
 _core:
   default_config_hash: 7mnnVkJkUSPhil9xoiTfdTivMqxCUloT_71AHWNUbJg
 id: profile.customer.default
@@ -18,16 +21,27 @@ targetEntityType: profile
 bundle: customer
 mode: default
 content:
-  address:
+  field_profile_address_postal:
+    weight: 2
+    settings:
+      default_country: PT
+    third_party_settings: {  }
     type: address_default
+    region: content
+  field_profile_name_fullname:
     weight: 0
     settings: {  }
     third_party_settings: {  }
+    type: name_default
     region: content
-  path:
-    type: path
-    weight: 30
-    region: content
-    settings: {  }
+  field_profile_text_vatin:
+    weight: 1
+    settings:
+      size: 20
+      placeholder: PT
     third_party_settings: {  }
-hidden: {  }
+    type: string_textfield
+    region: content
+hidden:
+  address: true
+  path: true
