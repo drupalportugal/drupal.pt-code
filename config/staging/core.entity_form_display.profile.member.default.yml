@@ -122,5 +122,10 @@ content:
     third_party_settings: {  }
     type: string_textfield
     region: content
-hidden:
-  path: true
+  path:
+    type: path
+    weight: 30
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+hidden: {  }

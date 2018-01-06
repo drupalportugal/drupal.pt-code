@@ -1,0 +1,19 @@
+uuid: 08b3a3a9-b112-46f1-aa18-fc5605ccd352
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - field.storage.profile.field_numero_de_socio
+    - profile.type.socio_adp
+id: profile.socio_adp.field_numero_de_socio
+field_name: field_numero_de_socio
+entity_type: profile
+bundle: socio_adp
+label: 'Numero de socio'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

@@ -1,4 +1,4 @@
-uuid: fdf4568c-f959-4e5d-a581-a6a39eb767e4
+uuid: b2cfaefc-c7c0-4bca-bfc7-b890ddfefeb3
 langcode: pt-pt
 status: true
 dependencies:
@@ -8,7 +8,7 @@ id: commerce_product_variation.default.title
 field_name: title
 entity_type: commerce_product_variation
 bundle: default
-label: Título
+label: Title
 description: 'The variation title.'
 required: false
 translatable: false

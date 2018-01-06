@@ -1,4 +1,4 @@
-uuid: 212fb1d9-1326-4448-9569-099a7f6dcbd6
+uuid: 8cbb9d56-51a7-4993-a1ed-2845f4823c39
 langcode: pt-pt
 status: true
 dependencies:
@@ -29,7 +29,9 @@ content:
     weight: 1
     label: hidden
     settings:
+      default_quantity: '1'
       combine: true
+      show_quantity: false
     third_party_settings: {  }
     region: content
 hidden:

@@ -1,6 +1,6 @@
 uuid: c255d577-5d92-4a5c-8cfb-4db56247998b
 langcode: pt-pt
-status: true
+status: false
 dependencies:
   content:
     - 'block_content:basic:d8c1cc5b-4249-43c9-aa50-ac85072f8862'
@@ -12,7 +12,7 @@ dependencies:
 id: drupalportugal_bartik_custom_become_member
 theme: drupalportugal_bartik
 region: sidebar_second
-weight: -14
+weight: -8
 provider: null
 plugin: 'block_content:d8c1cc5b-4249-43c9-aa50-ac85072f8862'
 settings:

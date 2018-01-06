@@ -1,4 +1,4 @@
-uuid: 8c42203f-115c-4f78-ba5d-cdbbb06a3881
+uuid: 085de1ac-976b-4f4b-a5eb-ca9bc8b566fe
 langcode: pt-pt
 status: true
 dependencies:
@@ -8,7 +8,7 @@ id: commerce_product.default.changed
 field_name: changed
 entity_type: commerce_product
 bundle: default
-label: Alterado
+label: Changed
 description: 'The time when the product was last edited.'
 required: false
 translatable: false

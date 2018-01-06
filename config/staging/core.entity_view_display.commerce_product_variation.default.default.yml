@@ -1,4 +1,4 @@
-uuid: 042e6ed3-697b-45d6-9c9c-653a7812ec74
+uuid: 00ffb34a-db08-4803-9ad3-c530709b9fbb
 langcode: pt-pt
 status: true
 dependencies:
@@ -12,7 +12,7 @@ bundle: default
 mode: default
 content:
   price:
-    label: above
+    label: inline
     type: commerce_price_default
     weight: 0
     region: content
@@ -20,15 +20,8 @@ content:
       strip_trailing_zeroes: false
       display_currency_code: false
     third_party_settings: {  }
-  sku:
-    type: string
-    weight: 1
-    region: content
-    label: above
-    settings:
-      link_to_entity: false
-    third_party_settings: {  }
 hidden:
   langcode: true
   product_id: true
+  sku: true
   title: true

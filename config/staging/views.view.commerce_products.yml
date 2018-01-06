@@ -1,4 +1,4 @@
-uuid: edec48f3-118a-44f5-9cde-45ad76773342
+uuid: ff965a62-7ba2-46e2-be92-9569f2719988
 langcode: pt-pt
 status: true
 dependencies:
@@ -10,7 +10,7 @@ dependencies:
 _core:
   default_config_hash: lTfF_aenIIJ8YnvaratQgGpNEkFtA7tSDiElcgecVQo
 id: commerce_products
-label: Products
+label: Produtos
 module: views
 description: ''
 tag: Commerce
@@ -581,7 +581,7 @@ display:
           entity_field: title
           plugin_id: string
       sorts: {  }
-      title: Products
+      title: Produtos
       header: {  }
       footer: {  }
       empty:

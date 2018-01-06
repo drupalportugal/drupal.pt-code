@@ -11,7 +11,7 @@ dependencies:
 id: drupalportugal_bartik_section_drupal
 theme: drupalportugal_bartik
 region: sidebar_second
-weight: -13
+weight: -15
 provider: null
 plugin: 'system_menu_block:section-drupal'
 settings:

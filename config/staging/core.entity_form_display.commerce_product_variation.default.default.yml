@@ -1,4 +1,4 @@
-uuid: e0d5d0c2-077c-40c6-a079-86fd8727545c
+uuid: 11214355-3ddf-47b1-9dfa-7af40f346fe1
 langcode: pt-pt
 status: true
 dependencies:
@@ -41,19 +41,6 @@ content:
       display_label: true
     third_party_settings: {  }
     region: content
-  title:
-    type: string_textfield
-    weight: -5
-    region: content
-    settings:
-      size: 60
-      placeholder: ''
-    third_party_settings: {  }
-  translation:
-    weight: 10
-    region: content
-    settings: {  }
-    third_party_settings: {  }
 hidden:
   created: true
   uid: true

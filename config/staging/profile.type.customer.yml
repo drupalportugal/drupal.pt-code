@@ -1,4 +1,4 @@
-uuid: d4b53d57-ea7a-4c64-8219-cff5e336d602
+uuid: 521e0569-a9d7-4f47-b8df-cb719c3bd0f0
 langcode: pt-pt
 status: true
 dependencies:
@@ -11,12 +11,7 @@ id: customer
 label: Cliente
 registration: false
 multiple: true
-roles:
-  authenticated: authenticated
-  associate: '0'
-  author: '0'
-  moderator: '0'
-  administrator: '0'
+roles: {  }
 weight: 0
 use_revisions: false
-description: 'Perfil predefinido do Commerce.'
+description: null

@@ -1,4 +1,4 @@
-uuid: a7d07f77-2f97-404c-9ef5-7439bbd91517
+uuid: 991a3775-999d-4983-bdee-d166d869db49
 langcode: pt-pt
 status: true
 dependencies:
@@ -13,7 +13,7 @@ id: profile.customer.address
 field_name: address
 entity_type: profile
 bundle: customer
-label: Address
+label: Morada
 description: ''
 required: true
 translatable: false

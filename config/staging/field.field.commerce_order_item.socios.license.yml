@@ -1,0 +1,21 @@
+uuid: 5b11385a-8c4e-4bb8-8c89-6035599b494d
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - commerce_order.commerce_order_item_type.socios
+    - field.storage.commerce_order_item.license
+id: commerce_order_item.socios.license
+field_name: license
+entity_type: commerce_order_item
+bundle: socios
+label: License
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: null
+settings:
+  handler: 'default:commerce_license'
+  handler_settings: {  }
+field_type: entity_reference

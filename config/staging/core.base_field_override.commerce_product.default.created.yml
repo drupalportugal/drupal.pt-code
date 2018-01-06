@@ -1,4 +1,4 @@
-uuid: 391b700b-54de-4af5-8121-b39dd9608d75
+uuid: a3b826c7-49bd-4b24-a10b-4fa11c9c6adb
 langcode: pt-pt
 status: true
 dependencies:
@@ -8,7 +8,7 @@ id: commerce_product.default.created
 field_name: created
 entity_type: commerce_product
 bundle: default
-label: Criado
+label: Created
 description: 'The time when the product was created.'
 required: false
 translatable: false

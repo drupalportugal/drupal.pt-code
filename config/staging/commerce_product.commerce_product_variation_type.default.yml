@@ -1,13 +1,7 @@
-uuid: 3394aa84-aba0-4156-8071-c5bb8e7b3ddd
+uuid: 2fecf04f-844b-405e-b369-8405d97cd77e
 langcode: pt-pt
 status: true
-dependencies:
-  module:
-    - commerce_license
-third_party_settings:
-  commerce_license:
-    license_types: {  }
-    activate_on_place: false
+dependencies: {  }
 _core:
   default_config_hash: QPuFH9E4612ox18hXdUXL8FhU021rCvOtYISSmvMQzc
 id: default

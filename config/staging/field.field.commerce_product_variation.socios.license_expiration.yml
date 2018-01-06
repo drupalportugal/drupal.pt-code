@@ -1,0 +1,21 @@
+uuid: baa96abe-a04b-4f3c-ae44-f7a96836100c
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - commerce_product.commerce_product_variation_type.socios
+    - field.storage.commerce_product_variation.license_expiration
+  module:
+    - commerce
+id: commerce_product_variation.socios.license_expiration
+field_name: license_expiration
+entity_type: commerce_product_variation
+bundle: socios
+label: 'License Expiration'
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: null
+settings: {  }
+field_type: 'commerce_plugin_item:recurring_period'

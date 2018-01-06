@@ -1,4 +1,4 @@
-uuid: ef9ab3d4-0a3f-4878-b4fe-c95edcb2dbf8
+uuid: a7443b5e-bd07-43fa-a6b4-d9098c4b9630
 langcode: pt-pt
 status: true
 dependencies:
@@ -38,8 +38,7 @@ content:
     type: language_select
     weight: 3
     region: content
-    settings:
-      include_locked: true
+    settings: {  }
     third_party_settings: {  }
   path:
     type: path
@@ -72,11 +71,6 @@ content:
       placeholder: ''
     third_party_settings: {  }
     region: content
-  translation:
-    weight: 10
-    region: content
-    settings: {  }
-    third_party_settings: {  }
   uid:
     type: entity_reference_autocomplete
     weight: 4

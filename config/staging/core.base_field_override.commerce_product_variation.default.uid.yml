@@ -1,4 +1,4 @@
-uuid: c45e2ce2-44ad-4e0a-a3b1-4dba7c1add3b
+uuid: bd6798f4-47df-4c04-bd56-75207c0b85e8
 langcode: pt-pt
 status: true
 dependencies:
@@ -8,7 +8,7 @@ id: commerce_product_variation.default.uid
 field_name: uid
 entity_type: commerce_product_variation
 bundle: default
-label: Autor
+label: Author
 description: 'The variation author.'
 required: false
 translatable: false

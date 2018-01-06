@@ -1,4 +1,4 @@
-uuid: 98a852d7-87f7-4df3-8aea-c146304cc39c
+uuid: 5d10e2d8-a8bb-4964-a822-c0e68d772404
 langcode: pt-pt
 status: true
 dependencies:
@@ -16,23 +16,16 @@ targetEntityType: commerce_product_variation
 bundle: default
 mode: cart
 content:
-  sku:
-    type: string
-    weight: 1
-    region: content
-    label: inline
-    settings:
-      link_to_entity: false
-    third_party_settings: {  }
-  title:
-    type: string
+  product_id:
+    type: entity_reference_label
     weight: 0
-    region: content
     label: hidden
     settings:
-      link_to_entity: true
+      link: true
     third_party_settings: {  }
+    region: content
 hidden:
   langcode: true
   price: true
-  product_id: true
+  sku: true
+  title: true

@@ -49,7 +49,6 @@ third_party_settings:
     regions:
       left:
         - 'dynamic_block_field:profile-user_fields_picture'
-        - 'dynamic_block_field:profile-user_fields_created'
         - field_profile_name_fullname
         - field_profile_date_birthdate
         - field_profile_list_genderident
@@ -64,11 +63,6 @@ third_party_settings:
         - field_profile_text_drupalorguser
         - field_profile_text_jobtitle
     fields:
-      'dynamic_block_field:profile-user_fields_created':
-        plugin_id: 'dynamic_block_field:profile-user_fields_created'
-        weight: 1
-        label: hidden
-        formatter: default
       'dynamic_block_field:profile-user_fields_picture':
         plugin_id: 'dynamic_block_field:profile-user_fields_picture'
         weight: 0
@@ -80,14 +74,14 @@ bundle: member
 mode: default
 content:
   field_profile_address_postal:
-    weight: 7
+    weight: 6
     label: above
     settings: {  }
     third_party_settings: {  }
     type: address_default
     region: middle
   field_profile_date_birthdate:
-    weight: 3
+    weight: 2
     label: above
     settings:
       age_format: birthdate
@@ -96,7 +90,7 @@ content:
     type: age_field_formatter
     region: left
   field_profile_email_email:
-    weight: 9
+    weight: 8
     label: above
     settings: {  }
     third_party_settings:
@@ -105,7 +99,7 @@ content:
     type: email_mailto
     region: middle
   field_profile_lang_languages:
-    weight: 5
+    weight: 4
     label: above
     settings:
       format:
@@ -116,16 +110,10 @@ content:
     third_party_settings:
       ds:
         ds_limit: ''
-        ft:
-          id: default
-          settings:
-            lb: ''
-            lb-col: false
-            classes: {  }
     type: languagefield_default
     region: left
   field_profile_link_website:
-    weight: 10
+    weight: 9
     label: above
     settings:
       trim_length: 80
@@ -139,14 +127,14 @@ content:
     type: link
     region: middle
   field_profile_list_genderident:
-    weight: 4
+    weight: 3
     label: above
     settings: {  }
     third_party_settings: {  }
     type: list_default
     region: left
   field_profile_name_fullname:
-    weight: 2
+    weight: 1
     label: above
     settings:
       format: default
@@ -162,7 +150,7 @@ content:
     type: name_default
     region: left
   field_profile_phone_telephone:
-    weight: 8
+    weight: 7
     label: above
     settings:
       title: ''
@@ -172,29 +160,22 @@ content:
     type: telephone_link
     region: middle
   field_profile_text_biography:
-    weight: 6
+    weight: 5
     label: above
     settings: {  }
     third_party_settings: {  }
     type: text_default
     region: middle
   field_profile_text_drupalorguser:
-    weight: 11
+    weight: 10
     label: above
     settings:
       link_to_entity: false
-    third_party_settings:
-      ds:
-        ft:
-          id: default
-          settings:
-            lb: ''
-            lb-col: false
-            classes: {  }
+    third_party_settings: {  }
     type: string
     region: right
   field_profile_text_jobtitle:
-    weight: 12
+    weight: 11
     label: above
     settings:
       link_to_entity: false

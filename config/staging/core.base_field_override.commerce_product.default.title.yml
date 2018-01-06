@@ -1,4 +1,4 @@
-uuid: a3ffd22d-b8b1-45a3-8fae-d472f57266ad
+uuid: 01c90869-ea0d-4649-b1bc-dce48c622187
 langcode: pt-pt
 status: true
 dependencies:
@@ -8,10 +8,10 @@ id: commerce_product.default.title
 field_name: title
 entity_type: commerce_product
 bundle: default
-label: Título
-description: 'O nome do produto.'
+label: Title
+description: 'The product title.'
 required: true
-translatable: true
+translatable: false
 default_value: {  }
 default_value_callback: ''
 settings: {  }

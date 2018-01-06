@@ -7,14 +7,4 @@ label: Sócio
 weight: -8
 is_admin: null
 permissions:
-  - 'create associate commerce_order'
-  - 'create customer profile'
-  - 'create default commerce_order'
-  - 'delete own commerce_license'
-  - 'delete own customer profile'
-  - 'manage own commerce_payment_method'
-  - 'update own commerce_license'
-  - 'update own customer profile'
-  - 'view commerce_store'
-  - 'view own commerce_license'
-  - 'view own customer profile'
+  - 'view own socio_adp profile'

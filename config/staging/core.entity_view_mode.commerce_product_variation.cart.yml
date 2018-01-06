@@ -1,4 +1,4 @@
-uuid: ffd949f5-266c-4d82-ae2a-2559dab6e313
+uuid: 1ef6a7b2-2ea8-4dd7-b6a1-e5800c8966c6
 langcode: pt-pt
 status: true
 dependencies:
@@ -11,6 +11,6 @@ dependencies:
 _core:
   default_config_hash: SjZo-csuMc7wQHh55OpVRuTrQTp8zy3k6cR9RykDWIg
 id: commerce_product_variation.cart
-label: Cart
+label: Carrinho
 targetEntityType: commerce_product_variation
 cache: true

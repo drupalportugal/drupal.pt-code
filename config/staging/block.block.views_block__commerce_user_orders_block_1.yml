@@ -1,0 +1,33 @@
+uuid: 32907cfe-696d-436d-b9d8-c4715f2ee662
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - views.view.commerce_user_orders
+  module:
+    - user
+    - views
+  theme:
+    - drupalportugal_bartik
+id: views_block__commerce_user_orders_block_1
+theme: drupalportugal_bartik
+region: sidebar_second
+weight: -11
+provider: null
+plugin: 'views_block:commerce_user_orders-block_1'
+settings:
+  id: 'views_block:commerce_user_orders-block_1'
+  label: ''
+  provider: views
+  label_display: visible
+  views_label: ''
+  items_per_page: '5'
+  context_mapping: {  }
+visibility:
+  user_role:
+    id: user_role
+    roles:
+      associate: associate
+    negate: false
+    context_mapping:
+      user: '@user.current_user_context:current_user'
