@@ -1,4 +1,4 @@
-uuid: 73b89a1a-8f29-4604-8a58-bac6e7af7e3f
+uuid: a575ca6b-7b99-451b-9daa-59360b7cc931
 langcode: pt-pt
 status: true
 dependencies:
@@ -10,10 +10,10 @@ id: commerce_product.default.path
 field_name: path
 entity_type: commerce_product
 bundle: default
-label: 'URL alternativo'
+label: 'URL alias'
 description: 'The product URL alias.'
 required: false
-translatable: true
+translatable: false
 default_value: {  }
 default_value_callback: ''
 settings: {  }

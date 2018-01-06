@@ -1,15 +1,7 @@
-Version 3.1.4-dev
+Version 3.1.3-dev
 -----------------
 
 Nothing yet.
-
-Version 3.1.3 (2017-12-26)
---------------------------
-
-### Fixed
-
-* Improve compatibility with php-scoper, by supporting prefixed namespaces in
-  `NodeAbstract::getType()`.
 
 Version 3.1.2 (2017-11-04)
 --------------------------

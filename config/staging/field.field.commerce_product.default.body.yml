@@ -1,4 +1,4 @@
-uuid: 74bc8ace-4c90-4ca3-8913-0532d2a4c949
+uuid: 0b04ccbb-eb8f-4043-acf5-8d420c7cf326
 langcode: pt-pt
 status: true
 dependencies:
@@ -16,7 +16,7 @@ bundle: default
 label: Corpo
 description: ''
 required: false
-translatable: true
+translatable: false
 default_value: {  }
 default_value_callback: ''
 settings:

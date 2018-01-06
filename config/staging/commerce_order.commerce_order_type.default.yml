@@ -1,23 +1,14 @@
-uuid: 04ef0969-455c-40c2-b109-373c8c584ffe
+uuid: 76c3ee9a-6217-4ba0-8684-ea05d46b5ed4
 langcode: pt-pt
 status: true
-dependencies:
-  module:
-    - commerce_cart
-    - commerce_checkout
-third_party_settings:
-  commerce_cart:
-    cart_form_view: commerce_cart_form
-    cart_block_view: commerce_cart_block
-  commerce_checkout:
-    checkout_flow: default
+dependencies: {  }
 _core:
   default_config_hash: zf7YA-OOtWhhrphbf3YOlc49POwC9rePktH9cBavEiA
 label: Predefinido
 id: default
-workflow: order_fulfillment
+workflow: order_default
 traits: {  }
 refresh_mode: customer
 refresh_frequency: 300
 sendReceipt: true
-receiptBcc: secretariado@drupal.pt
+receiptBcc: ''

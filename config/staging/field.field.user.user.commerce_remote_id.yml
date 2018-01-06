@@ -1,4 +1,4 @@
-uuid: 7d03f703-d0ce-48b5-ad56-25d3a4c1f0fa
+uuid: 124b72f9-631d-49a0-a1aa-229ee303ff65
 langcode: pt-pt
 status: true
 dependencies:
@@ -16,7 +16,7 @@ id: user.user.commerce_remote_id
 field_name: commerce_remote_id
 entity_type: user
 bundle: user
-label: 'Remote ID'
+label: 'ID remoto'
 description: ''
 required: false
 translatable: false

@@ -7,7 +7,7 @@ dependencies:
 id: default_commerce_product
 label: 'Default Commerce Product'
 type: 'canonical_entities:commerce_product'
-pattern: 'product/[commerce_product:title]'
+pattern: 'product/[commerce_product:uid:entity:display-name]'
 selection_criteria: {  }
 selection_logic: and
 weight: 9

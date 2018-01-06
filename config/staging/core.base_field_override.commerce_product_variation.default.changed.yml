@@ -1,4 +1,4 @@
-uuid: 51ee7f56-1837-48c0-8e36-236ff4ac0cad
+uuid: fa133524-1912-44cb-ae19-4f2c3389867b
 langcode: pt-pt
 status: true
 dependencies:
@@ -8,7 +8,7 @@ id: commerce_product_variation.default.changed
 field_name: changed
 entity_type: commerce_product_variation
 bundle: default
-label: Alterado
+label: Changed
 description: 'The time when the variation was last edited.'
 required: false
 translatable: false

@@ -1,0 +1,22 @@
+uuid: 1b48e511-a2f2-4166-a9db-864ce99eed12
+langcode: pt-pt
+status: true
+dependencies:
+  module:
+    - commerce_paypal
+id: paypal
+label: Paypal
+weight: null
+plugin: paypal_express_checkout
+configuration:
+  api_username: paypal_api1.drupal-pt.org
+  api_password: QZAGDLK4CTJZSJ4Q
+  shipping_prompt: shipping_skip
+  signature: AQZV3h9JZgeLfLrW5aTWcWBDuZTNAwn6o0P6YsrSUCm.SelTTyFt0Lyk
+  solution_type: Mark
+  display_label: PayPal
+  mode: live
+  payment_method_types:
+    - credit_card
+conditions: {  }
+conditionOperator: AND

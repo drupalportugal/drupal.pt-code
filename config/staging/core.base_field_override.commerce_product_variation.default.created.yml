@@ -1,4 +1,4 @@
-uuid: 1819c3c3-d7e8-4e09-a5d4-758541ce04ed
+uuid: 96492633-ce5a-4b6c-8fa5-9c4ca5653fda
 langcode: pt-pt
 status: true
 dependencies:
@@ -8,7 +8,7 @@ id: commerce_product_variation.default.created
 field_name: created
 entity_type: commerce_product_variation
 bundle: default
-label: Criado
+label: Created
 description: 'The time when the variation was created.'
 required: false
 translatable: false

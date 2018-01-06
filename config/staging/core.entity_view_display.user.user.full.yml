@@ -1,13 +1,15 @@
 uuid: ff356629-0940-4577-9810-398eef7278c9
 langcode: pt-pt
-status: true
+status: false
 dependencies:
   config:
     - core.entity_view_mode.user.full
     - field.field.user.user.commerce_remote_id
     - field.field.user.user.user_picture
+    - image.style.medium
   module:
     - ds
+    - image
     - user
 third_party_settings:
   ds:
@@ -27,11 +29,20 @@ third_party_settings:
           layout_class: {  }
     regions:
       ds_content:
-        - 'dynamic_block_field:user-profile_fields_member'
+        - member_for
+        - username
+        - user_picture
+        - 'dynamic_block_field:user-user_compact_view_mode'
+        - profile_member
     fields:
-      'dynamic_block_field:user-profile_fields_member':
-        plugin_id: 'dynamic_block_field:user-profile_fields_member'
-        weight: 0
+      'dynamic_block_field:user-user_compact_view_mode':
+        plugin_id: 'dynamic_block_field:user-user_compact_view_mode'
+        weight: 3
+        label: hidden
+        formatter: default
+      username:
+        plugin_id: username
+        weight: 1
         label: hidden
         formatter: default
 _core:
@@ -46,16 +57,33 @@ content:
     region: ds_content
     settings: {  }
     third_party_settings: {  }
+  member_for:
+    weight: 0
+    region: ds_content
+    settings: {  }
+    third_party_settings: {  }
   picture:
     weight: 0
     region: ds_content
     settings: {  }
     third_party_settings: {  }
+  profile_member:
+    weight: 4
+    region: ds_content
+    settings: {  }
+    third_party_settings: {  }
+  user_picture:
+    weight: 2
+    region: ds_content
+    label: hidden
+    settings:
+      image_style: medium
+      image_link: ''
+    third_party_settings: {  }
+    type: image
 hidden:
   commerce_remote_id: true
   langcode: true
-  member_for: true
-  profile_associate: true
+  profile_collective_associate: true
   profile_customer: true
-  profile_member: true
-  user_picture: true
+  profile_individual_associate: true

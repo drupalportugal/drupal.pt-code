@@ -1,0 +1,17 @@
+uuid: 6f161009-9af0-4cb1-85a2-acd0826b5042
+langcode: pt-pt
+status: true
+dependencies: {  }
+id: socio_adp
+label: 'Socio ADP'
+registration: false
+multiple: true
+roles:
+  associate: associate
+  authenticated: '0'
+  author: '0'
+  moderator: '0'
+  administrator: '0'
+weight: 0
+use_revisions: true
+description: 'Perfil para sócios'

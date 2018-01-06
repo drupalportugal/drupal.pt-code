@@ -1,4 +1,4 @@
-uuid: 1b24ce09-a7b0-476a-b87f-fccd988a9a78
+uuid: eb9e5b97-3160-4568-9f78-9b469d2ce917
 langcode: pt-pt
 status: true
 dependencies:
@@ -8,8 +8,8 @@ id: commerce_product.default.uid
 field_name: uid
 entity_type: commerce_product
 bundle: default
-label: Autor
-description: 'O autor produto.'
+label: Author
+description: 'The product author.'
 required: false
 translatable: false
 default_value: {  }

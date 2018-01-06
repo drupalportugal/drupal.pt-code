@@ -1,4 +1,4 @@
-uuid: 21df4920-6ee3-4fad-89c9-1ccc9a14b5f2
+uuid: ab58a41e-ce59-4ca8-9d4f-d7d1d0c7e9fc
 langcode: pt-pt
 status: true
 dependencies:
@@ -8,9 +8,9 @@ dependencies:
     - content_translation
 third_party_settings:
   content_translation:
-    enabled: true
+    enabled: false
 id: commerce_store.online
 target_entity_type_id: commerce_store
 target_bundle: online
 default_langcode: site_default
-language_alterable: true
+language_alterable: false

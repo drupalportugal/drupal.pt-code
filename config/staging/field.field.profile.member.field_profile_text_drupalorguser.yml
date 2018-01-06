@@ -11,7 +11,7 @@ entity_type: profile
 bundle: member
 label: 'Nome de utilizador no Drupal.org'
 description: 'O teu nome de utilizador no drupal.org. Não adiciones a hiperligação. Esta informação será <strong>pública</strong>.'
-required: false
+required: true
 translatable: false
 default_value: {  }
 default_value_callback: ''

@@ -30,6 +30,7 @@ hidden:
   commerce_remote_id: true
   langcode: true
   member_for: true
-  profile_associate: true
+  profile_collective_associate: true
   profile_customer: true
+  profile_individual_associate: true
   profile_member: true

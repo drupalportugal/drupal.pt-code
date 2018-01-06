@@ -1,4 +1,4 @@
-uuid: fbef4b38-7792-46e1-be05-bf99888d6bac
+uuid: 12fd8c2e-b158-486d-bbfb-bab0832d21cb
 langcode: pt-pt
 status: true
 dependencies:
@@ -8,15 +8,15 @@ id: commerce_product.default.status
 field_name: status
 entity_type: commerce_product
 bundle: default
-label: Publicado
+label: Published
 description: ''
 required: false
-translatable: true
+translatable: false
 default_value:
   -
     value: 1
 default_value_callback: ''
 settings:
-  on_label: Ligado
-  off_label: Desligado
+  on_label: 'On'
+  off_label: 'Off'
 field_type: boolean

@@ -1,4 +1,4 @@
-uuid: 992f76f9-e257-4b09-965d-e620075197de
+uuid: 9fd9314f-c6f4-4346-91ba-d0201f354094
 langcode: pt-pt
 status: true
 dependencies:
@@ -24,9 +24,9 @@ content:
   billing_profile:
     type: commerce_billing_profile
     weight: 0
+    region: content
     settings: {  }
     third_party_settings: {  }
-    region: content
   cart:
     type: boolean_checkbox
     settings:
@@ -38,13 +38,13 @@ content:
     type: inline_entity_form_complex
     weight: 1
     settings:
-      form_mode: default
       override_labels: true
       label_singular: 'order item'
       label_plural: 'order items'
       allow_new: true
       match_operator: CONTAINS
       allow_existing: false
+      form_mode: default
     third_party_settings: {  }
     region: content
 hidden:
@@ -52,7 +52,6 @@ hidden:
   ip_address: true
   mail: true
   order_number: true
-  path: true
   state: true
   store_id: true
   uid: true

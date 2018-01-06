@@ -25,9 +25,9 @@ settings:
   max_filesize: 2MB
   max_resolution: 1024x1024
   min_resolution: 80x80
-  alt_field: true
+  alt_field: false
   alt_field_required: false
-  title_field: true
+  title_field: false
   title_field_required: false
   default_image:
     uuid: ae41d4dc-89ba-4e6c-a435-b9b2cb1fe7d8

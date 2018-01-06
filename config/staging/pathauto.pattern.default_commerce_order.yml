@@ -1,6 +1,6 @@
 uuid: f5196a9f-d61b-472f-9fb1-4875aaa30133
 langcode: pt-pt
-status: false
+status: true
 dependencies:
   module:
     - commerce_order

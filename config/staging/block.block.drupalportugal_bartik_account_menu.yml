@@ -12,7 +12,7 @@ dependencies:
 id: drupalportugal_bartik_account_menu
 theme: drupalportugal_bartik
 region: sidebar_second
-weight: -9
+weight: -10
 provider: null
 plugin: 'system_menu_block:account'
 settings:

@@ -7,20 +7,17 @@ dependencies:
     - field.storage.user.user_picture
     - image.style.user_grid_picture
     - system.menu.section-association
-    - user.role.associate
   module:
     - address
     - image
-    - languagefield
     - name
-    - options
     - profile
     - user
 id: association_directory
 label: 'Association Directory'
 module: views
 description: 'Directory of members of the community.'
-tag: 'association, user, profile'
+tag: community
 base_table: users_field_data
 base_field: uid
 core: 8.x
@@ -540,87 +537,11 @@ display:
           plugin_id: boolean
           entity_type: user
           entity_field: status
-        roles_target_id:
-          id: roles_target_id
-          table: user__roles
-          field: roles_target_id
-          relationship: none
-          group_type: group
-          admin_label: ''
-          operator: or
-          value:
-            associate: associate
-          group: 1
-          exposed: false
-          expose:
-            operator_id: ''
-            label: ''
-            description: ''
-            use_operator: false
-            operator: ''
-            identifier: ''
-            required: false
-            remember: false
-            multiple: false
-            remember_roles:
-              authenticated: authenticated
-            reduce: false
-          is_grouped: false
-          group_info:
-            label: ''
-            description: ''
-            identifier: ''
-            optional: true
-            widget: select
-            multiple: false
-            remember: false
-            default_group: All
-            default_group_multiple: {  }
-            group_items: {  }
-          reduce_duplicates: false
-          entity_type: user
-          plugin_id: user_roles
         field_profile_bool_indirectory_value:
           id: field_profile_bool_indirectory_value
           table: profile__field_profile_bool_indirectory
           field: field_profile_bool_indirectory_value
           relationship: profile_type
-          group_type: group
-          admin_label: ''
-          operator: '='
-          value: '1'
-          group: 1
-          exposed: false
-          expose:
-            operator_id: ''
-            label: ''
-            description: ''
-            use_operator: false
-            operator: ''
-            identifier: ''
-            required: false
-            remember: false
-            multiple: false
-            remember_roles:
-              authenticated: authenticated
-          is_grouped: false
-          group_info:
-            label: ''
-            description: ''
-            identifier: ''
-            optional: true
-            widget: select
-            multiple: false
-            remember: false
-            default_group: All
-            default_group_multiple: {  }
-            group_items: {  }
-          plugin_id: boolean
-        field_profile_bool_indirectory_value_2:
-          id: field_profile_bool_indirectory_value_2
-          table: profile__field_profile_bool_indirectory
-          field: field_profile_bool_indirectory_value
-          relationship: profile_type_2
           group_type: group
           admin_label: ''
           operator: '='
@@ -665,7 +586,7 @@ display:
           exposed: true
           expose:
             operator_id: name_op
-            label: Utilizador
+            label: 'User name'
             description: ''
             use_operator: false
             operator: name_op
@@ -676,7 +597,6 @@ display:
             remember_roles:
               authenticated: authenticated
               anonymous: '0'
-              associate: '0'
               author: '0'
               moderator: '0'
               administrator: '0'
@@ -708,7 +628,7 @@ display:
           exposed: true
           expose:
             operator_id: field_profile_name_fullname_op
-            label: 'Nome completo'
+            label: 'Full name'
             description: ''
             use_operator: false
             operator: field_profile_name_fullname_op
@@ -719,7 +639,6 @@ display:
             remember_roles:
               authenticated: authenticated
               anonymous: '0'
-              associate: '0'
               author: '0'
               moderator: '0'
               administrator: '0'
@@ -736,91 +655,6 @@ display:
             default_group_multiple: {  }
             group_items: {  }
           plugin_id: name_fulltext
-        field_profile_list_genderident_value:
-          id: field_profile_list_genderident_value
-          table: profile__field_profile_list_genderident
-          field: field_profile_list_genderident_value
-          relationship: profile_type
-          group_type: group
-          admin_label: ''
-          operator: or
-          value: {  }
-          group: 1
-          exposed: true
-          expose:
-            operator_id: field_profile_list_genderident_value_op
-            label: 'Identidade de género'
-            description: ''
-            use_operator: false
-            operator: field_profile_list_genderident_value_op
-            identifier: field_profile_list_genderident_value
-            required: false
-            remember: false
-            multiple: false
-            remember_roles:
-              authenticated: authenticated
-              anonymous: '0'
-              associate: '0'
-              author: '0'
-              moderator: '0'
-              administrator: '0'
-            reduce: false
-          is_grouped: false
-          group_info:
-            label: ''
-            description: ''
-            identifier: ''
-            optional: true
-            widget: select
-            multiple: false
-            remember: false
-            default_group: All
-            default_group_multiple: {  }
-            group_items: {  }
-          reduce_duplicates: false
-          plugin_id: list_field
-        field_profile_lang_languages_value:
-          id: field_profile_lang_languages_value
-          table: profile__field_profile_lang_languages
-          field: field_profile_lang_languages_value
-          relationship: profile_type
-          group_type: group
-          admin_label: ''
-          operator: in
-          value: {  }
-          group: 1
-          exposed: true
-          expose:
-            operator_id: field_profile_lang_languages_value_op
-            label: Idioma
-            description: ''
-            use_operator: false
-            operator: field_profile_lang_languages_value_op
-            identifier: field_profile_lang_languages_value
-            required: false
-            remember: false
-            multiple: false
-            remember_roles:
-              authenticated: authenticated
-              anonymous: '0'
-              associate: '0'
-              author: '0'
-              moderator: '0'
-              administrator: '0'
-            reduce: 0
-          is_grouped: false
-          group_info:
-            label: ''
-            description: ''
-            identifier: ''
-            optional: true
-            widget: select
-            multiple: false
-            remember: false
-            default_group: All
-            default_group_multiple: {  }
-            group_items: {  }
-          plugin_id: languagefield
         field_profile_address_postal_country_code:
           id: field_profile_address_postal_country_code
           table: profile__field_profile_address_postal
@@ -834,7 +668,7 @@ display:
           exposed: true
           expose:
             operator_id: field_profile_address_postal_country_code_op
-            label: País
+            label: Country
             description: ''
             use_operator: false
             operator: field_profile_address_postal_country_code_op
@@ -845,7 +679,6 @@ display:
             remember_roles:
               authenticated: authenticated
               anonymous: '0'
-              associate: '0'
               author: '0'
               moderator: '0'
               administrator: '0'
@@ -876,7 +709,7 @@ display:
           exposed: true
           expose:
             operator_id: field_profile_address_postal_locality_op
-            label: Cidade
+            label: City
             description: ''
             use_operator: false
             operator: field_profile_address_postal_locality_op
@@ -887,7 +720,6 @@ display:
             remember_roles:
               authenticated: authenticated
               anonymous: '0'
-              associate: '0'
               author: '0'
               moderator: '0'
               administrator: '0'
@@ -904,6 +736,78 @@ display:
             default_group_multiple: {  }
             group_items: {  }
           plugin_id: string
+        field_profile_bool_indirectory_value_1:
+          id: field_profile_bool_indirectory_value_1
+          table: profile__field_profile_bool_indirectory
+          field: field_profile_bool_indirectory_value
+          relationship: profile_type_1
+          group_type: group
+          admin_label: ''
+          operator: '='
+          value: '1'
+          group: 2
+          exposed: false
+          expose:
+            operator_id: ''
+            label: ''
+            description: ''
+            use_operator: false
+            operator: ''
+            identifier: ''
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+          plugin_id: boolean
+        field_profile_bool_indirectory_value_2:
+          id: field_profile_bool_indirectory_value_2
+          table: profile__field_profile_bool_indirectory
+          field: field_profile_bool_indirectory_value
+          relationship: profile_type_2
+          group_type: group
+          admin_label: ''
+          operator: '='
+          value: '1'
+          group: 2
+          exposed: false
+          expose:
+            operator_id: ''
+            label: ''
+            description: ''
+            use_operator: false
+            operator: ''
+            identifier: ''
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+          plugin_id: boolean
       sorts:
         access:
           id: access
@@ -969,8 +873,19 @@ display:
           relationship: none
           group_type: group
           admin_label: 'Profile Type (Member)'
-          required: true
+          required: false
           profile_type: member
+          entity_type: user
+          plugin_id: profile_relationship
+        profile_type_1:
+          id: profile_type_1
+          table: users_field_data
+          field: profile_type
+          relationship: none
+          group_type: group
+          admin_label: 'Profile Type (Individual)'
+          required: false
+          profile_type: individual_associate
           entity_type: user
           plugin_id: profile_relationship
         profile_type_2:
@@ -979,9 +894,9 @@ display:
           field: profile_type
           relationship: none
           group_type: group
-          admin_label: 'Profile Type (Associate)'
-          required: true
-          profile_type: associate
+          admin_label: 'Profile Type (Collective)'
+          required: false
+          profile_type: collective_associate
           entity_type: user
           plugin_id: profile_relationship
       arguments: {  }
@@ -991,6 +906,7 @@ display:
         operator: AND
         groups:
           1: AND
+          2: OR
       use_ajax: true
       group_by: false
     cache_metadata:
@@ -1030,6 +946,692 @@ display:
         context: '0'
         menu_name: section-association
       display_description: ''
+    cache_metadata:
+      max-age: -1
+      contexts:
+        - 'languages:language_content'
+        - 'languages:language_interface'
+        - url
+        - url.query_args
+        - user.permissions
+      tags:
+        - 'config:field.storage.profile.field_profile_name_fullname'
+        - 'config:field.storage.user.user_picture'
+  page_collective:
+    display_plugin: page
+    id: page_collective
+    display_title: 'Page: Collective Associate Directory'
+    position: 3
+    display_options:
+      display_extenders:
+        metatag_display_extender: {  }
+      path: associacao/diretorio/coletivo
+      defaults:
+        style: true
+        row: true
+        relationships: false
+        title: false
+        filters: false
+        filter_groups: false
+      menu:
+        type: normal
+        title: 'Diretório de Associados Coletivos'
+        description: ''
+        expanded: false
+        parent: 'views_view:views.association_directory.page_associate'
+        weight: -49
+        context: '0'
+        menu_name: section-association
+      display_description: ''
+      relationships:
+        profile_type:
+          id: profile_type
+          table: users_field_data
+          field: profile_type
+          relationship: none
+          group_type: group
+          admin_label: 'Profile Type (Member)'
+          required: false
+          profile_type: member
+          entity_type: user
+          plugin_id: profile_relationship
+        profile_type_1:
+          id: profile_type_1
+          table: users_field_data
+          field: profile_type
+          relationship: none
+          group_type: group
+          admin_label: 'Profile Type (Colective)'
+          required: false
+          profile_type: collective_associate
+          entity_type: user
+          plugin_id: profile_relationship
+      title: 'Diretório de Associados Coletivos'
+      filters:
+        uid_raw:
+          id: uid_raw
+          table: users_field_data
+          field: uid_raw
+          relationship: none
+          group_type: group
+          admin_label: ''
+          operator: '!='
+          value:
+            min: ''
+            max: ''
+            value: '1'
+          group: 1
+          exposed: false
+          expose:
+            operator_id: ''
+            label: ''
+            description: ''
+            use_operator: false
+            operator: ''
+            identifier: ''
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+          entity_type: user
+          plugin_id: numeric
+        status:
+          id: status
+          table: users_field_data
+          field: status
+          relationship: none
+          group_type: group
+          admin_label: ''
+          operator: '='
+          value: '1'
+          group: 1
+          exposed: false
+          expose:
+            operator_id: ''
+            label: ''
+            description: ''
+            use_operator: false
+            operator: ''
+            identifier: ''
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+          plugin_id: boolean
+          entity_type: user
+          entity_field: status
+        field_profile_bool_indirectory_value:
+          id: field_profile_bool_indirectory_value
+          table: profile__field_profile_bool_indirectory
+          field: field_profile_bool_indirectory_value
+          relationship: profile_type_1
+          group_type: group
+          admin_label: ''
+          operator: '='
+          value: '1'
+          group: 1
+          exposed: false
+          expose:
+            operator_id: ''
+            label: ''
+            description: ''
+            use_operator: false
+            operator: ''
+            identifier: ''
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+          plugin_id: boolean
+        name:
+          id: name
+          table: users_field_data
+          field: name
+          relationship: none
+          group_type: group
+          admin_label: ''
+          operator: contains
+          value: ''
+          group: 1
+          exposed: true
+          expose:
+            operator_id: name_op
+            label: 'User name'
+            description: ''
+            use_operator: false
+            operator: name_op
+            identifier: username
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+              anonymous: '0'
+              author: '0'
+              moderator: '0'
+              administrator: '0'
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+          entity_type: user
+          entity_field: name
+          plugin_id: string
+        field_profile_name_fullname:
+          id: field_profile_name_fullname
+          table: profile__field_profile_name_fullname
+          field: field_profile_name_fullname
+          relationship: profile_type
+          group_type: group
+          admin_label: ''
+          operator: contains
+          value: ''
+          group: 1
+          exposed: true
+          expose:
+            operator_id: field_profile_name_fullname_op
+            label: 'Full name'
+            description: ''
+            use_operator: false
+            operator: field_profile_name_fullname_op
+            identifier: field_profile_name_fullname
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+              anonymous: '0'
+              author: '0'
+              moderator: '0'
+              administrator: '0'
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+          plugin_id: name_fulltext
+        field_profile_address_postal_country_code:
+          id: field_profile_address_postal_country_code
+          table: profile__field_profile_address_postal
+          field: field_profile_address_postal_country_code
+          relationship: profile_type
+          group_type: group
+          admin_label: ''
+          operator: in
+          value: {  }
+          group: 1
+          exposed: true
+          expose:
+            operator_id: field_profile_address_postal_country_code_op
+            label: Country
+            description: ''
+            use_operator: false
+            operator: field_profile_address_postal_country_code_op
+            identifier: field_profile_address_postal_country_code
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+              anonymous: '0'
+              author: '0'
+              moderator: '0'
+              administrator: '0'
+            reduce: false
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+          plugin_id: country_code
+        field_profile_address_postal_locality:
+          id: field_profile_address_postal_locality
+          table: profile__field_profile_address_postal
+          field: field_profile_address_postal_locality
+          relationship: profile_type
+          group_type: group
+          admin_label: ''
+          operator: '='
+          value: ''
+          group: 1
+          exposed: true
+          expose:
+            operator_id: field_profile_address_postal_locality_op
+            label: City
+            description: ''
+            use_operator: false
+            operator: field_profile_address_postal_locality_op
+            identifier: field_profile_address_postal_locality
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+              anonymous: '0'
+              author: '0'
+              moderator: '0'
+              administrator: '0'
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+          plugin_id: string
+      filter_groups:
+        operator: AND
+        groups:
+          1: AND
+    cache_metadata:
+      max-age: -1
+      contexts:
+        - 'languages:language_content'
+        - 'languages:language_interface'
+        - url
+        - url.query_args
+        - user.permissions
+      tags:
+        - 'config:field.storage.profile.field_profile_name_fullname'
+        - 'config:field.storage.user.user_picture'
+  page_individual:
+    display_plugin: page
+    id: page_individual
+    display_title: 'Page: Individual Associate Directory'
+    position: 2
+    display_options:
+      display_extenders:
+        metatag_display_extender: {  }
+      path: associacao/diretorio/individual
+      defaults:
+        style: true
+        row: true
+        relationships: false
+        title: false
+        filters: false
+        filter_groups: false
+      menu:
+        type: normal
+        title: 'Diretório de Associados Individuais'
+        description: ''
+        expanded: false
+        parent: 'views_view:views.association_directory.page_associate'
+        weight: -50
+        context: '0'
+        menu_name: section-association
+      display_description: ''
+      relationships:
+        profile_type:
+          id: profile_type
+          table: users_field_data
+          field: profile_type
+          relationship: none
+          group_type: group
+          admin_label: 'Profile Type (Member)'
+          required: false
+          profile_type: member
+          entity_type: user
+          plugin_id: profile_relationship
+        profile_type_1:
+          id: profile_type_1
+          table: users_field_data
+          field: profile_type
+          relationship: none
+          group_type: group
+          admin_label: 'Profile Type (Individual)'
+          required: false
+          profile_type: individual_associate
+          entity_type: user
+          plugin_id: profile_relationship
+      title: 'Diretório de Associados Individuais'
+      filters:
+        uid_raw:
+          id: uid_raw
+          table: users_field_data
+          field: uid_raw
+          relationship: none
+          group_type: group
+          admin_label: ''
+          operator: '!='
+          value:
+            min: ''
+            max: ''
+            value: '1'
+          group: 1
+          exposed: false
+          expose:
+            operator_id: ''
+            label: ''
+            description: ''
+            use_operator: false
+            operator: ''
+            identifier: ''
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+          entity_type: user
+          plugin_id: numeric
+        status:
+          id: status
+          table: users_field_data
+          field: status
+          relationship: none
+          group_type: group
+          admin_label: ''
+          operator: '='
+          value: '1'
+          group: 1
+          exposed: false
+          expose:
+            operator_id: ''
+            label: ''
+            description: ''
+            use_operator: false
+            operator: ''
+            identifier: ''
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+          plugin_id: boolean
+          entity_type: user
+          entity_field: status
+        field_profile_bool_indirectory_value:
+          id: field_profile_bool_indirectory_value
+          table: profile__field_profile_bool_indirectory
+          field: field_profile_bool_indirectory_value
+          relationship: profile_type_1
+          group_type: group
+          admin_label: ''
+          operator: '='
+          value: '1'
+          group: 1
+          exposed: false
+          expose:
+            operator_id: ''
+            label: ''
+            description: ''
+            use_operator: false
+            operator: ''
+            identifier: ''
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+          plugin_id: boolean
+        name:
+          id: name
+          table: users_field_data
+          field: name
+          relationship: none
+          group_type: group
+          admin_label: ''
+          operator: contains
+          value: ''
+          group: 1
+          exposed: true
+          expose:
+            operator_id: name_op
+            label: 'User name'
+            description: ''
+            use_operator: false
+            operator: name_op
+            identifier: username
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+              anonymous: '0'
+              author: '0'
+              moderator: '0'
+              administrator: '0'
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+          entity_type: user
+          entity_field: name
+          plugin_id: string
+        field_profile_name_fullname:
+          id: field_profile_name_fullname
+          table: profile__field_profile_name_fullname
+          field: field_profile_name_fullname
+          relationship: profile_type
+          group_type: group
+          admin_label: ''
+          operator: contains
+          value: ''
+          group: 1
+          exposed: true
+          expose:
+            operator_id: field_profile_name_fullname_op
+            label: 'Full name'
+            description: ''
+            use_operator: false
+            operator: field_profile_name_fullname_op
+            identifier: field_profile_name_fullname
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+              anonymous: '0'
+              author: '0'
+              moderator: '0'
+              administrator: '0'
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+          plugin_id: name_fulltext
+        field_profile_address_postal_country_code:
+          id: field_profile_address_postal_country_code
+          table: profile__field_profile_address_postal
+          field: field_profile_address_postal_country_code
+          relationship: profile_type
+          group_type: group
+          admin_label: ''
+          operator: in
+          value: {  }
+          group: 1
+          exposed: true
+          expose:
+            operator_id: field_profile_address_postal_country_code_op
+            label: Country
+            description: ''
+            use_operator: false
+            operator: field_profile_address_postal_country_code_op
+            identifier: field_profile_address_postal_country_code
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+              anonymous: '0'
+              author: '0'
+              moderator: '0'
+              administrator: '0'
+            reduce: false
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+          plugin_id: country_code
+        field_profile_address_postal_locality:
+          id: field_profile_address_postal_locality
+          table: profile__field_profile_address_postal
+          field: field_profile_address_postal_locality
+          relationship: profile_type
+          group_type: group
+          admin_label: ''
+          operator: '='
+          value: ''
+          group: 1
+          exposed: true
+          expose:
+            operator_id: field_profile_address_postal_locality_op
+            label: City
+            description: ''
+            use_operator: false
+            operator: field_profile_address_postal_locality_op
+            identifier: field_profile_address_postal_locality
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+              anonymous: '0'
+              author: '0'
+              moderator: '0'
+              administrator: '0'
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+          plugin_id: string
+      filter_groups:
+        operator: AND
+        groups:
+          1: AND
     cache_metadata:
       max-age: -1
       contexts:

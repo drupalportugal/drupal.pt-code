@@ -1,4 +1,4 @@
-uuid: cec5ed86-fc74-4361-9ba4-e4fe17008a1a
+uuid: 65c5a99c-282b-4568-849d-8984cd579704
 langcode: pt-pt
 status: true
 dependencies:
@@ -15,23 +15,23 @@ targetEntityType: commerce_product_variation
 bundle: default
 mode: summary
 content:
-  sku:
-    type: string
-    weight: 1
-    region: content
-    label: inline
+  product_id:
+    type: entity_reference_label
+    weight: 0
+    label: hidden
     settings:
-      link_to_entity: false
+      link: true
     third_party_settings: {  }
+    region: content
   title:
     label: hidden
     type: string
-    weight: 0
+    weight: -5
     settings:
-      link_to_entity: true
+      link_to_entity: false
     third_party_settings: {  }
     region: content
 hidden:
   langcode: true
   price: true
-  product_id: true
+  sku: true

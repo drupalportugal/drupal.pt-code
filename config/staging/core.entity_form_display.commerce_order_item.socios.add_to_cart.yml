@@ -1,0 +1,46 @@
+uuid: 103e4ffe-2dfc-45d8-ba3f-5b283641ff1e
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - commerce_order.commerce_order_item_type.socios
+    - core.entity_form_mode.commerce_order_item.add_to_cart
+    - field.field.commerce_order_item.socios.field_nic
+    - field.field.commerce_order_item.socios.field_nif
+    - field.field.commerce_order_item.socios.license
+  module:
+    - commerce_product
+id: commerce_order_item.socios.add_to_cart
+targetEntityType: commerce_order_item
+bundle: socios
+mode: add_to_cart
+content:
+  field_nic:
+    type: string_textfield
+    weight: 1
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_nif:
+    type: string_textfield
+    weight: 2
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  purchased_entity:
+    type: commerce_product_variation_title
+    weight: 0
+    settings:
+      label_display: true
+      label_text: 'Please select'
+    region: content
+    third_party_settings: {  }
+hidden:
+  created: true
+  license: true
+  quantity: true
+  unit_price: true

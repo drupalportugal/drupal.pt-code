@@ -1,4 +1,4 @@
-uuid: b2f51124-4340-4c7c-acdf-b5d8198923de
+uuid: 2a961201-5d8f-4c4d-8471-98843527b150
 langcode: pt-pt
 status: true
 dependencies:
@@ -275,7 +275,7 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
-          label: Store
+          label: Loja
           exclude: false
           alter:
             alter_text: false
@@ -341,7 +341,7 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
-          label: Customer
+          label: Cliente
           exclude: false
           alter:
             alter_text: false
