@@ -68,6 +68,7 @@
     "drupal/select_or_other": "^1.0.0-alpha3",
     "drupal/token": "^1.1.0",
     "drupal/views_slideshow": "^4.6.0",
+    "drupal/content_access": "^1.0",
     "webflo/drupal-finder": "^0.3.0",
     "webmozart/path-util": "^2.3.0"
   },
