@@ -1,9 +1,0 @@
-langcode: en
-status: true
-dependencies: {  }
-id: default
-label: Default
-description: ''
-variationType: default
-injectVariationFields: true
-traits: {  }

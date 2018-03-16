@@ -1,4 +1,0 @@
-administer licenses:
-  title: 'Administer License entities'
-  description: 'Create, edit, and delete all licenses.'
-  restrict access: true

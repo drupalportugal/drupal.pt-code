@@ -7,6 +7,6 @@ events:
           type: script
           script:
             # Build non-development composer packages.
-            - rm -rf docroot/modules/contrib/*
+            # - composer install --no-interaction --no-dev --optimize-autoloader
             - composer update --no-interaction --no-dev --optimize-autoloader
 

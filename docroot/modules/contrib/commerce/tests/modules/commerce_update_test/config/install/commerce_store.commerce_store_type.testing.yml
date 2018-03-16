@@ -1,7 +1,0 @@
-langcode: en
-status: true
-dependencies: {  }
-id: testing
-label: Testing
-description: ''
-traits: {  }

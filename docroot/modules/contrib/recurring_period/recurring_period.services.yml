@@ -1,8 +1,0 @@
-services:
-  plugin.manager.recurring_period:
-    class: Drupal\recurring_period\RecurringPeriodManager
-    parent: default_plugin_manager
-  recurring_period.referenceable_plugin_types_subscriber:
-    class: Drupal\recurring_period\EventSubscriber\ReferenceablePluginTypesSubscriber
-    tags:
-      - { name: event_subscriber }
