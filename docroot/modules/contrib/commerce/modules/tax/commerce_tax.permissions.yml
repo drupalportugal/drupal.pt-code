@@ -1,3 +1,0 @@
-administer commerce_tax_type:
-  title: 'Administer tax types'
-  'restrict access': TRUE
