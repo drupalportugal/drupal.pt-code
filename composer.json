@@ -85,12 +85,13 @@
       "phpunit/phpunit": ">=4.8.28 <5",
       "symfony/css-selector": "^2.8"
     },
+    "conflict": {
+      "drupal/drupal": "*"
+    },
     "minimum-stability": "dev",
     "prefer-stable": true,
     "config": {
-      "preferred-install": "dist",
-      "autoloader-suffix": "Drupal8",
-      "vendor-dir": "./vendor"
+      "sort-packages": true
     },
     "autoload": {
       "psr-4": {
@@ -117,14 +118,12 @@
     },
     "extra": {
       "installer-paths": {
-        "core": ["type:drupal-core"],
-        "modules/contrib/{$name}": ["type:drupal-module"],
-        "profiles/contrib/{$name}": ["type:drupal-profile"],
-        "themes/contrib/{$name}": ["type:drupal-theme"],
-        "drush/contrib/{$name}": ["type:drupal-drush"],
-        "modules/custom/{$name}": ["type:drupal-custom-module"],
-        "themes/custom/{$name}": ["type:drupal-custom-theme"],
-        "libraries/{$name}" : ["type:drupal-library"]
+        "docroot/core": ["type:drupal-core"],
+        "docroot/libraries/{$name}": ["type:drupal-library"],
+        "docroot/modules/contrib/{$name}": ["type:drupal-module"],
+        "docroot/profiles/contrib/{$name}": ["type:drupal-profile"],
+        "docroot/themes/contrib/{$name}": ["type:drupal-theme"],
+        "drush/contrib/{$name}": ["type:drupal-drush"]
       },
       "patches": {
           "drupal/core": {
