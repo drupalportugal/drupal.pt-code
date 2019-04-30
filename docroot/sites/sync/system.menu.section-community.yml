@@ -1,0 +1,8 @@
+uuid: 6ad4a5f8-25ae-40e3-a61d-d21978022aa3
+langcode: pt-pt
+status: true
+dependencies: {  }
+id: section-community
+label: 'Secção: Comunidade'
+description: 'Navegação para a secção Comunidade'
+locked: false

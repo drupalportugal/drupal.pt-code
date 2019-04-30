@@ -1,0 +1,20 @@
+uuid: bab62772-2db7-4950-95f3-64883ccf2e8a
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - node.type.funcionalidade
+id: node.funcionalidade.uid
+field_name: uid
+entity_type: node
+bundle: funcionalidade
+label: 'Authored by'
+description: 'The username of the content author.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: 'Drupal\node\Entity\Node::getCurrentUserId'
+settings:
+  handler: default
+  handler_settings: {  }
+field_type: entity_reference

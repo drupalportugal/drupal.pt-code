@@ -1,0 +1,14 @@
+uuid: 1d360126-4c65-4295-a058-c88775079c4f
+langcode: pt-pt
+status: true
+dependencies:
+  module:
+    - aggregator
+id: default_aggregator
+label: 'Default Aggregator'
+type: 'canonical_entities:aggregator_feed'
+pattern: 'aggregator/sources/[aggregator_feed:fid]'
+selection_criteria: {  }
+selection_logic: and
+weight: 5
+relationships: {  }

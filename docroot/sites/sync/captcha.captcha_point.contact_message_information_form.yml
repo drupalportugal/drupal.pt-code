@@ -1,0 +1,7 @@
+uuid: 060b7083-ad41-4b1f-bfda-56bcfa4f0950
+langcode: pt-pt
+status: true
+dependencies: {  }
+formId: contact_message_information_form
+captchaType: recaptcha/reCAPTCHA
+label: contact-message-information-form

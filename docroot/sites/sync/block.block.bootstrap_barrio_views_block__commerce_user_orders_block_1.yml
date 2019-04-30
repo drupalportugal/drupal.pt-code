@@ -1,0 +1,33 @@
+uuid: 8ae11d04-db0b-4a06-a389-cff3a33ade48
+langcode: pt-pt
+status: false
+dependencies:
+  config:
+    - views.view.commerce_user_orders
+  module:
+    - user
+    - views
+  theme:
+    - bootstrap_barrio
+id: bootstrap_barrio_views_block__commerce_user_orders_block_1
+theme: bootstrap_barrio
+region: sidebar_second
+weight: -11
+provider: null
+plugin: 'views_block:commerce_user_orders-block_1'
+settings:
+  id: 'views_block:commerce_user_orders-block_1'
+  label: ''
+  provider: views
+  label_display: visible
+  views_label: ''
+  items_per_page: '5'
+  context_mapping: {  }
+visibility:
+  user_role:
+    id: user_role
+    roles:
+      associate: associate
+    negate: false
+    context_mapping:
+      user: '@user.current_user_context:current_user'

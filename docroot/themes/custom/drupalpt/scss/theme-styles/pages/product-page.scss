@@ -1,0 +1,42 @@
+/*
+*
+--- --- --- PRODUCT PAGE --- --- ---
+*
+*/
+
+
+.path-product {
+
+    #block-drupalpt-content {
+        article p {
+            margin-bottom: 15px; 
+        }
+
+        .field--name-price {
+            margin: 25px 0;
+
+            .field__label {
+                font: 500 16px/18px 'Inter', sans-serif;
+                letter-spacing: -0.5px;
+                text-transform: uppercase;
+                margin-bottom: 5px;
+            }
+        }
+
+        .form-group {
+            fieldset {
+                padding: 0;
+                margin-bottom: 25px;
+
+                label {
+                    font: 500 16px/18px 'Inter', sans-serif;
+                    letter-spacing: -0.5px;
+                    text-transform: uppercase;
+                }
+            }
+            button {
+                @extend %mini-link-styles;
+            }
+        }
+    }
+}

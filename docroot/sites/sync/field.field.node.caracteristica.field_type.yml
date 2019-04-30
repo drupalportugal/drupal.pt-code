@@ -1,0 +1,29 @@
+uuid: e24d8996-5f6d-4631-af30-f3e171c90a22
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_type
+    - node.type.caracteristica
+    - taxonomy.vocabulary.characteristic_type
+id: node.caracteristica.field_type
+field_name: field_type
+entity_type: node
+bundle: caracteristica
+label: Tipo
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      characteristic_type: characteristic_type
+    sort:
+      field: name
+      direction: asc
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

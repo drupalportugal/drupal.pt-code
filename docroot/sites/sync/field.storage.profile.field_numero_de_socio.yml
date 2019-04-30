@@ -1,0 +1,21 @@
+uuid: 2e90b854-e8f2-4c2d-8ec1-348b223b39c4
+langcode: pt-pt
+status: true
+dependencies:
+  module:
+    - profile
+id: profile.field_numero_de_socio
+field_name: field_numero_de_socio
+entity_type: profile
+type: string
+settings:
+  max_length: 255
+  is_ascii: false
+  case_sensitive: false
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

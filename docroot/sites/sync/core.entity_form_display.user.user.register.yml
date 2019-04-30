@@ -1,0 +1,62 @@
+uuid: 331c15dc-8d8a-475f-a2a0-7748c7478172
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - core.entity_form_mode.user.register
+    - field.field.user.user.commerce_remote_id
+    - field.field.user.user.user_picture
+    - image.style.thumbnail
+  module:
+    - image
+    - path
+    - user
+_core:
+  default_config_hash: LLAieeozVsoZDb-2PbFxRJpQqnKmpR7-4OoRJnduz-U
+id: user.user.register
+targetEntityType: user
+bundle: user
+mode: register
+content:
+  account:
+    weight: 0
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  contact:
+    weight: 6
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  google_analytics:
+    weight: 7
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  language:
+    weight: 4
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  path:
+    type: path
+    weight: 2
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  timezone:
+    weight: 3
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  user_picture:
+    settings:
+      preview_image_style: thumbnail
+      progress_indicator: bar
+    type: image_image
+    weight: 1
+    third_party_settings: {  }
+    region: content
+hidden:
+  commerce_remote_id: true
+  langcode: true

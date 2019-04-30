@@ -1,0 +1,22 @@
+uuid: 290314d0-f08c-450e-9496-87c5b27796c3
+langcode: pt-pt
+status: true
+dependencies:
+  theme:
+    - bootstrap_barrio
+_core:
+  default_config_hash: X9I1OB0W3WlWtrK-CNcg6hNWwa8wficanpH8pYnDZDE
+id: bootstrap_barrio_local_tasks
+theme: bootstrap_barrio
+region: content
+weight: -13
+provider: null
+plugin: local_tasks_block
+settings:
+  id: local_tasks_block
+  label: Separadores
+  provider: core
+  label_display: '0'
+  primary: true
+  secondary: true
+visibility: {  }

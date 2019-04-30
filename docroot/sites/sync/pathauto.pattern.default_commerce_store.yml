@@ -1,0 +1,14 @@
+uuid: 44d17543-2ac3-4d8f-925a-17341a97dd63
+langcode: pt-pt
+status: true
+dependencies:
+  module:
+    - commerce_store
+id: default_commerce_store
+label: 'Default Commerce Store'
+type: 'canonical_entities:commerce_store'
+pattern: 'store/[commerce_store:name]'
+selection_criteria: {  }
+selection_logic: and
+weight: 10
+relationships: {  }

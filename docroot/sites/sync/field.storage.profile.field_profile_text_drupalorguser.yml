@@ -1,0 +1,21 @@
+uuid: 931d3296-8969-4c3d-b981-cf0489e9c39a
+langcode: pt-pt
+status: true
+dependencies:
+  module:
+    - profile
+id: profile.field_profile_text_drupalorguser
+field_name: field_profile_text_drupalorguser
+entity_type: profile
+type: string
+settings:
+  max_length: 60
+  is_ascii: false
+  case_sensitive: false
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

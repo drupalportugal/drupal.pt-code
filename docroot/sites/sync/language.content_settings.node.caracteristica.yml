@@ -1,0 +1,11 @@
+uuid: ae1b0589-8670-4b50-b875-454f31ca6743
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.caracteristica
+id: node.caracteristica
+target_entity_type_id: node
+target_bundle: caracteristica
+default_langcode: site_default
+language_alterable: true

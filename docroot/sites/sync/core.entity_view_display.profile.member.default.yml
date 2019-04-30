@@ -1,0 +1,113 @@
+uuid: 28b2b089-d668-4531-9fc7-5e627261546a
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - field.field.profile.member.field_profile_address_postal
+    - field.field.profile.member.field_profile_bool_indirectory
+    - field.field.profile.member.field_profile_date_birthdate
+    - field.field.profile.member.field_profile_email_email
+    - field.field.profile.member.field_profile_lang_languages
+    - field.field.profile.member.field_profile_link_website
+    - field.field.profile.member.field_profile_list_genderident
+    - field.field.profile.member.field_profile_name_fullname
+    - field.field.profile.member.field_profile_phone_telephone
+    - field.field.profile.member.field_profile_text_biography
+    - field.field.profile.member.field_profile_text_drupalorguser
+    - field.field.profile.member.field_profile_text_jobtitle
+    - profile.type.member
+  module:
+    - age_field_formatter
+    - ds
+    - layout_builder
+    - name
+third_party_settings:
+  ds:
+    layout:
+      id: ds_1col_wrapper
+      library: null
+      disable_css: false
+      entity_classes: all_classes
+      settings:
+        wrappers:
+          ds_content: div
+        outer_wrapper: section
+        attributes: ''
+        link_attribute: ''
+        link_custom: ''
+        classes:
+          layout_class: {  }
+          ds_content:
+            container: container
+    regions:
+      ds_content:
+        - 'dynamic_block_field:profile-user_fields_picture'
+        - field_profile_name_fullname
+        - field_profile_date_birthdate
+        - field_profile_email_email
+        - field_profile_text_drupalorguser
+    fields:
+      'dynamic_block_field:profile-user_fields_picture':
+        plugin_id: 'dynamic_block_field:profile-user_fields_picture'
+        weight: 0
+        label: hidden
+        formatter: default
+  layout_builder:
+    sections: {  }
+id: profile.member.default
+targetEntityType: profile
+bundle: member
+mode: default
+content:
+  field_profile_date_birthdate:
+    weight: 2
+    label: above
+    settings:
+      age_format: birthdate
+      year_suffix: '1'
+      date_format: 'Y-m-d\TH:i:s'
+    third_party_settings: {  }
+    type: age_field_formatter
+    region: ds_content
+  field_profile_email_email:
+    weight: 3
+    label: above
+    settings: {  }
+    third_party_settings:
+      ds:
+        ds_limit: ''
+    type: email_mailto
+    region: ds_content
+  field_profile_name_fullname:
+    weight: 1
+    label: above
+    settings:
+      format: default
+      output: default
+      multiple: default
+      multiple_delimiter: ', '
+      multiple_and: text
+      multiple_delimiter_precedes_last: never
+      multiple_el_al_min: '3'
+      multiple_el_al_first: '1'
+      markup: false
+    third_party_settings: {  }
+    type: name_default
+    region: ds_content
+  field_profile_text_drupalorguser:
+    weight: 4
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: ds_content
+hidden:
+  field_profile_address_postal: true
+  field_profile_bool_indirectory: true
+  field_profile_lang_languages: true
+  field_profile_link_website: true
+  field_profile_list_genderident: true
+  field_profile_phone_telephone: true
+  field_profile_text_biography: true
+  field_profile_text_jobtitle: true

@@ -1,0 +1,14 @@
+uuid: f5196a9f-d61b-472f-9fb1-4875aaa30133
+langcode: pt-pt
+status: true
+dependencies:
+  module:
+    - commerce_order
+id: default_commerce_order
+label: 'Default Commerce Order'
+type: 'canonical_entities:commerce_order'
+pattern: 'order/[commerce_order:order_id]'
+selection_criteria: {  }
+selection_logic: and
+weight: 8
+relationships: {  }

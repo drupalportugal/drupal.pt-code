@@ -1,0 +1,25 @@
+uuid: 318a87f4-39fd-4942-87af-daa2e2c4baf8
+langcode: en
+status: true
+dependencies:
+  content:
+    - 'block_content:basic:1ac0b73b-e4ae-4b13-8355-d01e5f4b925a'
+  module:
+    - block_content
+  theme:
+    - drupalpt
+id: madewithdrupal8
+theme: drupalpt
+region: footer_second
+weight: 0
+provider: null
+plugin: 'block_content:1ac0b73b-e4ae-4b13-8355-d01e5f4b925a'
+settings:
+  id: 'block_content:1ac0b73b-e4ae-4b13-8355-d01e5f4b925a'
+  label: 'Made with Drupal 8'
+  provider: block_content
+  label_display: '0'
+  status: true
+  info: ''
+  view_mode: full
+visibility: {  }

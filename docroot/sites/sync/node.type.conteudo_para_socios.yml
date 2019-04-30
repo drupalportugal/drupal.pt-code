@@ -1,0 +1,23 @@
+uuid: 7c6cec24-b498-4e0d-b7b7-379488fd5dde
+langcode: pt-pt
+status: true
+dependencies:
+  module:
+    - menu_ui
+third_party_settings:
+  menu_ui:
+    available_menus:
+      - main-menu
+      - main
+      - footer
+      - section-association
+      - section-community
+      - section-drupal
+    parent: 'main-menu:menu_link_content:d8fd5018-f6d2-4773-b8f5-7d7ab609c634'
+name: 'Conteúdo para sócios'
+type: conteudo_para_socios
+description: ''
+help: ''
+new_revision: true
+preview_mode: 1
+display_submitted: false

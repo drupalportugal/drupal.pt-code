@@ -1,0 +1,21 @@
+uuid: 5faa56e9-bff2-49aa-82c7-145b34038e1f
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_func_body
+    - node.type.funcionalidade
+  module:
+    - text
+id: node.funcionalidade.field_func_body
+field_name: field_func_body
+entity_type: node
+bundle: funcionalidade
+label: Descrição
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: text_long

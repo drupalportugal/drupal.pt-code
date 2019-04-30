@@ -1,0 +1,24 @@
+uuid: da186f05-b5fe-441e-9518-3a4d1c23e783
+langcode: pt-pt
+status: false
+dependencies:
+  config:
+    - views.view.events
+  module:
+    - views
+  theme:
+    - bootstrap_barrio
+id: bootstrap_barrio_views_block__events_block_events
+theme: bootstrap_barrio
+region: footer_second
+weight: 0
+provider: null
+plugin: 'views_block:events-block_events'
+settings:
+  id: 'views_block:events-block_events'
+  label: Eventos
+  provider: views
+  label_display: visible
+  views_label: ''
+  items_per_page: none
+visibility: {  }

@@ -1,0 +1,31 @@
+uuid: 43b57be6-a5e7-4b37-a613-9ee84cd626fe
+langcode: pt-pt
+status: false
+dependencies:
+  content:
+    - 'block_content:basic:25678aef-4f17-4688-9f8e-e5cff2cbd6e4'
+  module:
+    - block_content
+    - system
+  theme:
+    - bootstrap_barrio
+id: bootstrap_barrio_custom_follow_us
+theme: bootstrap_barrio
+region: sidebar_second
+weight: -12
+provider: null
+plugin: 'block_content:25678aef-4f17-4688-9f8e-e5cff2cbd6e4'
+settings:
+  id: 'block_content:25678aef-4f17-4688-9f8e-e5cff2cbd6e4'
+  label: Segue-nos
+  provider: block_content
+  label_display: visible
+  status: true
+  info: ''
+  view_mode: full
+visibility:
+  request_path:
+    id: request_path
+    pages: '<front>'
+    negate: false
+    context_mapping: {  }

@@ -1,0 +1,19 @@
+uuid: 58da1d17-52b7-4e44-813c-6a84196af9f1
+langcode: en
+status: true
+dependencies:
+  module:
+    - link
+    - node
+id: node.field_use_case_url
+field_name: field_use_case_url
+entity_type: node
+type: link
+settings: {  }
+module: link
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

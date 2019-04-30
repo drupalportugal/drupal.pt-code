@@ -1,0 +1,31 @@
+uuid: 4ac71587-39d7-42ae-94b2-2eb84fa1bb14
+langcode: pt-pt
+status: true
+dependencies:
+  content:
+    - 'block_content:basic:9bff8c56-5e36-48c2-9133-b42abaf983a1'
+  module:
+    - block_content
+    - system
+  theme:
+    - bootstrap_barrio
+id: bootstrap_barrio_custom_contact_us
+theme: bootstrap_barrio
+region: content
+weight: -10
+provider: null
+plugin: 'block_content:9bff8c56-5e36-48c2-9133-b42abaf983a1'
+settings:
+  id: 'block_content:9bff8c56-5e36-48c2-9133-b42abaf983a1'
+  label: Contacta-nos
+  provider: block_content
+  label_display: '0'
+  status: true
+  info: ''
+  view_mode: full
+visibility:
+  request_path:
+    id: request_path
+    pages: "/contacta-nos\r\n/contacta-nos/*\r\n/contact\r\n/contact/*"
+    negate: false
+    context_mapping: {  }

@@ -1,0 +1,22 @@
+uuid: c5fc67e5-ce5d-4716-9db6-e0afd0bfee69
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - field.storage.node.body
+    - node.type.paginas
+  module:
+    - text
+id: node.paginas.body
+field_name: body
+entity_type: node
+bundle: paginas
+label: Body
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  display_summary: true
+field_type: text_with_summary

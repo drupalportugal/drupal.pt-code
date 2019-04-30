@@ -1,0 +1,36 @@
+uuid: 05af7e3a-407b-42ec-b1ac-eeae42667b9b
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+    - options
+id: node.field_placement
+field_name: field_placement
+entity_type: node
+type: list_string
+settings:
+  allowed_values:
+    -
+      value: '1'
+      label: Inicio
+    -
+      value: '2'
+      label: 'Recursos - Como aprender'
+    -
+      value: '3'
+      label: 'Recursos - Como contribuir'
+    -
+      value: '4'
+      label: 'Comunidade - Bem vindo'
+    -
+      value: '5'
+      label: 'Inicio - Comunidade'
+  allowed_values_function: ''
+module: options
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

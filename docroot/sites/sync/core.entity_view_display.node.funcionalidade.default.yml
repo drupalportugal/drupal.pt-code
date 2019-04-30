@@ -1,0 +1,29 @@
+uuid: 0cf4f910-dbda-4f26-a259-5feae5a70e03
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - field.field.node.funcionalidade.field_func_body
+    - node.type.funcionalidade
+  module:
+    - text
+    - user
+id: node.funcionalidade.default
+targetEntityType: node
+bundle: funcionalidade
+mode: default
+content:
+  field_func_body:
+    label: hidden
+    weight: 1
+    type: text_default
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  links:
+    weight: 100
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+hidden:
+  langcode: true

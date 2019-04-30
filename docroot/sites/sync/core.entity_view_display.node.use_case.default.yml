@@ -1,0 +1,65 @@
+uuid: 6a6d756d-9312-4c16-bb31-3f7051feadb4
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.use_case.body
+    - field.field.node.use_case.field_logo
+    - field.field.node.use_case.field_media_image
+    - field.field.node.use_case.field_use_case_url
+    - image.style.use_case_image
+    - node.type.use_case
+  module:
+    - layout_builder
+    - link
+    - media
+    - text
+    - user
+third_party_settings:
+  layout_builder:
+    sections: {  }
+id: node.use_case.default
+targetEntityType: node
+bundle: use_case
+mode: default
+content:
+  body:
+    label: hidden
+    type: text_default
+    weight: 2
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  field_logo:
+    type: media_thumbnail
+    weight: 1
+    label: hidden
+    settings:
+      image_style: use_case_logo_170_70_
+      image_link: ''
+    third_party_settings: {  }
+    region: content
+  field_media_image:
+    type: media_thumbnail
+    weight: 0
+    label: hidden
+    settings:
+      image_style: use_case_image
+      image_link: ''
+    third_party_settings: {  }
+    region: content
+  field_use_case_url:
+    weight: 3
+    label: hidden
+    settings:
+      trim_length: 80
+      url_only: false
+      url_plain: false
+      rel: ''
+      target: ''
+    third_party_settings: {  }
+    type: link
+    region: content
+hidden:
+  langcode: true
+  links: true

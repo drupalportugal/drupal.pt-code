@@ -1,0 +1,31 @@
+uuid: 4ffd354a-b75a-4098-b804-3870b3e6c24e
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - field.field.node.paginas.body
+    - node.type.paginas
+  module:
+    - text
+    - user
+id: node.paginas.teaser
+targetEntityType: node
+bundle: paginas
+mode: teaser
+content:
+  body:
+    label: hidden
+    type: text_summary_or_trimmed
+    weight: 101
+    settings:
+      trim_length: 600
+    third_party_settings: {  }
+    region: content
+  links:
+    weight: 100
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+hidden:
+  langcode: true

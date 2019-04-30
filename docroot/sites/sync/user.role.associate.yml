@@ -1,0 +1,11 @@
+uuid: 85222f4b-c3d9-49eb-abab-9d78f12ae3a3
+langcode: pt-pt
+status: true
+dependencies: {  }
+id: associate
+label: Sócio
+weight: -8
+is_admin: null
+permissions:
+  - 'display eu cookie compliance popup'
+  - 'view own socio_adp profile'

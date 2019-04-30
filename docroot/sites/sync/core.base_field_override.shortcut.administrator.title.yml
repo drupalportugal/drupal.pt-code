@@ -1,0 +1,18 @@
+uuid: 0eb16c1f-59de-4b0e-b8b0-5bde75cdc7fb
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - shortcut.set.administrator
+id: shortcut.administrator.title
+field_name: title
+entity_type: shortcut
+bundle: administrator
+label: Name
+description: 'The name of the shortcut.'
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

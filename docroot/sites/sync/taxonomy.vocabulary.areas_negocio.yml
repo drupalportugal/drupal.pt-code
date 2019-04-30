@@ -1,0 +1,9 @@
+uuid: beb3357b-e3a3-4cb6-b167-ecac2e282d1a
+langcode: pt-pt
+status: true
+dependencies: {  }
+name: 'Áreas de negócio'
+vid: areas_negocio
+description: 'Por áreas de negócio entende-se sectores de actividade: eGov, Educação, Saúde, Indústria...'
+hierarchy: 0
+weight: 0

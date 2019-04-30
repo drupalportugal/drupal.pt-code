@@ -1,0 +1,22 @@
+uuid: 2eb03cc2-be12-4aeb-954d-c031f657d52e
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - field.storage.node.body
+    - node.type.conteudo_para_socios
+  module:
+    - text
+id: node.conteudo_para_socios.body
+field_name: body
+entity_type: node
+bundle: conteudo_para_socios
+label: Body
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  display_summary: true
+field_type: text_with_summary

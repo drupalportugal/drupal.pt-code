@@ -1,0 +1,25 @@
+uuid: c11b2aa6-df8c-40a8-b11e-119a2b695d45
+langcode: pt-pt
+status: false
+dependencies:
+  content:
+    - 'block_content:basic:9258650d-736d-4f09-b9a1-f4ff27fe25fc'
+  module:
+    - block_content
+  theme:
+    - bootstrap_barrio
+id: bootstrap_barrio_custom_keep_up
+theme: bootstrap_barrio
+region: footer_fourth
+weight: -14
+provider: null
+plugin: 'block_content:9258650d-736d-4f09-b9a1-f4ff27fe25fc'
+settings:
+  id: 'block_content:9258650d-736d-4f09-b9a1-f4ff27fe25fc'
+  label: Acompanha
+  provider: block_content
+  label_display: visible
+  status: true
+  info: ''
+  view_mode: full
+visibility: {  }

@@ -1,0 +1,12 @@
+uuid: fed867d8-27eb-4755-9502-9cdf3e77f38b
+langcode: pt-pt
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: 96ryTApvzUl00vKGZusJUDgPHQALAKN8Mb13Jxm02KU
+id: default
+label: Predefinido
+description: ''
+variationType: default
+injectVariationFields: true
+traits: {  }

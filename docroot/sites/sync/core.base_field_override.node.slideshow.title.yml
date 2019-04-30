@@ -1,0 +1,18 @@
+uuid: af545796-e13b-4c6f-997d-21c8e73d26de
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - node.type.slideshow
+id: node.slideshow.title
+field_name: title
+entity_type: node
+bundle: slideshow
+label: Title
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

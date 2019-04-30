@@ -1,0 +1,109 @@
+/*
+*
+--- --- --- INFO PAGES --- --- ---
+*
+*/
+
+//
+/*
+*   INFO PAGES & BASIC PAGE STYLES
+*   --- Termos e Condições: .page-node-719 //NOT USED BUT KEEP STYLES
+*   --- Politica de Privacidade: .page-node-720 //NOT USED BUT KEEP STYLES
+*   --- Página 404
+*/
+
+.page-node-719, .page-node-720, .pagina-404 {
+    .node__content {
+        padding-bottom: 0 !important;
+    }
+}
+
+.info-page, .basic-page  {
+    padding-top: 10rem;
+    padding-bottom: 11rem;
+
+    .node__content {
+        padding-bottom: 0 !important;
+    }
+
+    // --- >>> --- HEADINGS & TEXT STYLES --- >>> --- //
+
+    h1, h2, h3, h4, h5, h6 {
+        margin: 0;
+        padding: 0; 
+    }
+
+    h1 {
+        font: 700 28px/36px 'Inter', sans-serif;
+        letter-spacing: 0;
+        padding: 1rem 0;
+    }
+
+    h2 {
+        font: 500 24px/32px 'Inter', sans-serif;
+        letter-spacing: 0;
+        padding: 2rem 0 1.5rem;
+    }
+
+    h3 {
+        font: 400 20px/24px 'Inter', sans-serif;
+        letter-spacing: 0;
+        padding: 1rem 0;
+    }
+
+    h4 {
+        font: 600 18px/21px 'Inter', sans-serif;
+        letter-spacing: 0;
+        padding: 1rem 0;
+    }
+
+    h5 {
+        font: 700 16px/19px 'Inter', sans-serif;
+        letter-spacing: -0.5px;
+        padding: 1rem 0;
+    }
+
+    h6 {
+        font: 600 18px/21px 'Inter', sans-serif;
+        letter-spacing: -0.5px;
+        padding: 1rem 0;
+    }
+
+    p { 
+        font: 300 16px/24px 'Inter', sans-serif;
+        letter-spacing: 0;
+        color: $black; 
+        
+        margin: 0;
+        padding: 1rem 0;
+    }
+
+    ul li, ol li {
+        font: 300 16px/24px 'Inter', sans-serif;
+        padding: 0.5rem 0;
+    }
+
+    b, strong {
+        font-weight: 700;
+    }
+
+    a {
+        color: $black;
+        font-weight: 500;
+    }
+
+    a:hover {
+        color: $light-blue;
+        text-decoration: none;
+    }
+
+    .field__label {
+        font: 600 16px/19px 'Inter', sans-serif;
+        text-transform: uppercase;
+        padding: 1rem 0;
+    }
+
+    .content-topic:last-child {
+        margin-bottom: 0;
+    }
+}

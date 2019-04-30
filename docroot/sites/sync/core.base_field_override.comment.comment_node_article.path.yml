@@ -1,0 +1,20 @@
+uuid: d973a85e-0738-41c5-ad98-d9acef3fb5d7
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - comment.type.comment_node_article
+  module:
+    - path
+id: comment.comment_node_article.path
+field_name: path
+entity_type: comment
+bundle: comment_node_article
+label: 'URL alternativo'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: path

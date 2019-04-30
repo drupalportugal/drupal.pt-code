@@ -1,0 +1,25 @@
+uuid: 99dd93fb-1d64-4c35-b6c2-8aa8b58ee3f1
+langcode: pt-pt
+status: false
+dependencies:
+  content:
+    - 'block_content:basic:9258650d-736d-4f09-b9a1-f4ff27fe25fc'
+  module:
+    - block_content
+  theme:
+    - drupalpt
+id: drupalpt_custom_keep_up
+theme: drupalpt
+region: footer_fourth
+weight: -14
+provider: null
+plugin: 'block_content:9258650d-736d-4f09-b9a1-f4ff27fe25fc'
+settings:
+  id: 'block_content:9258650d-736d-4f09-b9a1-f4ff27fe25fc'
+  label: Acompanha
+  provider: block_content
+  label_display: visible
+  status: true
+  info: ''
+  view_mode: full
+visibility: {  }

@@ -1,0 +1,16 @@
+uuid: 44688b65-db32-4016-ac50-269303f1b0cf
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - node.type.funcionalidade
+  module:
+    - content_translation
+third_party_settings:
+  content_translation:
+    enabled: true
+id: node.funcionalidade
+target_entity_type_id: node
+target_bundle: funcionalidade
+default_langcode: site_default
+language_alterable: true

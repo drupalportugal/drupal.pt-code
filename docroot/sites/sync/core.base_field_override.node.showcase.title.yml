@@ -1,0 +1,18 @@
+uuid: 38c034b2-f3af-46b4-af7f-ef3ed8cf9503
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - node.type.showcase
+id: node.showcase.title
+field_name: title
+entity_type: node
+bundle: showcase
+label: 'Nome do website'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

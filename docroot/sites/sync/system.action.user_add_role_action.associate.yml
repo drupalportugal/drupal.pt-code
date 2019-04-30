@@ -1,0 +1,14 @@
+uuid: 4f423818-f9cf-483e-8d87-1f0ccf7bfa61
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - user.role.associate
+  module:
+    - user
+id: user_add_role_action.associate
+label: 'Add the Associate role to the selected user(s)'
+type: user
+plugin: user_add_role_action
+configuration:
+  rid: associate

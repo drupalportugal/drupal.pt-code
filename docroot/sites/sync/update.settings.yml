@@ -1,0 +1,14 @@
+check:
+  disabled_extensions: true
+  interval_days: 7
+fetch:
+  url: ''
+  max_attempts: 2
+  timeout: 30
+notification:
+  emails:
+    - webmaster@drupal.pt
+  threshold: security
+_core:
+  default_config_hash: 2QzULf0zovJQx3J06Y9rufzzfi-CY2CTTlEfJJh2Qyw
+langcode: pt-pt

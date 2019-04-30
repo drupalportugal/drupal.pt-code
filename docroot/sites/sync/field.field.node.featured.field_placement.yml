@@ -1,0 +1,21 @@
+uuid: fac3be8e-c862-434d-a97e-8e2685574bf8
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_placement
+    - node.type.featured
+  module:
+    - options
+id: node.featured.field_placement
+field_name: field_placement
+entity_type: node
+bundle: featured
+label: Local
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: list_string

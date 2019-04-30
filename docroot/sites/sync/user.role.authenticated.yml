@@ -1,0 +1,46 @@
+uuid: f69b3e26-c2d8-4431-9abc-8b3984ce87aa
+langcode: pt-pt
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: dJ0L2DNSj5q6XVZAGsuVDpJTh5UeYkIPwKrUOOpr8YI
+id: authenticated
+label: 'Authenticated user'
+weight: -9
+is_admin: false
+permissions:
+  - 'access cart'
+  - 'access checkout'
+  - 'access comments'
+  - 'access content'
+  - 'access news feeds'
+  - 'access site-wide contact form'
+  - 'access user contact forms'
+  - 'access user profiles'
+  - 'cancel account'
+  - 'change own username'
+  - 'create individual_associate profile'
+  - 'create member profile'
+  - 'delete own collective_associate profile'
+  - 'delete own individual_associate profile'
+  - 'delete own member profile'
+  - 'display eu cookie compliance popup'
+  - 'edit own comments'
+  - 'opt-in or out of tracking'
+  - 'post comments'
+  - 'search content'
+  - 'update own collective_associate profile'
+  - 'update own individual_associate profile'
+  - 'update own member profile'
+  - 'use advanced search'
+  - 'use text format markdown'
+  - 'use text format plain_text'
+  - 'use text format restricted_html'
+  - 'view any member profile'
+  - 'view commerce_product'
+  - 'view media'
+  - 'view own collective_associate profile'
+  - 'view own commerce_order'
+  - 'view own individual_associate profile'
+  - 'view own member profile'
+  - 'view own profile'

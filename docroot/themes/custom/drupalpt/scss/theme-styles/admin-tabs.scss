@@ -1,0 +1,80 @@
+/*
+*
+--- --- --- ADMIN TABS --- --- ---
+*
+*/
+
+// POSITION ABSOLUTE ON ADMIN EDIT TABS
+%fixed-admin-edit-navs {
+    position: fixed;
+    background: white;
+    border: 2px solid $light-blue;
+    border-radius: 0;
+    z-index: 100;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.20);
+}
+
+.tabs {
+    position: relative;
+    margin: 0 !important;
+
+    .primary, .secondary {
+        @extend %fixed-admin-edit-navs;
+
+        bottom: 100px;
+        right: 25px;
+    
+        .active {
+            font-weight: 500;
+            border: none;
+
+            background: $light-blue-opaci-25;
+        }
+    
+        .nav-item {
+            margin: 0;
+
+            .nav-link {
+                color: #222222;
+                border-radius: 0;
+                border: none;
+        
+                &:hover {
+                    background: $light-blue-opaci-25;
+                }
+            }
+        }
+    }
+
+    .secondary { 
+        bottom: 280px;
+        right: 25px;
+    }
+}
+
+#block-drupalpt-help {
+    @extend %fixed-admin-edit-navs;
+
+    margin: 0;
+    padding: 15px;
+    width: 540px;
+    bottom: 150px;
+    right: 25px;
+
+    p {
+        font-size: 13px;
+
+        &:last-child {
+            margin: 0;
+        }
+    }
+}
+
+// Better positioning alert msg
+.alert-wrapper {
+    bottom: 350px;
+    right: 25px;
+    left: inherit;
+    width: 500px;
+    z-index: 100;
+}

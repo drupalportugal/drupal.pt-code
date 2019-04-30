@@ -1,0 +1,15 @@
+content_access_roles_gids:
+  anonymous: 1
+  authenticated: 2
+  associate: 3
+  author: 4
+  moderator: 5
+  administrator: 6
+_core:
+  default_config_hash: 7LkiviGITIpniIOOIzpuxR7r4XzqqYN_cwu0fb0kx1M
+langcode: pt-pt
+content_access_node_type:
+  page: 'a:1:{s:8:"per_node";i:1;}'
+  article: 'a:1:{s:8:"per_node";i:1;}'
+  evento: 'a:1:{s:8:"per_node";i:1;}'
+  conteudo_para_socios: 'a:2:{s:8:"view_own";a:2:{i:0;s:9:"associate";i:1;s:13:"administrator";}s:4:"view";a:1:{i:0;s:9:"associate";}}'

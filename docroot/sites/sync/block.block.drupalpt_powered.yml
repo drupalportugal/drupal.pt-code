@@ -1,0 +1,20 @@
+uuid: 5ea388ef-a367-4998-92d7-f654cb7ffe91
+langcode: pt-pt
+status: false
+dependencies:
+  module:
+    - system
+  theme:
+    - drupalpt
+id: drupalpt_powered
+theme: drupalpt
+region: footer_fifth
+weight: 0
+provider: null
+plugin: system_powered_by_block
+settings:
+  id: system_powered_by_block
+  label: 'Energizado com Drupal'
+  provider: system
+  label_display: '0'
+visibility: {  }

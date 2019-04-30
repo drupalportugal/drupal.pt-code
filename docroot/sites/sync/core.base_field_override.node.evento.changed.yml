@@ -1,0 +1,18 @@
+uuid: 3f8e00bc-dcbd-40a8-a178-993c18ad7c12
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - node.type.evento
+id: node.evento.changed
+field_name: changed
+entity_type: node
+bundle: evento
+label: Changed
+description: 'The time that the node was last edited.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: changed

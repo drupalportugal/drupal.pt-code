@@ -1,0 +1,29 @@
+uuid: 990e1f8f-d9c0-44ca-8497-1d4dd17743ce
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - field.field.node.conteudo_para_socios.body
+    - node.type.conteudo_para_socios
+  module:
+    - text
+    - user
+id: node.conteudo_para_socios.default
+targetEntityType: node
+bundle: conteudo_para_socios
+mode: default
+content:
+  body:
+    label: hidden
+    type: text_default
+    weight: 101
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  links:
+    weight: 100
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+hidden:
+  langcode: true

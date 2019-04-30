@@ -1,0 +1,20 @@
+uuid: b14c2227-3d18-43ea-b383-be25008cccd2
+langcode: pt-pt
+status: true
+dependencies:
+  module:
+    - system
+  theme:
+    - bootstrap_barrio
+id: bootstrap_barrio_powered
+theme: bootstrap_barrio
+region: footer_fifth
+weight: 0
+provider: null
+plugin: system_powered_by_block
+settings:
+  id: system_powered_by_block
+  label: 'Energizado com Drupal'
+  provider: system
+  label_display: '0'
+visibility: {  }

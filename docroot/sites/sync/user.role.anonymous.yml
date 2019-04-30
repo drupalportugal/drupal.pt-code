@@ -1,0 +1,24 @@
+uuid: aa8f4089-4b1b-49b6-a1bd-8b77f223898f
+langcode: pt-pt
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: j5zLMOdJBqC0bMvSdth5UebkprJB8g_2FXHqhfpJzow
+id: anonymous
+label: 'Anonymous user'
+weight: -10
+is_admin: false
+permissions:
+  - 'access comments'
+  - 'access content'
+  - 'access news feeds'
+  - 'access site-wide contact form'
+  - 'access user profiles'
+  - 'display eu cookie compliance popup'
+  - 'search content'
+  - 'use text format plain_text'
+  - 'use text format restricted_html'
+  - 'view any member profile'
+  - 'view commerce_product'
+  - 'view media'
+  - 'view own profile'

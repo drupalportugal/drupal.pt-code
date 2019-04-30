@@ -1,0 +1,22 @@
+uuid: cf63f823-8eca-41c7-935d-b2f77846a002
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - node.type.showcase
+id: node.showcase.status
+field_name: status
+entity_type: node
+bundle: showcase
+label: 'Publishing status'
+description: 'A boolean indicating whether the node is published.'
+required: false
+translatable: false
+default_value:
+  -
+    value: 1
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean

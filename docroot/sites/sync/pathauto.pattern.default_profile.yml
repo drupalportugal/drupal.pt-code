@@ -1,0 +1,14 @@
+uuid: 39903b7a-63c2-40cc-ac87-2f218ac81033
+langcode: pt-pt
+status: true
+dependencies:
+  module:
+    - profile
+id: default_profile
+label: 'Default Profile'
+type: 'canonical_entities:profile'
+pattern: 'profile/[profile:profile_id]'
+selection_criteria: {  }
+selection_logic: and
+weight: 6
+relationships: {  }

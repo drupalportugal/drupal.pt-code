@@ -1,0 +1,22 @@
+uuid: 01740837-6e57-4431-a5ab-b6725a392bb7
+langcode: pt-pt
+status: true
+dependencies:
+  theme:
+    - drupalpt
+_core:
+  default_config_hash: X9I1OB0W3WlWtrK-CNcg6hNWwa8wficanpH8pYnDZDE
+id: drupalpt_local_tasks
+theme: drupalpt
+region: content
+weight: -13
+provider: null
+plugin: local_tasks_block
+settings:
+  id: local_tasks_block
+  label: Separadores
+  provider: core
+  label_display: '0'
+  primary: true
+  secondary: true
+visibility: {  }

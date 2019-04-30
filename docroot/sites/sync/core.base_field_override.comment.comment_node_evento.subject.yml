@@ -1,0 +1,18 @@
+uuid: 68ccd8f1-20ac-4ec2-9e7f-2b053f36e9d2
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - comment.type.comment_node_evento
+id: comment.comment_node_evento.subject
+field_name: subject
+entity_type: comment
+bundle: comment_node_evento
+label: Subject
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

@@ -1,0 +1,60 @@
+cookie_lifetime: 100
+domain: ''
+domains_option: 1
+domains_list: ''
+eu_only: null
+eu_only_js: null
+exclude_paths: "/admin\r\n/admin/*\r\n/batch\r\n/node/add*\r\n/node/*/*\r\n/user/*/*"
+exclude_admin_theme: false
+langcode: pt-pt
+popup_agreed:
+  value: '<h2>Obrigado por aceitar cookies</h2><p>Pode agora esconder esta mensagem ou saber mais sobre cookies.</p>'
+  format: restricted_html
+popup_agree_button_message: Concordo
+popup_agreed_enabled: false
+popup_bg_hex: 1A1A1A
+popup_clicking_confirmation: false
+popup_scrolling_confirmation: false
+popup_delay: 1000
+show_disagree_button: true
+popup_disagree_button_message: 'Saber mais'
+popup_enabled: true
+popup_find_more_button_message: 'Saber mais'
+popup_height: null
+popup_hide_agreed: false
+popup_hide_button_message: Ocultar
+popup_info:
+  value: '<h2>Usamos cookies para permitir uma melhor experiência.</h2><p>Ao navegar no site estará a consentir a sua utilização.</p>'
+  format: restricted_html
+mobile_popup_info:
+  value: ''
+  format: markdown
+popup_info_template: new
+mobile_breakpoint: 768
+popup_link: 'http://ec.europa.eu/ipg/basics/legal/cookies/index_en.htm'
+popup_link_new_window: true
+popup_position: false
+fixed_top_position: true
+popup_text_hex: ffffff
+popup_width: 100%
+use_bare_css: false
+disagree_do_not_show_popup: false
+reload_page: false
+cookie_name: ''
+exclude_uid_1: false
+better_support_for_screen_readers: false
+use_mobile_message: false
+method: opt_in
+disagree_button_label: 'Não concordo'
+disabled_javascripts: ''
+whitelisted_cookies: ''
+consent_storage_method: do_not_store
+withdraw_message:
+  value: '<h2>Usamos cookies para permitir uma melhor experiência</h2><p>Deu-nos consentimento para definir cookies.</p>'
+  format: restricted_html
+withdraw_action_button_label: 'Retirar consentimento'
+withdraw_tab_button_label: 'Politica de privacidade'
+withdraw_enabled: false
+_core:
+  default_config_hash: 9RpVluEdsYtiE1Ity_X-P_3WmflzyJFit3v3u5k_w8c
+cookie_session: 0

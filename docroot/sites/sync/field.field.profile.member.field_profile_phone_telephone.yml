@@ -1,0 +1,21 @@
+uuid: 9de6ab10-287d-425e-b517-7df249e26b6a
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - field.storage.profile.field_profile_phone_telephone
+    - profile.type.member
+  module:
+    - telephone
+id: profile.member.field_profile_phone_telephone
+field_name: field_profile_phone_telephone
+entity_type: profile
+bundle: member
+label: 'Número de telefone'
+description: 'O(s) teu(s) número(s) de telefone pessoal(ais) ou profissional(ais) com notação internacional. Esta informação será <strong>pública</strong>.'
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: telephone

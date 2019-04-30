@@ -1,0 +1,22 @@
+uuid: 724fb120-d0b7-4a2f-93da-1b128b058ee3
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - field.storage.node.body
+    - node.type.evento
+  module:
+    - text
+id: node.evento.body
+field_name: body
+entity_type: node
+bundle: evento
+label: 'Breve descrição'
+description: 'Pequeno texto para destacar algo no evento: tema aglutinador, convidado especial, nova localização...'
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  display_summary: true
+field_type: text_with_summary

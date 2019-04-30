@@ -1,0 +1,22 @@
+uuid: 14111693-a344-40e9-a468-3607fd6ec8f8
+langcode: pt-pt
+status: true
+dependencies:
+  module:
+    - help
+  theme:
+    - drupalpt
+_core:
+  default_config_hash: 8I8iACSa0sKO3k3jlvUG1ge52rfcKX7USJAQYnzuBgg
+id: drupalpt_help
+theme: drupalpt
+region: content
+weight: -12
+provider: null
+plugin: help_block
+settings:
+  id: help_block
+  label: Ajuda
+  provider: help
+  label_display: '0'
+visibility: {  }

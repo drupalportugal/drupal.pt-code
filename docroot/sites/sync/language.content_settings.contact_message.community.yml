@@ -1,0 +1,11 @@
+uuid: 280c9246-c036-41cf-a230-dfa5658e89e1
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - contact.form.community
+id: contact_message.community
+target_entity_type_id: contact_message
+target_bundle: community
+default_langcode: site_default
+language_alterable: false

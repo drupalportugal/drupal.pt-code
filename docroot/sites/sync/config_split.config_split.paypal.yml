@@ -1,0 +1,15 @@
+uuid: 195ab4fc-0d33-40c8-8586-83caaf6d198e
+langcode: pt-pt
+status: true
+dependencies: {  }
+id: paypal
+label: Paypal
+folder: ''
+module:
+  commerce_paypal: 0
+theme: {  }
+blacklist: {  }
+graylist: {  }
+graylist_dependents: true
+graylist_skip_equal: true
+weight: 0

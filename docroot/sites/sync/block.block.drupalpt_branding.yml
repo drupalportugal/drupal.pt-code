@@ -1,0 +1,25 @@
+uuid: a3181847-45ec-4052-ada9-34ede1577215
+langcode: pt-pt
+status: true
+dependencies:
+  module:
+    - system
+  theme:
+    - drupalpt
+_core:
+  default_config_hash: NDwadleLD3YVSbDUaakxyYZyINYtkFtOVGShfq4kWy8
+id: drupalpt_branding
+theme: drupalpt
+region: header
+weight: -15
+provider: null
+plugin: system_branding_block
+settings:
+  id: system_branding_block
+  label: 'Imagem de marca do sítio'
+  provider: system
+  label_display: '0'
+  use_site_logo: true
+  use_site_name: false
+  use_site_slogan: false
+visibility: {  }

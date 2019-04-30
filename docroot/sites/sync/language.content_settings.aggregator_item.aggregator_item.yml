@@ -1,0 +1,11 @@
+uuid: 40c4463f-3819-4ae8-83ec-bfcd1ab60ad8
+langcode: pt-pt
+status: true
+dependencies:
+  module:
+    - aggregator
+id: aggregator_item.aggregator_item
+target_entity_type_id: aggregator_item
+target_bundle: aggregator_item
+default_langcode: site_default
+language_alterable: false

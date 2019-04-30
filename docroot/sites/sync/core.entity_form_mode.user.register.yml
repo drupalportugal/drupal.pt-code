@@ -1,0 +1,12 @@
+uuid: a9914cfc-1943-4e7d-a5ce-5b4bf49066d3
+langcode: pt-pt
+status: true
+dependencies:
+  module:
+    - user
+_core:
+  default_config_hash: flXhTcp55yLcyy7ZLOhPGKGZobZQJdkAFVWV3LseiuI
+id: user.register
+label: Inscrever-se
+targetEntityType: user
+cache: true

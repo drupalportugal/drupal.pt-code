@@ -1,0 +1,18 @@
+uuid: ed6b49d9-71e0-4f20-b9af-83e2f4d555ea
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.caracteristica
+id: node.caracteristica.title
+field_name: title
+entity_type: node
+bundle: caracteristica
+label: Caracteristica
+description: ''
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

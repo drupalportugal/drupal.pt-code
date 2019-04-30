@@ -1,0 +1,17 @@
+uuid: ac3f3dc3-8d3c-421c-ad5a-03a2ad9d5457
+langcode: pt-pt
+status: true
+dependencies:
+  module:
+    - menu_ui
+third_party_settings:
+  menu_ui:
+    available_menus: {  }
+    parent: ''
+name: Showcase
+type: showcase
+description: 'Divulgação de websites produzidos com Drupal'
+help: ''
+new_revision: true
+preview_mode: 1
+display_submitted: false

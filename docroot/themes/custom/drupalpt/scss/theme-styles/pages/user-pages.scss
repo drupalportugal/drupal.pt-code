@@ -1,0 +1,125 @@
+/*
+*
+--- --- --- USER PAGES --- --- ---
+*
+*/
+
+
+/*
+*   User Profile pages
+*/
+
+.field--name-dynamic-block-fielduser-profile-fields-member {
+    /*padding-top: 135px;
+    padding-bottom: 130px;*/
+    
+    .views-field-user-picture {
+        margin-bottom: 25px;
+    }
+
+    .field {
+        margin-bottom: 25px;
+
+        .field__label {
+            font: 500 16px/18px 'Inter', sans-serif;
+            letter-spacing: -0.5px;
+            text-transform: uppercase;
+        }
+
+        .field__item {
+            font: 300 16px/26px 'Inter', sans-serif;
+            letter-spacing: 0;
+        }
+    }
+}
+
+
+.path-user {
+    ul.primary {
+        z-index: 1;
+        background: $white;
+        position: relative;
+        margin-top: 25px;
+        bottom: inherit;
+        right: inherit;
+        justify-content: center;
+        border: 1px solid $light-blue;
+
+        .active {
+            background: $light-blue-opaci-15;
+            a {
+                font-weight: bolder !important;
+            }
+        }
+
+        .nav-item a {
+            letter-spacing: -0.5px;
+            text-transform: uppercase;
+            font: 400 12px/18px 'Inter', sans-serif;
+        }
+    }
+
+    .block-system-main-block {
+        /*background: $section-bg-light-grey;
+        padding: 135px 15px 130px 15px;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        justify-content: center;
+        align-items: stretch;
+        align-content: stretch;
+
+        .content {
+            width: 35%;
+        }*/
+
+        .js-form-item {
+            padding: 0;
+            margin-top: 50px;
+
+            &:first-child {
+                margin-top: 0;
+            }
+
+            label {
+                font: 500 16px/18px 'Inter', sans-serif;
+                letter-spacing: -0.5px;
+                text-transform: uppercase;
+            }
+
+            .text-muted {
+                display: block;
+                margin-top: 10px;
+                font: 300 16px/26px 'Inter', sans-serif;
+            }
+        }
+
+        .js-form-submit {
+            margin-top: 50px;
+            //@extend %no-bg-link-styles;
+            @extend %main-link-styles;
+        }
+
+        #user-pass p {
+            margin-top: 40px;
+            font: 300 16px/26px 'Inter', sans-serif;
+        }
+    }
+}
+
+.path-user, .path-product, .path-cart {
+    .block-system-main-block {
+        background: $section-bg-light-grey;
+        padding: 135px 15px 130px 15px;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        justify-content: center;
+        align-items: stretch;
+        align-content: stretch;
+
+        .content {
+            width: 35%;
+        }
+    }
+}

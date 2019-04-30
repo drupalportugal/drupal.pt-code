@@ -1,0 +1,43 @@
+/*
+*
+--- --- --- INICIO --- --- ---
+*
+*/
+
+// PÁGINA RECURSOS :: page-node-683
+.page-node-683 {
+
+    #main {
+        #block-drupalpt-content {
+            
+            // --- --- SECTIONS --- --- //
+            
+            .resources-learn-intro {
+                .img-with-border {
+                    @extend %border-blue-around-img;
+                }
+            }
+
+            .resources-learn-content {
+                margin-top: 437px;
+                margin-bottom: 130px;
+
+                .content-topic:last-child, .content-topic:last-child p:last-child{
+                    margin-bottom: 0;
+                    padding-bottom: 0;
+                }
+            }
+
+            .resources-contribute-intro {
+                height: 800px;
+                padding-top: 135px;
+                @extend %gradient-bg-with-img;
+            }
+
+            .resources-contribute-content {
+                margin-top: 353px;
+            }
+        }
+    }
+}
+

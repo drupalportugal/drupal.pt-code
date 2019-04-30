@@ -1,0 +1,45 @@
+uuid: 796bf220-e58d-46d9-bc87-6abd18a92b10
+langcode: pt-pt
+status: true
+dependencies:
+  module:
+    - options
+    - profile
+id: profile.field_profile_list_genderident
+field_name: field_profile_list_genderident
+entity_type: profile
+type: list_string
+settings:
+  allowed_values:
+    -
+      value: bigender
+      label: Bigender
+    -
+      value: feminine
+      label: Feminine
+    -
+      value: genderfluid
+      label: 'Gender fluid'
+    -
+      value: genderneutral
+      label: 'Gender neutral'
+    -
+      value: genderqueer
+      label: 'Gender queer'
+    -
+      value: masculine
+      label: Masculine
+    -
+      value: transgender
+      label: Transgender
+    -
+      value: unknown
+      label: 'Rather not say'
+  allowed_values_function: ''
+module: options
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

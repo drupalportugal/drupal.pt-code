@@ -1,0 +1,15 @@
+uuid: 8b4c49f7-117c-4acb-a9b6-57d2fec67594
+langcode: pt-pt
+status: true
+dependencies: {  }
+name: landing_3_col_image_350x218_
+label: 'Landing 3 col image (350x218)'
+effects:
+  a2078de6-cbab-414c-8448-13e0ac48c7c7:
+    uuid: a2078de6-cbab-414c-8448-13e0ac48c7c7
+    id: image_scale_and_crop
+    weight: 1
+    data:
+      width: 350
+      height: 218
+      anchor: center-center

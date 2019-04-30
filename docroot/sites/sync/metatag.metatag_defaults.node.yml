@@ -1,0 +1,12 @@
+uuid: 2c2e0aa0-d985-4971-a974-2d3ee3971517
+langcode: pt-pt
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: rpwvgyEURXLz_JjgMCrkS1rUv-0k3L79BpO-ReN7fDI
+id: node
+label: Conteúdo
+tags:
+  canonical_url: '[node:url]'
+  title: '[node:title] | [site:name]'
+  description: '[node:summary]'

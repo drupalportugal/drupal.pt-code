@@ -1,0 +1,25 @@
+uuid: a9d5381f-dd8d-4fde-a8f5-8a53ef2bdc08
+langcode: en
+status: true
+dependencies:
+  content:
+    - 'block_content:basic:ac298edf-68bf-417b-a4c8-6be3ad009bc5'
+  module:
+    - block_content
+  theme:
+    - drupalpt
+id: associacaodrupalportugalc20102019
+theme: drupalpt
+region: footer_third
+weight: 0
+provider: null
+plugin: 'block_content:ac298edf-68bf-417b-a4c8-6be3ad009bc5'
+settings:
+  id: 'block_content:ac298edf-68bf-417b-a4c8-6be3ad009bc5'
+  label: 'Associação Drupal Portugal © 2010-2019'
+  provider: block_content
+  label_display: '0'
+  status: true
+  info: ''
+  view_mode: full
+visibility: {  }

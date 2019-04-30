@@ -1,0 +1,25 @@
+uuid: 712f8f57-b9fb-4a46-962e-609ec3d17d8d
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - field.storage.profile.field_profile_list_genderident
+    - profile.type.member
+  module:
+    - options
+    - profile
+third_party_settings:
+  profile:
+    profile_private: true
+id: profile.member.field_profile_list_genderident
+field_name: field_profile_list_genderident
+entity_type: profile
+bundle: member
+label: 'Identidade de género'
+description: 'A tua <a href="http://www.telegraph.co.uk/men/the-filter/a-nearly-complete-glossary-of-gender-identities-for-your-next-ce/">identidade de género</a>, isto é, como te identificas com o teu género. Esta informação será <strong>privada</strong>.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: list_string

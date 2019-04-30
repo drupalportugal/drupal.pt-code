@@ -1,0 +1,13 @@
+uuid: 24bbeafb-77db-449f-9949-e2f4fdce036a
+langcode: pt-pt
+status: true
+dependencies:
+  module:
+    - pathauto
+_core:
+  default_config_hash: '-SdRoSbsl_FULjbX8mgESZdeoEOjgi7rDhHNdLOJ8n8'
+id: pathauto_update_alias_node
+label: 'Atualizar um caminho alternativo'
+type: node
+plugin: pathauto_update_alias
+configuration: {  }

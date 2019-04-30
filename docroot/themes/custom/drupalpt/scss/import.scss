@@ -1,0 +1,60 @@
+/* IMPORTS */
+
+//@import url(font-awesome.min.css);
+// variables
+@import "variables";
+//bootstrap
+@import "../node_modules/bootstrap/scss/bootstrap";
+//material design bootstrap
+//@import "../node_modules/mdbootstrap/scss/mdb";
+// barrio
+@import "barrio";
+// typography
+@import "typography";
+// mixins
+@import "mixins-placeholders";
+
+
+
+
+// ---------- IMPORT MY SASS FILES ---------- //
+
+@import "theme-styles/header";
+
+@import "theme-styles/footer";
+
+@import "theme-styles/globals";
+
+// Fix Layout Builder
+@import "theme-styles/fix-layout-builder";
+
+// Admin Tabs
+@import "theme-styles/admin-tabs";
+
+
+// Website Pages
+@import "theme-styles/pages/inicio";
+@import "theme-styles/pages/resources";
+@import "theme-styles/pages/companies";
+@import "theme-styles/pages/community";
+@import "theme-styles/pages/contacts";
+
+@import "theme-styles/pages/info-page";
+@import "theme-styles/pages/user-pages";
+@import "theme-styles/pages/user-register";
+@import "theme-styles/pages/product-page";
+
+@import "theme-styles/pages/drupal-day-braganca";
+
+
+// Responsive Optimization
+@import "theme-styles/responsive";
+
+// EU Cookie Compliance
+@import "theme-styles/util/eu-cookie-compliance";
+
+// Scroll Down mouse
+@import "theme-styles/util/scroll-down";
+
+// Ripple effect for buttons & images
+@import "theme-styles/util/ripple-effect";

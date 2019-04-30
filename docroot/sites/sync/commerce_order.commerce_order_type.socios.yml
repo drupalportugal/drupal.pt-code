@@ -1,0 +1,21 @@
+uuid: 89bcec07-f500-44e4-83a4-658e0481b793
+langcode: pt-pt
+status: true
+dependencies:
+  module:
+    - commerce_cart
+    - commerce_checkout
+third_party_settings:
+  commerce_cart:
+    cart_form_view: commerce_cart_form
+    cart_block_view: commerce_cart_block
+  commerce_checkout:
+    checkout_flow: default
+label: Socios
+id: socios
+workflow: order_fulfillment
+traits: {  }
+refresh_mode: customer
+refresh_frequency: 300
+sendReceipt: true
+receiptBcc: info@drupal.pt

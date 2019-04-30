@@ -1,0 +1,105 @@
+/*
+*
+--- --- --- DRUPAL DAY BRAGANÇA STYLES --- --- ---
+*
+*/
+
+
+.drupal-day-braganca-top {
+    color: white;
+
+    .event {
+        .event-name {
+
+        }
+
+        .event-date {
+            margin: 2rem 0;
+        }
+
+        .event-description {
+            font: 200 24px/34px 'Inter', sans-serif;
+        }
+
+        .event-bg-img {
+            background-image: url("../images/drupal-day-braganca-castle-bg.svg");
+            background-repeat: no-repeat;
+
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.85;
+            font-size: 0;
+        }
+    }
+}
+
+.drupal-day-braganca-content {
+    .block-block-content {
+        padding: 8rem 0 0;
+    }
+
+    h3 {
+        color: #1AACB7;
+        margin-bottom: 1.5rem;
+    }
+
+    p {
+        margin-bottom: 1rem;
+    }
+
+    li {
+        font: 300 18px/28px 'Inter', sans-serif;
+    }
+
+    .event-block {
+        margin-bottom: 5rem;
+
+        &:last-child {
+            margin-bottom: 0;
+        }
+    }
+
+    .program {
+        .date {
+            text-transform: uppercase;
+            margin-bottom: 2rem;
+        }
+
+        .activity {
+            margin-bottom: 2rem;
+
+            p {
+                margin: 0.5rem 0;
+            }
+
+            span {
+                font: 300 15px/24px 'Inter', sans-serif;
+                display: block;
+            }
+        }
+    }
+
+    .location {
+        a {
+            text-transform: uppercase;
+        }
+    }
+    .organizers {
+        .logos {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            align-items: baseline;
+            align-content: flex-start;
+            justify-content: flex-start;
+
+            li {
+                margin-right: 1.5rem;
+                margin-bottom: 1.5rem;
+            }
+        }
+    }
+}

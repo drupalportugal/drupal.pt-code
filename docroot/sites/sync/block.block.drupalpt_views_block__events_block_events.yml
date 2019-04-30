@@ -1,0 +1,24 @@
+uuid: 4c3553f6-b041-47a1-bdbc-d2c36eb570bd
+langcode: pt-pt
+status: false
+dependencies:
+  config:
+    - views.view.events
+  module:
+    - views
+  theme:
+    - drupalpt
+id: drupalpt_views_block__events_block_events
+theme: drupalpt
+region: footer_second
+weight: 0
+provider: null
+plugin: 'views_block:events-block_events'
+settings:
+  id: 'views_block:events-block_events'
+  label: Eventos
+  provider: views
+  label_display: visible
+  views_label: ''
+  items_per_page: none
+visibility: {  }
