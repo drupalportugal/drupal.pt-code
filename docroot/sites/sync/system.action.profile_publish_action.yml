@@ -1,0 +1,13 @@
+uuid: 7398565d-2e23-43dd-932b-ebdbf80d9f22
+langcode: pt-pt
+status: true
+dependencies:
+  module:
+    - profile
+_core:
+  default_config_hash: dz5_l09fj1m6b4MZVYlHjYHsXSlG9aQHGGoupPb8phg
+id: profile_publish_action
+label: 'Publish selected profile'
+type: profile
+plugin: profile_publish_action
+configuration: {  }

@@ -1,0 +1,29 @@
+uuid: b5c80446-5036-4d38-9624-ecfde5ee76e2
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - field.field.profile.socio_adp.field_numero_de_socio
+    - profile.type.socio_adp
+  module:
+    - path
+id: profile.socio_adp.default
+targetEntityType: profile
+bundle: socio_adp
+mode: default
+content:
+  field_numero_de_socio:
+    weight: 31
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  path:
+    type: path
+    weight: 30
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+hidden: {  }

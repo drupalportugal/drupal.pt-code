@@ -1,0 +1,20 @@
+uuid: af5a7dbe-a860-4903-8b34-075dd0a69724
+langcode: pt-pt
+status: false
+dependencies:
+  theme:
+    - drupalpt
+_core:
+  default_config_hash: 7rR9chwXvdM2H8OYMAYx9Zj3GGlPMrZp_M3ZA4thYTk
+id: drupalpt_page_title
+theme: drupalpt
+region: content
+weight: -14
+provider: null
+plugin: page_title_block
+settings:
+  id: page_title_block
+  label: 'Título da página'
+  provider: core
+  label_display: '0'
+visibility: {  }

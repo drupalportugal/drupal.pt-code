@@ -1,0 +1,23 @@
+uuid: 622ca347-6950-4a46-8cce-50d4f902bd84
+langcode: en
+status: true
+dependencies:
+  config:
+    - block_content.type.block_image_title_text_link
+    - field.storage.block_content.field_link
+  module:
+    - link
+id: block_content.block_image_title_text_link.field_link
+field_name: field_link
+entity_type: block_content
+bundle: block_image_title_text_link
+label: Link
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  link_type: 17
+  title: 1
+field_type: link

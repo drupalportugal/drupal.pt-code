@@ -1,0 +1,8 @@
+uuid: bafc7b11-2456-4df2-97f7-2b843dc12622
+langcode: en
+status: true
+dependencies: {  }
+id: block_image_title_text_link
+label: 'Block w/ image, title, text, link'
+revision: 0
+description: 'Bloco c/ imagem, titulo, texto e link'

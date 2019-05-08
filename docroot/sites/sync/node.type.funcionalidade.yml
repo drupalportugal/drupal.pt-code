@@ -1,0 +1,17 @@
+uuid: 3714c79d-e928-41e1-ae23-33c5bcd38d40
+langcode: pt-pt
+status: true
+dependencies:
+  module:
+    - menu_ui
+third_party_settings:
+  menu_ui:
+    available_menus: {  }
+    parent: ''
+name: Funcionalidade
+type: funcionalidade
+description: 'Conteúdos que descrevem as funcionalidades do drupal.'
+help: ''
+new_revision: true
+preview_mode: 1
+display_submitted: false

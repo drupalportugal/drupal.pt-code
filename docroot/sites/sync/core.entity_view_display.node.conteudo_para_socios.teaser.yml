@@ -1,0 +1,31 @@
+uuid: d2c95dc0-fd36-4d32-98a2-ff2bdd062119
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - field.field.node.conteudo_para_socios.body
+    - node.type.conteudo_para_socios
+  module:
+    - text
+    - user
+id: node.conteudo_para_socios.teaser
+targetEntityType: node
+bundle: conteudo_para_socios
+mode: teaser
+content:
+  body:
+    label: hidden
+    type: text_summary_or_trimmed
+    weight: 101
+    settings:
+      trim_length: 600
+    third_party_settings: {  }
+    region: content
+  links:
+    weight: 100
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+hidden:
+  langcode: true

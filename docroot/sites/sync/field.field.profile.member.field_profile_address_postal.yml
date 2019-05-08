@@ -1,0 +1,38 @@
+uuid: 7338b86a-7b20-4d87-854d-4ab8c586c71b
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - field.storage.profile.field_profile_address_postal
+    - profile.type.member
+  module:
+    - address
+id: profile.member.field_profile_address_postal
+field_name: field_profile_address_postal
+entity_type: profile
+bundle: member
+label: 'Endereço postal'
+description: 'O teu endereço postal pessoal ou profissional. Esta informação será <strong>pública</strong>.'
+required: true
+translatable: true
+default_value:
+  -
+    country_code: PT
+default_value_callback: ''
+settings:
+  available_countries: {  }
+  fields:
+    locality: locality
+    administrativeArea: '0'
+    dependentLocality: '0'
+    postalCode: '0'
+    sortingCode: '0'
+    addressLine1: '0'
+    addressLine2: '0'
+    organization: '0'
+    givenName: '0'
+    additionalName: '0'
+    familyName: '0'
+  langcode_override: ''
+  field_overrides: {  }
+field_type: address

@@ -1,0 +1,22 @@
+uuid: a1ee9ac3-00d4-4691-bae7-ad868a2d5301
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - node.type.slideshow
+id: node.slideshow.promote
+field_name: promote
+entity_type: node
+bundle: slideshow
+label: 'Promoted to front page'
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: 1
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean

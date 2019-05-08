@@ -1,0 +1,23 @@
+uuid: 3d3f516e-31d5-49db-938c-b55ec2f287e6
+langcode: pt-pt
+status: true
+dependencies: {  }
+name: user_grid_picture
+label: 'User: Grid Picture (200x200)'
+effects:
+  615f7e7d-f337-4fb7-9b27-5433e7b62995:
+    uuid: 615f7e7d-f337-4fb7-9b27-5433e7b62995
+    id: image_scale
+    weight: 2
+    data:
+      width: null
+      height: 200
+      upscale: false
+  a091bcbe-912d-4341-83df-b40fe287a407:
+    uuid: a091bcbe-912d-4341-83df-b40fe287a407
+    id: image_crop
+    weight: 3
+    data:
+      width: 200
+      height: 200
+      anchor: center-center

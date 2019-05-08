@@ -1,0 +1,29 @@
+uuid: fb6bdf13-5d8d-4e81-a83e-3f57c60ea9ea
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_categoria
+    - node.type.showcase
+    - taxonomy.vocabulary.tags
+id: node.showcase.field_categoria
+field_name: field_categoria
+entity_type: node
+bundle: showcase
+label: Categoria
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      tags: tags
+    sort:
+      field: name
+      direction: asc
+    auto_create: true
+    auto_create_bundle: ''
+field_type: entity_reference

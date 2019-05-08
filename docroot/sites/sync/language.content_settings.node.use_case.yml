@@ -1,0 +1,11 @@
+uuid: 0e3b5d20-46a9-4605-bead-cf8767781378
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.use_case
+id: node.use_case
+target_entity_type_id: node
+target_bundle: use_case
+default_langcode: site_default
+language_alterable: true

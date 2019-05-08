@@ -1,0 +1,56 @@
+---
+
+# This playbook runs with vagrant provision.
+# Set basic webserver setup
+
+- hosts: all
+  become: yes
+  become_method: sudo
+  vars_files:
+    - vars/vars.yml
+
+  tasks:
+    - name: Create database
+      mysql_db:
+        name: "{{ vars.configs.alias }}"
+        login_host: localhost
+        login_user: root
+        login_password: omibee
+        state: present
+
+    - name: Run composer install
+      composer:
+        command: install
+        working_dir: /vagrant/www/{{ vars.configs.alias }}
+      become: yes
+      become_user: vagrant
+
+    - name: Create private folder
+      file:
+        path: /vagrant/www/{{ vars.configs.alias }}/private
+        state: directory
+        mode: 0755
+
+    - name: Import minimum DB
+      command: bash -c "zcat /vagrant/www/{{ vars.configs.alias }}/database/development.sql | drush --root=/vagrant/www/{{ vars.configs.alias }} -y sql-cli"
+
+    - name: Import configs if any
+      command: drush cim --root=/vagrant/www/{{ vars.configs.alias }}
+
+    # only works for reasearch theme;
+    # for other themes, needs further setup
+    - name: Compass compile
+      command: compass compile
+      args:
+        chdir: /vagrant/www/{{ vars.configs.alias }}/themes/rebase
+      when: vars.configs.profile == "research"
+
+    - name: Clear caches
+      command: drush cr --root=/vagrant/www/{{ vars.configs.alias }}
+
+    - name: Restart apache
+      service: name=apache2 state=restarted
+
+  handlers:
+    - name: restart mysql
+      service: name=mysql state=restarted

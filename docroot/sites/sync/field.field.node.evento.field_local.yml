@@ -1,0 +1,21 @@
+uuid: b1779b77-88fd-4a66-bc14-77bdca6399f5
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_local
+    - node.type.evento
+  module:
+    - text
+id: node.evento.field_local
+field_name: field_local
+entity_type: node
+bundle: evento
+label: Local
+description: 'Colocar: nome da cidade - nome do local. Ex. Lisboa - Kompacto'
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: text

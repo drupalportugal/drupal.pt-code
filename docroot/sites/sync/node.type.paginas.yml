@@ -1,0 +1,18 @@
+uuid: 56ffa9c5-1552-473c-8660-172f11118635
+langcode: pt-pt
+status: true
+dependencies:
+  module:
+    - menu_ui
+third_party_settings:
+  menu_ui:
+    available_menus:
+      - main
+    parent: 'main:'
+name: Páginas
+type: paginas
+description: 'Content Type a usar para criar as páginas do novo website.'
+help: ''
+new_revision: true
+preview_mode: 1
+display_submitted: false

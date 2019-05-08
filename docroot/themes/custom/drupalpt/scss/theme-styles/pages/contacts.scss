@@ -1,0 +1,100 @@
+/*
+*
+--- --- --- INICIO --- --- ---
+*
+*/
+
+// PÁGINA CONTACTOS :: page-node-714
+.page-node-714  {
+
+    footer {
+        margin-top: 0;
+    }
+
+    #main {
+        #block-drupalpt-content {
+            
+            // --- --- SECTIONS --- --- //
+
+            .node__content {
+                padding-bottom: 0;
+            }
+
+            .landing {
+                //height: auto;
+                height: 100%;
+            }
+
+            .contact-top {
+                //padding-top: 135px;
+                padding-bottom: 200px;
+
+                @extend %gradient-bg-with-img;
+                color: $white;
+
+                p {
+                    margin-bottom: 80px;
+                    color: $white;
+                }
+
+                a {
+                    color: $white;
+
+                    &:hover {
+                        color: $light-blue;
+                    }
+                }
+
+                .block-webform {
+                    margin-top: 80px;
+                    
+                    h2 {
+                        font: 700 20px/30px 'Inter', sans-serif;
+                        letter-spacing: -0.5px;
+                        text-transform: uppercase;
+                        margin-bottom: 30px;
+                    }
+
+
+                    #webform-submission-contact-node-714-add-form {
+                        //@extend %border-blue-around-img;
+                        margin-top: 0px;
+
+                        .js-form-item {
+                            padding: 0;
+                            margin-left: 0;
+                            margin-right: 0;
+                        }
+
+                        > fieldset {
+                            width: 50%;
+                            margin-top: 30px;
+                        }
+
+                        fieldset label {
+                            font: 700 16px/19px 'Inter', sans-serif;
+                            letter-spacing: -0.5px;
+                            text-transform: uppercase;
+                        }
+
+                        #edit-name--wrapper {
+                            legend {
+                                display: none;
+                            }
+                        }
+
+
+                        .webform-actions {
+                            margin-top: 30px;
+                            
+                            button {
+                                @extend %no-bg-link-styles;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+

@@ -1,0 +1,20 @@
+uuid: 01717f08-e51c-4e23-9600-4a52981f8581
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - comment.type.comment
+  module:
+    - path
+id: comment.comment.path
+field_name: path
+entity_type: comment
+bundle: comment
+label: 'URL alternativo'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: path

@@ -1,0 +1,15 @@
+uuid: dbf3b3ee-314c-4a10-b349-e5811b82829d
+langcode: en
+status: true
+dependencies: {  }
+name: use_case_image
+label: 'Use Case Image (1110×564)'
+effects:
+  fbfe5185-62a3-40dc-a631-3c1752e6c4ed:
+    uuid: fbfe5185-62a3-40dc-a631-3c1752e6c4ed
+    id: image_scale_and_crop
+    weight: 1
+    data:
+      width: 1110
+      height: 564
+      anchor: center-center

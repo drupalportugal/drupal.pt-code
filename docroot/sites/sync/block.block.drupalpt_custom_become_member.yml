@@ -1,0 +1,33 @@
+uuid: 0f6fb2bc-22ff-45dc-ac29-959f29835704
+langcode: pt-pt
+status: false
+dependencies:
+  content:
+    - 'block_content:basic:d8c1cc5b-4249-43c9-aa50-ac85072f8862'
+  module:
+    - block_content
+    - user
+  theme:
+    - drupalpt
+id: drupalpt_custom_become_member
+theme: drupalpt
+region: sidebar_second
+weight: -8
+provider: null
+plugin: 'block_content:d8c1cc5b-4249-43c9-aa50-ac85072f8862'
+settings:
+  id: 'block_content:d8c1cc5b-4249-43c9-aa50-ac85072f8862'
+  label: Associa-te!
+  provider: block_content
+  label_display: visible
+  status: true
+  info: ''
+  view_mode: full
+visibility:
+  user_role:
+    id: user_role
+    roles:
+      administrator: administrator
+    negate: false
+    context_mapping:
+      user: '@user.current_user_context:current_user'

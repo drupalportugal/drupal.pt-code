@@ -245,8 +245,6 @@
  * @endcode
  */
 $config_directories = array();
-$config_directories['active'] = '../config/active';
-$config_directories['staging'] = '../config/staging';
 
 /**
  * Settings:
@@ -268,7 +266,7 @@ $config_directories['staging'] = '../config/staging';
  *
  * @see install_select_profile()
  */
-$settings['install_profile'] = 'standard';
+# $settings['install_profile'] = '';
 
 /**
  * Salt for one-time login links, cancel links, form tokens, etc.
@@ -287,7 +285,7 @@ $settings['install_profile'] = 'standard';
  *   $settings['hash_salt'] = file_get_contents('/home/example/salt.txt');
  * @endcode
  */
-$settings['hash_salt'] = 'vdEeBpl5q1V0T0jxoAKNa8b0Lr6X8sgv6z6-1GmW4BtMbL1nlLyjyeLfahcQq_or6A7qIq6vHQ';
+$settings['hash_salt'] = 'hZAoLXyqc1q2A87O9qU9iSVU9_l6Nb3yNgPYpOCldR2-_61Q5Q1ClT5UHT6dEXO6LEaCCDJeYw';
 
 /**
  * Deployment identifier.
@@ -327,9 +325,6 @@ $settings['update_free_access'] = FALSE;
  *
  * You can also define an array of host names that can be accessed directly,
  * bypassing the proxy, in $settings['http_client_config']['proxy']['no'].
- *
- * If these settings are not configured, the system environment variables
- * HTTP_PROXY, HTTPS_PROXY, and NO_PROXY on the web server will be used instead.
  */
 # $settings['http_client_config']['proxy']['http'] = 'http://proxy_user:proxy_pass@example.com:8080';
 # $settings['http_client_config']['proxy']['https'] = 'http://proxy_user:proxy_pass@example.com:8080';
@@ -422,6 +417,20 @@ $settings['update_free_access'] = FALSE;
  */
 # $settings['omit_vary_cookie'] = TRUE;
 
+
+/**
+ * Cache TTL for client error (4xx) responses.
+ *
+ * Items cached per-URL tend to result in a large number of cache items, and
+ * this can be problematic on 404 pages which by their nature are unbounded. A
+ * fixed TTL can be set for these items, defaulting to one hour, so that cache
+ * backends which do not support LRU can purge older entries. To disable caching
+ * of client error responses set the value to 0. Currently applies only to
+ * page_cache module.
+ */
+# $settings['cache_ttl_4xx'] = 3600;
+
+
 /**
  * Class Loader.
  *
@@ -429,7 +438,7 @@ $settings['update_free_access'] = FALSE;
  * performance reasons. Detection can be prevented by setting
  * class_loader_auto_detect to false, as in the example below.
  */
-$settings['class_loader_auto_detect'] = FALSE;
+# $settings['class_loader_auto_detect'] = FALSE;
 
 /*
  * If the APC extension is not detected, either because APC is missing or
@@ -658,7 +667,7 @@ if ($settings['hash_salt']) {
 /**
  * Load services definition file.
  */
-$settings['container_yamls'][] = __DIR__ . '/services.yml';
+$settings['container_yamls'][] = $app_root . '/' . $site_path . '/services.yml';
 
 /**
  * Override the default service container class.
@@ -668,6 +677,15 @@ $settings['container_yamls'][] = __DIR__ . '/services.yml';
  * to test a service container that throws an exception.
  */
 # $settings['container_base_class'] = '\Drupal\Core\DependencyInjection\Container';
+
+/**
+ * Override the default yaml parser class.
+ *
+ * Provide a fully qualified class name here if you would like to provide an
+ * alternate implementation YAML parser. The class must implement the
+ * \Drupal\Component\Serialization\SerializationInterface interface.
+ */
+# $settings['yaml_parser_class'] = NULL;
 
 /**
  * Trusted host configuration.
@@ -707,6 +725,24 @@ $settings['container_yamls'][] = __DIR__ . '/services.yml';
  */
 
 /**
+ * The default list of directories that will be ignored by Drupal's file API.
+ *
+ * By default ignore node_modules and bower_components folders to avoid issues
+ * with common frontend tools and recursive scanning of directories looking for
+ * extensions.
+ *
+ * @see file_scan_directory()
+ * @see \Drupal\Core\Extension\ExtensionDiscovery::scanDirectory()
+ */
+$settings['file_scan_ignore_directories'] = [
+  'node_modules',
+  'bower_components',
+];
+
+$config_directories['sync'] = 'sites/sync';
+$settings['file_public_path'] = 'sites/default/files';
+
+/**
  * Load local development override configuration, if available.
  *
  * Use settings.local.php to override variables on secondary (staging,
@@ -716,10 +752,10 @@ $settings['container_yamls'][] = __DIR__ . '/services.yml';
  *
  * Keep this code block at the end of this file to take full effect.
  */
+
  if (file_exists(__DIR__ . DIRECTORY_SEPARATOR . 'settings.local.php')) {
    include(__DIR__ . DIRECTORY_SEPARATOR . 'settings.local.php');
  }
-
 // On Acquia Cloud, this include file configures Drupal to use the correct
 // database in each site environment (Dev, Stage, or Prod). To use this
 // settings.php for development on your local workstation, set $db_url
@@ -727,7 +763,6 @@ $settings['container_yamls'][] = __DIR__ . '/services.yml';
 if (file_exists('/var/www/site-php')) {
   require('/var/www/site-php/druportugal/druportugal-settings.inc');
 }
-
 
 // <DDSETTINGS>
 // Please don't edit anything between <DDSETTINGS> tags.

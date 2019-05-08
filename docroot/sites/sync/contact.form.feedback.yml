@@ -1,0 +1,14 @@
+uuid: 416d4ee0-520f-4fcb-8c59-061901bd3454
+langcode: pt-pt
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: vymHlgJy26BuI5GGj9-IXjwR3dRC5C0tij4BpWJnoqw
+id: feedback
+label: 'Opinião sobre o sítio da Web'
+recipients:
+  - webmaster@drupal.pt
+reply: ''
+weight: 0
+message: 'Your message has been sent.'
+redirect: ''

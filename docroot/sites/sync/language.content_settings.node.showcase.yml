@@ -1,0 +1,16 @@
+uuid: ab695a5c-af3f-4342-b8ad-1d4a0ebf58d2
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - node.type.showcase
+  module:
+    - content_translation
+third_party_settings:
+  content_translation:
+    enabled: false
+id: node.showcase
+target_entity_type_id: node
+target_bundle: showcase
+default_langcode: zxx
+language_alterable: false

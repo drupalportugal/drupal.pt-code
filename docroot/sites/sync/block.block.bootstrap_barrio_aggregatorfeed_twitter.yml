@@ -1,0 +1,22 @@
+uuid: 3576c2b1-59ce-4e42-af83-c1628bce1165
+langcode: pt-pt
+status: false
+dependencies:
+  module:
+    - aggregator
+  theme:
+    - bootstrap_barrio
+id: bootstrap_barrio_aggregatorfeed_twitter
+theme: bootstrap_barrio
+region: footer_fourth
+weight: -13
+provider: null
+plugin: aggregator_feed_block
+settings:
+  id: aggregator_feed_block
+  label: 'Nas redes sociais'
+  provider: aggregator
+  label_display: visible
+  block_count: 5
+  feed: '4'
+visibility: {  }

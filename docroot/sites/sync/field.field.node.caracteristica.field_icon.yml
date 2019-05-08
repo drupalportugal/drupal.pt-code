@@ -1,0 +1,28 @@
+uuid: 46bd8777-bf68-4dc6-9664-771a03594af0
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_icon
+    - media.type.image
+    - node.type.caracteristica
+id: node.caracteristica.field_icon
+field_name: field_icon
+entity_type: node
+bundle: caracteristica
+label: Icon
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:media'
+  handler_settings:
+    target_bundles:
+      image: image
+    sort:
+      field: _none
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

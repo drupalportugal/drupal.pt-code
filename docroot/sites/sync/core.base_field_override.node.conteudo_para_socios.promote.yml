@@ -1,0 +1,22 @@
+uuid: 2ffdba14-1a7a-4395-b64b-331bb61c71d2
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - node.type.conteudo_para_socios
+id: node.conteudo_para_socios.promote
+field_name: promote
+entity_type: node
+bundle: conteudo_para_socios
+label: 'Promovido à página principal'
+description: ''
+required: false
+translatable: true
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  on_label: Ligado
+  off_label: Desligado
+field_type: boolean

@@ -1,0 +1,44 @@
+/*
+*
+--- --- --- GLOBAL STYLING
+*
+*/
+
+// Fix CSS break in Layout Builder
+#drupal-off-canvas select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
+
+// Fix first & last '+ Add Section' on Layout Builder being display under the header or footer
+// Fix to container width, giving it padding to better display the '+ Add Section' buttons
+#layout-builder {
+    padding: 143px 15px 25px 15px;
+    background: #e6e6e6;
+
+    .layout-section {
+        margin-left: -15px;
+        margin-right: -15px;
+
+        a.configure-section {
+            background-color: #f7f7f7;
+            margin-left: 15px;
+            padding: 10px 20px;
+            color: #787878;
+            outline: 2px dashed #979797;
+        
+            &:hover {
+                border-bottom-style: none;
+                color: #000;
+            }
+        }
+
+        .new-block {
+            background-color: #f7f7f7;
+            padding: 10px 20px;
+            color: #787878;
+            outline: 2px dashed #979797;
+        }
+    }
+}
+

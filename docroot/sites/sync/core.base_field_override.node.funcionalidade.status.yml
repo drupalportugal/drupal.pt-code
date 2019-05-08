@@ -1,0 +1,22 @@
+uuid: 3a5f91e5-f267-4244-86f6-f50e3a06e8e5
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - node.type.funcionalidade
+id: node.funcionalidade.status
+field_name: status
+entity_type: node
+bundle: funcionalidade
+label: 'Publishing status'
+description: 'A boolean indicating whether the node is published.'
+required: false
+translatable: false
+default_value:
+  -
+    value: 1
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean

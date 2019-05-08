@@ -1,0 +1,23 @@
+uuid: 7c8a1648-e6a0-48ac-b3df-db8fee2b1a20
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_company_link
+    - node.type.company
+  module:
+    - link
+id: node.company.field_company_link
+field_name: field_company_link
+entity_type: node
+bundle: company
+label: 'Company link'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  link_type: 17
+  title: 1
+field_type: link

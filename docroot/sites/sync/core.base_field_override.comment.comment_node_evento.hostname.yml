@@ -1,0 +1,18 @@
+uuid: 048706e2-6e2c-429e-bdeb-418bdfe037e9
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - comment.type.comment_node_evento
+id: comment.comment_node_evento.hostname
+field_name: hostname
+entity_type: comment
+bundle: comment_node_evento
+label: Hostname
+description: 'The comment author''s hostname.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

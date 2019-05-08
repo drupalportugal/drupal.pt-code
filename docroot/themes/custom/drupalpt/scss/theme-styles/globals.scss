@@ -1,0 +1,281 @@
+/*
+*
+--- --- --- GLOBAL STYLING --- ---- ---
+*
+*/
+
+* { 
+    margin: 0;
+    padding: 0;
+} 
+
+body { 
+    background: $white; 
+    color: #000;
+    overflow: hidden;
+    overflow-y: auto;
+    min-height: 100%;
+}
+
+html {
+    min-height: 100vh;
+    height: 100%;
+}
+
+html,
+body {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    position: relative;
+}
+
+.btn-primary:focus, .btn-primary.focus {
+    box-shadow: none;
+    outline: none;
+}
+
+:focus {
+    outline: none;
+}
+
+.navbar-toggler:focus {
+    outline: none;
+}
+
+::selection {
+    background: $light-blue; /* WebKit/Blink Browsers */
+  }
+  ::-moz-selection {
+    background: $light-blue; /* Gecko Browsers */
+  }
+
+
+// --- >>> --- HEADINGS & TEXT STYLES --- >>> --- //
+
+h1, h2, h3, h4, h5, h6 {
+    margin: 0;
+    padding: 0; 
+}
+
+h1 {
+    font: 700 74px/88px 'Inter', sans-serif;
+    letter-spacing: 0;
+}
+
+h2 {
+    font: 100 84px/101px 'Inter', sans-serif;
+    letter-spacing: 0;
+}
+
+h3 {
+    font: 700 36px/43px 'Inter', sans-serif;
+    letter-spacing: 0;
+}
+
+h4 {
+    font: 600 24px/28px 'Inter', sans-serif;
+    letter-spacing: 0;
+}
+
+h5 {
+    font: 700 20px/30px 'Inter', sans-serif;
+    letter-spacing: -0.5px;
+}
+
+h6 {
+    font: 600 18px/21px 'Inter', sans-serif;
+    letter-spacing: -0.5px;
+}
+
+p { 
+    font: 300 18px/28px 'Inter', sans-serif;
+    letter-spacing: 0;
+    color: $black; 
+    
+    margin: 0;
+    padding: 0; 
+}
+
+b, strong {
+    font-weight: 700;
+}
+
+ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+a {
+    color: $black;
+    font-weight: 500;
+}
+
+a:hover {
+    color: $light-blue;
+    text-decoration: none;
+}
+
+
+// --- <<< --- HEADINGS & TEXT STYLES --- <<< --- //
+
+
+
+// --- >>> --- GENERAL STYLES --- >>> --- //
+
+.img-responsive {
+    display: block;
+    max-width: 100%;
+    height: auto;
+}
+
+// Remove content top margin
+#main #block-drupalpt-content .node__content{
+    margin: 0;
+    padding-bottom: 225px;
+}
+
+.landing {
+    min-height: 800px;
+    //padding-top: 300px;
+    
+    height: 90vh;
+    padding-top: 270px;
+    
+    @extend %gradient-bg-with-img;
+}
+
+.view-header-text {
+    font: 200 20px/30px 'Inter', sans-serif;
+    font-style: italic;
+    letter-spacing: 0;
+}
+
+.img-with-border { 
+    @extend %border-blue-around-img;
+
+    a {
+        display: block;
+    }
+    
+    img {
+        width: 100%;
+        height: auto;
+    }
+}
+
+.content-header {
+    h2 {
+        margin-bottom: 50px;
+        color: $white;
+    }
+
+    p {
+        width: 75%;
+        margin-bottom: 35px;
+        color: $white;
+        //margin-bottom: 95px;
+    }
+}
+
+ul.list-of-text, ol {
+    padding-left: 30px;
+
+    li {
+        font: 300 18px/28px 'Inter', sans-serif;
+        letter-spacing: 0;
+        color: $black; 
+    }
+
+    a {
+        font: 500 18px/28px 'Inter', sans-serif;
+        letter-spacing: 0;
+        color: $black; 
+
+        &:hover {
+            color: $light-blue;
+            opacity: 0.6;
+        }
+    }
+}
+
+ul.list-of-text {
+    list-style-type: circle;
+}
+
+.content-text {
+
+    h3 {
+        color: $white;
+        padding: 20px 40px;
+        @extend %gradient-bg;
+        margin-bottom: 80px;
+    }
+
+    
+}
+
+.content-topic:last-child, .list-of-text:last-child {
+    margin-bottom: 0 !important;
+}
+
+.content-topic {
+    margin-bottom: 80px;
+
+    h5 {
+        text-transform: uppercase;
+        margin-bottom: 15px;
+    }
+
+    p {
+        margin-bottom: 35px;
+    }
+
+    ol {
+        padding-left: 30px;
+    }
+}
+
+.topic-links {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: -15px;
+
+    list-style: none;
+    padding-left: 0;
+
+    a {
+        @extend %mini-link-styles;
+        margin-right: 15px;
+        margin-bottom: 15px;
+    }
+}
+
+
+.form-group {
+    margin-bottom: 0;
+}
+
+.form-control {
+    background-color: $white;
+    background-clip: unset;
+    border: 2px solid $white;
+    border-radius: 0;
+    -webkit-appearance: none;
+    -webkit-border-radius: 0px;
+    font: 300 16px/26px 'Inter', sans-serif;
+    letter-spacing: 0;
+
+    &:focus {
+        color: #495057;
+        background-color: $white;
+        border-color: $light-blue;
+        outline: 0;
+        box-shadow: 0px 4px 8px rgba(0,0,0,0.16);
+    }
+}
+
+    
+
+// --- <<< --- GENERAL STYLES --- <<< --- //
+

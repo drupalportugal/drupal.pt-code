@@ -1,0 +1,12 @@
+uuid: cd2b506e-f069-4be7-bb75-14d69f8aa95d
+langcode: pt-pt
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: 1noCXlegCr5HFehQRF1ViXy1jhU1jZ_sNN99a8Sj5jo
+id: front
+label: 'Página principal'
+tags:
+  canonical_url: '[site:url]'
+  shortlink: '[site:url]'
+  title: '[site:name]'

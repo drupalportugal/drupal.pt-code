@@ -1,0 +1,11 @@
+uuid: 7bdca705-7643-41ec-8c0e-ef413b9711d1
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - contact.form.association
+id: contact_message.association
+target_entity_type_id: contact_message
+target_bundle: association
+default_langcode: site_default
+language_alterable: false

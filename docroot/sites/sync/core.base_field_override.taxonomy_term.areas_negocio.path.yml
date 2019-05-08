@@ -1,0 +1,20 @@
+uuid: c49a876f-1c74-432e-b591-4fe9af606a61
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - taxonomy.vocabulary.areas_negocio
+  module:
+    - path
+id: taxonomy_term.areas_negocio.path
+field_name: path
+entity_type: taxonomy_term
+bundle: areas_negocio
+label: 'URL alias'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: path

@@ -1,0 +1,29 @@
+uuid: ace16c6d-e6b4-4608-b081-6e6fac9e23e4
+langcode: pt-pt
+status: false
+dependencies:
+  config:
+    - system.menu.section-association
+  module:
+    - system
+  theme:
+    - drupalpt
+id: drupalpt_section_association
+theme: drupalpt
+region: sidebar_second
+weight: -13
+provider: null
+plugin: 'system_menu_block:section-association'
+settings:
+  id: 'system_menu_block:section-association'
+  label: Associação
+  provider: system
+  label_display: visible
+  level: 1
+  depth: 0
+visibility:
+  request_path:
+    id: request_path
+    pages: "/associacao\r\n/associacao/*\r\n/adp\r\n/adp/*"
+    negate: false
+    context_mapping: {  }

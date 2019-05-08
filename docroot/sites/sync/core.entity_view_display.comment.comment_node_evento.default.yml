@@ -1,0 +1,28 @@
+uuid: 3745ec59-abd3-4889-915d-5d32394ba17d
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - comment.type.comment_node_evento
+    - field.field.comment.comment_node_evento.comment_body
+  module:
+    - text
+id: comment.comment_node_evento.default
+targetEntityType: comment
+bundle: comment_node_evento
+mode: default
+content:
+  comment_body:
+    label: hidden
+    weight: 0
+    type: text_default
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  links:
+    weight: 100
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+hidden:
+  langcode: true

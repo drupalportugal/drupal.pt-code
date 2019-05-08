@@ -1,0 +1,8 @@
+uuid: 7ec1df76-e382-41a2-a050-497ac0e6146d
+langcode: und
+status: true
+dependencies: {  }
+id: legal-menu
+label: Legal
+description: 'Terms & Conditions, Privacy Policy, Cookies, etc'
+locked: false

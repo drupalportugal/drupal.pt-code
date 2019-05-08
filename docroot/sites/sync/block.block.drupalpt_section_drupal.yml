@@ -1,0 +1,29 @@
+uuid: b4fa8be6-dd99-431b-86d4-79113c6d22f7
+langcode: pt-pt
+status: false
+dependencies:
+  config:
+    - system.menu.section-drupal
+  module:
+    - system
+  theme:
+    - drupalpt
+id: drupalpt_section_drupal
+theme: drupalpt
+region: sidebar_second
+weight: -15
+provider: null
+plugin: 'system_menu_block:section-drupal'
+settings:
+  id: 'system_menu_block:section-drupal'
+  label: Drupal
+  provider: system
+  label_display: visible
+  level: 1
+  depth: 0
+visibility:
+  request_path:
+    id: request_path
+    pages: "/drupal\r\n/drupal/*"
+    negate: false
+    context_mapping: {  }

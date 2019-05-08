@@ -1,0 +1,18 @@
+uuid: b2d0b668-4718-4ea2-80c3-98a311a6d88c
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - node.type.funcionalidade
+id: node.funcionalidade.created
+field_name: created
+entity_type: node
+bundle: funcionalidade
+label: 'Authored on'
+description: 'The time that the node was created.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: created

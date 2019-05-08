@@ -1,0 +1,20 @@
+uuid: 7088733d-4fbc-448c-bfdc-e7079b776b87
+langcode: pt-pt
+status: true
+dependencies:
+  theme:
+    - drupalpt
+_core:
+  default_config_hash: 13GQpeITIJsp1kyPniXtWZfyFH87vb1xxJCHifL4UeE
+id: drupalpt_local_actions
+theme: drupalpt
+region: content
+weight: -11
+provider: null
+plugin: local_actions_block
+settings:
+  id: local_actions_block
+  label: 'Ações principais de administrador'
+  provider: core
+  label_display: '0'
+visibility: {  }

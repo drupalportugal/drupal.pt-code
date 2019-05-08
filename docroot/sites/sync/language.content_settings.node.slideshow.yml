@@ -1,0 +1,16 @@
+uuid: ac2fe818-c9d8-4c7f-8900-27787d9512ad
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - node.type.slideshow
+  module:
+    - content_translation
+third_party_settings:
+  content_translation:
+    enabled: false
+id: node.slideshow
+target_entity_type_id: node
+target_bundle: slideshow
+default_langcode: zxx
+language_alterable: false

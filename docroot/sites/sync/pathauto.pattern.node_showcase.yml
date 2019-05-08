@@ -1,0 +1,22 @@
+uuid: fd0e1e00-91d3-49a4-b19f-e016b5841d89
+langcode: pt-pt
+status: true
+dependencies:
+  module:
+    - node
+id: node_showcase
+label: 'Node: Showcase'
+type: 'canonical_entities:node'
+pattern: 'showcase/[node:title]'
+selection_criteria:
+  d3a62ce5-8c6a-4837-bcb3-8bf54d7f8be2:
+    id: node_type
+    bundles:
+      showcase: showcase
+    negate: false
+    context_mapping:
+      node: node
+    uuid: d3a62ce5-8c6a-4837-bcb3-8bf54d7f8be2
+selection_logic: and
+weight: -4
+relationships: {  }

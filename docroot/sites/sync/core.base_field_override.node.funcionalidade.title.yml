@@ -1,0 +1,18 @@
+uuid: b21e88e9-427a-46d8-afc4-38896e903663
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - node.type.funcionalidade
+id: node.funcionalidade.title
+field_name: title
+entity_type: node
+bundle: funcionalidade
+label: Funcionalidade
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

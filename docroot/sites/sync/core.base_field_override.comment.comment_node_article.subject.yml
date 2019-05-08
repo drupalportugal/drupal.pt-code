@@ -1,0 +1,18 @@
+uuid: 6a47bc55-fa2c-44b2-9548-bef0e327a366
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - comment.type.comment_node_article
+id: comment.comment_node_article.subject
+field_name: subject
+entity_type: comment
+bundle: comment_node_article
+label: Subject
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

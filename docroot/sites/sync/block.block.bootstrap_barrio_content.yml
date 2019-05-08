@@ -1,0 +1,20 @@
+uuid: e9e08930-5d82-42dc-9b9c-bc705ad6dc9f
+langcode: pt-pt
+status: true
+dependencies:
+  module:
+    - system
+  theme:
+    - bootstrap_barrio
+id: bootstrap_barrio_content
+theme: bootstrap_barrio
+region: content
+weight: -9
+provider: null
+plugin: system_main_block
+settings:
+  id: system_main_block
+  label: 'Conteúdo da página principal'
+  provider: system
+  label_display: '0'
+visibility: {  }

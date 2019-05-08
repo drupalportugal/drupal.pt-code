@@ -1,0 +1,130 @@
+/*
+*
+--- --- --- HEADER --- --- ---
+*
+*/
+
+// Default colors for header
+#header {
+    @extend %gradient-bg;
+    #navbar-top, #navbar-main {
+        background-color: transparent !important;
+    }
+}
+
+// Page has landing section w/ gradient-bg? Header goes absolute & transparent.
+/*
+*   Pages with gradient-bg:
+*   --- Inicio: .page-node-682
+*   --- Recursos: .page-node-683
+*   --- Empresas: .page-node-684
+*   --- Comunidade: .page-node-713
+*   --- Contactos: .page-node-714
+*
+*   --- Drupal Day Bragança: .page-node-737
+*/
+
+.page-node-682,
+.page-node-683,
+.page-node-684,
+.page-node-713,
+.page-node-714,
+.page-node-737 {
+
+    #page-wrapper {
+        position: relative;
+    }
+
+    #header {
+        @extend %header-is-absolute;
+        background: transparent !important;
+        background-image: none !important;
+        
+        #navbar-top, #navbar-main {
+            background-color: transparent !important;
+        }
+    }
+
+    // Remove content top margin
+    #main #block-drupalpt-content .node__content{
+        margin: 0;
+    }
+}
+
+#header {
+    #navbar-top {
+        height: 40px;
+
+        > .container {
+            justify-content: flex-end;
+            align-content: flex-start;
+        }
+
+        .nav {
+            .nav-link {
+                font: 600 10px/14px 'Inter', sans-serif;
+                opacity: 1;
+                letter-spacing: 0;
+                text-transform: uppercase;
+                color: #FFF;
+
+                padding: 0;
+                padding-left: 25px;
+
+                &:hover {
+                    opacity: 0.6;
+                }
+            }
+        }
+    }
+
+    #navbar-main {
+        display: block;
+        height: 70px;
+        position: relative;
+        z-index: 2;
+
+        .navbar-toggler {
+            color: $white;
+            border-radius: 0;
+        }
+
+        #CollapsingNavbar {
+            justify-content: flex-end;
+        }
+    }
+}
+
+.navbar-brand {
+    width: 150px;
+    margin: 0;
+    padding: 0;
+}
+
+// Appears on Header & Footer
+.menu--main-menu {
+    .nav {
+        .nav-item {
+            .nav-link {
+                font: 600 14px/16px 'Inter', sans-serif;
+                letter-spacing: 0.44px;
+                text-transform: uppercase;
+                color: #FFF;
+                opacity: 0.6;
+                //padding: 10px 0px 10px 25px;
+
+                &:hover {
+                    opacity: 1;
+                }
+            }
+
+            .is-active {
+                opacity: 1;
+            }
+        }
+    }
+}
+
+#header .nav .nav-item:last-child a {
+    padding-right: 0;
+}

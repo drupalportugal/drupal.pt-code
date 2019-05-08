@@ -1,0 +1,22 @@
+uuid: 9eb0ca60-9b5e-4953-87d2-546fd0fe36bc
+langcode: pt-pt
+status: false
+dependencies:
+  module:
+    - aggregator
+  theme:
+    - drupalpt
+id: drupalpt_aggregatorfeed_portugaldrupalgroups
+theme: drupalpt
+region: footer_first
+weight: 0
+provider: null
+plugin: aggregator_feed_block
+settings:
+  id: aggregator_feed_block
+  label: 'No fórum'
+  provider: aggregator
+  label_display: visible
+  block_count: 5
+  feed: '1'
+visibility: {  }

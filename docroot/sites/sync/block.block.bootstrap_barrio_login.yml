@@ -1,0 +1,27 @@
+uuid: 0b4b4439-5b30-4d57-ace3-80fae8e37158
+langcode: pt-pt
+status: false
+dependencies:
+  module:
+    - user
+  theme:
+    - bootstrap_barrio
+id: bootstrap_barrio_login
+theme: bootstrap_barrio
+region: sidebar_second
+weight: -9
+provider: null
+plugin: user_login_block
+settings:
+  id: user_login_block
+  label: 'Iniciar sessão'
+  provider: user
+  label_display: visible
+visibility:
+  user_role:
+    id: user_role
+    roles:
+      anonymous: anonymous
+    negate: false
+    context_mapping:
+      user: '@user.current_user_context:current_user'

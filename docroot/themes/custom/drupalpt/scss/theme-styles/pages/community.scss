@@ -1,0 +1,118 @@
+/*
+*
+--- --- --- INICIO --- --- ---
+*
+*/
+
+// PÁGINA COMUNIDADE :: page-node-713
+.page-node-713  {
+
+    #main {
+        #block-drupalpt-content {
+            
+            // --- --- SECTIONS --- --- //
+
+            .community-content {
+                //margin-top: 437px;
+                margin-top: 594px;
+                margin-bottom: 130px;
+
+                .content-topic:last-child, .content-topic:last-child p:last-child{
+                    margin-bottom: 0;
+                    padding-bottom: 0;
+                }
+            }
+            
+            .community-adp {
+                padding-top: 135px;
+                padding-bottom: 130px;
+
+                @extend %gradient-bg-with-img;
+                color: $white;
+
+                ul.list-of-text, ol {
+                
+                    li, a {
+                        color: $white; 
+                    }
+                }
+
+                p {
+                    margin-bottom: 80px;
+                    color: $white;
+                }
+
+                a {
+                    color: $white;
+
+                    &:hover {
+                        color: $light-blue;
+                    }
+                }
+
+                .block-webform {
+                    margin-top: 80px;
+                    
+                    h2 {
+                        font: 700 20px/30px 'Inter', sans-serif;
+                        letter-spacing: -0.5px;
+                        text-transform: uppercase;
+                        margin-bottom: 30px;
+                    }
+
+
+                    #webform-submission-subscription-adp-node-713-add-form {
+                        //@extend %border-blue-around-img;
+                        margin-top: 0px;
+
+                        .js-form-item {
+                            padding: 0;
+                            margin: 0;
+                        }
+
+                        > fieldset {
+                            width: 50%;
+                        }
+
+                        fieldset label {
+                            font: 700 16px/19px 'Inter', sans-serif;
+                            letter-spacing: -0.5px;
+                            text-transform: uppercase;
+                        }
+
+                        #edit-name--wrapper {
+                            legend {
+                                display: none;
+                            }
+                        }
+
+                        .form-item-email {
+                            margin-top: 30px;
+                        }
+
+                        .form-item-drupal-org-id {
+                            margin-top: 30px;
+                        }
+
+                        .webform-actions {
+                            margin-top: 30px;
+
+                            button {
+                                @extend %no-bg-link-styles;
+                            }
+                        }
+                    }
+                }
+            }
+
+            .community-content-bottom {
+                padding-top: 130px;
+                
+                .list-of-text {
+                    margin-bottom: 130px;
+                }
+            }
+        }
+    }
+}
+

@@ -1,0 +1,13 @@
+uuid: 307af187-12e9-4d3c-b192-e85396a96104
+langcode: pt-pt
+status: true
+dependencies:
+  module:
+    - node
+_core:
+  default_config_hash: U9HspszLxcw6pZmRacFa6yDbbheyMN-We4fPbrWWHGg
+id: node_save_action
+label: 'Guardar conteúdo'
+type: node
+plugin: 'entity:save_action:node'
+configuration: {  }

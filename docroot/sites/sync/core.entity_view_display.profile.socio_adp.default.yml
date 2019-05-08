@@ -1,0 +1,21 @@
+uuid: d2b35504-4e82-4020-a301-8750ee1cf2a6
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - field.field.profile.socio_adp.field_numero_de_socio
+    - profile.type.socio_adp
+id: profile.socio_adp.default
+targetEntityType: profile
+bundle: socio_adp
+mode: default
+content:
+  field_numero_de_socio:
+    weight: 0
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+hidden: {  }

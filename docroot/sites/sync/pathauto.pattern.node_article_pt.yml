@@ -1,0 +1,33 @@
+uuid: d68d2980-de81-4318-9ea1-b92a6e261aeb
+langcode: pt-pt
+status: true
+dependencies:
+  module:
+    - language
+    - node
+id: node_article_pt
+label: 'Node: Article PT'
+type: 'canonical_entities:node'
+pattern: 'artigo/[node:title]'
+selection_criteria:
+  b7bb3bcc-5f7e-49db-9934-baccda937281:
+    id: node_type
+    bundles:
+      article: article
+    negate: false
+    context_mapping:
+      node: node
+    uuid: b7bb3bcc-5f7e-49db-9934-baccda937281
+  dc600dd9-9c9f-42bf-9184-f3fcbd27604d:
+    id: language
+    langcodes:
+      pt-pt: pt-pt
+    negate: false
+    context_mapping:
+      language: 'node:langcode:language'
+    uuid: dc600dd9-9c9f-42bf-9184-f3fcbd27604d
+selection_logic: and
+weight: -11
+relationships:
+  'node:langcode:language':
+    label: Language

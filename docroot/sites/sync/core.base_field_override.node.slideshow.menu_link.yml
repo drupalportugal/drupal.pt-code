@@ -1,0 +1,20 @@
+uuid: c713ad20-ba50-4277-b061-4a7f23ebc8c2
+langcode: pt-pt
+status: false
+dependencies:
+  config:
+    - node.type.slideshow
+id: node.slideshow.menu_link
+field_name: menu_link
+entity_type: node
+bundle: slideshow
+label: 'Menu link'
+description: 'Computed menu link for the node (only available during node saving).'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: default
+  handler_settings: {  }
+field_type: entity_reference

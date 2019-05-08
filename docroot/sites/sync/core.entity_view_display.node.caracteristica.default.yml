@@ -1,0 +1,42 @@
+uuid: 6d39ca78-8c39-4a9c-b02e-09f85fc4e769
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.caracteristica.body
+    - field.field.node.caracteristica.field_icon
+    - field.field.node.caracteristica.field_type
+    - node.type.caracteristica
+  module:
+    - layout_builder
+    - media
+    - text
+    - user
+third_party_settings:
+  layout_builder:
+    sections: {  }
+id: node.caracteristica.default
+targetEntityType: node
+bundle: caracteristica
+mode: default
+content:
+  body:
+    label: hidden
+    type: text_default
+    weight: 1
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  field_icon:
+    type: media_thumbnail
+    weight: 0
+    label: hidden
+    settings:
+      image_style: ''
+      image_link: ''
+    third_party_settings: {  }
+    region: content
+hidden:
+  field_type: true
+  langcode: true
+  links: true

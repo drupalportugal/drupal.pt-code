@@ -1,0 +1,24 @@
+uuid: 08a65173-61b2-47a8-a402-019ffaa0c8c0
+langcode: en
+status: true
+dependencies:
+  config:
+    - system.menu.account
+  module:
+    - system
+  theme:
+    - drupalpt
+id: useraccountmenu
+theme: drupalpt
+region: top_header
+weight: -15
+provider: null
+plugin: 'system_menu_block:account'
+settings:
+  id: 'system_menu_block:account'
+  label: 'User account menu'
+  provider: system
+  label_display: '0'
+  level: 1
+  depth: 1
+visibility: {  }

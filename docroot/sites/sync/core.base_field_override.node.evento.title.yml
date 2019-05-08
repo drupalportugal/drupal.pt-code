@@ -1,0 +1,18 @@
+uuid: a9b765c3-4ec5-486c-b3d9-ca6a4e098eda
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - node.type.evento
+id: node.evento.title
+field_name: title
+entity_type: node
+bundle: evento
+label: 'Nome do evento'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

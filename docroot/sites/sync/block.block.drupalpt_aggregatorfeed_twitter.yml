@@ -1,0 +1,22 @@
+uuid: 6e1c667e-0718-48f7-ab8d-33a480ec2390
+langcode: pt-pt
+status: false
+dependencies:
+  module:
+    - aggregator
+  theme:
+    - drupalpt
+id: drupalpt_aggregatorfeed_twitter
+theme: drupalpt
+region: footer_fourth
+weight: -13
+provider: null
+plugin: aggregator_feed_block
+settings:
+  id: aggregator_feed_block
+  label: 'Nas redes sociais'
+  provider: aggregator
+  label_display: visible
+  block_count: 5
+  feed: '4'
+visibility: {  }

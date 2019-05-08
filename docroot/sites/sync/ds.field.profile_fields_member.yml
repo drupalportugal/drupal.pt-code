@@ -1,0 +1,18 @@
+id: profile_fields_member
+label: 'Profile fields: Member'
+ui_limit: ''
+properties:
+  block: 'views_block:profile_fields-block_member'
+  use_block_title: false
+  config:
+    id: 'views_block:profile_fields-block_member'
+    label: ''
+    provider: views
+    label_display: visible
+    views_label: ''
+    items_per_page: none
+    context_mapping: {  }
+type: block
+type_label: 'Block field'
+entities:
+  user: user

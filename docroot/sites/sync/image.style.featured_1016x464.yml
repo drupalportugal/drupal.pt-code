@@ -1,0 +1,15 @@
+uuid: 8ebc1a40-51cc-4940-97c1-349a7dd6b6c1
+langcode: en
+status: true
+dependencies: {  }
+name: featured_1016x464
+label: 'Destaque (1016x464)'
+effects:
+  60237793-3f44-411b-be73-0e6f6f932a34:
+    uuid: 60237793-3f44-411b-be73-0e6f6f932a34
+    id: image_scale_and_crop
+    weight: 1
+    data:
+      width: 1016
+      height: 464
+      anchor: center-center

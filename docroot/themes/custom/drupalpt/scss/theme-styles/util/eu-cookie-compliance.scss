@@ -1,0 +1,70 @@
+/*
+*
+--- --- --- EU COOKIE COMPLIANCE BANNER --- --- ---
+*
+*/
+
+.eu-cookie-compliance-banner {
+    button:focus {
+        outline: none !important;
+    }
+
+    .eu-cookie-compliance-content {
+        padding: 15px 0;
+
+        .eu-cookie-compliance-message {
+            h2 {
+                font: 200 16px/25px 'Inter', sans-serif;
+                font-style: italic;
+            }
+    
+            p {
+                font: 300 12px/18px 'Inter', sans-serif;
+            }
+    
+            .eu-cookie-compliance-more-button {
+                font: 600 12px/18px 'Inter', sans-serif;
+                letter-spacing: -0.5px;
+                color: #fff;
+                text-transform: uppercase;
+                text-decoration: none;
+
+                &:hover {
+                    color: $light-blue;
+                    text-decoration: none;
+                }
+            }
+        }
+    
+        .eu-cookie-compliance-buttons {
+            .eu-cookie-compliance-secondary-button {
+                font: 200 16px/25px 'Inter', sans-serif;
+
+                &:hover {
+                    color: $light-blue;
+                }
+            }
+    
+            .eu-cookie-compliance-default-button {
+                display: inline-block;
+                padding: 9px 12px;
+                font: 500 13px/16px 'Inter', sans-serif;
+                letter-spacing: -0.5px;
+                color: #fff;
+                background: none;
+                border: none;
+                white-space: nowrap;
+                text-transform: uppercase;
+                text-align: center;
+                border: 2px solid $light-blue;
+                text-shadow: none;
+                box-shadow: none;
+                border: 2px solid $light-blue;
+            
+                &:hover {
+                    color: $light-blue;
+                }
+            }
+        }
+    }
+}

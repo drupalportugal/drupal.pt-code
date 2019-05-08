@@ -1,0 +1,19 @@
+uuid: fd5a1c15-7f0f-4920-b08c-d1feed11f879
+langcode: pt-pt
+status: true
+dependencies:
+  module:
+    - menu_ui
+third_party_settings:
+  menu_ui:
+    available_menus: {  }
+    parent: ''
+_core:
+  default_config_hash: AeW1SEDgb1OTQACAWGhzvMknMYAJlcZu0jljfeU3oso
+name: Artigo
+type: article
+description: 'Utilize <em>artigos</em> para conteúdos onde a data é relevante, como notícias, comunicados de imprensa ou entradas de blogue.'
+help: ''
+new_revision: true
+preview_mode: 1
+display_submitted: false

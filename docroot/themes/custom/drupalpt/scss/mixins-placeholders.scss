@@ -1,0 +1,99 @@
+/*
+*
+--- --- --- MIXINS & PLACEHOLDERS --- --- ---
+*
+*/
+
+// --- --- MIXINS --- --- //
+
+// --- --- PLACEHOLDERS --- --- //
+
+%gradient-bg {
+    background-image: linear-gradient(-28deg, #22C1C3, #0678BE);
+}
+
+%gradient-bg-with-img {
+    background-image: url("../images/drupalpt-bg-illustration.png"), linear-gradient(-28deg, #22C1C3, #0678BE);
+    background-repeat: no-repeat;
+    //background-position: right center;
+    background-position: right top;
+    background-attachment: fixed;
+
+    background-size: inherit; /* Gecko 2.0 (Firefox 4.0) and other CSS3-compliant browsers */
+    -moz-background-size: inherit; /* Gecko 1.9.2 (Firefox 3.6) */
+    -o-background-size: inherit; /* Opera 9.5 */
+    -webkit-background-size: inherit; /* Safari 3.0 */
+}
+
+%header-is-absolute {
+    position: absolute;
+    width: 100%;
+    left: 0;
+    top: 0;
+    z-index: 1;
+}
+
+%border-blue-around-img {
+    position: relative;
+    padding: 45px;
+    border: 2px solid $light-blue;
+    margin-top: 95px;
+}
+
+%main-link-styles {
+    padding: 14px 42px;
+    font: 600 18px/21px 'Inter', sans-serif;
+    letter-spacing: -0.5px;
+    @extend %gradient-bg;
+    color: $white;
+    border: 0;
+    border-radius: 0;
+    white-space: nowrap;
+    text-transform: uppercase;
+    text-align: center;
+
+    &:hover {
+        //opacity: 0.85;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.16);
+    }
+}
+
+%no-bg-link-styles {
+    padding: 14px 42px;
+    font: 600 18px/21px 'Inter', sans-serif;
+    letter-spacing: -0.5px;
+    background: $light-blue-opaci-65;
+    color: #fff;
+    border: 2px solid #00F0F3;
+    border-radius: 0;
+    white-space: nowrap;
+    text-transform: uppercase;
+    text-align: center;
+    transition: none;
+
+    &:hover {
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.16);
+        border: 2px solid $white;
+    }
+}
+
+%mini-link-styles {
+    display: inline-block;
+    background: transparent;
+    padding: 9px 12px;
+    font: 600 13px/16px 'Inter', sans-serif;
+    letter-spacing: -0.5px;
+    color: $black;
+    border: 0;
+    border-radius: 5px;
+    white-space: nowrap;
+    text-transform: uppercase;
+    text-align: center;
+
+    border: 2px solid $light-blue;
+
+    &:hover {
+        color: $light-blue;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.16);
+    }
+}
