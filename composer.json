@@ -60,6 +60,7 @@
       "drupal/inline_entity_form": "^1.0.0-beta1",
       "drupal/languagefield": "^1.4.0",
       "drupal/markdown": "^1.2.0",
+      "drupal/memcache": "^2.0",
       "drupal/metatag": "^1.10",
       "drupal/name": "^1.0.0-beta1",
       "drupal/pathauto": "^1.0.0",
