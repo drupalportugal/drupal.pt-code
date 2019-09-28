@@ -661,8 +661,17 @@ if ($settings['hash_salt']) {
  * Remove the leading hash signs if you would like to alter this functionality.
  */
 $config['system.performance']['fast_404']['exclude_paths'] = '/\/(?:styles)|(?:system\/files)\//';
-$config['system.performance']['fast_404']['paths'] = '/\.(?:txt|png|gif|jpe?g|css|js|ico|swf|flv|cgi|bat|pl|dll|exe|asp)$/i';
+$config['system.performance']['fast_404']['paths'] = '/\.(?:txt|xml|png|gif|jpe?g|css|js|ico|swf|flv|cgi|bat|pl|dll|exe|asp)$/i';
 $config['system.performance']['fast_404']['html'] = '<!DOCTYPE html><html><head><title>404 Not Found</title></head><body><h1>Not Found</h1><p>The requested URL "@path" was not found on this server.</p></body></html>';
+
+/* Production performance settings */
+$config['system.logging']['error_level'] = 'hide';
+$config['system.performance']['cache']['page']['use_internal'] = TRUE;
+$config['system.performance']['css']['preprocess'] = TRUE;
+$config['system.performance']['css']['gzip'] = TRUE;
+$config['system.performance']['js']['preprocess'] = TRUE;
+$config['system.performance']['js']['gzip'] = TRUE;
+$config['system.performance']['response']['gzip'] = TRUE;
 
 /**
  * Load services definition file.
