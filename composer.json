@@ -128,10 +128,12 @@
       },
       "patches": {
           "drupal/core": {
-              "[2942975] - Expose Layout Builder data to REST and JSON:API":
-              "https://www.drupal.org/files/issues/2018-09-20/2942975-24.patch",
               "[2957368] - Call to a member function transformDimensions()":
               "https://www.drupal.org/files/issues/2018-04-04/2957368_0.patch"  
+          },
+          "drupal/recaptcha": {
+              "[3035883] - CAPTCHA validation error: unknown CAPTCHA session ID":
+              "https://www.drupal.org/files/issues/2019-11-15/3035883-29-workaround.patch"
           }
       }
     }
