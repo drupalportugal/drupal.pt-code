@@ -39,7 +39,7 @@
       "composer/installers": "^1.4.0",
       "cweagans/composer-patches": "^1.6.4",
       "drupal-composer/drupal-scaffold": "^2.4.0",
-      "drupal/core": "^8.7.7",
+      "drupal/core": "^8.9.6",
       "drush/drush": "*",
       "drupal/acquia_connector": "^1.14.0",
       "drupal/address": "^1.3.0",
@@ -72,7 +72,7 @@
       "drupal/views_slideshow": "^4.6.0",
       "drupal/content_access": "^1.0",
       "webmozart/path-util": "^2.3.0",
-      "drupal/admin_toolbar": "^1.26",
+      "drupal/admin_toolbar": "^2.3",
       "drupal/webform": "^5.1",
       "drupal/content_sync": "^2.1",
       "drupal/bootstrap_barrio": "^4.22"
