@@ -5,6 +5,6 @@ dependencies: {  }
 _core:
   default_config_hash: ED57FmT-0m4efG4QVnJlhznN7NzcWmnw4t4MH2D1YuM
 id: given
-label: Given
+label: Prenome
 locked: false
 pattern: g

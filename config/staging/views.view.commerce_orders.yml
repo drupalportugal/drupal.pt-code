@@ -11,7 +11,6 @@ dependencies:
     - commerce_store
     - options
     - state_machine
-    - system
     - user
 _core:
   default_config_hash: tpDt6NuuckyWNxkctwBhb-wOuIK--Fk8OBMk6OuRCZg
@@ -22,7 +21,6 @@ description: ''
 tag: Commerce
 base_table: commerce_order
 base_field: order_id
-core: 8.x
 display:
   default:
     display_plugin: default
@@ -48,13 +46,13 @@ display:
       exposed_form:
         type: basic
         options:
-          submit_button: Filtro
+          submit_button: Filter
           reset_button: false
           reset_button_label: Reiniciar
           exposed_sorts_label: 'Ordenar por'
           expose_sort_order: true
-          sort_asc_label: Ascendente
-          sort_desc_label: Descendente
+          sort_asc_label: Asc
+          sort_desc_label: Desc
       pager:
         type: full
         options:
@@ -71,98 +69,22 @@ display:
             offset: false
             offset_label: Deslocamento
           tags:
-            previous: '‹ Anterior'
-            next: 'Seguinte ›'
-            first: '« Primeira'
-            last: 'Última »'
+            previous: '‹ anterior'
+            next: 'seguinte ›'
+            first: '« primeira'
+            last: 'última »'
           quantity: 9
       style:
-        type: table
+        type: grid
         options:
           grouping: {  }
-          row_class: ''
-          default_row_class: true
-          override: true
-          sticky: false
-          caption: ''
-          summary: ''
-          description: ''
-          columns:
-            order_number: order_number
-            placed: placed
-            type: type
-            store_id: store_id
-            uid: uid
-            mail: uid
-            state: state
-            total_price__number: total_price__number
-            operations: operations
-          info:
-            order_number:
-              sortable: true
-              default_sort_order: asc
-              align: ''
-              separator: ''
-              empty_column: false
-              responsive: ''
-            placed:
-              sortable: true
-              default_sort_order: desc
-              align: ''
-              separator: ''
-              empty_column: false
-              responsive: ''
-            type:
-              sortable: true
-              default_sort_order: asc
-              align: ''
-              separator: ''
-              empty_column: true
-              responsive: priority-medium
-            store_id:
-              sortable: true
-              default_sort_order: asc
-              align: ''
-              separator: ''
-              empty_column: true
-              responsive: priority-medium
-            uid:
-              sortable: false
-              default_sort_order: asc
-              align: ''
-              separator: '<br />'
-              empty_column: false
-              responsive: ''
-            mail:
-              sortable: false
-              default_sort_order: asc
-              align: ''
-              separator: ''
-              empty_column: false
-              responsive: ''
-            state:
-              sortable: true
-              default_sort_order: asc
-              align: ''
-              separator: ''
-              empty_column: false
-              responsive: ''
-            total_price__number:
-              sortable: true
-              default_sort_order: asc
-              align: ''
-              separator: ''
-              empty_column: false
-              responsive: ''
-            operations:
-              sortable: false
-              default_sort_order: asc
-              align: ''
-              separator: ''
-              empty_column: false
-              responsive: ''
-          default: placed
-          empty_table: true
+          columns: 1
+          automatic_width: true
+          alignment: horizontal
+          col_class_default: true
+          col_class_custom: ''
+          row_class_default: true
+          row_class_custom: ''
       row:
         type: fields
       fields:
@@ -291,7 +213,7 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
-          label: Data
+          label: Date
           exclude: false
           alter:
             alter_text: false
@@ -358,7 +280,7 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
-          label: Tipo
+          label: Type
           exclude: false
           alter:
             alter_text: false
@@ -749,7 +671,7 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
-          label: Operações
+          label: Operations
           exclude: false
           alter:
             alter_text: false
@@ -882,6 +804,9 @@ display:
               authenticated: authenticated
               anonymous: '0'
               administrator: '0'
+            placeholder: ''
+            operator_limit_selection: false
+            operator_list: {  }
           is_grouped: false
           group_info:
             label: ''
@@ -910,7 +835,7 @@ display:
           exposed: true
           expose:
             operator_id: type_op
-            label: Tipo
+            label: Type
             description: ''
             use_operator: false
             operator: type_op
@@ -924,6 +849,8 @@ display:
               administrator: '0'
             reduce: false
             hide_single_bundle: true
+            operator_limit_selection: false
+            operator_list: {  }
           is_grouped: false
           group_info:
             label: ''
@@ -965,6 +892,8 @@ display:
               anonymous: '0'
               administrator: '0'
             reduce: false
+            operator_limit_selection: false
+            operator_list: {  }
           is_grouped: false
           group_info:
             label: ''
@@ -980,7 +909,22 @@ display:
           entity_type: commerce_order
           entity_field: state
           plugin_id: state_machine_state
-      sorts: {  }
+      sorts:
+        placed:
+          id: placed
+          table: commerce_order
+          field: placed
+          relationship: none
+          group_type: group
+          admin_label: ''
+          order: DESC
+          exposed: true
+          expose:
+            label: Criada
+          granularity: minute
+          entity_type: commerce_order
+          entity_field: placed
+          plugin_id: date
       title: Encomendas
       header: {  }
       footer: {  }
@@ -994,21 +938,24 @@ display:
           admin_label: ''
           empty: true
           tokenize: false
-          content: 'No orders available.'
+          content: 'Não existem encomendas disponíveis.'
           plugin_id: text_custom
       relationships:
         order_items:
           id: order_items
           table: commerce_order__order_items
-          field: order_items
+          field: order_items_target_id
           relationship: none
           group_type: group
           admin_label: 'order_items: Order item'
           required: false
           plugin_id: standard
+          entity_type: commerce_order
+          entity_field: order_items
       arguments: {  }
-      display_extenders: {  }
-      use_ajax: false
+      display_extenders:
+        metatag_display_extender: {  }
+      use_ajax: true
       filter_groups:
         operator: AND
         groups:
@@ -1019,6 +966,8 @@ display:
         - 'languages:language_interface'
         - url
         - url.query_args
+        - 'url.query_args:sort_by'
+        - 'url.query_args:sort_order'
         - user.permissions
       cacheable: false
       max-age: 0
@@ -1030,7 +979,8 @@ display:
     display_title: Página
     position: 1
     display_options:
-      display_extenders: {  }
+      display_extenders:
+        metatag_display_extender: {  }
       path: admin/commerce/orders/list
       menu:
         type: 'default tab'
@@ -1052,6 +1002,8 @@ display:
         - 'languages:language_interface'
         - url
         - url.query_args
+        - 'url.query_args:sort_by'
+        - 'url.query_args:sort_order'
         - user.permissions
       cacheable: false
       max-age: 0

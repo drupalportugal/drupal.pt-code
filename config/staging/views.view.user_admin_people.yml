@@ -16,12 +16,11 @@ description: 'Encontrar e gerir pessoas a interagir com o teu sítio.'
 tag: default
 base_table: users_field_data
 base_field: uid
-core: 8.x
 display:
   default:
     display_plugin: default
     id: default
-    display_title: Principal
+    display_title: Predefinido
     position: 0
     display_options:
       access:
@@ -41,13 +40,13 @@ display:
       exposed_form:
         type: basic
         options:
-          submit_button: Filtro
+          submit_button: Filter
           reset_button: true
           reset_button_label: Reiniciar
           exposed_sorts_label: 'Ordenar por'
           expose_sort_order: true
-          sort_asc_label: Ascendente
-          sort_desc_label: Descendente
+          sort_asc_label: Asc
+          sort_desc_label: Desc
       pager:
         type: full
         options:
@@ -483,7 +482,7 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
-          label: Operações
+          label: Operations
           exclude: false
           alter:
             alter_text: false
@@ -680,6 +679,9 @@ display:
               authenticated: authenticated
               anonymous: '0'
               administrator: '0'
+            placeholder: ''
+            operator_limit_selection: false
+            operator_list: {  }
           is_grouped: false
           group_info:
             label: ''
@@ -721,6 +723,8 @@ display:
               authenticated: authenticated
               anonymous: '0'
               administrator: '0'
+            operator_limit_selection: false
+            operator_list: {  }
           is_grouped: true
           group_info:
             label: Estado
@@ -770,6 +774,8 @@ display:
               anonymous: '0'
               administrator: '0'
             reduce: false
+            operator_limit_selection: false
+            operator_list: {  }
           is_grouped: false
           group_info:
             label: ''
@@ -810,6 +816,8 @@ display:
               anonymous: '0'
               administrator: '0'
             reduce: false
+            operator_limit_selection: false
+            operator_list: {  }
           is_grouped: false
           group_info:
             label: ''
@@ -847,6 +855,8 @@ display:
             multiple: false
             remember_roles:
               authenticated: authenticated
+            operator_limit_selection: false
+            operator_list: {  }
           is_grouped: false
           group_info:
             label: ''
@@ -888,6 +898,11 @@ display:
             multiple: false
             remember_roles:
               authenticated: authenticated
+            placeholder: ''
+            min_placeholder: ''
+            max_placeholder: ''
+            operator_limit_selection: false
+            operator_list: {  }
           is_grouped: false
           group_info:
             label: ''
@@ -922,6 +937,9 @@ display:
             remember: false
             multiple: false
             required: false
+            placeholder: ''
+            operator_limit_selection: false
+            operator_list: {  }
           is_grouped: false
           group_info:
             label: ''

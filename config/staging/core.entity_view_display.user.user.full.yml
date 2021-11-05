@@ -87,3 +87,4 @@ hidden:
   profile_collective_associate: true
   profile_customer: true
   profile_individual_associate: true
+  profile_socio_adp: true

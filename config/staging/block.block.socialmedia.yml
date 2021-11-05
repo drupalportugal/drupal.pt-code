@@ -1,0 +1,25 @@
+uuid: 5c54047f-9588-4332-958c-d0de79ff3700
+langcode: en
+status: true
+dependencies:
+  content:
+    - 'block_content:basic:30d7c23e-a886-426c-beec-4a9e7ce5341b'
+  module:
+    - block_content
+  theme:
+    - drupalpt
+id: socialmedia
+theme: drupalpt
+region: footer_first
+weight: 0
+provider: null
+plugin: 'block_content:30d7c23e-a886-426c-beec-4a9e7ce5341b'
+settings:
+  id: 'block_content:30d7c23e-a886-426c-beec-4a9e7ce5341b'
+  label: 'Social Media'
+  provider: block_content
+  label_display: '0'
+  status: true
+  info: ''
+  view_mode: full
+visibility: {  }

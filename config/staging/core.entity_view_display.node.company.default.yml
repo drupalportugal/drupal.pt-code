@@ -1,0 +1,58 @@
+uuid: 0eef08e8-c695-4699-8431-07749e22ddea
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.company.body
+    - field.field.node.company.field_company_link
+    - field.field.node.company.field_logo
+    - node.type.company
+  module:
+    - layout_builder
+    - link
+    - media
+    - text
+    - user
+third_party_settings:
+  layout_builder:
+    sections: {  }
+id: node.company.default
+targetEntityType: node
+bundle: company
+mode: default
+content:
+  body:
+    label: hidden
+    type: text_default
+    weight: 3
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  field_company_link:
+    weight: 2
+    label: hidden
+    settings:
+      trim_length: 80
+      target: _blank
+      url_only: false
+      url_plain: false
+      rel: '0'
+    third_party_settings: {  }
+    type: link
+    region: content
+  field_logo:
+    weight: 1
+    label: hidden
+    settings:
+      image_style: ''
+      image_link: ''
+    third_party_settings: {  }
+    type: media_thumbnail
+    region: content
+  links:
+    weight: 0
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+hidden:
+  langcode: true

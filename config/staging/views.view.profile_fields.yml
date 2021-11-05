@@ -15,7 +15,6 @@ description: ''
 tag: ''
 base_table: profile
 base_field: profile_id
-core: 8.x
 display:
   default:
     display_plugin: default
@@ -196,9 +195,9 @@ display:
         - 'languages:language_interface'
         - url
       tags:
+        - 'config:core.entity_view_display.profile.customer.default'
         - 'config:core.entity_view_display.profile.member.default'
         - 'config:core.entity_view_display.profile.socio_adp.default'
-        - 'config:core.entity_view_display.profile.customer.default'
   block_member:
     display_plugin: block
     id: block_member
@@ -238,6 +237,8 @@ display:
             remember_roles:
               authenticated: authenticated
             reduce: false
+            operator_limit_selection: false
+            operator_list: {  }
           is_grouped: false
           group_info:
             label: ''

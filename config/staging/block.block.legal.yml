@@ -1,0 +1,25 @@
+uuid: eba6debc-06d1-4f69-b0e9-e52b53d9e481
+langcode: en
+status: true
+dependencies:
+  config:
+    - system.menu.legal-menu
+  module:
+    - system
+  theme:
+    - drupalpt
+id: legal
+theme: drupalpt
+region: footer_third
+weight: 0
+provider: null
+plugin: 'system_menu_block:legal-menu'
+settings:
+  id: 'system_menu_block:legal-menu'
+  label: Legal
+  provider: system
+  label_display: '0'
+  level: 1
+  depth: 1
+  expand_all_items: false
+visibility: {  }

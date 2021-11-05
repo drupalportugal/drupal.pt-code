@@ -1,0 +1,7 @@
+uuid: 7f0add55-56a7-498c-bd4a-945832e833e0
+langcode: pt-pt
+status: false
+dependencies: {  }
+formId: node_showcase_form
+captchaType: default
+label: null

@@ -12,8 +12,8 @@ field_name: field_profile_lang_languages
 entity_type: profile
 bundle: member
 label: Idiomas
-description: 'Seleciona um ou mais idiomas que compreendes ou falas. Esta informação será <strong>pública</strong>.'
-required: true
+description: 'Esta informação será <strong>pública</strong>.'
+required: false
 translatable: false
 default_value: {  }
 default_value_callback: ''

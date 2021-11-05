@@ -1,0 +1,16 @@
+uuid: f3b9560c-35d3-4d7e-bc0d-99b121246f8f
+langcode: pt-pt
+status: true
+dependencies:
+  enforced:
+    module:
+      - webform
+_core:
+  default_config_hash: K8qTfK5-87DpwTQBkqhgTMR4P0Zz8Z9aNI7OnMlTb0Q
+id: gender
+label: Sexo
+category: Demographic
+likert: false
+options: |
+  Masculino: Masculino
+  Feminino: Feminino

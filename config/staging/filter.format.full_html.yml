@@ -4,7 +4,6 @@ status: true
 dependencies:
   module:
     - editor
-    - markdown
 _core:
   default_config_hash: hewPmBgni9jlDK_IjLxUx1HsTbinK-hdl0lOwjbteIY
 name: 'HTML Completo'
@@ -69,10 +68,3 @@ filters:
     weight: -49
     settings:
       filter_url_length: 72
-  markdown:
-    id: markdown
-    provider: markdown
-    status: false
-    weight: -42
-    settings:
-      markdown_library: php-markdown

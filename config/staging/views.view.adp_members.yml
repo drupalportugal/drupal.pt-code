@@ -7,12 +7,13 @@ dependencies:
     - field.storage.commerce_order_item.field_nif
     - field.storage.profile.field_numero_de_socio
     - user.role.administrator
-    - user.role.moderator
+    - user.role.associate
   module:
     - commerce_license
     - commerce_order
     - options
     - profile
+    - state_machine
     - user
 id: adp_members
 label: 'ADP Members'
@@ -21,7 +22,6 @@ description: ''
 tag: ''
 base_table: commerce_license
 base_field: license_id
-core: 8.x
 display:
   default:
     display_plugin: default
@@ -33,7 +33,6 @@ display:
         type: role
         options:
           role:
-            moderator: moderator
             administrator: administrator
       cache:
         type: tag
@@ -59,10 +58,13 @@ display:
       pager:
         type: mini
         options:
-          items_per_page: 40
+          items_per_page: 100
           offset: 0
           id: 0
           total_pages: null
+          tags:
+            previous: '‹ Anterior'
+            next: 'Seguinte ›'
           expose:
             items_per_page: false
             items_per_page_label: 'Itens por página'
@@ -71,11 +73,6 @@ display:
             items_per_page_options_all_label: '- Todos -'
             offset: false
             offset_label: Deslocamento
-          tags:
-            previous: '‹ Anterior'
-            next: 'Seguinte ›'
-            first: '« Primeira'
-            last: 'Última »'
       style:
         type: table
         options:
@@ -516,57 +513,6 @@ display:
           entity_type: commerce_order_item
           entity_field: title
           plugin_id: field
-        label:
-          id: label
-          table: commerce_license
-          field: label
-          relationship: none
-          group_type: group
-          admin_label: ''
-          label: Label
-          exclude: false
-          alter:
-            alter_text: false
-            text: ''
-            make_link: false
-            path: ''
-            absolute: false
-            external: false
-            replace_spaces: false
-            path_case: none
-            trim_whitespace: false
-            alt: ''
-            rel: ''
-            link_class: ''
-            prefix: ''
-            suffix: ''
-            target: ''
-            nl2br: false
-            max_length: 0
-            word_boundary: true
-            ellipsis: true
-            more_link: false
-            more_link_text: ''
-            more_link_path: ''
-            strip_tags: false
-            trim: false
-            preserve_tags: ''
-            html: false
-          element_type: ''
-          element_class: ''
-          element_label_type: ''
-          element_label_class: ''
-          element_label_colon: true
-          element_wrapper_type: ''
-          element_wrapper_class: ''
-          element_default_classes: true
-          empty: ''
-          hide_empty: false
-          empty_zero: false
-          hide_alter_empty: true
-          link_to_entity: true
-          entity_type: commerce_license
-          plugin_id: commerce_license__entity_label
         order_id:
           id: order_id
           table: commerce_order_item
@@ -693,6 +639,13 @@ display:
           multi_type: separator
           separator: ', '
           field_api_classes: false
+          set_precision: false
+          precision: 0
+          decimal: .
+          format_plural: false
+          format_plural_string: !!binary MQNAY291bnQ=
+          prefix: ''
+          suffix: ''
           entity_type: user
           entity_field: mail
           plugin_id: field
@@ -888,7 +841,7 @@ display:
         roles:
           id: roles
           table: user__roles
-          field: roles
+          field: roles_target_id
           relationship: uid
           group_type: group
           admin_label: ''
@@ -933,26 +886,209 @@ display:
           hide_empty: false
           empty_zero: false
           hide_alter_empty: true
-          click_sort_column: target_id
           type: entity_reference_label
-          settings:
-            link: true
-          group_column: target_id
-          group_columns: {  }
-          group_rows: true
-          delta_limit: 0
-          delta_offset: 0
-          delta_reversed: false
-          delta_first_last: false
-          multi_type: separator
           separator: ', '
-          field_api_classes: false
           entity_type: user
           entity_field: roles
-          plugin_id: field
-      filters: {  }
-      sorts: {  }
-      title: 'ADP Members'
+          plugin_id: user_roles
+      filters:
+        uid_raw:
+          id: uid_raw
+          table: users_field_data
+          field: uid_raw
+          relationship: uid
+          group_type: group
+          admin_label: ''
+          operator: 'not empty'
+          value:
+            min: ''
+            max: ''
+            value: ''
+          group: 1
+          exposed: false
+          expose:
+            operator_id: uid_raw_op
+            label: 'O ID do utilizador'
+            description: null
+            use_operator: false
+            operator: uid_raw_op
+            identifier: uid_raw
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+            placeholder: null
+            min_placeholder: null
+            max_placeholder: null
+            operator_limit_selection: false
+            operator_list: {  }
+          is_grouped: false
+          group_info:
+            label: 'O ID do utilizador'
+            description: ''
+            identifier: uid_raw
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: '1'
+            default_group_multiple: {  }
+            group_items:
+              1:
+                title: ID
+                operator: 'not empty'
+                value:
+                  value: ''
+                  min: ''
+                  max: ''
+              2:
+                title: ID_
+                operator: 'not empty'
+                value:
+                  value: ''
+                  min: ''
+                  max: ''
+              3:
+                title: ID__
+                operator: 'not empty'
+                value:
+                  value: ''
+                  min: ''
+                  max: ''
+          entity_type: user
+          plugin_id: numeric
+        roles_target_id:
+          id: roles_target_id
+          table: user__roles
+          field: roles_target_id
+          relationship: uid
+          group_type: group
+          admin_label: ''
+          operator: or
+          value:
+            associate: associate
+          group: 1
+          exposed: false
+          expose:
+            operator_id: roles_target_id_op
+            label: 'Grupos de utilizador'
+            description: null
+            use_operator: false
+            operator: roles_target_id_op
+            identifier: roles_target_id
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+            reduce: false
+            operator_limit_selection: false
+            operator_list: {  }
+          is_grouped: true
+          group_info:
+            label: Sócios
+            description: ''
+            identifier: roles_target_id
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items:
+              1:
+                title: Plenos
+                operator: or
+                value:
+                  associate: associate
+              2:
+                title: Expirados
+                operator: not
+                value:
+                  associate: associate
+          reduce_duplicates: true
+          entity_type: user
+          entity_field: roles
+          plugin_id: user_roles
+        state:
+          id: state
+          table: commerce_license
+          field: state
+          relationship: none
+          group_type: group
+          admin_label: ''
+          operator: in
+          value:
+            active: active
+          group: 1
+          exposed: false
+          expose:
+            operator_id: state_op
+            label: Licença
+            description: ''
+            use_operator: false
+            operator: state_op
+            identifier: state
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+              anonymous: '0'
+              associate: '0'
+              author: '0'
+              moderator: '0'
+              administrator: '0'
+            reduce: false
+            operator_limit_selection: false
+            operator_list: {  }
+          is_grouped: false
+          group_info:
+            label: Estado
+            description: null
+            identifier: state
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items:
+              1: {  }
+              2: {  }
+              3: {  }
+          entity_type: commerce_license
+          entity_field: state
+          plugin_id: state_machine_state
+      sorts:
+        field_numero_de_socio_value:
+          id: field_numero_de_socio_value
+          table: profile__field_numero_de_socio
+          field: field_numero_de_socio_value
+          relationship: profile_type
+          group_type: group
+          admin_label: ''
+          order: ASC
+          exposed: false
+          expose:
+            label: 'Numero de socio (field_numero_de_socio)'
+          plugin_id: standard
+        state:
+          id: state
+          table: commerce_license
+          field: state
+          relationship: none
+          group_type: group
+          admin_label: ''
+          order: ASC
+          exposed: false
+          expose:
+            label: Estado
+          entity_type: commerce_license
+          entity_field: state
+          plugin_id: standard
+      title: 'Active ADP Members'
       header: {  }
       footer: {  }
       empty: {  }
@@ -992,8 +1128,13 @@ display:
       arguments: {  }
       display_extenders:
         metatag_display_extender: {  }
+      group_by: true
+      filter_groups:
+        operator: AND
+        groups:
+          1: AND
     cache_metadata:
-      max-age: 0
+      max-age: -1
       contexts:
         - 'languages:language_content'
         - 'languages:language_interface'
@@ -1006,17 +1147,659 @@ display:
   page_1:
     display_plugin: page
     id: page_1
-    display_title: Page
+    display_title: 'ADP Members'
     position: 1
     display_options:
       display_extenders:
         metatag_display_extender: {  }
-      path: adp-members
+      path: admin/adp-members
+      menu:
+        type: 'default tab'
+        title: 'Gerir Sócios'
+        description: ''
+        expanded: false
+        parent: ''
+        weight: -34
+        context: '0'
+        menu_name: main-menu
+      tab_options:
+        type: none
+        title: ''
+        description: ''
+        weight: 0
+      display_description: ''
+      filters:
+        uid_raw:
+          id: uid_raw
+          table: users_field_data
+          field: uid_raw
+          relationship: uid
+          group_type: group
+          admin_label: ''
+          operator: 'not empty'
+          value:
+            min: ''
+            max: ''
+            value: ''
+          group: 1
+          exposed: false
+          expose:
+            operator_id: uid_raw_op
+            label: 'O ID do utilizador'
+            description: null
+            use_operator: false
+            operator: uid_raw_op
+            identifier: uid_raw
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+            placeholder: null
+            min_placeholder: null
+            max_placeholder: null
+            operator_limit_selection: false
+            operator_list: {  }
+          is_grouped: false
+          group_info:
+            label: 'O ID do utilizador'
+            description: ''
+            identifier: uid_raw
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: '1'
+            default_group_multiple: {  }
+            group_items:
+              1:
+                title: ID
+                operator: 'not empty'
+                value:
+                  value: ''
+                  min: ''
+                  max: ''
+              2:
+                title: ID_
+                operator: 'not empty'
+                value:
+                  value: ''
+                  min: ''
+                  max: ''
+              3:
+                title: ID__
+                operator: 'not empty'
+                value:
+                  value: ''
+                  min: ''
+                  max: ''
+          entity_type: user
+          plugin_id: numeric
+        roles_target_id:
+          id: roles_target_id
+          table: user__roles
+          field: roles_target_id
+          relationship: uid
+          group_type: group
+          admin_label: ''
+          operator: or
+          value:
+            associate: associate
+          group: 1
+          exposed: true
+          expose:
+            operator_id: roles_target_id_op
+            label: 'Grupos de utilizador'
+            description: null
+            use_operator: false
+            operator: roles_target_id_op
+            identifier: roles_target_id
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+            reduce: false
+            operator_limit_selection: false
+            operator_list: {  }
+          is_grouped: true
+          group_info:
+            label: Sócios
+            description: ''
+            identifier: roles_target_id
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items:
+              1:
+                title: Plenos
+                operator: or
+                value:
+                  associate: associate
+              2:
+                title: Expirados
+                operator: not
+                value:
+                  associate: associate
+          reduce_duplicates: true
+          entity_type: user
+          entity_field: roles
+          plugin_id: user_roles
+        state:
+          id: state
+          table: commerce_license
+          field: state
+          relationship: none
+          group_type: group
+          admin_label: ''
+          operator: in
+          value:
+            all: all
+            new: new
+            pending: pending
+            active: active
+            suspended: suspended
+            expired: expired
+            revoked: revoked
+            failed: failed
+            canceled: canceled
+          group: 1
+          exposed: true
+          expose:
+            operator_id: state_op
+            label: Estado
+            description: ''
+            use_operator: false
+            operator: state_op
+            identifier: state
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+              anonymous: '0'
+              associate: '0'
+              author: '0'
+              moderator: '0'
+              administrator: '0'
+            reduce: false
+            operator_limit_selection: false
+            operator_list: {  }
+          is_grouped: false
+          group_info:
+            label: Estado
+            description: null
+            identifier: state
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items:
+              1: {  }
+              2: {  }
+              3: {  }
+          entity_type: commerce_license
+          entity_field: state
+          plugin_id: state_machine_state
+      defaults:
+        filters: false
+        filter_groups: false
+        title: false
+      filter_groups:
+        operator: AND
+        groups:
+          1: AND
+      title: 'ADP Members'
     cache_metadata:
-      max-age: 0
+      max-age: -1
       contexts:
         - 'languages:language_content'
         - 'languages:language_interface'
+        - url
+        - url.query_args
+        - user.roles
+      tags:
+        - 'config:field.storage.commerce_order_item.field_nic'
+        - 'config:field.storage.commerce_order_item.field_nif'
+        - 'config:field.storage.profile.field_numero_de_socio'
+  page_2:
+    display_plugin: page
+    id: page_2
+    display_title: 'Sócios Activos'
+    position: 1
+    display_options:
+      display_extenders:
+        metatag_display_extender: {  }
+      path: admin/adp-members/active
+      menu:
+        type: tab
+        title: 'Sócios Activos'
+        description: ''
+        expanded: false
+        parent: ''
+        weight: -34
+        context: '0'
+        menu_name: main-menu
+      tab_options:
+        type: none
+        title: ''
+        description: ''
+        weight: 0
+      display_description: ''
+      title: 'Active ADP Members'
+      defaults:
+        title: false
+        filters: false
+        filter_groups: false
+      filters:
+        uid_raw:
+          id: uid_raw
+          table: users_field_data
+          field: uid_raw
+          relationship: uid
+          group_type: group
+          admin_label: ''
+          operator: 'not empty'
+          value:
+            min: ''
+            max: ''
+            value: ''
+          group: 1
+          exposed: false
+          expose:
+            operator_id: uid_raw_op
+            label: 'O ID do utilizador'
+            description: null
+            use_operator: false
+            operator: uid_raw_op
+            identifier: uid_raw
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+            placeholder: null
+            min_placeholder: null
+            max_placeholder: null
+            operator_limit_selection: false
+            operator_list: {  }
+          is_grouped: false
+          group_info:
+            label: 'O ID do utilizador'
+            description: ''
+            identifier: uid_raw
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: '1'
+            default_group_multiple: {  }
+            group_items:
+              1:
+                title: ID
+                operator: 'not empty'
+                value:
+                  value: ''
+                  min: ''
+                  max: ''
+              2:
+                title: ID_
+                operator: 'not empty'
+                value:
+                  value: ''
+                  min: ''
+                  max: ''
+              3:
+                title: ID__
+                operator: 'not empty'
+                value:
+                  value: ''
+                  min: ''
+                  max: ''
+          entity_type: user
+          plugin_id: numeric
+        roles_target_id:
+          id: roles_target_id
+          table: user__roles
+          field: roles_target_id
+          relationship: uid
+          group_type: group
+          admin_label: ''
+          operator: or
+          value:
+            associate: associate
+          group: 1
+          exposed: false
+          expose:
+            operator_id: roles_target_id_op
+            label: 'Grupos de utilizador'
+            description: null
+            use_operator: false
+            operator: roles_target_id_op
+            identifier: roles_target_id
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+            reduce: false
+            operator_limit_selection: false
+            operator_list: {  }
+          is_grouped: true
+          group_info:
+            label: Sócios
+            description: ''
+            identifier: roles_target_id
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items:
+              1:
+                title: Plenos
+                operator: or
+                value:
+                  associate: associate
+              2:
+                title: Expirados
+                operator: not
+                value:
+                  associate: associate
+          reduce_duplicates: true
+          entity_type: user
+          entity_field: roles
+          plugin_id: user_roles
+        state:
+          id: state
+          table: commerce_license
+          field: state
+          relationship: none
+          group_type: group
+          admin_label: ''
+          operator: in
+          value:
+            active: active
+          group: 1
+          exposed: false
+          expose:
+            operator_id: state_op
+            label: Licença
+            description: ''
+            use_operator: false
+            operator: state_op
+            identifier: state
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+              anonymous: '0'
+              associate: '0'
+              author: '0'
+              moderator: '0'
+              administrator: '0'
+            reduce: false
+            operator_limit_selection: false
+            operator_list: {  }
+          is_grouped: false
+          group_info:
+            label: Estado
+            description: null
+            identifier: state
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items:
+              1: {  }
+              2: {  }
+              3: {  }
+          entity_type: commerce_license
+          entity_field: state
+          plugin_id: state_machine_state
+      filter_groups:
+        operator: AND
+        groups:
+          1: AND
+    cache_metadata:
+      max-age: -1
+      contexts:
+        - 'languages:language_content'
+        - 'languages:language_interface'
+        - url.query_args
+        - user.roles
+      tags:
+        - 'config:field.storage.commerce_order_item.field_nic'
+        - 'config:field.storage.commerce_order_item.field_nif'
+        - 'config:field.storage.profile.field_numero_de_socio'
+  page_3:
+    display_plugin: page
+    id: page_3
+    display_title: 'Sócios Expirados'
+    position: 1
+    display_options:
+      display_extenders:
+        metatag_display_extender: {  }
+      path: admin/adp-members/inactive
+      menu:
+        type: tab
+        title: 'Sócios Expirados'
+        description: ''
+        expanded: false
+        parent: ''
+        weight: -34
+        context: '0'
+        menu_name: main-menu
+      tab_options:
+        type: none
+        title: ''
+        description: ''
+        weight: 0
+      display_description: ''
+      title: 'Inactive ADP Members'
+      defaults:
+        title: false
+        filters: false
+        filter_groups: false
+        use_ajax: false
+      filters:
+        uid_raw:
+          id: uid_raw
+          table: users_field_data
+          field: uid_raw
+          relationship: uid
+          group_type: group
+          admin_label: ''
+          operator: 'not empty'
+          value:
+            min: ''
+            max: ''
+            value: ''
+          group: 1
+          exposed: false
+          expose:
+            operator_id: uid_raw_op
+            label: 'O ID do utilizador'
+            description: null
+            use_operator: false
+            operator: uid_raw_op
+            identifier: uid_raw
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+            placeholder: null
+            min_placeholder: null
+            max_placeholder: null
+            operator_limit_selection: false
+            operator_list: {  }
+          is_grouped: false
+          group_info:
+            label: 'O ID do utilizador'
+            description: ''
+            identifier: uid_raw
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: '1'
+            default_group_multiple: {  }
+            group_items:
+              1:
+                title: ID
+                operator: 'not empty'
+                value:
+                  value: ''
+                  min: ''
+                  max: ''
+              2:
+                title: ID_
+                operator: 'not empty'
+                value:
+                  value: ''
+                  min: ''
+                  max: ''
+              3:
+                title: ID__
+                operator: 'not empty'
+                value:
+                  value: ''
+                  min: ''
+                  max: ''
+          entity_type: user
+          plugin_id: numeric
+        roles_target_id:
+          id: roles_target_id
+          table: user__roles
+          field: roles_target_id
+          relationship: uid
+          group_type: group
+          admin_label: ''
+          operator: not
+          value:
+            associate: associate
+          group: 1
+          exposed: false
+          expose:
+            operator_id: roles_target_id_op
+            label: 'Grupos de utilizador'
+            description: null
+            use_operator: false
+            operator: roles_target_id_op
+            identifier: roles_target_id
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+            reduce: false
+            operator_limit_selection: false
+            operator_list: {  }
+          is_grouped: true
+          group_info:
+            label: Sócios
+            description: ''
+            identifier: roles_target_id
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items:
+              1:
+                title: Plenos
+                operator: or
+                value:
+                  associate: associate
+              2:
+                title: Expirados
+                operator: not
+                value:
+                  associate: associate
+          reduce_duplicates: true
+          entity_type: user
+          entity_field: roles
+          plugin_id: user_roles
+        state:
+          id: state
+          table: commerce_license
+          field: state
+          relationship: none
+          group_type: group
+          admin_label: ''
+          operator: in
+          value:
+            all: all
+            new: new
+            pending: pending
+            active: active
+            suspended: suspended
+            expired: expired
+            revoked: revoked
+            failed: failed
+            canceled: canceled
+          group: 1
+          exposed: true
+          expose:
+            operator_id: state_op
+            label: Estado
+            description: ''
+            use_operator: false
+            operator: state_op
+            identifier: state
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+              anonymous: '0'
+              associate: '0'
+              author: '0'
+              moderator: '0'
+              administrator: '0'
+            reduce: false
+            operator_limit_selection: false
+            operator_list: {  }
+          is_grouped: false
+          group_info:
+            label: Estado
+            description: null
+            identifier: state
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items:
+              1: {  }
+              2: {  }
+              3: {  }
+          entity_type: commerce_license
+          entity_field: state
+          plugin_id: state_machine_state
+      filter_groups:
+        operator: AND
+        groups:
+          1: AND
+      use_ajax: true
+    cache_metadata:
+      max-age: -1
+      contexts:
+        - 'languages:language_content'
+        - 'languages:language_interface'
+        - url
         - url.query_args
         - user.roles
       tags:

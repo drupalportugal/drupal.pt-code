@@ -9,7 +9,6 @@ dependencies:
     - field.field.profile.member.field_profile_email_email
     - field.field.profile.member.field_profile_lang_languages
     - field.field.profile.member.field_profile_link_website
-    - field.field.profile.member.field_profile_list_genderident
     - field.field.profile.member.field_profile_name_fullname
     - field.field.profile.member.field_profile_phone_telephone
     - field.field.profile.member.field_profile_text_biography
@@ -30,9 +29,8 @@ bundle: member
 mode: default
 content:
   field_profile_address_postal:
-    weight: 6
-    settings:
-      default_country: PT
+    weight: 8
+    settings: {  }
     third_party_settings: {  }
     type: address_default
     region: content
@@ -44,7 +42,7 @@ content:
     type: boolean_checkbox
     region: content
   field_profile_date_birthdate:
-    weight: 2
+    weight: 3
     settings:
       date_order: YMD
       time_type: none
@@ -52,16 +50,8 @@ content:
     third_party_settings: {  }
     type: datetime_datelist
     region: content
-  field_profile_email_email:
-    weight: 8
-    settings:
-      size: 60
-      placeholder: '@'
-    third_party_settings: {  }
-    type: email_default
-    region: content
   field_profile_lang_languages:
-    weight: 4
+    weight: 7
     settings:
       format:
         name: name
@@ -71,43 +61,63 @@ content:
     type: languagefield_select
     region: content
   field_profile_link_website:
-    weight: 9
+    weight: 6
     settings:
       placeholder_url: 'https://'
       placeholder_title: ''
     third_party_settings: {  }
     type: link_default
     region: content
-  field_profile_list_genderident:
-    weight: 3
-    settings: {  }
-    third_party_settings: {  }
-    type: options_select
-    region: content
   field_profile_name_fullname:
     weight: 1
-    settings: {  }
+    settings:
+      labels:
+        title: Título
+        given: Prenome
+        middle: 'Middle name(s)'
+        family: Sobrenome
+        generational: Generational
+        credentials: Credentials
+      size:
+        title: 6
+        given: 20
+        middle: 20
+        family: 20
+        generational: 5
+        credentials: 35
+      title_display:
+        title: description
+        given: description
+        middle: description
+        family: description
+        generational: description
+        credentials: description
+      widget_layout: stacked
+      show_component_required_marker: false
+      credentials_inline: false
+      override_field_settings: false
     third_party_settings: {  }
     type: name_default
     region: content
   field_profile_phone_telephone:
-    weight: 7
+    weight: 9
     settings:
       placeholder: '+351'
     third_party_settings: {  }
     type: telephone_default
     region: content
   field_profile_text_biography:
-    weight: 5
+    weight: 4
     settings:
       rows: 9
       summary_rows: 3
       placeholder: ''
+      show_summary: false
     third_party_settings: {  }
     type: text_textarea_with_summary
     region: content
   field_profile_text_drupalorguser:
-    weight: 10
+    weight: 2
     settings:
       size: 60
       placeholder: ''
@@ -115,17 +125,14 @@ content:
     type: string_textfield
     region: content
   field_profile_text_jobtitle:
-    weight: 11
+    weight: 5
     settings:
       size: 60
       placeholder: ''
     third_party_settings: {  }
     type: string_textfield
     region: content
-  path:
-    type: path
-    weight: 30
-    region: content
-    settings: {  }
-    third_party_settings: {  }
-hidden: {  }
+hidden:
+  field_profile_email_email: true
+  is_default: true
+  path: true

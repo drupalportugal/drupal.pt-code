@@ -12,11 +12,12 @@ field_name: field_profile_text_biography
 entity_type: profile
 bundle: member
 label: Biografia
-description: 'Por favor inclui um texto breve acerca de ti para nos deixares saber quem és fora do Drupal. Esta informação será <strong>pública</strong>.'
+description: 'Por favor inclui um breve texto acerca de ti. Esta informação será <strong>pública</strong>.'
 required: true
 translatable: false
 default_value: {  }
 default_value_callback: ''
 settings:
   display_summary: false
+  required_summary: false
 field_type: text_with_summary

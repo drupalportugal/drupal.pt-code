@@ -14,12 +14,11 @@ description: 'Conteúdo recente.'
 tag: default
 base_table: node_field_data
 base_field: nid
-core: 8.x
 display:
   default:
     display_plugin: default
     id: default
-    display_title: Principal
+    display_title: Predefinido
     position: 0
     display_options:
       access:
@@ -45,8 +44,8 @@ display:
           reset_button_label: Reiniciar
           exposed_sorts_label: 'Ordenar por'
           expose_sort_order: true
-          sort_asc_label: Ascendente
-          sort_desc_label: Descendente
+          sort_asc_label: Asc
+          sort_desc_label: Desc
       pager:
         type: some
         options:
@@ -188,6 +187,8 @@ display:
             multiple: false
             remember_roles:
               authenticated: authenticated
+            operator_limit_selection: false
+            operator_list: {  }
           is_grouped: false
           group_info:
             label: ''
@@ -227,6 +228,8 @@ display:
             remember_roles:
               authenticated: authenticated
             reduce: false
+            operator_limit_selection: false
+            operator_list: {  }
           is_grouped: false
           group_info:
             label: ''

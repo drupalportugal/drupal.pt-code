@@ -13,15 +13,14 @@ _core:
 id: taxonomy_term
 label: 'Termo de taxonomia'
 module: taxonomy
-description: 'Content belonging to a certain taxonomy term.'
+description: 'Conteúdo pertencente a um certo termo de taxonomia.'
 tag: default
 base_table: node_field_data
 base_field: nid
-core: '8'
 display:
   default:
     id: default
-    display_title: Principal
+    display_title: Predefinido
     display_plugin: default
     position: 0
     display_options:
@@ -48,8 +47,8 @@ display:
           reset_button_label: Reiniciar
           exposed_sorts_label: 'Ordenar por'
           expose_sort_order: true
-          sort_asc_label: Ascendente
-          sort_desc_label: Descendente
+          sort_asc_label: Asc
+          sort_desc_label: Desc
       pager:
         type: mini
         options:
@@ -66,8 +65,8 @@ display:
             offset: false
             offset_label: Deslocamento
           tags:
-            previous: '‹ Anterior'
-            next: 'Seguinte ›'
+            previous: ‹‹
+            next: ››
             first: '« Primeira'
             last: 'Última »'
       sorts:
@@ -164,6 +163,8 @@ display:
             remember_roles:
               authenticated: authenticated
             reduce: false
+            operator_limit_selection: false
+            operator_list: {  }
           is_grouped: false
           group_info:
             label: ''
@@ -202,6 +203,8 @@ display:
             multiple: false
             remember_roles:
               authenticated: authenticated
+            operator_limit_selection: false
+            operator_list: {  }
           is_grouped: false
           group_info:
             label: ''

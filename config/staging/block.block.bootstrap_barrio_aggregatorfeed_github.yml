@@ -1,0 +1,22 @@
+uuid: 55a42f72-e061-42c7-a0f8-8f2bb15b5ae7
+langcode: pt-pt
+status: false
+dependencies:
+  module:
+    - aggregator
+  theme:
+    - bootstrap_barrio
+id: bootstrap_barrio_aggregatorfeed_github
+theme: bootstrap_barrio
+region: footer_third
+weight: 0
+provider: null
+plugin: aggregator_feed_block
+settings:
+  id: aggregator_feed_block
+  label: 'No GitHub'
+  provider: aggregator
+  label_display: visible
+  block_count: 5
+  feed: '6'
+visibility: {  }

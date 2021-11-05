@@ -7,6 +7,7 @@ dependencies:
     - field.field.user.user.user_picture
   module:
     - ds
+    - layout_builder
     - user
 third_party_settings:
   ds:
@@ -18,12 +19,14 @@ third_party_settings:
       settings:
         wrappers:
           ds_content: div
-        outer_wrapper: div
+        outer_wrapper: section
         attributes: ''
         link_attribute: ''
         link_custom: ''
         classes:
           layout_class: {  }
+          ds_content:
+            container: container
     regions:
       ds_content:
         - 'dynamic_block_field:user-profile_fields_member'
@@ -33,6 +36,10 @@ third_party_settings:
         weight: 0
         label: hidden
         formatter: default
+  layout_builder:
+    sections: {  }
+    allow_custom: false
+    enabled: false
 _core:
   default_config_hash: V51QPCKkgNREKtSmB9Iu2wmAMEpktVpnzklWaZV8UYo
 id: user.user.default
@@ -52,11 +59,14 @@ content:
     third_party_settings: {  }
 hidden:
   commerce_remote_id: true
+  customer_profiles: true
   langcode: true
   member_for: true
+  member_profiles: true
   profile_collective_associate: true
   profile_customer: true
   profile_individual_associate: true
   profile_member: true
   profile_socio_adp: true
+  socio_adp_profiles: true
   user_picture: true

@@ -4,9 +4,9 @@ status: true
 dependencies:
   config:
     - commerce_order.commerce_order_type.socios
-    - field.field.commerce_order.socios.order_items
   module:
     - commerce_order
+    - commerce_price
     - state_machine
     - user
 id: commerce_order.socios.default
@@ -14,6 +14,15 @@ targetEntityType: commerce_order
 bundle: socios
 mode: default
 content:
+  balance:
+    type: commerce_price_default
+    label: inline
+    weight: 11
+    settings:
+      strip_trailing_zeroes: false
+      currency_display: symbol
+    third_party_settings: {  }
+    region: content
   completed:
     label: above
     type: timestamp
@@ -83,3 +92,4 @@ hidden:
   changed: true
   order_number: true
   store_id: true
+  total_paid: true

@@ -4,14 +4,14 @@ status: true
 dependencies: {  }
 id: socio_adp
 label: 'Socio ADP'
-registration: false
+display_label: null
 multiple: true
+registration: false
 roles:
   associate: associate
   authenticated: '0'
   author: '0'
   moderator: '0'
   administrator: '0'
-weight: 0
-use_revisions: true
-description: 'Perfil para sócios'
+allow_revisions: true
+new_revision: true

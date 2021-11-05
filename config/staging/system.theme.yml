@@ -1,5 +1,5 @@
-admin: seven
-default: drupalportugal_bartik
+admin: gin
+default: drupalpt
 _core:
   default_config_hash: fOjer9hADYYnbCJVZMFZIIM1azTFWyg84ZkFDHfAbUg
 langcode: pt-pt

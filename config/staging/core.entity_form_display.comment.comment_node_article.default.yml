@@ -6,6 +6,7 @@ dependencies:
     - comment.type.comment_node_article
     - field.field.comment.comment_node_article.comment_body
   module:
+    - path
     - text
 id: comment.comment_node_article.default
 targetEntityType: comment
@@ -15,6 +16,8 @@ content:
   author:
     weight: -2
     region: content
+    settings: {  }
+    third_party_settings: {  }
   comment_body:
     type: text_textarea
     weight: 11

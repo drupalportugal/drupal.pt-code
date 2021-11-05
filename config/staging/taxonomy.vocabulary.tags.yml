@@ -7,5 +7,4 @@ _core:
 name: Etiquetas
 vid: tags
 description: 'Use etiquetas para agrupar artigos, sobre tópicos similares, em categorias.'
-hierarchy: 0
 weight: 0

@@ -13,12 +13,11 @@ description: 'Mostra uma lista de contas de utilizador mais recentes no sítio.'
 tag: default
 base_table: users_field_data
 base_field: uid
-core: 8.x
 display:
   default:
     display_plugin: default
     id: default
-    display_title: Principal
+    display_title: Predefinido
     position: 0
     display_options:
       access:
@@ -44,8 +43,8 @@ display:
           reset_button_label: Reiniciar
           exposed_sorts_label: 'Ordenar por'
           expose_sort_order: true
-          sort_asc_label: Ascendente
-          sort_desc_label: Descendente
+          sort_asc_label: Asc
+          sort_desc_label: Desc
       pager:
         type: some
         options:
@@ -98,6 +97,8 @@ display:
           id: status
           expose:
             operator: '0'
+            operator_limit_selection: false
+            operator_list: {  }
           group: 1
           plugin_id: boolean
           entity_type: user
@@ -129,6 +130,11 @@ display:
             multiple: false
             remember_roles:
               authenticated: authenticated
+            placeholder: ''
+            min_placeholder: ''
+            max_placeholder: ''
+            operator_limit_selection: false
+            operator_list: {  }
           is_grouped: false
           group_info:
             label: ''
@@ -182,7 +188,7 @@ display:
     display_options:
       display_description: 'Uma lista de utilizadores novos'
       block_description: 'Novos utilizadores'
-      block_category: Utilizador
+      block_category: User
       display_extenders: {  }
     cache_metadata:
       contexts:

@@ -5,6 +5,6 @@ dependencies: {  }
 _core:
   default_config_hash: ncFyR_rxMIEe7JBLvFdLM6Z7VbmWFx_5SSWCH7-8pxI
 id: family
-label: Family
+label: Sobrenome
 locked: false
 pattern: f

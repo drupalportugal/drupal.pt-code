@@ -5,11 +5,8 @@ dependencies:
   config:
     - commerce_product.commerce_product_type.socios
     - field.field.commerce_product.socios.body
-    - field.field.commerce_product.socios.stores
-    - field.field.commerce_product.socios.variations
   module:
     - commerce
-    - inline_entity_form
     - path
     - text
 id: commerce_product.socios.default
@@ -24,6 +21,7 @@ content:
       rows: 9
       summary_rows: 3
       placeholder: ''
+      show_summary: false
     third_party_settings: {  }
     region: content
   created:
@@ -78,18 +76,7 @@ content:
       match_operator: CONTAINS
       size: 60
       placeholder: ''
+      match_limit: 10
     third_party_settings: {  }
-  variations:
-    type: inline_entity_form_complex
-    weight: 10
-    settings:
-      override_labels: true
-      label_singular: variation
-      label_plural: variations
-      form_mode: default
-      allow_new: true
-      allow_existing: false
-      match_operator: CONTAINS
-    third_party_settings: {  }
-    region: content
-hidden: {  }
+hidden:
+  variations: true

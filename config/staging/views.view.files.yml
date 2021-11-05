@@ -14,12 +14,11 @@ description: 'Encontrar e gerir ficheiros.'
 tag: default
 base_table: file_managed
 base_field: fid
-core: 8.x
 display:
   default:
     display_plugin: default
     id: default
-    display_title: Principal
+    display_title: Predefinido
     position: 0
     display_options:
       access:
@@ -40,13 +39,13 @@ display:
       exposed_form:
         type: basic
         options:
-          submit_button: Filtro
+          submit_button: Filter
           reset_button: false
           reset_button_label: Reiniciar
           exposed_sorts_label: 'Ordenar por'
           expose_sort_order: true
-          sort_asc_label: Ascendente
-          sort_desc_label: Descendente
+          sort_asc_label: Asc
+          sort_desc_label: Desc
       pager:
         type: mini
         options:
@@ -524,7 +523,7 @@ display:
           relationship: fid
           group_type: sum
           admin_label: ''
-          label: 'Usado em'
+          label: 'Utilizado em'
           exclude: false
           alter:
             alter_text: false
@@ -570,7 +569,7 @@ display:
           decimal: .
           separator: ','
           format_plural: true
-          format_plural_string: !!binary MSBwbGFjZQNAY291bnQgcGxhY2Vz
+          format_plural_string: !!binary MSBsdWdhcgNAY291bnQgbHVnYXJlcw==
           prefix: ''
           suffix: ''
           plugin_id: numeric
@@ -600,6 +599,9 @@ display:
               authenticated: authenticated
               anonymous: '0'
               administrator: '0'
+            placeholder: ''
+            operator_limit_selection: false
+            operator_list: {  }
           is_grouped: false
           group_info:
             label: ''
@@ -640,6 +642,9 @@ display:
               authenticated: authenticated
               anonymous: '0'
               administrator: '0'
+            placeholder: ''
+            operator_limit_selection: false
+            operator_list: {  }
           is_grouped: false
           group_info:
             label: ''
@@ -681,6 +686,8 @@ display:
               anonymous: '0'
               administrator: '0'
             reduce: false
+            operator_limit_selection: false
+            operator_list: {  }
           is_grouped: false
           group_info:
             label: ''
@@ -728,12 +735,12 @@ display:
         - url
         - url.query_args
         - user.permissions
-      max-age: 0
+      max-age: -1
       tags: {  }
   page_1:
     display_plugin: page
     id: page_1
-    display_title: 'Files overview'
+    display_title: 'Resumo de ficheiros'
     position: 1
     display_options:
       path: admin/content/files
@@ -765,12 +772,12 @@ display:
         - url
         - url.query_args
         - user.permissions
-      max-age: 0
+      max-age: -1
       tags: {  }
   page_2:
     display_plugin: page
     id: page_2
-    display_title: 'File usage'
+    display_title: 'uso de ficheiros'
     position: 2
     display_options:
       display_description: ''
@@ -796,7 +803,7 @@ display:
           id: 0
           total_pages: 0
           tags:
-            previous: '‹ Previous'
+            previous: '‹ Anterior'
             next: 'Seguinte ›'
           expose:
             items_per_page: false
@@ -1017,7 +1024,7 @@ display:
           suffix: ''
           plugin_id: numeric
       group_by: false
-      title: 'File usage'
+      title: 'uso de ficheiros'
       arguments:
         fid:
           id: fid
@@ -1122,5 +1129,5 @@ display:
         - url
         - url.query_args
         - user.permissions
-      max-age: 0
+      max-age: -1
       tags: {  }

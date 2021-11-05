@@ -12,7 +12,7 @@ field_name: field_profile_link_website
 entity_type: profile
 bundle: member
 label: 'Endereço de website'
-description: 'O(s) teu(s) endereço(s) de website(s) pessoal(is) ou professional(is). Esta informação será <strong>pública</strong>.'
+description: 'Esta informação será <strong>pública</strong>.'
 required: false
 translatable: false
 default_value: {  }

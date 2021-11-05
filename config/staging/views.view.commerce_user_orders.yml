@@ -15,13 +15,12 @@ dependencies:
 _core:
   default_config_hash: InlzG5jd3RryfIKQvjJqhVyA8SOyJmmXfjdl5l8eYD8
 id: commerce_user_orders
-label: 'User orders'
+label: 'Encomendas dos utilizador'
 module: views
-description: 'Display a list of placed orders for a user.'
+description: 'Mostra a lista de encomendas colocadas para um utilizador.'
 tag: Commerce
 base_table: commerce_order
 base_field: order_id
-core: 8.x
 display:
   default:
     display_plugin: default
@@ -52,8 +51,8 @@ display:
           reset_button_label: Reiniciar
           exposed_sorts_label: 'Ordenar por'
           expose_sort_order: true
-          sort_asc_label: Ascendente
-          sort_desc_label: Descendente
+          sort_asc_label: Asc
+          sort_desc_label: Desc
       pager:
         type: full
         options:
@@ -270,7 +269,7 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
-          label: Data
+          label: Date
           exclude: false
           alter:
             alter_text: false
@@ -747,6 +746,8 @@ display:
             remember_roles:
               authenticated: authenticated
             reduce: false
+            operator_limit_selection: false
+            operator_list: {  }
           is_grouped: false
           group_info:
             label: ''
@@ -784,12 +785,14 @@ display:
         order_items:
           id: order_items
           table: commerce_order__order_items
-          field: order_items
+          field: order_items_target_id
           relationship: none
           group_type: group
           admin_label: 'order_items: Order item'
           required: false
           plugin_id: standard
+          entity_type: commerce_order
+          entity_field: order_items
         license:
           id: license
           table: commerce_order_item__license
@@ -840,7 +843,7 @@ display:
           plugin_id: numeric
       display_extenders: {  }
     cache_metadata:
-      max-age: 0
+      max-age: -1
       contexts:
         - 'languages:language_content'
         - 'languages:language_interface'
@@ -1133,7 +1136,7 @@ display:
           role:
             associate: associate
     cache_metadata:
-      max-age: 0
+      max-age: -1
       contexts:
         - 'languages:language_content'
         - 'languages:language_interface'
@@ -1145,7 +1148,7 @@ display:
   order_page:
     display_plugin: page
     id: order_page
-    display_title: 'User orders'
+    display_title: 'Encomendas dos utilizador'
     position: 1
     display_options:
       display_extenders: {  }
@@ -1755,7 +1758,7 @@ display:
       defaults:
         fields: false
     cache_metadata:
-      max-age: 0
+      max-age: -1
       contexts:
         - 'languages:language_content'
         - 'languages:language_interface'

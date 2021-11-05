@@ -10,7 +10,7 @@ field_name: field_profile_text_drupalorguser
 entity_type: profile
 bundle: member
 label: 'Nome de utilizador no Drupal.org'
-description: 'O teu nome de utilizador no drupal.org. Não adiciones a hiperligação. Esta informação será <strong>pública</strong>.'
+description: 'O teu nome de utilizador no drupal.org. A informação será <strong>pública</strong>.'
 required: true
 translatable: false
 default_value: {  }

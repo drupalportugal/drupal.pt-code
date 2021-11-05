@@ -1,0 +1,25 @@
+uuid: 07a9b8f3-db1b-4bcb-b309-3b097c5db89b
+langcode: pt-pt
+status: false
+dependencies:
+  content:
+    - 'block_content:basic:69cfffbe-8824-4271-9abe-d1e73257240d'
+  module:
+    - block_content
+  theme:
+    - drupalpt
+id: drupalpt_custom_communicate
+theme: drupalpt
+region: footer_first
+weight: 0
+provider: null
+plugin: 'block_content:69cfffbe-8824-4271-9abe-d1e73257240d'
+settings:
+  id: 'block_content:69cfffbe-8824-4271-9abe-d1e73257240d'
+  label: Comunica
+  provider: block_content
+  label_display: visible
+  status: true
+  info: ''
+  view_mode: full
+visibility: {  }

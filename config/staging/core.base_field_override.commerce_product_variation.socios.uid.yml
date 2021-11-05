@@ -13,7 +13,7 @@ description: 'The variation author.'
 required: false
 translatable: false
 default_value: {  }
-default_value_callback: 'Drupal\commerce_product\Entity\ProductVariation::getCurrentUserId'
+default_value_callback: 'Drupal\commerce_product\Entity\ProductVariation::getDefaultEntityOwner'
 settings:
   handler: default
   handler_settings: {  }

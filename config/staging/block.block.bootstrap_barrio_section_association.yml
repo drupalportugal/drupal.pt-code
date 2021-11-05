@@ -1,0 +1,30 @@
+uuid: 82927ad4-5699-44fe-8a04-ee8801b02aff
+langcode: pt-pt
+status: false
+dependencies:
+  config:
+    - system.menu.section-association
+  module:
+    - system
+  theme:
+    - bootstrap_barrio
+id: bootstrap_barrio_section_association
+theme: bootstrap_barrio
+region: sidebar_second
+weight: -13
+provider: null
+plugin: 'system_menu_block:section-association'
+settings:
+  id: 'system_menu_block:section-association'
+  label: Associação
+  provider: system
+  label_display: visible
+  level: 1
+  depth: 0
+  expand_all_items: false
+visibility:
+  request_path:
+    id: request_path
+    pages: "/associacao\r\n/associacao/*\r\n/adp\r\n/adp/*"
+    negate: false
+    context_mapping: {  }

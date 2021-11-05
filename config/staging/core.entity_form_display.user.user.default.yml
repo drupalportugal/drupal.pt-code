@@ -5,9 +5,7 @@ dependencies:
   config:
     - field.field.user.user.commerce_remote_id
     - field.field.user.user.user_picture
-    - image.style.thumbnail
   module:
-    - image
     - path
     - user
 _core:
@@ -23,39 +21,41 @@ content:
     settings: {  }
     third_party_settings: {  }
   contact:
-    weight: 6
+    weight: 3
     region: content
     settings: {  }
     third_party_settings: {  }
   google_analytics:
-    weight: 7
+    weight: 4
     region: content
     settings: {  }
     third_party_settings: {  }
+  langcode:
+    type: language_select
+    weight: 6
+    region: content
+    settings:
+      include_locked: true
+    third_party_settings: {  }
   language:
-    weight: 4
+    weight: 2
     region: content
     settings: {  }
     third_party_settings: {  }
   path:
     type: path
-    weight: 2
+    weight: 1
     region: content
     settings: {  }
     third_party_settings: {  }
   timezone:
-    weight: 3
+    weight: 5
     region: content
     settings: {  }
     third_party_settings: {  }
-  user_picture:
-    type: image_image
-    weight: 1
-    region: content
-    settings:
-      preview_image_style: thumbnail
-      progress_indicator: bar
-    third_party_settings: {  }
 hidden:
   commerce_remote_id: true
-  langcode: true
+  customer_profiles: true
+  member_profiles: true
+  socio_adp_profiles: true
+  user_picture: true

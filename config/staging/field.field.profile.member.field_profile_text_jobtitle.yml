@@ -10,7 +10,7 @@ field_name: field_profile_text_jobtitle
 entity_type: profile
 bundle: member
 label: 'Título profissional'
-description: 'O(s) teu(s) título(s) profissional(ais) atual(ais). Esta informação será <strong>pública</strong>.'
+description: 'Esta informação será <strong>pública</strong>.'
 required: false
 translatable: false
 default_value: {  }

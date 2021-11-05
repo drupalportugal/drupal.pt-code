@@ -5,8 +5,6 @@ dependencies:
   config:
     - commerce_product.commerce_product_type.socios
     - field.field.commerce_product.socios.body
-    - field.field.commerce_product.socios.stores
-    - field.field.commerce_product.socios.variations
   module:
     - commerce_product
     - text

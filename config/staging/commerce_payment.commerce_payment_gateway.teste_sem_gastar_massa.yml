@@ -10,9 +10,15 @@ configuration:
   instructions:
     value: ''
     format: plain_text
-  display_label: 'Manuteste sem gastar massaal'
+  display_label: 'Pagamento Manual'
   mode: n/a
   payment_method_types:
     - credit_card
-conditions: {  }
+  collect_billing_information: true
+conditions:
+  -
+    plugin: order_customer_role
+    configuration:
+      roles:
+        - administrator
 conditionOperator: AND

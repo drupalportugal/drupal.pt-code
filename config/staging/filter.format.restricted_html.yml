@@ -4,7 +4,6 @@ status: true
 dependencies:
   module:
     - editor
-    - markdown
 _core:
   default_config_hash: KUjJ8Ti_ZJSlhGM88E_mhJP-8mmQRNUB6RFof615Kt0
 name: 'HTML Restrito'
@@ -69,10 +68,3 @@ filters:
     status: false
     weight: -42
     settings: {  }
-  markdown:
-    id: markdown
-    provider: markdown
-    status: false
-    weight: -41
-    settings:
-      markdown_library: php-markdown

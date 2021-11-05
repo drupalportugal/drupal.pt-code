@@ -1,0 +1,27 @@
+uuid: 53b3b055-ec3e-4508-b639-42e42e279fc2
+langcode: pt-pt
+status: false
+dependencies:
+  module:
+    - user
+  theme:
+    - drupalpt
+id: drupalpt_login
+theme: drupalpt
+region: sidebar_second
+weight: -9
+provider: null
+plugin: user_login_block
+settings:
+  id: user_login_block
+  label: 'Iniciar sessão'
+  provider: user
+  label_display: visible
+visibility:
+  user_role:
+    id: user_role
+    roles:
+      anonymous: anonymous
+    negate: false
+    context_mapping:
+      user: '@user.current_user_context:current_user'

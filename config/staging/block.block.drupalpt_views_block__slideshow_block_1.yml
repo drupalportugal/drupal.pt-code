@@ -1,0 +1,24 @@
+uuid: 01507070-ce19-4cb3-be5d-234502bdd474
+langcode: pt-pt
+status: false
+dependencies:
+  config:
+    - views.view.slideshow
+  module:
+    - views
+  theme:
+    - drupalpt
+id: drupalpt_views_block__slideshow_block_1
+theme: drupalpt
+region: featured_top
+weight: -15
+provider: null
+plugin: 'views_block:slideshow-block_1'
+settings:
+  id: 'views_block:slideshow-block_1'
+  label: Slideshow
+  provider: views
+  label_display: '0'
+  views_label: ''
+  items_per_page: none
+visibility: {  }

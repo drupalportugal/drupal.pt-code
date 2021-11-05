@@ -3,7 +3,31 @@ field_template: false
 ft-default: default
 ft-show-colon: false
 classes:
-  region: {  }
+  region:
+    - landing
+    - content-header
+    - content-text
+    - home-landing-lower
+    - home-intro
+    - home-benefits
+    - home-solutions
+    - home-use-cases
+    - home-community
+    - resources-learn-intro
+    - resources-learn-content
+    - 'resources-contribute-intro '
+    - resources-contribute-content
+    - companies-intro
+    - companies-content
+    - community-intro
+    - community-content
+    - community-adp
+    - community-content-bottom
+    - contact-top
+    - info-page
+    - drupal-day-braganca-top
+    - drupal-day-braganca-content
+    - container
   field: {  }
 use_field_names: true
 _core:

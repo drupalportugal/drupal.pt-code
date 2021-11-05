@@ -12,33 +12,27 @@ field_name: field_profile_name_fullname
 entity_type: profile
 bundle: member
 label: 'Nome completo'
-description: 'O teu nome civil completo. Esta informação será <strong>pública</strong>.'
+description: 'O teu nome completo. Esta informação será <strong>pública</strong>.'
 required: true
 translatable: false
-default_value:
-  -
-    title: null
-    given: ''
-    middle: ''
-    family: ''
-    generational: null
-    credentials: null
+default_value: {  }
 default_value_callback: ''
 settings:
-  size:
-    title: 6
-    given: 20
-    middle: 20
-    family: 20
-    generational: 5
-    credentials: 35
-  title_display:
-    title: none
-    given: description
-    middle: description
-    family: description
-    generational: none
-    credentials: none
+  components:
+    given: true
+    title: false
+    middle: false
+    family: false
+    generational: false
+    credentials: false
+  minimum_components:
+    given: true
+    title: false
+    middle: false
+    family: false
+    generational: false
+    credentials: false
+  allow_family_or_given: true
   field_type:
     title: select
     given: text
@@ -46,16 +40,82 @@ settings:
     family: text
     generational: select
     credentials: text
-  inline_css:
-    title: ''
-    given: ''
-    middle: ''
-    family: ''
-    generational: ''
-    credentials: ''
-  component_css: ''
+  max_length:
+    title: 31
+    given: 63
+    middle: 127
+    family: 63
+    generational: 15
+    credentials: 255
+  sort_options:
+    title: false
+    generational: false
+  autocomplete_source:
+    title:
+      title: title
+    given: {  }
+    middle: {  }
+    family: {  }
+    generational:
+      generational: '0'
+    credentials: {  }
+  autocomplete_separator:
+    title: ' '
+    given: ' -'
+    middle: ' -'
+    family: ' -'
+    generational: ' '
+    credentials: ', '
+  title_options:
+    - '-- --'
+    - Mr.
+    - Mrs.
+    - Miss
+    - Ms.
+    - Dr.
+    - Prof.
+  generational_options:
+    - '-- --'
+    - Jr.
+    - Sr.
+    - I
+    - II
+    - III
+    - IV
+    - V
+    - VI
+    - VII
+    - VIII
+    - IX
+    - X
   component_layout: default
   show_component_required_marker: true
+  labels:
+    title: Title
+    given: Given
+    middle: 'Middle name(s)'
+    family: Family
+    generational: Generational
+    credentials: Credentials
+  title_display:
+    title: none
+    given: none
+    middle: description
+    family: description
+    generational: none
+    credentials: none
+  size:
+    title: 6
+    given: 20
+    middle: 20
+    family: 20
+    generational: 5
+    credentials: 35
   credentials_inline: false
+  widget_layout: stacked
+  preferred_field_reference: field_profile_text_drupalorguser
+  preferred_field_reference_separator: ', '
+  alternative_field_reference: field_profile_text_drupalorguser
+  alternative_field_reference_separator: ', '
   override_format: default
 field_type: name

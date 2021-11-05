@@ -1,31 +1,4 @@
 cloud_migration: {  }
-subscription_data:
-  active: true
-  href: 'https://insight.acquia.com/node/uuid/6d4d12e5-783a-7074-2dee-9b34f11163d3/dashboard'
-  uuid: 6d4d12e5-783a-7074-2dee-9b34f11163d3
-  subscription_name: 'Drupal Portugal'
-  expiration_date:
-    value: '2017-06-27T00:00:00'
-  product:
-    view: 'Acquia Network'
-  derived_key_salt: e11e73cdb6c97de7827d9b8929e4c24b
-  update_service: '1'
-  search_service_enabled: 1
-  rpc_version: '3.1'
-  update: {  }
-  heartbeat_data:
-    acquia_lift:
-      status: false
-      decision:
-        public_key: ''
-        private_key: ''
-      profile:
-        account_name: ''
-        hostname: ''
-        public_key: ''
-        secret_key: ''
-        js_path: ''
-    search_service_enabled: 1
 subscription_name: 'Drupal Portugal'
 debug: false
 cron_interval: 30
@@ -38,20 +11,13 @@ spi:
   server: 'https://nspi.acquia.com'
   ssl_override: false
   ssl_verify: true
-  def_vars:
-    preprocess_css:
-      optional: 0
-      description: ''
   def_waived_vars: {  }
-  def_timestamp: 1374783288
-  new_optional_data: 1
   admin_priv: 1
   send_node_user: 1
   send_watchdog: 1
-  module_diff_data: 1
   use_cron: 1
-  dynamic_banner: 0
-  set_variables_override: 0
+  dynamic_banner: 1
+  set_variables_override: 1
   set_variables_automatic:
     - acquia_spi_set_variables_automatic
     - error_level
@@ -73,9 +39,9 @@ spi:
     time: 0
   cron_interval: 28800
   site_name: 'Drupal Portugal: prod'
-  site_machine_name: 6d4d12e5_783a_7074_2dee_9b34f11163d3__druportugal
+  site_machine_name: 6d4d12e5_783a_7074_2dee_9b34f11163d3__druportugal__5cc8d8b90371d
   site_uuid: e70a0d95-d81e-4230-96ca-89b2ecdfdbde
-  site_environment: prod
+  site_environment: null
   env_detection_enabled: true
 mapping:
   acquia_spi_send_node_user:

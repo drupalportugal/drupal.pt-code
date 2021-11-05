@@ -1,0 +1,11 @@
+uuid: 72a27b35-79ec-4ef6-8bb7-76c7d48d65de
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - node.type.conteudo_para_socios
+id: node.conteudo_para_socios
+target_entity_type_id: node
+target_bundle: conteudo_para_socios
+default_langcode: site_default
+language_alterable: false

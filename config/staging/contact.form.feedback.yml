@@ -10,5 +10,5 @@ recipients:
   - webmaster@drupal.pt
 reply: ''
 weight: 0
-message: 'A sua mensagem foi enviada.'
+message: 'Your message has been sent.'
 redirect: ''

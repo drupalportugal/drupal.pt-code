@@ -1,0 +1,11 @@
+uuid: 9af0fbd8-c094-4c41-9eed-4b435b219ace
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - node.type.paginas
+id: node.paginas
+target_entity_type_id: node
+target_bundle: paginas
+default_langcode: site_default
+language_alterable: true

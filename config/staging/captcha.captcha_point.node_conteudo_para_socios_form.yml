@@ -1,0 +1,7 @@
+uuid: 4451a90d-0efd-4a9b-8b55-acdc6ac386f6
+langcode: pt-pt
+status: false
+dependencies: {  }
+formId: node_conteudo_para_socios_form
+captchaType: default
+label: null

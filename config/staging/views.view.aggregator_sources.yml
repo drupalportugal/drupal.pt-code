@@ -17,12 +17,11 @@ description: ''
 tag: aggregator
 base_table: aggregator_feed
 base_field: fid
-core: 8.x
 display:
   default:
     display_plugin: default
     id: default
-    display_title: Principal
+    display_title: Predefinido
     position: 0
     display_options:
       access:
@@ -48,8 +47,8 @@ display:
           reset_button_label: Reiniciar
           exposed_sorts_label: 'Ordenar por'
           expose_sort_order: true
-          sort_asc_label: Ascendente
-          sort_desc_label: Descendente
+          sort_asc_label: Asc
+          sort_desc_label: Desc
       pager:
         type: full
         options:

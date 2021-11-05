@@ -5,5 +5,4 @@ dependencies: {  }
 name: 'Áreas de negócio'
 vid: areas_negocio
 description: 'Por áreas de negócio entende-se sectores de actividade: eGov, Educação, Saúde, Indústria...'
-hierarchy: 0
 weight: 0

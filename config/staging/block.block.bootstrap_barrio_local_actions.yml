@@ -1,0 +1,20 @@
+uuid: 75ee6e87-f881-48c1-addf-2ff7c7366c2e
+langcode: pt-pt
+status: true
+dependencies:
+  theme:
+    - bootstrap_barrio
+_core:
+  default_config_hash: 13GQpeITIJsp1kyPniXtWZfyFH87vb1xxJCHifL4UeE
+id: bootstrap_barrio_local_actions
+theme: bootstrap_barrio
+region: content
+weight: -11
+provider: null
+plugin: local_actions_block
+settings:
+  id: local_actions_block
+  label: 'Ações principais de administrador'
+  provider: core
+  label_display: '0'
+visibility: {  }

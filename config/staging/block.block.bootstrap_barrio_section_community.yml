@@ -1,0 +1,30 @@
+uuid: 3637abce-a232-4c12-a646-72187b2495ae
+langcode: pt-pt
+status: false
+dependencies:
+  config:
+    - system.menu.section-community
+  module:
+    - system
+  theme:
+    - bootstrap_barrio
+id: bootstrap_barrio_section_community
+theme: bootstrap_barrio
+region: sidebar_second
+weight: -14
+provider: null
+plugin: 'system_menu_block:section-community'
+settings:
+  id: 'system_menu_block:section-community'
+  label: Comunidade
+  provider: system
+  label_display: visible
+  level: 1
+  depth: 0
+  expand_all_items: false
+visibility:
+  request_path:
+    id: request_path
+    pages: "/comunidade\r\n/comunidade/*"
+    negate: false
+    context_mapping: {  }

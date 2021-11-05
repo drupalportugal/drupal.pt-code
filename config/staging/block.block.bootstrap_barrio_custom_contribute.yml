@@ -1,0 +1,25 @@
+uuid: 88f2b69f-096f-4ec0-b962-44bdf427925c
+langcode: pt-pt
+status: false
+dependencies:
+  content:
+    - 'block_content:basic:1fb342e7-93cf-4aa3-9cea-e94080a33a16'
+  module:
+    - block_content
+  theme:
+    - bootstrap_barrio
+id: bootstrap_barrio_custom_contribute
+theme: bootstrap_barrio
+region: footer_third
+weight: 0
+provider: null
+plugin: 'block_content:1fb342e7-93cf-4aa3-9cea-e94080a33a16'
+settings:
+  id: 'block_content:1fb342e7-93cf-4aa3-9cea-e94080a33a16'
+  label: Contribui
+  provider: block_content
+  label_display: visible
+  status: true
+  info: ''
+  view_mode: full
+visibility: {  }

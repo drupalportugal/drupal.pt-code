@@ -15,7 +15,6 @@ description: 'Provides User fields to other objects exposed as blocks.'
 tag: ''
 base_table: users_field_data
 base_field: uid
-core: 8.x
 display:
   default:
     display_plugin: default

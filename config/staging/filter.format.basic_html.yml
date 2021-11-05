@@ -4,7 +4,6 @@ status: true
 dependencies:
   module:
     - editor
-    - markdown
 _core:
   default_config_hash: P8ddpAIKtawJDi5SzOwCzVnnNYqONewSTJ6Xn0dW_aQ
 name: 'HTML Básico'
@@ -69,10 +68,3 @@ filters:
     status: false
     weight: -42
     settings: {  }
-  markdown:
-    id: markdown
-    provider: markdown
-    status: false
-    weight: -41
-    settings:
-      markdown_library: php-markdown

@@ -10,6 +10,7 @@ dependencies:
       - commerce_order
   module:
     - address
+    - path
 _core:
   default_config_hash: 7mnnVkJkUSPhil9xoiTfdTivMqxCUloT_71AHWNUbJg
 id: profile.customer.default
@@ -23,4 +24,10 @@ content:
     settings: {  }
     third_party_settings: {  }
     region: content
+  path:
+    type: path
+    weight: 30
+    region: content
+    settings: {  }
+    third_party_settings: {  }
 hidden: {  }

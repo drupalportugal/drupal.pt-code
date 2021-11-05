@@ -1,0 +1,25 @@
+uuid: 7dee4af4-b0f4-465e-86fd-bc5c65283f8f
+langcode: pt-pt
+status: false
+dependencies:
+  content:
+    - 'block_content:basic:16347f52-8287-44de-85ed-e6e0c8255d8a'
+  module:
+    - block_content
+  theme:
+    - bootstrap_barrio
+id: bootstrap_barrio_custom_take_part
+theme: bootstrap_barrio
+region: footer_second
+weight: -14
+provider: null
+plugin: 'block_content:16347f52-8287-44de-85ed-e6e0c8255d8a'
+settings:
+  id: 'block_content:16347f52-8287-44de-85ed-e6e0c8255d8a'
+  label: Participa
+  provider: block_content
+  label_display: visible
+  status: true
+  info: ''
+  view_mode: full
+visibility: {  }

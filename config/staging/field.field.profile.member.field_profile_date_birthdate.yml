@@ -7,12 +7,16 @@ dependencies:
     - profile.type.member
   module:
     - datetime
+    - profile
+third_party_settings:
+  profile:
+    profile_private: true
 id: profile.member.field_profile_date_birthdate
 field_name: field_profile_date_birthdate
 entity_type: profile
 bundle: member
 label: 'Data de nascimento'
-description: 'A tua data de nascimento. Esta informação será <strong>pública</strong>.'
+description: 'Esta informação será <strong>privada</strong>.'
 required: false
 translatable: false
 default_value: {  }

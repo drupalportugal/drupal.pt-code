@@ -1,0 +1,15 @@
+uuid: 27a41f53-bd91-48c0-b569-2b3ffaaf7867
+langcode: en
+status: true
+dependencies: {  }
+name: use_case_logo_scale_only_200_100_
+label: 'Use Case Logo -scale only (200×100)'
+effects:
+  5c904d5e-f09f-4999-b684-980807b646d6:
+    uuid: 5c904d5e-f09f-4999-b684-980807b646d6
+    id: image_scale
+    weight: 2
+    data:
+      width: 200
+      height: 100
+      upscale: true

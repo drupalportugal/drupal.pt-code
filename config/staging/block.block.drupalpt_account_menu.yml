@@ -1,0 +1,33 @@
+uuid: 590cb417-a7d6-4249-8fb5-4d0d6b82d7b4
+langcode: pt-pt
+status: false
+dependencies:
+  config:
+    - system.menu.account
+  module:
+    - system
+    - user
+  theme:
+    - drupalpt
+id: drupalpt_account_menu
+theme: drupalpt
+region: sidebar_second
+weight: -10
+provider: null
+plugin: 'system_menu_block:account'
+settings:
+  id: 'system_menu_block:account'
+  label: 'Menu de utilizador'
+  provider: system
+  label_display: '0'
+  level: 1
+  depth: 1
+  expand_all_items: false
+visibility:
+  user_role:
+    id: user_role
+    roles:
+      authenticated: authenticated
+    negate: false
+    context_mapping:
+      user: '@user.current_user_context:current_user'

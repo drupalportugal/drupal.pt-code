@@ -1,0 +1,23 @@
+uuid: d13ff6cf-b38a-40f6-98cb-05cbc7555c99
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.body
+    - node.type.caracteristica
+  module:
+    - text
+id: node.caracteristica.body
+field_name: body
+entity_type: node
+bundle: caracteristica
+label: Body
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  display_summary: true
+  required_summary: false
+field_type: text_with_summary

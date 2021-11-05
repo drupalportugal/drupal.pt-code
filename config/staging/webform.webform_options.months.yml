@@ -1,0 +1,26 @@
+uuid: 7b664cd5-138a-43d1-ba6a-e73e9abce90a
+langcode: pt-pt
+status: true
+dependencies:
+  enforced:
+    module:
+      - webform
+_core:
+  default_config_hash: pZJnuQkh9afNML5IcMuKTUC__vmHMFn66Qr5IWtedZ4
+id: months
+label: Meses
+category: 'Data e hora'
+likert: false
+options: |
+  Janeiro: Janeiro
+  Fevereiro: Fevereiro
+  Março: Março
+  Abril: Abril
+  Maio: Maio
+  Junho: Junho
+  Julho: Julho
+  Agosto: Agosto
+  Setembro: Setembro
+  Outubro: Outubro
+  Novembro: Novembro
+  Dezembro: Dezembro

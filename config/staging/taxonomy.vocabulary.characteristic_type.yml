@@ -1,0 +1,8 @@
+uuid: 49658cea-d450-4f6b-b1e4-fae388a013e6
+langcode: en
+status: true
+dependencies: {  }
+name: 'Tipo de Caracteristica'
+vid: characteristic_type
+description: 'Para categorizar as caracteristicas (content type)'
+weight: 0

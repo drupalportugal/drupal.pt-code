@@ -1,0 +1,25 @@
+uuid: 890f44f0-e22d-4132-be32-4bc1f69822a5
+langcode: en
+status: true
+dependencies:
+  config:
+    - system.menu.main-menu
+  module:
+    - system
+  theme:
+    - drupalpt
+id: mainmenu_footer
+theme: drupalpt
+region: footer_first
+weight: 0
+provider: null
+plugin: 'system_menu_block:main-menu'
+settings:
+  id: 'system_menu_block:main-menu'
+  label: 'Main menu Footer'
+  provider: system
+  label_display: '0'
+  level: 1
+  depth: 0
+  expand_all_items: false
+visibility: {  }

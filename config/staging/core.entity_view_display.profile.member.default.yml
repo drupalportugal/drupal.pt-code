@@ -9,7 +9,6 @@ dependencies:
     - field.field.profile.member.field_profile_email_email
     - field.field.profile.member.field_profile_lang_languages
     - field.field.profile.member.field_profile_link_website
-    - field.field.profile.member.field_profile_list_genderident
     - field.field.profile.member.field_profile_name_fullname
     - field.field.profile.member.field_profile_phone_telephone
     - field.field.profile.member.field_profile_text_biography
@@ -17,170 +16,95 @@ dependencies:
     - field.field.profile.member.field_profile_text_jobtitle
     - profile.type.member
   module:
-    - address
     - age_field_formatter
     - ds
-    - languagefield
-    - link
+    - layout_builder
     - name
-    - options
-    - telephone
-    - text
 third_party_settings:
   ds:
     layout:
-      id: ds_3col_stacked
-      library: ds/ds_3col_stacked
+      id: ds_1col_wrapper
+      library: null
       disable_css: false
       entity_classes: all_classes
       settings:
         wrappers:
-          header: div
-          left: div
-          middle: div
-          right: div
-          footer: div
-        outer_wrapper: div
+          ds_content: div
+        outer_wrapper: section
         attributes: ''
         link_attribute: ''
         link_custom: ''
         classes:
           layout_class: {  }
+          ds_content:
+            container: container
     regions:
-      left:
+      ds_content:
         - 'dynamic_block_field:profile-user_fields_picture'
         - field_profile_name_fullname
         - field_profile_date_birthdate
-        - field_profile_list_genderident
-        - field_profile_lang_languages
-      middle:
-        - field_profile_text_biography
-        - field_profile_address_postal
-        - field_profile_phone_telephone
         - field_profile_email_email
-        - field_profile_link_website
-      right:
         - field_profile_text_drupalorguser
-        - field_profile_text_jobtitle
     fields:
       'dynamic_block_field:profile-user_fields_picture':
         plugin_id: 'dynamic_block_field:profile-user_fields_picture'
         weight: 0
         label: hidden
         formatter: default
+  layout_builder:
+    sections: {  }
 id: profile.member.default
 targetEntityType: profile
 bundle: member
 mode: default
 content:
-  field_profile_address_postal:
-    weight: 6
-    label: above
-    settings: {  }
-    third_party_settings: {  }
-    type: address_default
-    region: middle
   field_profile_date_birthdate:
     weight: 2
     label: above
     settings:
       age_format: birthdate
       year_suffix: '1'
+      date_format: 'Y-m-d\TH:i:s'
     third_party_settings: {  }
     type: age_field_formatter
-    region: left
+    region: ds_content
   field_profile_email_email:
-    weight: 8
+    weight: 3
     label: above
     settings: {  }
     third_party_settings:
       ds:
         ds_limit: ''
     type: email_mailto
-    region: middle
-  field_profile_lang_languages:
+    region: ds_content
+  field_profile_name_fullname:
+    type: name_default
+    settings:
+      list_format: default
+      format: default
+      markup: none
+      link_target: ''
+      preferred_field_reference: ''
+      preferred_field_reference_separator: ', '
+      alternative_field_reference: ''
+      alternative_field_reference_separator: ', '
+    weight: 1
+    label: above
+    third_party_settings: {  }
+    region: ds_content
+  field_profile_text_drupalorguser:
     weight: 4
     label: above
     settings:
-      format:
-        name: name
-        iso: 0
-        name_native: 0
-      link_to_entity: 0
-    third_party_settings:
-      ds:
-        ds_limit: ''
-    type: languagefield_default
-    region: left
-  field_profile_link_website:
-    weight: 9
-    label: above
-    settings:
-      trim_length: 80
-      rel: nofollow
-      target: _blank
-      url_only: false
-      url_plain: false
-    third_party_settings:
-      ds:
-        ds_limit: ''
-    type: link
-    region: middle
-  field_profile_list_genderident:
-    weight: 3
-    label: above
-    settings: {  }
-    third_party_settings: {  }
-    type: list_default
-    region: left
-  field_profile_name_fullname:
-    weight: 1
-    label: above
-    settings:
-      format: default
-      output: default
-      multiple: default
-      multiple_delimiter: ', '
-      multiple_and: text
-      multiple_delimiter_precedes_last: never
-      multiple_el_al_min: '3'
-      multiple_el_al_first: '1'
-      markup: false
-    third_party_settings: {  }
-    type: name_default
-    region: left
-  field_profile_phone_telephone:
-    weight: 7
-    label: above
-    settings:
-      title: ''
-    third_party_settings:
-      ds:
-        ds_limit: ''
-    type: telephone_link
-    region: middle
-  field_profile_text_biography:
-    weight: 5
-    label: above
-    settings: {  }
-    third_party_settings: {  }
-    type: text_default
-    region: middle
-  field_profile_text_drupalorguser:
-    weight: 10
-    label: above
-    settings:
       link_to_entity: false
     third_party_settings: {  }
     type: string
-    region: right
-  field_profile_text_jobtitle:
-    weight: 11
-    label: above
-    settings:
-      link_to_entity: false
-    third_party_settings: {  }
-    type: string
-    region: right
+    region: ds_content
 hidden:
+  field_profile_address_postal: true
   field_profile_bool_indirectory: true
+  field_profile_lang_languages: true
+  field_profile_link_website: true
+  field_profile_phone_telephone: true
+  field_profile_text_biography: true
+  field_profile_text_jobtitle: true

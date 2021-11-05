@@ -1,0 +1,25 @@
+uuid: cf5e753e-d339-4952-890c-f895cd758e0c
+langcode: pt-pt
+status: true
+dependencies:
+  content:
+    - 'block_content:basic:1a0cb9e2-5772-45aa-9cee-14d1a3636182'
+  module:
+    - block_content
+  theme:
+    - bootstrap_barrio
+id: bootstrap_barrio_custom_credits_warnings
+theme: bootstrap_barrio
+region: footer_fifth
+weight: 0
+provider: null
+plugin: 'block_content:1a0cb9e2-5772-45aa-9cee-14d1a3636182'
+settings:
+  id: 'block_content:1a0cb9e2-5772-45aa-9cee-14d1a3636182'
+  label: 'Créditos e avisos'
+  provider: block_content
+  label_display: '0'
+  status: true
+  info: ''
+  view_mode: full
+visibility: {  }

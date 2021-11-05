@@ -5,12 +5,17 @@ dependencies:
   config:
     - field.storage.profile.field_profile_email_email
     - profile.type.member
+  module:
+    - profile
+third_party_settings:
+  profile:
+    profile_private: true
 id: profile.member.field_profile_email_email
 field_name: field_profile_email_email
 entity_type: profile
 bundle: member
 label: 'Endereço de email'
-description: 'O(s) teu(s) endereço(s) de email pessoal(is) ou professional(is). Esta informação será <strong>pública</strong>.'
+description: 'Esta informação será <strong>privada</strong>.'
 required: false
 translatable: false
 default_value: {  }

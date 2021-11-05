@@ -1,0 +1,35 @@
+uuid: e294126e-bc2f-4bf0-9a0c-e301bce76af6
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - field.field.node.caracteristica.body
+    - field.field.node.caracteristica.field_icon
+    - field.field.node.caracteristica.field_type
+    - node.type.caracteristica
+  module:
+    - text
+    - user
+id: node.caracteristica.teaser
+targetEntityType: node
+bundle: caracteristica
+mode: teaser
+content:
+  body:
+    label: hidden
+    type: text_summary_or_trimmed
+    weight: 101
+    settings:
+      trim_length: 600
+    third_party_settings: {  }
+    region: content
+  links:
+    weight: 100
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+hidden:
+  field_icon: true
+  field_type: true
+  langcode: true

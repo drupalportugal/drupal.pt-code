@@ -1,0 +1,19 @@
+uuid: cc07cf89-beda-418b-95f9-4cb209b68961
+langcode: en
+status: true
+dependencies:
+  config:
+    - block_content.type.block_image_title_text_link
+    - field.storage.block_content.field_title
+id: block_content.block_image_title_text_link.field_title
+field_name: field_title
+entity_type: block_content
+bundle: block_image_title_text_link
+label: Titulo
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

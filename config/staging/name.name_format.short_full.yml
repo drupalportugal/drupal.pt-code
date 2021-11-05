@@ -5,6 +5,6 @@ dependencies: {  }
 _core:
   default_config_hash: bSKPB_jbNxLzPcnRZSS6my7XyZZhQfVhNyHwYt_NZEE
 id: short_full
-label: 'Given Family'
+label: 'Prenome e Sobrenome'
 locked: false
 pattern: g+if

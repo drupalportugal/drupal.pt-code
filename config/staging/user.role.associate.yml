@@ -7,4 +7,5 @@ label: Sócio
 weight: -8
 is_admin: null
 permissions:
+  - 'display eu cookie compliance popup'
   - 'view own socio_adp profile'

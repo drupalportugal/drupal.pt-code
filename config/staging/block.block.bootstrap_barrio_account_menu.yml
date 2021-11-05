@@ -1,0 +1,33 @@
+uuid: ad21ced5-7b17-4e05-82a4-a9c9bc992d6c
+langcode: pt-pt
+status: false
+dependencies:
+  config:
+    - system.menu.account
+  module:
+    - system
+    - user
+  theme:
+    - bootstrap_barrio
+id: bootstrap_barrio_account_menu
+theme: bootstrap_barrio
+region: sidebar_second
+weight: -10
+provider: null
+plugin: 'system_menu_block:account'
+settings:
+  id: 'system_menu_block:account'
+  label: 'Menu de utilizador'
+  provider: system
+  label_display: '0'
+  level: 1
+  depth: 1
+  expand_all_items: false
+visibility:
+  user_role:
+    id: user_role
+    roles:
+      authenticated: authenticated
+    negate: false
+    context_mapping:
+      user: '@user.current_user_context:current_user'

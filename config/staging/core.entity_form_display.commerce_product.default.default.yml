@@ -5,11 +5,8 @@ dependencies:
   config:
     - commerce_product.commerce_product_type.default
     - field.field.commerce_product.default.body
-    - field.field.commerce_product.default.stores
-    - field.field.commerce_product.default.variations
   module:
     - commerce
-    - inline_entity_form
     - path
     - text
 _core:
@@ -26,6 +23,7 @@ content:
       rows: 9
       summary_rows: 3
       placeholder: ''
+      show_summary: false
     third_party_settings: {  }
     region: content
   created:
@@ -78,19 +76,8 @@ content:
       match_operator: CONTAINS
       size: 60
       placeholder: ''
+      match_limit: 10
     third_party_settings: {  }
     region: content
-  variations:
-    type: inline_entity_form_complex
-    weight: 6
-    settings:
-      match_operator: CONTAINS
-      override_labels: false
-      label_singular: ''
-      label_plural: ''
-      allow_new: true
-      allow_existing: false
-      form_mode: default
-    third_party_settings: {  }
-    region: content
-hidden: {  }
+hidden:
+  variations: true

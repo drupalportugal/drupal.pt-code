@@ -10,13 +10,12 @@ dependencies:
 _core:
   default_config_hash: n9Ex_quBSEoJSBauWflhu627_KJLiobwpc1HvKLcv8Q
 id: commerce_order_item_table
-label: 'Order items'
+label: 'Itens da encomenda'
 module: views
-description: 'Display a set of order items in a table.'
+description: 'Mostra um conjunto de items de uma encomenda numa tabela.'
 tag: ''
 base_table: commerce_order_item
 base_field: order_item_id
-core: 8.x
 display:
   default:
     display_plugin: default
@@ -46,8 +45,8 @@ display:
           reset_button_label: Reiniciar
           exposed_sorts_label: 'Ordenar por'
           expose_sort_order: true
-          sort_asc_label: Ascendente
-          sort_desc_label: Descendente
+          sort_asc_label: Asc
+          sort_desc_label: Desc
       pager:
         type: none
         options:
@@ -492,7 +491,7 @@ display:
           plugin_id: numeric
       display_extenders: {  }
     cache_metadata:
-      max-age: 0
+      max-age: -1
       contexts:
         - 'languages:language_content'
         - 'languages:language_interface'

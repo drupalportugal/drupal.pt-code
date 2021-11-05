@@ -1,0 +1,20 @@
+uuid: ade6311d-a5f1-434b-a37c-ed10b41e761d
+langcode: pt-pt
+status: true
+dependencies:
+  module:
+    - system
+  theme:
+    - drupalpt
+id: drupalpt_content
+theme: drupalpt
+region: content
+weight: -9
+provider: null
+plugin: system_main_block
+settings:
+  id: system_main_block
+  label: 'Conteúdo da página principal'
+  provider: system
+  label_display: '0'
+visibility: {  }

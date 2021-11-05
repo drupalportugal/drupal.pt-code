@@ -1,0 +1,23 @@
+uuid: c5c6172e-1e65-4a60-a8d9-6c0f37e0d97e
+langcode: en
+status: true
+dependencies:
+  module:
+    - system
+  theme:
+    - drupalpt
+id: drupalpt_logo
+theme: drupalpt
+region: footer_first
+weight: 0
+provider: null
+plugin: system_branding_block
+settings:
+  id: system_branding_block
+  label: 'Drupalpt Logo'
+  provider: system
+  label_display: '0'
+  use_site_logo: true
+  use_site_name: false
+  use_site_slogan: false
+visibility: {  }

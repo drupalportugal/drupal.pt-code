@@ -1,4 +1,4 @@
-uuid: e8f4f2d6-0f41-41ad-b8bd-3221ad0ce80c
+uuid: 1494b6ac-19f0-4421-b7b4-27f588d622e2
 langcode: pt-pt
 status: true
 dependencies:
@@ -6,20 +6,19 @@ dependencies:
     - dblog
     - user
 _core:
-  default_config_hash: 3QZ9apklK6mQ7BzodmxzOxqO---2BCPtOLE3k9eQ0Is
+  default_config_hash: oG4FVrpj6HxivwdvkAyY23ApbR-iWTnKvM4JHdJ6XmA
 id: watchdog
 label: Watchdog
 module: views
-description: 'Mensagens de registo recentes'
+description: 'Recent log messages'
 tag: ''
 base_table: watchdog
 base_field: wid
-core: 8.x
 display:
   default:
     display_plugin: default
     id: default
-    display_title: Principal
+    display_title: Predefinido
     position: 0
     display_options:
       access:
@@ -40,13 +39,13 @@ display:
       exposed_form:
         type: basic
         options:
-          submit_button: Filtro
+          submit_button: Filter
           reset_button: true
           reset_button_label: Reiniciar
           exposed_sorts_label: 'Ordenar por'
-          expose_sort_order: true
-          sort_asc_label: Ascendente
-          sort_desc_label: Descendente
+          expose_sort_order: false
+          sort_asc_label: Asc
+          sort_desc_label: Desc
       pager:
         type: mini
         options:
@@ -63,10 +62,8 @@ display:
             offset: false
             offset_label: Deslocamento
           tags:
-            previous: '‹ Anterior'
-            next: 'Seguinte ›'
-            first: '« Primeira'
-            last: 'Última »'
+            previous: ‹‹
+            next: ››
       style:
         type: table
         options:
@@ -153,7 +150,7 @@ display:
           field: nothing
           relationship: none
           group_type: group
-          admin_label: Ícone
+          admin_label: Icon
           label: ''
           exclude: false
           alter:
@@ -252,7 +249,7 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
-          label: Severidade
+          label: Severity
           exclude: true
           alter:
             alter_text: false
@@ -302,7 +299,7 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
-          label: Tipo
+          label: Type
           exclude: false
           alter:
             alter_text: false
@@ -351,7 +348,7 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
-          label: Data
+          label: Date
           exclude: false
           alter:
             alter_text: false
@@ -403,7 +400,7 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
-          label: Mensagem
+          label: Message
           exclude: false
           alter:
             alter_text: false
@@ -453,7 +450,7 @@ display:
           relationship: uid
           group_type: group
           admin_label: ''
-          label: Utilizador
+          label: User
           exclude: false
           alter:
             alter_text: false
@@ -518,7 +515,7 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
-          label: Operações
+          label: Operations
           exclude: false
           alter:
             alter_text: false
@@ -574,7 +571,7 @@ display:
           exposed: true
           expose:
             operator_id: type_op
-            label: Tipo
+            label: Type
             description: ''
             use_operator: false
             operator: type_op
@@ -587,6 +584,8 @@ display:
               anonymous: '0'
               administrator: '0'
             reduce: false
+            operator_limit_selection: false
+            operator_list: {  }
           is_grouped: false
           group_info:
             label: ''
@@ -613,7 +612,7 @@ display:
           exposed: true
           expose:
             operator_id: severity_op
-            label: Severidade
+            label: Severity
             description: ''
             use_operator: false
             operator: severity_op
@@ -626,6 +625,8 @@ display:
               anonymous: '0'
               administrator: '0'
             reduce: false
+            operator_limit_selection: false
+            operator_list: {  }
           is_grouped: false
           group_info:
             label: ''
@@ -652,23 +653,21 @@ display:
           expose:
             label: ''
           plugin_id: standard
-      title: 'Mensagens de registo recentes'
+      title: 'Recent log messages'
       header: {  }
       footer: {  }
       empty:
         area:
-          id: area
+          id: area_text_custom
           table: views
-          field: area
+          field: area_text_custom
           relationship: none
           group_type: group
-          admin_label: ''
+          admin_label: 'No log messages available.'
           empty: true
           tokenize: false
-          content:
-            value: 'Não há mensagens no registo.'
-            format: basic_html
-          plugin_id: text
+          content: 'No log messages available.'
+          plugin_id: text_custom
       relationships:
         uid:
           id: uid
@@ -687,7 +686,7 @@ display:
           1: AND
       css_class: admin-dblog
     cache_metadata:
-      max-age: 0
+      max-age: -1
       contexts:
         - 'languages:language_content'
         - 'languages:language_interface'
@@ -704,7 +703,7 @@ display:
       display_extenders: {  }
       path: admin/reports/dblog
     cache_metadata:
-      max-age: 0
+      max-age: -1
       contexts:
         - 'languages:language_content'
         - 'languages:language_interface'

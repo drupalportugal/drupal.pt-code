@@ -1,0 +1,22 @@
+uuid: f25accbd-a516-4386-8fd3-808472a8f586
+langcode: pt-pt
+status: true
+dependencies:
+  module:
+    - system
+  theme:
+    - drupalpt
+_core:
+  default_config_hash: KHQIJ7Vfl25lTjzIc7qIvnuistt-Mw2O0kG4jCofmkI
+id: drupalpt_messages
+theme: drupalpt
+region: highlighted
+weight: 0
+provider: null
+plugin: system_messages_block
+settings:
+  id: system_messages_block
+  label: 'Mensagens de estado'
+  provider: system
+  label_display: '0'
+visibility: {  }

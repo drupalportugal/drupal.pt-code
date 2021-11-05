@@ -4,8 +4,8 @@ mail: webmaster@drupal.pt
 slogan: 'Comunidade Portuguesa de Drupal'
 page:
   403: ''
-  404: ''
-  front: /node
+  404: /node/723
+  front: /node/682
 admin_compact_mode: false
 weight_select_max: 100
 langcode: pt-pt

@@ -6,10 +6,8 @@ dependencies:
     - core.entity_form_mode.user.register
     - field.field.user.user.commerce_remote_id
     - field.field.user.user.user_picture
-    - image.style.thumbnail
   module:
-    - image
-    - path
+    - profile
     - user
 _core:
   default_config_hash: LLAieeozVsoZDb-2PbFxRJpQqnKmpR7-4OoRJnduz-U
@@ -23,40 +21,21 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
-  contact:
-    weight: 6
-    region: content
-    settings: {  }
-    third_party_settings: {  }
-  google_analytics:
-    weight: 7
-    region: content
-    settings: {  }
-    third_party_settings: {  }
-  language:
-    weight: 4
-    region: content
-    settings: {  }
-    third_party_settings: {  }
-  path:
-    type: path
-    weight: 2
-    settings: {  }
-    third_party_settings: {  }
-    region: content
-  timezone:
-    weight: 3
-    region: content
-    settings: {  }
-    third_party_settings: {  }
-  user_picture:
-    settings:
-      preview_image_style: thumbnail
-      progress_indicator: bar
-    type: image_image
+  member_profiles:
+    type: profile_form
     weight: 1
+    settings:
+      form_mode: default
     third_party_settings: {  }
     region: content
 hidden:
   commerce_remote_id: true
+  contact: true
+  customer_profiles: true
+  google_analytics: true
   langcode: true
+  language: true
+  path: true
+  socio_adp_profiles: true
+  timezone: true
+  user_picture: true

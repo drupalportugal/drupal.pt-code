@@ -8,18 +8,17 @@ dependencies:
 _core:
   default_config_hash: 2uV1-bP-4ZwdUPr4BsJG_vxcEg_Half6UjEvYStWZsA
 id: aggregator_rss_feed
-label: 'Aggregator RSS feed'
+label: 'Feed RSS do agregador'
 module: aggregator
 description: ''
 tag: aggregator
 base_table: aggregator_item
 base_field: iid
-core: 8.x
 display:
   default:
     display_plugin: default
     id: default
-    display_title: Principal
+    display_title: Predefinido
     position: 0
     display_options:
       access:
@@ -45,8 +44,8 @@ display:
           reset_button_label: Reiniciar
           exposed_sorts_label: 'Ordenar por'
           expose_sort_order: true
-          sort_asc_label: Ascendente
-          sort_desc_label: Descendente
+          sort_asc_label: Asc
+          sort_desc_label: Desc
       pager:
         type: full
         options:
@@ -127,7 +126,7 @@ display:
           entity_field: iid
       filters: {  }
       sorts: {  }
-      title: 'Aggregator RSS feed'
+      title: 'Feed RSS do agregador'
       header: {  }
       footer: {  }
       empty: {  }
