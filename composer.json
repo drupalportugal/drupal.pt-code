@@ -69,6 +69,7 @@
         "drupal/name": "^1.0.0-beta1",
         "drupal/pathauto": "^1.0.0",
         "drupal/profile": "^1.0.0-rc1",
+        "drupal/quick_node_clone": "^1.15",
         "drupal/recaptcha": "^3.0",
         "drupal/redirect": "^1.0.0",
         "drupal/token": "^1.1.0",
