@@ -64,6 +64,7 @@
         "drupal/google_analytics": "^2.2.0",
         "drupal/inline_entity_form": "^1.0.0-beta1",
         "drupal/languagefield": "^1.4.0",
+        "drupal/markdown": "^3.0",
         "drupal/memcache": "^2.0",
         "drupal/metatag": "^1.10",
         "drupal/name": "^1.0.0-beta1",
@@ -72,11 +73,13 @@
         "drupal/quick_node_clone": "^1.15",
         "drupal/recaptcha": "^3.0",
         "drupal/redirect": "^1.0.0",
+        "drupal/smtp": "^1.2",
         "drupal/token": "^1.1.0",
         "drupal/upgrade_status": "^3.11",
         "drupal/views_slideshow": "^4.6.0",
         "drupal/webform": "^6.1",
         "drush/drush": "*",
+        "league/commonmark": "^1",
         "webmozart/path-util": "^2.3.0"
     },
     "require-dev": {
