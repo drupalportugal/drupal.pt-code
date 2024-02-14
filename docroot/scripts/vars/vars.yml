@@ -1,0 +1,4 @@
+configs:
+  alias: drupalpt
+  alias_domain: drupalpt.omibee
+  trusted_host_patterns: ^drupalpt\.omibee$

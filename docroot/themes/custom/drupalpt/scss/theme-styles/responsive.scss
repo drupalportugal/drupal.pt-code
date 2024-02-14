@@ -1,0 +1,372 @@
+/*
+*
+--- --- --- RESPONSIVE STYLING --- ---- ---
+*
+*/
+
+// --- >>> --- TARGETING A SINGLE SEGMENT OF SCREEN SIZES --- >>> --- //
+
+// Extra small devices (portrait phones, less than 576px)
+@include media-breakpoint-only(xs) { 
+    body {
+        //background: yellow !important;
+    }
+
+    #scrolldown {
+        margin-top: 115px !important;
+    }
+
+    .landing {
+        padding-top: 180px;
+    }
+
+    .home-intro {
+        h1 {
+            font: 700 60px/74px 'Inter', sans-serif;
+        }
+
+        h3{
+            font: 700 26px/36px 'Inter', sans-serif;
+        }
+    }
+
+    .home-community {
+        .view-header {
+            .view-header-titles {
+                h2 {
+                    font: 100 52px/60px 'Inter', sans-serif;
+                }
+            }
+        }
+
+        .views-row .views-field-field-title {
+            h4 {
+                font: 200 20px/30px 'Inter', sans-serif !important;
+            }
+        }
+    }
+
+    .content-header h2, .view-header-titles h2 {
+        font: 100 54px/66px 'Inter', sans-serif;
+    }
+
+    .page-node-682 #main #block-drupalpt-content .home-community .img-with-border {
+        span {
+            font: 200 20px/22px 'Inter', sans-serif;
+            padding: 0px 30px;
+        }
+
+        .visit-cta {
+            padding: 0px 25px;
+        }
+    }
+
+    .page-node-683 #main #block-drupalpt-content .resources-learn-content {
+        margin-top: 120px !important;
+    }
+
+    .page-node-683 #main #block-drupalpt-content .resources-contribute-content {
+        margin-top: 120px !important;
+    }
+
+    .community-intro .field--type-text-with-summary h2 {
+        font: 100 50px/58px 'Inter', sans-serif;
+    }
+
+    .page-node-713 #main #block-drupalpt-content .community-content {
+        //margin-top: 110px !important;
+        margin-top: 220px !important;
+    }
+
+    .page-node-683, .page-node-713 {
+        .img-with-border {
+            padding: 0 !important;
+        }
+    }
+
+    .content-text h3 {
+        font: 700 30px/36px 'Inter', sans-serif;
+    }
+
+    .resources-contribute-intro .img-with-border, .resources-learn-intro .img-with-border {
+        margin-top: 55px !important;
+    }
+
+    .path-user .block-system-main-block .content, .path-product .block-system-main-block .content {
+        width: 100%;
+    }
+}
+
+
+// Small devices (landscape phones, 576px and up)
+@include media-breakpoint-only(sm) { 
+    body {
+        //background: orange !important;
+    }
+
+    .path-user .block-system-main-block .content, .path-product .block-system-main-block .content {
+        width: 70%;
+    }
+}
+
+
+// Medium devices (tablets, 768px and up)
+@include media-breakpoint-only(md) { 
+    body {
+        //background: red !important;
+    }
+
+    .home-landing-lower .row {
+        justify-content: center;
+    }
+
+    .page-node-713 #main #block-drupalpt-content .community-content {
+        //margin-top: 345px;
+        margin-top: 557px;
+    }
+
+    .page-node-683 #main #block-drupalpt-content {
+        .resources-learn-content {
+            margin-top: 291px;
+        }
+
+        .resources-contribute-content { 
+            margin-top: 208px;
+        }
+    }
+
+    .path-user .block-system-main-block .content, .path-product .block-system-main-block .content {
+        width: 70%;
+    }
+}
+
+
+// Large devices (desktops, 992px and up)
+@include media-breakpoint-only(lg) { 
+    body {
+        //background: violet !important;
+    }
+
+    .page-node-683 #main #block-drupalpt-content .resources-contribute-content {
+        margin-top: 271px;
+    }
+
+    .page-node-683 #main #block-drupalpt-content .resources-learn-content {
+        margin-top: 383px;
+    }
+
+    .path-user .block-system-main-block .content, .path-product .block-system-main-block .content {
+        width: 50%;
+    }
+}
+
+
+// Extra large devices (large desktops, 1200px and up)
+@include media-breakpoint-only(xl) { 
+    body {
+        //background: purple !important;
+    }
+
+    .path-user .block-system-main-block .content, .path-product .block-system-main-block .content {
+        width: 30%;
+    }
+}
+
+// --- <<< --- TARGETING A SINGLE SEGMENT OF SCREEN SIZES --- <<< --- //
+
+
+// --- >>> --- TARGETING SMALLER SEGMENTS OF GIVEN SCREEN --- >>> --- //
+
+// Extra small devices (portrait phones, less than 576px)
+@include media-breakpoint-down(xs) { 
+    .page-node-682 #main #block-drupalpt-content .home-community .views-row .views-field-field-link .visit-cta {
+        padding: 0px 25px;
+    }
+}
+
+// Small devices (landscape phones, less than 768px)
+@include media-breakpoint-down(sm) { 
+    .page-node-713 #main #block-drupalpt-content .community-content {
+        //margin-top: 291px;
+        margin-top: 586px;
+    }
+
+    .page-node-683 #main #block-drupalpt-content {
+        .resources-learn-content {
+            margin-top: 291px;
+        }
+
+        .resources-contribute-content { 
+            margin-top: 226px
+        }
+    }
+
+    .content-header p {
+        width: 100%;
+    }
+}
+
+// Medium devices (tablets, less than 992px)
+@include media-breakpoint-down(md) { 
+    .navbar-collapse ul.nav {
+        display: flex;
+        flex-direction: column;
+        flex-wrap: nowrap;
+        justify-content: flex-start;
+        align-items: stretch;
+        align-content: stretch;
+        text-align: center;
+        //margin-top: 25px;
+        margin-top: 9px;
+        padding: 30px 0;
+        background: linear-gradient(-28deg, #22C1C3, #0678BE);
+        opacity: 0.95;
+        border: 2px solid $light-blue;
+        border-left: none;
+        border-right: none;
+        
+        .nav-item {
+            //padding: 12px 0;
+            padding: 15px 0;
+
+            a {
+                padding: 0;
+            }
+        }
+    }
+
+    .page-node-682 #main #block-drupalpt-content {
+        .home-intro h3, .home-intro p {
+            width: 100%;
+        }
+    }
+
+    .home-landing-lower .row .views-row {
+        margin-bottom: 50px;
+
+        &:last-child {
+            margin-bottom: 0;
+        }
+    }
+
+    .home-benefits, .home-solutions, .home-use-cases, .home-community {
+        .view-header {
+            text-align: center;
+
+            .view-header-titles {
+                margin-bottom: 35px;
+
+                h2 {
+                    margin: 0 !important;
+                }
+            }
+
+            .view-header-text {
+                text-align: center !important;
+            }
+        }
+    }
+
+    .page-node-713 #main #block-drupalpt-content .community-adp .block-webform #webform-submission-subscription-adp-node-713-add-form > fieldset {
+        width: 100%;
+    }
+
+    .page-node-714 #main #block-drupalpt-content .contact-top .block-webform #webform-submission-contact-node-714-add-form > fieldset {
+        width: 100%;
+    }
+
+    .info-page h2 {
+        font: 100 60px/66px 'Inter', sans-serif;
+    }
+
+    .info-page p {
+        width: 100%;
+    }
+
+    footer {
+        .region-footer-first {
+            justify-content: center;
+            padding: 100px 0 90px 0;
+    
+            #block-mainmenu-footer {
+                margin: 50px 0;
+                width: 100%;
+
+                ul.nav {
+                    display: flex;
+                    flex-direction: column;
+                    flex-wrap: nowrap;
+                    justify-content: flex-start;
+                    align-items: stretch;
+                    align-content: stretch;
+                    text-align: center;
+                }
+            }
+        }
+
+        .region-footer-third {
+            #block-associacaodrupalportugalc20102019 {
+                text-align: center;
+                width: 100%;
+                padding: 25px 0;
+            }
+
+            #block-legal {
+                width: 100%;
+                ul.nav {
+                    justify-content: center;
+                }
+            }
+        }
+    }
+}
+
+// Large devices (desktops, less than 1200px)
+@include media-breakpoint-down(lg) { 
+
+}
+
+// Extra large devices (large desktops)
+// No media query since the extra-large breakpoint has no upper bound on its width
+
+// --- <<< --- TARGETING SMALLER SEGMENTS OF GIVEN SCREEN --- <<< --- //
+
+
+
+// --- <<< --- TARGETING LARGER SEGMENTS OF GIVEN SCREEN --- <<< --- //
+
+@include media-breakpoint-up(xs) { 
+    
+}
+
+@include media-breakpoint-up(sm) { 
+
+}
+
+@include media-breakpoint-up(md) { 
+
+}
+
+@include media-breakpoint-up(lg) { 
+    footer .region-footer-third .nav-item a:last-child {
+        padding-right: 0;
+    }
+}
+
+@include media-breakpoint-up(xl) { 
+    
+}
+
+// --- <<< --- TARGETING LARGER SEGMENTS OF GIVEN SCREEN --- <<< --- //
+
+
+// --- >>> --- TARGETING BETWEEN GIVEN SCREENS --- >>> --- //
+
+// Adjust .landing-lower column width between md and lg screen sizes
+@include media-breakpoint-between(md, lg) {
+    .landing-lower.container {
+        max-width: 100%;
+    }
+ }
+
+ // --- <<< --- TARGETING BETWEEN GIVEN SCREENS --- <<< --- //

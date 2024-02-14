@@ -1,0 +1,361 @@
+/*
+*
+--- --- --- INICIO --- --- ---
+*
+*/
+
+// PÁGINA INICIO :: page-node-682
+.page-node-682  {
+
+    #main {
+        #block-drupalpt-content {
+            
+            // --- --- SECTIONS --- --- //
+            
+            .home-intro {
+                position: relative;
+                
+                h1 {
+                    margin-bottom: 20px;
+                    color: $white;
+                }
+
+                h3{
+                    margin-bottom: 30px;
+                    width: 600px;
+                    color: $white;
+                }
+
+                p {
+                    width: 615px;
+                    color: $white;
+                }
+
+                .block-block-content0e21c325-e1b4-4266-833b-2eabf7126b74 {
+                    .field--type-text-with-summary {
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                    }
+                }
+            }
+
+            .home-landing-lower {
+                margin: -80px auto 130px auto;
+
+                .views-field-field-media-image {
+                    transition: all .4s ease 0s;
+
+                    &:hover {
+                        transform: scale(1.05);
+                    }
+
+                    a {
+                        display: block;
+                        //transition: all .4s ease 0s;
+
+                        &:hover {
+                            cursor: pointer;
+                            //opacity: .95;
+                            //transform: scale(1.05);
+                        }
+
+                        img {
+                            width: 100%;
+                            height: 100%;
+                        }
+                    }
+                }
+
+                .views-field-field-title {
+                    h4 {
+                        margin-top: 30px;
+
+                        a {
+                            font: 600 24px/28px 'Inter', sans-serif;
+                            color: $very-dark-grey;
+    
+                            &:hover {
+                                color: $light-blue;
+                                text-decoration: none;
+                            }
+                        }
+                    }
+                }
+
+                .views-field-body {
+                    p {
+                        font: 300 16px/26px 'Inter', sans-serif;
+
+                        margin-top: 20px;
+                    }
+                }
+            }
+            
+            .home-benefits, .home-solutions, .home-use-cases, .home-community {
+
+                //padding: 180px 0 0 0;
+                padding: 180px 0 150px 0;
+
+                .view-header {
+                    display: flex;
+                    justify-content: space-between;
+                    //margin-bottom: 110px;
+                    margin-bottom: 150px;
+
+                    .view-header-titles {
+                        h2 {
+                            margin-left: -5px;
+                        }
+
+                        h5 {
+                            text-transform: uppercase;
+                        }
+                    }
+
+                    p {
+                        width: 520px;
+                        align-self: flex-end;
+                        text-align: right;
+                    }
+                }
+            }
+            
+            .home-benefits, .home-solutions {
+
+                .view-content {
+
+                    .views-row {
+                        margin-bottom: 30px; 
+
+                        &:nth-child(even) .views-row-fields {
+                            border: 2px solid $white;
+                        }
+
+                        .views-row-fields {
+                            border: 2px solid $light-blue;
+                            height: 350px;
+
+                            &:hover {
+                                cursor: crosshair;
+                                box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.16);
+
+                                .views-field-field-icon {
+                                    opacity: 0;
+                                    //transform: rotateY(-180deg);
+                                }
+
+                                .views-field-title {
+                                    opacity: 0;
+                                    //transform: rotateY(-180deg);
+                                }
+
+                                .views-field-body {
+                                    opacity: 1;
+                                    //transform: rotateY(0deg);
+                                }
+                            }
+
+                            .views-field-field-icon {
+                                position: absolute;
+                                top: 43%;
+                                left: 50%;
+                                transform: translate(-50%, -50%);
+
+                                //backface-visibility: hidden;
+                            }
+    
+                            .views-field-title {
+                                position: absolute;
+                                top: 60%;
+                                left: 0;
+                    
+                                text-align: center;
+                                width: 100%;
+
+                                //backface-visibility: hidden;
+
+                                h6 {
+                                    text-transform: uppercase;
+                                    color: $white;
+                                }
+                            }
+    
+                            .views-field-body {
+                                opacity: 0;
+                                display: flex;
+                                justify-content: center;
+                                align-items: center;
+                                width: 100%;
+                                height: 100%;
+                                background: $white;
+                                padding: 25px;
+                                text-align: center;
+                                font: 300 16px/26px 'Inter', sans-serif;
+                                //backface-visibility: hidden;
+                                //transform: rotateY(180deg);
+                                transition: all 200ms ease-in-out;
+                            }
+                        }
+                    }
+                }
+            }
+
+            .home-benefits {
+                @extend %gradient-bg-with-img;
+
+                .view-header {
+
+                    .view-header-titles {
+                        h2, h5 {
+                            color: $white;
+                        }
+                    }
+
+                    p {
+                        color: $white;
+                    }
+                }
+            }
+            
+            .home-solutions {
+                background: $section-bg-light-grey;
+
+                .views-row-fields {
+                    background: $white;
+                }
+
+                .views-field-title {
+
+                    h6 {
+                        color: $h6-dark-grey !important;
+                    }
+                }
+
+                .view-content {
+                    .views-row {
+                        &:nth-child(even) .views-row-fields {
+                            border: 2px solid $square-border-dark-grey;
+                        }
+                    }
+                }
+            }
+
+            .home-use-cases {
+                background: #00F0F310;
+
+                .use-case {
+                    margin-bottom: 180px;
+
+                    &:last-child {
+                        margin-bottom: 0;
+                    }
+
+                    .row {
+                        justify-content: center;
+                    }
+
+                    .views-field-field-logo {
+                        .field-content {
+                            text-align: center;
+                            padding-bottom: 50px;
+                        }
+                    }
+
+                    .views-field-field-media-image {
+                        a {
+                            display: block;
+                            border: 2px solid $light-blue;
+                            
+                            background: #00F0F3;
+
+                            &:hover {
+                                cursor: pointer;
+                                box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.16);
+                                border: 2px solid $white;
+                            }
+
+                            img {
+                                width: 100%;
+                                height: auto;
+
+                                &:hover {
+                                    opacity: 0.8;
+                                }
+                            }
+                        }
+
+                        img {
+                            width: 100%;
+                            height: auto;
+
+                            &:hover {
+                                opacity: 0.8;
+                            }
+                        }
+                    }
+
+                    .views-field-body {
+                        margin-top: -20px;
+
+                        .field-content {
+                            text-align: center;
+                            padding: 30px;
+                            border: 2px solid #00F0F3;
+                            background: #fff;
+                            font: 300 18px/28px 'Inter', sans-serif;
+                        }
+                    }
+                }
+            }
+
+            .home-community {
+                padding-bottom: 0;
+
+                .views-row {
+                    
+                    .views-field-field-title {
+                        h4 {
+                            font: 200 32px/34px 'Inter', sans-serif;
+                            text-align: center;
+                            padding: 0px 40px;
+                            background: #FFF;
+                            z-index: 9;
+                            position: absolute;
+                            top: 0;
+                            left: 50%;
+                            transform: translate(-50%, -50%);
+                        }
+                    }
+
+                    .img-with-border {
+                        margin-top: 0;
+                    }
+
+                    /*
+                    .views-field-field-media-image {
+                    }*/
+
+                    .views-field-field-link {
+                        position: relative;
+                        .visit-cta {
+                            text-align: center;
+                            padding: 0px 75px;
+                            display: inline-block;
+                            position: absolute;
+                            //bottom: -50px;
+                            background: #FFF;
+                            left: 50%;
+                            transform: translate(-50%, -50%);
+                        }
+    
+                        .visit-link {
+                            @extend %main-link-styles;
+                        }
+                    }
+
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,24 @@
+[core]
+	repositoryformatversion = 0
+	filemode = true
+	bare = false
+	logallrefupdates = true
+[remote "github"]
+	url = git@github.com:drupalportugal/drupal.pt-code.git
+	fetch = +refs/heads/*:refs/remotes/github/*
+[remote "gitlab"]
+	url = git@gitlab.com:drupalportugal/drupal.pt-code.git
+	fetch = +refs/heads/*:refs/remotes/gitlab/*
+[remote "acquia"]
+	url = druportugal@svn-3224.prod.hosting.acquia.com:druportugal.git
+	fetch = +refs/heads/*:refs/remotes/acquia/*
+[remote "all"]
+	url = git@github.com:drupalportugal/drupal.pt-code.git
+	url = git@gitlab.com:drupalportugal/drupal.pt-code.git
+	url = druportugal@svn-3224.prod.hosting.acquia.com:druportugal.git
+[branch "8.x-dev"]
+	remote = github
+	merge = refs/heads/8.x-dev
+[branch "7.x-dev"]
+	remote = github
+	merge = refs/heads/7.x-dev

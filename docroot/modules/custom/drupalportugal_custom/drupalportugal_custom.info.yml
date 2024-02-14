@@ -1,0 +1,6 @@
+name: Drupal Portugal - Customizations
+type: module
+description: Customizations needed by the site
+package: Drupal Portugal
+core: 8.x
+core_version_requirement: ^8 || ^9 || ^10
