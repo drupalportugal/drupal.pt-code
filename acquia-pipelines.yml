@@ -3,10 +3,7 @@ version: 1.3.0
 events:
   build:
     steps:
-      - get-core:
+      - hello:
           type: script
           script:
-            # Build non-development composer packages.
-            # - composer install --no-interaction --no-dev --optimize-autoloader
-            # - composer update --no-interaction --no-dev --optimize-autoloader --ignore-platform-req=php
-
+            - echo "Drupal.pt"
