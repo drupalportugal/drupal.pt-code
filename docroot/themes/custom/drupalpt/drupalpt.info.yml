@@ -4,6 +4,7 @@ description: 'This is Drupalpt SASS Bootstrap Subtheme.'
 # version: VERSION
 # core: 8.x
 base theme: bootstrap_barrio
+core_version_requirement: ^10 || ^11
 
 libraries:
   - drupalpt/global-styling
@@ -32,10 +33,3 @@ regions:
   footer_third: 'Footer third'
   footer_fourth: 'Footer fourth'
   footer_fifth: 'Footer fifth'
-
-# Information added by Drupal.org packaging script on 2019-02-25
-version: '8.x-1.9'
-core: '8.x'
-core_version_requirement: ^8 || ^9 || ^10
-project: 'bootstrap_sass'
-datestamp: 1551065297
