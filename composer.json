@@ -41,6 +41,7 @@
         "drupal/acquia_connector": "^4.0",
         "drupal/address": "^2.0",
         "drupal/admin_toolbar": "^3.0",
+        "drupal/age_field_formatter": "^3.0.0",
         "drupal/bootstrap_barrio": "*",
         "drupal/commerce": "^2.27",
         "drupal/commerce_license": "^3",
