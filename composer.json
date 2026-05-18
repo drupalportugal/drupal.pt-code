@@ -38,7 +38,7 @@
     "require": {
         "composer/installers": "^2.3",
         "cweagans/composer-patches": "^1.6.4",
-        "drupal/acquia_connector": "^4.0",
+        "drupal/acquia_connector": "^4.1",
         "drupal/address": "^2.0",
         "drupal/admin_toolbar": "^3.0",
         "drupal/bootstrap_barrio": "*",
